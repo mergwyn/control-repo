@@ -1,0 +1,30 @@
+#!/bin/sh
+
+echo $0: $*
+fs="
+/
+"
+dirs="
+var/log
+var/cache
+"
+
+echo $0: ${dirs}
+for root in ${fs}
+do
+	for dir in ${dirs}
+	do
+		echo ${root}${dir}
+		for d in $(find ${root}${dir} -type d -print)
+		do
+			#echo $d
+			cat > ${d}/.rsync-filter <<!
++ */
++ .sentinel
+- *
+!
+		done
+	done
+done
+
+exit

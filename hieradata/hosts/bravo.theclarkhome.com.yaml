@@ -1,0 +1,30 @@
+---
+
+classes:
+  - network
+  - role::domain_controller
+
+    #- profile::samba_dc 
+
+profile::dhcp_server::role: secondary
+
+samba::dc::role:                'secondary'
+samba::dc::loglevel:            '2'
+samba::dc::provisionargs:       "--use-xattrs=yes --use-ntvfs"
+
+network::interfaces_hash:
+  eth0:
+    method:                     static
+    pre_up:                     
+      - /sbin/ifconfig eth0 mtu 9004
+    ipaddress:                  "192.168.11.22"
+    netmask:                    "%{hiera('defaults::netmask')}"
+    gateway:                    "%{hiera('defaults::gateway')}"
+    network:                    "%{hiera('defaults::network')}"
+    dns_nameservers:            "192.168.11.22 192.168.11.21"
+    dns_search:                 "%{hiera('defaults::dns_search')}"
+
+unattended_upgrades::period:     '1'
+unattended_upgrades::autoremove: true
+
+# vim: sw=2:ai:nu expandtab

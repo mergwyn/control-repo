@@ -1,0 +1,82 @@
+---
+
+classes:
+  - timezone
+  - role::minimal_server
+  - profile::puppet_agent
+
+# puppet agent
+puppet::puppet_server:                  "echo.%{domain}"
+puppet::manage_repos:                   false
+puppet::structured_facts:               true
+
+profile::mail_client::myorigin:         "%{domain}"
+profile::mail_client::password_credentials: "mergwyn@virginmedia.com:%{hiera('passwords::virgin')}"
+profile::mail_client::password_hash:    '/etc/postfix/sasl-passwords'
+profile::mail_client::relayhost:        '[smtp.virginmedia.com]:465'
+profile::mail_client::root_mail_recipient: "%{hiera('defaults::adminemail')}"
+
+# time related
+timezone::timezone:                     'Europe/London'
+
+ntp::driftfile:                         '/var/lib/ntp/ntp.drift'
+ntp::logfile:                           '/var/log/ntp'
+ntp::ntpsigndsocket:                    '/var/lib/samba/ntp_signd/'
+ntp::servers:
+  - 127.127.1.0
+  - foxtrot.%{domain}  iburst prefer
+  - golf.%{domain}  iburst prefer
+ntp::fudge: 
+  - 127.127.1.0 stratum 10
+ntp::restrict:
+  - default kod nomodify notrap nopeer mssntp
+  - 127.0.0.1
+  - foxtrot.%{domain} mask 255.255.255.255 nomodify notrap nopeer noquery
+  - golf.%{domain} mask 255.255.255.255 nomodify notrap nopeer noquery
+
+unattended_upgrades::period:            '1'
+unattended_upgrades::autoremove:        true
+unattended_upgrades::email:             "%{hiera('defaults::adminemail')}"
+unattended_upgrades:
+  repos:
+    "%{lsbdistcodename}-security":
+      origin:                           'Ubuntu'
+    'Zabbix':
+      origin:                           'Zabbix'
+  stable:
+      origin:                           'Jamie Cameron'
+
+
+samba::params::sernetpkgs:              false
+samba::classic::domain:                 "%{hiera('defaults::workgroup')}"
+samba::classic::realm:                  "%{hiera('defaults::realm')}"
+samba::dc::domain:                      "%{hiera('defaults::workgroup')}"
+samba::dc::realm:                       "%{hiera('defaults::realm')}"
+samba::dc::loglevel:                    '1'
+samba::dc::adminpassword:               "%{hiera('passwords::domain')}"
+samba::dc::dnsforwarder:                '208.67.222.222'
+samba::dc::serverservices:              's3fs, rpc, nbt, wrepl, ldap, cldap, kdc, drepl, winbind, ntp_signd, kcc, dnsupdate, dns'
+samba::dc::provisionargs:               '--use-xattrs=yes --use-ntvfs'
+
+mysql::server::manage_config_file:      false
+
+zabbix::agent::zabbix_version:          '3.4'
+zabbix::server::zabbix_version:         '3.4'
+zabbix::zabbix_url:                     "%{fqdn}"
+zabbix::zabbix_server:                  "%{hostname}"
+zabbix::database_type:                  'mysql'
+zabbix::database_name:                  'zabbix'
+zabbix::database_user:                  'zabbix'
+zabbix::database_password:              'ls278sq'
+
+zabbix::agent::listenip:                '0.0.0.0'
+zabbix::agent::hostname:                "%{fqdn}"
+zabbix::agent::server:                  "zulu,zulu.%{domain}"
+zabbix::agent::serveractive:            "zulu,zulu.%{domain}"
+zabbix::agent::enableremotecommands:    '1'
+
+tvheadend::release:                     'stable-4.2'
+tvheadend::admin_password:              "%{hiera('passwords::tvheadend')}"
+
+# vim: sw=2:ai:nu expandtab
+#

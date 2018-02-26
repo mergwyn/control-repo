@@ -1,0 +1,17 @@
+# Unison preferences file
+perms=0
+prefer=newer
+retry=3
+times=true
+confirmbigdeletes=false
+copythreshold=0
+sshargs=-o ControlMaster=auto -o ControlPath=~/.ssh/ctl/%h_%p_%r -o ControlPersist=1
+logfile=/Library/Logs/unison.log
+ignore = BelowPath .zfs
+ignore = BelowPath .recycle
+ignore = BelowPath .Trash
+ignore = BelowPath .cache
+ignore = BelowPath Network Trash Folder
+ignore = Path .AppleDouble
+ignore = Name .DS_Store
+ignore = Name ._.DS_Store

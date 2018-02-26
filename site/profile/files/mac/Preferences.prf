@@ -1,0 +1,64 @@
+# Unison preferences file
+include common
+#root = /Users/gary/Library
+#root = ssh://gary@foxtrot//home/gary/Library
+#path = Library
+#path = Documents/Microsoft User Data
+
+# Library folder items to exclude:
+
+ignore = BelowPath Application Support
+ignore = Path Saved Application State
+ignore = Path */Saved Application State
+ignore = BelowPath Containers
+ignore = BelowPath Caches
+ignore = BelowPath Safari/LocalStorage
+ignore = BelowPath Safari/Touch Icons Cache
+ignore = BelowPath Containers/com.microsoft.onenote.mac/Data/Library/Application Support
+ignore = BelowPath Microsoft User Data/OneNote/15.0/cache
+ignore = BelowPath Outlook 15 Profiles/Main Profile/Data/Message Sources
+ignore = BelowPath cache
+ignore = Name *.DS_Store
+ignore = Name .DS_Store
+ignore = Name ._.DS_Store
+ignore = Name *.swp
+ignore = Name *.db-shm
+ignore = Name *_fifo
+ignore = BelowPath */Cache
+ignore = BelowPath */Caches
+ignore = BelowPath Containers/com.microsoft.onenote.mac/Data/Library/Caches
+ignore = BelowPath */Logs
+ignore = BelowPath */Log
+ignore = BelowPath */cache
+ignore = BelowPath *com.apple.LaunchServices
+ignore = BelowPath .SymAVQSFile
+ignore = BelowPath Address Book Plug-Ins
+ignore = BelowPath Assistants
+ignore = BelowPath Audio
+ignore = BelowPath Autosave Information
+ignore = BelowPath Calendars
+ignore = BelowPath ColorPickers
+ignore = BelowPath Compositions
+ignore = BelowPath Cookies
+ignore = BelowPath Favorites
+ignore = BelowPath FontCollections
+ignore = BelowPath Fonts
+ignore = BelowPath Icons
+ignore = BelowPath Input Methods
+ignore = BelowPath Internet Plug-Ins
+ignore = BelowPath Keyboard Layouts
+ignore = BelowPath Keychains
+ignore = BelowPath Logs
+ignore = BelowPath MAVMac800QSFile
+ignore = BelowPath Mail/V*
+ignore = BelowPath Messages/Archive
+ignore = BelowPath Mobile Documents
+ignore = BelowPath PreferencePanes
+ignore = BelowPath Printers
+ignore = BelowPath PubSub
+ignore = BelowPath Safari/ReadingListArchives
+ignore = BelowPath Screen Savers
+ignore = BelowPath Sounds
+ignore = BelowPath Spelling
+ignore = BelowPath Voices
+ignore = BelowPath iMovie

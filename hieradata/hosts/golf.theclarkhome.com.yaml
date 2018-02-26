@@ -1,0 +1,40 @@
+---
+
+classes:
+  - role::lxd_server
+  - ntp
+
+network::interfaces_hash:
+  enp3s0:
+    method:                     manual
+    pre_up:
+      - /sbin/ifconfig enp3s0 mtu 9004
+  br0:
+    ipaddress:                  "192.168.11.11"
+    netmask:                    "%{hiera('defaults::netmask')}"
+    gateway:                    "%{hiera('defaults::gateway')}"
+    network:                    "%{hiera('defaults::network')}"
+    dns_nameservers:            "%{hiera('defaults::dns_nameservers')}"
+    dns_search:                 "%{hiera('defaults::dns_search')}"
+    bridge_ports:
+      - enp3s0
+    bridge_maxwait:             "0"
+    bridge_fd:                  "0"
+    bridge_stp:                 "off"
+
+ntp::driftfile: /var/lib/ntp/ntp.drift
+ntp::logfile: /var/log/ntp
+ntp::ntpsigndsocket: /var/lib/samba/ntp_signd/
+ntp::servers:
+  - 127.127.1.0
+  - 0.pool.ntp.org     prefer
+  - 1.pool.ntp.org     prefer
+ntp::fudge: 
+  - 127.127.1.0 stratum 10
+ntp::restrict:
+  - default kod nomodify notrap nopeer mssntp
+  - 127.0.0.1
+  - 0.pool.ntp.org   mask 255.255.255.255    nomodify notrap nopeer noquery
+  - 1.pool.ntp.org   mask 255.255.255.255    nomodify notrap nopeer noquery
+
+# vim: sw=2:ai:nu expandtab

@@ -1,0 +1,7 @@
+---
+
+classes:
+  - role::internet_gateway
+  - role::print_server
+
+# vim: sw=2:ai:nu expandtab

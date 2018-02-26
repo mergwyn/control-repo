@@ -1,0 +1,12 @@
+# vim: sw=2:ai:nu expandtab
+
+alias h=history
+alias he='history | egrep'
+alias r='fc -s'
+alias l='ls -CFsa'
+#alias most='du -hsx * | sort -rh | head -10'
+#alias most='du -hx --max-depth=1 . | sort -rh | head -10'
+alias most='du -kaxh --max-depth=1 | sort -rh | head -10'
+alias nodile='pmset noidle'
+
+set -o vi

@@ -1,0 +1,30 @@
+---
+
+classes:
+  - role::generic_server
+  - profile::sabnzbdplus
+
+profile::sabnzbdplus::settings:
+  misc:
+    api_key:            bdff81eb3afeabd9163a4acb0a929402
+    cache_dir:          /var/sabnzbd/cache
+    complete_dir:       /srv/media/SABnzbd/complete
+    dirscan_dir:        /srv/media/SABnzbd/watch
+    download_dir:       /srv/media/SABnzbd/incomplete
+    email_from:         sabnzbd@theclarkhome.com
+    email_server:       localhost
+    email_to:           media@theclarkhome.com
+    host:               0.0.0.0
+    tv_sort_string:     "%sn/Season %s/%sn S%0sE%0e.%ext"
+    web_dir:            Glitter
+    script_dir:         scripts
+    movie_categories:   movies
+    nzb_key:            27379cfbd12079b1f573c722ca7d9404
+  free.xsusenet.com:
+    key_val_separator:  ':'
+    section_prefix:     '[['
+    section_suffix:     ']]'
+    username:           'gary72833'
+
+
+# vim: sw=2:ai:nu expandtab
