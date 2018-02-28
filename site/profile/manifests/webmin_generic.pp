@@ -4,8 +4,12 @@
 class profile::webmin_generic {
   $adminemail=hiera('unattended_upgrades::email')
 
+  # for 2FA with google
+  package { 'libauthen-oath-perl': }
+
   class { 'webmin':
     usermin => 'disable',
+    require => Package['libauthen-oath-perl'],
   }
 
   # update config values
