@@ -115,12 +115,12 @@ host DELLA3F95F {
 	hardware ethernet 08:00:37:a3:f9:5f;
 }
 group {
-	use-host-decl-names off;
-	#host humax-lan {
-	#	ddns-hostname "humax";
-	#	option host-name "humax";
-	#	hardware ethernet dc:d3:21:57:55:46;
-	#}
+	use-host-decl-names on;
+	host humax-lan {
+		ddns-hostname "humax";
+		option host-name "humax";
+		hardware ethernet dc:d3:21:57:55:46;
+	}
 	host humax {
 		ddns-hostname "humax";
 		option host-name "humax";
