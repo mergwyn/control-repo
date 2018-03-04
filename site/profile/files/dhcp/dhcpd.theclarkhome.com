@@ -156,10 +156,10 @@ on commit {
 	set ClientIP = binary-to-ascii(10, 8, ".", leased-address);
 	set ClientMac = binary-to-ascii(16, 8, ":", substring(hardware, 1, 6));
 	set ClientName = pick-first-value(
-		ddns-hostname,
-		option host-name,
 		host-decl-name,
 		config-option host-name,
+		ddns-hostname,
+		option host-name,
 		noname);
 	log(concat("Commit: IP: ", ClientIP, " Mac: ", ClientMac, " Name: ", ClientName));
 	#execute("/etc/dhcp/dhcp-dyndns.sh", "add", ClientIP, ClientName, ClientMac);
@@ -170,10 +170,10 @@ on release {
 	set ClientMac = binary-to-ascii(16, 8, ":", substring(hardware, 1, 6));
 	set noname = concat("dhcp-", binary-to-ascii(10, 8, "-", leased-address));
 	set ClientName = pick-first-value(
-		ddns-hostname,
-		option host-name,
 		host-decl-name,
 		config-option host-name,
+		ddns-hostname,
+		option host-name,
 		noname);
 	log(concat("Release: IP: ", ClientIP, " Mac: ", ClientMac, " Name: ", ClientName));
 	#execute("/etc/dhcp/dhcp-dyndns.sh", "delete", ClientIP, ClientName, ClientMac);
@@ -184,10 +184,10 @@ on expiry {
 	set ClientMac = binary-to-ascii(16, 8, ":", substring(hardware, 1, 6));
 	set noname = concat("dhcp-", binary-to-ascii(10, 8, "-", leased-address));
 	set ClientName = pick-first-value(
-		ddns-hostname,
-		option host-name,
 		host-decl-name,
 		config-option host-name,
+		ddns-hostname,
+		option host-name,
 		noname);
 	log(concat("Expired: IP: ", ClientIP, " Mac: ", ClientMac, " Name: ", ClientName));
 	#execute("/etc/dhcp/dhcp-dyndns.sh", "delete", ClientIP, ClientName, ClientMac);
