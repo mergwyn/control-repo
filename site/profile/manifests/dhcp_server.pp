@@ -106,7 +106,7 @@ class profile::dhcp_server (
   file { "/etc/apparmor.d/local/usr.sbin.dhcpd":
     ensure  => file,
     notify  => Service["apparmor"],
-    content  => "  /etc/dhcp/dhcp-dyndns.sh krwix,\n  /etc/dhcp/dhcpd-update-samba-dns.sh krwix, \n",
+    content  => "  /etc/dhcp/dhcp-dyndns.sh krwux,\n  /etc/dhcp/dhcpd-update-samba-dns.sh krwux, \n",
     owner   => 'root',
     group   => 'root',
   }
