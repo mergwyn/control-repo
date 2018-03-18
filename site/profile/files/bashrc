@@ -118,3 +118,10 @@ fi
 #if [ -e /usr/bin/dbus-launch -a -z "$DBUS_SESSION_BUS_ADDRESS" ] ; then
 #  eval `dbus-launch --sh-syntax`
 #fi
+
+# functions to extract local processes
+localpids() 	{ ps --no-headers axo pid,cgroup | awk '{ if ($2 ~ /11:.*:\/lxc\// ) next;  else print $1 fi }' ; }
+lps() 		{ ps -p $(localpids | paste -d, -s) $* ; }
+lpcount() 	{ localpids | wc -l; }
+
+export -f localpids lps lpcount
