@@ -7,7 +7,7 @@ class profile::sabnzbdplus (
   $settings = {},
   ) {
 
-  apt::ppa { 'ppa:jcfp/ppa': 
+  apt::ppa { 'ppa:jcfp/nobetas': 
     package_manage => true
   }
   apt::ppa { 'ppa:jcfp/sab-addons': 
