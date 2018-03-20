@@ -21,7 +21,7 @@ class profile::sabnzbdplus (
 
   package { 'sabnzbdplus':
     ensure  => present,
-    require => Apt::Ppa['ppa:jcfp/ppa'],
+    require => Apt::Ppa['ppa:jcfp/nobetas'],
     notify  => Service['sabnzbdplus'],
   }
 
