@@ -1,25 +1,31 @@
 #
 
 class profile::ddclient {
-  include ddclient
-  # package { 'ddclient': ensure => installed }
 
-  #file { '/etc/ddclient.conf':
-    #ensure  => file,
-    #owner   => root,
-    #group   => root,
-    #mode    => '0600',
-    #require => Package['ddclient'],
-    #notify  => Service['ddclient'],
-    #source  => 'puppet:///modules/profile/ddclient/ddclient.conf',
-  #}
+  class { 'ddclient': 
+    hosts_config     => 'concat',
+    daemon_interval => 300,
+    getip_from      => 'web',
+    getip_options   => ['web=myip.dnsomatic.com'],
+    data_dir        => '/tmp/ddclient.cache',
+    pid_file        => '/var/run/ddclient.pid',
+    enable_ssl      => 'yes',
+  }
 
-  #service { 'ddclient':
-    #ensure    => running,
-    #subscribe => [
-      #Package['ddclient'],
-      #File['/etc/ddclient.conf']
-    #],
-  #}
+  ddclient::host { 'namecheap':
+    login    => 'theclarkhome.com',
+    server   => 'dynamicdns.park-your-domain.com',
+    protocol => 'namecheap',
+    password => hiera("defaults::namecheappassword"),
+    hostname => 'webmin,zulu,tango,papa,foxtrot,echo,vpn',
+  }
+  ddclient::host { 'opendns':
+    login    => 'mergwyn',
+    password => hiera("defaults::opendnspassword"),
+    protocol => 'dyndns2',
+    server   => 'updates.opendns.com',
+    hostname => 'Home',
+  }
+
 }
 # vim: sw=2:ai:nu expandtab
