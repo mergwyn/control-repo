@@ -25,7 +25,7 @@ mod 'netmanagers-ddclient', :git =>  'https://github.com/mergwyn/puppet-ddclient
 #mod 'panaman-webmin', '1.0.0'
 mod 'puppetlabs-apache', '3.0.0'
 mod 'puppetlabs-apt', '4.5.1'
-mod 'puppetlabs-concat', '4.1.1'
+mod 'puppetlabs-concat', '4.2.1'
 mod 'puppetlabs-firewall', '1.12.0'
 mod 'puppetlabs-gcc', '0.3.0'
 mod 'puppetlabs-git', '0.5.0'
