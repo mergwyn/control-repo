@@ -5,7 +5,7 @@ class profile::reverse_proxy {
   # sort out certificates first
   class { ::letsencrypt:
     configure_epel => true,
-    email          => hiera(C'defaults::adminemail'),
+    email          => hiera('defaults::adminemail'),
   }
 
   $domain = $facts['domain']
