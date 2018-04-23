@@ -1,5 +1,6 @@
 class profile::backuppc_server {
 #
+  package { 'pigz': }
   
   zabbix::userparameters { 'backuppc':
     source => "puppet:///modules/profile/backuppc/backuppc.conf",
