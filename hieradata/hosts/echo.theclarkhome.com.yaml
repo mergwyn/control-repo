@@ -2,6 +2,7 @@
 
 classes:
   - role::puppet_master
+  - role::git
 
 
 # vim: sw=2:ai:nu expandtab

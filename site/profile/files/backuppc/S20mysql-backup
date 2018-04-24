@@ -3,8 +3,9 @@
 LEVEL=$1
 DUMPDIR=/var/lib/mysql/log/
 USER=root
-MYSQLADMIN=`which mysqladmin`
-[[ -f  "${0}-password" ]] && . "${0}-password"
+MYSQLADMIN=$(which mysqladmin)
+PASSFILE="../${0}-password"
+[[ -f  "${PASSFILE}" ]] && . "${PASSFILE}"
 
 echo $0: $*
 [ -d "$DUMPDIR" ] || exit 0
