@@ -1,0 +1,39 @@
+#!/bin/bash
+# A simple shell script to update all lxd container hypervisor
+# URL: https://bash.cyberciti.biz/virtualization/shell-script-to-update-all-lxd-container-hypervisor/
+# Tested on : Ubuntu 16.04 LTS lxd server 
+# Tested on : Ubuntu/Debian lxd container hypervisor only 
+# ----------------------------------------------------------------------------
+# Author: nixCraft 
+# Copyright: 2016 nixCraft under GNU GPL v2.0+
+# ----------------------------------------------------------------------------
+# Last updated 14 Aug 2016
+# ----------------------------------------------------------------------------
+# Set full path to bins 
+_apt="/usr/bin/apt-get"
+_lxc="/usr/bin/lxc"
+_awk="/usr/bin/awk"
+bold=$(tput setaf 1) 
+normal=$(tput setaf 0) 
+bold=$(tput smso) 
+normal=$(tput rmso) 
+
+echo ${bold}"Updating localhost $(hostname)...${normal}"
+${_apt} -qq update 
+${_apt} -qq -y upgrade
+${_apt} -qq -y clean
+${_apt} -qq -y autoclean
+
+# Get containers list
+clist="$(${_lxc} list -c ns | ${_awk} '!/NAME/{ if ( $4 == "RUNNING" ) print $2}')"
+
+# Use bash for loop and update all container hypervisor powered by Debian or Ubuntu
+# NOTE: for CentOS use yum command instead of apt-get
+for c in $clist
+do
+	echo ${bold}"Updating Debian/Ubuntu container \"$c\"...${normal}"
+	${_lxc} exec $c ${_apt} -- -qq update
+	${_lxc} exec $c ${_apt} -- -qq -y upgrade
+	${_lxc} exec $c ${_apt} -- -qq -y clean
+	${_lxc} exec $c ${_apt} -- -qq -y autoclean
+done 
