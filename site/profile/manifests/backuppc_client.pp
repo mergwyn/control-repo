@@ -1,7 +1,7 @@
 #
 class profile::backuppc_client {
   $scripts='/etc/backuppc/scripts/'
-  $dir="${scripts}DumpPreUser/'
+  $dir="${scripts}DumpPreUser/"
   file {['/etc/backuppc','/etc/backuppc/scripts',"${dir}"]:
     ensure => directory
   }
