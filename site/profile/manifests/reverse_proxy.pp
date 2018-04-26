@@ -19,32 +19,22 @@ class profile::reverse_proxy {
   }
 
   # now for the reverse proxy
-  package { "pound": ensure => installed }
+  class { 'nginx': }
 
-  file { '/etc/pound': ensure => 'directory', }
-
-  file { '/etc/pound/pound.cfg':
-     ensure  => file,
-     require => Package["pound"],
-     notify  => Service["pound"],
-     source  => 'puppet:///modules/profile/pound/pound.cfg',
+  # now for servers - these can be moved to hiera
+  nginx::resource::server { 'foxtrot.theclarkhome.com':
+    listen_port => 80,
+    proxy       => 'http://foxtrot.theclarkhome.com:80',
+    #access_log  => '/var/log/nginx/foxtrot_access.log',
+    #error_log   => '/var/log/nginx/foxtrot_error.log',
   }
 
-  file { '/etc/default/pound':
-     ensure  => file,
-     require => Package["pound"],
-     notify  => Service["pound"],
-     source  => 'puppet:///modules/profile/pound/pound.default',
-  }
-	
-  service { 'pound':
-    ensure => running,
-    subscribe => [
-      Package['pound'],
-      File['/etc/pound/pound.cfg'],
-      File['/etc/default/pound'],
-    ],
-  }
+  
+  # Finally tidy up pound
+  Package { "pound":             ensure => absent }
+  file { '/etc/pound/pound.cfg': ensure => absent, }
+  file { '/etc/pound':           ensure => absent, }
+  file { '/etc/default/pound':   ensure  => absent, }
 	
 }
 #
