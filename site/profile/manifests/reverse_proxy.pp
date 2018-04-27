@@ -11,6 +11,8 @@ class profile::reverse_proxy {
   $domain = $facts['domain']
   letsencrypt::certonly { 'home':
     domains => [ $facts['fqdn'] ],
+    plugin  => 'webroot',
+    webroot_paths => ["/var/www/$hostname"],
     #domains => [ $facts['fqdn'], "echo.$domain", "foxtrot.$domain", "tango.$domain",  "vpn.$domain" ],
     manage_cron => true,
     #cron_before_command => 'service nginx stop',
