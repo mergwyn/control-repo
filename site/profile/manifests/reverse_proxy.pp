@@ -67,10 +67,10 @@ class profile::reverse_proxy {
 
   
   # Finally tidy up pound
-  Package { 'pound':             ensure => absent }
-  file { '/etc/pound/pound.cfg': ensure => absent, }
-  file { '/etc/pound':           ensure => absent, }
-  file { '/etc/default/pound':   ensure  => absent, }
+  #Package { 'pound':             ensure => absent }
+  #file { '/etc/pound/pound.cfg': ensure => absent, }
+  #file { '/etc/pound':           ensure => absent, }
+  #file { '/etc/default/pound':   ensure  => absent, }
   
 }
 #
