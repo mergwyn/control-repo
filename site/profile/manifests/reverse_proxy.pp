@@ -1,78 +1,37 @@
 #
 
 class profile::reverse_proxy {
-
-  # sort out certificates first
-  #class { '::letsencrypt':
-  #  config => {
-  #    email  => hiera('defaults::adminemail'),
-  #    server => 'https://acme-staging.api.letsencrypt.org/directory'
-  #  }
-  #}
-
-  #$dir='/usr/share/nginx/html'
   $domain = $::facts['domain']
-  #letsencrypt::certonly { 'home':
-  #  domains       => [ $::facts['fqdn'] ],
-  #  plugin        => 'webroot',
-  #  webroot_paths => ["${dir}/${::hostname}"],
-    #domains => [
-    #  $facts['fqdn'],
-    #  "echo.$domain",
-    #  "foxtrot.$domain",
-    #  "tango.$domain",
-    #  "vpn.$domain"
-    #],
-    #webroot_paths => [
-    #  "$dir/$hostname",
-    #  "$dir/echo",
-    #  "$dir/foxtrot",
-    #  "$dir/tango",
-    #  $dir/vpn"
-    #],
-    #manage_cron   => true,
-    #cron_before_command => 'service nginx stop',
-    #cron_success_command => '/bin/systemctl reload nginx.service',
-    #suppress_cron_output => true,
-  #}
 
-  # now for the reverse proxy
   class { 'nginx': }
 
-  # now for servers - these can be moved to hiera
-  nginx::resource::server { "${::hostname}.${domain}":
-    listen_port => 80,
-    proxy       => "http://${::hostname}.${domain}:80",
-  }
-  nginx::resource::server { "foxtrot.${domain}":
-    listen_port => 80,
-    proxy       => "http://foxtrot.${domain}:80",
-  }
-  nginx::resource::server { "webmin.${domain}":
-    listen_port => 80,
+  nginx::resource::server { 'webmin':
+    listen_port => 1000,
+    server_name => [ "${::hostname}.${domain}" ],
     proxy       => "http://${::hostname}.${domain}:10000",
   }
-  nginx::resource::server { "zulu.${domain}":
+  nginx::resource::server { 'zulu':
+    server_name => [ "zulu.${domain}" ],
     listen_port => 80,
     proxy       => "http://zulu.${domain}:80",
   }
   # tango related
-  nginx::resource::server { "couchpototo.tango.${domain}":
+  nginx::resource::server { 'couchpototo.tango':
     listen_port => 5050,
     server_name => [ "tango.${domain}" ],
-    proxy       => "http://tango.${domain}:5050",
+    proxy       => 'http://tango:5050',
   }
-  nginx::resource::server { "sabnzdb.tango.${domain}":
+  nginx::resource::server { 'sabnzbd.tango':
     listen_port => 8080,
     server_name => [ "tango.${domain}" ],
     proxy       => "http://tango.${domain}:8080",
   }
-  nginx::resource::server { "sonarr.tango.${domain}":
+  nginx::resource::server { 'sonarr.tango':
     listen_port => 8989,
     server_name => [ "tango.${domain}" ],
     proxy       => "http://tango.${domain}:8989",
   }
-  nginx::resource::server { "transmission.tango.${domain}":
+  nginx::resource::server { 'transmission.tango':
     listen_port => 9091,
     server_name => [ "tango.${domain}" ],
     proxy       => "http://tango.${domain}:9091",
@@ -81,7 +40,7 @@ class profile::reverse_proxy {
   nginx::resource::upstream { 'plex_upstream':
     members => [ "tango.${domain}:32400", ],
   }
-  nginx::resource::server { "plex.tango.${domain}":
+  nginx::resource::server { 'plex.tango':
     listen_port => 32400,
     server_name => [ "tango.${domain}" ],
     access_log  => 'off',
@@ -108,10 +67,13 @@ class profile::reverse_proxy {
   }
   
   # Finally tidy up pound
-  #Package { 'pound':             ensure => absent }
-  #file { '/etc/pound/pound.cfg': ensure => absent, }
-  #file { '/etc/pound':           ensure => absent, }
-  #file { '/etc/default/pound':   ensure  => absent, }
+  Package { 'pound':             ensure => absent }
+  file { '/etc/pound/pound.cfg': ensure => absent, }
+  file { '/etc/default/pound':   ensure  => absent, }
+  file { '/etc/pound':
+    ensure => absent,
+    force  => true,
+  }
   
 }
 #
