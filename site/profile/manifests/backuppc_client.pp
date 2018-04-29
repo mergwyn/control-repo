@@ -1,8 +1,8 @@
 #
 class profile::backuppc_client {
   $scripts='/etc/backuppc/scripts/'
-  $dir="${scripts}DumpPreUser/'
-  file {['/etc/backuppc','/etc/backuppc/scripts',"${dir}"]:
+  $dir="${scripts}DumpPreUser/"
+  file {['/etc/backuppc','/etc/backuppc/scripts',$dir]:
     ensure => directory
   }
 
@@ -17,9 +17,9 @@ class profile::backuppc_client {
     mode   => '0555',
   }
   file { "${scripts}/S20mysql-backup-password":
-    ensure => present,
-    content => sprintf("PASSWORD=%s\n",hiera("passwords::mysql")),
-    mode   => '0555',
+    ensure  => present,
+    content => sprintf("PASSWORD=%s\n",hiera('passwords::mysql')),
+    mode    => '0555',
   }
   file { "${dir}/S20mysql-backup-password":
     ensure => absent,

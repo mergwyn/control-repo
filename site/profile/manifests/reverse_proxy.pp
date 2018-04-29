@@ -1,51 +1,80 @@
 #
 
 class profile::reverse_proxy {
+  $domain = $::facts['domain']
 
-  # sort out certificates first
-  class { ::letsencrypt:
-    configure_epel => true,
-    email          => hiera('defaults::adminemail'),
+  class { 'nginx': }
+
+  nginx::resource::server { 'webmin':
+    listen_port => 1000,
+    server_name => [ "${::hostname}.${domain}" ],
+    proxy       => "http://${::hostname}.${domain}:10000",
   }
-
-  $domain = $facts['domain']
-  letsencrypt::certonly { 'home':
-    domains => [ $facts['fqdn'] ],
-    #domains => [ $facts['fqdn'], "echo.$domain", "foxtrot.$domain", "tango.$domain",  "vpn.$domain" ],
-    manage_cron => true,
-    #cron_before_command => 'service nginx stop',
-    #cron_success_command => '/bin/systemctl reload nginx.service',
-    #suppress_cron_output => true,
+  nginx::resource::server { 'zulu':
+    server_name => [ "zulu.${domain}" ],
+    listen_port => 80,
+    proxy       => "http://zulu.${domain}:80",
   }
-
-  # now for the reverse proxy
-  package { "pound": ensure => installed }
-
-  file { '/etc/pound': ensure => 'directory', }
-
-  file { '/etc/pound/pound.cfg':
-     ensure  => file,
-     require => Package["pound"],
-     notify  => Service["pound"],
-     source  => 'puppet:///modules/profile/pound/pound.cfg',
+  # tango related
+  nginx::resource::server { 'couchpototo.tango':
+    listen_port => 5050,
+    server_name => [ "tango.${domain}" ],
+    proxy       => 'http://tango:5050',
   }
-
-  file { '/etc/default/pound':
-     ensure  => file,
-     require => Package["pound"],
-     notify  => Service["pound"],
-     source  => 'puppet:///modules/profile/pound/pound.default',
+  nginx::resource::server { 'sabnzbd.tango':
+    listen_port => 8080,
+    server_name => [ "tango.${domain}" ],
+    proxy       => "http://tango.${domain}:8080",
   }
-	
-  service { 'pound':
-    ensure => running,
-    subscribe => [
-      Package['pound'],
-      File['/etc/pound/pound.cfg'],
-      File['/etc/default/pound'],
-    ],
+  nginx::resource::server { 'sonarr.tango':
+    listen_port => 8989,
+    server_name => [ "tango.${domain}" ],
+    proxy       => "http://tango.${domain}:8989",
   }
-	
+  nginx::resource::server { 'transmission.tango':
+    listen_port => 9091,
+    server_name => [ "tango.${domain}" ],
+    proxy       => "http://tango.${domain}:9091",
+  }
+  #
+  nginx::resource::upstream { 'plex_upstream':
+    members => [ "tango.${domain}:32400", ],
+  }
+  nginx::resource::server { 'plex.tango':
+    listen_port => 32400,
+    server_name => [ "tango.${domain}" ],
+    access_log  => 'off',
+    locations   => {
+      '/web' => {
+        location            => '/web',
+        proxy               => "http://tango.${domain}:32400",
+        proxy_buffering     => 'off',
+        proxy_redirect      => 'off',
+        proxy_http_version  => '1.1',
+        proxy_set_header    => [
+          'X-Forwarded-For $proxy_add_x_forwarded_for',
+          'Upgrade $http_upgrade',
+          'Connection $http_connection',
+          'X-Real-IP $remote_addr',
+          'Host $http_host',
+        ],
+        location_cfg_append => {
+    #      'if ($http_x_plex_device_name = "")' => '{rewrite ^/$ https://$http_host/web/index.html}',
+          'proxy_cookie_path' => '/web/ /',
+        },
+      },
+    },
+  }
+  
+  # Finally tidy up pound
+  Package { 'pound':             ensure => absent }
+  file { '/etc/pound/pound.cfg': ensure => absent, }
+  file { '/etc/default/pound':   ensure  => absent, }
+  file { '/etc/pound':
+    ensure => absent,
+    force  => true,
+  }
+  
 }
 #
 # vim: sw=2:ai:nu expandtab
