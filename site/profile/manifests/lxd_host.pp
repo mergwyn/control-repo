@@ -38,9 +38,9 @@ fi
     user    => 'root',
     minute  => 4,
   }
-  file { '/etc/cron.hourly/lxdsnap': ensure -> absent, }
+  file { '/etc/cron.hourly/lxdsnap': ensure => absent, }
 
-  file { 'usr/local/bin/upgrade_lxd':
+  file { '/usr/local/bin/upgrade_lxd':
     ensure => present,
     mode   => '0555',
   }
