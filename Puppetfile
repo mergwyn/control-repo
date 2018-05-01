@@ -45,6 +45,7 @@ mod 'puppetlabs-translate', '1.1.0'
 mod 'puppetlabs-vcsrepo', '2.3.0'
 mod 'puppetlabs-xinetd', '3.0.0'
 mod 'puppet-letsencrypt', '2.3.0'
+mod 'puppet-cron', '1.1.1',
 mod 'puppet-make', '2.0.0'
 mod 'puppet-nginx', '0.11.0'
 mod 'puppet-puppetboard', '4.0.0'
