@@ -46,11 +46,11 @@ class profile::domain_sso {
   # work around for cron starting before sssd
   $crondir = '/etc/systemd/system/cron.service.d'
   if $::facts['os']['release']['full'] == '16.04' {
-    file { $crondir: ensure => directory }
-    file { "${crondir}/override.conf":
-      ensure  => present,
+    ::systemd::dropin_file { 'ssdwait.conf':
+      unit    => 'cron.service',
       content => "[Unit]\nRequires=nss-lookup.target\n",
-    }
+    } ~> service {'cron': ensure    => 'running', }
+    file { "${crondir}/override.conf": ensure => absent }
   } else {
     file { "${crondir}/override.conf": ensure => absent }
     file { $crondir: ensure => absent }
