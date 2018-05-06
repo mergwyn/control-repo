@@ -46,14 +46,14 @@ class profile::domain_sso {
   # work around for cron starting before sssd
   $crondir = '/etc/systemd/system/cron.service.d'
   if $::facts['os']['release']['full'] == '16.04' {
-    file { $crondir: ensure => directory, },
+    file { $crondir: ensure => directory }
     file { "${crondir}/override.conf":
       ensure  => present,
       content => '[Service]\nRequires=nss-lookup.target\n',
     }
   } else {
-    file { "${crondir}/override.conf": ensure => absent, },
-    file { $crondir: ensure => absent, }
+    file { "${crondir}/override.conf": ensure => absent }
+    file { $crondir: ensure => absent }
   }
 }
 # vim: sw=2:ai:nu expandtab
