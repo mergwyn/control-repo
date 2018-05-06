@@ -1,0 +1,14 @@
+#!/bin/bash
+
+set -o errexit
+
+cd "${1}"
+apt-get install python-pip
+pip install --upgrade pip idna
+pip install pylxd
+apt-get install -y python-dev
+apt-get install -y libssl-dev libffi-dev
+apt-get install -y libxml2-dev libxslt1-dev
+apt-get install -y python3 python-virtualenv
+make install
+chmod +x snap.py
