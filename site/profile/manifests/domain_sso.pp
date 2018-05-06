@@ -49,7 +49,7 @@ class profile::domain_sso {
     file { $crondir: ensure => directory }
     file { "${crondir}/override.conf":
       ensure  => present,
-      content => "[Service]\nRequires=nss-lookup.target\n",
+      content => "[Unit]\nRequires=nss-lookup.target\n",
     }
   } else {
     file { "${crondir}/override.conf": ensure => absent }
