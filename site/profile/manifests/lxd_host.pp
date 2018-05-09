@@ -43,9 +43,7 @@ status=\$?
 ",
   }
 
-  class { 'cron':
-    manage_package => false,
-  }
+  include cron
   cron::job { 'lxdsnap':
     environment => [ 'PATH="/usr/sbin:/usr/bin:/sbin:/bin"' ],
     command => '/usr/local/bin/lxdsnap_cron',

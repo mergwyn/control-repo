@@ -46,6 +46,7 @@ class profile::domain_sso {
   # work around for cron starting before sssd
   $crondir = '/etc/systemd/system/cron.service.d'
   if $::facts['os']['release']['full'] == '16.04' {
+    include cron
     ::systemd::dropin_file { 'sssd-wait.conf':
       unit    => 'cron.service',
       content => "[Unit]\nAfter=nss-lookup.target\n",
