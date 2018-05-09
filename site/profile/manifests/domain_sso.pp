@@ -49,7 +49,8 @@ class profile::domain_sso {
     ::systemd::dropin_file { 'sssd-wait.conf':
       unit    => 'cron.service',
       content => "[Unit]\nAfter=nss-lookup.target\n",
-    } ~> service {'cron': ensure    => 'running', }
+      notify  => Service['cron'],
+    } #~> service {'cron': ensure    => 'running', }
     file { "${crondir}/ssdwait.conf": ensure => absent }
   } else {
     file { "${crondir}/sssd-wait.conf": ensure => absent }
