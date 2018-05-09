@@ -1,0 +1,62 @@
+#!/bin/bash
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+#menuentry 'Ubuntu (snapshot)' {
+#        linux   /ROOT/bravo/@zfsroot/boot/vmlinuz-3.13.0-32-generic root=ZFS=rpool/ROOT/bravo@zfsroot ro boot=zfs
+#        initrd  /ROOT/bravo/@zfsroot/boot/initrd.img-3.13.0-32-generic
+#}
+rpool=rpool # name of root pool
+
+[[ -f /etc/default/grub ]] && . /etc/default/grub
+DIST=${GRUB_DISTRIBUTOR:-"Linux"}
+
+snapdir=/.zfs/snapshot
+first=0
+rootfs=$(mount | grep 'on / type' | sed "s!^.*on / type !!" | cut -d ' ' -f 1)
+[ "$rootfs" != "zfs" ] && exit 0
+
+# we have a zfs root file systems
+ROOT=$(mount | grep 'on / type' | cut -d ' ' -f 1)
+SROOT=$(echo $ROOT | sed "s:^$rpool::")
+
+for snap in $(zfs list -r -p -t snap -o name $ROOT | sed "s!$ROOT@!!" | grep -v NAME | tac)
+do
+	if [ ! -d /.zfs/snapshot/$snap/boot/ ]
+	then
+		continue
+	fi
+	#for version in $(ls /.zfs/snapshot/$snap/boot/vmlinuz-* | grep -v old-dkms | sed "s:/.zfs/snapshot/$snap/boot/vmlinuz-::" | tac)
+	for version in $(cd /.zfs/snapshot/$snap/boot; ls vmlinuz-* | grep -v old-dkms | tac)
+	do
+		version=$(echo $version | sed 's/^vmlinuz-//')
+		if [ $first -eq 0 ] 
+		then
+			echo Found ZFS snapshots to include in menu >&2
+			cat <<!
+# Auto generated zfs snapshot entries
+
+submenu 'ZFS snapshot boot options for $DIST' {
+!
+			first=1
+		fi
+
+		echo "Found linux image: $ROOT@$snap/boot/vmlinuz-$version" >&2
+
+		if [ -f /.zfs/snapshot/$snap/boot/initrd.img-$version ]
+		then
+			echo Found initrd image: $SROOT/@$snap/boot/initrd.img-$version >&2
+		fi
+		snapdate=$(zfs list -t snapshot -o creation $ROOT@$snap | tail -1)
+		cat <<!
+	menuentry '$snap $version ($snapdate)' {
+		linux   $SROOT/@$snap/boot/vmlinuz-$version root=ZFS=$ROOT@$snap ro boot=zfs
+		initrd  $SROOT/@$snap/boot/initrd.img-$version
+	}
+!
+	done
+	umount /.zfs/snapshot/$snap 2> /dev/null
+done
+
+[[ $first -ne 0 ]] && echo "}" 
+exit 0
