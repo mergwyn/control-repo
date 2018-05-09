@@ -29,7 +29,7 @@ class profile::zfs_server {
   }
   file { '/etc/cron.daily/grubupdate':
     ensure  => present,
-    content => "#!/bin/bash\n\n update-grub 2>&1 | logger -t update-grub -i\n"
+    content => "#!/bin/bash\n\n update-grub 2>&1 | logger -t update-grub -i\n",
     mode    => '0555',
   }
 
