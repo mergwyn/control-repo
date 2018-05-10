@@ -33,6 +33,34 @@ class profile::zfs_server {
     mode    => '0555',
   }
 
+  # zfs autosnap cron entries
+  cron::job {'zfs-auto-snapshot':
+    environment => [ 'PATH="/usr/bin:/bin:/usr/sbin:/sbin"'],
+    command     => 'zfs-auto-snapshot --quiet --syslog --label=01 --keep=4  //',
+    user        => 'root',
+    minute      => '*/15',
+  }
+  file { '/etc/cron.hourly/zfs-auto-snapshot':
+    ensure  => present,
+    mode    => '0555',
+    content => "#!/bin/sh\nexec zfs-auto-snapshot --quiet --syslog --label=02 --keep=24 //\n"
+  }
+  file { '/etc/cron.daily/zfs-auto-snapshot':
+    ensure  => present,
+    mode    => '0555',
+    content => "#!/bin/sh\nexec zfs-auto-snapshot --quiet --syslog --label=03 --keep=14 //\n"
+  }
+  file { '/etc/cron.weekly/zfs-auto-snapshot':
+    ensure  => present,
+    mode    => '0555',
+    content => "#!/bin/sh\nexec zfs-auto-snapshot --quiet --syslog --label=04 --keep=8 //\n"
+  }
+  file { '/etc/cron.monthly/zfs-auto-snapshot':
+    ensure  => present,
+    mode    => '0555',
+    content => "#!/bin/sh\nexec zfs-auto-snapshot --quiet --syslog --label=05 --keep=12 //\n"
+  }
+
   # zabbix support
   zabbix::userparameters { 'zfs-auto':
     source => 'puppet:///modules/profile/zfs/zfs-auto.conf',
