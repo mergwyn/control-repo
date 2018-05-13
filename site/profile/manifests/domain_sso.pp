@@ -12,7 +12,7 @@ class profile::domain_sso {
   class { '::sssd':
     config => {
       'sssd'                    => {
-        'services'            => ['nss', 'pam', 'sudo'],
+        'services'            => ['nss', 'pam'],
         'config_file_version' => 2,
         'domains'             => $::domain,
       },
