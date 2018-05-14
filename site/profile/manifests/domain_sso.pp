@@ -20,8 +20,6 @@ class profile::domain_sso {
         'filter_groups' => 'root',
         'filter_users'  => 'root'
       },
-      'sudo'                    => {
-      },
       'domain/theclarkhome.com' => {
         'accessprovider'                 => 'ad',
         'ad_domain'                      => $::domain,
@@ -42,6 +40,14 @@ class profile::domain_sso {
     }
   }
 
+  # remove sudo sss setting
+  augeas { 'nsswitch.conf':
+    context => "/files/etc/nsswitch.conf",
+    changes => [
+      "set *[self::database = 'sudoers']/service[1] files",
+      "rm *[self::database = 'sudoers']/service[2] ",
+    ],
+  }
 
   # work around for cron starting before sssd
   $crondir = '/etc/systemd/system/cron.service.d'
