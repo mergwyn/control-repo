@@ -55,7 +55,7 @@ mod 'puppet-staging', '3.2.0'
 mod 'puppet-tvheadend', '0.1.0'
 mod 'puppet-zabbix', '6.3.1'
 #mod 'saz-ssh', '3.0.1'
-mod 'saz-ssh', :git => 'https://github.com/saz/puppet-ssh',
+mod 'saz-ssh', :git => 'https://github.com/saz/puppet-ssh'
 mod 'saz-sudo', '5.0.0'
 mod 'saz-timezone', '4.1.1'
 #mod 'sfu-managedmac', '0.7.3'
