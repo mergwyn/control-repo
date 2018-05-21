@@ -1,0 +1,34 @@
+#!/bin/bash
+# This file provides an easy way to add custom menu entries.  Simply type the
+# menu entries you want to add after this comment.  Be careful not to change
+# the 'exec tail' line above.
+#menuentry 'Ubuntu (snapshot)' {
+#        linux   /ROOT/bravo/@zfsroot/boot/vmlinuz-3.13.0-32-generic root=ZFS=rpool/ROOT/bravo@zfsroot ro boot=zfs
+#        initrd  /ROOT/bravo/@zfsroot/boot/initrd.img-3.13.0-32-generic
+#}
+rpool=rpool # name of root pool
+
+[[ -f /etc/default/grub ]] && . /etc/default/grub
+DIST=${GRUB_DISTRIBUTOR:-"Linux"}
+
+snapdir=/.zfs/snapshot
+first=0
+rootfs=$(mount | grep 'on / type' | sed "s!^.*on / type !!" | cut -d ' ' -f 1)
+[ "$rootfs" != "zfs" ] && exit 0
+
+# we have a zfs root file systems
+ROOT=$(mount | grep 'on / type' | cut -d ' ' -f 1)
+SROOT=$(echo $ROOT | sed "s:^$rpool::")
+
+
+cat <<!
+	menuentry 'ZFS snapshot selection vmlinuz' {
+		linux   ${SROOT}/@/vmlinuz root=ZFS=${ROOT}@ ro boot=zfs
+		initrd  ${SROOT}/@/initrd.img
+	}
+	menuentry 'ZFS snapshot selection vmlinuz.old' {
+		linux   ${SROOT}/@/vmlinuz.old root=ZFS=${ROOT}@ ro boot=zfs
+		initrd  ${SROOT}/@/initrd.img.old
+	}
+!
+

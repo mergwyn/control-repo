@@ -4,27 +4,25 @@ class profile::domain_sso {
   exec { 'create_keytab':
     command => '/usr/bin/net ads keytab create -P',
     creates => '/etc/krb5.keytab',
-    require => [ 
+    require => [
       Package[ 'samba-common-bin'],
     ]
   }
   package { 'samba-common-bin': }
   class { '::sssd':
     config => {
-      'sssd' => {
-        'services'            => ['nss', 'pam', 'sudo'],
+      'sssd'                    => {
+        'services'            => ['nss', 'pam'],
         'config_file_version' => 2,
-        'domains'             => $domain,
+        'domains'             => $::domain,
       },
-      'nss' => {
-        'filter_groups'                  => 'root',
-        'filter_users'                   => 'root'
-      },
-      'sudo' => {
+      'nss'                     => {
+        'filter_groups' => 'root',
+        'filter_users'  => 'root'
       },
       'domain/theclarkhome.com' => {
         'accessprovider'                 => 'ad',
-        'ad_domain'                      => $domain,
+        'ad_domain'                      => $::domain,
         'auth_provider'                  => 'ad',
         'cache_credentials'              => true,
         'debug_level'                    => '1',
@@ -40,6 +38,30 @@ class profile::domain_sso {
         'use_fully_qualified_names'      => false,
       }
     }
+  }
+
+  # remove sudo sss setting
+  augeas { 'nsswitch.conf':
+    context => "/files/etc/nsswitch.conf",
+    changes => [
+      "set *[self::database = 'sudoers']/service[1] files",
+      "rm *[self::database = 'sudoers']/service[2] ",
+    ],
+  }
+
+  # work around for cron starting before sssd
+  $crondir = '/etc/systemd/system/cron.service.d'
+  if $::facts['os']['release']['full'] == '16.04' {
+    include cron
+    ::systemd::dropin_file { 'sssd-wait.conf':
+      unit    => 'cron.service',
+      content => "[Unit]\nAfter=nss-lookup.target\n",
+      notify  => Service['cron'],
+    } #~> service {'cron': ensure    => 'running', }
+    file { "${crondir}/ssdwait.conf": ensure => absent }
+  } else {
+    file { "${crondir}/sssd-wait.conf": ensure => absent }
+    file { $crondir: ensure => absent }
   }
 }
 # vim: sw=2:ai:nu expandtab

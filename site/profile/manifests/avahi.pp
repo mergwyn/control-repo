@@ -4,7 +4,7 @@ class profile::avahi {
 
   package { 'avahi-daemon-install':
     name             => 'avahi-daemon',
-    install_options  => ['-o', 'DPkg::NoTriggers'],
+    install_options  => ['-o', 'DPkg::Options=NoTriggers'],
   }
 
   ini_setting { '[rlimits] rlimit-nproc':

@@ -18,17 +18,20 @@ class profile::lxd_host {
       require  => Package['git'],
       source   => 'https://github.com/nsyntych/lxdsnap.git',
       revision => 'master',
-  } ->
+      notify   => Exec['build-lxdsnap'],
+  }
   file { '/usr/local/bin/build_lxdsnap':
     ensure => present,
     mode   => '0555',
     source => 'puppet:///modules/profile/build_lxdsnap',
-  } ->
+  }
   exec { 'build-lxdsnap':
-    cwd     => $installdir,
-    path    => '/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin',
-    command => "build_lxdsnap ${installdir}",
-    timeout => 600, # 10 minutes
+    cwd         => $installdir,
+    path        => '/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin',
+    command     => "build_lxdsnap ${installdir}",
+    timeout     => 600, # 10 minutes
+    require     => File['/usr/local/bin/build_lxdsnap'],
+    refreshonly => true,
   }
 
   # now lxdsnap crontab related jobs
@@ -43,14 +46,12 @@ status=\$?
 ",
   }
 
-  class { 'cron':
-    manage_package => false,
-  }
+  include cron
   cron::job { 'lxdsnap':
     environment => [ 'PATH="/usr/sbin:/usr/bin:/sbin:/bin"' ],
-    command => '/usr/local/bin/lxdsnap_cron',
-    user    => 'root',
-    minute  => 4,
+    command     => '/usr/local/bin/lxdsnap_cron',
+    user        => 'root',
+    minute      => 4,
   }
   file { '/etc/cron.hourly/lxdsnap': ensure => absent, }
 

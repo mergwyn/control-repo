@@ -75,7 +75,7 @@ zabbix::agent::server:                  "zulu,zulu.%{domain}"
 zabbix::agent::serveractive:            "zulu,zulu.%{domain}"
 zabbix::agent::enableremotecommands:    '1'
 
-tvheadend::release:                     'stable-4.2'
+tvheadend::release:                     'release'
 tvheadend::admin_password:              "%{hiera('passwords::tvheadend')}"
 
 # vim: sw=2:ai:nu expandtab
