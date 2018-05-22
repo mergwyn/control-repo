@@ -3,7 +3,7 @@
 class profile::reverse_proxy {
   $domain = $::facts['domain']
 
-  class { 'nginx': }
+  include nginx
 
   nginx::resource::server { 'webmin':
     listen_port => 1000,
