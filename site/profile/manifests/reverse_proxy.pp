@@ -17,7 +17,7 @@ class profile::reverse_proxy {
   nginx::resource::server { 'couchpototo.tango':
     listen_port => 5050,
     server_name => [ "tango.$::domain" ],
-    proxy       => 'http://tango.$::domain:5050',
+    proxy       => "http://tango.$::domain:5050",
   }
   nginx::resource::server { 'sabnzbd.tango':
     listen_port => 8080,
