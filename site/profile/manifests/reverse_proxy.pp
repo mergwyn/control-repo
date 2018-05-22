@@ -40,7 +40,7 @@ class profile::reverse_proxy {
   }
   nginx::resource::server { 'plex.tango':
     listen_port => 32400,
-    server_name => [ "tango.$::domain}" ],
+    server_name => [ "tango.$::domain" ],
     access_log  => 'off',
     locations   => {
       '/web' => {
