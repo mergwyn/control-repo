@@ -101,7 +101,7 @@ host mike {
 	fixed-address 192.168.11.20;
 }
 host papa {
-	hardware ethernet 00:16:3e:90:da:ae;
+	hardware ethernet 00:16:3e:fc:2a:87;
 	fixed-address 192.168.11.240;
 }
 host DELLA3F95F {
