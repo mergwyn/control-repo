@@ -100,13 +100,8 @@ host mike {
 	hardware ethernet 52:54:00:53:b7:0a;
 	fixed-address 192.168.11.20;
 }
-host ipod-touch {
-	ddns-hostname "ipod-touch";
-	option host-name "ipod-touch";
-	hardware ethernet f0:b4:79:ce:60:61;
-}
 host papa {
-	hardware ethernet 00:16:3e:75:24:26;
+	hardware ethernet 00:16:3e:90:da:ae;
 	fixed-address 192.168.11.240;
 }
 host DELLA3F95F {
