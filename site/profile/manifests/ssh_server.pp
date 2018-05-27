@@ -2,7 +2,6 @@
 
 class profile::ssh_server {
   class { 'ssh::server':
-    storeconfigs_enabled => false,
     options              => {
       'HostKey'                         => [
         '/etc/ssh/ssh_host_rsa_key',
