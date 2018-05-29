@@ -27,15 +27,15 @@ DIST=${GRUB_DISTRIBUTOR:-"Linux"}
 
 declare -i count=0
 
-{
+BELIST=$({
 if [[ $(which beadm) ]]
 then
   beadm list -H | cut -f 1 | sed "s:^:${POOL}/${BEDS}/:"
 else
   zfs list -H -r -p -o name ${POOL}/${BEDS}
 fi
-} | tac |
-while read BE
+} | tac)
+for BE in $BELIST
 do
   #TODO handle mounting of toplevel BE (mountpoint needs to be legacy)
   for fs in $(zfs list -H -r -p -t all -o name ${BE} | tac)
