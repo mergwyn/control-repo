@@ -10,6 +10,7 @@ echo "#### $0 "
 MNTINFO=$(mount | grep 'on / type')
 [[ ${MNTINFO} = *zfs* ]] || exit 0
 # we have a zfs root file system
+echo "### END $0 ###" >&2
 
 BOOTEDROOT=${MNTINFO%% *}
 oIFS=$IFS
@@ -77,6 +78,8 @@ done
 rmdir ${MNTDIR}
 
 [[ $count != 0 ]] && echo "}" 
+
+echo "### END $0 ###" >&2
 exit 0
 
-# vim: se sw=2 ai nu
+# vim: sw=2:ai:nu 

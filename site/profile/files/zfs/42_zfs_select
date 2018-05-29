@@ -6,6 +6,7 @@
 #        linux   /ROOT/bravo/@zfsroot/boot/vmlinuz-3.13.0-32-generic root=ZFS=rpool/ROOT/bravo@zfsroot ro boot=zfs
 #        initrd  /ROOT/bravo/@zfsroot/boot/initrd.img-3.13.0-32-generic
 #}
+echo "### BEGIN $0 ###" >&2
 rpool=rpool # name of root pool
 
 [[ -f /etc/default/grub ]] && . /etc/default/grub
@@ -32,3 +33,6 @@ cat <<!
 	}
 !
 
+echo "### END $0 ###" >&2
+
+# vim: sw=2:ai:nu 
