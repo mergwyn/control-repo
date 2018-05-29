@@ -69,10 +69,9 @@ class profile::zfs_server {
   vcsrepo { $installdir:
       ensure   => present,
       provider => git,
-      require  => Package['git'],
       source   => 'https://github.com/mergwyn/beadm',
       revision => 'master',
-      requires => Package['gawk'],
+      require  => Package['git', 'gawk'],
   } ->
   file { '/usr/local/bin/beadm':
     ensure => present,
