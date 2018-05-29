@@ -6,7 +6,7 @@
 #        linux   /ROOT/bravo/@zfsroot/boot/vmlinuz-3.13.0-32-generic root=ZFS=POOL/ROOT/bravo@zfsroot ro boot=zfs
 #        initrd  /ROOT/bravo/@zfsroot/boot/initrd.img-3.13.0-32-generic
 #}
-echo "#### $0 "
+
 MNTINFO=$(mount | grep 'on / type')
 [[ ${MNTINFO} = *zfs* ]] || exit 0
 # we have a zfs root file system
@@ -79,7 +79,6 @@ rmdir ${MNTDIR}
 
 [[ $count != 0 ]] && echo "}" 
 
-echo "### END $0 ###" >&2
 exit 0
 
 # vim: sw=2:ai:nu 
