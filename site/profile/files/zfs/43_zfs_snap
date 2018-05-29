@@ -6,6 +6,7 @@
 #        linux   /ROOT/bravo/@zfsroot/boot/vmlinuz-3.13.0-32-generic root=ZFS=POOL/ROOT/bravo@zfsroot ro boot=zfs
 #        initrd  /ROOT/bravo/@zfsroot/boot/initrd.img-3.13.0-32-generic
 #}
+echo "#### $0 "
 MNTINFO=$(mount | grep 'on / type')
 [[ ${MNTINFO} = *zfs* ]] || exit 0
 # we have a zfs root file system
@@ -16,7 +17,7 @@ IFS=/ PARTS=( ${BOOTEDROOT} )
 IFS=$oIFS
 POOL=${PARTS[0]}
 BEDS=${PARTS[1]}
-BE=${PARTS[2]}
+#BE=${PARTS[2]}
 
 MNTDIR=/tmp/grub$$
 mkdir ${MNTDIR} || true
@@ -24,51 +25,58 @@ mkdir ${MNTDIR} || true
 [[ -f /etc/default/grub ]] && . /etc/default/grub
 DIST=${GRUB_DISTRIBUTOR:-"Linux"}
 
-declare -i first=0
+declare -i count=0
 
-for fs in $(zfs list -H -r -p -t all -o name $POOL/${BEDS} | tac)
+{
+if [[ $(which beadm) ]]
+then
+  beadm list -H | cut -f 1 | sed "s:^:${POOL}/${BEDS}/:"
+else
+  zfs list -H -r -p -o name ${POOL}/${BEDS}
+fi
+} | tac |
+while read BE
 do
-	rootfs=${fs%%@*}
-	be=${rootfs##*/}
-	snapname=${fs#*@}
-	if [[ ${snapname} != ${fs} ]]
-	then
-		entry=$snapname/
-        else
-		entry=
-	fi
-	mount -t zfs ${fs} ${MNTDIR} 2>/dev/null || continue
-	if [ ! -d ${MNTDIR}/boot/ ]
-	then
-		umount ${MNTDIR}
-		continue
-	fi
+  #TODO handle mounting of toplevel BE (mountpoint needs to be legacy)
+  for fs in $(zfs list -H -r -p -t all -o name ${BE} | tac)
+  do
+    rootfs=${fs%%@*}
+    be=${rootfs##*/}
+    entry=
+    snapname=${fs#*@}
+    [[ ${snapname} != ${fs} ]] && entry=$snapname/
 
-	for version in $(cd ${MNTDIR}/boot; ls vmlinuz-* | grep -v old-dkms | tac)
-	do
-		version=$(echo $version | sed 's/^vmlinuz-//')
-		if [ $first -eq 0 ] 
-		then
-			echo Found ZFS snapshots to include in menu >&2
-			echo "# Auto generated zfs snapshot entries"
-			echo
-			echo "submenu 'ZFS snapshot boot options for $DIST' {"
-			first=1
-		fi
+    mount -t zfs ${fs} ${MNTDIR} 2>/dev/null || continue
+    if [[ ! -d ${MNTDIR}/boot/ ]]
+    then
+      umount ${MNTDIR}
+      continue
+    fi
 
-		if [[ -f ${MNTDIR}/boot/vmlinuz-$version && -f ${MNTDIR}/boot/initrd.img-$version ]] 
-		then
-			echo "Found linux image: $fs/boot/vmlinuz-$version" >&2
-			echo Found initrd image: $fs/boot/initrd.img-$version >&2
-			echo "	menuentry '$fs $version ($(zfs list -H -o creation $fs))' {"
-			echo "		linux   /${BEDS}/${be}/@${entry}boot/vmlinuz-$version root=ZFS=$fs ro boot=zfs"
-			echo "		initrd  /${BEDS}/${be}/@${entry}boot/initrd.img-$version"
-			echo "	}"
-		fi
-	done
-	umount ${MNTDIR}
+    for version in $(cd ${MNTDIR}/boot; ls vmlinuz-* | grep -v old-dkms | tac)
+    do
+      version=$(echo $version | sed 's/^vmlinuz-//')
+      if [[ -f ${MNTDIR}/boot/vmlinuz-$version && -f ${MNTDIR}/boot/initrd.img-$version ]] 
+      then
+	if [[ $count = 0 ]] 
+	then
+	  echo "# Auto generated zfs boot environment and snapshot entries"
+	  echo "submenu 'ZFS boot environment and snapshot options for $DIST' {"
+	fi
+	count+=1
+	echo "Adding kernel $version from $fs" >&2
+	echo "	menuentry '$fs $version ($(zfs list -H -o creation $fs))' {"
+	echo "		linux   /${BEDS}/${be}/@${entry}boot/vmlinuz-$version root=ZFS=$fs ro boot=zfs"
+	echo "		initrd  /${BEDS}/${be}/@${entry}boot/initrd.img-$version"
+	echo "	}"
+      fi
+    done
+    umount ${MNTDIR}
+  done
 done
 rmdir ${MNTDIR}
 
-[[ $first -ne 0 ]] && echo "}" 
+[[ $count != 0 ]] && echo "}" 
 exit 0
+
+# vim: se sw=2 ai nu
