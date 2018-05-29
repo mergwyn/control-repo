@@ -65,7 +65,7 @@ do
 	  echo "submenu 'ZFS boot environment and snapshot options for $DIST' {"
 	fi
 	count+=1
-	echo "Adding kernel $version from $fs" >&2
+	echo "Found kernel image: $version on $fs" >&2
 	echo "	menuentry '$fs $version ($(zfs list -H -o creation $fs))' {"
 	echo "		linux   /${BEDS}/${be}/@${entry}boot/vmlinuz-$version root=ZFS=$fs ro boot=zfs"
 	echo "		initrd  /${BEDS}/${be}/@${entry}boot/initrd.img-$version"
