@@ -61,6 +61,25 @@ class profile::zfs_server {
     content => "#!/bin/sh\nexec zfs-auto-snapshot --quiet --syslog --label=05 --keep=12 //\n"
   }
 
+  # beadm boot environments
+  $installdir='/opt/code/beadm'
+
+ # lxd snap related commands
+  package { 'gawk': }
+  vcsrepo { $installdir:
+      ensure   => present,
+      provider => git,
+      require  => Package['git'],
+      source   => 'https://github.com/mergwyn/beadm',
+      revision => 'master',
+      requires => Package['gawk'],
+  } ->
+  file { '/usr/local/bin/beadm':
+    ensure => present,
+    mode   => '0555',
+    source => "file://$installdir/beadm",
+  }
+
   # zabbix support
   zabbix::userparameters { 'zfs-auto':
     source => 'puppet:///modules/profile/zfs/zfs-auto.conf',
