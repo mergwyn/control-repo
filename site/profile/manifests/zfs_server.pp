@@ -67,7 +67,7 @@ class profile::zfs_server {
  # lxd snap related commands
   package { 'gawk': }
   vcsrepo { $installdir:
-      ensure   => present,
+      ensure   => latest,
       provider => git,
       source   => 'https://github.com/mergwyn/beadm',
       revision => 'master',
@@ -77,6 +77,12 @@ class profile::zfs_server {
     ensure => present,
     mode   => '0555',
     source => "file://$installdir/beadm",
+  }
+
+  file { '/etc/default/beadm.conf':
+    ensure => present,
+    mode   => '0555',
+    content => "#\nGRUB=YES\n"
   }
 
   # zabbix support
