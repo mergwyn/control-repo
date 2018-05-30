@@ -16,6 +16,9 @@ BEDS=${PARTS[1]}
 MNTDIR=/tmp/grub$$
 mkdir ${MNTDIR} || true
 
+declare -i COUNT=0
+declare -i INDENT=0
+
 [[ -f /etc/default/grub ]] && . /etc/default/grub
 DIST=${GRUB_DISTRIBUTOR:-"Linux"}
 
@@ -34,7 +37,7 @@ make_entry()
 {
   local _mntdir=$1
   local _fs=$2
-  declare -i _indent=${3:-0}
+  local _submenu="${3:-}"
 
   rootfs=${_fs%%@*}
   be=${rootfs##*/}
@@ -45,16 +48,22 @@ make_entry()
   ${MOUNT} ${_mntdir} >&2
   if [[ -d ${_mntdir}/boot/ ]]
   then
-    for version in $(cd ${_mntdir}/boot; ls vmlinuz-* | grep -v old-dkms | tac)
+    for version in $(cd ${_mntdir}/boot; ls -t vmlinuz-* | grep -v old-dkms)
     do
       version=$(echo $version | sed 's/^vmlinuz-//')
       if [[ -f ${_mntdir}/boot/vmlinuz-$version && -f ${_mntdir}/boot/initrd.img-$version ]] 
       then
+        if [[ ${COUNT} = 0 && ${_submenu} ]]
+	then
+	  echowtabs ${INDENT} "submenu '${_submenu}' {"
+	  (( INDENT++ ))
+	fi
+        COUNT+=1
 	echo "Found kernel image: $version on ${_fs}" >&2
-	echowtabs ${_indent} "menuentry '$DIST, boot environment ${be}${entry}, with Linux $version ($(zfs list -H -o creation ${_fs}))' {"
-	echowtabs ${_indent}+1 "	linux   /${BEDS}/${be}/@${snapname}boot/vmlinuz-$version root=ZFS=${_fs} ro boot=zfs"
-	echowtabs ${_indent}+1 "	initrd  /${BEDS}/${be}/@${snapname}boot/initrd.img-$version"
-	echowtabs ${_indent} "}"
+	echowtabs ${INDENT} "menuentry '${DIST}, ${be}${entry}, with kernel $version ($(zfs list -H -o creation ${_fs}))' {"
+	echowtabs ${INDENT}+1 "	linux   /${BEDS}/${be}/@${snapname}boot/vmlinuz-$version root=ZFS=${_fs} ro boot=zfs"
+	echowtabs ${INDENT}+1 "	initrd  /${BEDS}/${be}/@${snapname}boot/initrd.img-$version"
+	echowtabs ${INDENT} "}"
       fi
     done
   fi
@@ -73,26 +82,30 @@ fi
 } | tac)
 for BE in $BELIST
 do
+  INDENT=0
   if [[ ${BE} = ${BOOTEDROOT} ]]
   then
     MOUNT=:
     UMOUNT=:
-    make_entry "" ${BE}
+    make_entry "" ${BE} "${DIST}, boot environment ${BE}"
   else
     be="${BE##*/}"
     MOUNT="beadm mount ${be}"
     UMOUNT="beadm umount "${be}""
-    make_entry ${MNTDIR} ${BE}
+    make_entry ${MNTDIR} ${BE} "${DIST}, boot environment ${BE}"
   fi
-
-  echo "submenu '${DIST}, boot environment ${BE} snapshots' {"
+  COUNT=0 # to make sure we don't output empt submenus
   for fs in $(zfs list -H -r -p -t snap -o name ${BE} | tac)
   do
     MOUNT="mount -t zfs ${fs}"
     UMOUNT="umount ${MNTDIR}"
-    make_entry ${MNTDIR} ${fs} 1
+    make_entry ${MNTDIR} ${fs} "${DIST}, ${BE} snapshots"
   done
-  echo "}"
+  until [[ $INDENT = 0 ]]
+  do
+    (( INDENT-- ))
+    echowtabs ${INDENT} "}"
+  done
 done
 rmdir ${MNTDIR}
 
