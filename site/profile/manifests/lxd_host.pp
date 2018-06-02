@@ -2,7 +2,7 @@
 
 class profile::lxd_host {
   package { 'lxd': }
-  package { 'crie': }
+  package { 'criu': }
   package { 'bridge-utils': }
   package { 'git': }
   service { 'lxd':
