@@ -2,6 +2,7 @@
 
 class profile::lxd_host {
   package { 'lxd': }
+  package { 'bridge-utils': }
   package { 'git': }
   service { 'lxd':
     ensure  => 'running',
