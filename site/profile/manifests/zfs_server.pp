@@ -2,6 +2,9 @@
 # TODO: sudo configuration
 
 class profile::zfs_server {
+  $codedir='/opt/code'
+  $bindir='/usr/local/bin'
+  $mandir='/usr/local/share/man'
 
   # monthly report
   file { '/usr/local/bin/zfs_report.sh':
@@ -33,9 +36,31 @@ class profile::zfs_server {
     mode    => '0555',
   }
 
-  # zfs autosnap cron entries
+  # zfs autosnap 
+  vcsrepo { "$codedir/zfs-auto-snapshot":
+    ensure   => latest,
+    provider => git,
+    source   => 'https://github.com/zfsonlinux/zfs-auto-snapshot',
+    revision => 'master',
+    require  => Package['git', 'gawk'],
+  } 
+  file { "$bindir/zfs-auto-snapshot":
+    ensure => present,
+    mode   => '0755',
+    source => "file://$codedir/zfs-auto-snapshot/src/zfs-auto-snapshot.sh",
+  }
+  file { '/sbin/zfs-auto-snapshot': ensure => absent, }
+
+  file { "$mandir/man8": ensure => directory, }
+  
+  file { "$mandir/man8/zfs-auto-snapshot.8":
+    ensure => present,
+    mode   => '0644',
+    source => "file://$codedir/zfs-auto-snapshot/src/zfs-auto-snapshot.8",
+  }
+
   cron::job {'zfs-auto-snapshot':
-    environment => [ 'PATH="/usr/bin:/bin:/usr/sbin:/sbin"'],
+    environment => [ 'PATH="/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin"'],
     command     => 'zfs-auto-snapshot --quiet --syslog --label=01 --keep=4  //',
     user        => 'root',
     minute      => '*/15',
@@ -62,24 +87,32 @@ class profile::zfs_server {
   }
 
   # beadm boot environments
-  $installdir='/opt/code/beadm'
 
  # lxd snap related commands
   package { 'gawk': }
-  vcsrepo { $installdir:
+  vcsrepo { "$codedir/beadm":
       ensure   => latest,
       provider => git,
       source   => 'https://github.com/mergwyn/beadm',
       revision => 'master',
       require  => Package['git', 'gawk'],
-  } ->
-  file { '/usr/local/bin/beadm':
+  }
+  file { "$bindir/beadm":
     ensure => present,
     mode   => '0555',
-    source => "file://$installdir/beadm",
+    source => "file://$codedir/beadm/beadm",
+  }
+  file { "$mandir/man1": ensure => directory, }
+  file { "$mandir/man1/beadm.1":
+    ensure => present,
+    mode   => '0644',
+    source => "file://$codedir/beadm/beadm.1",
   }
 
   file { '/etc/default/beadm.conf':
+    ensure => absent,
+  }
+  file { '/etc/beadm.conf':
     ensure => present,
     mode   => '0555',
     content => "#\nGRUB=YES\n"
