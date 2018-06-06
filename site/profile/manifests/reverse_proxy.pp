@@ -13,6 +13,11 @@ class profile::reverse_proxy {
     listen_port => 80,
     proxy       => "http://zulu.$::domain:80",
   }
+  nginx::resource::server { 'foxtrot':
+    server_name => [ "foxtrot.$::domain" ],
+    listen_port => 80,
+    proxy       => "http://foxtrot.$::domain:80",
+  } 
   # tango related
   nginx::resource::server { 'couchpototo.tango':
     listen_port => 5050,
