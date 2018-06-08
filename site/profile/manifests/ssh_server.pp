@@ -14,7 +14,7 @@ class profile::ssh_server {
       'GSSAPIKeyExchange'               => 'yes',
       'HostbasedAuthentication'         => 'no',
       'IgnoreRhosts'                    => 'yes',
-      'KerberosAuthentication'          => 'no',
+      'KerberosAuthentication'          => 'yes',
       'KeyRegenerationInterval'         => '3600',
       'LoginGraceTime'                  => '120',
       'LogLevel'                        => 'INFO',
