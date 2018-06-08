@@ -25,12 +25,12 @@ class profile::samba_dc {
   ]
   file {$oldfiles: ensure => absent, }
 
-  file { "${preuser}/S30samba_backup":
+  file { '/etc/backuppc/scripts/scripts/DumpPreUser/S30samba_backup':
     ensure => present,
     source => 'puppet:///modules/profile/backuppc/S30samba_backup',
     mode   => '0555',
   }
-  file { "${postuser}/P30samba_clean":
+  file { '/etc/backuppc/scripts/scripts/DumpPostser/P30samba_clean':
     ensure => present,
     source => 'puppet:///modules/profile/backuppc/P30samba_clean',
     mode   => '0555',
