@@ -14,10 +14,6 @@ class profile::samba_dc {
   $scripts='/etc/backuppc/scripts/'
   $preuser="${scripts}DumpPreUser/"
   $postuser="${scripts}DumpPostUser/"
-  file {[$preuser, $postuser]:
-    ensure  => directory,
-    recurse => true,
-  }
 
   $oldfiles = [ 
     '/var/lib/samba/sysvol/theclarkhome.com/scripts/samba4_backup',
@@ -25,12 +21,12 @@ class profile::samba_dc {
   ]
   file {$oldfiles: ensure => absent, }
 
-  file { '/etc/backuppc/scripts/scripts/DumpPreUser/S30samba_backup':
+  file { "${preuser}/S30samba_backup":
     ensure => present,
     source => 'puppet:///modules/profile/backuppc/S30samba_backup',
     mode   => '0555',
   }
-  file { '/etc/backuppc/scripts/scripts/DumpPostser/P30samba_clean':
+  file { "${preuser}/P30samba_clean":
     ensure => present,
     source => 'puppet:///modules/profile/backuppc/P30samba_clean',
     mode   => '0555',
