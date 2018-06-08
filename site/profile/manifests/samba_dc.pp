@@ -4,13 +4,9 @@
 class profile::samba_dc {
 
   package { 'unison': }
-  file { '/etc/cron.daily/samba4-backup':
-    content => "#!/bin/sh\n/var/lib/samba/sysvol/theclarkhome.com/scripts/samba4_backup\n",
-    mode    => '0755',
-  }
+  # TODO add unison replcaition script and cron entry
 
-  # support for backup as part of backuppc run
-
+  # support for samba backup as part of backuppc run
   $scripts='/etc/backuppc/scripts/'
   $preuser="${scripts}DumpPreUser/"
   $postuser="${scripts}DumpPostUser/"
