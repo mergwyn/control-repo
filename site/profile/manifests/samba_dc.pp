@@ -19,6 +19,12 @@ class profile::samba_dc {
     recurse => true,
   }
 
+  $oldfiles = [ 
+    '/var/lib/samba/sysvol/theclarkhome.com/scripts/samba4_backup',
+    '/etc/cron.daily/samba4-backup'
+  ]
+  file {$oldfiles: ensure => absent, }
+
   file { "${preuser}/S30samba_backup":
     ensure => present,
     source => 'puppet:///modules/profile/backuppc/S30samba_backup',
