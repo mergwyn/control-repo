@@ -22,7 +22,7 @@ class profile::samba_dc {
     source => 'puppet:///modules/profile/backuppc/S30samba_backup',
     mode   => '0555',
   }
-  file { "${preuser}/P30samba_clean":
+  file { "${posuser}/P30samba_clean":
     ensure => present,
     source => 'puppet:///modules/profile/backuppc/P30samba_clean',
     mode   => '0555',
