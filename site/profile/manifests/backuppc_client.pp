@@ -1,19 +1,19 @@
 #
 class profile::backuppc_client {
   $scripts='/etc/backuppc/scripts/'
-  $PreUser="${scripts}DumpPreUser/"
-  $PostUser="${scripts}DumpPostUser/"
-  file {[$PreUser, $PostUser]:
+  $preuser="${scripts}DumpPreUser/"
+  $postuser="${scripts}DumpPostUser/"
+  file {[$preuser, $postuser]:
     ensure  => directory,
     recurse => true,
   }
 
-  file { "${PreUser}/S10dirsonly":
+  file { "${preuser}/S10dirsonly":
     ensure => present,
     source => 'puppet:///modules/profile/backuppc/S10dirsonly',
     mode   => '0555',
   }
-  file { "${PreUser}/S20mysql-backup":
+  file { "${preuser}/S20mysql-backup":
     ensure => present,
     source => 'puppet:///modules/profile/backuppc/S20mysql-backup',
     mode   => '0555',
@@ -26,9 +26,9 @@ class profile::backuppc_client {
   package { 'rsync': ensure => installed }
 
   # backuppc ssh keys
-  $system_account        = hiera("defaults::system_user")
-  $system_home_directory = hiera("defaults::system_home_dir")
-  $backuppc_hostname     = hiera("defaults::backuppc_server")
+  $system_account        = hiera('defaults::system_user')
+  $system_home_directory = hiera('defaults::system_home_dir')
+  $backuppc_hostname     = hiera('defaults::backuppc_server')
 
   file { "${system_home_directory}/.ssh":
     ensure => 'directory',
