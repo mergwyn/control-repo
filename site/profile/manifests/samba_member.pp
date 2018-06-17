@@ -11,7 +11,7 @@ class profile::samba_member {
 
     strictrealm           => false,         # * Check for Strict Realm (default: true)
     security              => 'ADS',         # * security mode.
-    krbconf               => false,         # * Deploy krb5.conf fil e (default: true)
+    krbconf               => true,         # * Deploy krb5.conf fil e (default: true)
     nsswitch              => false,         # * Add winbind to nsswitch,
     adminuser             => hiera("defaults::adminuser"),
     adminpassword         => hiera("passwords::domain"),
