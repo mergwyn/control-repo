@@ -10,6 +10,8 @@ class profile::backuppc_server {
   user { 'backuppc':
     groups     => 'backuppc',
     uid        => '118',
+    home       => '/var/lib/backuppc',
+    comment    => 'BackupPC,,,',
     managehome => false,
   }
   
