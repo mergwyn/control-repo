@@ -2,7 +2,18 @@
 class profile::backuppc_server {
 
   package { 'pigz': }
+
+  #TODO: add mounts for srv2
+  group { 'backuppc':
+    uid        => '125',
+  }
+  user { 'backuppc':
+    groups     => 'backuppc',
+    uid        => '118',
+    managehome => false,
+  }
   
+  # Hook into zabbix
   zabbix::userparameters { 'backuppc':
     source => 'puppet:///modules/profile/backuppc/backuppc.conf',
   }
