@@ -3,7 +3,7 @@
 set -o errexit
 
 cd "${1}"
-apt-get install python-pip
+apt-get install -y python-pip
 pip install --upgrade pip idna
 pip install pylxd
 apt-get install -y python-dev
