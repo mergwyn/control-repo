@@ -5,7 +5,7 @@ class profile::backuppc_server {
 
   #TODO: add mounts for srv2
   group { 'backuppc':
-    gid        => '125',
+    gid        => '127',
   }
   user { 'backuppc':
     groups     => 'backuppc',
