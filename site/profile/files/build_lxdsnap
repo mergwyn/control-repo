@@ -12,3 +12,4 @@ apt-get install -y libxml2-dev libxslt1-dev
 apt-get install -y python3 python-virtualenv
 make install
 chmod +x snap.py
+touch build.done
