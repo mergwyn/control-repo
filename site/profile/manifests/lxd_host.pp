@@ -34,7 +34,7 @@ class profile::lxd_host {
     command     => "build_lxdsnap ${codedir}",
     timeout     => 600, # 10 minutes
     require     => File["${bindir}/build_lxdsnap"],
-    refreshonly => true,
+    creates     => "${codedir}/build.done",
   }
 
   # now lxdsnap crontab related jobs
