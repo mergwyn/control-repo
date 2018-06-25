@@ -2,6 +2,10 @@
 # TODO: sudo configuration
 
 class profile::zfs_server {
+
+  $zfsopts = hiera_hash('zfsopts')
+  create_resources ( zfs, $zfsopts )
+
   $codedir='/opt/code'
   $bindir='/usr/local/bin'
   $mandir='/usr/local/share/man'

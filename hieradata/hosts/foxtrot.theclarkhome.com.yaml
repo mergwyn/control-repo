@@ -3,7 +3,6 @@
 classes:
   - role::lxd_server
   - role::backup_server
-  - ntp
 
 #- profile::domain_sso
 #- nginx
@@ -61,19 +60,9 @@ nginx::nginx_locations:
       #fastcgi_param SCRIPT_FILENAME:   "/usr/share/backuppc/cgi-bin$fastcgi_script_name"
 
 
-ntp::driftfile: /var/lib/ntp/ntp.drift
-ntp::logfile: /var/log/ntp
-ntp::ntpsigndsocket: /var/lib/samba/ntp_signd/
-ntp::servers:
-  - 127.127.1.0
-  - 0.pool.ntp.org     prefer
-  - 1.pool.ntp.org     prefer
-ntp::fudge: 
-  - 127.127.1.0 stratum 10
-ntp::restrict:
-  - default kod nomodify notrap nopeer mssntp
-  - 127.0.0.1
-  - 0.pool.ntp.org   mask 255.255.255.255    nomodify notrap nopeer noquery
-  - 1.pool.ntp.org   mask 255.255.255.255    nomodify notrap nopeer noquery
-
+zfsopts:
+  'srv/backup':
+    sharenfs:                  "rw=@192.168.11.0/24,insecure,no_subtree_check,no_root_squash"
+        
+---
 # vim: sw=2:ai:nu expandtab
