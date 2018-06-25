@@ -3,6 +3,12 @@ class profile::backuppc_server {
 
   package { 'pigz': }
 
+  # this assumes web server is defined and is nginx
+  service { 'apache2':
+    ensure => 'stopped',
+    enable => 'false',
+  }
+
   #TODO: add mounts for srv2
   group { 'backuppc':
     gid        => '127',
