@@ -4,7 +4,7 @@
 class profile::zfs_server {
 
   exec { 'zfs_share-a':
-    command     => "/sbin/zfs share -a"
+    command     => "/sbin/zfs share -a",
     refreshonly => true,    
   }
   augeas { 'zfs.default':
