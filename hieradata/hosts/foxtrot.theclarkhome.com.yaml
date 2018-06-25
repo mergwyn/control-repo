@@ -59,10 +59,5 @@ nginx::nginx_locations:
       fastcgi_index:            'BackupPC_Admin'
       #fastcgi_param SCRIPT_FILENAME:   "/usr/share/backuppc/cgi-bin$fastcgi_script_name"
 
-
-zfsopts:
-  'srv/backup':
-    sharenfs:                  "rw=@192.168.11.0/24,insecure,no_subtree_check,no_root_squash"
-        
 ---
 # vim: sw=2:ai:nu expandtab

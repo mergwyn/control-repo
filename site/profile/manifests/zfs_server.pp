@@ -3,8 +3,20 @@
 
 class profile::zfs_server {
 
-  $zfsopts = hiera_hash('zfsopts')
-  create_resources ( zfs, $zfsopts )
+  exec { 'zfs_share-a':
+    command     => "/sbin/zfs share -a"
+    refreshonly => true,    
+  }
+  augeas { 'zfs.default':
+    lens => "shellvars.lns",
+    incl => '/etc/default/zfs',
+    context => '/files/etc/default/zfs',
+    notify => Exec['zfs_share-a'],
+    changes => [ 
+      'set ZFS_SHARE yes',
+      'set ZFS_UNSHARE yes'
+    ]   
+  }
 
   $codedir='/opt/code'
   $bindir='/usr/local/bin'
