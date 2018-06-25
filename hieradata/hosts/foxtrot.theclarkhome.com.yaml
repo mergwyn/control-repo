@@ -3,6 +3,7 @@
 classes:
   - role::lxd_server
   - role::backup_server
+  - role::file_server
 
 #- profile::domain_sso
 #- nginx
