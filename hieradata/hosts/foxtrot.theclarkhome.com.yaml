@@ -37,28 +37,29 @@ network::interfaces_hash:
     bridge_fd:                  "0"
     bridge_stp:                 "off"
 
-nginx::nginx_vhosts:
+nginx::nginx_servers:
   'backuppc':
-    server_name:                [ 'foxtrot.theclarkhome.com' ]
+    server_name:                [ "%{::fqdn}" ]
     listen_port:                80
+    www_root:                   '/usr/share/nginx/html'
+    use_default_location:       false
 nginx::nginx_locations:
   '/backuppc':
-    vhost:                      'backuppc'
-    auth_basic:                 "BackupPC admin"
-    auth_basic_user_file:       "/etc/backuppc/htpasswd"
-    www_root:                   "/usr/share/backuppc/cgi-bin"
+    server:                     'backuppc'
     index_files:                [ "/index.cgi" ]
+    location_cfg_append:
+      auth_pam:                 '"BackupPC admin"'
+      auth_pam_service_name:    '"nginx"'
+    location_alias:             '/usr/share/backuppc/cgi-bin/'
   'cgi':
-    vhost:                      'backuppc'
+    server:                     'backuppc'
     location:                   '~\.cgi$'
     fastcgi:                    'unix:/var/run/fcgiwrap.socket'
-    fastcgi_script:             "/usr/share/backuppc/cgi-bin$fastcgi_script_name"
-    www_root:                   '/tmp/'
-    #gzip_vary:                 'off'
+    fastcgi_script:             '/usr/share/backuppc/cgi-bin$fastcgi_script_name'
+    fastcgi_params:             '/etc/nginx/fastcgi_params'
+    fastcgi_index:              'BackupPC_Admin'
     location_cfg_append:
-      include:                  '/etc/nginx/fastcgi_params'
-      fastcgi_index:            'BackupPC_Admin'
-      #fastcgi_param SCRIPT_FILENAME:   "/usr/share/backuppc/cgi-bin$fastcgi_script_name"
+      gzip:                     'off'
 
 ---
 # vim: sw=2:ai:nu expandtab
