@@ -50,6 +50,10 @@ unattended_upgrades:
       origin:                           'Jamie Cameron'
 
 
+# set nginx package
+nginx::package_name:                    'nginx-extras'
+
+
 samba::params::sernetpkgs:              false
 samba::classic::domain:                 "%{hiera('defaults::workgroup')}"
 samba::classic::realm:                  "%{hiera('defaults::realm')}"
