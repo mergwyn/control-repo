@@ -6,7 +6,37 @@ class profile::backuppc_server {
   # this assumes web server is defined and is nginx
   service { 'apache2':
     ensure => 'stopped',
-    enable => 'false',
+    enable => false,
+  }
+
+  # define nginx config
+
+  nginx::resource::server { 'backuppc':
+    server_name          => [ $::facts['fqdn'] ],
+    listen_port          => 80,
+    use_default_location => false,
+    locations            => {
+      '/backuppc' => {
+        server              => 'backuppc',
+        index_files         => [ '/index.cgi' ],
+        location_cfg_append => {
+          auth_pam              => '"BackupPC admin"',
+          auth_pam_service_name => '"nginx"',
+        },
+        location_alias      => '/usr/share/backuppc/cgi-bin/',
+      },
+      'cgi'       => {
+        server              => 'backuppc',
+        location            => '~\.cgi$',
+        fastcgi             => 'unix:/var/run/fcgiwrap.socket',
+        fastcgi_script      => '/usr/share/backuppc/cgi-bin$fastcgi_script_name',
+        fastcgi_params      => '/etc/nginx/fastcgi_params',
+        fastcgi_index       => 'BackupPC_Admin',
+        location_cfg_append => {
+          gzip => 'off',
+        },
+      },
+    },
   }
 
   #TODO: add mounts for srv2
