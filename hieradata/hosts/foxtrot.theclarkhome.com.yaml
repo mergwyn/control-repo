@@ -38,11 +38,6 @@ network::interfaces_hash:
     bridge_stp:                 "off"
 
 nginx::nginx_servers:
-  'backuppc':
-    server_name:                [ "%{::fqdn}" ]
-    listen_port:                80
-    www_root:                   '/usr/share/nginx/html'
-    use_default_location:       false
   'webdav':
     server_name:                [ "%{::fqdn}" ]
     listen_port:                80
@@ -52,22 +47,6 @@ nginx::nginx_servers:
     listen_port:                80
     use_default_location:       false
 nginx::nginx_locations:
-  '/backuppc':
-    server:                     'backuppc'
-    index_files:                [ "/index.cgi" ]
-    location_cfg_append:
-      auth_pam:                 '"BackupPC admin"'
-      auth_pam_service_name:    '"nginx"'
-    location_alias:             '/usr/share/backuppc/cgi-bin/'
-  'cgi':
-    server:                     'backuppc'
-    location:                   '~\.cgi$'
-    fastcgi:                    'unix:/var/run/fcgiwrap.socket'
-    fastcgi_script:             '/usr/share/backuppc/cgi-bin$fastcgi_script_name'
-    fastcgi_params:             '/etc/nginx/fastcgi_params'
-    fastcgi_index:              'BackupPC_Admin'
-    location_cfg_append:
-      gzip:                     'off'
   '/webdav':
     server:                     'webdav'
     autoindex:                  'on'
