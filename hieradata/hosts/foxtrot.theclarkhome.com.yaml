@@ -37,36 +37,5 @@ network::interfaces_hash:
     bridge_fd:                  "0"
     bridge_stp:                 "off"
 
-nginx::nginx_servers:
-  'webdav':
-    server_name:                [ "%{::fqdn}" ]
-    listen_port:                80
-    use_default_location:       false
-  'munki_repo':
-    server_name:                [ "%{::fqdn}" ]
-    listen_port:                80
-    use_default_location:       false
-nginx::nginx_locations:
-  '/webdav':
-    server:                     'webdav'
-    autoindex:                  'on'
-    index_files:                [ "/index.cgi" ]
-    location_alias:             '/srv/webdav'
-    location_cfg_append:
-      auth_pam:                 '"Restricted area"'
-      auth_pam_service_name:    '"nginx"'
-      dav_methods:              'PUT DELETE MKCOL COPY MOVE'
-      dav_ext_methods:          'PROPFIND OPTIONS'
-      dav_access:               'group:rw all:r'
-      create_full_put_path:     'on'
-  '/munki_repo/':
-    server:                     'munki_repo'
-    location_alias:             '/usr/share/nginx/html/munki-repo/'
-    autoindex:                  'off'
-    location_cfg_append:
-      auth_pam:                 '"Restricted area"'
-      auth_pam_service_name:    '"nginx"'
-
-
 ---
 # vim: sw=2:ai:nu expandtab
