@@ -4,6 +4,11 @@ class profile::core_users {
   # users and ssh access
   $passwordsalt = hiera('defaults::sharedpassword')
   user { 'root': password => "${passwordsalt}", }
+  file { '/root/.profile':
+    ensure => present,
+    path   => '/root/.profile',
+    source => 'file:///etc/skel/.profile',
+  }
   file { '/root/.bashrc':
     ensure => present,
     path   => '/root/.bashrc',

@@ -6,5 +6,4 @@ class role::lxd_server {
   include profile::samba_member
   include profile::domain_sso
   include profile::lxd_host
-  include profile::zfs_server
 }

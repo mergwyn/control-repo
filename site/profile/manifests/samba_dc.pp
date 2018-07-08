@@ -3,11 +3,30 @@
 
 class profile::samba_dc {
 
-    package { 'unison': }
-    file { '/etc/cron.daily/samba4-backup':
-      content => "#!/bin/sh\n/var/lib/samba/sysvol/theclarkhome.com/scripts/samba4_backup\n",
-      mode    => '0755',
-    }
+  package { 'unison': }
+  # TODO add unison replcaition script and cron entry
+
+  # support for samba backup as part of backuppc run
+  $scripts='/etc/backuppc/scripts/'
+  $preuser="${scripts}DumpPreUser/"
+  $postuser="${scripts}DumpPostUser/"
+
+  $oldfiles = [ 
+    '/var/lib/samba/sysvol/theclarkhome.com/scripts/samba4_backup',
+    '/etc/cron.daily/samba4-backup'
+  ]
+  file {$oldfiles: ensure => absent, }
+
+  file { "${preuser}/S30samba_backup":
+    ensure => present,
+    source => 'puppet:///modules/profile/backuppc/S30samba_backup',
+    mode   => '0555',
+  }
+  file { "${postuser}/P30samba_clean":
+    ensure => present,
+    source => 'puppet:///modules/profile/backuppc/P30samba_clean',
+    mode   => '0555',
+  }
     #class { '::samba::dc':
     #}
     #class { '::samba::dc':

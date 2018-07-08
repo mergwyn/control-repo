@@ -1,0 +1,11 @@
+#!/bin/bash
+#
+
+WHERE=/var/backups
+
+LEVEL=$1
+STATUS=$2
+echo $0: $LEVEL $STATUS
+
+[[ ${STATUS} = 1 ]] && rm "$WHERE/"{samba4_private.,sysvol}*bz2 
+

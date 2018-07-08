@@ -1,62 +1,114 @@
 #!/bin/bash
-# This file provides an easy way to add custom menu entries.  Simply type the
-# menu entries you want to add after this comment.  Be careful not to change
-# the 'exec tail' line above.
-#menuentry 'Ubuntu (snapshot)' {
-#        linux   /ROOT/bravo/@zfsroot/boot/vmlinuz-3.13.0-32-generic root=ZFS=rpool/ROOT/bravo@zfsroot ro boot=zfs
-#        initrd  /ROOT/bravo/@zfsroot/boot/initrd.img-3.13.0-32-generic
-#}
-rpool=rpool # name of root pool
+# support for boot environments and snapshots
+
+MNTINFO=$(mount | grep 'on / type')
+[[ ${MNTINFO} = *zfs* ]] || exit 0
+# we have a zfs root file system
+
+BOOTEDROOT=${MNTINFO%% *}
+oIFS=$IFS
+IFS=/ PARTS=( ${BOOTEDROOT} )
+IFS=$oIFS
+POOL=${PARTS[0]}
+BEDS=${PARTS[1]}
+#BE=${PARTS[2]}
+
+MNTDIR=/tmp/grub$$
+mkdir ${MNTDIR} || true
+
+declare -i COUNT=0
+declare -i INDENT=0
 
 [[ -f /etc/default/grub ]] && . /etc/default/grub
 DIST=${GRUB_DISTRIBUTOR:-"Linux"}
 
-snapdir=/.zfs/snapshot
-first=0
-rootfs=$(mount | grep 'on / type' | sed "s!^.*on / type !!" | cut -d ' ' -f 1)
-[ "$rootfs" != "zfs" ] && exit 0
+echowtabs()
+{
+  tabs=$1
+  shift
+  for ((i=0; i<$tabs; i++))
+  do
+    echo -n "	"
+  done
+  echo $*
+}
 
-# we have a zfs root file systems
-ROOT=$(mount | grep 'on / type' | cut -d ' ' -f 1)
-SROOT=$(echo $ROOT | sed "s:^$rpool::")
+make_entry()
+{
+  local _mntdir=$1
+  local _fs=$2
+  local _submenu="${3:-}"
 
-for snap in $(zfs list -r -p -t snap -o name $ROOT | sed "s!$ROOT@!!" | grep -v NAME | tac)
-do
-	if [ ! -d /.zfs/snapshot/$snap/boot/ ]
+  rootfs=${_fs%%@*}
+  be=${rootfs##*/}
+  snap=${fs#*@}
+  snapname=${snap}/
+  [[ ${snap} ]] && entry="@${snap}" || entry=""
+ 
+  ${MOUNT} ${_mntdir} >&2
+  if [[ -d ${_mntdir}/boot/ ]]
+  then
+    for version in $(cd ${_mntdir}/boot; ls -t vmlinuz-* | grep -v old-dkms)
+    do
+      version=$(echo $version | sed 's/^vmlinuz-//')
+      if [[ -f ${_mntdir}/boot/vmlinuz-$version && -f ${_mntdir}/boot/initrd.img-$version ]] 
+      then
+        if [[ ${COUNT} = 0 && ${_submenu} ]]
 	then
-		continue
+	  echowtabs ${INDENT} "submenu '${_submenu}' {"
+	  (( INDENT++ ))
 	fi
-	#for version in $(ls /.zfs/snapshot/$snap/boot/vmlinuz-* | grep -v old-dkms | sed "s:/.zfs/snapshot/$snap/boot/vmlinuz-::" | tac)
-	for version in $(cd /.zfs/snapshot/$snap/boot; ls vmlinuz-* | grep -v old-dkms | tac)
-	do
-		version=$(echo $version | sed 's/^vmlinuz-//')
-		if [ $first -eq 0 ] 
-		then
-			echo Found ZFS snapshots to include in menu >&2
-			cat <<!
-# Auto generated zfs snapshot entries
+        COUNT+=1
+	echo "Found kernel image: $version on ${_fs}" >&2
+	echowtabs ${INDENT} "menuentry '${DIST}, ${be}${entry}, with kernel $version ($(zfs list -H -o creation ${_fs}))' {"
+	echowtabs ${INDENT}+1 "	linux   /${BEDS}/${be}/@${snapname}boot/vmlinuz-$version root=ZFS=${_fs} ro boot=zfs"
+	echowtabs ${INDENT}+1 "	initrd  /${BEDS}/${be}/@${snapname}boot/initrd.img-$version"
+	echowtabs ${INDENT} "}"
+      fi
+    done
+  fi
+  ${UMOUNT} >&2
+}
 
-submenu 'ZFS snapshot boot options for $DIST' {
-!
-			first=1
-		fi
+echo "# Auto generated zfs boot environment and snapshot entries"
 
-		echo "Found linux image: $ROOT@$snap/boot/vmlinuz-$version" >&2
-
-		if [ -f /.zfs/snapshot/$snap/boot/initrd.img-$version ]
-		then
-			echo Found initrd image: $SROOT/@$snap/boot/initrd.img-$version >&2
-		fi
-		snapdate=$(zfs list -t snapshot -o creation $ROOT@$snap | tail -1)
-		cat <<!
-	menuentry '$snap $version ($snapdate)' {
-		linux   $SROOT/@$snap/boot/vmlinuz-$version root=ZFS=$ROOT@$snap ro boot=zfs
-		initrd  $SROOT/@$snap/boot/initrd.img-$version
-	}
-!
-	done
-	umount /.zfs/snapshot/$snap 2> /dev/null
+BELIST=$({
+if [[ $(which beadm) ]]
+then
+  beadm list -H | cut -f 1 | sed "s:^:${POOL}/${BEDS}/:"
+else
+  zfs list -H -r -p -o name ${POOL}/${BEDS}
+fi
+} | tac)
+for BE in $BELIST
+do
+  INDENT=0
+  if [[ ${BE} = ${BOOTEDROOT} ]]
+  then
+    MOUNT=:
+    UMOUNT=:
+    make_entry "" ${BE} "${DIST}, boot environment ${BE}"
+  else
+    be="${BE##*/}"
+    MOUNT="beadm mount ${be}"
+    UMOUNT="beadm umount "${be}""
+    make_entry ${MNTDIR} ${BE} "${DIST}, boot environment ${BE}"
+  fi
+  COUNT=0 # to make sure we don't output empt submenus
+  for fs in $(zfs list -H -r -p -t snap -o name ${BE} | tac)
+  do
+    MOUNT="mount -t zfs ${fs}"
+    UMOUNT="umount ${MNTDIR}"
+    make_entry ${MNTDIR} ${fs} "${DIST}, ${BE} snapshots"
+  done
+  until [[ $INDENT = 0 ]]
+  do
+    (( INDENT-- ))
+    echowtabs ${INDENT} "}"
+  done
 done
+rmdir ${MNTDIR}
 
-[[ $first -ne 0 ]] && echo "}" 
 exit 0
+
+# vim: sw=2:ai:nu 

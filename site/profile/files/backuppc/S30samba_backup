@@ -1,0 +1,98 @@
+#!/bin/sh
+#
+# Copyright (C) Matthieu Patou <mat@matws.net> 2010
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+
+FROMWHERE=/var/lib/samba
+case `hostname -s` in
+foxtrot)
+	WHERE=/srv/backup/`hostname -s`
+	;;
+*)
+	WHERE=/var/backups
+	;;
+esac
+if [ -n "$1" ] && [ "$1" = "-h" -o "$1" = "--usage" ]; then
+	echo "samba_backup [provisiondir] [destinationdir]"
+	echo "Will backup your provision located in provisiondir to archive stored in destinationdir"
+	echo "Default provisiondir: $FROMWHERE"
+	echo "Default destinationdir: $WHERE"
+	exit 0
+fi
+
+[ -n "$1" -a -d "$1" ]&&FROMWHERE=$1
+[ -n "$2" -a -d "$2" ]&&WHERE=$2
+
+echo $0: $FROMWHERE $WHERE
+
+DIRS="private sysvol"
+#Number of days to keep the backup
+DAYS="-daystart -mtime +2"
+WHEN=`date +%d%m%y`
+
+cd $FROMWHERE
+for d in $DIRS;do
+        relativedirname=`find . -type d -name "$d" -prune`
+        relativedirname=${relativedirname:-./$d/*}
+	n=`echo $d | sed 's/\//_/g'`
+	case "$d" in
+	"private")
+		for db in tdb ldb
+		do
+			find $relativedirname -name "*.$db.bak" -exec rm {} \;
+			for ldb in `find $relativedirname -name "*.$db"`; do
+				tdbbackup $ldb
+				if [ $? -ne 0 ]; then
+					echo "Error while backuping $ldb"
+					exit 1
+				fi
+			done
+		done
+		tar -cjf ${WHERE}/samba4_${n}.${WHEN}.tar.bz2  $relativedirname \
+			--exclude='*.ldb' --exclude='*.tdb' --exclude=*.tmp --exclude=./private/smbd.tmp --exclude=ldapi \
+			>/dev/null 2>&1
+		res=$?
+		case $res in
+		0)	;;
+		1)	#echo "Error $res while archiving ${WHERE}/samba4_${n}.${WHEN}.tar.bz2"
+			;;
+		*)	echo "Error $res while archiving ${WHERE}/samba4_${n}.${WHEN}.tar.bz2"
+                        exit 1
+			;;
+		esac
+		find $relativedirname -name "*.ldb.bak" -exec rm {} \;
+		find $relativedirname -name "*.tdb.bak" -exec rm {} \;
+		find $WHERE -name "samba4_*bz2" $DAYS -exec rm  {} \; >/dev/null 2>&1
+		;;
+	*)
+		TARGET=${WHERE}/${n}.${WHEN}
+		tar --exclude=.osync_monitor --exclude=.osync_workdir -cjf ${TARGET}.tar.bz2  $relativedirname #>/dev/null 2>&1
+		res=$?
+		case $res in
+		0)	;;
+		1)	echo "Error $res while archiving ${TARGET}.tar.bz2"
+			;;
+		*)	echo "Error $res while archiving ${TARGET}.tar.bz2"
+			exit 1
+			;;
+		esac
+		find $WHERE -name "${n}*bz2" $DAYS -exec rm  {} \; >/dev/null 2>&1
+		;;
+	esac
+done
+
+
+

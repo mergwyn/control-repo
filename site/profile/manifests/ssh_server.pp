@@ -2,7 +2,6 @@
 
 class profile::ssh_server {
   class { 'ssh::server':
-    storeconfigs_enabled => false,
     options              => {
       'HostKey'                         => [
         '/etc/ssh/ssh_host_rsa_key',
@@ -15,7 +14,7 @@ class profile::ssh_server {
       'GSSAPIKeyExchange'               => 'yes',
       'HostbasedAuthentication'         => 'no',
       'IgnoreRhosts'                    => 'yes',
-      'KerberosAuthentication'          => 'no',
+      'KerberosAuthentication'          => 'yes',
       'KeyRegenerationInterval'         => '3600',
       'LoginGraceTime'                  => '120',
       'LogLevel'                        => 'INFO',

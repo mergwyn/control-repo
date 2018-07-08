@@ -55,7 +55,7 @@ class profile::domain_sso {
     include cron
     ::systemd::dropin_file { 'sssd-wait.conf':
       unit    => 'cron.service',
-      content => '[Unit]\nAfter=nss-lookup.target\n',
+      content => "[Unit]\nAfter=nss-user-lookup.target\n",
       notify  => Service['cron'],
     } #~> service {'cron': ensure    => 'running', }
     file { "${crondir}/ssdwait.conf": ensure => absent }
@@ -66,7 +66,7 @@ class profile::domain_sso {
   # work aorund for bug where ssd pid file is not handled
   ::systemd::dropin_file { 'sssd-pidfile.conf':
     unit    => 'sssd.service',
-    content => '[Service]\nPIDFile=/var/run/sssd.pid\n',
+    content => "[Service]\nPIDFile=/var/run/sssd.pid\n",
     notify  => Service['sssd'],
   }
 }

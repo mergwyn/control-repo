@@ -3,6 +3,25 @@
 
 class profile::zfs_server {
 
+  exec { 'zfs_share-a':
+    command     => "/sbin/zfs share -a",
+    refreshonly => true,    
+  }
+  augeas { 'zfs.default':
+    lens => "shellvars.lns",
+    incl => '/etc/default/zfs',
+    context => '/files/etc/default/zfs',
+    notify => Exec['zfs_share-a'],
+    changes => [ 
+      'set ZFS_SHARE yes',
+      'set ZFS_UNSHARE yes'
+    ]   
+  }
+
+  $codedir='/opt/code'
+  $bindir='/usr/local/bin'
+  $mandir='/usr/local/share/man'
+
   # monthly report
   file { '/usr/local/bin/zfs_report.sh':
     ensure => present,
@@ -33,9 +52,31 @@ class profile::zfs_server {
     mode    => '0555',
   }
 
-  # zfs autosnap cron entries
+  # zfs autosnap 
+  vcsrepo { "$codedir/zfs-auto-snapshot":
+    ensure   => latest,
+    provider => git,
+    source   => 'https://github.com/zfsonlinux/zfs-auto-snapshot',
+    revision => 'master',
+    require  => Package['git', 'gawk'],
+  } 
+  file { "$bindir/zfs-auto-snapshot":
+    ensure => present,
+    mode   => '0755',
+    source => "file://$codedir/zfs-auto-snapshot/src/zfs-auto-snapshot.sh",
+  }
+  file { '/sbin/zfs-auto-snapshot': ensure => absent, }
+
+  file { "$mandir/man8": ensure => directory, }
+  
+  file { "$mandir/man8/zfs-auto-snapshot.8":
+    ensure => present,
+    mode   => '0644',
+    source => "file://$codedir/zfs-auto-snapshot/src/zfs-auto-snapshot.8",
+  }
+
   cron::job {'zfs-auto-snapshot':
-    environment => [ 'PATH="/usr/bin:/bin:/usr/sbin:/sbin"'],
+    environment => [ 'PATH="/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin"'],
     command     => 'zfs-auto-snapshot --quiet --syslog --label=01 --keep=4  //',
     user        => 'root',
     minute      => '*/15',
@@ -59,6 +100,38 @@ class profile::zfs_server {
     ensure  => present,
     mode    => '0555',
     content => "#!/bin/sh\nexec zfs-auto-snapshot --quiet --syslog --label=05 --keep=12 //\n"
+  }
+
+  # beadm boot environments
+
+ # lxd snap related commands
+  package { 'gawk': }
+  vcsrepo { "$codedir/beadm":
+      ensure   => latest,
+      provider => git,
+      source   => 'https://github.com/mergwyn/beadm',
+      revision => 'master',
+      require  => Package['git', 'gawk'],
+  }
+  file { "$bindir/beadm":
+    ensure => present,
+    mode   => '0555',
+    source => "file://$codedir/beadm/beadm",
+  }
+  file { "$mandir/man1": ensure => directory, }
+  file { "$mandir/man1/beadm.1":
+    ensure => present,
+    mode   => '0644',
+    source => "file://$codedir/beadm/beadm.1",
+  }
+
+  file { '/etc/default/beadm.conf':
+    ensure => absent,
+  }
+  file { '/etc/beadm.conf':
+    ensure => present,
+    mode   => '0555',
+    content => "#\nGRUB=YES\n"
   }
 
   # zabbix support

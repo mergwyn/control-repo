@@ -3,12 +3,15 @@
 set -o errexit
 
 cd "${1}"
-apt-get install python-pip
-pip install --upgrade pip idna
+apt install -y python3-pip
+python3 -m pip install --upgrade pip
+pip install --upgrade pip
+pip install --upgrade idna
 pip install pylxd
-apt-get install -y python-dev
-apt-get install -y libssl-dev libffi-dev
-apt-get install -y libxml2-dev libxslt1-dev
-apt-get install -y python3 python-virtualenv
+apt install -y python-dev
+apt install -y libssl-dev libffi-dev
+apt install -y libxml2-dev libxslt1-dev
+apt install -y python3 python-virtualenv
 make install
 chmod +x snap.py
+touch build.done

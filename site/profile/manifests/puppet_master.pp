@@ -26,8 +26,9 @@ class profile::puppet_master {
   class { 'apache::mod::wsgi': }
   # Configure Puppetboard
   class { 'puppetboard':
-    manage_git        => true,
-    manage_virtualenv => true,
+    manage_git          => true,
+    manage_virtualenv   => true,
+    default_environment => '*',
   }
   # Access Puppetboard through pboard.example.com
   class { 'puppetboard::apache::vhost':

@@ -2,6 +2,8 @@
 
 class profile::lxd_host {
   package { 'lxd': }
+  package { 'criu': }
+  package { 'bridge-utils': }
   package { 'git': }
   service { 'lxd':
     ensure  => 'running',
@@ -9,10 +11,11 @@ class profile::lxd_host {
     require => Package['lxd'],
   }
 
-  $installdir='/opt/code/lxdsnap'
+  $codedir='/opt/code/lxdsnap'
+  $bindir='/usr/local/bin'
 
   # lxd snap related commands
-  vcsrepo { $installdir:
+  vcsrepo { $codedir:
       ensure   => present,
       provider => git,
       require  => Package['git'],
@@ -20,26 +23,26 @@ class profile::lxd_host {
       revision => 'master',
       notify   => Exec['build-lxdsnap'],
   }
-  file { '/usr/local/bin/build_lxdsnap':
+  file { "${bindir}/build_lxdsnap":
     ensure => present,
     mode   => '0555',
     source => 'puppet:///modules/profile/build_lxdsnap',
   }
   exec { 'build-lxdsnap':
-    cwd         => $installdir,
+    cwd         => $codedir,
     path        => '/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin',
-    command     => "build_lxdsnap ${installdir}",
+    command     => "build_lxdsnap ${codedir}",
     timeout     => 600, # 10 minutes
-    require     => File['/usr/local/bin/build_lxdsnap'],
-    refreshonly => true,
+    require     => File["${bindir}/build_lxdsnap"],
+    creates     => "${codedir}/build.done",
   }
 
   # now lxdsnap crontab related jobs
-  file { '/usr/local/bin/lxdsnap_cron':
+  file { "${bindir}/lxdsnap_cron":
     ensure  => present,
     mode    => '0555',
     content => "#!/bin/bash
-python ${installdir}/snap.py 2>&1 | logger -t lxdsnap
+python ${codedir}/snap.py 2>&1 | logger -t lxdsnap
 status=\$?
 [[ \${status} -ne 0 ]] && 
 	logger -t lxdsnap -s \"lxdsnap returned \$status\"
@@ -49,13 +52,13 @@ status=\$?
   include cron
   cron::job { 'lxdsnap':
     environment => [ 'PATH="/usr/sbin:/usr/bin:/sbin:/bin"' ],
-    command     => '/usr/local/bin/lxdsnap_cron',
+    command     => "${bindir}/lxdsnap_cron",
     user        => 'root',
     minute      => 4,
   }
   file { '/etc/cron.hourly/lxdsnap': ensure => absent, }
 
-  file { '/usr/local/bin/upgrade_lxd':
+  file { "${bindir}/upgrade_lxd":
     ensure => present,
     mode   => '0555',
     source => 'puppet:///modules/profile/upgrade_lxd'
