@@ -10,8 +10,10 @@ class profile::backuppc_server {
   }
 
   # define nginx config
-  nginx::nginx_cfg_prepend => {
-    include => [ '/etc/nginx/modules-enabled/*.conf' ],
+  class { 'nginx':
+    nginx_cfg_prepend => {
+      include => [ '/etc/nginx/modules-enabled/*.conf' ],
+    }   
   }
 
   nginx::resource::server { 'backuppc':
