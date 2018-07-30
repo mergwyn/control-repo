@@ -13,7 +13,7 @@ class profile::backuppc_server {
   class { 'nginx':
     nginx_cfg_prepend => {
       include => [ '/etc/nginx/modules-enabled/*.conf' ],
-    }   
+    }
   }
 
   nginx::resource::server { 'backuppc':
@@ -45,6 +45,26 @@ class profile::backuppc_server {
   }
 
   #TODO: add mounts for srv2
+#UUID=87be41fa-af64-4165-b8a4-1d27cba1f349 /srv2	ext4	defaults,user_xattr,acl		0	0
+#/srv2/backuppc		/var/lib/backuppc	none	bind,rw				0	0
+
+  mount { 'srv2':
+    ensure  => 'mounted',
+    name    => '/srv2',
+    device  => 'UUID=87be41fa-af64-4165-b8a4-1d27cba1f349',
+    fstype  => 'ext4',
+    options => 'defaults,user_xattr,acl',
+  }
+
+  mount { 'backuppc':
+    ensure   => 'mounted',
+    name     => '/var/lib/backuppc',
+    device   => '/srv2/backuppc'
+    fstype   => 'none',
+    options  => 'bind,rw',
+    requires => Mount['srv2'],
+  }
+
   group { 'backuppc':
     gid        => '127',
   }
@@ -55,7 +75,7 @@ class profile::backuppc_server {
     comment    => 'BackupPC,,,',
     managehome => false,
   }
-  
+
   # Hook into zabbix
   zabbix::userparameters { 'backuppc':
     source => 'puppet:///modules/profile/backuppc/backuppc.conf',
