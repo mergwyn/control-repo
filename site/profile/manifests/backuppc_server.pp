@@ -59,7 +59,7 @@ class profile::backuppc_server {
   mount { 'backuppc':
     ensure   => 'mounted',
     name     => '/var/lib/backuppc',
-    device   => '/srv2/backuppc'
+    device   => '/srv2/backuppc',
     fstype   => 'none',
     options  => 'bind,rw',
     requires => Mount['srv2'],
