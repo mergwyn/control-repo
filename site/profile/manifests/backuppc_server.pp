@@ -112,7 +112,7 @@ class profile::backuppc_server {
   #}
 
   # collect hostkeys
-  Sshkey <<| tag == "backuppc_sshkeys_${facts['networking']['fqdn']}" |>>
-  #Sshkey <<| |>>
+  #Sshkey <<| tag == "backuppc_sshkeys_${facts['networking']['fqdn']}" |>>
+  Sshkey <<| |>>
 
 # vim: sw=2:ai:nu expandtab
