@@ -7,7 +7,7 @@ class profile::base {
   package { 'landscape-common':         ensure => present, }
   package { 'vim':                      ensure => present, }
   package { 'anacron':                  ensure => present, }
-  package { 'vim-tiny':                 ensure => absent, }
+  package { [ 'vim-tiny', 'mlocate' ]:  ensure => absent, }
 
   file { '/etc/legal':                  ensure  => absent, }
   file { '/etc/vim/vim.local':          ensure  => absent, }
