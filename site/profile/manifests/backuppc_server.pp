@@ -93,7 +93,7 @@ class profile::backuppc_server {
 
   # Export backuppc's authorized key to all clients
   # TODO don't rely on facter to obtain the ssh key.
-  #if $facts['backuppc_pubkey_rsa'] != undef {
+  if $facts['backuppc_pubkey_rsa'] != undef {
     @@ssh_authorized_key { "backuppc_${facts['networking']['fqdn']}":
       ensure  => present,
       key     => $facts['backuppc_pubkey_rsa'],
@@ -109,7 +109,7 @@ class profile::backuppc_server {
       type    => 'ssh-rsa',
       tag     => "backuppc_${facts['networking']['fqdn']}",
     }
-  #}
+  }
 
   # collect hostkeys
   #Sshkey <<| tag == "backuppc_sshkeys_${facts['networking']['fqdn']}" |>>
