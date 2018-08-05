@@ -3,7 +3,7 @@
 
 class profile::photos {
   apt::ppa { 'ppa:nilarimogard/webupd8':
-    package_manage => true
+    #package_manage => true
   }
 
   package { 'grive':
