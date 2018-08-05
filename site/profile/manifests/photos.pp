@@ -1,7 +1,7 @@
 #
 # TODO: complete testing of settings setup
 
-class profile::grive (
+class profile::grive {
   apt::ppa { 'ppa:nilarimogard/webupd8':
     package_manage => true
   }
