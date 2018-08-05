@@ -1,7 +1,6 @@
 #
 
 class profile::web_server {
-  include nginx
   package { [ 'fcgiwrap' ]: }
 
   # define nginx config
