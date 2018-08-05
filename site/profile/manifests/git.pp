@@ -2,7 +2,7 @@
 
 class profile::git {
 
-  package { [ 'software-properties-common', 'git' ] : }
+  package { [ 'python-software-properties', 'git' ] : }
 
 }
 
