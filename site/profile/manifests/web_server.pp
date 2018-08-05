@@ -4,6 +4,13 @@ class profile::web_server {
   include nginx
   package { [ 'fcgiwrap' ]: }
 
+  # define nginx config
+  class { 'nginx':
+    nginx_cfg_prepend => {
+      include => [ '/etc/nginx/modules-enabled/*.conf' ],
+    }
+  }
+
   nginx::resource::server { 'webdav':
     server_name          => [ $::facts['fqdn'] ],
     listen_port          => 80,

@@ -9,13 +9,6 @@ class profile::backuppc_server {
     enable => false,
   }
 
-  # define nginx config
-  class { 'nginx':
-    nginx_cfg_prepend => {
-      include => [ '/etc/nginx/modules-enabled/*.conf' ],
-    }
-  }
-
   nginx::resource::server { 'backuppc':
     server_name          => [ $::facts['fqdn'] ],
     listen_port          => 80,
