@@ -4,12 +4,12 @@ class profile::lxd_host {
   package { 'lxd': }
   package { 'criu': }
   package { 'bridge-utils': }
-  package { 'git': }
   service { 'lxd':
     ensure  => 'running',
     #enable  => true,
     require => Package['lxd'],
   }
+  include profile::git
 
   $codedir='/opt/code/lxdsnap'
   $bindir='/usr/local/bin'

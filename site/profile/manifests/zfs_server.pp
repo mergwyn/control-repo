@@ -3,6 +3,7 @@
 
 class profile::zfs_server {
 
+  include profile::git
   exec { 'zfs_share-a':
     command     => "/sbin/zfs share -a",
     refreshonly => true,    
