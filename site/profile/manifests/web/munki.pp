@@ -1,6 +1,6 @@
 #
 
-class profile::web:munki {
+class profile::web::munki {
   include profile::web::nginx
 
   nginx::resource::server { 'munki_repo':,
