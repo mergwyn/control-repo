@@ -160,7 +160,7 @@ zabbix	ALL=(root)	NOPASSWD:	/sbin/zfs
   kmod::option { 'zfs_arc_max':
     module  => 'zfs',
     option  => 'zfs_arc_max',
-    value   => $::facts['memory']['system']['total']/2,
+    value   => $::facts['memory']['system']['total_bytes']/2,
   }
 
 }
