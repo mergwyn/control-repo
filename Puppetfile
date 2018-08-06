@@ -3,6 +3,7 @@ forge 'http://forge.puppetlabs.com'
 
 mod 'andschwa-unattended_upgrades', '0.2.3'
 mod 'camptocamp-augeas', '1.6.0'
+mod 'camptocamp-kmod', '2.2.0'
 mod 'camptocamp-postfix', '1.6.0'
 mod 'camptocamp-systemd', '1.1.1'
 #mod 'CraigWatson1987-transmission', '2.1.0'

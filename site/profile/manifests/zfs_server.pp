@@ -153,5 +153,15 @@ zabbix	ALL=(root)	NOPASSWD:	/sbin/zfs
     mode    => '0440',
   }
 
+  # set kernel parameters
+  # available_bytes
+  #
+
+  kmod::option { 'zfs_arc_max':
+    module  => 'zfs',
+    option  => 'zfs_arc_max',
+    value   => $::facts['memory']['system']['total']/2,
+  }
+
 }
 # vim: sw=2:ai:nu expandtab
