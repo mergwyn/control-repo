@@ -42,7 +42,7 @@ class profile::lxd_host {
     ensure  => present,
     mode    => '0555',
     content => "#!/bin/bash
-python ${codedir}/snap.py 2>&1 | logger -t lxdsnap
+python3 ${codedir}/snap.py 2>&1 | logger -t lxdsnap
 status=\$?
 [[ \${status} -ne 0 ]] && 
 	logger -t lxdsnap -s \"lxdsnap returned \$status\"
