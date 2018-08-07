@@ -154,13 +154,15 @@ zabbix	ALL=(root)	NOPASSWD:	/sbin/zfs
   }
 
   # set kernel parameters
-  # available_bytes
-  #
-
   kmod::option { 'zfs_arc_max':
     module  => 'zfs',
     option  => 'zfs_arc_max',
     value   => $::facts['memory']['system']['total_bytes']/2,
+    notify  => Exec['update_initramfs_all']
+  }
+  exec { 'update_initramfs_all':
+    command     => 'update-initramfs -k all -u',
+    refreshonly => true
   }
 
 }
