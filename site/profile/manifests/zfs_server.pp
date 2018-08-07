@@ -167,7 +167,7 @@ zabbix	ALL=(root)	NOPASSWD:	/sbin/zfs
     notify  => Exec['update_initramfs_all']
   }
   exec { 'update_initramfs_all':
-    command     => 'update-initramfs -k all -u',
+    command     => '/usr/sbin/update-initramfs -k all -u',
     refreshonly => true
   }
 
