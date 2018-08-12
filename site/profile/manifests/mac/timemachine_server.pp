@@ -8,7 +8,7 @@ class profile::mac::timemachine_server {
     ensure            => present,
     path              => '/etc/netatalk/AppleVolumes.default',
     section           => '',
-    key_val_separator => '',
+    key_val_separator => ' ',
     setting           => ':DEFAULT:',
     value             => 'options:upriv,usedots,noadouble',
   }
@@ -17,7 +17,7 @@ class profile::mac::timemachine_server {
     ensure            => present,
     path              => '/etc/netatalk/AppleVolumes.default',
     section           => '',
-    key_val_separator => '',
+    key_val_separator => ' ',
     setting           => '/srv/timemachine',
     value             => '"Time Machine" cnidscheme:dbd options:usedots,upriv,tm',
   }
