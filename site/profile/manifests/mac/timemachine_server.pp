@@ -9,13 +9,13 @@ class profile::mac::timemachine_server {
     ensure => present,
     path   => '/etc/netatalk/AppleVolumes.default',
     line   => ':DEFAULT: options:upriv,usedots,noadouble',
-    match  => ':DEFAULT:',
+    match  => '^:DEFAULT:',
   }
   file_line { 'timemachine':
     ensure => present,
     path   => '/etc/netatalk/AppleVolumes.default',
     line   => '/srv/timemachine "Time Machine" cnidscheme:dbd options:usedots,upriv,tm',
-    match  => '/srv/timemachine',
+    match  => '^/srv/timemachine',
   }
 
   #ini_setting {'default':
