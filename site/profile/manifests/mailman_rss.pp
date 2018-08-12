@@ -26,6 +26,7 @@ class profile::mailman_rss (
   }
   exec { 'install_requirements':
     path        => ['/bin', '/usr/bin', '/sbin', '/usr/sbin', '/usr/local/bin'],
+    cwd         => "${target}",
     command     => 'pip install -r requirements.txt',
     refreshonly => true
   }
