@@ -8,5 +8,6 @@ class role::main_server {
   include profile::web::webdav
   include profile::web::munki
   include profile::photos
+  include profile::mac:timemachine_server
 }
 # vim: sw=2:ai:nu expandtab
