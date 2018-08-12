@@ -9,5 +9,6 @@ class role::main_server {
   include profile::web::munki
   include profile::photos
   include profile::mac::timemachine_server
+  include profile::mailman_rssm
 }
 # vim: sw=2:ai:nu expandtab
