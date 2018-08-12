@@ -9,9 +9,7 @@ class profile::mailman_rss (
 
   include profile::git
 
-  file { [ "${htmldir}/rss" ]:
-    ensure => directory,
-  }
+  file { "${htmldir}/rss": ensure => directory, }
 
   $target="${codedir}/mailman-archive-scraper"
 
@@ -46,5 +44,6 @@ class profile::mailman_rss (
   file { "${target}/zfs-discuss.cfg":
     source => 'puppet:///modules/profile/zfs/zfs-discuss.cfg',
   }
+  file { "${htmldir}/rss/zfs-discuss": ensure => directory, }
 }
 # vim: sw=2:ai:nu expandtab
