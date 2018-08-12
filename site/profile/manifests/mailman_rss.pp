@@ -36,7 +36,7 @@ class profile::mailman_rss (
 
   # set up cron
   file { '/etc/cron.hourly/mailman-rss':
-    ensure  => present,
+    ensure  => absent,
     mode    => '0555',
     content => "#!/bin/sh\nexec /usr/bin/python ${target}/MailmanArchiveScraper.py ${target}/zfs*.cfg\n",
   }
