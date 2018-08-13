@@ -20,6 +20,14 @@ class profile::puppet_master {
   class { 'puppetdb': }
   # Configure the Puppet master to use puppetdb
   class { 'puppetdb::master::config': }
+  # Clean old reports
+  tidy { '/opt/puppetlabs/server/data/puppetserver/reports':
+    age     => '30d',
+    matches => "*.yaml",
+    recurse => true,
+    rmdirs  => false,
+    type    => ctime,
+  }
 
   # Configure Apache on this server
   class { 'apache': }
