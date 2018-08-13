@@ -28,10 +28,10 @@ class profile::mailman_rss (
 PYTHON="--python /usr/bin/python"
 install: venv/bin/activate
 venv/bin/activate: requirements.txt
-        test -d venv || virtualenv $(PYTHON) venv
-        . venv/bin/activate; pip install -Ur requirements.txt
-        chmod a+x MailmanArchiveScraper.py
-        touch venv/bin/activate
+	/opt/code/mailman-archive-scraper test -d venv || virtualenv $(PYTHON) venv
+	. venv/bin/activate; pip install -Ur requirements.txt
+	chmod a+x MailmanArchiveScraper.py
+	touch venv/bin/activate
 ',
   }
 
