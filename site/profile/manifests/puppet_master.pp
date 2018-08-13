@@ -9,9 +9,9 @@ class profile::puppet_master {
   class { 'r10k':
     cachedir => '/var/cache/r10k',
     sources  => {
-    'mergwyn' => {
-      'remote'  => 'https://github.com/mergwyn/theclarkhome-control',
-      'basedir' => "${::settings::codedir}/environments",
+      'mergwyn' => {
+        'remote'  => 'https://github.com/mergwyn/theclarkhome-control',
+        'basedir' => "${::settings::codedir}/environments",
       },
     },
   }
@@ -26,7 +26,7 @@ class profile::puppet_master {
     matches => "*.yaml",
     recurse => true,
     rmdirs  => false,
-    type    => ctime,
+    type    => mtime,
   }
 
   # Configure Apache on this server
