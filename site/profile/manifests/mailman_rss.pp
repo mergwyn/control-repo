@@ -19,26 +19,35 @@ class profile::mailman_rss (
     provider => git,
     source   => 'https://github.com/philgyford/mailman-archive-scraper',
     revision => 'master',
+    notify   => Exec['install_requirements'],
     require  => Package['git'],
-    notify   => Exec['install_requirements', 'chmod']
   }
-  exec { 'install_requirements':
-    path        => ['/bin', '/usr/bin', '/sbin', '/usr/sbin', '/usr/local/bin'],
-    cwd         => "${target}",
-    command     => 'pip install -r requirements.txt',
-    refreshonly => true
-  }
-  exec { 'chmod':
-    path        => ['/bin', '/usr/bin', '/sbin', '/usr/sbin', '/usr/local/bin'],
-    command     => "chmod a+x ${target}/MailmanArchiveScraper.py",
-    refreshonly => true
+  file { "${target}/Makefile":
+    ensure  => present,
+    content => '
+PYTHON="--python /usr/bin/python"
+install: venv/bin/activate
+venv/bin/activate: requirements.txt
+        test -d venv || virtualenv $(PYTHON) venv
+        . venv/bin/activate; pip install -Ur requirements.txt
+        chmod a+x MailmanArchiveScraper.py
+        touch venv/bin/activate
+',
   }
 
-  # set up cron
+  exec { 'install_requirements':
+    path        => ['/bin', '/usr/bin', '/sbin', '/usr/sbin', '/usr/local/bin'],
+    cwd         => $target,
+    command     => 'make install',
+    require     => File["${target}/Makefile"],
+    refreshonly => true,
+  }
+
+# set up cron
   file { '/etc/cron.hourly/mailman-rss':
     ensure  => absent,
     mode    => '0555',
-    content => "#!/bin/sh\nexec /usr/bin/python ${target}/MailmanArchiveScraper.py ${target}/zfs*.cfg\n",
+    content => "#!/bin/sh\nexec ${target}/venv/bin/python ${target}/MailmanArchiveScraper.py ${target}/zfs*.cfg\n",
   }
 
   file { "${target}/zfs-discuss.cfg":
