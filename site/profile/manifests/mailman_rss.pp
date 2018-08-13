@@ -25,7 +25,7 @@ class profile::mailman_rss (
   file { "${target}/Makefile":
     ensure  => present,
     content => '
-PYTHON="--python /usr/bin/python"
+PYTHON="--python=/usr/bin/python"
 install: venv/bin/activate
 venv/bin/activate: requirements.txt
 	test -d venv || virtualenv $(PYTHON) venv
