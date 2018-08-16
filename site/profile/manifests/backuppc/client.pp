@@ -1,5 +1,5 @@
 #
-class profile::backuppc_client {
+class profile::backuppc::client {
   $scripts='/etc/backuppc/scripts/'
   $preuser="${scripts}DumpPreUser/"
   $postuser="${scripts}DumpPostUser/"
@@ -42,14 +42,14 @@ class profile::backuppc_client {
     require => File["${system_home_directory}/.ssh"]
   }
 
-#  if $facts['networking']['fqdn'] != $backuppc_hostname {
-#    @@sshkey { $facts['networking']['fqdn']:
-#      ensure => $ensure,
-#      type   => 'ssh-rsa',
-#      key    => $facts['ssh']['rsa']['key'],
-#      tag    => "backuppc_sshkeys_${backuppc_hostname}",
-#    }
-#  }
+  if $facts['networking']['fqdn'] != $backuppc_hostname {
+    @@sshkey { $facts['networking']['fqdn']:
+      ensure => $ensure,
+      type   => 'ssh-rsa',
+      key    => $facts['ssh']['rsa']['key'],
+      tag    => "backuppc_sshkeys_${backuppc_hostname}",
+    }
+  }
 }
 
 

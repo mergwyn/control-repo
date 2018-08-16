@@ -3,6 +3,7 @@
 
 class profile::zfs_server {
 
+  include profile::git
   exec { 'zfs_share-a':
     command     => "/sbin/zfs share -a",
     refreshonly => true,    
@@ -150,6 +151,24 @@ zabbix	ALL=(root)	NOPASSWD:	/sbin/zpool
 zabbix	ALL=(root)	NOPASSWD:	/sbin/zfs
 ",
     mode    => '0440',
+  }
+
+  # set kernel parameters
+  kmod::option { 'zfs_arc_max':
+    module  => 'zfs',
+    option  => 'zfs_arc_max',
+    value   => $::facts['memory']['system']['total_bytes']/2,
+    notify  => Exec['update_initramfs_all']
+  }
+  kmod::option { 'zfs_arc_min':
+    module  => 'zfs',
+    option  => 'zfs_arc_min',
+    value   => $::facts['memory']['system']['total_bytes']/8,
+    notify  => Exec['update_initramfs_all']
+  }
+  exec { 'update_initramfs_all':
+    command     => '/usr/sbin/update-initramfs -k all -u',
+    refreshonly => true
   }
 
 }

@@ -1,18 +1,8 @@
 ---
 
 classes:
+  - role::main_server
   - role::lxd_server
-  - role::backup_server
-  - role::file_server
-
-#- profile::domain_sso
-#- nginx
-#- network
-#- profile::lxd_host
-
-#unattended_upgrades:
-#  stable:
-#      origin:                   'Jamie Cameron'
 
 network::interfaces_hash:
   enp3s0:

@@ -4,12 +4,12 @@ class profile::lxd_host {
   package { 'lxd': }
   package { 'criu': }
   package { 'bridge-utils': }
-  package { 'git': }
   service { 'lxd':
     ensure  => 'running',
     #enable  => true,
     require => Package['lxd'],
   }
+  include profile::git
 
   $codedir='/opt/code/lxdsnap'
   $bindir='/usr/local/bin'
@@ -42,7 +42,7 @@ class profile::lxd_host {
     ensure  => present,
     mode    => '0555',
     content => "#!/bin/bash
-python ${codedir}/snap.py 2>&1 | logger -t lxdsnap
+python3 ${codedir}/snap.py 2>&1 | logger -t lxdsnap
 status=\$?
 [[ \${status} -ne 0 ]] && 
 	logger -t lxdsnap -s \"lxdsnap returned \$status\"

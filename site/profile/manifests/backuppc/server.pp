@@ -1,5 +1,5 @@
 #
-class profile::backuppc_server {
+class profile::backuppc::server {
 
   package { 'pigz': }
 
@@ -8,13 +8,7 @@ class profile::backuppc_server {
     ensure => 'stopped',
     enable => false,
   }
-
-  # define nginx config
-  class { 'nginx':
-    nginx_cfg_prepend => {
-      include => [ '/etc/nginx/modules-enabled/*.conf' ],
-    }   
-  }
+  include profile::web::nginx
 
   nginx::resource::server { 'backuppc':
     server_name          => [ $::facts['fqdn'] ],
@@ -45,6 +39,26 @@ class profile::backuppc_server {
   }
 
   #TODO: add mounts for srv2
+#UUID=87be41fa-af64-4165-b8a4-1d27cba1f349 /srv2	ext4	defaults,user_xattr,acl		0	0
+#/srv2/backuppc		/var/lib/backuppc	none	bind,rw				0	0
+
+  mount { 'srv2':
+    ensure  => 'mounted',
+    name    => '/srv2',
+    device  => 'UUID=87be41fa-af64-4165-b8a4-1d27cba1f349',
+    fstype  => 'ext4',
+    options => 'defaults,user_xattr,acl',
+  }
+
+  mount { 'backuppc':
+    ensure  => 'mounted',
+    name    => '/var/lib/backuppc',
+    device  => '/srv2/backuppc',
+    fstype  => 'none',
+    options => 'bind,rw',
+    require => Mount['srv2'],
+  }
+
   group { 'backuppc':
     gid        => '127',
   }
@@ -55,7 +69,7 @@ class profile::backuppc_server {
     comment    => 'BackupPC,,,',
     managehome => false,
   }
-  
+
   # Hook into zabbix
   zabbix::userparameters { 'backuppc':
     source => 'puppet:///modules/profile/backuppc/backuppc.conf',
@@ -73,7 +87,7 @@ class profile::backuppc_server {
 
   # Export backuppc's authorized key to all clients
   # TODO don't rely on facter to obtain the ssh key.
-  #if $facts['backuppc_pubkey_rsa'] != undef {
+  if $facts['backuppc_pubkey_rsa'] != undef {
     @@ssh_authorized_key { "backuppc_${facts['networking']['fqdn']}":
       ensure  => present,
       key     => $facts['backuppc_pubkey_rsa'],
@@ -89,7 +103,7 @@ class profile::backuppc_server {
       type    => 'ssh-rsa',
       tag     => "backuppc_${facts['networking']['fqdn']}",
     }
-  #}
+  }
 
   # collect hostkeys
   #Sshkey <<| tag == "backuppc_sshkeys_${facts['networking']['fqdn']}" |>>
