@@ -9,9 +9,9 @@ class profile::puppet_master {
   class { 'r10k':
     cachedir => '/var/cache/r10k',
     sources  => {
-    'mergwyn' => {
-      'remote'  => 'https://github.com/mergwyn/theclarkhome-control',
-      'basedir' => "${::settings::codedir}/environments",
+      'mergwyn' => {
+        'remote'  => 'https://github.com/mergwyn/theclarkhome-control',
+        'basedir' => "${::settings::codedir}/environments",
       },
     },
   }
@@ -20,6 +20,14 @@ class profile::puppet_master {
   class { 'puppetdb': }
   # Configure the Puppet master to use puppetdb
   class { 'puppetdb::master::config': }
+  # Clean old reports
+  tidy { '/opt/puppetlabs/server/data/puppetserver/reports':
+    age     => '30d',
+    matches => "*.yaml",
+    recurse => true,
+    rmdirs  => false,
+    type    => mtime,
+  }
 
   # Configure Apache on this server
   class { 'apache': }
