@@ -1,7 +1,8 @@
 ---
 
-#classes:
+classes:
   - ntp
+  - sysctl
 
 ntp::driftfile: /var/lib/ntp/ntp.drift
 ntp::logfile: /var/log/ntp
@@ -17,5 +18,12 @@ ntp::restrict:
   - 127.0.0.1
   - 0.pool.ntp.org   mask 255.255.255.255    nomodify notrap nopeer noquery
   - 1.pool.ntp.org   mask 255.255.255.255    nomodify notrap nopeer noquery
+
+
+sysctl::values:
+  vm.swappiness:
+    value: '10'
+  dirty_ratio:
+    value: 15
 
 # vim: sw=2:ai:nu expandtab

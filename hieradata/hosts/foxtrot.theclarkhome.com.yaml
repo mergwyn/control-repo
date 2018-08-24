@@ -27,15 +27,5 @@ network::interfaces_hash:
     bridge_fd:                  "0"
     bridge_stp:                 "off"
 
-sysctl::values:
-  vm.swappiness:
-    value: '10'
-  vm.overcommit_memory:
-    value: 2
-  vm.overcommit_ratio:
-    value: 25
-  dirty_ratio:
-    value: 15
-
 ---
 # vim: sw=2:ai:nu expandtab
