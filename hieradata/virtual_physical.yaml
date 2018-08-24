@@ -23,7 +23,7 @@ ntp::restrict:
 sysctl::values:
   vm.swappiness:
     value: '10'
-  dirty_ratio:
+  vm.dirty_ratio:
     value: '15'
 
 # vim: sw=2:ai:nu expandtab
