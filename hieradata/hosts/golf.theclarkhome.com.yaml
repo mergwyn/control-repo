@@ -2,7 +2,6 @@
 
 classes:
   - role::lxd_server
-  - ntp
 
 network::interfaces_hash:
   enp3s0:
@@ -22,19 +21,14 @@ network::interfaces_hash:
     bridge_fd:                  "0"
     bridge_stp:                 "off"
 
-ntp::driftfile: /var/lib/ntp/ntp.drift
-ntp::logfile: /var/log/ntp
-ntp::ntpsigndsocket: /var/lib/samba/ntp_signd/
-ntp::servers:
-  - 127.127.1.0
-  - 0.pool.ntp.org     prefer
-  - 1.pool.ntp.org     prefer
-ntp::fudge: 
-  - 127.127.1.0 stratum 10
-ntp::restrict:
-  - default kod nomodify notrap nopeer mssntp
-  - 127.0.0.1
-  - 0.pool.ntp.org   mask 255.255.255.255    nomodify notrap nopeer noquery
-  - 1.pool.ntp.org   mask 255.255.255.255    nomodify notrap nopeer noquery
+sysctl::values:
+  vm.swappiness:
+    value: '10'
+  vm.overcommit_memory:
+    value: 2
+  vm.overcommit_ratio:
+    value: 25
+  dirty_ratio:
+    value: 15
 
 # vim: sw=2:ai:nu expandtab
