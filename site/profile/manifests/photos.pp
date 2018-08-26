@@ -11,6 +11,8 @@ class profile::photos {
     require => Apt::Ppa['ppa:nilarimogard/webupd8'],
   }
 
+  package { 'exiftran': }
+
   cron::job {'photo-upload':
     environment => [ 'PATH="/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin"'],
     command     => '/home/gary/photos/google_upload',
