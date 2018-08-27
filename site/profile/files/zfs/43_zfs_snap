@@ -94,13 +94,13 @@ do
     UMOUNT="beadm umount "${be}""
     make_entry ${MNTDIR} ${BE} "${DIST}, boot environment ${BE}"
   fi
-  COUNT=0 # to make sure we don't output empt submenus
-  for fs in $(zfs list -H -r -p -t snap -o name ${BE} | tac)
-  do
-    MOUNT="mount -t zfs ${fs}"
-    UMOUNT="umount ${MNTDIR}"
-    make_entry ${MNTDIR} ${fs} "${DIST}, ${BE} snapshots"
-  done
+#  COUNT=0 # to make sure we don't output empt submenus
+#  for fs in $(zfs list -H -r -p -t snap -o name ${BE} | tac)
+#  do
+#    MOUNT="mount -t zfs ${fs}"
+#    UMOUNT="umount ${MNTDIR}"
+#    make_entry ${MNTDIR} ${fs} "${DIST}, ${BE} snapshots"
+#  done
   until [[ $INDENT = 0 ]]
   do
     (( INDENT-- ))
