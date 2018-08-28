@@ -21,15 +21,18 @@ ROOT=$(mount | grep 'on / type' | cut -d ' ' -f 1)
 SROOT=$(echo $ROOT | sed "s:^$rpool::")
 
 
+make_entry ()
+{
+echo Adding snapshot selection entries for $1$2
 cat <<!
-	menuentry 'ZFS snapshot selection vmlinuz' {
-		linux   ${SROOT}/@/vmlinuz root=ZFS=${ROOT}@ ro boot=zfs
-		initrd  ${SROOT}/@/initrd.img
-	}
-	menuentry 'ZFS snapshot selection vmlinuz.old' {
-		linux   ${SROOT}/@/vmlinuz.old root=ZFS=${ROOT}@ ro boot=zfs
-		initrd  ${SROOT}/@/initrd.img.old
+	menuentry 'ZFS snapshot selection $1$2' {
+		linux   ${SROOT}/@/$1$2 root=ZFS=${ROOT}@ ro boot=zfs
+		initrd  ${SROOT}/@/initrd.img$2
 	}
 !
+}
+
+make_entry vmlinuz
+make_entry vmlinuz .old
 
 # vim: sw=2:ai:nu 
