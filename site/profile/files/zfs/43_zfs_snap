@@ -59,7 +59,7 @@ make_entry()
 	  (( INDENT++ ))
 	fi
         COUNT+=1
-	echo "Found kernel image: $version on ${_fs}" >&2
+	echo "Found kernel image: $version in boot environment ${be}${entry} " >&2 
 	echowtabs ${INDENT} "menuentry '${DIST}, ${be}${entry}, with kernel $version ($(zfs list -H -o creation ${_fs}))' {"
 	echowtabs ${INDENT}+1 "	linux   /${BEDS}/${be}/@${snapname}boot/vmlinuz-$version root=ZFS=${_fs} ro boot=zfs"
 	echowtabs ${INDENT}+1 "	initrd  /${BEDS}/${be}/@${snapname}boot/initrd.img-$version"
