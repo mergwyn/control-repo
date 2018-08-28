@@ -23,7 +23,7 @@ SROOT=$(echo $ROOT | sed "s:^$rpool::")
 
 make_entry ()
 {
-echo Adding snapshot selection entries for $1$2 >$2
+echo Adding snapshot selection entries for $1$2 >&2
 cat <<!
 	menuentry 'ZFS snapshot selection $1$2' {
 		linux   ${SROOT}/@/$1$2 root=ZFS=${ROOT}@ ro boot=zfs
