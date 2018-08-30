@@ -64,11 +64,17 @@ subnet 192.168.11.0 netmask 255.255.255.0 {
 
 	option routers 192.168.11.254;
 }
-host switch1 {
-	ddns-hostname "switch1";
-	option host-name "switch1";
+host netgear-gs108t-1 {
+	ddns-hostname "netgear-gs108t-1";
+	option host-name "netgear-gs108t-1";
 	hardware ethernet 00:8e:f2:59:c7:98;
 	fixed-address 192.168.11.1;
+}
+host netgear-gs116e-1 {
+	ddns-hostname "netgear-gs116e-1";
+	option host-name "netgear-gs116e-1";
+	hardware ethernet a0:40:a0:71:7e:ce;
+	fixed-address 192.168.11.2;
 }
 host zabbix1 {
 	hardware ethernet 00:0c:29:95:80:68;
