@@ -72,16 +72,13 @@ class profile::backuppc::server {
 
   # Hook into zabbix
   zabbix::userparameters { 'backuppc':
-    ensure  => present,
     source => 'puppet:///modules/profile/backuppc/backuppc.conf',
   }
   zabbix::userparameters { 'discovery_backuppc_sudo.pl':
-    ensure  => present,
     script  => 'puppet:///modules/profile/backuppc/discovery_backuppc_sudo.pl',
     mode    => '0555',
   }
   zabbix::userparameters { 'check_backuppc_sudo.pl':
-    ensure  => present,
     script  => 'puppet:///modules/profile/backuppc/check_backuppc_sudo.pl',
     mode    => '0555',
   }
