@@ -15,7 +15,7 @@ class profile::zabbix_agent {
 
   zabbix::userparameters { "discovery_disks.perl":
     script      => "puppet:///modules/profile/zabbix_agent/discovery_disks.perl",
-    script_dir  => ${dir},
+    script_dir  => $dir,
   }
   zabbix::userparameters { 'disk_autodiscovery':
     source => 'puppet:///modules/profile/zabbix_agent/disk_autodiscovery.conf',
@@ -23,7 +23,7 @@ class profile::zabbix_agent {
 
   zabbix::userparameters { "discovery_processes.sh":
     script      => "puppet:///modules/profile/zabbix_agent/discovery_processes.sh",
-    script_dir  => ${dir},
+    script_dir  => $dir,
   }
   zabbix::userparameters { 'process_autodiscovery':
     content => "UserParameter=custom.proc.discovery_perl,/etc/zabbix/scripts/discovery_processes.sh\n"
@@ -31,7 +31,7 @@ class profile::zabbix_agent {
 
   zabbix::userparameters { "discovery_tcp_services.perl":
     script      => "puppet:///modules/profile/zabbix_agent/discovery_tcp_services.perl",
-    script_dir  => ${dir},
+    script_dir  => $dir,
   }
   zabbix::userparameters { 'service_autodiscovery_tcp':
     content => "UserParameter=custom.services.tcp.discovery_perl,/etc/zabbix/scripts/discovery_tcp_services.perl\n",
@@ -39,7 +39,7 @@ class profile::zabbix_agent {
 
   zabbix::userparameters { "discovery_udp_services.perl":
     script      => "puppet:///modules/profile/zabbix_agent/discovery_udp_services.perl",
-    script_dir  => ${dir},
+    script_dir  => $dir,
   }
   zabbix::userparameters { 'service_autodiscovery_udp':
     content => "UserParameter=custom.services.udp.discovery_perl,/etc/zabbix/scripts/discovery_udp_services.perl\n",
