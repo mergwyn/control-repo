@@ -76,11 +76,9 @@ class profile::backuppc::server {
   }
   zabbix::userparameters { 'discovery_backuppc_sudo.pl':
     script  => 'puppet:///modules/profile/backuppc/discovery_backuppc_sudo.pl',
-    mode    => '0555',
   }
   zabbix::userparameters { 'check_backuppc_sudo.pl':
     script  => 'puppet:///modules/profile/backuppc/check_backuppc_sudo.pl',
-    mode    => '0555',
   }
 }
 
