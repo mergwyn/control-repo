@@ -2,6 +2,7 @@
 class profile::backuppc::server {
 
   package { 'pigz': }
+  package { 'libjson-perl': }
 
   # this assumes web server is defined and is nginx
   service { 'apache2':
