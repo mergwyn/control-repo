@@ -1,23 +1,13 @@
 #!/usr/bin/perl
 
 # Backuppc
+#use lib "/usr/local/BackupPC/lib";
 use lib "/usr/share/backuppc/lib";
 use BackupPC::Lib;
 use BackupPC::CGI::Lib;
 
-use POSIX;
-
-
 #Other
 use Data::Dumper;
-
-
-# We need to switch to backuppc UID/GID
-my $uid = getuid();
-my $gid = getgid();
-my (undef,undef,$bkpuid,$bkpgid) = getpwnam('backuppc');
-setuid($bkpuid) if ($uid ne $bkpuid);
-setgid($bkpgid) if ($gid ne $bkpgid);
 
 # Globals
 $bpc = BackupPC::Lib->new();
@@ -40,15 +30,15 @@ GetStatusInfo("jobs queueLen info");
 &general_info();
 &hosts_info();
 
-print "1";
 # Push Data to Zabbix
 foreach my $key (keys %Val) {
 	if ($Var{$key})
 	{
 		zabbix_post($Var{$key},$Val{$key});
-		#print "$Var{$key} | $Val{$key}\n";
+		print "$Var{$key} | $Val{$key}\n";
 	}
 }
+print "1";
 
 
 # Functions
@@ -63,8 +53,7 @@ sub hosts_info
 	$incrCnt2 = 0;
 	$total_speed_full = 0;
 	$total_speed_incr = 0;
-
-	$fullAgeDays = "NONE";
+	
 	$no_backups_2 = "NONE";
         $no_backups_3 = "NONE";
         $no_backups_4 = "NONE";
@@ -73,7 +62,6 @@ sub hosts_info
 	while ( my ($host, $value) = each(%$hosts) )
 	{
 
-		#if ($host = "archive") { next; }
 	        my @Backups = $bpc->BackupInfoRead($host);
         	$bpc->ConfigRead($host);
 		my %Conf = $bpc->Conf();
@@ -93,7 +81,7 @@ sub hosts_info
                 		$fullCnt++;
                 		if ( $fullAge < 0 || $Backups[$i]{startTime} > $fullAge ) 
 				{
-					$fullAge  = $Backups[$i]{startTime};
+                			$fullAge  = $Backups[$i]{startTime};
                     			$fullSize = $Backups[$i]{size};
                     			$fullDur  = $Backups[$i]{endTime} - $Backups[$i]{startTime};
                 		}
@@ -123,24 +111,47 @@ sub hosts_info
                         $total_speed_incr += ($incrSize / $incrDur);
 			$incrCnt2++;
                 }
-		
-		# Check for Hosts that don't have backups
-		if ($host != "archive") {
-			if ( (time() - $incrAge) > (86400 * 2)  && (time() - $fullAge) > (86400 * 2) && $Conf{BackupsDisable} == 0)
-			{ if ($no_backups_2 eq "NONE") { $no_backups_2 = "$host"} else { $no_backups_2 .= "\n$host" } }
 
-			if ( (time() - $incrAge) > (86400 * 3)  && (time() - $fullAge) > (86400 * 3) && $Conf{BackupsDisable} == 0)
-			{ if ($no_backups_3 eq "NONE") { $no_backups_3 = "$host"} else { $no_backups_3 .= "\n$host" } }
-
-			if ( (time() - $incrAge) > (86400 * 4)  && (time() - $fullAge) > (86400 * 4) && $Conf{BackupsDisable} == 0)
-			{ if ($no_backups_4 eq "NONE") { $no_backups_4 = "$host"} else { $no_backups_4 .= "\n$host" } }
-
-			if ( (time() - $incrAge) > (86400 * 5)  && (time() - $fullAge) > (86400 * 5) && $Conf{BackupsDisable} == 0)
-			{ if ($no_backups_5 eq "NONE") { $no_backups_5 = "$host"} else { $no_backups_5 .= "\n$host" } }
-			# Check for Hosts full backup age
-			if ( (time() - $fullAge) > (86400 * 7) && $Conf{BackupsDisable} == 0)
-			{ if ($fullAgeDays eq "NONE") { $fullAgeDays = "$host" } else { $fullAgeDays .= "\n$host" } }
+		if ($host eq "haulingaz")
+		{ 
+			print "Full Age: $fullAge\n";
+			print "Full Period: $Conf{FullPeriod}\n";
+			print "Incr Age: $incrAge\n";
+			print "Incr Period: $Conf{IncrPeriod}\n";
 		}
+
+                # Check for Hosts that don't have backups (Full)         
+		my $skip_inc = 0;
+
+		# If we have a full that less than 2 days old we can skip
+                if ( (time() - $fullAge) < ( (86400 * 2) ) && $Conf{BackupsDisable} == 0 )
+                { $skip_inc = 1;}
+
+		# If we don't have any fulls, we are going to set the no_backups so we can skip inc
+                if ( (time() - $fullAge) > ( ($Conf{FullPeriod} * 86400) + (86400 * 2) ) && $Conf{BackupsDisable} == 0 )
+                { if ($no_backups_2 eq "NONE") { $no_backups_2 = "$host"} else { $no_backups_2 .= "\n$host" } $skip_inc = 1;}
+
+                if ( (time() - $fullAge) > ( ($Conf{FullPeriod} * 86400) + (86400 * 3) ) && $Conf{BackupsDisable} == 0 )
+                { if ($no_backups_3 eq "NONE") { $no_backups_3 = "$host"} else { $no_backups_3 .= "\n$host" } $skip_inc = 1;}
+
+                if ( (time() - $fullAge) > ( ($Conf{FullPeriod} * 86400) + (86400 * 4) ) && $Conf{BackupsDisable} == 0 )
+                { if ($no_backups_4 eq "NONE") { $no_backups_4 = "$host"} else { $no_backups_4 .= "\n$host" } $skip_inc = 1;}
+
+                if ( (time() - $fullAge) > ( ($Conf{FullPeriod} * 86400) + (86400 * 5) ) && $Conf{BackupsDisable} == 0 )
+                { if ($no_backups_5 eq "NONE") { $no_backups_5 = "$host"} else { $no_backups_5 .= "\n$host" } $skip_inc = 1;}
+
+		# Check for Hosts that don't have backups (Incremental)		
+		if ( (time() - $incrAge) > ( ($Conf{IncrPeriod} * 86400) + (86400 * 2) ) && $Conf{BackupsDisable} == 0 && $Conf{IncrKeepCnt} > 0 && $skip_inc == 0)
+		{ if ($no_backups_2 eq "NONE") { $no_backups_2 = "$host"} else { $no_backups_2 .= "\n$host" } }
+		
+		if ( (time() - $incrAge) > ( ($Conf{IncrPeriod} * 86400) + (86400 * 3) ) && $Conf{BackupsDisable} == 0 && $Conf{IncrKeepCnt} > 0 && $skip_inc == 0)
+                { if ($no_backups_3 eq "NONE") { $no_backups_3 = "$host"} else { $no_backups_3 .= "\n$host" } }
+
+		if ( (time() - $incrAge) > ( ($Conf{IncrPeriod} * 86400) + (86400 * 4) ) && $Conf{BackupsDisable} == 0 && $Conf{IncrKeepCnt} > 0 && $skip_inc == 0)
+                { if ($no_backups_4 eq "NONE") { $no_backups_4 = "$host"} else { $no_backups_4 .= "\n$host" } }
+
+		if ( (time() - $incrAge) > ( ($Conf{IncrPeriod} * 86400) + (86400 * 5) ) && $Conf{BackupsDisable} == 0 && $Conf{IncrKeepCnt} > 0 && $skip_inc == 0)
+                { if ($no_backups_5 eq "NONE") { $no_backups_5 = "$host"} else { $no_backups_5 .= "\n$host" } }
 
 
        	}
@@ -149,7 +160,6 @@ sub hosts_info
 	if ($incrCnt2 > 0 )
 	{ $Val{hostsAvgIncrSpeed} = ($total_speed_incr / $incrCnt2); }
 	$Val{hostsFullSize}  = $fullSizeTot;
-	$Val{hostsFullAgeDays} = $fullAgeDays;
 	$Val{hostsFullCount} = $fullCnt;
         $Val{hostsIncrSize}  = $incrSizeTot;
         $Val{hostsIncrCount} = $incrCnt;
@@ -164,7 +174,7 @@ sub pool_info
         while ( my ($key, $value) = each(%Info) )
         {
                 if ($key =~ /pool/)
-                {$Val{$key} = $Info{$key}; }
+                {$Val{$key} = int($Info{$key}); }
         }
 }
 
@@ -290,7 +300,6 @@ sub zabbix_post {
 	my $val = $_[1];
 	
         my $cmd = "zabbix_sender -z $zabbix_server -p 10051 -s $zabbix_host -k $key -o '$val'";
-	#print "$cmd\n";
         system("$cmd >/dev/null");
 }
 
@@ -330,7 +339,6 @@ sub var_config {
 
 	# Hosts
         $Var{hostsAvgFullSpeed}                 = "backuppc.hosts_full_speed";
-	$Var{hostsFullAgeDays}			= "backuppc.hosts_full_age_days";
         $Var{hostsAvgIncrSpeed}                 = "backuppc.hosts_incr_speed";
         $Var{hostsFullSize}                     = "backuppc.hosts_full_size";
         $Var{hostsFullCount}                    = "backuppc.hosts_full_count";
@@ -341,6 +349,5 @@ sub var_config {
 	$Var{hostsNoBackups4}			= "backuppc.hosts_nobackup_4";
 	$Var{hostsNoBackups5}			= "backuppc.hosts_nobackup_5";
 }
-
 
 
