@@ -2,6 +2,7 @@
 
 class profile::zabbix_agent {
   class {'zabbix::agent': }
+  package {'zabbix-sender': }
 
   $etc='/etc/zabbix'
   $dir="$etc/scripts"
