@@ -39,10 +39,6 @@ class profile::backuppc::server {
     },
   }
 
-  #TODO: add mounts for srv2
-#UUID=87be41fa-af64-4165-b8a4-1d27cba1f349 /srv2	ext4	defaults,user_xattr,acl		0	0
-#/srv2/backuppc		/var/lib/backuppc	none	bind,rw				0	0
-
   mount { 'srv2':
     ensure  => 'mounted',
     name    => '/srv2',
@@ -71,16 +67,25 @@ class profile::backuppc::server {
     managehome => false,
   }
 
+  include sudo
+  sudo::conf { 'zabbix-backuppc':
+    content => 'zabbix  ALL=(ALL)       NOPASSWD:       /etc/zabbix/scripts/*',
+  }
+
   # Hook into zabbix
   zabbix::userparameters { 'backuppc':
     source => 'puppet:///modules/profile/backuppc/backuppc.conf',
   }
   zabbix::userparameters { 'discovery_backuppc_sudo.pl':
-    script  => 'puppet:///modules/profile/backuppc/discovery_backuppc_sudo.pl',
+    script     => 'puppet:///modules/profile/backuppc/discovery_backuppc_sudo.pl',
     script_dir => '/etc/zabbix/scripts',
   }
   zabbix::userparameters { 'check_backuppc_sudo.pl':
-    script  => 'puppet:///modules/profile/backuppc/check_backuppc_sudo.pl',
+    script     => 'puppet:///modules/profile/backuppc/check_backuppc_sudo.pl',
+    script_dir => '/etc/zabbix/scripts',
+  }
+  zabbix::userparameters { 'backuppc_info.pl':
+    script     => 'puppet:///modules/profile/backuppc/backuppc_info.pl',
     script_dir => '/etc/zabbix/scripts',
   }
 }
