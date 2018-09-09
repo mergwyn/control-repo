@@ -29,9 +29,19 @@
 # give disk dmname, returns Proxmox VM name
 sub get_vmname_by_id
   {
-  $vmname=`cat /etc/qemu-server/$_[0].conf | grep name | cut -d \: -f 2`;
+  if (-e "/etc/qemu-server/$_[0].conf") {
+    $CONFFILE__="/etc/qemu-server/$_[0].conf";
+    }
+  elsif (-e "/etc/pve/qemu-server/$_[0].conf") {
+    $CONFFILE__="/etc/pve/qemu-server/$_[0].conf";
+    }
+  else {
+    return "";
+    }
+  $vmname=`cat $CONFFILE__ | grep name | cut -d \: -f 2`;
   $vmname =~ s/^\s+//; #remove leading spaces
   $vmname =~ s/\s+$//; #remove trailing spaces
+  $vmname =~ s/\n$//; #remove trailing \n
   return $vmname
   }
 
@@ -60,8 +70,8 @@ for (`cat /proc/diskstats`)
     }
   #print("$major $minor $disk $diskdev $dmname $vmid $vmname \n");
 
-  print "\t,\n" if not $first;
-  $first = 0;
+  print "\t,\n" if not $firstline;
+  $firstline = 0;
 
   print "\t{\n";
   print "\t\t\"{#DISK}\":\"$disk\",\n";
