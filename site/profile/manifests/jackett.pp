@@ -26,20 +26,20 @@ class profile::jackett () {
     enable  => true,
     active  => true,
     content => '[Unit]
-  Description=Jackett Daemon
-  After=network.target
+Description=Jackett Daemon
+After=network.target
 
-  [Service]
-  User=media
-  Restart=always
-  RestartSec=5
-  Type=simple
-  ExecStart=/usr/bin/mono --debug /opt/Jackett/JackettConsole.exe --NoRestart
-  TimeoutStopSec=20
+[Service]
+User=media
+Restart=always
+RestartSec=5
+Type=simple
+ExecStart=/usr/bin/mono --debug /opt/Jackett/JackettConsole.exe --NoRestart
+TimeoutStopSec=20
 
-  [Install]
-  WantedBy=multi-user.target
-  '
+[Install]
+WantedBy=multi-user.target
+'
     }
 }
 # vim: sw=2:ai:nu expandtab
