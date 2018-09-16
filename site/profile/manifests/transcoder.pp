@@ -11,7 +11,7 @@ class profile::transcoder {
       provider => git,
       require  => Package['git'],
       source   => 'https://github.com/mergwyn/scripts.git',
-      revision => 'latest',
+      revision => 'master',
   }
 
   include cron
