@@ -103,6 +103,7 @@ class profile::dhcp_server (
     enable  => true,
     require => Package['apparmor'],
   }
+  include profile::apparmor
   file { "/etc/apparmor.d/local/usr.sbin.dhcpd":
     ensure  => file,
     notify  => Service["apparmor"],

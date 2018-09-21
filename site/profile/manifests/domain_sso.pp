@@ -56,9 +56,19 @@ class profile::domain_sso {
     ],
   }
 
+  include profile::apparmor
+  file { "/etc/apparmor.d/local/usr.sbin.sssd":
+    ensure  => file,
+    notify  => Service['sssd', 'apparmor'],
+    content  => "  /var/lib/samba/private/krb5.conf r,",
+    owner   => 'root',
+    group   => 'root',
+  }
+
   # work around for cron starting before sssd
   $crondir = '/etc/systemd/system/cron.service.d'
-  if $::facts['os']['release']['full'] == '16.04' {
+  if $::facts['os']['release']['full'] == '16.04' or
+     $::facts['os']['release']['full'] == '18.04'  {
     include cron
     ::systemd::dropin_file { 'sssd-wait.conf':
       unit    => 'cron.service',
