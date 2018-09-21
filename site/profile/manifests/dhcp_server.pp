@@ -97,12 +97,6 @@ class profile::dhcp_server (
   }
 
   # need to make sure apparmor is updated to allow the scripts to fire
-  package { 'apparmor': }
-  service { 'apparmor':
-    ensure  => 'running',
-    enable  => true,
-    require => Package['apparmor'],
-  }
   include profile::apparmor
   file { "/etc/apparmor.d/local/usr.sbin.dhcpd":
     ensure  => file,
