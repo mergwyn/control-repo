@@ -60,7 +60,7 @@ class profile::domain_sso {
   file { "/etc/apparmor.d/local/usr.sbin.sssd":
     ensure  => file,
     notify  => Service['sssd', 'apparmor'],
-    content  => "  /var/lib/samba/private/krb5.conf r,",
+    content  => "  /var/lib/samba/private/krb5.conf r,\n",
     owner   => 'root',
     group   => 'root',
   }
