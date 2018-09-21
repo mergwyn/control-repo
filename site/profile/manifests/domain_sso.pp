@@ -1,12 +1,12 @@
 #
 
 class profile::domain_sso {
-  if ($samba::dc::role != "") {
-    require profile::samba_member
-  }
-  else {
-    require profile::samba_dc
-  }
+#  if ($samba::dc::role != "") {
+#    require profile::samba_member
+#  }
+#  else {
+#    require profile::samba_dc
+#  }
 
   exec { 'create_keytab':
     command => '/usr/bin/net ads keytab create -P',
