@@ -22,7 +22,7 @@ ntp::restrict:
 
 sysctl::values:
   vm.swappiness:
-    value: '10'
+    value: '1'
   vm.dirty_ratio:
     value: '15'
 
