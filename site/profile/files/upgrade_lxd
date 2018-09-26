@@ -11,7 +11,7 @@
 # ----------------------------------------------------------------------------
 # Set full path to bins 
 _apt="/usr/bin/apt-get"
-_lxc="/usr/bin/lxc"
+_lxc="lxc"
 _awk="/usr/bin/awk"
 bold=$(tput setaf 1) 
 normal=$(tput setaf 0) 
