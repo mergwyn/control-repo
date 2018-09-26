@@ -9,11 +9,11 @@ class profile::lxd_host {
     provider => snap,
   }
 
-  service { 'lxd':
-    ensure  => 'running',
-    #enable  => true,
-    require => Package['lxd'],
-  }
+  #service { 'lxd':
+  #  ensure  => 'running',
+  #  #enable  => true,
+  #  require => Package['lxd'],
+  #}
   include profile::git
 
   $codedir='/opt/code/lxdsnap'
