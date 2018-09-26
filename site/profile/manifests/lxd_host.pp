@@ -4,7 +4,7 @@ class profile::lxd_host {
   package { [ 'criu', 'bridge-utils' ]: }
 
   include ::snapd
-  package { 'lxd': }
+  package { 'lxd': 
     ensure   => latest,
     provider => snap,
   }
