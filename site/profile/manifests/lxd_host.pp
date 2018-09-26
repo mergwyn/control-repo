@@ -1,9 +1,14 @@
 #
 
 class profile::lxd_host {
+  package { [ 'criu', 'bridge-utils' ]: }
+
+  include ::snapd
   package { 'lxd': }
-  package { 'criu': }
-  package { 'bridge-utils': }
+    ensure   => latest,
+    provider => snap,
+  }
+
   service { 'lxd':
     ensure  => 'running',
     #enable  => true,
