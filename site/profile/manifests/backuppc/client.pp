@@ -1,12 +1,16 @@
 #
 class profile::backuppc::client (
   $scripts  = '/etc/backuppc/scripts',
-  $preuser  = "${scripts}/PreUser",
-  $postuser = "${scripts}/PostUser",
+  $preuser  = "${scripts}/DumpPreUser",
+  $postuser = "${scripts}/DumpPostUser",
   ) {
 
   file {['/etc/backuppc',$scripts, $preuser, $postuser]:
     ensure  => directory,
+    recurse => true,
+  }
+  file {[ "${scripts}/PreUser", "${scripts}/PostUser",
+    ensure  => absent
     recurse => true,
   }
 
