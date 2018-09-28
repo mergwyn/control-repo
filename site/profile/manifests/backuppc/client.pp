@@ -9,7 +9,7 @@ class profile::backuppc::client (
     ensure  => directory,
     recurse => true,
   }
-  file {[ "${scripts}/PreUser", "${scripts}/PostUser",
+  file {[ "${scripts}/PreUser", "${scripts}/PostUser"]:
     ensure  => absent
     recurse => true,
   }
