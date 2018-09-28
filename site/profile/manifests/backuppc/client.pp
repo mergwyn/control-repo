@@ -19,16 +19,9 @@ class profile::backuppc::client (
     source => 'puppet:///modules/profile/backuppc/S10dirsonly',
     mode   => '0555',
   }
-  file { "${preuser}/S20mysql-backup":
-    ensure  => absent,
-  }
+  file { "${preuser}/S20mysql-backup": ensure  => absent, }
+  file { "${scripts{/S20mysql-backup-password": ensure  => absent, }
 
-  file { "${scripts{/S20mysql-backup-password":
-    ensure  => absent,
-  }
-
-}
-  
   package { 'rsync': ensure => installed }
 
   # backuppc ssh keys
