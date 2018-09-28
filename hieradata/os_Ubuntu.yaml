@@ -85,9 +85,9 @@ zabbix::agent::enableremotecommands:    '1'
 tvheadend::release:                     'release'
 tvheadend::admin_password:              "%{hiera('passwords::tvheadend')}"
 
-profile::backuppc::scripts:             '/etc/backuppc/scripts/'
-profile::backuppc::preuser:             "%{hiera('profile::backuppc::scripts')DumpPreUser/"
-profile::backuppc::postuser:            "%{hiera('profile::backuppc::scripts')DumpPostUser/"
+profile::backuppc::scripts:             '/etc/backuppc/scripts'
+profile::backuppc::preuser:             "%{hiera('profile::backuppc::scripts')/DumpPreUser"
+profile::backuppc::postuser:            "%{hiera('profile::backuppc::scripts')/DumpPostUser"
 
 # vim: sw=2:ai:nu expandtab
 #

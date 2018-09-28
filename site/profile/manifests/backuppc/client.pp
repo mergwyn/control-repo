@@ -1,8 +1,9 @@
 #
-class profile::backuppc::client {
-  $scripts=$profile::backuppc::scripts
-  $preuser=$profile::backuppc::scripts
-  $postuser=$profile::backuppc::postuser
+class profile::backuppc::client (
+  $scripts  = '/etc/backuppc/scripts',
+  $preuser  = "${scripts}/PreUser",
+  $postuser = "${scripts}/PostUser",
+  ) {
 
   file {['/etc/backuppc',$scripts, $preuser, $postuser]:
     ensure  => directory,

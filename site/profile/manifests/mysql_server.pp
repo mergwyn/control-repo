@@ -25,14 +25,16 @@ class profile::mysql_server {
     ]
   }
 
-  file { "${profile::backuppc}:preuser/S20mysql-backup":
+  $scripts=hiera('profile::backuppc::scripts')
+  $preuser=hiera('profile::backuppc::preuser')
+  file { "${preuser}/S20mysql-backup":
     ensure  => present,
     source  => 'puppet:///modules/profile/backuppc/S20mysql-backup',
     mode    => '0555',
     require => Class['profile::backuppc:client'],
   }
 
-  file { "${profile::backuppc}:scripts/S20mysql-backup-password":
+  file { "${scripts{/S20mysql-backup-password":
     ensure  => present,
     content => sprintf("PASSWORD=%s\n",hiera('passwords::mysql')),
     mode    => '0555',
