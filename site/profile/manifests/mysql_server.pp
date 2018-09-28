@@ -34,7 +34,7 @@ class profile::mysql_server {
     require => Class['profile::backuppc:client'],
   }
 
-  file { "${scripts{/S20mysql-backup-password":
+  file { "${scripts}/S20mysql-backup-password":
     ensure  => present,
     content => sprintf("PASSWORD=%s\n",hiera('passwords::mysql')),
     mode    => '0555',
