@@ -31,14 +31,14 @@ class profile::mysql_server {
     ensure  => present,
     source  => 'puppet:///modules/profile/backuppc/S20mysql-backup',
     mode    => '0555',
-    require => Class['profile::backuppc:client'],
+    require => Class['profile::backuppc::client'],
   }
 
   file { "${scripts}/S20mysql-backup-password":
     ensure  => present,
     content => sprintf("PASSWORD=%s\n",hiera('passwords::mysql')),
     mode    => '0555',
-    require => Class['profile::backuppc:client'],
+    require => Class['profile::backuppc::client'],
   }
 
 }
