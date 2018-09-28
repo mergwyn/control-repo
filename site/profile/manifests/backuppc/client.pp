@@ -11,7 +11,6 @@ class profile::backuppc::client (
   }
   file {[ "${scripts}/PreUser", "${scripts}/PostUser"]:
     ensure  => absent
-    recurse => true,
   }
 
   file { "${preuser}/S10dirsonly":
