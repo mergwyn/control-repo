@@ -19,7 +19,7 @@ class profile::mysql_server {
     changes => [
       "set target[.='mysqld']/log_bin /var/lib/mysql/log/mysql-bin.log",
       "set target[.='mysqld']/server-id 1",
-      "set target[.='mysqld']/innodb_buffer_pool_size 2G",
+      "set target[.='mysqld']/innodb_buffer_pool_size 1G",
       "set target[.='mysqld']/innodb_buffer_pool_instances 8",
       "set target[.='mysqld']/innodb_flush_log_at_trx_commit 0",
     ]
