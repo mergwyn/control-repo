@@ -1,7 +1,7 @@
 #
 # TODO: move to hiera? use dyanmic resources?
 
-class profile::domian::dhcpd (
+class profile::domain::dhcpd (
   $role = "primary",
   ) {
   $owner = "dhcpd"
