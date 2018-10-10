@@ -2,7 +2,9 @@
 
 class profile::domain::sso {
   $type=lookup( { 'name' => 'samba::dc::role', 'default_value' => 'member' } )
-  if ($ype = "member") {
+   notify {"samba:dc:role returned $type for $::fqdn":}
+
+  if ($ype = 'member') {
     $require='profile::domain::member'
   }
   else {
@@ -12,9 +14,7 @@ class profile::domain::sso {
   exec { 'create_keytab':
     command => '/usr/bin/net ads keytab create -P',
     creates => '/etc/krb5.keytab',
-    require => [
-      Class[ $require ],
-    ]
+  #  require => [ Class[ $require ] ],
   }
   class { '::sssd':
     config => {
