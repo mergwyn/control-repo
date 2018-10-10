@@ -1,7 +1,7 @@
 #
 
 class profile::domain::sso {
-  $type=lookup('samba::dc::role', "member")
+  $type=lookup( { 'name' => 'samba::dc::role', 'default value' => 'member' } )
   if ($ype = "member") {
     require profile::domain::member
   }
