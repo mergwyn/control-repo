@@ -1,7 +1,7 @@
 #
 
 class profile::domain::sso {
-  if (hieradata('samba::dc::role') != "") {
+  if (hiera('samba::dc::role') != "") {
     require profile::domain::member
   }
   else {
