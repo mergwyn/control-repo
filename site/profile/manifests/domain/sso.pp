@@ -1,7 +1,8 @@
 #
 
 class profile::domain::sso {
-  if (hiera('samba::dc::role') != "") {
+  $type=lookup('samba::dc::role', "member")
+  if ($ype = "member") {
     require profile::domain::member
   }
   else {
