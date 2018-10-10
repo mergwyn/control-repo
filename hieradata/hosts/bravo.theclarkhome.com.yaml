@@ -6,7 +6,7 @@ classes:
 
     #- profile::samba_dc 
 
-profile::dhcp_server::role: secondary
+profile::domain::dhcpd::role: secondary
 
 samba::dc::role:                'secondary'
 samba::dc::loglevel:            '2'

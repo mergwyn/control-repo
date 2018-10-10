@@ -1,6 +1,6 @@
 #
 
-class profile::samba_member {
+class profile::domain::member {
   class { '::samba::classic':
     # Mandatory parameters
     domain                => hiera("defaults::workgroup"),

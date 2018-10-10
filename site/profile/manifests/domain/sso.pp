@@ -1,21 +1,20 @@
 #
 
-class profile::domain_sso {
+class profile::domain::sso {
 #  if ($samba::dc::role != "") {
-#    require profile::samba_member
+#    require profile::domain::member
 #  }
 #  else {
-#    require profile::samba_dc
+#    require profile::domain::dc
 #  }
 
   exec { 'create_keytab':
     command => '/usr/bin/net ads keytab create -P',
     creates => '/etc/krb5.keytab',
     require => [
-      Package[ 'samba-common-bin'],
+      Package[ 'samba'],
     ]
   }
-  package { 'samba-common-bin': }
   class { '::sssd':
     config => {
       'sssd'                    => {
