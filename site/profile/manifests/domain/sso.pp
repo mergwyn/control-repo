@@ -1,12 +1,12 @@
 #
 
 class profile::domain::sso {
-#  if ($samba::dc::role != "") {
-#    require profile::domain::member
-#  }
-#  else {
-#    require profile::domain::dc
-#  }
+  if (hieradata('samba::dc::role') != "") {
+    require profile::domain::member
+  }
+  else {
+    require profile::domain::dc
+  }
 
   exec { 'create_keytab':
     command => '/usr/bin/net ads keytab create -P',
