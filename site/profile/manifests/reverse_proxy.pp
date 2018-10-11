@@ -62,7 +62,7 @@ class profile::reverse_proxy {
           'Host $http_host',
         ],
         location_cfg_append => {
-    #      'if ($http_x_plex_device_name = "")' => '{rewrite ^/$ https://$http_host/web/index.html}',
+    #      'if ($http_x_plex_device_name == "")' => '{rewrite ^/$ https://$http_host/web/index.html}',
           'proxy_cookie_path' => '/web/ /',
         },
       },
