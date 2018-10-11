@@ -2,19 +2,20 @@
 
 class profile::domain::sso {
   $type=lookup( { 'name' => 'samba::dc::role', 'default_value' => 'member' } )
-   notify {"samba:dc:role returned $type for $::fqdn":}
+  notify {"samba:dc:role returned $type for $::fqdn":}
 
-  if ($ype = 'member') {
+  if ($ype == 'member') {
     $require='profile::domain::member'
   }
   else {
     $require='profile::domain::dc'
   }
+  notify {"samba:dc:role $type for $::fqdn requires $require":}
 
   exec { 'create_keytab':
     command => '/usr/bin/net ads keytab create -P',
     creates => '/etc/krb5.keytab',
-  #  require => [ Class[ $require ] ],
+    require => [ Class[ $require ] ],
   }
   class { '::sssd':
     config => {
