@@ -8,9 +8,6 @@ class profile::domain::sso {
     'member': { $require = 'profile::domain::member' }
     default:  { $require = 'profile::domain::dc' }
   }
-  else {
-    $require = 'profile::domain::dc'
-  }
   notify {"samba:dc:role $type for $::fqdn requires $require":}
 
   exec { 'create_keytab':
