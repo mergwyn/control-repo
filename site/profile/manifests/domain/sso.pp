@@ -1,15 +1,15 @@
 #
 
 class profile::domain::sso {
-  $type=lookup( { 'name' => 'samba::dc::role', 'default_value' => 'member' } )
+  $type = lookup( { "name" => "samba::dc::role", "default_value" => "member" } )
 
   if ($ype == 'member') {
-    $require='profile::domain::member'
+    $require = 'profile::domain::member'
   }
   else {
-    $require='profile::domain::dc'
+    $require = 'profile::domain::dc'
   }
-  #notify {"samba:dc:role $type for $::fqdn requires $require":}
+  notify {"samba:dc:role $type for $::fqdn requires $require":}
 
   exec { 'create_keytab':
     command => '/usr/bin/net ads keytab create -P',
