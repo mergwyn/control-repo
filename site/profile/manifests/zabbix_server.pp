@@ -9,7 +9,7 @@ class profile::zabbix_server {
   class { 'apache': mpm_module => 'prefork', }
   include apache::mod::php
 
-  include profile::mysql_server
+  include profile::mysql::server
 
   class { 'zabbix': }
 
