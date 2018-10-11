@@ -8,7 +8,7 @@ class profile::domain::sso {
     'member': { $require = 'profile::domain::member' }
     default:  { $require = 'profile::domain::dc' }
   }
-  notify {"samba:dc:role $type for $::fqdn requires $require":}
+  #notify {"samba:dc:role $type for $::fqdn requires $require":}
 
   exec { 'create_keytab':
     command => '/usr/bin/net ads keytab create -P',
