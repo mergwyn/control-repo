@@ -5,18 +5,18 @@ class profile::lxd_host {
   package { [ 'criu' ]: ensure => absent, }
 
   include ::snapd
-  package { 'lxd': 
+  package { 'lxd':
     ensure   => latest,
     provider => snap,
   }
   exec { 'enable-criu':
-    command     => 'snap set lxd criu.enable=true',
-    require     => Package['lxd'],
-    notify      => Exec ['lxd-refresh'],
+    command => 'snap set lxd criu.enable=true',
+    require => Package['lxd'],
+    notify  => Exec['lxd-refresh'],
   }
   exec { 'lxd-refresh':
-    command     => 'snap restart lxd.daemon',
-    require     => Package['lxd'],
+    command => 'snap restart lxd.daemon',
+    require => Package['lxd'],
   }
 
   include profile::git
@@ -39,12 +39,12 @@ class profile::lxd_host {
     source => 'puppet:///modules/profile/build_lxdsnap',
   }
   exec { 'build-lxdsnap':
-    cwd         => $codedir,
-    path        => '/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin',
-    command     => "build_lxdsnap ${codedir}",
-    timeout     => 600, # 10 minutes
-    require     => File["${bindir}/build_lxdsnap"],
-    creates     => "${codedir}/build.done",
+    cwd     => $codedir,
+    path    => '/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin',
+    command => "build_lxdsnap ${codedir}",
+    timeout => 600, # 10 minutes
+    require => File["${bindir}/build_lxdsnap"],
+    creates => "${codedir}/build.done",
   }
 
   # now lxdsnap crontab related jobs
