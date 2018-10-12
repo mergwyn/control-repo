@@ -1,19 +1,24 @@
 #
 
 class profile::lxd_host {
-  package { [ 'criu', 'bridge-utils' ]: }
+  package { [ 'bridge-utils' ]: }
+  package { [ 'criu' ]: ensure => absent, }
 
   include ::snapd
   package { 'lxd': 
     ensure   => latest,
     provider => snap,
   }
+  exec { 'enable-criu':
+    command     => 'snap set lxd criu.enable=true',
+    require     => Package['lxd'],
+    notify      => Exec ['lxd-refresh'],
+  }
+  exec { 'lxd-refresh':
+    command     => 'snap restart lxd.daemon',
+    require     => Package['lxd'],
+  }
 
-  #service { 'lxd':
-  #  ensure  => 'running',
-  #  #enable  => true,
-  #  require => Package['lxd'],
-  #}
   include profile::git
 
   $codedir='/opt/code/lxdsnap'
