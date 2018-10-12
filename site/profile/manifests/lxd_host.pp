@@ -15,7 +15,7 @@ class profile::lxd_host {
     notify  => Exec['snap.lxd.daemon.service'],
   }
   Exec { 'snap.lxd.daemon.service':
-    command => '/usr/bin/snap run --command=reload lxd.daemon'
+    command => '/usr/bin/snap run --command=reload lxd.daemon',
     require => Package['lxd'],
   }
 
