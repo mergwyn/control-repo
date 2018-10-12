@@ -2,7 +2,6 @@
 
 class profile::domain::sso {
   $type = lookup( { "name" => "samba::dc::role", "default_value" => "member" } )
-  notify {"samba:dc:role $type for $::fqdn":}
 
   case $type {
     'member': { $require = 'profile::domain::member' }
