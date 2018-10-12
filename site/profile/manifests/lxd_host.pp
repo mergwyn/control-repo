@@ -12,10 +12,11 @@ class profile::lxd_host {
   exec { 'enable-criu':
     command => '/usr/bin/snap set lxd criu.enable=true',
     require => Package['lxd'],
-    notify  => Exec['lxd-refresh'],
+    notify  => Service['snap.lxd.daemon.service'],
   }
-  exec { 'lxd-refresh':
-    command => '/usr/bin/snap restart --reload lxd.daemon',
+  service { 'snap.lxd.daemon.service':
+    ensure  => running,
+    enable  => true,
     require => Package['lxd'],
   }
 
