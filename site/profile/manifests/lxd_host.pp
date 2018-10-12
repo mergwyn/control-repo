@@ -15,7 +15,7 @@ class profile::lxd_host {
     notify  => Exec['lxd-refresh'],
   }
   exec { 'lxd-refresh':
-    command => 'snap restart lxd.daemon',
+    command => '/usr/bin/snap restart lxd.daemon',
     require => Package['lxd'],
   }
 
