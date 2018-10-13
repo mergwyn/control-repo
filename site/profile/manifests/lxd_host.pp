@@ -18,6 +18,7 @@ class profile::lxd_host {
     path    => '/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin',
     command => 'snap run --command=reload lxd.daemon',
     require => Package['lxd'],
+    refreshonly => true,
   }
 
   include profile::git
