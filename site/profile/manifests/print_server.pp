@@ -4,14 +4,22 @@ class profile::print_server {
   #include cups::install
   #include cups
   class { 'cups': }
-  $package = 'xerox-workcentre-6015b-6015n-6015ni'
-  $driver  = 'xerox-workcentre-6015b-6015n-6015ni_1.0-28_i386.deb'
+
   $dir     = '/usr/share/xerox-driver'
   file { $dir : ensure => directory, }
 
-  file { "$dir/$driver":
+  $driver = 'xerox-workcentre-6015b-6015n-6015ni'
+  $arch =  $::facts['os']['architecture']
+  case $arch {
+    'i386':  { $version = '1.0-28'; $suffix = $arch }
+    'amd64': { $version = '1.0-29'; $suffix = '64'}
+    default: { notify { "Unexpected arch ${arch} for print server driver": withpath => true } }
+  }
+  $package  = "${driver}_${version}_${suffix}.deb"
+
+  file { "${dir}/${package}":
     ensure => present,
-    source => "puppet:///modules/profile/print_server/$driver",
+    source => "puppet:///modules/profile/print_server/${package}",
   }
 
   #service { 'cups':
@@ -20,11 +28,11 @@ class profile::print_server {
   #  require => Package['cups'],
   #}
 
-  package { "$package":
+  package { $driver:
     ensure   => present,
     provider => dpkg,
     require  => Package[ 'cups' ],
-    source   => "$dir/$driver",
+    source   => "${dir}/${package}",
   }
 
   file { '/etc/cups/cupsd.conf':
