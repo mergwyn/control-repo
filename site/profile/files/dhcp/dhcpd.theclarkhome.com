@@ -81,7 +81,7 @@ host zabbix1 {
 	fixed-address 192.168.11.41;
 }
 host tango {
-	hardware ethernet 00:16:3e:d6:a5:e1;
+	hardware ethernet 00:16:3e:01:f8:9a;
 	fixed-address 192.168.11.42;
 }
 host s685ip {
