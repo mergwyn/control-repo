@@ -3,7 +3,7 @@
 
 class profile::couchpotato (
   $user = media,
-  $group = 'domain users',
+  $group = 'domain\x20users',
   $data  = '/var/cache/couchpotato',
   $run   = '/var/run/couchpotato/',
   ) {
