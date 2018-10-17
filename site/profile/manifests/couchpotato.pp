@@ -20,12 +20,9 @@ class profile::couchpotato (
   # TODO settings
 
   # automatically start daemon
-  file { '/etc/systemd/system/couchpotato.service':
-    ensure  => present,
-    notify  => [
-      Exec['systemctl-daemon-reload'],
-      Service['couchpotato'],
-    ],
+  systemd::unit_file { 'couchpotato.service':
+    enable  => true,
+    active  => true,
     content => "
 # Systemd service file
 [Unit]
