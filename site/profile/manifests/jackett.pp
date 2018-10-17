@@ -14,7 +14,7 @@ class profile::jackett () {
     path         => "/opt/${package_name}_${package_ensure}.tar.gz",
     source       => $package_source,
     user         => 'media',
-    group        => 'domain\x20users',
+    group        => '513',
     extract      => true,
     extract_path => $install_path,
     creates      => $package_source

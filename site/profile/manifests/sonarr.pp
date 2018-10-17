@@ -4,7 +4,7 @@
 
 class profile::sonarr (
   $user  = 'media',
-  $group = 'domain\x20users',
+  $group = '513',
   ) {
   # repo
   apt::source { 'sonarr':
