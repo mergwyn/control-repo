@@ -21,12 +21,9 @@ class profile::sonarr (
     },
   }
   # automatically start daemon
-  file { '/etc/systemd/system/sonarr.service':
-    ensure  => present,
-    notify  => [
-      Exec['systemctl-daemon-reload'],
-      Service['sonarr'],
-    ],
+  systemd::unit_file { 'sonarr.service':
+    enable  => true,
+    active  => true,
     content => "
 [Unit]
 Description=Sonarr Daemon
