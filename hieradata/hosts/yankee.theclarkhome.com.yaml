@@ -2,5 +2,6 @@
 
 classes:
   - role::generic_server
+  - jackett
 
 # vim: sw=2:ai:nu expandtab
