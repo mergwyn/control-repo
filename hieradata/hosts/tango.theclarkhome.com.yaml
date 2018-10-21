@@ -7,7 +7,7 @@ classes:
 transmission::config_dir:               "/home/media/.config/transmission-daemon"
 transmission::umask:                    "2"
 transmission::user:                     "media"
-transmission::group:                    "domain users"
+transmission::group:                    "513"
 
 transmission::download_dir:             "/srv/media/torrent/complete"
 transmission::incomplete_dir:           "/srv/media/torrent/incomplete"
