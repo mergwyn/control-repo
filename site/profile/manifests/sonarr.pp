@@ -32,10 +32,11 @@ RequiresMountsFor=/srv/media /home/media
 [Service]
 User=$user
 Group=$group
-Restart=always
+Restart=on-failure
 RestartSec=5
 Type=simple
 ExecStart=/usr/bin/mono /opt/NzbDrone/NzbDrone.exe -nobrowser
+KillMode=process
 TimeoutStopSec=20
 
 [Install]
