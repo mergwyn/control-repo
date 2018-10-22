@@ -36,7 +36,6 @@ Restart=always
 RestartSec=5
 Type=simple
 ExecStart=/usr/bin/mono /opt/NzbDrone/NzbDrone.exe -nobrowser
-ExecStop=-/usr/bin/mono /tmp/nzbdrone_update/NzbDrone.Update.exe \\`ps aux | grep NzbDrone | grep -v grep | awk '{ print $2 }'\\` /tmp/nzbdrone_update /opt/NzbDrone/NzbDrone.exe
 TimeoutStopSec=20
 
 [Install]
