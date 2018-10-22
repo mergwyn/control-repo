@@ -4,7 +4,7 @@
 class profile::mono () {
 
   $distro= $::facts['os']['distro']['codename']
-  apt::source { 'mono':
+  apt::source { 'mono-official-stable':
     location => 'https://download.mono-project.com/repo/ubuntu',
     release  => "stable-$distro",
     repos    => 'main',
