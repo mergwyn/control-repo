@@ -23,6 +23,7 @@ mod 'managedmac', :git => 'https://github.com/henrydobson/managedmac', :branch =
 #mod 'managedmac', :git => 'https://github.com/pfhonore/puppet-managedmac'
 mod 'meltwater-cpan', '2.0.0'
 mod 'mergwyn-jackett', :git => 'https://github.com/mergwyn/mergwyn-jackett'
+mod 'mergwyn-radarr', :git => 'https://github.com/mergwyn/mergwyn-radarr'
 mod 'mosen-cups', '1.5.0'
 mod 'netmanagers-ddclient', :git =>  'https://github.com/mergwyn/puppet-ddclient'
 #mod 'netmanagers-ddclient', :git =>  'https://github.com/netmanagers/puppet-ddclient'
