@@ -21,8 +21,8 @@ class profile::couchpotato (
 
   # automatically start daemon
   systemd::unit_file { 'couchpotato.service':
-    enable  => true,
-    active  => true,
+    enable  => false,
+    active  => false,
     content => "
 # Systemd service file
 [Unit]
