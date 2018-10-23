@@ -2,6 +2,7 @@
 
 classes:
   - role::generic_server
+  - radarr
   - jackett
 
 # vim: sw=2:ai:nu expandtab
