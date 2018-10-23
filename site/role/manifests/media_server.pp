@@ -8,7 +8,7 @@ class role::media_server {
   include profile::transmission
   include profile::couchpotato
   include profile::sonarr
-  include profile::jackett
+  include profile::media::download_server
   include profile::tvheadend
   include profile::transcoder
 }
