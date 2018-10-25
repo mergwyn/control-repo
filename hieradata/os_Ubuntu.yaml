@@ -3,7 +3,7 @@
 classes:
   - timezone
   - role::minimal_server
-  - profile::puppet_agent
+  - profile::puppet::agent
 
 # puppet agent
 puppet::puppet_server:                  "echo.%{domain}"

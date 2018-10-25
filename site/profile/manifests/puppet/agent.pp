@@ -1,6 +1,6 @@
 #
 
-class profile::puppet_agent {
+class profile::puppet::agent {
 
   file { '/etc/apt/preferences.d/00-puppet.pref':
     ensure  => absent,

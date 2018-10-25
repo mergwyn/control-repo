@@ -1,6 +1,6 @@
 #
 
-class profile::puppet_master {
+class profile::puppet::server {
 
   #include '::puppet'
   #include '::puppet::master'
@@ -23,7 +23,7 @@ class profile::puppet_master {
   # Clean old reports
   tidy { '/opt/puppetlabs/server/data/puppetserver/reports':
     age     => '30d',
-    matches => "*.yaml",
+    matches => '*.yaml',
     recurse => true,
     rmdirs  => false,
     type    => mtime,
