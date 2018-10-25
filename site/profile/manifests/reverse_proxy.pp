@@ -29,6 +29,11 @@ class profile::reverse_proxy {
     server_name => [ "tango.$::domain" ],
     proxy       => "http://tango.$::domain:8080",
   }
+  nginx::resource::server { 'radarr.tango':
+    listen_port => 7878,
+    server_name => [ "tango.$::domain" ],
+    proxy       => "http://tango.$::domain:7878",
+  }
   nginx::resource::server { 'sonarr.tango':
     listen_port => 8989,
     server_name => [ "tango.$::domain" ],
@@ -40,34 +45,34 @@ class profile::reverse_proxy {
     proxy       => "http://tango.$::domain:9091",
   }
   #
-  nginx::resource::upstream { 'plex_upstream':
-    members => [ "tango.$::domain:32400", ],
-  }
-  nginx::resource::server { 'plex.tango':
-    listen_port => 32400,
-    server_name => [ "tango.$::domain" ],
-    access_log  => 'off',
-    locations   => {
-      '/web' => {
-        location            => '/web',
-        proxy               => "http://tango.$::domain:32400",
-        proxy_buffering     => 'off',
-        proxy_redirect      => 'off',
-        proxy_http_version  => '1.1',
-        proxy_set_header    => [
-          'X-Forwarded-For $proxy_add_x_forwarded_for',
-          'Upgrade $http_upgrade',
-          'Connection $http_connection',
-          'X-Real-IP $remote_addr',
-          'Host $http_host',
-        ],
-        location_cfg_append => {
-    #      'if ($http_x_plex_device_name == "")' => '{rewrite ^/$ https://$http_host/web/index.html}',
-          'proxy_cookie_path' => '/web/ /',
-        },
-      },
-    },
-  }
+#  nginx::resource::upstream { 'plex_upstream':
+#    members => [ "tango.$::domain:32400", ],
+#  }
+#  nginx::resource::server { 'plex.tango':
+#    listen_port => 32400,
+#    server_name => [ "tango.$::domain" ],
+#    access_log  => 'off',
+#    locations   => {
+#      '/web' => {
+#        location            => '/web',
+#        proxy               => "http://tango.$::domain:32400",
+#        proxy_buffering     => 'off',
+#        proxy_redirect      => 'off',
+#        proxy_http_version  => '1.1',
+#        proxy_set_header    => [
+#          'X-Forwarded-For $proxy_add_x_forwarded_for',
+#          'Upgrade $http_upgrade',
+#          'Connection $http_connection',
+#          'X-Real-IP $remote_addr',
+#          'Host $http_host',
+#        ],
+#        location_cfg_append => {
+#    #      'if ($http_x_plex_device_name == "")' => '{rewrite ^/$ https://$http_host/web/index.html}',
+#          'proxy_cookie_path' => '/web/ /',
+#        },
+#      },
+#    },
+#  }
   
   # Finally tidy up pound
   Package { 'pound':             ensure => absent }
