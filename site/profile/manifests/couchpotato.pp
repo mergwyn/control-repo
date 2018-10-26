@@ -49,10 +49,10 @@ WantedBy=multi-user.target
   }
 
   # finally install package and start service
-  service { 'couchpotato':
-    ensure  => 'stopped',
-    enable  => true,
-  }
+  #service { 'couchpotato':
+  #  ensure  => 'stopped',
+  #  enable  => true,
+  #}
 #service { 'couchpotato':
   #  ensure  => 'running',
   #  enable  => true,
