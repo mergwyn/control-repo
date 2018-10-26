@@ -3,20 +3,12 @@
 class profile::media::transcoder {
 
   include profile::git
+  include profile::scripts
 
   $packages = [ 'nfs-common' ]
   package { $packages: ensure => present }
 
   $codedir='/opt/code/scripts'
-
-  # lxd snap related commands
-  vcsrepo { $codedir:
-      ensure   => present,
-      provider => git,
-      require  => Package['git'],
-      source   => 'https://github.com/mergwyn/scripts.git',
-      revision => 'master',
-  }
 
   include cron
   cron::job { 'media':
