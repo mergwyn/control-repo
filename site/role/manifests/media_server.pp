@@ -10,5 +10,5 @@ class role::media_server {
   include profile::sonarr
   include profile::media::iptv
   include profile::media::downloader
-  include profile::media:transcoder
+  include profile::media::transcoder
 }
