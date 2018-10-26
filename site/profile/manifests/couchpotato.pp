@@ -7,7 +7,7 @@ class profile::couchpotato (
   $data  = '/var/cache/couchpotato',
   $run   = '/var/run/couchpotato/',
   ) {
-  package { 'git-core': }
+  include profile::git
   $topdir='/opt'
   $targetdir="${topdir}/CouchPotatoServer"
 
@@ -15,7 +15,7 @@ class profile::couchpotato (
     path    => '/bin:/sbin:/usr/bin:/usr/sbin',
     unless  => "test -d '${targetdir}'",
     command => "git -C ${topdir} clone https://github.com/CouchPotato/CouchPotatoServer.git",
-    require => Package['git-core'],
+    require => Class[ 'profile::git' ],
   }
   # TODO settings
 
