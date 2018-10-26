@@ -80,10 +80,10 @@ host switch2 {
 #	hardware ethernet 00:16:3e:01:f8:9a;
 #	fixed-address 192.168.11.42;
 #}
-#host echo {
-#	hardware ethernet 00:16:3e:60:37:e3;
-#	fixed-address 192.168.11.44;
-#}
+host echo {
+	hardware ethernet 00:16:3e:60:37:e3;
+	fixed-address 192.168.11.44;
+}
 #host zulu {
 #	hardware ethernet 00:16:3e:98:92:d8;
 #	fixed-address 192.168.11.45;
