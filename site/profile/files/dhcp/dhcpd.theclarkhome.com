@@ -76,28 +76,18 @@ host switch2 {
 	hardware ethernet a0:40:a0:71:7e:ce;
 	fixed-address 192.168.11.2;
 }
-host zabbix1 {
-	hardware ethernet 00:0c:29:95:80:68;
-	fixed-address 192.168.11.41;
-}
-host tango {
-	hardware ethernet 00:16:3e:01:f8:9a;
-	fixed-address 192.168.11.42;
-}
-host s685ip {
-	ddns-hostname "s685ip";
-	option host-name "s685ip";
-	hardware ethernet 00:01:e3:9a:f9:c1;
-	fixed-address 192.168.11.43;
-}
-host echo {
-	hardware ethernet 00:16:3e:60:37:e3;
-	fixed-address 192.168.11.44;
-}
-host zulu {
-	hardware ethernet 00:16:3e:98:92:d8;
-	fixed-address 192.168.11.45;
-}
+#host tango {
+#	hardware ethernet 00:16:3e:01:f8:9a;
+#	fixed-address 192.168.11.42;
+#}
+#host echo {
+#	hardware ethernet 00:16:3e:60:37:e3;
+#	fixed-address 192.168.11.44;
+#}
+#host zulu {
+#	hardware ethernet 00:16:3e:98:92:d8;
+#	fixed-address 192.168.11.45;
+#}
 host foxtrot {
 	hardware ethernet 00:0c:29:62:d5:5f;
 	fixed-address 192.168.11.12;
@@ -110,13 +100,18 @@ host papa {
 	hardware ethernet 00:16:3e:fc:2a:87;
 	fixed-address 192.168.11.240;
 }
-host DELLA3F95F {
-	ddns-hostname "DELLA3F95F";
-	option host-name "DELLA3F95F";
-	hardware ethernet 08:00:37:a3:f9:5f;
-}
 group {
 	use-host-decl-names on;
+	host DELLA3F95F {
+		ddns-hostname "DELLA3F95F";
+		option host-name "DELLA3F95F";
+		hardware ethernet 08:00:37:a3:f9:5f;
+	}
+	host s685ip {
+		ddns-hostname "s685ip";
+		option host-name "s685ip";
+		hardware ethernet 00:01:e3:9a:f9:c1;
+	}
 	host humax-lan {
 		ddns-hostname "humax";
 		option host-name "humax";
