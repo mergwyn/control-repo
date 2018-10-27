@@ -8,7 +8,7 @@ class profile::scripts {
 
   # common scripts
   vcsrepo { $codedir:
-      ensure   => present,
+      ensure   => latest,
       provider => git,
       require  => Package['git'],
       source   => 'https://github.com/mergwyn/scripts.git',
