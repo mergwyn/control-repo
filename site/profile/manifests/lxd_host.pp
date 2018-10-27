@@ -30,7 +30,7 @@ class profile::lxd_host {
 
   # lxd snap related commands
   vcsrepo { $codedir:
-      ensure   => present,
+      ensure   => latest,
       provider => git,
       require  => Package['git'],
       source   => 'https://github.com/nsyntych/lxdsnap.git',
