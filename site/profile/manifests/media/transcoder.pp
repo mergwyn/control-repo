@@ -2,12 +2,16 @@
 
 class profile::media::transcoder {
 
+  $codedir = '/opt'
+  $scriptdir = "${codedir}/scripts"
+  $packages = [ 'nfs-common' ]
+
   include profile::git
   include profile::scripts
   include profile::media::sickbeard_automator
 
-  $packages = [ 'nfs-common' ]
   package { $packages: ensure => present }
+
 
 
   #setup systemd entry
@@ -22,7 +26,7 @@ After=multi-user.target
 Restart=on-failure
 RestartSec=5
 Type=simple
-ExecStart=${codedir}/bin/humaxscan
+ExecStart=${scriptdir}/bin/humaxscan
 TimeoutStopSec=20
 StartLimitInterval=60s
 StartLimitBurst=3
