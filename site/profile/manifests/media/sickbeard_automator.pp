@@ -4,12 +4,9 @@ class profile::media::sickbeard_automator {
   $codedir='/opt/'
   $target="${codedir}/sickbeard_mp4_automator"
   $scriptdir = "${codedir}/scripts"
-  $packages = [ 'nfs-common' ]
 
   include profile::git
   include profile::scripts
-
-  package { $packages: ensure => present }
 
   apt::ppa { 'ppa:jonathonf/ffmpeg-4':
     package_manage => true
