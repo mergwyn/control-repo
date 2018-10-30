@@ -1,14 +1,15 @@
 #
 class profile::media::sickbeard_automator {
 
+  $codedir='/opt/'
+  $target="${codedir}/sickbeard_mp4_automator"
+  $scriptdir = ${codedir}/scripts"
+  $packages = [ 'nfs-common' ]
+
   include profile::git
   include profile::scripts
 
-  $packages = [ 'nfs-common' ]
   package { $packages: ensure => present }
-
-  $codedir='/opt/'
-  $target="${codedir}/sickbeard_mp4_automator"
 
   apt::ppa { 'ppa:jonathonf/ffmpeg-4':
     package_manage => true
@@ -18,6 +19,17 @@ class profile::media::sickbeard_automator {
     require => Apt::Ppa['ppa:jonathonf/ffmpeg-4'],
   }
 
+  # cron job to run scripts
+  include cron
+  cron::job { 'media':
+    environment => [ 'PATH="/usr/sbin:/usr/bin:/sbin:/bin"' ],
+    command     => "test -x ${scriptdir}/bin/process_media_job && ${scriptdir}/bin/process_media_job",
+    user        => 'media',
+    minute      => 5,
+    hour        => '0-18',
+  }
+
+  # remainder of module relates to  sickbeard_mp4_automator
   vcsrepo { $target:
     ensure   => latest,
     provider => git,

@@ -4,20 +4,10 @@ class profile::media::transcoder {
 
   include profile::git
   include profile::scripts
+  include profile::media:sickbeard_automator
 
   $packages = [ 'nfs-common' ]
   package { $packages: ensure => present }
-
-  $codedir='/opt/scripts'
-
-  include cron
-  cron::job { 'media':
-    environment => [ 'PATH="/usr/sbin:/usr/bin:/sbin:/bin"' ],
-    command     => "test -x ${codedir}/bin/process_media_job && ${codedir}/bin/process_media_job",
-    user        => 'media',
-    minute      => 5,
-    hour        => '0-18',
-  }
 
 
   #setup systemd entry
