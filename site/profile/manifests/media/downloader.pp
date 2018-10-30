@@ -3,7 +3,7 @@
 class profile::media::downloader () {
 
   #TODO insert dependency on mono into module
-  include profile::mono
+  include profile::media::mono
   include ::jackett
   include ::radarr
 }
