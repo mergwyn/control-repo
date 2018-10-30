@@ -4,7 +4,7 @@ class profile::media::iptv {
   include cron
   include profile::scripts
 
-  $codedir='/opt/code/scripts'
+  $codedir='/opt/scripts'
 
   $packages = [ 'curl', 'socat' ]
   package { $packages: ensure => present }

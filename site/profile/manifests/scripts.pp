@@ -4,7 +4,7 @@ class profile::scripts {
 
   include profile::git
 
-  $codedir='/opt/code/scripts'
+  $codedir='/opt/scripts'
 
   # common scripts
   vcsrepo { $codedir:

@@ -8,7 +8,7 @@ class profile::media::transcoder {
   $packages = [ 'nfs-common' ]
   package { $packages: ensure => present }
 
-  $codedir='/opt/code/scripts'
+  $codedir='/opt/scripts'
 
   include cron
   cron::job { 'media':
