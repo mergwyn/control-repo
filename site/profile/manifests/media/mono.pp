@@ -1,7 +1,7 @@
 #
 # TODO: 
 
-class profile::mono () {
+class profile::media::mono () {
 
   $distro= $::facts['os']['distro']['codename']
   apt::source { 'mono-official-stable':
