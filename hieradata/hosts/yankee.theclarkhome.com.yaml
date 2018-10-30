@@ -2,7 +2,6 @@
 
 classes:
   - role::generic_server
-  - radarr
-  - jackett
+  - profile::media::sickbeard_automator
 
 # vim: sw=2:ai:nu expandtab
