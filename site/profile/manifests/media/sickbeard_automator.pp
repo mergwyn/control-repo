@@ -3,7 +3,7 @@ class profile::media::sickbeard_automator {
 
   $codedir='/opt/'
   $target="${codedir}/sickbeard_mp4_automator"
-  $scriptdir = ${codedir}/scripts"
+  $scriptdir = "${codedir}/scripts"
   $packages = [ 'nfs-common' ]
 
   include profile::git
