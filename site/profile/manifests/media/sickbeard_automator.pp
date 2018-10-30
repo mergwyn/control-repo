@@ -29,7 +29,15 @@ class profile::media::sickbeard_automator {
     revision => 'master',
   }
   #TODO install dependencies
-  #TODO install plex.ini
+  $configdir = '/etc/sickbeard_mp4_automator'
+  file { $configdir:
+    ensure => directory,
+  }
+  file { "${configdir}/plex.ini":
+    ensure => file,
+    source => 'puppet:///modules/profile/plex.ini',
+  }
+  #
   #TODO change logging parameters?
   $logpath = '/var/log/sickbeard_mp4_automator'
   file { $logpath:
