@@ -4,7 +4,7 @@ class profile::media::transcoder {
 
   include profile::git
   include profile::scripts
-  include profile::media:sickbeard_automator
+  include profile::media::sickbeard_automator
 
   $packages = [ 'nfs-common' ]
   package { $packages: ensure => present }
