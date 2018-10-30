@@ -30,8 +30,17 @@ class profile::media::sickbeard_automator {
   }
   #TODO install dependencies
   #TODO install plex.ini
-  #TODO chmod log file /var/log/sickbeard_mp4_automator/index.log
   #TODO change logging parameters?
+  $logpath = '/var/log/sickbeard_mp4_automator'
+  file { $logpath:
+    ensure => directory,
+    mode   => '0777',
+  }
+  file { "${logpath}/index.log":
+    ensure => file,
+    mode   => '0666',
+    require => File[$logpath],
+  }
 }
 
 # vim: sw=2:ai:nu expandtab
