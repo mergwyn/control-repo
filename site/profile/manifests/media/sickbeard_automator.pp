@@ -1,9 +1,13 @@
 #
 class profile::media::sickbeard_automator {
 
-  $codedir='/opt/'
-  $target="${codedir}/sickbeard_mp4_automator"
+  $codedir   = '/opt/'
+  $target    = "${codedir}/sickbeard_mp4_automator"
   $scriptdir = "${codedir}/scripts"
+  $configdir = '/etc/sickbeard_mp4_automator'
+  $logdir    = '/var/log/sickbeard_mp4_automator'
+  $owner     =  hiera('defaults::media_user')
+  $group     =  hiera('defaults::media_group')
 
   include profile::git
   include profile::scripts
@@ -21,12 +25,12 @@ class profile::media::sickbeard_automator {
   cron::job { 'media':
     environment => [ 'PATH="/usr/sbin:/usr/bin:/sbin:/bin"' ],
     command     => "test -x ${scriptdir}/bin/process_media_job && ${scriptdir}/bin/process_media_job",
-    user        => 'media',
+    user        => $owner,
     minute      => 5,
     hour        => '0-18',
   }
 
-  # remainder of module relates to  sickbeard_mp4_automator
+  # Get the lastest version from github
   vcsrepo { $target:
     ensure   => latest,
     provider => git,
@@ -36,27 +40,38 @@ class profile::media::sickbeard_automator {
     ],
     source   => 'https://github.com/mdhiggins/sickbeard_mp4_automator',
     revision => 'master',
+    owner    => $owner,
+    group    => $group,
   }
   #TODO install dependencies
-  $configdir = '/etc/sickbeard_mp4_automator'
+  # Install the configuration file
   file { $configdir:
     ensure => directory,
+    owner  => $owner,
+    group  => $group,
   }
   file { "${configdir}/plex.ini":
-    ensure => file,
-    source => 'puppet:///modules/profile/plex.ini',
+    ensure  => file,
+    source  => 'puppet:///modules/profile/plex.ini',
+    owner   => $owner,
+    group   => $group,
+    require => File[$configdir],
   }
   #
   #TODO change logging parameters?
-  $logpath = '/var/log/sickbeard_mp4_automator'
-  file { $logpath:
+  # Make sure log file exists and is writable
+  file { $logdir:
     ensure => directory,
+    owner  => $owner,
+    group  => $group,
     mode   => '0777',
   }
-  file { "${logpath}/index.log":
+  file { "${logdir}/index.log":
     ensure => file,
-    mode   => '0666',
-    require => File[$logpath],
+    mode   => '0664',
+    owner  => $owner,
+    group  => $group,
+    require => File[$logdir],
   }
 }
 
