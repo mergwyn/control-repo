@@ -29,7 +29,7 @@ mod 'netmanagers-ddclient', :git =>  'https://github.com/mergwyn/puppet-ddclient
 #mod 'netmanagers-ddclient', :git =>  'https://github.com/netmanagers/puppet-ddclient'
 #mod 'panaman-webmin', '1.0.0'
 mod 'puppet-archive', '3.2.1'
-mod 'puppet-cron', '1.3.0'
+mod 'puppet-cron', '1.3.1'
 #mod 'puppet-homebrew', :git => 'https://github.com/grahamgilbert/puppet-homebrew'
 mod 'puppetlabs-apache', '3.4.0'
 mod 'puppetlabs-apt', '6.1.1'
