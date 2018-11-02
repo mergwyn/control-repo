@@ -31,6 +31,7 @@ mod 'netmanagers-ddclient', :git =>  'https://github.com/mergwyn/puppet-ddclient
 mod 'puppet-archive', '3.2.1'
 mod 'puppet-cron', '1.3.1'
 #mod 'puppet-homebrew', :git => 'https://github.com/grahamgilbert/puppet-homebrew'
+mod 'puppet-alternatives', '2.1.0'
 mod 'puppetlabs-apache', '3.4.0'
 mod 'puppetlabs-apt', '6.1.1'
 mod 'puppetlabs-concat', '5.1.0'
