@@ -6,7 +6,7 @@ class profile::puppet::agent {
   
   # make sure we match srver version
   class {'::puppet_agent':
-    package_version => $serverversion,
+    #package_version => $serverversion,
   }
 
   file { '/etc/profile.d/puppet.sh':
