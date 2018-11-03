@@ -2,6 +2,8 @@
 
 class profile::puppet::agent {
 
+  include ::sudo
+  
   file { '/etc/apt/preferences.d/00-puppet.pref':
     ensure  => absent,
     #content => "# /etc/apt/preferences.d/00-puppet.pref\nPackage: puppet puppet-common\nPin: version 3.8*\nPin-Priority: 501\n"
