@@ -34,7 +34,7 @@ class profile::base {
   include profile::mail_client
   include profile::unattended_upgrades
   include profile::webmin_generic
-  include profile::zabbix_agent
+  include profile::zabbix::agent
   include profile::backuppc::client
 }
 

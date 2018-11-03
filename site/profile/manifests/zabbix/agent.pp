@@ -1,6 +1,6 @@
 #
 
-class profile::zabbix_agent {
+class profile::zabbix::agent {
   class {'zabbix::agent': }
   package {'zabbix-sender': }
 

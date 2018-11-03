@@ -18,7 +18,7 @@ class profile::mysql::server {
     notify  => Class['mysql::server::service'],
     changes => [
       "set target[.='mysqld']/innodb_buffer_pool_instances 1",
-      "set target[.='mysqld']/innodb_buffer_pool_size 1G",
+      "set target[.='mysqld']/innodb_buffer_pool_size 1300M",
       "set target[.='mysqld']/innodb_flush_log_at_trx_commit 0",
       "set target[.='mysqld']/innodb_log_file_size 128M",
       "set target[.='mysqld']/log_bin /var/lib/mysql/log/mysql-bin.log",

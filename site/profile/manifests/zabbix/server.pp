@@ -1,6 +1,6 @@
 #
 
-class profile::zabbix_server {
+class profile::zabbix::server {
 
   # additional packages needed for ubuntu 16.04 and zabbix 3
   package { [ 'php-xml', 'php-mbstring', 'php-bcmath' ] : }

@@ -1,7 +1,6 @@
 ---
 
 classes:
-  - profile::base  
-  - profile::zabbix_server
+  - role::zabbix_server
 
 # vim: sw=2:ai:nu expandtab
