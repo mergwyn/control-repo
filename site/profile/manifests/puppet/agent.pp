@@ -12,6 +12,8 @@ class profile::puppet::agent {
     packages        => 'puppet-agent',
     release_version => '5.5*'
   }
+  package { 'puppet-agent': ensure => latest }
+  package { 'puppetlabs-release-pc1': ensure => absent }
 
   file { '/etc/profile.d/puppet.sh':
     ensure  => present,
