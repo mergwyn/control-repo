@@ -34,14 +34,8 @@ class profile::mysql::server {
                 'innodb-buffer-pool-size'        => '2G',
                 'innodb_buffer_pool_size'        => '1300M',
                 'server-id'                      => '1',
-              }
-            }
-          }
-
-  file { '/var/lib/mysql/log':
-    ensure => directory,
-    owner  => 'mysql',
-    group  => 'mysql',
+      }
+    }
   }
 
   $scripts=hiera('profile::backuppc::scripts')
