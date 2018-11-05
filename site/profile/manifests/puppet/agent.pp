@@ -3,10 +3,13 @@
 class profile::puppet::agent {
 
   include ::sudo
+  include profile::puppet::repo
   
   # make sure we match srver version
-  class {'::puppet_agent':
-    #package_version => $serverversion,
+  #
+  apt::pin { 'puppet-agent':
+    priority        => 501
+    release_version => '5.5*'
   }
 
   file { '/etc/profile.d/puppet.sh':

@@ -5,6 +5,7 @@ class profile::puppet::server {
   #include '::puppet'
   #include '::puppet::master'
 
+  include profile::puppet::repo
 
   class { 'r10k':
     cachedir => '/var/cache/r10k',
