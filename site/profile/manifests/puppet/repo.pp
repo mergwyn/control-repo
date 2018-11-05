@@ -12,7 +12,11 @@ class profile::puppet::repo {
       'server' => 'pgp.mit.edu',
     },
   }
-  $purgelist = [ 'pc_repo.list', 'pc_repo.list.distUpgrade' ]
+  $aptdir = '/etc/apt/sources.list.d'
+  $purgelist = [
+    "${aptdir}/pc_repo.list",
+    "${aptdir}/pc_repo.list.distUpgrade",
+  ]
   file { $purgelist: ensure => absent }
 }
 # vim: sw=2:ai:nu expandtab
