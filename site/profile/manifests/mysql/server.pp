@@ -3,7 +3,8 @@
 class profile::mysql::server {
 
   class { 'mysql::server':
-    override_options => {
+    manage_config_file => true,
+    override_options   => {
       'mysqld' => {
                 # MyISAM #
                 'key-buffer-size'                => '32M',
