@@ -1,31 +1,47 @@
 #
-# TODO: use inifiles for config rather that augeas
 
 class profile::mysql::server {
 
-  class { 'mysql::server': }
+  class { 'mysql::server':
+    override_options => {
+      'mysqld' => {
+                # MyISAM #
+                'key-buffer-size'                => '32M',
+                'myisam-recover-options'         => 'FORCE,BACKUP',
+                # SAFETY #
+                'max-allowed-packet'             => '16M',
+                'max-connect-errors'             => '1000000',
+                # BINARY LOGGING #
+                'log_bin'                        => '/var/lib/mysql/log/mysql-bin.log',
+                'expire-logs-days'               => '14',
+                'sync-binlog'                    => '1',
+                # CACHES AND LIMITS #
+                'tmp-table-size'                 => '32M',
+                'max-heap-table-size'            => '32M',
+                'query-cache-type'               => '0',
+                'query-cache-size'               => '0',
+                'max-connections'                => '500',
+                'thread-cache-size'              => '50',
+                'open-files-limit'               => '65535',
+                'table-definition-cache'         => '1024',
+                'table-open-cache'               => '2048',
+                # INNODB #
+                #'innodb-flush-method' => 'O_DIRECT',
+                'innodb-log-files-in-group'      => '2',
+                'innodb-log-file-size'           => '128M',
+                'innodb-flush-log-at-trx-commit' => '1',
+                'innodb-file-per-table'          => '1',
+                'innodb-buffer-pool-size'        => '2G',
+                'innodb_buffer_pool_size'        => '1300M',
+                'server-id'                      => '1',
+              }
+            }
+          }
 
   file { '/var/lib/mysql/log':
     ensure => directory,
     owner  => 'mysql',
     group  => 'mysql',
-  }
-
-  augeas { 'mysqld.cnf':
-    lens    => 'MySQL.lns',
-    incl    => '/etc/mysql/mysql.conf.d/mysqld.cnf',
-    context => '/files/etc/mysql/mysql.conf.d/mysqld.cnf',
-    notify  => Class['mysql::server::service'],
-    changes => [
-      "set target[.='mysqld']/innodb_buffer_pool_instances 1",
-      "set target[.='mysqld']/innodb_buffer_pool_size 1300M",
-      "set target[.='mysqld']/innodb_flush_log_at_trx_commit 0",
-      "set target[.='mysqld']/innodb_log_file_size 128M",
-      "set target[.='mysqld']/log_bin /var/lib/mysql/log/mysql-bin.log",
-      "set target[.='mysqld']/query_cache_size 0",
-      "set target[.='mysqld']/query_cache_type 0",
-      "set target[.='mysqld']/server-id 1",
-    ]
   }
 
   $scripts=hiera('profile::backuppc::scripts')
