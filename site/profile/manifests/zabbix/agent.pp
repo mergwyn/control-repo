@@ -9,7 +9,7 @@ class profile::zabbix::agent {
   file { [ "$etc", "$dir" ]: ensure => directory, }
 
   sudo::conf { 'zabbix':
-    content => 'zabbix  ALL=NOPASSWD: /bin/netstat",
+    content => 'zabbix  ALL=NOPASSWD: /bin/netstat',
   }
   
   zabbix::userparameters { "discovery_disks.perl":
