@@ -7,10 +7,10 @@ class profile::puppet::repo {
     location => 'http://apt.puppetlabs.com',
     release  => 'bionic',
     repos    => 'puppet5',
-    key      => {
-      'id'     => '6F6B15509CF8E59E6E469F327F438280EF8D349F',
-      'server' => 'pgp.mit.edu',
-    },
+    #key      => {
+    #  'id'     => '6F6B15509CF8E59E6E469F327F438280EF8D349F',
+    #  'server' => 'pgp.mit.edu',
+    #},
   }
   $aptdir = '/etc/apt/sources.list.d'
   $purgelist = [
