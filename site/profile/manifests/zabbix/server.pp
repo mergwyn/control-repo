@@ -11,7 +11,7 @@ class profile::zabbix::server {
 
   include profile::mysql::server
 
-  class { 'zabbix': }
+  #class { 'zabbix': }
 
 }
 # vim: sw=2:ai:nu expandtab
