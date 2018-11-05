@@ -143,14 +143,11 @@ class profile::zfs_server {
     content => "UserParameter=zpool.health[*],sudo zpool list -H -o health \${1}\n",
   }
 
-  file { '/etc/sudoers.d/zabbix-zfs':
-    ensure  => present,
-    content => "
-Defaults:zabbix	!requiretty
-zabbix	ALL=(root)	NOPASSWD:	/sbin/zpool
-zabbix	ALL=(root)	NOPASSWD:	/sbin/zfs
-",
-    mode    => '0440',
+  sudo::conf { 'zabbix-zpool':
+    content => 'zabbix  ALL=(root)      NOPASSWD:       /sbin/zpool'
+  }
+  sudo::conf { 'zabbix-zfs':
+    content => 'zabbix	ALL=(root)	NOPASSWD:	/sbin/zfs'
   }
 
   # set kernel parameters

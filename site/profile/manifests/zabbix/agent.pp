@@ -8,12 +8,10 @@ class profile::zabbix::agent {
   $dir="$etc/scripts"
   file { [ "$etc", "$dir" ]: ensure => directory, }
 
-  file { "/etc/sudoers.d/zabbix":
-    ensure  => present,
-    content  => "zabbix ALL=NOPASSWD: /bin/netstat\n",
-    mode    => '0440',
+  sudo::conf { 'zabbix':
+    content => 'zabbix  ALL=NOPASSWD: /bin/netstat",
   }
-
+  
   zabbix::userparameters { "discovery_disks.perl":
     script      => "puppet:///modules/profile/zabbix_agent/discovery_disks.perl",
     script_dir  => $dir,
