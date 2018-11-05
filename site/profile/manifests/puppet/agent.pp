@@ -7,8 +7,9 @@ class profile::puppet::agent {
   
   # make sure we match srver version
   #
-  apt::pin { 'puppet-agent':
+  apt::pin { 'puppet':
     priority        => 501,
+    packages        => 'puppet-agent',
     release_version => '5.5*'
   }
 
