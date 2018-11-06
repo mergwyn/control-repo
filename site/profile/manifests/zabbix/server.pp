@@ -7,11 +7,11 @@ class profile::zabbix::server {
   #package { [ 'snmp', 'snmp-builder' ] : }
 
   class { 'apache': mpm_module => 'prefork', }
-  #include apache::mod::php
+  include apache::mod::php
 
   include profile::mysql::server
 
-  #class { 'zabbix': }
+  class { 'zabbix': }
 
 }
 # vim: sw=2:ai:nu expandtab
