@@ -7,7 +7,7 @@ class profile::mysql::server {
   $defaults = {
     'path'         => '/etc/mysql/mysql.conf.d/overrides.cnf',
     'indent_width' => '0',
-    'notify'       => "Service['mysqld']",
+    'notify'       => "Service['mysql.service']",
   }
   $overrides = {
     'mysqld' => {
