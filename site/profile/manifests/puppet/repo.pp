@@ -16,6 +16,8 @@ class profile::puppet::repo {
   $purgelist = [
     "${aptdir}/pc_repo.list",
     "${aptdir}/pc_repo.list.distUpgrade",
+    "${aptdir}/puppetlabs-pc1.list",
+    "${aptdir}/puppetlabs-pc1.list.dpkg-old",
   ]
   file { $purgelist: ensure => absent }
 }
