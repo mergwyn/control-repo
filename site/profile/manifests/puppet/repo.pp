@@ -2,10 +2,17 @@
 
 class profile::puppet::repo {
 
+  $arch =  $::facts['os']['architecture']
+  case $arch {
+    'i386':  { $release = 'xenial' }
+    'amd64': { $release = $facts['lsbdistcodename'] }
+    default: { notify { "Unexpected arch ${arch} for puppet repo": withpath => true } }
+  }
+  $package  = "${driver}_${version}_${suffix}.deb"
   apt::source { 'puppet5':
-    comment  => 'Puppet 5 bionic Repository',
+    comment  => "Puppet 5 ${release} Repository",
     location => 'http://apt.puppetlabs.com',
-    release  => 'bionic',
+    release  => $release,
     repos    => 'puppet5',
     #key      => {
     #  'id'     => '6F6B15509CF8E59E6E469F327F438280EF8D349F',
