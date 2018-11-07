@@ -14,12 +14,12 @@ class profile::mac::brew {
   ]
 
   package { $brewpkglist:
-    ensure   => latest,
+    ensure   => present,
     provider => brew,
   }
 
   package { $caskpkglist:
-    ensure   => latest,
+    ensure   => present,
     provider => brewcask,
   }
 }
