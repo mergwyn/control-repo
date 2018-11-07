@@ -8,7 +8,10 @@ class profile::mac::brew {
   }
 
   $brewpkglist = [ 'unison' ]
-  $caskpkglist = [ 'munki' , 'puppet-agent-5' ]
+  $caskpkglist = [
+    'munki',
+    'puppetlabs/puppet/puppet-agent-5',
+  ]
 
   package { $brewpkglist:
     ensure   => latest,
