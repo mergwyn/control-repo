@@ -1,5 +1,5 @@
 #
-class munki_client {
+class profile::mac::munki_client {
   if $::operatingsystem != 'Darwin' {
     fail('The munki_client module is only supported on Darwin/OS X')
   }

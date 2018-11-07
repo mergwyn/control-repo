@@ -1,6 +1,6 @@
 #
 
-class profile::brew {
+class profile::mac::brew {
   # core stuff
   class { 'homebrew':
     user  => 'gary',
@@ -8,13 +8,12 @@ class profile::brew {
   }
 
   $brewpkglist = [ 'unison' ]
-  $caskpkglist = [ 'munki' ]
+  $caskpkglist = [ 'munki' , 'puppet-agent-5' ]
 
   package { $brewpkglist:
     ensure   => present,
     provider => brew,
   }
-
 
   package { $caskpkglist:
     ensure   => present,
