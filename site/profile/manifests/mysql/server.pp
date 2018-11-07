@@ -11,7 +11,7 @@ class profile::mysql::server {
   }
   $overrides = {
     'mysqld' => {
-      '# MyISAM '                      => '#',
+      '#'                              => 'MyISAM #',
       'key-buffer-size'                => '32M',
       'myisam-recover-options'         => 'FORCE,BACKUP',
       # SAFETY #
