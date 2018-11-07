@@ -28,7 +28,7 @@ class profile::mysql::server {
       'query_cache_size'               => '0',
       'max_connections'                => '50',
       'thread_cache_size'              => '50',
-      'open_files_limit'               => '5000',
+      'open_files_limit'               => '65535',
       'table_definition_cache'         => '1024',
       'table_open_cache'               => '2048',
       # INNODB #
@@ -37,8 +37,7 @@ class profile::mysql::server {
       'innodb_log_file_size'           => '128M',
       'innodb_flush_log_at_trx_commit' => '1',
       'innodb_file_per_table'          => '1',
-      'innodb_buffer_pool_size'        => '1300M',
-      'innodb_buffer_pool_instances'   => '1',
+      'innodb_buffer_pool_size'        => '2G',
       'server_id'                      => '1',
       #'setting1'  => 'value1',
       #'settings2' => {
