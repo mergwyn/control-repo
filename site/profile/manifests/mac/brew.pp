@@ -11,13 +11,17 @@ class profile::mac::brew {
   $caskpkglist = [ 'munki' , 'puppet-agent-5' ]
 
   package { $brewpkglist:
-    ensure   => present,
+    ensure   => latest,
     provider => brew,
+    user     => 'gary',
+    group    => 'domain users',
   }
 
   package { $caskpkglist:
-    ensure   => present,
+    ensure   => latest,
     provider => brewcask,
+    user     => 'gary',
+    group    => 'domain users',
   }
 }
 # vim: sw=2:ai:nu expandtab
