@@ -30,7 +30,7 @@ class profile::mac::munki_client {
     mode    => '0640',
     owner   => root,
     group   => wheel,
-    source  => "file://${puppet_confdir}/ssl/certs/private_keys/${clientcert}.pem",
+    source  => "file://${puppet_confdir}/ssl/private_keys/${clientcert}.pem",
     require => File['/Library/Managed Installs/certs/'],
   }
 }
