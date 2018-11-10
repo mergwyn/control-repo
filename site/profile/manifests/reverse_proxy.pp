@@ -4,7 +4,7 @@ class profile::reverse_proxy {
   include nginx
 
   nginx::resource::server { 'webmin':
-    listen_port => 1000,
+    listen_port => 10000,
     server_name => [ "${::hostname}.$::domain" ],
     proxy       => "http://${::hostname}.$::domain:10000",
   }
@@ -20,9 +20,7 @@ class profile::reverse_proxy {
   } 
   # tango related
   nginx::resource::server { 'couchpototo.tango':
-    listen_port => 5050,
-    server_name => [ "tango.$::domain" ],
-    proxy       => "http://tango.$::domain:5050",
+    ensure => absent,
   }
   nginx::resource::server { 'sabnzbd.tango':
     listen_port => 8080,
