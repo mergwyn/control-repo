@@ -3,11 +3,6 @@
 class profile::reverse_proxy {
   include nginx
 
-  nginx::resource::server { 'webmin':
-    listen_port => 10000,
-    server_name => [ "${::hostname}.$::domain" ],
-    proxy       => "http://${::hostname}.$::domain:10000",
-  }
   nginx::resource::server { 'zulu':
     server_name => [ "zulu.$::domain" ],
     listen_port => 80,
