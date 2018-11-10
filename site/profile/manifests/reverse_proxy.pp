@@ -19,9 +19,6 @@ class profile::reverse_proxy {
     proxy       => "http://foxtrot.$::domain:80",
   } 
   # tango related
-  nginx::resource::server { 'couchpototo.tango':
-    ensure => absent,
-  }
   nginx::resource::server { 'sabnzbd.tango':
     listen_port => 8080,
     server_name => [ "tango.$::domain" ],
