@@ -3,7 +3,7 @@
 class profile::router {
 
   include ::snapd
-  $snappackages = [ 'ffr' ]
+  $snappackages = [ 'frr' ]
   package { $snappackages:
     ensure   => present,
     provider => snap,
