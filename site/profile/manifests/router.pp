@@ -2,8 +2,12 @@
 
 class profile::router {
 
-  $packages = [ 'pfsense' ]
-  package { $packages: ensure => present }
+  include ::snapd
+  $snappackages = [ 'ffr' ]
+  package { $snappackages:
+    ensure   => present,
+    provider => snap,
+  }
 
 }
 #
