@@ -24,8 +24,10 @@ defaults::media_group:     '513'
 #settings for common applications
 jackett::user:             "%{hiera('defaults::media_user')}"
 jackett::group:            "%{hiera('defaults::media_group')}"
+jackett::keep:             2
 radarr::user:              "%{hiera('defaults::media_user')}"
 radarr::group:             "%{hiera('defaults::media_group')}"
+radarr::keep:              2
 
 
 #se vim: sw=2:ai:nu expandtab
