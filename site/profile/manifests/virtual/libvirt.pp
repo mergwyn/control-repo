@@ -1,7 +1,7 @@
 #
 # TODO: delete?
 
-class profile::libvirt_host {
+class profile::virtual::libvirt {
 #  include '::libvirt' 
   class { '::libvirt':
     listen_tls                => false,

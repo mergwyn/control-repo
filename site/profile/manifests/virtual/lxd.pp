@@ -1,6 +1,6 @@
 #
 
-class profile::lxd_host {
+class profile::virtual::lxd {
   package { [ 'bridge-utils' ]: }
   package { [ 'criu' ]: ensure => absent, }
 
