@@ -2,12 +2,12 @@
 
 class profile::router {
 
-  include ::snapd
-  $snappackages = [ 'frr' ]
-  package { $snappackages:
-    ensure   => present,
-    provider => snap,
-  }
+  #include ::snapd
+  #$snappackages = [ 'frr' ]
+  #package { $snappackages:
+  #  ensure   => present,
+  #  provider => snap,
+  #}
 
 }
 #
