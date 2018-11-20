@@ -47,7 +47,7 @@ zone 11.168.192.in-addr.arpa. {
 	key dhcp-key; # Use the key we defined earlier for dynamic updates
 }
 
-subnet 192.168.11.0 netmask 255.255.0.0 {
+subnet 192.168.11.0 netmask 255.255.255.0 {
 	authoritative;
 	#get-lease-hostnames true;
 	ddns-updates off;
@@ -99,6 +99,10 @@ host mike {
 host papa {
 	hardware ethernet 00:16:3e:fc:2a:87;
 	fixed-address 192.168.11.240;
+}
+# Group that uses VPN to internet
+group {
+        option routers 192.168.11.250;
 }
 group {
 	use-host-decl-names on;
