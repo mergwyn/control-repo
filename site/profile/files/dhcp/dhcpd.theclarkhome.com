@@ -47,7 +47,7 @@ zone 11.168.192.in-addr.arpa. {
 	key dhcp-key; # Use the key we defined earlier for dynamic updates
 }
 
-subnet 192.168.11.0 netmask 255.255.255.0 {
+subnet 192.168.11.0 netmask 255.255.0.0 {
 	authoritative;
 	#get-lease-hostnames true;
 	ddns-updates off;
