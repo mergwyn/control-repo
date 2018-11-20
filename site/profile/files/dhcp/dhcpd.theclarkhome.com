@@ -100,6 +100,9 @@ host papa {
 	hardware ethernet 00:16:3e:fc:2a:87;
 	fixed-address 192.168.11.240;
 }
+host romeo {
+	fixed-address 192.168.11.250;
+}
 # Group that uses VPN to internet
 group {
         option routers 192.168.11.250;
