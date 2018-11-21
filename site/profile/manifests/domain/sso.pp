@@ -41,7 +41,8 @@ class profile::domain::sso {
         'ldap_uri'                       => ['ldap://bravo.theclarkhome.com,ldap://alpha.theclarkhome.com'],
         'ldap_use_tokengroups'           => false,
         'use_fully_qualified_names'      => false,
-      }
+      },
+      require => Exec[ 'create_keytab' ],
     }
   }
 
