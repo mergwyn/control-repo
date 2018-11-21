@@ -2,12 +2,11 @@
 
 class profile::router {
 
-  #include ::snapd
-  #$snappackages = [ 'frr' ]
-  #package { $snappackages:
-  #  ensure   => present,
-  #  provider => snap,
-  #}
+  $aptpackages = [
+    'ufw',
+    'openvpn-client',
+  ]
+  package { $aptpackages: ensure   => present, }
 
 }
 #
