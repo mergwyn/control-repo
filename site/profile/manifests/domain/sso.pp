@@ -8,11 +8,11 @@ class profile::domain::sso {
     default:  { $require = 'profile::domain::dc' }
   }
   notify {"samba:dc:role $type for $::fqdn requires $require":}
+  Class[$require] ~> Class['profile::domain::sso']
 
   exec { 'create_keytab':
     command => '/usr/bin/net ads keytab create -P',
     creates => '/etc/krb5.keytab',
-    require => [ Class[ $require ] ],
   }
   class { '::sssd':
     config => {
