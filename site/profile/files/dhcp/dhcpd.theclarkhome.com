@@ -84,10 +84,10 @@ host echo {
 	hardware ethernet 00:16:3e:60:37:e3;
 	fixed-address 192.168.11.44;
 }
-#host zulu {
-#	hardware ethernet 00:16:3e:98:92:d8;
-#	fixed-address 192.168.11.45;
-#}
+host zulu {
+	hardware ethernet 00:16:3e:98:92:d8;
+	fixed-address 192.168.11.45;
+}
 host foxtrot {
 	hardware ethernet 00:0c:29:62:d5:5f;
 	fixed-address 192.168.11.12;
