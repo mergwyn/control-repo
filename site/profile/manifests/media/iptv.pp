@@ -19,7 +19,7 @@ class profile::media::iptv {
   package { $packages: ensure => present }
 
   class{'::tvheadend':
-    release        => 'stable-4.2',
+    release        => 'stable',
     admin_password => 'L1nahswf.ve',
     user           => 'media',
     group          => '513',
