@@ -7,7 +7,8 @@ class profile::domain::sso {
     'member': { $require = 'profile::domain::member' }
     default:  { $require = 'profile::domain::dc' }
   }
-  notify {"samba:dc:role $type for $::fqdn requires $require":}
+  #notify {"samba:dc:role $type for $::fqdn requires $require":}
+  #
   Class[$require] ~> Class['profile::domain::sso']
 
   exec { 'create_keytab':
