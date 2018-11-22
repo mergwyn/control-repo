@@ -27,6 +27,10 @@ class profile::base {
       source => 'puppet:///modules/profile/11-media-by-label-auto-mount.rules',
     }
   }
+  host { $::facts['hostname']:
+    ensure       => absent,
+    ip           => '127.0.1.1',
+  }
   host { $::facts['fqdn']:
     ensure       => present,
     host_aliases => $::facts['hostname'],
