@@ -27,6 +27,11 @@ class profile::base {
       source => 'puppet:///modules/profile/11-media-by-label-auto-mount.rules',
     }
   }
+  host { $::facts['fqdn']:
+    ensure       => present,
+    host_aliases => $::facts['hostname'],
+    ip           => '127.0.1.1',
+  }
 
   include profile::core_users
   include profile::avahi
