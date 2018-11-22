@@ -6,25 +6,12 @@ class profile::media::iptv {
 
   $codedir='/opt/scripts'
 
-  group { 'hts': gid => '900', }
-  user { 'hts':
-    groups     => 'hts',
-    uid        => '900',
-    home       => '/var/lib/hts',
-    comment    => 'tvheadend,,,',
-    managehome => false,
-    require    => Group['hts'],
-  }
-
   $packages = [ 'curl', 'socat' ]
   package { $packages: ensure => present }
 
   class{'::tvheadend':
     release        => 'stable',
     admin_password => 'L1nahswf.ve',
-    user           => 'hts',
-    group          => 'hts',
-    require        => User['hts'],
   } 
 
   cron::job::multiple { 'xmltv':
