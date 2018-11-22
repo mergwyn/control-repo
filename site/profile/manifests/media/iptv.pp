@@ -6,16 +6,24 @@ class profile::media::iptv {
 
   $codedir='/opt/scripts'
 
+  group { 'hts': gid => '900', }
+  user { 'hts':
+    groups     => 'hts',
+    uid        => '900',
+    home       => '/var/lib/hts',
+    comment    => 'tvheadend,,,',
+    managehome => false,
+  }
+
   $packages = [ 'curl', 'socat' ]
   package { $packages: ensure => present }
 
-  #class{'::tvheadend':
-    #release        => 'stable-4.2',
-    #admin_password => 'L1nahswf.ve',
-    #user           => 'media',
-    #group          => '513',
-  #} 
-  #TODO cron
+  class{'::tvheadend':
+    release        => 'stable-4.2',
+    admin_password => 'L1nahswf.ve',
+    user           => 'media',
+    group          => '513',
+  } 
 
   cron::job::multiple { 'xmltv':
     jobs => [
@@ -34,6 +42,7 @@ class profile::media::iptv {
   }
 
   #TODO tvhproxy
+  #TODO telly
 }
 
 # vim: sw=2:ai:nu expandtab
