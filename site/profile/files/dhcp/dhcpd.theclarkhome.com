@@ -108,7 +108,7 @@ host romeo {
 group vpn {
         option routers 192.168.11.250;
         host LGwebOSTV {
-		hardware ethernet c:1c:4e:48:06:e2;
+		hardware ethernet 7c:1c:4e:48:06:e2;
 		option host-name "LGwebOSTV";
 	}
         host india {
