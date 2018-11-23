@@ -105,13 +105,17 @@ host romeo {
 	fixed-address 192.168.11.250;
 }
 # Group that uses VPN to internet
-group {
+group vpn {
         option routers 192.168.11.250;
+        host LGwebOSTV {
+		hardware ethernet c:1c:4e:48:06:e2;
+		option host-name "LGwebOSTV";
+	}
         host india {
 		hardware ethernet 00:16:3e:93:c6:21;
 	}
 }
-group {
+group hostnames {
 	use-host-decl-names on;
 	host DELLA3F95F {
 		ddns-hostname "DELLA3F95F";
