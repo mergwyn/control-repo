@@ -52,7 +52,7 @@ class profile::domain::member {
     idrangemax    => 19999,
     backend       => 'ad',
     schema_mode   => 'rfc2307',
-    unix_nss_info => yes,
+    #unix_nss_info => yes,
   }
 }
 # vim: sw=2:ai:nu expandtab
