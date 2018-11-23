@@ -107,6 +107,9 @@ host romeo {
 # Group that uses VPN to internet
 group {
         option routers 192.168.11.250;
+        host india {
+		hardware ethernet 00:16:3e:93:c6:21;
+	}
 }
 group {
 	use-host-decl-names on;
