@@ -107,10 +107,10 @@ host romeo {
 # Group that uses VPN to internet
 group vpn {
         option routers 192.168.11.250;
-        #host LGwebOSTV {
+        host LGwebOSTV {
 	#	hardware ethernet 7c:1c:4e:48:06:e2;
-	#	option host-name "LGwebOSTV";
-	#}
+		option host-name "LGwebOSTV";
+	}
         host india {
 		hardware ethernet 00:16:3e:93:c6:21;
 	}
