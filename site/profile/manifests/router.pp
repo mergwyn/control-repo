@@ -4,7 +4,7 @@ class profile::router {
 
   $aptpackages = [
     'ufw',
-    'openvpn-client',
+    #'openvpn-client',
   ]
   package { $aptpackages: ensure   => present, }
 
