@@ -2,15 +2,15 @@
 
 class profile::base {
   # core stuff
-  packages_present = [
+  $packages_present = [
     'ubuntu-standard',
     'update-notifier-common',
     'landscape-common',
     'vim',
     'anacron',
   ]
-  package { $packages_present': ensure => present, }
-  packages_absent = [ 
+  package { $packages_present: ensure => present, }
+  $packages_absent = [ 
     'vim-tiny',
     'mlocate'
   ]
