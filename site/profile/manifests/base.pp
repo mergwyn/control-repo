@@ -38,7 +38,7 @@ class profile::base {
     ensure       => absent,
     ip           => '127.0.1.1',
   }
-  host { $facts['networking']['fqdn']:
+  host { "$facts['networking']['fqdn']":
     ensure       => present,
     host_aliases => $facts['networking']['hostname'],
     ip           => '127.0.1.1',
