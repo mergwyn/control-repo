@@ -42,6 +42,7 @@ class profile::domain::dhcpd (
     owner   => "$owner",
     group   => "$group",
   }
+  #Concat::Fragment dhcp_hosts <<| tag == "vpn"|>>
 
   file { "/etc/dhcp/dhcp-dyndns-real.sh":
     ensure  => absent,
