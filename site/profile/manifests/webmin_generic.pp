@@ -8,7 +8,7 @@ class profile::webmin_generic {
   package { 'libauthen-oath-perl': }
 
   class { 'webmin':
-    usermin => 'disable',
+    #usermin => 'disable',
     require => Package['libauthen-oath-perl'],
   }
 
