@@ -1,8 +1,9 @@
 ---
 
 classes:
-  - role::generic_server
-  - profile::sabnzbdplus
+  - role::router
+    #- role::generic_server
+    #- profile::sabnzbdplus
 
 profile::sabnzbdplus::settings:
   misc:
