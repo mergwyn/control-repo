@@ -2,12 +2,19 @@
 
 class profile::base {
   # core stuff
-  package { 'ubuntu-standard':          ensure => present, }
-  package { 'update-notifier-common':   ensure => present, }
-  package { 'landscape-common':         ensure => present, }
-  package { 'vim':                      ensure => present, }
-  package { 'anacron':                  ensure => present, }
-  package { [ 'vim-tiny', 'mlocate' ]:  ensure => absent, }
+  packages_present = [
+    'ubuntu-standard',
+    'update-notifier-common',
+    'landscape-common',
+    'vim',
+    'anacron',
+  ]
+  package { $packages_present': ensure => present, }
+  packages_absent = [ 
+    'vim-tiny',
+    'mlocate'
+  ]
+  package { $packages_absent:   ensure => absent, }
 
   file { '/etc/legal':                  ensure  => absent, }
   file { '/etc/vim/vim.local':          ensure  => absent, }
@@ -27,13 +34,13 @@ class profile::base {
       source => 'puppet:///modules/profile/11-media-by-label-auto-mount.rules',
     }
   }
-  host { $::facts['networking']['hostname']:
+  host { $facts['networking']['hostname']:
     ensure       => absent,
     ip           => '127.0.1.1',
   }
-  host { $::facts['networking']['fqdn']:
+  host { $facts['networking']['fqdn']:
     ensure       => present,
-    host_aliases => $::facts['networking']['hostname'],
+    host_aliases => $facts['networking']['hostname'],
     ip           => '127.0.1.1',
   }
 
