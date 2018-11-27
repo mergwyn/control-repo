@@ -40,7 +40,7 @@ class profile::base {
   }
   host { "$facts['networking']['fqdn']":
     ensure       => present,
-    host_aliases => $facts['networking']['hostname'],
+    host_aliases => "$facts['networking']['hostname']",
     ip           => '127.0.1.1',
   }
 
