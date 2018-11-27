@@ -8,6 +8,7 @@ class profile::base {
     'landscape-common',
     'vim',
     'anacron',
+    'gpg',
   ]
   package { $packages_present: ensure => present, }
   $packages_absent = [ 
