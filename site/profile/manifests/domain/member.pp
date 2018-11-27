@@ -5,7 +5,7 @@ class profile::domain::member {
     # Mandatory parameters
     domain              => hiera('defaults::workgroup'),
     realm               => hiera('defaults::realm'),
-    smbname             => $::facts['hostname'],
+    smbname             => $::facts['networking']['hostname'],
     sambaloglevel       => 2,
     logtosyslog         => true,
     sambaclassloglevel  => {

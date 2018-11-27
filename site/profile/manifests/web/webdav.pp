@@ -4,7 +4,7 @@ class profile::web::webdav{
   include profile::web::nginx
 
   nginx::resource::server { 'webdav':
-    server_name          => [ $::facts['fqdn'] ],
+    server_name          => [ $::facts['networking']['fqdn'] ],
     listen_port          => 80,
     use_default_location => false,
     locations            => {

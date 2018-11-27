@@ -12,7 +12,7 @@ class profile::backuppc::server {
   include profile::web::nginx
 
   nginx::resource::server { 'backuppc':
-    server_name          => [ $::facts['fqdn'] ],
+    server_name          => [ $::facts['networking']['fqdn'] ],
     listen_port          => 80,
     use_default_location => false,
     locations            => {

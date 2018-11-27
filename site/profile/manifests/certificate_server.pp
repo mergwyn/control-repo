@@ -11,13 +11,13 @@ class profile::reverse_proxy {
   #}
 
   #$dir='/usr/share/nginx/html'
-  $domain = $::facts['domain']
+  $domain = $::facts['networking']['domain']
   #letsencrypt::certonly { 'home':
-  #  domains       => [ $::facts['fqdn'] ],
+  #  domains       => [ $::facts['networking']['fqdn'] ],
   #  plugin        => 'webroot',
   #  webroot_paths => ["${dir}/${::hostname}"],
     #domains => [
-    #  $facts['fqdn'],
+    #  $facts['networking']['fqdn'],
     #  "echo.$domain",
     #  "foxtrot.$domain",
     #  "tango.$domain",
