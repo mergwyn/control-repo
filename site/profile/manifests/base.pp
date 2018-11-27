@@ -34,7 +34,7 @@ class profile::base {
       source => 'puppet:///modules/profile/11-media-by-label-auto-mount.rules',
     }
   }
-  host { $facts['networking']['hostname']:
+  host { "$facts['networking']['hostname']":
     ensure       => absent,
     ip           => '127.0.1.1',
   }
