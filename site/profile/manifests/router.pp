@@ -8,10 +8,14 @@ class profile::router {
 
   $aptpackages = [
     'ufw',
-    'openvpn-client',
+    'openvpn',
   ]
   package { $aptpackages: ensure   => present, }
+  #
+  #TODO configure ufw
+  #TODO configure openvpn
 
+  # make sure routes are up to date
   cron::job { 'iptv-routes':
     command     => "test -x ${codedir}/iptv/getroutes && ${codedir}/iptv/getroutes",
     minute      => 51, 
