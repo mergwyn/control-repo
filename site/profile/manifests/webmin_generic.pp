@@ -28,10 +28,10 @@ class profile::webmin_generic {
     'require'           => 'Package[webmin]',
     'notify'            => 'Service[webmin]',
     'key_val_separator' => '=',
-    require             => Package['webmin'],
   }
 
   $package_updates_settings = {
+    require             => Package['webmin'],
     '' => {
       'sched_email'     => "$adminemail",
       'update_multiple' => '1',
