@@ -15,7 +15,10 @@ class profile::webmin_generic {
 
   class { 'webmin':
     #usermin => 'disable',
-    require => Package['libauthen-oath-perl'],
+    require => [ 
+      Package['libauthen-oath-perl'],
+      Exec['apt_show_versions_clean'],
+    ],
   }
 
   # update config values
@@ -25,6 +28,7 @@ class profile::webmin_generic {
     'require'           => 'Package[webmin]',
     'notify'            => 'Service[webmin]',
     'key_val_separator' => '=',
+    require             => Package['webmin'],
   }
 
   $package_updates_settings = {
