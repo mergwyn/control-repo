@@ -31,7 +31,7 @@ class profile::webmin_generic {
   }
 
   $package_updates_settings = {
-    require             => Package['webmin'],
+    'require'             => Package['webmin'],
     '' => {
       'sched_email'     => "$adminemail",
       'update_multiple' => '1',
