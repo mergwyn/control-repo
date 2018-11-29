@@ -7,7 +7,7 @@ class profile::webmin_generic {
   exec { 'apt_show_versions_clean':
     command   => 'apt-get purge -y apt-show-versions',
     path      => ['/usr/bin', '/sbin', '/bin'],
-    unless   => '/opt/webmin_apt_ppa_install',
+    unless   => 'test -f /opt/webmin_apt_ppa_install',
     logoutput => 'on_failure',
   } 
   # for 2FA with google
