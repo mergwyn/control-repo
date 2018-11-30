@@ -19,7 +19,7 @@ class profile::media::iptv {
       {
         command     => "test -x ${codedir}/iptv/get-epg && ${codedir}/iptv/get-epg",
         minute      => 30,
-        hour        => '4,12,16',
+        hour        => '*',
       },
       {
         command     => "test -x ${codedir}/iptv/get-channels && ${codedir}/iptv/get-channels",
