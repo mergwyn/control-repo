@@ -2,23 +2,17 @@
 # TODO: parameters and settings
 
 class profile::unattended_upgrades {
-  #$upgrade_blacklist = hiera_array('do_not_upgrade')
-  #class {'::unattended_upgrades': }
+  include apt
   class {'::unattended_upgrades':
-    #period    => '1',
-    #autoremove => true,
-    repos     => {
-      "${lsbdistcodename}-security" => { origin => "Ubuntu", },
-      #"${lsbdistcodename}" => { origin => "Ubuntu", },
-      #"${lsbdistcodename}-updates" => { origin => "Ubuntu", },
-      #"${lsbdistcodename}-proposed" => { origin => "Ubuntu", },
-      #"${lsbdistcodename}-backports" => { origin => "Ubuntu", },
-      "Zabbix" => { origin => "Zabbix", },
-      stable => { origin => 'Jamie Cameron', },
-    },
-    #blacklist => $upgrade_blacklist,
-    #email     => hiera("adminemail"),
+    origins => [
+      '${distro_id}:${distro_codename}',                #lint:ignore:single_quote_string_with_variables
+      '${distro_id}:${distro_codename}-security',       #lint:ignore:single_quote_string_with_variables
+      'Jamie Cameron:stable',
+      'Zabbix:${distro_codename}',                      #lint:ignore:single_quote_string_with_variables
+      'puppet:${distro_codename}',                      #lint:ignore:single_quote_string_with_variables
+    ],
+    email   => hiera('defaults::adminemail'), },
   }
-  file { "/etc/apt/apt.conf.d/50unattended-upgrades.ucf-dist": ensure  => absent, }
+  file { '/etc/apt/apt.conf.d/50unattended-upgrades.ucf-dist': ensure  => absent, }
 }
 # vim: sw=2:ai:nu expandtab
