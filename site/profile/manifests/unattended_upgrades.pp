@@ -11,7 +11,10 @@ class profile::unattended_upgrades {
       'Zabbix:${distro_codename}',                      #lint:ignore:single_quote_string_with_variables
       'puppet:${distro_codename}',                      #lint:ignore:single_quote_string_with_variables
     ],
-    #mail    => hiera('defaults::adminemail'),
+    mail    => {
+      'to'            => hiera('defaults::adminemail'),
+      'only_on_error' => true,
+    }
   }
   file { '/etc/apt/apt.conf.d/50unattended-upgrades.ucf-dist': ensure  => absent, }
 }
