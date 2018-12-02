@@ -13,7 +13,7 @@ class profile::unattended_upgrades {
     ],
     mail    => {
       'to'            => hiera('defaults::adminemail'),
-      'only_on_error' => true,
+      'only_on_error' => false,
     }
   }
   file { '/etc/apt/apt.conf.d/50unattended-upgrades.ucf-dist': ensure  => absent, }
