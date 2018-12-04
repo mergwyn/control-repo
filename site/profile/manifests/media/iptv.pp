@@ -32,6 +32,7 @@ class profile::media::iptv {
 
   #TODO tvhproxy
   #TODO telly
+  include profile::web::xmltv
 }
 
 # vim: sw=2:ai:nu expandtab
