@@ -12,6 +12,13 @@ class profile::web::xmltv {
         server              => 'xmltv',
         location_alias      => '/srv/media/xmltv/',
         autoindex           => 'off',
+      },
+      '/favicon.ico' => {
+        location_cfg_append => {
+          access_log =>     'off',
+          return => '204',
+          log_not_found =>  'off',
+        },
       }
     }
   }
