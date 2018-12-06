@@ -33,7 +33,7 @@ class profile::mysql::server {
       'table_open_cache'               => '2048',
       # INNODB #
       #'innodb_flush_method' => 'O_DIRECT',
-      'innodb_log_files_in_group'      => '6',
+      'innodb_log_files_in_group'      => '4',
       'innodb_log_file_size'           => '128M',
       'innodb_flush_log_at_trx_commit' => '1',
       'innodb_file_per_table'          => '1',
