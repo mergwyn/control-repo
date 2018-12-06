@@ -1,6 +1,9 @@
 #
 class profile::backuppc::server {
 
+  include profile::scripts
+  #TODO cron for GPO backup
+
   package { 'pigz': }
   package { 'libjson-perl': }
 
