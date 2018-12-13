@@ -8,7 +8,6 @@ class profile::puppet::repo {
     'amd64': { $release = $facts['lsbdistcodename'] }
     default: { notify { "Unexpected arch ${arch} for puppet repo": withpath => true } }
   }
-  $package  = "${driver}_${version}_${suffix}.deb"
   apt::source { 'puppet5':
     comment  => "Puppet 5 ${release} Repository",
     location => 'http://apt.puppetlabs.com',
