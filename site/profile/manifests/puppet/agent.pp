@@ -4,7 +4,7 @@ class profile::puppet::agent {
 
   include ::sudo
   include profile::puppet::repo
-  
+
   # make sure we match srver version
   #
   apt::pin { 'puppet':

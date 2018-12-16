@@ -30,8 +30,8 @@ Description=Sonarr Daemon
 RequiresMountsFor=/srv/media /home/media
 
 [Service]
-User=$user
-Group=$group
+User=${user}
+Group=${group}
 Restart=on-failure
 RestartSec=5
 Type=simple

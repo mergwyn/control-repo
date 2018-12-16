@@ -3,7 +3,7 @@
 class profile::core_users {
   # users and ssh access
   $passwordsalt = hiera('defaults::sharedpassword')
-  user { 'root': password => "${passwordsalt}", }
+  user { 'root': password => $passwordsalt, }
   file { '/root/.profile':
     ensure => present,
     path   => '/root/.profile',
@@ -31,7 +31,7 @@ class profile::core_users {
   }
   user { 'ubuntu': ensure => absent }
   user { 'sadmin':
-    password   => "${passwordsalt}",
+    password   => $passwordsalt,
     groups     => 'sudo',
     uid        => '1000',
     managehome => true,

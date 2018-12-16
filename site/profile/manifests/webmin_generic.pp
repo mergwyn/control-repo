@@ -7,15 +7,15 @@ class profile::webmin_generic {
   exec { 'apt_show_versions_clean':
     command   => 'apt-get purge -y apt-show-versions',
     path      => ['/usr/bin', '/sbin', '/bin'],
-    unless   => 'test -f /opt/webmin_apt_ppa_install',
+    unless    => 'test -f /opt/webmin_apt_ppa_install',
     logoutput => 'on_failure',
-  } 
+  }
   # for 2FA with google
   package { 'libauthen-oath-perl': }
 
   class { 'webmin':
     #usermin => 'disable',
-    require => [ 
+    require => [
       Package['libauthen-oath-perl'],
       Exec['apt_show_versions_clean'],
     ],
@@ -32,7 +32,7 @@ class profile::webmin_generic {
 
   $package_updates_settings = {
     '' => {
-      'sched_email'     => "$adminemail",
+      'sched_email'     => $adminemail,
       'update_multiple' => '1',
       'sched_action'    => '0',
       'cache_time'      => '6',

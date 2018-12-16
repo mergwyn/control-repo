@@ -1,6 +1,6 @@
 #
 
-class profile::docker {
+class profile::virtual::docker {
 
   #include ::snapd
   #$snappackages = [ 'frr' ]
@@ -10,14 +10,15 @@ class profile::docker {
   #}
   # Docker
 
-sudo add-apt-repository \
-   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
-   $(lsb_release -cs) \
-   stable"
+#sudo add-apt-repository \
+#   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+#   $(lsb_release -cs) \
+#   stable"
+
   apt::source { 'docker':
-    comment  => "Docker Repository",
+    comment  => 'Docker Repository',
     location => 'https://download.docker.com/linux/ubuntu',
-    release  => $release,
+    #release  => $release,
     repos    => 'docker',
     key      => {
       'id'     => '9DC858229FC7DD38854AE2D88D81803C0EBFCD88',

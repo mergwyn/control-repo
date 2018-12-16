@@ -1,7 +1,7 @@
 #
 
 class profile::domain::sso {
-  $type = lookup( { "name" => "samba::dc::role", "default_value" => "member" } )
+  $type = lookup( { 'name' => 'samba::dc::role', 'default_value' => 'member' } )
 
   case $type {
     'member': { $require = 'profile::domain::member' }
@@ -43,13 +43,13 @@ class profile::domain::sso {
         'ldap_use_tokengroups'           => false,
         'use_fully_qualified_names'      => false,
       },
-      require => Exec[ 'create_keytab' ],
+      require                   => Exec[ 'create_keytab' ],
     }
   }
 
   # remove sudo sss setting
   augeas { 'nsswitch.conf':
-    context => "/files/etc/nsswitch.conf",
+    context => '/files/etc/nsswitch.conf',
     changes => [
       "set *[self::database = 'sudoers']/service[1] files",
       "rm *[self::database = 'sudoers']/service[2] ",
@@ -57,10 +57,10 @@ class profile::domain::sso {
   }
 
   include profile::apparmor
-  file { "/etc/apparmor.d/local/usr.sbin.sssd":
+  file { '/etc/apparmor.d/local/usr.sbin.sssd':
     ensure  => file,
     notify  => Service['sssd', 'apparmor'],
-    content  => "  /var/lib/samba/private/krb5.conf r,\n",
+    content => "  /var/lib/samba/private/krb5.conf r,\n",
     owner   => 'root',
     group   => 'root',
   }
@@ -68,7 +68,7 @@ class profile::domain::sso {
   # work around for cron starting before sssd
   $crondir = '/etc/systemd/system/cron.service.d'
   if $::facts['os']['release']['full'] == '16.04' or
-     $::facts['os']['release']['full'] == '18.04'  {
+    $::facts['os']['release']['full'] == '18.04'  {
     include cron
     ::systemd::dropin_file { 'sssd-wait.conf':
       unit    => 'cron.service',

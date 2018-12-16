@@ -11,7 +11,7 @@ class profile::domain::dc {
   $preuser="${scripts}DumpPreUser/"
   $postuser="${scripts}DumpPostUser/"
 
-  $oldfiles = [ 
+  $oldfiles = [
     '/var/lib/samba/sysvol/theclarkhome.com/scripts/samba4_backup',
     '/etc/cron.daily/samba4-backup'
   ]

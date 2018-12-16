@@ -2,9 +2,9 @@
 # TODO: sudo configuration
 
 class profile::mailman_rss (
-    $codedir = '/opt/code',
-    $bindir  = '/usr/local/bin',
-    $htmldi  = '/usr/share/nginx/html',
+    $codedir  = '/opt/code',
+    $bindir   = '/usr/local/bin',
+    $htmldir  = '/usr/share/nginx/html',
   ) {
 
   include profile::git

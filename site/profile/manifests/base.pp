@@ -11,7 +11,7 @@ class profile::base {
     'gpg',
   ]
   package { $packages_present: ensure => present, }
-  $packages_absent = [ 
+  $packages_absent = [
     'vim-tiny',
     'mlocate'
   ]
@@ -36,8 +36,8 @@ class profile::base {
     }
   }
   host { $facts['networking']['hostname']:
-    ensure       => absent,
-    ip           => '127.0.1.1',
+    ensure => absent,
+    ip     => '127.0.1.1',
   }
   host { $facts['networking']['fqdn']:
     ensure       => present,

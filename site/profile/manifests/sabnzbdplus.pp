@@ -7,10 +7,10 @@ class profile::sabnzbdplus (
   $settings = {},
   ) {
 
-  apt::ppa { 'ppa:jcfp/nobetas': 
+  apt::ppa { 'ppa:jcfp/nobetas':
     package_manage => true
   }
-  apt::ppa { 'ppa:jcfp/sab-addons': 
+  apt::ppa { 'ppa:jcfp/sab-addons':
     package_manage => true
   }
   package { [ 'python-sabyenc', 'par2-tbb' ]:
@@ -28,7 +28,7 @@ class profile::sabnzbdplus (
   service { 'sabnzbdplus':
     ensure  => 'running',
     enable  => true,
-    require => [ 
+    require => [
       Package['sabnzbdplus'],
       Package['python-sabyenc'],
       Package['par2-tbb'],
@@ -36,14 +36,14 @@ class profile::sabnzbdplus (
   }
 
   augeas { 'sabnzbdplus.default':
-    lens => "shellvars.lns",
-    incl => '/etc/default/sabnzbdplus',
+    lens    => 'shellvars.lns',
+    incl    => '/etc/default/sabnzbdplus',
     context => '/files/etc/default/sabnzbdplus',
-    notify => Service['sabnzbdplus'],
-    changes => [ 
-      "set START yes",
-      "set USER $user:$group",
-    ] 
+    notify  => Service['sabnzbdplus'],
+    changes => [
+      'set START yes',
+      "set USER ${user}:${group}",
+    ]
   }
 
   validate_hash($settings)

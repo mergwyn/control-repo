@@ -1,6 +1,6 @@
 #
 
-class profile::reverse_proxy {
+class profile::certificate_server {
 
   # sort out certificates first
   #class { '::letsencrypt':
@@ -106,13 +106,13 @@ class profile::reverse_proxy {
       },
     },
   }
-  
+
   # Finally tidy up pound
   #Package { 'pound':             ensure => absent }
   #file { '/etc/pound/pound.cfg': ensure => absent, }
   #file { '/etc/pound':           ensure => absent, }
   #file { '/etc/default/pound':   ensure  => absent, }
-  
+
 }
 #
 # vim: sw=2:ai:nu expandtab

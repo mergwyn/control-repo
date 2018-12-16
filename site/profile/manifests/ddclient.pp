@@ -2,8 +2,8 @@
 
 class profile::ddclient {
 
-  class { 'ddclient': 
-    hosts_config     => 'concat',
+  class { 'ddclient':
+    hosts_config    => 'concat',
     daemon_interval => 300,
     getip_from      => 'web',
     getip_options   => ['web=myip.dnsomatic.com'],
@@ -16,12 +16,12 @@ class profile::ddclient {
     login    => 'theclarkhome.com',
     server   => 'dynamicdns.park-your-domain.com',
     protocol => 'namecheap',
-    password => hiera("passwords::namecheap"),
+    password => hiera('passwords::namecheap'),
     hostname => 'webmin,zulu,tango,papa,foxtrot,echo,vpn',
   }
   ddclient::host { 'opendns':
     login    => 'mergwyn',
-    password => hiera("passwords::opendns"),
+    password => hiera('passwords::opendns'),
     protocol => 'dyndns2',
     server   => 'updates.opendns.com',
     hostname => 'Home',

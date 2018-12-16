@@ -4,40 +4,40 @@ class profile::reverse_proxy {
   include nginx
 
   nginx::resource::server { 'zulu':
-    server_name => [ "zulu.$::domain" ],
+    server_name => [ "zulu.${::domain}" ],
     listen_port => 80,
-    proxy       => "http://zulu.$::domain:80",
+    proxy       => "http://zulu.${::domain}:80",
   }
   nginx::resource::server { 'foxtrot':
-    server_name => [ "foxtrot.$::domain" ],
+    server_name => [ "foxtrot.${::domain}" ],
     listen_port => 80,
-    proxy       => "http://foxtrot.$::domain:80",
-  } 
+    proxy       => "http://foxtrot.${::domain}:80",
+  }
   nginx::resource::server { 'echo':
-    server_name => [ "echo.$::domain" ],
+    server_name => [ "echo.${::domain}" ],
     listen_port => 80,
-    proxy       => "http://echo.$::domain:80",
+    proxy       => "http://echo.${::domain}:80",
   }
   # tango related
   nginx::resource::server { 'sabnzbd.tango':
     listen_port => 8080,
-    server_name => [ "tango.$::domain" ],
-    proxy       => "http://tango.$::domain:8080",
+    server_name => [ "tango.${::domain}" ],
+    proxy       => "http://tango.${::domain}:8080",
   }
   nginx::resource::server { 'radarr.tango':
     listen_port => 7878,
-    server_name => [ "tango.$::domain" ],
-    proxy       => "http://tango.$::domain:7878",
+    server_name => [ "tango.${::domain}" ],
+    proxy       => "http://tango.${::domain}:7878",
   }
   nginx::resource::server { 'sonarr.tango':
     listen_port => 8989,
-    server_name => [ "tango.$::domain" ],
-    proxy       => "http://tango.$::domain:8989",
+    server_name => [ "tango.${::domain}" ],
+    proxy       => "http://tango.${::domain}:8989",
   }
   nginx::resource::server { 'transmission.tango':
     listen_port => 9091,
-    server_name => [ "tango.$::domain" ],
-    proxy       => "http://tango.$::domain:9091",
+    server_name => [ "tango.${::domain}" ],
+    proxy       => "http://tango.${::domain}:9091",
   }
   #
 #  nginx::resource::upstream { 'plex_upstream':
@@ -68,7 +68,7 @@ class profile::reverse_proxy {
 #      },
 #    },
 #  }
-  
+
   # Finally tidy up pound
   Package { 'pound':             ensure => absent }
   file { '/etc/pound/pound.cfg': ensure => absent, }
@@ -77,7 +77,7 @@ class profile::reverse_proxy {
     ensure => absent,
     force  => true,
   }
-  
+
 }
 #
 # vim: sw=2:ai:nu expandtab

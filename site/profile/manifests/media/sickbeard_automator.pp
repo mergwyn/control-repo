@@ -67,10 +67,10 @@ class profile::media::sickbeard_automator {
     mode   => '0777',
   }
   file { "${logdir}/index.log":
-    ensure => file,
-    mode   => '0664',
-    owner  => $owner,
-    group  => $group,
+    ensure  => file,
+    mode    => '0664',
+    owner   => $owner,
+    group   => $group,
     require => File[$logdir],
   }
 }

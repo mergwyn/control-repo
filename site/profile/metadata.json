@@ -1,13 +1,34 @@
 {
-  "name": "profile",
+  "name": "mergwyn-profile",
   "version": "0.1.0",
   "author": "mergwyn",
-  "summary": null,
-  "license": "Apache 2.0",
+  "summary": "",
+  "license": "Apache-2.0",
   "source": "",
-  "project_page": null,
-  "issues_url": null,
   "dependencies": [
-  ]
-}
 
+  ],
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "Debian",
+      "operatingsystemrelease": [
+        "8"
+      ]
+    },
+    {
+      "operatingsystem": "Ubuntu",
+      "operatingsystemrelease": [
+        "16.04"
+      ]
+    }
+  ],
+  "requirements": [
+    {
+      "name": "puppet",
+      "version_requirement": ">= 4.10.0 < 7.0.0"
+    }
+  ],
+  "pdk-version": "1.8.0",
+  "template-url": "file:///opt/puppetlabs/pdk/share/cache/pdk-templates.git",
+  "template-ref": "1.8.0-0-g0d9da00"
+}

@@ -8,15 +8,15 @@ class profile::web::xmltv {
     listen_port          => 80,
     use_default_location => false,
     locations            => {
-      '/xmltv/' => {
-        server              => 'xmltv',
-        location_alias      => '/srv/media/xmltv/',
-        autoindex           => 'off',
+      '/xmltv/'      => {
+        server         => 'xmltv',
+        location_alias => '/srv/media/xmltv/',
+        autoindex      => 'off',
       },
       '/favicon.ico' => {
         location_cfg_append => {
-          access_log =>     'off',
-          return => '204',
+          access_log    =>     'off',
+          return        => '204',
           log_not_found =>  'off',
         },
       }

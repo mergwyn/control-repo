@@ -5,18 +5,18 @@ class profile::zfs_server {
 
   include profile::git
   exec { 'zfs_share-a':
-    command     => "/sbin/zfs share -a",
-    refreshonly => true,    
+    command     => '/sbin/zfs share -a',
+    refreshonly => true,
   }
   augeas { 'zfs.default':
-    lens => "shellvars.lns",
-    incl => '/etc/default/zfs',
+    lens    => 'shellvars.lns',
+    incl    => '/etc/default/zfs',
     context => '/files/etc/default/zfs',
-    notify => Exec['zfs_share-a'],
-    changes => [ 
+    notify  => Exec['zfs_share-a'],
+    changes => [
       'set ZFS_SHARE yes',
       'set ZFS_UNSHARE yes'
-    ]   
+    ]
   }
 
   $codedir='/opt/code'
@@ -54,26 +54,26 @@ class profile::zfs_server {
   }
 
   # zfs autosnap 
-  vcsrepo { "$codedir/zfs-auto-snapshot":
+  vcsrepo { "${codedir}/zfs-auto-snapshot":
     ensure   => latest,
     provider => git,
     source   => 'https://github.com/zfsonlinux/zfs-auto-snapshot',
     revision => 'master',
     require  => Package['git', 'gawk'],
-  } 
-  file { "$bindir/zfs-auto-snapshot":
+  }
+  file { "${bindir}/zfs-auto-snapshot":
     ensure => present,
     mode   => '0755',
-    source => "file://$codedir/zfs-auto-snapshot/src/zfs-auto-snapshot.sh",
+    source => "file://${codedir}/zfs-auto-snapshot/src/zfs-auto-snapshot.sh",
   }
   file { '/sbin/zfs-auto-snapshot': ensure => absent, }
 
-  file { "$mandir/man8": ensure => directory, }
-  
-  file { "$mandir/man8/zfs-auto-snapshot.8":
+  file { "${mandir}/man8": ensure => directory, }
+
+  file { "${mandir}/man8/zfs-auto-snapshot.8":
     ensure => present,
     mode   => '0644',
-    source => "file://$codedir/zfs-auto-snapshot/src/zfs-auto-snapshot.8",
+    source => "file://${codedir}/zfs-auto-snapshot/src/zfs-auto-snapshot.8",
   }
 
   cron::job {'zfs-auto-snapshot':
@@ -105,33 +105,33 @@ class profile::zfs_server {
 
   # beadm boot environments
 
- # lxd snap related commands
+  # lxd snap related commands
   package { 'gawk': }
-  vcsrepo { "$codedir/beadm":
+  vcsrepo { "${codedir}/beadm":
       ensure   => latest,
       provider => git,
       source   => 'https://github.com/mergwyn/beadm',
       revision => 'master',
       require  => Package['git', 'gawk'],
   }
-  file { "$bindir/beadm":
+  file { "${bindir}/beadm":
     ensure => present,
     mode   => '0555',
-    source => "file://$codedir/beadm/beadm",
+    source => "file://${codedir}/beadm/beadm",
   }
-  file { "$mandir/man1": ensure => directory, }
-  file { "$mandir/man1/beadm.1":
+  file { "${mandir}/man1": ensure => directory, }
+  file { "${mandir}/man1/beadm.1":
     ensure => present,
     mode   => '0644',
-    source => "file://$codedir/beadm/beadm.1",
+    source => "file://${codedir}/beadm/beadm.1",
   }
 
   file { '/etc/default/beadm.conf':
     ensure => absent,
   }
   file { '/etc/beadm.conf':
-    ensure => present,
-    mode   => '0555',
+    ensure  => present,
+    mode    => '0555',
     content => "#\nGRUB=YES\n"
   }
 
@@ -152,16 +152,16 @@ class profile::zfs_server {
 
   # set kernel parameters
   kmod::option { 'zfs_arc_max':
-    module  => 'zfs',
-    option  => 'zfs_arc_max',
-    value   => $::facts['memory']['system']['total_bytes']/2,
-    notify  => Exec['update_initramfs_all']
+    module => 'zfs',
+    option => 'zfs_arc_max',
+    value  => $::facts['memory']['system']['total_bytes']/2,
+    notify => Exec['update_initramfs_all']
   }
   kmod::option { 'zfs_arc_min':
-    module  => 'zfs',
-    option  => 'zfs_arc_min',
-    value   => $::facts['memory']['system']['total_bytes']/8,
-    notify  => Exec['update_initramfs_all']
+    module => 'zfs',
+    option => 'zfs_arc_min',
+    value  => $::facts['memory']['system']['total_bytes']/8,
+    notify => Exec['update_initramfs_all']
   }
   exec { 'update_initramfs_all':
     command     => '/usr/sbin/update-initramfs -k all -u',

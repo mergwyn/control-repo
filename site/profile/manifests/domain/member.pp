@@ -47,11 +47,11 @@ class profile::domain::member {
     backend    => 'tdb',         # * idmap backend
   }
   ::samba::idmap { 'Domain DC':
-    domain        => hiera('defaults::workgroup'),  # * name of the Domain or '*'
-    idrangemin    => 500,
-    idrangemax    => 19999,
-    backend       => 'ad',
-    schema_mode   => 'rfc2307',
+    domain      => hiera('defaults::workgroup'),  # * name of the Domain or '*'
+    idrangemin  => 500,
+    idrangemax  => 19999,
+    backend     => 'ad',
+    schema_mode => 'rfc2307',
     #unix_nss_info => yes,
   }
 }
