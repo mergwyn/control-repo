@@ -22,7 +22,7 @@ managedmac::activedirectory::evaluate:                  "yes"
 managedmac::activedirectory::provider:                  dsconfigad
 managedmac::activedirectory::hostname:                  "%{::domain}"
 managedmac::activedirectory::username:                  "administrator"
-managedmac::activedirectory::password:                  "%{hiera('passwords::admin')}"
+managedmac::activedirectory::password:                  "%{hiera('secrets::admin')}"
 managedmac::activedirectory::computer:                  "%{::hostname}"
 managedmac::activedirectory::mount_style:               smb
 managedmac::activedirectory::create_mobile_account_at_login: true

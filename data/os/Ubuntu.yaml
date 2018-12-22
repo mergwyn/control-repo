@@ -11,7 +11,7 @@ puppet::manage_repos:                   false
 puppet::structured_facts:               true
 
 profile::mail_client::myorigin:         "%{domain}"
-profile::mail_client::password_credentials: "mergwyn@virginmedia.com:%{hiera('passwords::virgin')}"
+profile::mail_client::password_credentials: "mergwyn@virginmedia.com:%{hiera('secrets::virgin')}"
 profile::mail_client::password_hash:    '/etc/postfix/sasl-passwords'
 profile::mail_client::relayhost:        '[smtp.virginmedia.com]:465'
 profile::mail_client::root_mail_recipient: "%{hiera('defaults::adminemail')}"
@@ -60,7 +60,7 @@ samba::classic::realm:                  "%{hiera('defaults::realm')}"
 samba::dc::domain:                      "%{hiera('defaults::workgroup')}"
 samba::dc::realm:                       "%{hiera('defaults::realm')}"
 samba::dc::loglevel:                    '1'
-samba::dc::adminpassword:               "%{hiera('passwords::domain')}"
+samba::dc::adminpassword:               "%{hiera('secrets::domain')}"
 samba::dc::dnsforwarder:                '208.67.222.222'
 samba::dc::serverservices:              's3fs, rpc, nbt, wrepl, ldap, cldap, kdc, drepl, winbind, ntp_signd, kcc, dnsupdate, dns'
 samba::dc::provisionargs:               '--use-xattrs=yes --use-ntvfs'
@@ -83,7 +83,7 @@ zabbix::agent::serveractive:            "zulu,zulu.%{domain}"
 zabbix::agent::enableremotecommands:    '1'
 
 tvheadend::release:                     'release'
-tvheadend::admin_password:              "%{hiera('passwords::tvheadend')}"
+tvheadend::admin_password:              "%{hiera('secrets::tvheadend')}"
 
 profile::backuppc::scripts:             '/etc/backuppc/scripts'
 profile::backuppc::preuser:             "%{hiera('profile::backuppc::scripts')}/DumpPreUser"

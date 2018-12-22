@@ -18,7 +18,7 @@ class profile::domain::member {
     krbconf             => true,         # * Deploy krb5.conf fil e (default: true)
     nsswitch            => false,         # * Add winbind to nsswitch,
     adminuser           => hiera('defaults::adminuser'),
-    adminpassword       => hiera('passwords::domain'),
+    adminpassword       => hiera('secrets::domain'),
     globaloptions       => {
       'kerberos method'      => 'secrets and keytab',
       'ntlm auth'            => 'yes',

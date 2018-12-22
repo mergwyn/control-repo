@@ -16,12 +16,12 @@ class profile::ddclient {
     login    => 'theclarkhome.com',
     server   => 'dynamicdns.park-your-domain.com',
     protocol => 'namecheap',
-    password => hiera('passwords::namecheap'),
+    password => hiera('secrets::namecheap'),
     hostname => 'webmin,zulu,tango,papa,foxtrot,echo,vpn',
   }
   ddclient::host { 'opendns':
     login    => 'mergwyn',
-    password => hiera('passwords::opendns'),
+    password => hiera('secrets::opendns'),
     protocol => 'dyndns2',
     server   => 'updates.opendns.com',
     hostname => 'Home',
