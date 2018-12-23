@@ -1,0 +1,7 @@
+---
+# Internet edge router
+profiles:
+  - profile::base  # TODO: include this automatically
+  - profile::router
+
+# vim: sw=2:ai:nu expandtab
