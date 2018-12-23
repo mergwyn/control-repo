@@ -21,16 +21,45 @@ node default {
     }
 
     # Look up profiles
-    lookup('profiles', Array[String], 'unique').include
+    $profiles=lookup('profiles', Array[String], 'unique')
+    if !empty($profiles) {
+      $profiles.each |$n,$c| {
+        if $c != '' {
+          contain $c
+        }
+      }
+    }
+
     case $::kernel {
       'Linux': {
-        lookup('linux_profiles', Array[String], 'unique').include
+        $linux_profiles=lookup('linux_profiles', Array[String], 'unique')
+        if !empty($linux_profiles) {
+          $profiles.each |$n,$c| {
+            if $c != '' {
+              contain $c
+            }
+          }
+        }
       }
       'Windows': {
-        lookup('windows_profiles', Array[String], 'unique').include
+        $windows_profils = lookup('windows_profiles', Array[String], 'unique')
+        if !empty($windows_profiles) {
+          $profiles.each |$n,$c| {
+            if $c != '' {
+              contain $c
+            }
+          }
+        }
       }
       'Darwin': {
-        lookup('darwin_profiles', Array[String], 'unique').include
+        $darwins_profiles = lookup('darwin_profiles', Array[String], 'unique')
+        if !empty($darwin_profiles) {
+          $profiles.each |$n,$c| {
+            if $c != '' {
+              contain $c
+            }
+          }
+        }
       }
     }
 
