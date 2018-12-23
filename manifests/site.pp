@@ -1,7 +1,7 @@
 #
 
 node default {
-  lookup('classes', Array[String], 'unique').include
+  lookup('classes', Array[String], 'unique', []).include
 
   if defined('$facts') and defined('$trusted') {
     if $trusted['extensions']['pp_role'] and !has_key($facts,'role') {
@@ -21,17 +21,17 @@ node default {
     }
 
     # Look up profiles
-    lookup('profiles', Array[String], 'unique').contain
+    lookup('profiles', Array[String], 'unique', []).contain
 
     case $::kernel {
       'Linux': {
-        lookup('linux_profiles', Array[String], 'unique').contain
+        lookup('linux_profiles', Array[String], 'unique', []).contain
       }
       'Windows': {
-        lookup('windows_profiles', Array[String], 'unique').contain
+        lookup('windows_profiles', Array[String], 'unique', []).contain
       }
       'Darwin': {
-        lookup('darwin_profiles', Array[String], 'unique').contain
+        lookup('darwin_profiles', Array[String], 'unique', []).contain
       }
       default: {
       }
