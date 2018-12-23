@@ -1,0 +1,12 @@
+---
+appveyor.yml:
+  delete: true
+.gitlab-ci.yml:
+  delete: true
+.travis.yml:
+  notifications:
+    email:
+      recipients:
+      - gary@theclarkhome.com
+      on_success: never # default: change
+      on_failure: always # default: always
