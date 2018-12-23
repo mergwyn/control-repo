@@ -1,4 +1,10 @@
 ---
+# default to empty arrays
+profiles: []
+linux_profiles: []
+windows_profiles: []
+darwin_profiles: []
+
 # environment
 defaults::workgroup:       'THECLARKHOME'
 defaults::realm:           'THECLARKHOME.COM'
