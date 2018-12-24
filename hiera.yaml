@@ -15,8 +15,8 @@ hierarchy:
     paths: 
       - "secrets.yaml"
       - "nodes/%{trusted.certname}.yaml"
-      - "role/%{::role}-%{::env}.yaml"
-      - "role/%{::role}.yaml"
+      - "role/%{trusted.extensions.pp_role}-%{trusted.extensions.pp_env}.yaml"
+      - "role/%{trusted.extensions.pp_role}.yaml"
       - "virtual/%{facts.virtual}_%{facts.os.name}.yaml"
       - "os/%{facts.os.name}.yaml"
       - "zfs_%{zfs_version}.yaml"
