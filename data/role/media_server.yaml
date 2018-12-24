@@ -5,10 +5,6 @@ profiles:
   - profile::base  # All roles should have the base profile
   - profile::domain::member
   - profile::domain::sso
-  - profile::media::sabnzbdplus
-  - profile::transmission
-  - profile::media::sonarr
-  - profile::media::iptv
   - profile::media::downloader
   - profile::media::transcoder
 
