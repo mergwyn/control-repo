@@ -1,0 +1,10 @@
+#
+---
+
+profiles:
+  - profile::base  # All roles should have the base profile
+  - profile::domain::dhcpd
+  - profile::domain::dc # this always only a secondary controller
+  - profile::domain::sso
+
+# vim: sw=2:ai:nu expandtab

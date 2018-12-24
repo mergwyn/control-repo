@@ -3,6 +3,6 @@
 
 profiles:
   - profile::base  # All roles should have the base profile
-  - profile::router
+  - profile::domain::dhcpd
 
 # vim: sw=2:ai:nu expandtab

@@ -1,0 +1,11 @@
+#
+---
+
+profiles:
+  - profile::base  # All roles should have the base profile
+  - profile::puppet::server
+  - profile::puppet::agent
+  - profile::domain::member
+  - profile::domain::sso
+
+# vim: sw=2:ai:nu expandtab

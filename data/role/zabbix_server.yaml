@@ -3,6 +3,8 @@
 
 profiles:
   - profile::base  # All roles should have the base profile
-  - profile::router
+  - profile::domain::member
+  - profile::domain::sso
+  - profile::zabbix::server
 
 # vim: sw=2:ai:nu expandtab

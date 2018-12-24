@@ -1,0 +1,9 @@
+#
+---
+
+profiles:
+  - profile::mac::managedmac
+  - profile::mac::brew
+  - profile::mac::munki_client
+
+# vim: sw=2:ai:nu expandtab

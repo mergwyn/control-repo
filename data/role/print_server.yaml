@@ -3,6 +3,6 @@
 
 profiles:
   - profile::base  # All roles should have the base profile
-  - profile::router
+  - profile::print_server
 
 # vim: sw=2:ai:nu expandtab
