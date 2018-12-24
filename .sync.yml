@@ -4,6 +4,9 @@ appveyor.yml:
 .gitlab-ci.yml:
   delete: true
 .travis.yml:
+  branches:
+    only:
+    - production
   notifications:
     email:
       recipients:
