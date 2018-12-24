@@ -1,7 +1,7 @@
 #
 # TODO: complete testing of settings setup
 
-class profile::sabnzbdplus (
+class profile::media::sabnzbdplus (
   $user = 'media',
   $group = '513',
   $settings = {},

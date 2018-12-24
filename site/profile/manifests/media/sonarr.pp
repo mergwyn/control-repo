@@ -2,7 +2,7 @@
 
 # TODO settings, systemd unit file
 
-class profile::sonarr (
+class profile::media::sonarr (
   $user  = 'media',
   $group = '513',
   ) {
