@@ -1,7 +1,6 @@
 #
 
 node default {
-  lookup('classes', Array[String], 'unique', []).include
 
   if defined('$facts') and defined('$trusted') {
     if $trusted['extensions']['pp_role'] and !has_key($facts,'role') {
@@ -18,23 +17,6 @@ node default {
     }
     if $trusted['extensions']['pp_application'] and !has_key($facts,'application') {
       $application = $trusted['extensions']['pp_application']
-    }
-
-    # Look up profiles
-    lookup('profiles', Array[String], 'unique', []).contain
-
-    case $::kernel {
-      'Linux': {
-        lookup('linux_profiles', Array[String], 'unique', []).contain
-      }
-      'Windows': {
-        lookup('windows_profiles', Array[String], 'unique', []).contain
-      }
-      'Darwin': {
-        lookup('darwin_profiles', Array[String], 'unique', []).contain
-      }
-      default: {
-      }
     }
 
     ### RESOURCE DEFAULTS
@@ -72,7 +54,25 @@ node default {
   }
       }
     }
+    # Look up profiles
+    lookup('profiles', Array[String], 'unique', []).contain
+
+    case $::kernel {
+      'Linux': {
+        lookup('linux_profiles', Array[String], 'unique', []).contain
+      }
+      'Windows': {
+        lookup('windows_profiles', Array[String], 'unique', []).contain
+      }
+      'Darwin': {
+        lookup('darwin_profiles', Array[String], 'unique', []).contain
+      }
+      default: {
+      }
+    }
   }
+
+  lookup('classes', Array[String], 'unique', []).include
 
 }
 # vim: sw=2:ai:nu expandtab
