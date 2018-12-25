@@ -5,8 +5,7 @@ appveyor.yml:
   delete: true
 .travis.yml:
   branches:
-    only:
-    - production
+  - production
   notifications:
     email:
       recipients:
