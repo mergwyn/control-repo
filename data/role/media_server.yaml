@@ -5,7 +5,9 @@ profiles:
   - profile::base  # All roles should have the base profile
   - profile::domain::member
   - profile::domain::sso
+  - profile::media::transcoder
   - profile::media::downloader
+#TODO: add plex
 
 # transmission
 transmission::config_dir:               "/home/media/.config/transmission-daemon"
