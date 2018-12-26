@@ -2,7 +2,6 @@
 
 classes:
   - network
-  - role::domain_controller
 
     #- profile::samba_dc 
 
@@ -23,9 +22,5 @@ network::interfaces_hash:
     network:                    "%{hiera('defaults::network')}"
     dns_nameservers:            "192.168.11.21 192.168.11.22"
     dns_search:                 "%{hiera('defaults::dns_search')}"
-
-
-unattended_upgrades::period:     '1'
-unattended_upgrades::autoremove: true
 
 # vim: sw=2:ai:nu expandtab

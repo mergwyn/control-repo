@@ -4,7 +4,15 @@
 classes:
   - profile::base  # All roles should have the base profile
   - profile::domain::dhcpd
-  - profile::domain::dc # this always only a secondary controller
   - profile::domain::sso
+  - profile::domain::dc 
+
+samba::dc::domain:                      "%{hiera('defaults::workgroup')}"
+samba::dc::realm:                       "%{hiera('defaults::realm')}"
+samba::dc::loglevel:                    '1'
+samba::dc::adminpassword:               "%{hiera('secrets::domain')}"
+samba::dc::dnsforwarder:                '208.67.222.222'
+samba::dc::serverservices:              's3fs, rpc, nbt, wrepl, ldap, cldap, kdc, drepl, winbind, ntp_signd, kcc, dnsupdate, dns'
+samba::dc::provisionargs:               '--use-xattrs=yes --use-ntvfs'
 
 # vim: sw=2:ai:nu expandtab
