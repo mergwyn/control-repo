@@ -7,6 +7,7 @@ classes:
   - profile::domain::sso
   - profile::domain::dc 
 
+samba::dc::role:                        'dc'
 samba::dc::domain:                      "%{hiera('defaults::workgroup')}"
 samba::dc::realm:                       "%{hiera('defaults::realm')}"
 samba::dc::loglevel:                    '1'
