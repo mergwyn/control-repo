@@ -5,5 +5,8 @@ classes:
   - profile::base  # All roles should have the base profile
   - profile::reverse_proxy
   - profile::ddclient
+  - profile::print_server
+
+# vim: sw=2:ai:nu expandtab
 
 # vim: sw=2:ai:nu expandtab
