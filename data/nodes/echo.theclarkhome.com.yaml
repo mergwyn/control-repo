@@ -1,7 +1,0 @@
----
-
-classes:
-  - role::puppet_master
-
-
-# vim: sw=2:ai:nu expandtab
