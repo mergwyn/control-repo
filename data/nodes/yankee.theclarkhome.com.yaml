@@ -1,7 +1,0 @@
----
-
-classes:
-  - role::generic_server
-  - profile::media::sickbeard_automator
-
-# vim: sw=2:ai:nu expandtab

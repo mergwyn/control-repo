@@ -1,6 +1,0 @@
----
-
-classes:
-  - role::zabbix_server
-
-# vim: sw=2:ai:nu expandtab
