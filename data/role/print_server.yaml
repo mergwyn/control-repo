@@ -1,7 +1,7 @@
 #
 ---
 
-profiles:
+classes:
   - profile::base  # All roles should have the base profile
   - profile::print_server
 

@@ -1,7 +1,7 @@
 #
 ---
 
-profiles:
+classes:
   - profile::base  # All roles should have the base profile
   - profile::puppet::server
   - profile::puppet::agent

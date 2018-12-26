@@ -1,7 +1,7 @@
 #
 ---
 
-profiles:
+classes:
   - profile::mac::managedmac
   - profile::mac::brew
   - profile::mac::munki_client

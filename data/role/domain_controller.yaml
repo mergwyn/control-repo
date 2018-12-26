@@ -1,7 +1,7 @@
 #
 ---
 
-profiles:
+classes:
   - profile::base  # All roles should have the base profile
   - profile::domain::dhcpd
   - profile::domain::dc # this always only a secondary controller
