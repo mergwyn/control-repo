@@ -3,13 +3,7 @@
 classes:
   - network
 
-    #- profile::samba_dc 
-
 profile::domain::dhcpd::role: primary
-
-samba::dc::role:                'secondary'
-samba::dc::loglevel:            '2'
-samba::dc::provisionargs:       "--use-xattrs=yes --use-ntvfs"
 
 network::interfaces_hash:
   eth0:
