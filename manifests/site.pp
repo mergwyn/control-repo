@@ -53,17 +53,17 @@
     }
   }
   # Look up profiles
-  lookup('classes', Array[String], 'unique', []).contain
+  lookup('classes', Array[String], {merge => 'unique', strategy => 'deep'}, []).contain
 
   case $::kernel {
     'Linux': {
-      lookup('linux_classes', Array[String], 'unique', []).contain
+      lookup('linux_classes', Array[String], {merge => 'unique', strategy => 'deep'}, []).contain
     }
     'Windows': {
-      lookup('windows_classes', Array[String], 'unique', []).contain
+      lookup('windows_classes', Array[String], {merge => 'unique', strategy => 'deep'}, []).contain
     }
     'Darwin': {
-      lookup('darwin_classes', Array[String], 'unique', []).contain
+      lookup('darwin_classes', Array[String], {merge => 'unique', strategy => 'deep'}, []).contain
     }
     default: {
     }
