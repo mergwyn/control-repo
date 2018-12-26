@@ -1,8 +1,5 @@
 ---
 
-classes:
-  - role::lxd_server
-
 network::interfaces_hash:
   enp3s0:
     method:                     manual
