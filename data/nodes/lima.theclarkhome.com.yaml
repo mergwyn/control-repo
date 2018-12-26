@@ -1,7 +1,0 @@
----
-
-classes:
-  - role::lxd_server
-
-
-# vim: sw=2:ai:nu expandtab

@@ -11,5 +11,7 @@ classes:
   - profile::photos
   - profile::mac::timemachine_server
   - profile::mailman_rss
+  - profile::virtual::lxd
+  - profile::backuppc::server
 
 # vim: sw=2:ai:nu expandtab
