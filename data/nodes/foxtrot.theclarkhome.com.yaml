@@ -1,9 +1,7 @@
 ---
 
 classes:
-  - role::main_server
-  - role::lxd_server
-  - role::backup_server
+  - network
 
 network::interfaces_hash:
   enp3s0:
