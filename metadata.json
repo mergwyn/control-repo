@@ -29,15 +29,14 @@
         "10"
       ]
     },
-    "operatingsystem_support": [
     {
-       "operatingsystem": "Darwin",
-       "operatingsystemrelease": [
-         "10.10",
-         "10.11",
-         "10.12",
-         "10.13"
-       ]
+      "operatingsystem": "Darwin",
+      "operatingsystemrelease": [
+       "10.10",
+       "10.11",
+       "10.12",
+       "10.13"
+     ]
     }
   ],
 
