@@ -18,7 +18,7 @@ class profile::photos {
 
   cron::job {'photo-upload':
     environment => [ 'PATH="/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin"'],
-    command     => "%{codedir}/bin/google_upload",
+    command     => "${codedir}/bin/google_upload",
     user        => 'gary',
     minute      => '35',
     hour        => '*/3',
