@@ -2,7 +2,7 @@
 
 classes:
   - timezone
-  - role::minimal_server
+  - profile::base
   - profile::puppet::agent
 
 # puppet agent
