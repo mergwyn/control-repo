@@ -11,7 +11,7 @@ class profile::puppet::server {
     cachedir => '/var/cache/r10k',
     sources  => {
       'mergwyn' => {
-        'remote'  => 'https://github.com/mergwyn/theclarkhome-control',
+        'remote'  => 'https://github.com/mergwyn/control-repo',
         'basedir' => "${::settings::codedir}/environments",
       },
     },
