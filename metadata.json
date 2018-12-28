@@ -1,10 +1,10 @@
 {
-  "name": "mergwyn-control",
+  "name": "mergwyn-control-repo",
   "version": "0.1.0",
   "author": "mergwyn",
   "summary": "",
   "license": "Apache-2.0",
-  "source": "",
+  "source": "https://github.com/mergwyn/control-repo",
   "dependencies": [
 
   ],
