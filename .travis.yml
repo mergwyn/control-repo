@@ -35,6 +35,7 @@ branches:
     - master
     - /^v\d/
     - production
+    - development
 notifications:
   email:
     recipients:

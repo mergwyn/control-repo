@@ -6,6 +6,7 @@ appveyor.yml:
 .travis.yml:
   branches:
   - production
+  - development
   notifications:
     email:
       recipients:
