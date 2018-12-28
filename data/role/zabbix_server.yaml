@@ -3,7 +3,6 @@
 
 classes:
   - profile::base  # All roles should have the base profile
-  - profile::domain::member
   - profile::domain::sso
   - profile::zabbix::server
 
