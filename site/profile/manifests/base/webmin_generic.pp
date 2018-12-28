@@ -1,8 +1,8 @@
 #
 # TODO: move to hiera?
 
-class profile::webmin_generic {
-  $adminemail=hiera('unattended_upgrades::email')
+class profile::base::webmin_generic {
+  $adminemail = lookup('unattended_upgrades::email')
 
   exec { 'apt_show_versions_clean':
     command   => 'apt-get purge -y apt-show-versions',

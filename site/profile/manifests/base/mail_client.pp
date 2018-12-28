@@ -1,6 +1,6 @@
 # postfix for mail
 
-class profile::mail_client (
+class profile::base::mail_client (
   $password_credentials = undef,
   $password_hash        = '/etc/postfix/sasl-passwords',
   $relayhost            = undef,

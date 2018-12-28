@@ -45,12 +45,15 @@ class profile::base {
     ip           => '127.0.1.1',
   }
 
-  include profile::core_users
-  include profile::avahi
-  include profile::ssh_server
-  include profile::mail_client
-  include profile::unattended_upgrades
-  include profile::webmin_generic
+  include profile::base::users
+  include profile::base::files
+  include profile::base::packages
+  include profile::base::core_users
+  include profile::base::avahi
+  include profile::base::ssh_server
+  include profile::base::mail_client
+  include profile::base::unattended_upgrades
+  include profile::base::webmin_generic
   include profile::zabbix::agent
   include profile::backuppc::client
 }

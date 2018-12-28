@@ -1,7 +1,7 @@
 # 
 # TODO: parameters and settings
 
-class profile::unattended_upgrades {
+class profile::base::unattended_upgrades {
   include apt
   class {'::unattended_upgrades':
     origins => [
@@ -12,7 +12,7 @@ class profile::unattended_upgrades {
       'puppet:${distro_codename}',                      #lint:ignore:single_quote_string_with_variables
     ],
     mail    => {
-      'to'            => hiera('defaults::adminemail'),
+      'to'            => lookup('defaults::adminemail'),
       'only_on_error' => false,
     }
   }

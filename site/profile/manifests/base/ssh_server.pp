@@ -1,6 +1,6 @@
 #
 
-class profile::ssh_server {
+class profile::base::ssh_server {
   class { 'ssh::server':
     options              => {
       'HostKey'                         => [

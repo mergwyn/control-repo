@@ -1,8 +1,8 @@
 #
 
-class profile::core_users {
+class profile::base::core_users {
   # users and ssh access
-  $passwordsalt = hiera('defaults::sharedpassword')
+  $passwordsalt = lookup('defaults::sharedpassword')
   user { 'root': password => $passwordsalt, }
   file { '/root/.profile':
     ensure => present,
