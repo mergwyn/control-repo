@@ -5,7 +5,7 @@ classes:
   - profile::base  # All roles should have the base profile
   - profile::domain::dhcpd
   - profile::domain::sso
-  - profile::domain::dc 
+  - profile::samba::dc 
 
 samba::dc::role:                        'dc'
 samba::dc::domain:                      "%{hiera('defaults::workgroup')}"
