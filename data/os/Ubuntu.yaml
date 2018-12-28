@@ -10,11 +10,11 @@ puppet::puppet_server:                  "echo.%{domain}"
 puppet::manage_repos:                   false
 puppet::structured_facts:               true
 
-profile::mail_client::myorigin:         "%{domain}"
-profile::mail_client::password_credentials: "mergwyn@virginmedia.com:%{hiera('secrets::virgin')}"
-profile::mail_client::password_hash:    '/etc/postfix/sasl-passwords'
-profile::mail_client::relayhost:        '[smtp.virginmedia.com]:465'
-profile::mail_client::root_mail_recipient: "%{hiera('defaults::adminemail')}"
+profile::base::mail_client::myorigin:         "%{domain}"
+profile::base::mail_client::password_credentials: "mergwyn@virginmedia.com:%{hiera('secrets::virgin')}"
+profile::base::mail_client::password_hash:    '/etc/postfix/sasl-passwords'
+profile::base::mail_client::relayhost:        '[smtp.virginmedia.com]:465'
+profile::base::mail_client::root_mail_recipient: "%{hiera('defaults::adminemail')}"
 
 # store ssh keys
 ssh::storeconfigs_enabled:              true
