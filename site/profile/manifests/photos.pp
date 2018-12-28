@@ -13,9 +13,12 @@ class profile::photos {
 
   package { [ 'exiftran', 'exiv2' ]: }
 
+  include profile::scripts
+  $codedir='/opt/scripts'
+
   cron::job {'photo-upload':
     environment => [ 'PATH="/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin"'],
-    command     => '/home/gary/photos/google_upload',
+    command     => "%{codedir}/bin/google_upload",
     user        => 'gary',
     minute      => '35',
     hour        => '*/3',
