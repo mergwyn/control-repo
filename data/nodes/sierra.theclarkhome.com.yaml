@@ -1,0 +1,8 @@
+---
+
+classes:
+  - profile::domain::dhcpd
+
+dhcp::failover::role: primary
+
+# vim: sw=2:ai:nu expandtab
