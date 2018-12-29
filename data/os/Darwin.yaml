@@ -1,8 +1,5 @@
 ---
 
-classes:
-  - role::mac_laptop
-
 managedmac::organization:                               "The Clark family"
 #managedmac::ntp::enable:                                true
 #managedmac::ntp::servers:
