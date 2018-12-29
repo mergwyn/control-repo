@@ -27,14 +27,15 @@ class profile::domain::dhcpd (
   }
 
   # config files
-  file { "/etc/dhcp/dhcpd.${::domain}":
+  file { '/etc/dhcp/dhcpd.samba_ddns':
     ensure  => file,
     require => Package['isc-dhcp-server'],
     notify  => Service['isc-dhcp-server'],
-    source  => "puppet:///modules/profile/dhcp/dhcpd.${::domain}",
+    source  => 'puppet:///modules/profile/dhcp/dhcpd.samba_ddns',
     owner   => $owner,
     group   => $group,
   }
+  file { "/etc/dhcp/dhcpd.${::domain}": ensure  => absent, }
   #Concat::Fragment dhcp_hosts <<| tag == "vpn"|>>
 
   file { '/etc/dhcp/dhcpd-update-samba-dns.conf':
