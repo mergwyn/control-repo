@@ -1,0 +1,45 @@
+# support for samba4 updates
+
+on commit {
+	set noname = concat("dhcp-", binary-to-ascii(10, 8, "-", leased-address));
+	set ClientIP = binary-to-ascii(10, 8, ".", leased-address);
+	set ClientMac = binary-to-ascii(16, 8, ":", substring(hardware, 1, 6));
+	set ClientName = pick-first-value(
+		ddns-hostname,
+		host-decl-name,
+		config-option host-name,
+		option host-name,
+		noname);
+	log(concat("Commit: IP: ", ClientIP, " Mac: ", ClientMac, " Name: ", ClientName));
+	#execute("/etc/dhcp/dhcp-dyndns.sh", "add", ClientIP, ClientName, ClientMac);
+	execute("/etc/dhcp/dhcpd-update-samba-dns.sh", "add", ClientIP, ClientName, ClientMac);
+}
+on release {
+	set ClientIP = binary-to-ascii(10, 8, ".", leased-address);
+	set ClientMac = binary-to-ascii(16, 8, ":", substring(hardware, 1, 6));
+	set noname = concat("dhcp-", binary-to-ascii(10, 8, "-", leased-address));
+	set ClientName = pick-first-value(
+		ddns-hostname,
+		host-decl-name,
+		config-option host-name,
+		option host-name,
+		noname);
+	log(concat("Release: IP: ", ClientIP, " Mac: ", ClientMac, " Name: ", ClientName));
+	#execute("/etc/dhcp/dhcp-dyndns.sh", "delete", ClientIP, ClientName, ClientMac);
+	execute("/etc/dhcp/dhcpd-update-samba-dns.sh", "delete", ClientIP, ClientName, ClientMac);
+}
+on expiry {
+	set ClientIP = binary-to-ascii(10, 8, ".", leased-address);
+	set ClientMac = binary-to-ascii(16, 8, ":", substring(hardware, 1, 6));
+	set noname = concat("dhcp-", binary-to-ascii(10, 8, "-", leased-address));
+	set ClientName = pick-first-value(
+		ddns-hostname,
+		host-decl-name,
+		config-option host-name,
+		option host-name,
+		noname);
+	log(concat("Expired: IP: ", ClientIP, " Mac: ", ClientMac, " Name: ", ClientName));
+	#execute("/etc/dhcp/dhcp-dyndns.sh", "delete", ClientIP, ClientName, ClientMac);
+	execute("/etc/dhcp/dhcpd-update-samba-dns.sh", "delete", ClientIP, ClientName, ClientMac);
+}
+

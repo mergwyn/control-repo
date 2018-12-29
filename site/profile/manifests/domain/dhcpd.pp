@@ -8,16 +8,9 @@ class profile::domain::dhcpd (
   $group = 'dhcpd'
   $perms = "${owner}.${group}"
   $keytab = '/etc/dhcp/dhcpd.keytab'
-  package { 'isc-dhcp-server': ensure => installed }
 
-  file { '/etc/dhcp/dhcpd.conf':
-    ensure  => file,
-    require => Package['isc-dhcp-server'],
-    notify  => Service['isc-dhcp-server'],
-    source  => "puppet:///modules/profile/dhcp/dhcpd.${role}.conf",
-    owner   => $owner,
-    group   => $group,
-  }
+  include dhcp::failover
+  include dhcp
 
   # export keytab to allow script to run
   exec { 'chown_dhcp_keytab':
@@ -34,37 +27,16 @@ class profile::domain::dhcpd (
   }
 
   # config files
-  file { "/etc/dhcp/dhcpd.${::domain}":
+  file { '/etc/dhcp/dhcpd.samba_ddns':
     ensure  => file,
     require => Package['isc-dhcp-server'],
     notify  => Service['isc-dhcp-server'],
-    source  => "puppet:///modules/profile/dhcp/dhcpd.${::domain}",
+    source  => 'puppet:///modules/profile/dhcp/dhcpd.samba_ddns',
     owner   => $owner,
     group   => $group,
   }
+  file { "/etc/dhcp/dhcpd.${::domain}": ensure  => absent, }
   #Concat::Fragment dhcp_hosts <<| tag == "vpn"|>>
-
-  file { '/etc/dhcp/dhcp-dyndns-real.sh':
-    ensure  => absent,
-  }
-  file { '/etc/dhcp/dhcp-dyndns.sh':
-    ensure  => absent,
-  }
-#  file { "/etc/dhcp/dhcp-dyndns-real.sh":
-#    ensure  => file,
-#    mode    => 0755,
-#    owner   => 'dhcpd',
-#    group   => 'dhcpd',
-#    source  => "puppet:///modules/profile/dhcp/dhcp-dyndns-real.sh",
-#  }
-
-#  file { "/etc/dhcp/dhcp-dyndns.sh":
-#    ensure  => file,
-#    mode    => 0755,
-#    owner   => 'dhcpd',
-#    group   => 'dhcpd',
-#    source  => "puppet:///modules/profile/dhcp/dhcp-dyndns.sh",
-#  }
 
   file { '/etc/dhcp/dhcpd-update-samba-dns.conf':
     ensure => file,
@@ -89,20 +61,12 @@ class profile::domain::dhcpd (
     source => 'puppet:///modules/profile/dhcp/samba-dnsupdate.sh',
   }
 
-  service { 'isc-dhcp-server':
-    ensure    => running,
-    subscribe => [
-      Package['isc-dhcp-server'],
-      File['/etc/dhcp/dhcpd.conf', "/etc/dhcp/dhcpd.${::domain}"]
-    ],
-  }
-
   # need to make sure apparmor is updated to allow the scripts to fire
   include profile::apparmor
   file { '/etc/apparmor.d/local/usr.sbin.dhcpd':
     ensure  => file,
     notify  => Service['apparmor'],
-    content => "  /etc/dhcp/dhcp-dyndns.sh krwux,\n  /etc/dhcp/dhcpd-update-samba-dns.sh krwux, \n",
+    content => "  /etc/dhcp/dhcpd-update-samba-dns.sh krwux, \n",
     owner   => 'root',
     group   => 'root',
   }

@@ -3,7 +3,8 @@
 classes:
   - network
 
-profile::domain::dhcpd::role: primary
+dhcp::failover::role:         primary
+dhcp::failover::peer_address: 192.168.11.22
 
 network::interfaces_hash:
   eth0:
