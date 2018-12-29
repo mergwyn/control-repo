@@ -46,12 +46,12 @@ dhcp::hosts:
     mac: 7c:1c:4e:48:06:e2
     ip:  0.0.0.0
     options:
-      router: 192.168.1.250 # Note change of gateway for VPN
+      routers: 192.168.1.250 # Note change of gateway for VPN
   india:
     mac: 00:16:3e:93:c6:21
     ip:  0.0.0.0
     options:
-      router: 192.168.1.250 # Note change of gateway for VPN
+      routers: 192.168.1.250 # Note change of gateway for VPN
   # Hosts with fixed ip
   switch1:
     mac: 00:8e:f2:59:c7:98
