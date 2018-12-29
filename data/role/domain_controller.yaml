@@ -39,7 +39,8 @@ dhcp::pools:
     failover: "%{trusted.domain}"
 
 dhcp::extra_config:
-  - "option netbios_nameservers 192.168.11.22, 192.168.11.21;"
+  - 'include "/etc/dhcp/dhcpd.samba_ddns";'
+  #- "option netbios_nameservers 192.168.11.22, 192.168.11.21;"
 
 dhcp::hosts:
   LGwebOSTV:
