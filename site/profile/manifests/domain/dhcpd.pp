@@ -9,8 +9,8 @@ class profile::domain::dhcpd (
   $perms = "${owner}.${group}"
   $keytab = '/etc/dhcp/dhcpd.keytab'
 
-  include dhcp::failover
   include dhcp
+  include dhcp::failover
 
   # export keytab to allow script to run
   exec { 'chown_dhcp_keytab':
