@@ -38,10 +38,10 @@ dhcp::pools:
     gateway:  192.168.11.254
     failover: "%{trusted.domain}"
 
-dhcp::dhcp_conf_fragments:
-  dhcp-conf-fragment:
-    target: "/etc/dhcp/dhcpd.conf"
-    content: "option netbios_nameservers 192.168.11.22, 192.168.11.21\n"
+#dhcp::dhcp_conf_fragments:
+#  dhcp-conf-fragment:
+#    target: "/etc/dhcp/dhcpd.conf"
+#    content: "option netbios_nameservers 192.168.11.22, 192.168.11.21\n"
 
 dhcp::hosts:
   LGwebOSTV:
