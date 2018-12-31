@@ -19,39 +19,39 @@
 
   ### RESOURCE DEFAULTS
   # Some resource defaults for Files and Execs
-  case $::kernel {
-    'Darwin': {
-      File {
-        owner => 'root',
-        group => 'wheel',
-        mode  => '0644',
-      }
-      Exec {
-        path => $::path,
-      }
-    }
-    'Windows': {
-      File {
-        owner => 'Administrator',
-        group => 'Administrators',
-        mode  => '0644',
-      }
-      Exec {
-        path => $::path,
-      }
-    }
-    default: {
-      File {
-        owner  => 'root',
-        group  => 'root',
-        mode   => '0644',
-        backup => false,              # Disable filebucket by default for all File resources:
-      }
-      Exec {
-        path => '/bin:/usr/bin:/sbin:/usr/sbin:/usr/local/bin:/usr/local/sbin',
-      }
-    }
-  }
+#  case $::kernel {
+#    'Darwin': {
+#      File {
+#        owner => 'root',
+#        group => 'wheel',
+#        mode  => '0644',
+#      }
+#      Exec {
+#        path => $::path,
+#      }
+#    }
+#    'Windows': {
+#      File {
+#        owner => 'Administrator',
+#        group => 'Administrators',
+#        mode  => '0644',
+#      }
+#      Exec {
+#        path => $::path,
+#      }
+#    }
+#    default: {
+#      File {
+#        owner  => 'root',
+#        group  => 'root',
+#        mode   => '0644',
+#        backup => false,              # Disable filebucket by default for all File resources:
+#      }
+#      Exec {
+#        path => '/bin:/usr/bin:/sbin:/usr/sbin:/usr/local/bin:/usr/local/sbin',
+#      }
+#    }
+#  }
   # Look up profiles
   lookup('classes', Array[String], 'deep', []).contain
 
