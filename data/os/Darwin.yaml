@@ -282,13 +282,13 @@ managedmac::files::objects:
     source: "puppet:///modules/profile/mac/common.prf"
   /usr/local/bin/UnisonHomeSync.sh:
     source: "puppet:///modules/profile/mac/UnisonHomeSync.sh"
-    mode: "0755"
+    mode: "0775"
   /usr/local/bin/SetupHomeSync.sh:
     source: "puppet:///modules/profile/mac/SetupHomeSync.sh"
-    mode: "0755"
+    mode: "0775"
   /usr/local/bin/logoutwatcher.sh:
     source: "puppet:///modules/profile/mac/logoutwatcher.sh"
-    mode: "0755"
+    mode: "0775"
   /etc/newsyslog.d/unison.conf:
     source: "puppet:///modules/profile/mac/unison.conf"
   /Library/Logs/unison.log:
