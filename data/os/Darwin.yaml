@@ -45,153 +45,7 @@ managedmac::ssh::enable:                                true
 managedmac::mobileconfigs::defaults::description:       'Installed by Puppet.'
 managedmac::mobileconfigs::defaults::organization:      'The Clark Home'
 
-managedmac::portablehomes::enable:                      true
-managedmac::portablehomes::menuExtra:                   on
-managedmac::portablehomes::isNewMobileAccount:          false
-managedmac::portablehomes::periodicSyncOn:              false
-managedmac::portablehomes::syncPeriodSeconds:           1200
-managedmac::portablehomes::syncOnChange:                false
-managedmac::portablehomes::replaceUserSyncList:         false
-managedmac::portablehomes::replaceUserPrefSyncList:     false
-managedmac::portablehomes::syncedFolders:
-  - '~'
-managedmac::portablehomes::syncedPrefFolders:
-  - '~/Documents/Microsoft User Data'
-  - '~/Library/Fonts'
-  - '~/Documents/Microsoft User Data'
-  - '~/Library/Preferences'
-  - '~/Library/Keychains'
-  - '~/Library/Application Support/Firefox'
-  - '~/Library/Application Support/Google'
-  - '~/Library/Application Support/LaunchBar'
-  - '~/Library/Application Support/TextMate'
-  - '~/Library/Application Support/Terminal'
-  - '~/Library/Application Support/Textual'
-  - '~/Library/Application Support/Sublime Text 2'
-  - '~/Library/Application Support/Zimbra'
-  - '~/Library/Application Support/Screen Sharing'
-  - '~/Library/Application Support/Remote Desktop'
-  - '~/Library/Application Support/Omni Group'
-  - '~/Library/Application Support/Microsoft'
-  - '~/Library/Application Support/Cyberduck'
-  - '~/Library/Application Support/Adium 2.0'
-  - '~/Library/Calendars'
-  - '~/Library/Safari'
-  - '~/Library/Services'
-  - '~/Library/Widgets'
-  - '~/Library/StickiesDatabase'
-  - '~/Library/Recent Servers'
-  - '~/Library/Application Support/Skype'
-
-managedmac::portablehomes::excludedItems:
-  fullPath:
-    - '~/.SymAVQSFile'
-    - '~/.Trash'
-    - '~/.Trashes'
-    - '~/Documents/Microsoft User Data'
-    - '~/Library'
-    - '~/NAVMac800QSFile'
-    - '~/Music/iTunes'
-    - '~/Pictures/iPhoto Library'
-    - '~/Documents/Virtual Machines'
-    - '~/Documents/Parallels'
-    - '~/Movies'
-    - '~/Pictures/Photo Booth'
-    - '~/Documents/Virtual Machines.localized'
-    - '~/Dropbox'
-    - '~/.crxde'
-    - '~/Documents/Virtual PC'
-    - '~/.dropbox'
-    - '~/Downloads'
-    - '~/Personal'
-    - '~/Documents/Final Cut Express Documents'
-    - '~/Google Drive'
-  endsWith:
-    - '.vmwarevm'
-    - '.idlk'
-    - '.aplibrary'
-  is:
-    - 'addons.sqlite'
-
-managedmac::portablehomes::excludedPrefItems:
-  fullPath:
-    - '~/.SymAVQSFile'
-    - '~/Documents/Microsoft User Data/Entourage Temp'
-    - '~/Library/Application Support/SyncServices'
-    - '~/Library/Application Support/MobileSync'
-    - '~/Library/Caches'
-    - '~/Library/Calendars/Calendar Cache'
-    - '~/Library/Logs'
-    - '~/Library/Mail/AvailableFeeds'
-    - '~/Library/Mail/Envelope Index'
-    - '~/Library/Preferences/Macromedia/Flash Player'
-    - '~/Library/Printers'
-    - '~/Library/PubSub/Database'
-    - '~/Library/PubSub/Downloads'
-    - '~/Library/PubSub/Feeds'
-    - '~/Library/Safari/Icons.db'
-    - '~/Library/Safari/HistoryIndex.sk'
-    - '~/Library/iTunes/iPhone Software Updates'
-    - '~/Library/Preferences/ByHost'
-    - '~/Library/Preferences/SDMHelpData'
-  is:
-    - '.GlobalPreferences.plist'
-    - '.localized'
-    - '.DS_Store'
-    - 'addons.sqlite'
-  endsWith:
-    - '.lockfile'
-    - 'network.plist'
-  regex:
-    - '.*ByHost.*'
-  contains:
-    - '-network-'
-  startsWith:
-    - 'IMAP-'
-    - 'Exchange-'
-    - 'EWS-'
-    - 'Mac-'
-
-managedmac::portablehomes::loginPrefSyncConflictResolution:     automatic
-managedmac::portablehomes::loginNonprefSyncConflictResolution:  automatic
-managedmac::portablehomes::logoutPrefSyncConflictResolution:    automatic
-managedmac::portablehomes::logoutNonprefSyncConflictResolution: automatic
-managedmac::portablehomes::backgroundConflictResolution:        automatic
-managedmac::portablehomes::syncPreferencesAtLogin:              dontSync
-managedmac::portablehomes::syncPreferencesAtLogout:             dontSync
-managedmac::portablehomes::syncPreferencesAtSyncNow:            dontSync
-managedmac::portablehomes::syncPreferencesInBackground:         dontSync
-managedmac::portablehomes::syncBackgroundSetAtLogin:            dontSync
-managedmac::portablehomes::syncBackgroundSetAtLogout:           dontSync
-managedmac::portablehomes::syncBackgroundSetAtSyncNow:          dontSync
-managedmac::portablehomes::syncBackgroundSetInBackground:       dontSync
-managedmac::portablehomes::loginPrefSuppressErrors:             false
-managedmac::portablehomes::loginNonprefSuppressErrors:          false
-managedmac::portablehomes::logoutPrefSuppressErrors:            false
-managedmac::portablehomes::logoutNonprefSuppressErrors:         false
-managedmac::portablehomes::backgroundSuppressErrors:            false
-managedmac::portablehomes::firstSyncSuppressErrors:             false
-managedmac::portablehomes::syncNowAllPrefsSuppressErrors:       false
-managedmac::portablehomes::loginPrefSuppressConflicts:          false
-managedmac::portablehomes::loginNonprefSuppressConflicts:       false
-managedmac::portablehomes::logoutPrefSuppressConflicts:         false
-managedmac::portablehomes::logoutNonprefSuppressConflicts:      false
-managedmac::portablehomes::backgroundSuppressConflicts:         false
-managedmac::portablehomes::firstSyncSuppressConflicts:          false
-managedmac::portablehomes::syncNowAllPrefsSuppressConflicts:    false
-managedmac::portablehomes::disableFirstSyncCancel:              false
-managedmac::portablehomes::disableLoginSyncCancel:              false
-managedmac::portablehomes::disableLogoutSyncCancel:             false
-managedmac::portablehomes::loginSyncDialogTimeoutSeconds:       0
-managedmac::portablehomes::logoutSyncDialogTimeoutSeconds:      0
-managedmac::portablehomes::progressDelaySeconds:                2
-managedmac::portablehomes::alertOnFailedMounts:                 false
-
-managedmac::propertylists::defaults:
-  owner: root
-  group: wheel
-  format: xml
-
+managedmac::portablehomes::enable:                      false
 
 #'/Library/LaunchDaemons/com.puppetlabs.puppet.plist':
 #     content:
@@ -206,6 +60,10 @@ managedmac::propertylists::defaults:
 #         - '--color=false'
 #       RunAtLoad: true
 
+managedmac::propertylists::defaults:
+  owner: root
+  group: wheel
+  format: xml
 managedmac::propertylists::files:
   '/Library/LaunchDaemons/com.googlecode.munki.logouthelper.plist':
     content:
@@ -296,15 +154,21 @@ managedmac::files::objects:
 
 
 
-#managedmac::fibs.puppet.plistles::objects:
-#  /Users/Shared/example_file_a.txt:
-#    content:
-#      "This is an example of how to create a file using the content parameter."
-#  /Users/Shared/example_file_b.txt:
-#    source: puppet:///modules/some_module/some_file.txt
-#  /Users/Shared/example_directory:
-#    ensure: directory
-#    group: wheel
-#    mode: 0755
+# packages to be installed
+profile::base::homebrew::defaults:
+  user: gary
+profile::base::homebrew::objects:
+  keeweb:
+    ensure: installed
+  amazon-music:
+    ensure: installed
+  firefox:
+    ensure: installed
+  sonos:
+    ensure: installed
+  chrome:
+    ensure: purged
+  munki:
+    ensure: purged
 
 # vim: sw=2:ai:nu expandtab

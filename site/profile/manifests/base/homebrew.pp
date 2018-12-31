@@ -3,7 +3,7 @@
 # 'create_resources' function.
 #
 
-class profile::base::packages (
+class profile::base::homebrew (
   $objects  = {},
   $defaults = {},
 ) {
@@ -11,7 +11,7 @@ class profile::base::packages (
   unless empty ($objects) {
     validate_raw_constructor ($objects)
     validate_hash ($defaults)
-    create_resources(package, $objects, $defaults)
+    create_resources(homebrew, $objects, $defaults)
   }
 
 }
