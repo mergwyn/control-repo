@@ -260,7 +260,7 @@ managedmac::files::defaults:
   owner: "root"
   group: "admin"
   ensure: file
-  mode: "0644"
+  #mode: "0644"
 managedmac::files::objects:
   /etc/krb5.config:
     source: "puppet:///modules/profile/mac/krb5.conf"
