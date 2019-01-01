@@ -3,6 +3,5 @@
 
 classes:
   - profile::mac::managedmac
-  - profile::mac::brew
 
 # vim: sw=2:ai:nu expandtab

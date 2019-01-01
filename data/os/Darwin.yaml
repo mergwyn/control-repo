@@ -1,5 +1,27 @@
 ---
 
+homebrew:
+  user:      gary
+  group:     wheel
+  multiuser: true
+
+# packages to be installed
+profile::base::packages:
+  unison:
+    ensure: installed
+  puppetlabs/puppet/puppet-agent-5:
+    ensure: installed
+  keeweb:
+    ensure: installed
+  amazon-music:
+    ensure: installed
+  firefox:
+    ensure: installed
+  sonos:
+    ensure: installed
+  munki:
+    ensure: purged
+
 managedmac::organization:                               "The Clark family"
 #managedmac::ntp::enable:                                true
 #managedmac::ntp::servers:
@@ -152,23 +174,5 @@ managedmac::files::objects:
   /Library/Logs/unison.log:
     mode: "0666"
 
-
-
-# packages to be installed
-profile::base::homebrew::defaults:
-  user: gary
-profile::base::homebrew::objects:
-  keeweb:
-    ensure: installed
-  amazon-music:
-    ensure: installed
-  firefox:
-    ensure: installed
-  sonos:
-    ensure: installed
-  chrome:
-    ensure: purged
-  munki:
-    ensure: purged
 
 # vim: sw=2:ai:nu expandtab

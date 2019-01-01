@@ -4,10 +4,17 @@
 #
 
 class profile::base::packages (
-  $objects  = {},
-  $defaults = {},
+  Optional[Hash] $objects  = {},
+  Optional[Hash] $defaults = {},
 ) {
 
+  case $facts['os']['kernel'] {
+    'Darwin': {
+      require ::homebrew
+    }
+    default: {
+    }
+  }
   unless empty ($objects) {
     validate_raw_constructor ($objects)
     validate_hash ($defaults)
