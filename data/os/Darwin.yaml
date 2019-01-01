@@ -1,28 +1,23 @@
 ---
 
-homebrew:
-  user:      gary
-  group:     wheel
-  multiuser: true
-
 # packages to be installed
 profile::base::packages::defaults:
   provider: homebrew
 profile::base::packages::objects:
   unison:
-    ensure: installed
+    ensure: present
   puppetlabs/puppet/puppet-agent-5:
-    ensure: installed
+    ensure: present
   keeweb:
-    ensure: installed
+    ensure: present
   amazon-music:
-    ensure: installed
+    ensure: present
   firefox:
-    ensure: installed
-  sonos:
-    ensure: installed
+    ensure: present
+  homebrew/cask-drivers/sonos:
+    ensure: present
   munki:
-    ensure: purged
+    ensure: absent
 
 managedmac::organization:                               "The Clark family"
 #managedmac::ntp::enable:                                true
