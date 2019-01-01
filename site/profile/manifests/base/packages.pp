@@ -10,7 +10,10 @@ class profile::base::packages (
 
   case $facts['os']['kernel'] {
     'Darwin': {
-      require ::homebrew
+      class { 'homebrew':
+        user      => 'gary',
+        multiuser => true,
+      }
     }
     default: {
     }
