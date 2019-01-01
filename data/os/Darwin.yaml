@@ -6,7 +6,9 @@ homebrew:
   multiuser: true
 
 # packages to be installed
-profile::base::packages:
+profile::base::packages::defaults:
+  provider: homebrew
+profile::base::packages::objects:
   unison:
     ensure: installed
   puppetlabs/puppet/puppet-agent-5:
