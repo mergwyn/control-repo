@@ -4,16 +4,13 @@
 #
 
 class profile::base::packages (
-  Optional[Hash] $objects  = {},
-  Optional[Hash] $defaults = {},
+  Hash            $objects = undef,
+  Optional[Hash] $defaults = undef,
 ) {
 
   case $facts['os']['kernel'] {
     'Darwin': {
-      class { 'homebrew':
-        user      => 'gary',
-        multiuser => true,
-      }
+      require profile::mac::brew
     }
     default: {
     }
