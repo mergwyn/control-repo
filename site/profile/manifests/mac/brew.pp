@@ -8,10 +8,10 @@ class profile::mac::brew {
     creates => '/usr/bin/git',
   }
   class { 'homebrew':
-    user         => 'gary',
-    group        => 'admin',
-    multiuser    => true,
-    require      => Exec['brew xcode git install'],
+    user      => 'gary',
+    group     => 'admin',
+    multiuser => true,
+    require   => Exec['brew xcode git install'],
   }
 }
 # vim: sw=2:ai:nu expandtab
