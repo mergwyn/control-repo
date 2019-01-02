@@ -8,27 +8,11 @@ class profile::mac::brew {
     creates => '/usr/bin/git',
   }
   class { 'homebrew':
-    user      => 'sadmin',
-    group     => 'wheel',
-    multiuser => true,
-    require   => Exec['brew xcode git install'],
-  }
-
-  $brewpkglist = [
-    'unison',
-  ]
-  $caskpkglist = [
-    'puppetlabs/puppet/puppet-agent-5',
-  ]
-
-  package { $brewpkglist:
-    ensure   => present,
-    provider => brew,
-  }
-
-  package { $caskpkglist:
-    ensure   => present,
-    provider => brewcask,
+    user         => 'gary',
+    group        => 'admin',
+    multiuser    => true,
+    github_token => '04e25c0d8c1cd9a72332a82187ffc677914df468',
+    require      => Exec['brew xcode git install'],
   }
 }
 # vim: sw=2:ai:nu expandtab

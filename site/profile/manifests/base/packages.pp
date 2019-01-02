@@ -8,9 +8,9 @@ class profile::base::packages (
   Optional[Hash] $defaults = undef,
 ) {
 
-  case $facts['os']['kernel'] {
+  case $::kernel {
     'Darwin': {
-      require profile::mac::brew
+      contain profile::mac::brew
     }
     default: {
     }

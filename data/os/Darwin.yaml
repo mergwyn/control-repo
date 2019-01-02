@@ -8,6 +8,8 @@ profile::base::packages::objects:
     ensure: present
   puppetlabs/puppet/puppet-agent-5:
     ensure: present
+  dropbox:
+    ensure: present
   keeweb:
     ensure: present
   amazon-music:
