@@ -11,7 +11,6 @@ class profile::mac::brew {
     user         => 'gary',
     group        => 'admin',
     multiuser    => true,
-    github_token => '04e25c0d8c1cd9a72332a82187ffc677914df468',
     require      => Exec['brew xcode git install'],
   }
 }

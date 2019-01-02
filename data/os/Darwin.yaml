@@ -1,5 +1,8 @@
 ---
 
+homebrew:
+  github_token: "%{lookup('secrets::github::homebrew')}"
+
 # packages to be installed
 profile::base::packages::defaults:
   provider: homebrew
@@ -19,6 +22,8 @@ profile::base::packages::objects:
   homebrew/cask-drivers/sonos:
     ensure: present
   munki:
+    ensure: absent
+  chrome:
     ensure: absent
 
 managedmac::organization:                               "The Clark family"
