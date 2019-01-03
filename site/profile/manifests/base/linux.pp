@@ -35,8 +35,9 @@ class profile::base::linux {
       source => 'puppet:///modules/profile/11-media-by-label-auto-mount.rules',
     }
   }
-  host { "${facts['networking']['hostname']} remove":
+  host { 'host remove':
     ensure => absent,
+    name   => $facts['networking']['hostname'],
     ip     => '127.0.1.1',
   }
   host { $facts['networking']['fqdn']:
@@ -48,8 +49,9 @@ class profile::base::linux {
     ensure => absent,
     ip     => '127.0.0.1',
   }
-  host { "${facts['networking']['hostname']} add":
+  host { 'host add':
     ensure       => present,
+    name         => $facts['networking']['hostname'],
     host_aliases => "${facts['networking']['hostname']} localhost",
     ip           => '127.0.0.1',
   }
