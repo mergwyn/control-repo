@@ -4,8 +4,8 @@
 #
 
 class profile::base::files (
-  $objects  = {},
-  $defaults = {},
+  Hash           $objects  = {},
+  Optional[Hash] $defaults = {},
 ) {
 
   unless empty ($objects) {

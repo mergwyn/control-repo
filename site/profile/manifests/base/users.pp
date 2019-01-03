@@ -4,8 +4,8 @@
 #
 
 class profile::base::users (
-  $objects  = {},
-  $defaults = {},
+  Hash           $objects  = {},
+  Optional[Hash] $defaults = {},
 ) {
 
   unless empty ($objects) {

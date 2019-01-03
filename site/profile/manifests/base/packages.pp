@@ -4,8 +4,8 @@
 #
 
 class profile::base::packages (
-  Hash            $objects = undef,
-  Optional[Hash] $defaults = undef,
+  Hash           $objects  = {},
+  Optional[Hash] $defaults = {},
 ) {
 
   case $::kernel {
