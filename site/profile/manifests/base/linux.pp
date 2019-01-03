@@ -50,7 +50,7 @@ class profile::base::linux {
   }
   host { $facts['networking']['hostname']:
     ensure       => present,
-    host_aliases => "${facts['networking']['hostname']} localhost",
+    host_aliases => "$facts['networking']['hostname'] localhost",
     ip           => '127.0.0.1',
   }
 
