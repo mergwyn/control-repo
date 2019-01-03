@@ -1,7 +1,6 @@
 ---
 
-homebrew:
-  github_token: "%{lookup('secrets::github::homebrew')}"
+homebrew::github_token: "%{lookup('secrets::github::homebrew')}"
 
 # packages to be installed
 profile::base::packages::defaults:
@@ -320,20 +319,4 @@ managedmac::files::objects:
   /Library/Logs/unison.log:
     mode: "0666"
 
-
-<<<<<<< HEAD
-=======
-
-#managedmac::fibs.puppet.plistles::objects:
-#  /Users/Shared/example_file_a.txt:
-#    content:
-#      "This is an example of how to create a file using the content parameter."
-#  /Users/Shared/example_file_b.txt:
-#    source: puppet:///modules/some_module/some_file.txt
-#  /Users/Shared/example_directory:
-#    ensure: directory
-#    group: wheel
-#    mode: 0755
-
->>>>>>> parent of fc0d9dc... Add support for macos adhoc package installation
 # vim: sw=2:ai:nu expandtab
