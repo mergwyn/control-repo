@@ -35,29 +35,14 @@ class profile::base::linux {
       source => 'puppet:///modules/profile/11-media-by-label-auto-mount.rules',
     }
   }
-  host { 'host remove':
+  host { $facts['networking']['hostname']:
     ensure => absent,
-    name   => $facts['networking']['hostname'],
     ip     => '127.0.1.1',
   }
   host { $facts['networking']['fqdn']:
     ensure       => present,
     host_aliases => $facts['networking']['hostname'],
     ip           => '127.0.1.1',
-  }
-  host { 'localhost':
-    ensure => absent,
-    ip     => '127.0.0.1',
-  }
-  host { 'host add':
-    ensure       => present,
-<<<<<<< HEAD
-    host_aliases => "$facts['networking']['hostname'] localhost",
-=======
-    name         => $facts['networking']['hostname'],
-    host_aliases => "${facts['networking']['hostname']} localhost",
->>>>>>> parent of 281826d... Revert "correct duplicate resource names"
-    ip           => '127.0.0.1',
   }
 
   include profile::base::core_users
