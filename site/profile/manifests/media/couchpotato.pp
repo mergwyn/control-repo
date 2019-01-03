@@ -23,7 +23,6 @@ class profile::media::couchpotato (
   systemd::unit_file { 'couchpotato.service':
     enable  => false,
     active  => false,
-    # lint:ignore:140chars
     content => "
 # Systemd service file
 [Unit]
@@ -41,7 +40,6 @@ ExecStart=${topdir}/CouchPotatoServer/CouchPotato.py --pid_file ${run}/couchpota
 [Install]
 WantedBy=multi-user.target
 ",
-    # lint:endignore
   }
 
   file { $data:
