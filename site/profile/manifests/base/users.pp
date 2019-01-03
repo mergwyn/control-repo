@@ -11,7 +11,7 @@ class profile::base::users (
   unless empty ($objects) {
     validate_raw_constructor ($objects)
     validate_hash ($defaults)
-    create_resources(user, $objects, $defaults)
+    create_resources(file, $objects, $defaults)
   }
 
 }

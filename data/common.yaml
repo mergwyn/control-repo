@@ -1,6 +1,4 @@
 ---
-classes:
-  - profile::base
 
 # environment
 defaults::workgroup:       'THECLARKHOME'
