@@ -44,6 +44,15 @@ class profile::base::linux {
     host_aliases => $facts['networking']['hostname'],
     ip           => '127.0.1.1',
   }
+  host { 'localhost':
+    ensure => absent,
+    ip     => '127.0.0.1',
+  }
+  host { $facts['networking']['hostname']:
+    ensure       => present,
+    host_aliases => "$facts['networking']['hostname'] localhost",
+    ip           => '127.0.0.1',
+  }
 
   include profile::base::core_users
   include profile::base::avahi
