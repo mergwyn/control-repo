@@ -2,7 +2,7 @@
 
 classes:
   - timezone
-  - profile::base
+  - profile::base::linux
   - profile::puppet::agent
 
 # puppet agent
