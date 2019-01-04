@@ -1,5 +1,8 @@
 ---
 
+homebrew::user:         'gary'
+homebrew::group:        'admin'
+homebrew::multiuser:    true
 homebrew::github_token: "%{lookup('secrets::github::homebrew')}"
 
 # packages to be installed
@@ -7,23 +10,17 @@ profile::base::packages::defaults:
   provider: homebrew
   ensure: present
 profile::base::packages::objects:
-  git:
-    provider: macports
-  unison:
-    ensure: present
-  puppetlabs/puppet/puppet-agent-5:
-    ensure: present
-  dropbox:
-    ensure: present
-  keeweb:
-    ensure: present
-  amazon-music:
-    ensure: present
-  firefox:
-    ensure: present
-  homebrew/cask-drivers/sonos:
-    ensure: present
-  munki: {}
+#  git:
+#    provider: macports
+  unison: {}
+  puppetlabs/puppet/puppet-agent-5: {}
+  dropbox: {}
+  keeweb: {}
+  amazon-music: {}
+  firefox: {}
+  homebrew/cask-drivers/sonos: {}
+  munki: 
+    ensure: absent
   chrome:
     ensure: absent
 
