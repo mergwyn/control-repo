@@ -5,7 +5,10 @@ homebrew::github_token: "%{lookup('secrets::github::homebrew')}"
 # packages to be installed
 profile::base::packages::defaults:
   provider: homebrew
+  ensure: present
 profile::base::packages::objects:
+  git:
+    provider: macports
   unison:
     ensure: present
   puppetlabs/puppet/puppet-agent-5:
