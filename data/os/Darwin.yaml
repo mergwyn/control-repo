@@ -23,8 +23,7 @@ profile::base::packages::objects:
     ensure: present
   homebrew/cask-drivers/sonos:
     ensure: present
-  munki:
-    ensure: absent
+  munki: {}
   chrome:
     ensure: absent
 
