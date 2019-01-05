@@ -29,6 +29,6 @@ profile::base::files::defaults:
   ensure: present
 profile::base::files::objects:
   '/etc/udev/rules.d/11-media-by-label-auto-mount.rules':
-    source: 'puppet:///modules/profile/11-media-by-label-auto-mount.rules',
+    source: 'puppet:///modules/profile/11-media-by-label-auto-mount.rules'
 
 # vim: sw=2:ai:nu expandtab
