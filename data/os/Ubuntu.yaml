@@ -5,7 +5,6 @@ classes:
   - profile::base::linux
   - profile::puppet::agent
 
-
 profile::base::packages::defaults:
   ensure: present
 profile::base::packages::objects:
@@ -23,23 +22,14 @@ profile::base::packages::objects:
 profile::base::files::defaults:
   ensure: present
 profile::base::files::objects:
-  /etc/legal:
-    ensure: absent
-  /etc/vim/vim.local:
-    ensure: absent
   /etc/vim/vimrc.local:
     source: 'puppet:///modules/profile/vimrc.local'
-  /etc/update-motd.d/10-help-text:
-    ensure: absent
   /etc/landscape/client.conf:
     content: "[sysinfo]\nexclude_sysinfo_plugins = LandscapeLink\n"
-
-#  if $::is_virtual == false or str2bool($::is_virtual) == false {
-#    file { '/etc/udev/rules.d/11-media-by-label-auto-mount.rules':
-#      ensure => present,
-#      source => 'puppet:///modules/profile/11-media-by-label-auto-mount.rules',
-#    }
-#  }
+  /etc/update-motd.d/10-help-text:
+    ensure: absent
+  /etc/legal:
+    ensure: absent
 
 # puppet agent
 puppet::puppet_server:                  "echo.%{domain}"
