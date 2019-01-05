@@ -19,11 +19,16 @@ ntp::restrict:
   - 0.pool.ntp.org   mask 255.255.255.255    nomodify notrap nopeer noquery
   - 1.pool.ntp.org   mask 255.255.255.255    nomodify notrap nopeer noquery
 
-
 sysctl::values:
   vm.swappiness:
     value: '1'
   vm.dirty_ratio:
     value: '15'
+
+profile::base::files::defaults:
+  ensure: present
+profile::base::files::objects:
+  '/etc/udev/rules.d/11-media-by-label-auto-mount.rules':
+    source: 'puppet:///modules/profile/11-media-by-label-auto-mount.rules',
 
 # vim: sw=2:ai:nu expandtab
