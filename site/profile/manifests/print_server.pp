@@ -43,11 +43,11 @@ class profile::print_server {
 
   printer { 'Dell_1355cn_Color_MFP_':
       ensure       => present,
-      uri          => 'dnssd://Dell%201355cn%20Color%20MFP%20(A3%3AF9%3A5F)._pdl-datastream._tcp.local/',
+      uri          => 'http://papa.theclarkhome.com:631/ipp/',
       description  => 'DELL Dell 1355cn Color MFP',
       location     => 'Study office',
       model        => 'lsb/usr/Xerox/Xerox-WorkCentre-6015B.ppd.gz',
-      shared       => undef,
+      shared       => true,
       error_policy => retry_job, # underscored version of error policy
       enabled      => true, # Enabled by default
       #options      => {  }, # Hash of options ( name => value ), supplied as -o flag to lpadmin.
