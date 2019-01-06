@@ -78,11 +78,11 @@ dhcp::hosts:
     mac: 08:00:37:a3:f9:5f
   s685ip:
     mac: 00:01:e3:9a:f9:c1
-  humax-lan:
-    ddns_hostname: humax
-    mac: dc:d3:21:57:55:46
-  humax-wifi:
-    ddns_hostname: humax
+  #humax-lan:
+  #  ddns_hostname: humax
+  #  mac: dc:d3:21:57:55:46
+  humax:
+    #ddns_hostname: humax
     mac: 80:1f:02:21:a1:74
   Lounge-sonos-playbar:
     mac: 00:0e:58:bc:b4:dc
