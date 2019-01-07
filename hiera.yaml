@@ -21,10 +21,4 @@ hierarchy:
       pkcs7_private_key: /etc/puppetlabs/secure/keys/private_key.pkcs7.pem
       pkcs7_public_key:  /etc/puppetlabs/secure/keys/public_key.pkcs7.pem
 
-lookup_options:
-  "^classes(.*)$":
-    merge: deep
-  "^profile::base::(.*)::(.*)$":
-    merge: deep
-
 # vim: sw=2:ai:nu expandtab
