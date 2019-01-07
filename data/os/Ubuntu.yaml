@@ -4,6 +4,14 @@ classes:
   - timezone
   - profile::base::linux
   - profile::puppet::agent
+  - profile::base::core_users
+  - profile::base::avahi
+  - profile::base::ssh_server
+  - profile::base::mail_client
+  - profile::base::unattended_upgrades
+  - profile::base::webmin_generic
+  - profile::zabbix::agent
+  - profile::backuppc::client
 
 profile::base::packages::defaults:
   ensure: present
