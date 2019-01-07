@@ -42,7 +42,7 @@ class profile::print_server {
   }
 
   printer { 'Dell_1355cn_Color_MFP_':
-      ensure       => present,
+      ensure       => absent,
       uri          => 'socket://della3f95f.theclarkhome.com:9100',
       description  => 'DELL Dell 1355cn Color MFP',
       location     => 'Study office',
@@ -62,7 +62,7 @@ class profile::print_server {
   }
 
   file { '/etc/avahi/services/AirPrint-Dell_1355cn_Color_MFP_.service':
-    ensure => present,
+    ensure => absent,
     source => 'puppet:///modules/profile/print_server/AirPrint-Dell_1355cn_Color_MFP_.service',
     notify => Service['avahi-daemon'],
   }
