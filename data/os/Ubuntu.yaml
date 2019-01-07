@@ -4,7 +4,6 @@ classes:
   - timezone
   - profile::base::linux
   - profile::puppet::agent
-  - profile::base::core_users
   - profile::base::avahi
   - profile::base::ssh_server
   - profile::base::mail_client
@@ -12,6 +11,43 @@ classes:
   - profile::base::webmin_generic
   - profile::zabbix::agent
   - profile::backuppc::client
+
+profile::base::users::defaults:
+  ensure: present
+profile::base::users::objects:
+  root:
+    password: "%{lookup('defaults::sharedpassword')}"
+  ubuntu:
+    ensure: absent
+  sadmin:
+    password: "%{lookup('defaults::sharedpassword')}"
+    groups: 'sudo'
+    uid: '1000'
+    managehome: true
+
+profile::base::files::defaults:
+  ensure: present
+profile::base::files::objects:
+  # relateded to users
+  /root/.profile:
+    source: 'file:///etc/skel/.profile'
+  /root/.bashrc:
+    source: 'puppet:///modules/profile/bashrc'
+  /root/.bash_aliases:
+    source: 'puppet:///modules/profile/bash_aliases'
+  /etc/skel/.bashrc:
+    source: 'puppet:///modules/profile/bashrc'
+  /etc/skel/.bash_aliases:
+    source: 'puppet:///modules/profile/bash_aliases'
+  /etc/vim/vimrc.local:
+    source: 'puppet:///modules/profile/vimrc.local'
+  # General
+  /etc/landscape/client.conf:
+    content: "[sysinfo]\nexclude_sysinfo_plugins = LandscapeLink\n"
+  /etc/update-motd.d/10-help-text:
+    ensure: absent
+  /etc/legal:
+    ensure: absent
 
 profile::base::packages::defaults:
   ensure: present
@@ -25,18 +61,6 @@ profile::base::packages::objects:
   vim-tiny:
     ensure: absent
   mlocate:
-    ensure: absent
-
-profile::base::files::defaults:
-  ensure: present
-profile::base::files::objects:
-  /etc/vim/vimrc.local:
-    source: 'puppet:///modules/profile/vimrc.local'
-  /etc/landscape/client.conf:
-    content: "[sysinfo]\nexclude_sysinfo_plugins = LandscapeLink\n"
-  /etc/update-motd.d/10-help-text:
-    ensure: absent
-  /etc/legal:
     ensure: absent
 
 # puppet agent
