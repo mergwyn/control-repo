@@ -43,7 +43,7 @@ class profile::print_server {
 
   printer { 'Dell_1355cn_Color_MFP_':
       ensure       => present,
-      uri          => 'http://papa.theclarkhome.com:631/ipp/',
+      uri          => 'socket://della3f95f.theclarkhome.com:9100',
       description  => 'DELL Dell 1355cn Color MFP',
       location     => 'Study office',
       model        => 'lsb/usr/Xerox/Xerox-WorkCentre-6015B.ppd.gz',
