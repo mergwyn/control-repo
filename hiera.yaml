@@ -6,7 +6,6 @@ defaults:
 
 hierarchy: 
   - name: "YAML hierarchy"
-    data_hash: yaml_data
     lookup_key: eyaml_lookup_key 
     paths: 
       - "secrets.yaml"
