@@ -2,16 +2,12 @@
 version: 5
 
 defaults: 
-  datadir: /etc/puppetlabs/code/environments/%{environment}/data
-  data_hash: yaml_data
+  datadir: data
 
 hierarchy: 
-  - 
-    name: "Encrypted data"
+  - name: "YAML hierarchy"
+    data_hash: yaml_data
     lookup_key: eyaml_lookup_key 
-    paths: 
-      - "secrets.yaml"
-    name: "My hierarchy"
     paths: 
       - "secrets.yaml"
       - "nodes/%{trusted.certname}.yaml"
@@ -21,10 +17,13 @@ hierarchy:
       - "os/%{facts.os.name}.yaml"
       - "zfs_%{zfs_version}.yaml"
       - "common.yaml"
+    lookup_options:
+      "^classes(.*)$":
+        merge: deep
+      "^profile::base::(.*)::(.*)$":
+        merge: deep
     options:
       pkcs7_private_key: /etc/puppetlabs/secure/keys/private_key.pkcs7.pem
       pkcs7_public_key:  /etc/puppetlabs/secure/keys/public_key.pkcs7.pem
-
-
 
 # vim: sw=2:ai:nu expandtab
