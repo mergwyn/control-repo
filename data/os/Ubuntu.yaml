@@ -2,7 +2,6 @@
 
 classes:
   - timezone
-  - profile::base::linux
   - profile::puppet::agent
   - profile::base::avahi
   - profile::base::ssh_server
@@ -62,6 +61,15 @@ profile::base::packages::objects:
     ensure: absent
   mlocate:
     ensure: absent
+
+profile::base::hosts:
+  "%{facts.networking.hostname}":
+    ensure: absent
+    ip:     '127.0.1.1'
+#  "%{trusted.certname}":
+#    ensure: present
+#    ip:     '127.0.1.1'
+#    host_aliases: "%{trusted.hostname}"
 
 # puppet agent
 puppet::puppet_server:                  "echo.%{domain}"
@@ -126,7 +134,7 @@ zabbix::database_name:                  'zabbix'
 zabbix::database_user:                  'zabbix'
 zabbix::database_password:              'ls278sq'
 
-zabbix::agent::listenip:                '0.0.0.0'
+zabbix::agent::listenip:                "%{facts.networking.ip}"
 zabbix::agent::hostname:                "%{fqdn}"
 zabbix::agent::server:                  "zulu,zulu.%{domain}"
 zabbix::agent::serveractive:            "zulu,zulu.%{domain}"
