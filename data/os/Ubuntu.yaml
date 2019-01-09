@@ -66,10 +66,10 @@ profile::base::hosts:
   "%{facts.networking.hostname}":
     ensure: absent
     ip:     '127.0.1.1'
-#  "%{trusted.certname}":
-#    ensure: present
-#    ip:     '127.0.1.1'
-#    host_aliases: "%{trusted.hostname}"
+  "%{trusted.certname}":
+    ensure: absent
+    ip:     '127.0.1.1'
+    host_aliases: "%{trusted.hostname}"
 
 # puppet agent
 puppet::puppet_server:                  "echo.%{domain}"
