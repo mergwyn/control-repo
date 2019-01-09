@@ -71,6 +71,9 @@ profile::base::hosts::objects:
     ip:     '127.0.1.1'
     host_aliases: "%{trusted.hostname}"
   localhost:
+    ensure: absent
+    ip:     '127.0.0.1'
+  localhost:
     ensure: present
     ip:     '127.0.0.1'
     host_aliases: "localhost.%{trusted.domain}"
