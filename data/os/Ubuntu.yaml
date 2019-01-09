@@ -62,6 +62,8 @@ profile::base::packages::objects:
   mlocate:
     ensure: absent
 
+profile::base::hosts::defaults:
+  ensure: present
 profile::base::hosts::objects:
   "%{trusted.hostname}":
     ensure: absent
@@ -74,13 +76,23 @@ profile::base::hosts::objects:
     ensure: absent
     ip:     '127.0.0.1'
   localhost:
-    ensure: present
     ip:     '127.0.0.1'
     host_aliases: "localhost.%{trusted.domain}"
   ip6-localhost:
-    ensure: present
     ip:     '::1'
     host_aliases: 'ip6-loopback'
+  ip6-localnet:
+    ip: 'fe00::0'
+  ip6-mcastprefix:
+    ip: 'ff00::0'
+  ip6-allnodes:
+    ip: 'ff02::1'
+  ip6-allrouters:
+    ip: 'ff02::2'
+  ip6-allhosts:
+    ip: 'ff02::3'
+
+
 
 # puppet agent
 puppet::puppet_server:                  "echo.%{trusted.domain}"
