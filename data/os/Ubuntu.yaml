@@ -80,7 +80,9 @@ profile::base::hosts::objects:
   localhost:
     ensure: present
     ip:     '::1'
-    host_aliases: "ip6-localhost ip6-loopback"
+    host_aliases:
+      - ip6-localhost
+      - ip6-loopback
 
 # puppet agent
 puppet::puppet_server:                  "echo.%{trusted.domain}"
