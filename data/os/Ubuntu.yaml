@@ -63,24 +63,28 @@ profile::base::packages::objects:
     ensure: absent
 
 profile::base::hosts::objects:
-  "%{facts.networking.hostname}":
+  "%{trusted.hostname}":
     ensure: absent
     ip:     '127.0.1.1'
   "%{trusted.certname}":
     ensure: absent
     ip:     '127.0.1.1'
     host_aliases: "%{trusted.hostname}"
+  localhost:
+    ensure: present
+    ip:     '127.0.0.1'
+    host_aliases: "localhost.%{trusted.domain}"
 
 # puppet agent
-puppet::puppet_server:                  "echo.%{domain}"
+puppet::puppet_server:                  "echo.%{trusted.domain}"
 puppet::manage_repos:                   false
 puppet::structured_facts:               true
 
-profile::base::mail_client::myorigin:         "%{domain}"
-profile::base::mail_client::password_credentials: "mergwyn@virginmedia.com:%{hiera('secrets::virgin')}"
+profile::base::mail_client::myorigin:         "%{trusted.domain}"
+profile::base::mail_client::password_credentials: "mergwyn@virginmedia.com:%{lookup('secrets::virgin')}"
 profile::base::mail_client::password_hash:    '/etc/postfix/sasl-passwords'
 profile::base::mail_client::relayhost:        '[smtp.virginmedia.com]:465'
-profile::base::mail_client::root_mail_recipient: "%{hiera('defaults::adminemail')}"
+profile::base::mail_client::root_mail_recipient: "%{lookup('defaults::adminemail')}"
 
 # store ssh keys
 ssh::storeconfigs_enabled:              true
@@ -93,19 +97,19 @@ ntp::logfile:                           '/var/log/ntp'
 ntp::ntpsigndsocket:                    '/var/lib/samba/ntp_signd/'
 ntp::servers:
   - 127.127.1.0
-  - foxtrot.%{domain}  iburst prefer
-  - golf.%{domain}  iburst prefer
+  - foxtrot.%{trusted.domain}  iburst prefer
+  - golf.%{trusted.domain}  iburst prefer
 ntp::fudge: 
   - 127.127.1.0 stratum 10
 ntp::restrict:
   - default kod nomodify notrap nopeer mssntp
   - 127.0.0.1
-  - foxtrot.%{domain} mask 255.255.255.255 nomodify notrap nopeer noquery
-  - golf.%{domain} mask 255.255.255.255 nomodify notrap nopeer noquery
+  - foxtrot.%{trusted.domain} mask 255.255.255.255 nomodify notrap nopeer noquery
+  - golf.%{trusted.domain} mask 255.255.255.255 nomodify notrap nopeer noquery
 
 unattended_upgrades::period:            '1'
 unattended_upgrades::autoremove:        true
-unattended_upgrades::email:             "%{hiera('defaults::adminemail')}"
+unattended_upgrades::email:             "%{lookup('defaults::adminemail')}"
 unattended_upgrades:
   repos:
     "%{lsbdistcodename}-security":
@@ -120,14 +124,14 @@ unattended_upgrades:
 nginx::package_name:                    'nginx-extras'
 
 samba::params::sernetpkgs:              false
-samba::classic::domain:                 "%{hiera('defaults::workgroup')}"
-samba::classic::realm:                  "%{hiera('defaults::realm')}"
+samba::classic::domain:                 "%{lookup('defaults::workgroup')}"
+samba::classic::realm:                  "%{lookup('defaults::realm')}"
 
 mysql::server::manage_config_file:      false
 
 zabbix::agent::zabbix_version:          '3.4'
 zabbix::server::zabbix_version:         '3.4'
-zabbix::zabbix_url:                     "%{fqdn}"
+zabbix::zabbix_url:                     "%{trusted.certname}"
 zabbix::zabbix_server:                  "%{hostname}"
 zabbix::database_type:                  'mysql'
 zabbix::database_name:                  'zabbix'
@@ -135,14 +139,14 @@ zabbix::database_user:                  'zabbix'
 zabbix::database_password:              'ls278sq'
 
 zabbix::agent::listenip:                "%{facts.networking.ip}"
-zabbix::agent::hostname:                "%{fqdn}"
-zabbix::agent::server:                  "zulu,zulu.%{domain}"
-zabbix::agent::serveractive:            "zulu,zulu.%{domain}"
+zabbix::agent::hostname:                "%{trusted.certname}"
+zabbix::agent::server:                  "zulu,zulu.%{trusted.domain}"
+zabbix::agent::serveractive:            "zulu,zulu.%{trusted.domain}"
 zabbix::agent::enableremotecommands:    '1'
 
 profile::backuppc::scripts:             '/etc/backuppc/scripts'
-profile::backuppc::preuser:             "%{hiera('profile::backuppc::scripts')}/DumpPreUser"
-profile::backuppc::postuser:            "%{hiera('profile::backuppc::scripts')}/DumpPostUser"
+profile::backuppc::preuser:             "%{lookup('profile::backuppc::scripts')}/DumpPreUser"
+profile::backuppc::postuser:            "%{lookup('profile::backuppc::scripts')}/DumpPostUser"
 
 # vim: sw=2:ai:nu expandtab
 #
