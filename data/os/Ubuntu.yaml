@@ -62,7 +62,7 @@ profile::base::packages::objects:
   mlocate:
     ensure: absent
 
-profile::base::hosts:
+profile::base::hosts::objects:
   "%{facts.networking.hostname}":
     ensure: absent
     ip:     '127.0.1.1'
