@@ -71,9 +71,16 @@ profile::base::hosts::objects:
     ip:     '127.0.1.1'
     host_aliases: "%{trusted.hostname}"
   localhost:
+    ensure: absent
+    ip:     '127.0.0.1'
+  localhost:
     ensure: present
     ip:     '127.0.0.1'
     host_aliases: "localhost.%{trusted.domain}"
+  localhost:
+    ensure: present
+    ip:     '::1'
+    host_aliases: "ip6-localhost ip6-loopback"
 
 # puppet agent
 puppet::puppet_server:                  "echo.%{trusted.domain}"
