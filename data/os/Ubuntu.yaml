@@ -69,7 +69,7 @@ profile::base::hosts::objects:
     ensure: absent
     ip:     '127.0.1.1'
   "%{trusted.certname}":
-    ensure: absent
+    ensure: present
     ip:     '127.0.1.1'
     host_aliases: "%{trusted.hostname}"
   localhost:
