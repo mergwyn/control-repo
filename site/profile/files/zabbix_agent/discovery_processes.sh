@@ -6,7 +6,7 @@ echo  "{"
 echo  "	\"data\":["
  
 ps --no-headers axo cgroup,comm |
-       	egrep -v "^*:*:/lxc/" |
+       	egrep -v "^*:*:/lxc" |
        	cut -f 2- -d ' ' |
        	sort -u |
 while read procname
