@@ -150,6 +150,7 @@ mysql::server::manage_config_file:      false
 
 zabbix::agent::zabbix_version:          '3.4'
 zabbix::server::zabbix_version:         '3.4'
+zabbix::server::sourceip:               "%{facts.networking.ip}"
 zabbix::zabbix_url:                     "%{trusted.certname}"
 zabbix::zabbix_server:                  "%{hostname}"
 zabbix::database_type:                  'mysql'
