@@ -120,7 +120,7 @@ fi
 #fi
 
 # functions to extract local processes
-localpids() 	{ ps --no-headers axo pid,cgroup | awk '{ if ($2 ~ /*:.*:\/lxc/ ) next;  else print $1 fi }' ; }
+localpids() 	{ ps --no-headers axo pid,cgroup | egrep -v '[[:digit:]]* [[:digit:]]*:[^:]*:/lxc' ; }
 lps() 		{ ps -p $(localpids | paste -d, -s) $* ; }
 lpcount() 	{ localpids | wc -l; }
 
