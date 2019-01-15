@@ -1,5 +1,6 @@
 ---
 
+zabbix::agent::server:       "%{facts.networking.ip}"
 zabbix::agent::serveractive: "%{facts.networking.ip}"
 
 # vim: sw=2:ai:nu expandtab
