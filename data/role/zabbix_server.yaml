@@ -6,7 +6,7 @@ classes:
   - profile::domain::sso
   - profile::zabbix::server
 
-zabbix::agent::server:       "%{trusted.hostname},%{trusted.certname},localhost"
-zabbix::agent::serveractive: "%{trusted.hostname},%{trusted.certname},localhost"
+zabbix::agent::server:       "127.0.0.1,%{trusted.hostname},%{trusted.certname},localhost"
+zabbix::agent::serveractive: "127.0.0.1,%{trusted.hostname},%{trusted.certname},localhost"
 
 # vim: sw=2:ai:nu expandtab
