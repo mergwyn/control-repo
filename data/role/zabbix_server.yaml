@@ -6,7 +6,17 @@ classes:
   - profile::domain::sso
   - profile::zabbix::server
 
-zabbix::agent::server:       "127.0.0.1,%{trusted.hostname},%{trusted.certname},localhost"
-zabbix::agent::serveractive: "127.0.0.1,%{trusted.hostname},%{trusted.certname},localhost"
+zabbix::zabbix_url:          "%{trusted.certname}"
+zabbix::zabbix_server:       "%{trusted.hostname}"
+zabbix::database_type:       'mysql'
+zabbix::database_name:       'zabbix'
+zabbix::database_user:       'zabbix'
+zabbix::database_password:   "%{hiera('secrets::mysql')}"
+zabbix::zabbix_timezone:     'Europe/London'
+
+zabbix::agent::server:       'localhost'
+zabbix::agent::serveractive: 'localhost'
+#zabbix::agent::server:       "127.0.0.1,%{trusted.hostname},%{trusted.certname},localhost"
+#zabbix::agent::serveractive: "127.0.0.1,%{trusted.hostname},%{trusted.certname},localhost"
 
 # vim: sw=2:ai:nu expandtab
