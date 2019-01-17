@@ -25,10 +25,10 @@ class profile::puppet::server {
   # Clean old reports
   include cron
   cron::job { 'puppet_reports':
-    command     => '/usr/bin/find /opt/puppetlabs/server/data/puppetserver/reports -type f -name "*.yaml" -mtime +30 -exec /bin/rm {} ";"'
-    user        => 'root',
-    minute      => 4,
-    hour        => 2,
+    command => '/usr/bin/find /opt/puppetlabs/server/data/puppetserver/reports -type f -name "*.yaml" -mtime +30 -exec /bin/rm {} ";"',
+    user    => 'root',
+    minute  => 4,
+    hour    => 2,
   }
 
   # Configure Apache on this server
