@@ -21,13 +21,14 @@ class profile::puppet::server {
   class { 'puppetdb': }
   # Configure the Puppet master to use puppetdb
   class { 'puppetdb::master::config': }
+
   # Clean old reports
-  tidy { '/opt/puppetlabs/server/data/puppetserver/reports':
-    age     => '30d',
-    matches => '*.yaml',
-    recurse => true,
-    rmdirs  => false,
-    type    => mtime,
+  include cron
+  cron::job { 'puppet_reports':
+    command     => '/usr/bin/find /opt/puppetlabs/server/data/puppetserver/reports -type f -name "*.yaml" -mtime +30 -exec /bin/rm {} ";"'
+    user        => 'root',
+    minute      => 4,
+    hour        => 2,
   }
 
   # Configure Apache on this server
