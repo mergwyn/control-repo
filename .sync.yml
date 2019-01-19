@@ -20,4 +20,3 @@ Gemfile:
   required:
     ':development':
       - gem: ra10ke
-        platforms: ruby
