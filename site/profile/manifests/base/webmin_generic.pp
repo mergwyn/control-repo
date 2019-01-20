@@ -48,6 +48,21 @@ class profile::base::webmin_generic {
     require           => Package['webmin'],
     notify            => Service['webmin'],
   }
+  file { '/etc/webmin/package-updates':
+    ensure => directory,
+  }
+  file { '/etc/webmin/package-updates/config':
+    ensure  => present,
+    mode    => '0600',
+    source  => 'puppet:///modules/profile/webmin/config',
+    require => File['/etc/webmin/package-updates'],
+  }
+  file { '/etc/webmin/package-updates/update.pl':
+    ensure  => present,
+    mode    => '0755',
+    source  => 'puppet:///modules/profile/webmin/update.pl',
+    require => File['/etc/webmin/package-updates'],
+  }
 
 }
 # vim: sw=2:ai:nu expandtab
