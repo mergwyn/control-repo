@@ -53,7 +53,7 @@ for d in $DIRS;do
 		for db in tdb ldb
 		do
 			find $relativedirname -name "*.$db.bak" -exec rm {} \;
-			for ldb in `find $relativedirname -name "*.$db"`; do
+			for ldb in `find $relativedirname -name "*.$db" ! -name '*netlogon_creds_cli.tdb'`; do
 				tdbbackup $ldb
 				if [ $? -ne 0 ]; then
 					echo "Error while backuping $ldb"
