@@ -14,9 +14,10 @@ profile::base::packages::objects:
   firefox: {}
   dropbox: {}
   keeweb: {}
-  notepadplus.install: {}
-  mp3gain.gui: {}
+  notepadplusplus: {}
+  mp3gain-gui: {}
   mp3tag: {}
+  kitty: {}
 
 # puppet agent
 puppet::puppet_server:                  "echo.%{trusted.domain}"
