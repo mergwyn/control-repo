@@ -14,8 +14,8 @@ profile::base::packages::objects:
   firefox: {}
   dropbox: {}
   keeweb: {}
-  notepad++: {}
-  mp3gain: {}
+  notepadplus.install: {}
+  mp3gain.gui: {}
   mp3tag: {}
 
 # puppet agent
