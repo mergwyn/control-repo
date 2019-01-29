@@ -153,7 +153,7 @@ zabbix::agent::hostname:                "%{trusted.certname}"
 zabbix::agent::server:                  "zulu,zulu.%{trusted.domain}"
 zabbix::agent::serveractive:            "zulu,zulu.%{trusted.domain}"
 zabbix::agent::enableremotecommands:    '1'
-zabbix::zabbix_package_state:           'latest'
+zabbix::agent::zabbix_package_state:    'latest'
 
 profile::backuppc::scripts:             '/etc/backuppc/scripts'
 profile::backuppc::preuser:             "%{lookup('profile::backuppc::scripts')}/DumpPreUser"
