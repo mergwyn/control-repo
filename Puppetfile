@@ -1,5 +1,5 @@
 #
-forge 'http://forge.puppetlabs.com'
+#forge 'http://forge.puppetlabs.com'
 
 #mod 'andschwa-unattended_upgrades', '0.2.3'
 mod 'camptocamp-augeas', '1.7.0'
