@@ -17,8 +17,6 @@ class profile::scripts {
 
   file { "${codedir}/iptv/iptv_urls":
     ensure  => present,
-    owner   => 'media',
-    group   => '513',
     mode    => '0600',
     content => @("EOT"),
                MAGIC_M3U="${lookup('secrets::iptv::m3u::magic')}"
