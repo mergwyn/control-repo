@@ -14,6 +14,18 @@ class profile::media::iptv {
     admin_password => 'L1nahswf.ve',
   }
 
+  $content = @("EOT")
+     MAGIC_M3U='http://watchthis.uk:80/get.php?${lookup('secrets::magic')}&output=ts&type=m3u_plus'
+     MAGIC_EPG='http://watchthis.uk/xmltv.php?${lookup('secrets::magic')}'
+     | EOT
+  file { "${codedir}/iptv/iptv_urls":
+    ensure  => present,
+    owner   => 'media',
+    group   => '513',
+    mode    => '0600',
+    content => $content,
+  }
+
   cron::job::multiple { 'xmltv':
     jobs        => [
       {
