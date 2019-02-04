@@ -15,8 +15,8 @@ class profile::media::iptv {
   }
 
   $content = @("EOT")
-     MAGIC_M3U='${lookup('secrets::iptv::m3u::magic')'
-     MAGIC_EPG='${lookup('secrets::iptv::epg::magic')'
+     MAGIC_M3U="${lookup('secrets::iptv::m3u::magic')"
+     MAGIC_EPG="${lookup('secrets::iptv::epg::magic')"
      | EOT
   file { "${codedir}/iptv/iptv_urls":
     ensure  => present,
