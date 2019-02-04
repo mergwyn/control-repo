@@ -15,5 +15,15 @@ class profile::scripts {
       revision => 'master',
   }
 
+  file { "${codedir}/iptv/iptv_urls":
+    ensure  => present,
+    owner   => 'media',
+    group   => '513',
+    mode    => '0600',
+    content => @("EOT"),
+               MAGIC_M3U="${lookup('secrets::iptv::m3u::magic')}"
+               MAGIC_EPG="${lookup('secrets::iptv::epg::magic')}"
+               | EOT 
+  }
 }
 # vim: sw=2:ai:nu expandtab
