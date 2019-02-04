@@ -11,19 +11,7 @@ class profile::media::iptv {
 
   class{'::tvheadend':
     release        => 'stable',
-    admin_password => 'L1nahswf.ve',
-  }
-
-  $content = @("EOT")
-     MAGIC_M3U="${lookup('secrets::iptv::m3u::magic')"
-     MAGIC_EPG="${lookup('secrets::iptv::epg::magic')"
-     | EOT
-  file { "${codedir}/iptv/iptv_urls":
-    ensure  => present,
-    owner   => 'media',
-    group   => '513',
-    mode    => '0600',
-    content => $content,
+    admin_password => lookup('secrets::tvheadend'),
   }
 
   cron::job::multiple { 'xmltv':
