@@ -24,23 +24,23 @@ class profile::media::couchpotato (
     enable  => false,
     active  => false,
     # lint:ignore:140chars
-    content => "
-# Systemd service file
-[Unit]
-Description=couchpotato daemon
-RequiresMountsFor=/srv/media /home/media
+    content => @("EOT"),
+      # Systemd service file
+      [Unit]
+      Description=couchpotato daemon
+      RequiresMountsFor=/srv/media /home/media
 
-[Service]
-User=${user}
-Group=${group}
-UMask=002
-Type=simple
-WorkingDirectory=${topdir}/CouchPotatoServer/
-ExecStart=${topdir}/CouchPotatoServer/CouchPotato.py --pid_file ${run}/couchpotato.pid --config_file /home/media/.config/couchpotato/settings.conf --data_dir ${data}
+      [Service]
+      User=${user}
+      Group=${group}
+      UMask=002
+      Type=simple
+      WorkingDirectory=${topdir}/CouchPotatoServer/
+      ExecStart=${topdir}/CouchPotatoServer/CouchPotato.py --pid_file ${run}/couchpotato.pid --config_file /home/media/.config/couchpotato/settings.conf --data_dir ${data}
 
-[Install]
-WantedBy=multi-user.target
-",
+      [Install]
+      WantedBy=multi-user.target
+      | EOT
     # lint:endignore
   }
 
