@@ -21,7 +21,7 @@ class profile::scripts {
     content => @("EOT"),
                MAGIC_M3U="${lookup('secrets::iptv::m3u::magic')}"
                MAGIC_EPG="${lookup('secrets::iptv::epg::magic')}"
-               | EOT 
+               | EOT
   }
 }
 # vim: sw=2:ai:nu expandtab
