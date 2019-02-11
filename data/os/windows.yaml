@@ -19,7 +19,12 @@ profile::base::packages::objects:
   mp3tag: {}
   kitty: {}
   zabbix-agent: {}
-  rsat: {}
+  rsat:
+    install_options:
+     - '/AD'
+     - '/GP'
+     - '/DNS'
+
 
 # puppet agent
 puppet::puppet_server:                  "echo.%{trusted.domain}"
