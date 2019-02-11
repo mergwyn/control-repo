@@ -19,6 +19,7 @@ profile::base::packages::objects:
   mp3tag: {}
   kitty: {}
   zabbix-agent: {}
+  rsat: {}
 
 # puppet agent
 puppet::puppet_server:                  "echo.%{trusted.domain}"
