@@ -1,6 +1,11 @@
 #
 
 class profile::base::windows {
+
+  dism {'Microsoft-Windows-Subsystem-Linux':
+    ensure    => present,
+    norestart => true,
+  }
 #  scheduled_task { 'GPO Backup':
 #    command   => "$::system32\\WindowsPowerShell\\v1.0\\powershell.exe",
 #    arguments => '-ExecutionPolicy RemoteSigned \\foxtrot\backup\GPO\GPOBackup.ps1',
