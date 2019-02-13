@@ -15,11 +15,11 @@ class profile::base::dism (
     default: {
     }
   }
-  unless empty ($objects) {
-    validate_raw_constructor ($objects)
-    validate_hash ($defaults)
-    create_resources(dism, $objects, $defaults)
-  }
+  #unless empty ($objects) {
+  #  validate_raw_constructor ($objects)
+  #  validate_hash ($defaults)
+  #  create_resources(dism, $objects, $defaults)
+  #}
 
 }
 
