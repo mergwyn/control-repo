@@ -8,13 +8,7 @@ class profile::base::dism (
   Optional[Hash] $defaults = {},
 ) {
 
-  case $::kernel {
-    'windows': {
-      require dism
-    }
-    default: {
-    }
-  }
+  #include dism
   #unless empty ($objects) {
   #  validate_raw_constructor ($objects)
   #  validate_hash ($defaults)
