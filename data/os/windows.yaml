@@ -3,10 +3,17 @@
 classes:
   - chocolatey
   - profile::base::dism
+  - profile::base::windows
 
 profile::base::files::defaults:
   ensure: present
 profile::base::files::objects:
+
+profile::base::dism::defaults:
+  ensure: present
+profile::base::dism::objects:
+  Microsoft-Windows-Subsystem-Linux:
+    norestart: true
 
 profile::base::packages::defaults:
   ensure: present
