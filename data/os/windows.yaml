@@ -27,6 +27,7 @@ profile::base::packages::objects:
      - '/AD'
      - '/GP'
      - '/DNS'
+     - '"'
 
 
 # puppet agent
