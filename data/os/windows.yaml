@@ -22,6 +22,8 @@ profile::base::packages::objects:
   zabbix-agent: {}
   rsat:
     install_options:
+     - '-params'
+     - '"'
      - '/AD'
      - '/GP'
      - '/DNS'
