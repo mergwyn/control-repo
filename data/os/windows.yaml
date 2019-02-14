@@ -20,14 +20,15 @@ profile::base::packages::objects:
   mp3tag: {}
   kitty: {}
   zabbix-agent: {}
+  wsl-ubuntu-1804: {}
   rsat:
     install_options:
-     - '-params'
-     - '"'
-     - '/AD'
-     - '/GP'
-     - '/DNS'
-     - '"'
+      - '-params'
+      - '"'
+      - '/AD'
+      - '/GP'
+      - '/DNS'
+      - '"'
 
 
 # puppet agent
@@ -35,11 +36,5 @@ puppet::puppet_server:                  "echo.%{trusted.domain}"
 puppet::manage_repos:                   false
 puppet::structured_facts:               true
 
-profile::base::mail_client::myorigin:         "%{trusted.domain}"
-profile::base::mail_client::password_credentials: "mergwyn@virginmedia.com:%{lookup('secrets::virgin')}"
-profile::base::mail_client::password_hash:    '/etc/postfix/sasl-passwords'
-profile::base::mail_client::relayhost:        '[smtp.virginmedia.com]:465'
-profile::base::mail_client::root_mail_recipient: "%{lookup('defaults::adminemail')}"
 
 # vim: sw=2:ai:nu expandtab
-#
