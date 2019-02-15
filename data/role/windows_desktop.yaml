@@ -1,5 +1,23 @@
-#
 ---
 
+classes:
+  - chocolatey
+  - profile::base::dism
+
+profile::base::dism::defaults:
+  ensure: present
+profile::base::dism::objects:
+  Microsoft-Windows-Subsystem-Linux: {}
+
+profile::base::packages::objects:
+  wsl-ubuntu-1804: {}
+  rsat:
+    install_options:
+      - '-params'
+      - '"'
+      - '/AD'
+      - '/GP'
+      - '/DNS'
+      - '"'
 
 # vim: sw=2:ai:nu expandtab
