@@ -66,7 +66,7 @@ class profile::zabbix::agent {
         '' => {
           'Server'       => lookup('zabbix::agent::server'),
           'ServerActive' => lookup('zabbix::agent::serveractive'),
-          'HostName'     => lookup('zabbix::agent::hostname'),
+          'Hostname'     => lookup('zabbix::agent::hostname'),
         }
       }
       create_ini_settings($overrides, $defaults)
