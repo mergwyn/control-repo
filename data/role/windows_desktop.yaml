@@ -3,10 +3,10 @@
 classes:
   - profile::base::dism
 
-profile::base::dism::defaults:
-  ensure: present
 profile::base::dism::objects:
-  Microsoft-Windows-Subsystem-Linux: {}
+  Microsoft-Windows-Subsystem-Linux: 
+    ensure: present
+    norestart: true
 
 profile::base::packages::objects:
   #wsl-ubuntu-1804: {}
