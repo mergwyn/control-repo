@@ -55,6 +55,7 @@ class profile::zabbix::agent {
         ensure  => 'running',
         enable  => true,
         require => Package['zabbix-agent'],
+        section => '',
       }
       $defaults = {
         'path'         => 'c:\\ProgramData\\zabbix\\zabbix_agentd.conf',
@@ -62,11 +63,9 @@ class profile::zabbix::agent {
         'notify'       => Service['zabbix-agent'],
       }
       $overrides = {
-        '' => {
-          'Server'       => lookup('zabbix::agent::server'),
-          'ServerActive' => lookup('zabbix::agent::serveractive'),
-          'HostName'     => lookup('zabbix::agent::hostname'),
-        }
+        'Server'       => lookup('zabbix::agent::server'),
+        'ServerActive' => lookup('zabbix::agent::serveractive'),
+        'HostName'     => lookup('zabbix::agent::hostname'),
       }
       create_ini_settings($overrides, $defaults)
 
