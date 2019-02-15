@@ -3,6 +3,7 @@
 classes:
   - chocolatey
   - profile::base::windows
+  - profile::zabbix::agent
 
 profile::base::files::defaults:
   ensure: present
