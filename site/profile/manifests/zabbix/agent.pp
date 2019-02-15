@@ -51,7 +51,7 @@ class profile::zabbix::agent {
       }
     }
     'windows': {
-      service {'zabbix-agent':
+      service {'Zabbix Agent':
         ensure  => 'running',
         enable  => true,
         require => Package['zabbix-agent'],
@@ -59,7 +59,7 @@ class profile::zabbix::agent {
       $defaults = {
         'path'         => 'c:\\ProgramData\\zabbix\\zabbix_agentd.conf',
         'indent_width' => '0',
-        'notify'       => Service['zabbix-agent'],
+        'notify'       => Service['Zabbix Agent'],
         section        => '',
       }
       $overrides = {
