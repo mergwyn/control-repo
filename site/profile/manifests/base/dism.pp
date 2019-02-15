@@ -8,15 +8,15 @@ class profile::base::dism (
   Optional[Hash] $defaults = {},
 ) {
 
-  include dism
-  unless empty ($objects) {
-    validate_raw_constructor ($objects)
-    validate_hash ($defaults)
-    create_resources(dism, $objects, $defaults)
-  }
-  #dism { 'Microsoft-Windows-Subsystem-Linux':
-  #  ensure => present,
+  #include dism
+  #unless empty ($objects) {
+  #  validate_raw_constructor ($objects)
+  #  validate_hash ($defaults)
+  #  create_resources(dism, $objects, $defaults)
   #}
+  dism { 'Microsoft-Windows-Subsystem-Linux':
+    ensure => present,
+  }
 
 }
 
