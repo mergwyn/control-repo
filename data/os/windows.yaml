@@ -26,5 +26,9 @@ puppet::puppet_server:                  "echo.%{trusted.domain}"
 puppet::manage_repos:                   false
 puppet::structured_facts:               true
 
+# zabbix agent
+zabbix::agent::hostname:                "%{trusted.certname}"
+zabbix::agent::server:                  "zulu,zulu.%{trusted.domain}"
+zabbix::agent::serveractive:            "zulu,zulu.%{trusted.domain}"
 
 # vim: sw=2:ai:nu expandtab
