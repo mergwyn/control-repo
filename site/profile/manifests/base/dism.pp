@@ -8,12 +8,12 @@ class profile::base::dism (
   Optional[Hash] $defaults = {},
 ) {
 
-  #include dism
-  #unless empty ($objects) {
-  #  validate_raw_constructor ($objects)
-  #  validate_hash ($defaults)
-  #  create_resources(dism, $objects, $defaults)
-  #}
+  include dism
+  unless empty ($objects) {
+    validate_raw_constructor ($objects)
+    validate_hash ($defaults)
+    create_resources(dism, $objects, $defaults)
+  }
 
 }
 
