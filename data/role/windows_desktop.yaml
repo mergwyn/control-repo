@@ -9,7 +9,6 @@ profile::base::dism::objects:
     norestart: true
 
 profile::base::packages::objects:
-  #wsl-ubuntu-1804: {}
   rsat:
     install_options:
       - '-params'
@@ -18,5 +17,6 @@ profile::base::packages::objects:
       - '/GP'
       - '/DNS'
       - '"'
+  wsl-ubuntu-1804: {}
 
 # vim: sw=2:ai:nu expandtab
