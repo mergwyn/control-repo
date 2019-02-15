@@ -14,9 +14,17 @@ class profile::base::dism (
   #  validate_hash ($defaults)
   #  create_resources(dism, $objects, $defaults)
   #}
-  dism { 'Microsoft-Windows-Subsystem-Linux':
-    ensure => present,
+  #dism { 'Microsoft-Windows-Subsystem-Linux':
+  #  ensure => present,
+  #}
+    $objects.each |String $key, Hash $value| {
+    $ensure = pick($value['ensure'], 'present')
+    dism { $key:
+      ensure => $ensure,
+      *      => $value,
+    }
   }
+
 
 }
 
