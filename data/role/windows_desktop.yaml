@@ -1,7 +1,6 @@
 ---
 
 classes:
-  - chocolatey
   - profile::base::dism
 
 profile::base::dism::defaults:
