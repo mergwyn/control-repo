@@ -5,7 +5,6 @@ classes:
 
 profile::base::dism::objects:
   Microsoft-Windows-Subsystem-Linux: 
-    ensure: present
     norestart: true
 
 profile::base::packages::objects:
