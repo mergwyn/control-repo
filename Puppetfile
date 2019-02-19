@@ -83,6 +83,7 @@ mod 'webmin', :git => 'https://github.com/rehanone/puppet-webmin'
 
 # tasks
 mod 'puppetlabs-bootstrap', '0.4.1'
+mod 'puppetlabs-exec', '0.3.0'
 
 # windows
 mod 'puppetlabs-chocolatey', '3.1.1'
