@@ -9,6 +9,8 @@ Facter.add('backuppc_pubkey_rsa') do
 
     if File.exist?(sshkey_path)
       File.open(sshkey_path).read.split(' ')[1]
+    else
+      nil
     end
   end
 end
