@@ -3,9 +3,9 @@
 classes:
   - profile::base::dism
 
-profile::base::dism::objects:
-  Microsoft-Windows-Subsystem-Linux: 
-    norestart: true
+#profile::base::dism::objects:
+#  Microsoft-Windows-Subsystem-Linux: 
+#    norestart: true
 
 profile::base::packages::objects:
   rsat:
@@ -16,6 +16,8 @@ profile::base::packages::objects:
       - '/GP'
       - '/DNS'
       - '"'
-  wsl-ubuntu-1804: {}
+  wsl: {}
+  wsl-ubuntu-1804: 
+    require: Package['wsl']
 
 # vim: sw=2:ai:nu expandtab
