@@ -60,6 +60,7 @@ class profile::zabbix::agent {
         'path'         => 'c:\\ProgramData\\zabbix\\zabbix_agentd.conf',
         'indent_width' => '0',
         'notify'       => Service['Zabbix Agent'],
+        require        => Package['zabbix-agent'],
         section        => '',
       }
       $overrides = {
