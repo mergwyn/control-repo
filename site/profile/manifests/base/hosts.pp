@@ -9,8 +9,6 @@ class profile::base::hosts (
 ) {
 
   unless empty ($objects) {
-    validate_raw_constructor ($objects)
-    validate_hash ($defaults)
     create_resources(host, $objects, $defaults)
   }
 

@@ -16,8 +16,6 @@ class profile::base::packages (
     }
   }
   unless empty ($objects) {
-    validate_raw_constructor ($objects)
-    validate_hash ($defaults)
     create_resources(package, $objects, $defaults)
   }
 

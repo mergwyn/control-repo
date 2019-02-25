@@ -9,8 +9,6 @@ class profile::base::files (
 ) {
 
   unless empty ($objects) {
-    validate_raw_constructor ($objects)
-    validate_hash ($defaults)
     create_resources(file, $objects, $defaults)
   }
 
