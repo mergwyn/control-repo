@@ -5,6 +5,6 @@ RSpec.configure do |c|
   c.manifest_dir = File.join(fixture_path, '../../manifests')
   c.manifest = File.join(fixture_path, '../../manifests/site.pp')
   # Hiera config file for unit tests
-#  c.hiera_config = File.join(fixture_path, 'hiera/hiera.yaml')
+  #  c.hiera_config = File.join(fixture_path, 'hiera/hiera.yaml')
   c.fail_fast = true
 end
