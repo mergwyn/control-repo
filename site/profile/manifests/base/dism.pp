@@ -8,24 +8,13 @@ class profile::base::dism (
   Optional[Hash] $defaults = {},
 ) {
 
-  #include dism
-  #unless empty ($objects) {
-  #  validate_raw_constructor ($objects)
-  #  validate_hash ($defaults)
-  #  create_resources(dism, $objects, $defaults)
-  #}
-  #dism { 'Microsoft-Windows-Subsystem-Linux':
-  #  ensure => present,
-  #}
-    $objects.each |String $key, Hash $value| {
+  $objects.each |String $key, Hash $value| {
     $ensure = pick($value['ensure'], 'present')
     dism { $key:
       ensure => $ensure,
       *      => $value,
     }
   }
-
-
 }
 
 # vim: sw=2:ai:nu expandtab
