@@ -17,7 +17,6 @@ profile::base::packages::objects:
       - '/DNS'
       - '"'
   wsl: {}
-  wsl-ubuntu-1804: 
-    require: Package['wsl']
+  wsl-ubuntu-1804: {}
 
 # vim: sw=2:ai:nu expandtab
