@@ -22,23 +22,23 @@ class profile::backuppc::client (
 
   package { 'rsync': ensure => installed }
 
-  # backuppc ssh keys
-  $system_account        = hiera('defaults::system_user')
-  $system_home_directory = hiera('defaults::system_home_dir')
-  $backuppc_hostname     = hiera('defaults::backuppc_server')
-
-  file { "${system_home_directory}/.ssh":
-    ensure => 'directory',
-    mode   => '0700',
-    owner  => $system_account,
-    group  => $system_account,
-  }
-  Ssh_authorized_key <<| tag == "backuppc_${backuppc_hostname}" |>> {
-    ensure  => present,
-    user    => $system_account,
-    require => File["${system_home_directory}/.ssh"]
-  }
-
+#  # backuppc ssh keys
+#  $system_account        = hiera('defaults::system_user')
+#  $system_home_directory = hiera('defaults::system_home_dir')
+#  $backuppc_hostname     = hiera('defaults::backuppc_server')
+#
+#  file { "${system_home_directory}/.ssh":
+#    ensure => 'directory',
+#    mode   => '0700',
+#    owner  => $system_account,
+#    group  => $system_account,
+#  }
+#  Ssh_authorized_key <<| tag == "backuppc_${backuppc_hostname}" |>> {
+#    ensure  => present,
+#    user    => $system_account,
+#    require => File["${system_home_directory}/.ssh"]
+#  }
+#
 #  if $facts['networking']['fqdn'] != $backuppc_hostname {
 #    @@sshkey { $facts['networking']['fqdn']:
 #      ensure => $ensure,

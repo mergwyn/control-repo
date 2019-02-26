@@ -93,31 +93,31 @@ class profile::backuppc::server {
   }
 }
 
-  # support for backuppc ssh keys
-  $topdir = '/var/lib/backuppc'
-
-  # Export backuppc's authorized key to all clients
-  # TODO don't rely on facter to obtain the ssh key.
-  if $facts['backuppc_pubkey_rsa'] != undef {
-    @@ssh_authorized_key { "backuppc_${facts['networking']['fqdn']}":
-      ensure  => present,
-      key     => $facts['backuppc_pubkey_rsa'],
-      name    => "backuppc_${facts['networking']['fqdn']}",
-      user    => 'backuppc',
-      options => [
-        #'command="~/backuppc.sh"',
-        'no-agent-forwarding',
-        'no-port-forwarding',
-        'no-pty',
-        'no-X11-forwarding',
-      ],
-      type    => 'ssh-rsa',
-      tag     => "backuppc_${facts['networking']['fqdn']}",
-    }
-  }
-
-  # collect hostkeys
-  #Sshkey <<| tag == "backuppc_sshkeys_${facts['networking']['fqdn']}" |>>
-  Sshkey <<| |>>
+#  # support for backuppc ssh keys
+#  $topdir = '/var/lib/backuppc'
+#
+#  # Export backuppc's authorized key to all clients
+#  # TODO don't rely on facter to obtain the ssh key.
+#  if $facts['backuppc_pubkey_rsa'] != undef {
+#    @@ssh_authorized_key { "backuppc_${facts['networking']['fqdn']}":
+#      ensure  => present,
+#      key     => $facts['backuppc_pubkey_rsa'],
+#      name    => "backuppc_${facts['networking']['fqdn']}",
+#      user    => 'backuppc',
+#      options => [
+#        #'command="~/backuppc.sh"',
+#        'no-agent-forwarding',
+#        'no-port-forwarding',
+#        'no-pty',
+#        'no-X11-forwarding',
+#      ],
+#      type    => 'ssh-rsa',
+#      tag     => "backuppc_${facts['networking']['fqdn']}",
+#    }
+#  }
+#
+#  # collect hostkeys
+#  #Sshkey <<| tag == "backuppc_sshkeys_${facts['networking']['fqdn']}" |>>
+#  Sshkey <<| |>>
 
 # vim: sw=2:ai:nu expandtab
