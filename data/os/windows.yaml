@@ -12,6 +12,8 @@ profile::base::files::objects:
 profile::base::packages::defaults:
   ensure: present
   provider: chocolatey
+  install_options:
+  - --no-progress
 profile::base::packages::objects:
   firefox: {}
   dropbox: {}
