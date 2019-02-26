@@ -16,7 +16,8 @@ profile::base::packages::objects:
       - '/GP'
       - '/DNS'
       - '"'
-  wsl:  {}
+  wsl:  
+    notify: Reboot[after]
   wsl-ubuntu-1804:
     require: 
     - Package[wsl]
