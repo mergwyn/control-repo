@@ -3,11 +3,9 @@
 class profile::base::windows {
   reboot { 'before':
     when        => pending,
-    refreshonly => true,
   }
   reboot { 'after':
     when        => pending,
-    refreshonly => true,
   }
 #  dism {'Microsoft-Windows-Subsystem-Linux':
 #    ensure    => present,
