@@ -19,8 +19,6 @@ profile::base::packages::objects:
   amazon-music: {}
   firefox: {}
   homebrew/cask-drivers/sonos: {}
-  munki: 
-    ensure: absent
   google-chrome:
     ensure: absent
 
