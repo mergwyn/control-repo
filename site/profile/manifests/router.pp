@@ -19,7 +19,7 @@ class profile::router {
   cron::job { 'iptv-routes':
     command     => "test -x ${codedir}/iptv/getroutes && ${codedir}/iptv/getroutes",
     minute      => 51,
-    hour        => '*/6',
+    hour        => '*/2',
     environment => [ 'PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"' ],
   }
 
