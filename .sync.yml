@@ -11,7 +11,7 @@ appveyor.yml:
     email:
       recipients:
       - gary@theclarkhome.com
-      on_success: never # default: change
+      on_success: change # default: change
       on_failure: always # default: always
 Rakefile:
   extras:
