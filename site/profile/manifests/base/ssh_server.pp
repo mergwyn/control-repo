@@ -20,6 +20,7 @@ class profile::base::ssh_server {
       'LogLevel'                        => 'INFO',
       'PermitEmptyPasswords'            => 'no',
       'PermitRootLogin'                 => 'yes',
+      'PermitUserEnvironment'           => 'yes',
       'PrintLastLog'                    => 'yes',
       'PrintMotd'                       => 'no',
       'PubkeyAuthentication'            => 'yes',
