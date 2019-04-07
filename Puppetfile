@@ -3,7 +3,7 @@
 
 #mod 'andschwa-unattended_upgrades', '0.2.3'
 mod 'camptocamp-augeas', '1.7.0'
-#mod 'camptocamp-kmod', '2.3.0'
+mod 'camptocamp-kmod', '2.3.0'
 mod 'camptocamp-postfix', '1.7.0'
 mod 'camptocamp-systemd', '2.2.0'
 #mod 'CraigWatson1987-transmission', '2.1.0'
