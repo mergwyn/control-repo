@@ -74,4 +74,3 @@ EOM
   end
 end
 
-require 'ra10ke'
