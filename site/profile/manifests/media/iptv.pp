@@ -16,11 +16,11 @@ class profile::media::iptv {
 
   cron::job::multiple { 'xmltv':
     jobs        => [
-      {
-        command => "test -x ${codedir}/iptv/get-epg && ${codedir}/iptv/get-epg",
-        minute  => 30,
-        hour    => '*',
-      },
+#      {
+#        command => "test -x ${codedir}/iptv/get-epg && ${codedir}/iptv/get-epg",
+#        minute  => 30,
+#        hour    => '*',
+#      },
       {
         command => "test -x ${codedir}/iptv/get-channels && ${codedir}/iptv/get-channels",
         minute  => 20,
