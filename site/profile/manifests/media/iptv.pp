@@ -9,10 +9,10 @@ class profile::media::iptv {
   $packages = [ 'curl', 'socat' ]
   package { $packages: ensure => present }
 
-  class{'::tvheadend':
-    release        => 'stable',
-    admin_password => lookup('secrets::tvheadend'),
-  }
+#  class{'::tvheadend':
+#    release        => 'stable',
+#    admin_password => lookup('secrets::tvheadend'),
+#  }
 
   cron::job::multiple { 'xmltv':
     jobs        => [
