@@ -49,6 +49,7 @@ dhcp::hosts:
       routers: 192.168.11.250 # Note change of gateway for VPN
   india:
     mac: 00:16:3e:93:c6:21
+    ip:  192.168.11.41
     options:
       routers: 192.168.11.250 # Note change of gateway for VPN
   # Hosts with fixed ip
@@ -61,6 +62,9 @@ dhcp::hosts:
   echo:
     mac: 00:16:3e:60:37:e3
     ip:  192.168.11.44
+  tango:
+    mac: 00:16:3e:01:f8:9a
+    ip:  192.168.11.42
   zulu:
     mac: 00:16:3e:98:92:d8
     ip:  192.168.11.45
