@@ -21,6 +21,8 @@ class profile::scripts {
     content => @("EOT"),
                MAGIC_M3U="${lookup('secrets::iptv::m3u::magic')}"
                MAGIC_EPG="${lookup('secrets::iptv::epg::magic')}"
+               QUALITY_M3U="${lookup('secrets::iptv::m3u::quality')}"
+               QUALITY_EPG="${lookup('secrets::iptv::epg::quality')}"
                | EOT
   }
 }
