@@ -37,7 +37,7 @@ class profile::mysql::server {
       'innodb_log_file_size'           => '128M',
       'innodb_flush_log_at_trx_commit' => '1',
       'innodb_file_per_table'          => '1',
-      'innodb_buffer_pool_size'        => '1536M',
+      'innodb_buffer_pool_size'        => '1792M',
       'innodb_buffer_pool_instances'   => '1',
       'server_id'                      => '1',
       #'setting1'  => 'value1',
