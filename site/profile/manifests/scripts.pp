@@ -18,13 +18,13 @@ class profile::scripts {
   file { "${codedir}/iptv/iptv_urls":
     ensure  => present,
     mode    => '0600',
-    content => @("EOT"),
+    content => @("EOT"/$),
                MAGIC_M3U="${lookup('secrets::iptv::m3u::magic')}"
                MAGIC_EPG="${lookup('secrets::iptv::epg::magic')}"
                QUALITY_M3U="${lookup('secrets::iptv::m3u::quality')}"
                QUALITY_EPG="${lookup('secrets::iptv::epg::quality')}"
                ROUTES=(
-               "\\$QUALITY_M3U"
+               '\$QUALITY_M3U'
                )
                | EOT
   }
