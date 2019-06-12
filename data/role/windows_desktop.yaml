@@ -18,7 +18,8 @@ profile::base::packages::objects:
       - '"'
 #  wsl:  
 #    notify: Reboot[after]
-  wsl-ubuntu-1804:
+#  wsl-ubuntu-1804:
+  wsl-ubuntu-1804: {}
 #    require: 
 #    - Package[wsl]
 #    - Reboot[before]
