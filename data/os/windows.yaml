@@ -10,7 +10,7 @@ profile::base::files::defaults:
 profile::base::files::objects:
 
 profile::base::packages::defaults:
-  ensure: present
+  ensure: latest
   provider: chocolatey
   install_options:
   - --no-progress
