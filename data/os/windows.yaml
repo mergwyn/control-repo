@@ -15,6 +15,7 @@ profile::base::packages::defaults:
   install_options:
   - --no-progress
 profile::base::packages::objects:
+  chocolateygui: {}
   firefox: {}
   dropbox: {}
   keeweb: {}
