@@ -16,11 +16,11 @@ profile::base::packages::objects:
       - '/GP'
       - '/DNS'
       - '"'
-  wsl:  
-    notify: Reboot[after]
+#  wsl:  
+#    notify: Reboot[after]
   wsl-ubuntu-1804:
-    require: 
-    - Package[wsl]
-    - Reboot[before]
+#    require: 
+#    - Package[wsl]
+#    - Reboot[before]
 
 # vim: sw=2:ai:nu expandtab
