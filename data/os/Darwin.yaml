@@ -20,6 +20,7 @@ profile::base::packages::objects:
   firefox: {}
   whatsapp: {}
   homebrew/cask-drivers/sonos: {}
+  aerial: {}
   google-chrome:
     ensure: absent
 
