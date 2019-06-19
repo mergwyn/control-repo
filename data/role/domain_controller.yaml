@@ -36,22 +36,22 @@ dhcp::pools:
     mask:     255.255.255.0
     range:    '192.168.11.100 192.168.11.199'
     gateway:  192.168.11.254
-    failover: "%{trusted.domain}"
+    failover: 'dhcp-failover'
 
 dhcp::extra_config:
-  - "option netbios_nameservers 192.168.11.22, 192.168.11.21;"
+  - 'include "/etc/dhcp/dhcpd.samba_ddns";'
+  #- "option netbios_nameservers 192.168.11.22, 192.168.11.21;"
 
 dhcp::hosts:
   LGwebOSTV:
     mac: 7c:1c:4e:48:06:e2
-    ip:  0.0.0.0
-    options:
-      router: 192.168.1.250 # Note change of gateway for VPN
+    #options:
+    #  routers: 192.168.11.250 # Note change of gateway for VPN
   india:
     mac: 00:16:3e:93:c6:21
-    ip:  0.0.0.0
-    options:
-      router: 192.168.1.250 # Note change of gateway for VPN
+    ip:  192.168.11.41
+    #options:
+    #  routers: 192.168.11.250 # Note change of gateway for VPN
   # Hosts with fixed ip
   switch1:
     mac: 00:8e:f2:59:c7:98
@@ -62,6 +62,9 @@ dhcp::hosts:
   echo:
     mac: 00:16:3e:60:37:e3
     ip:  192.168.11.44
+  tango:
+    mac: 00:16:3e:01:f8:9a
+    ip:  192.168.11.42
   zulu:
     mac: 00:16:3e:98:92:d8
     ip:  192.168.11.45
@@ -77,29 +80,21 @@ dhcp::hosts:
   # Hosts that just need names
   DELLA3F95F:
     mac: 08:00:37:a3:f9:5f
-    ip:  0.0.0.0
   s685ip:
     mac: 00:01:e3:9a:f9:c1
-    ip:  0.0.0.0
-  humax-lan:
-    ddns_hostname: humax
-    mac: dc:d3:21:57:55:46
-    ip:  0.0.0.0
-  humax-wifi:
-    ddns_hostname: humax
+  #humax-lan:
+  #  ddns_hostname: humax
+  #  mac: dc:d3:21:57:55:46
+  humax:
+    #ddns_hostname: humax
     mac: 80:1f:02:21:a1:74
-    ip:  0.0.0.0
   Lounge-sonos-playbar:
     mac: 00:0e:58:bc:b4:dc
-    ip:  0.0.0.0
   lounge-sonos-play1-ls:
     mac: 00:0e:58:c9:f0:9a
-    ip:  0.0.0.0
   lounge-sonos-play1-rs:
     mac: 94:9F:3E:12:FA:8A
-    ip:  0.0.0.0
   kitchen-sonos-playone:
     mac: 78:28:CA:CB:8B:94
-    ip:  0.0.0.0
 
 # vim: sw=2:ai:nu expandtab

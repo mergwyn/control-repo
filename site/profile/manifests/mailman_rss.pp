@@ -45,9 +45,10 @@ venv/bin/activate: requirements.txt
 
 # set up cron
   file { '/etc/cron.hourly/mailman-rss':
-    ensure  => present,
-    mode    => '0555',
-    content => "#!/bin/sh\nexec ${target}/venv/bin/python ${target}/MailmanArchiveScraper.py ${target}/zfs*.cfg\n",
+    ensure  => absent,
+  }
+  file { '/etc/cron.daily/mailman-rss':
+    ensure  => absent,
   }
 
   file { "${target}/zfs-discuss.cfg":

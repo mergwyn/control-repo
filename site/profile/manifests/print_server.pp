@@ -42,12 +42,12 @@ class profile::print_server {
   }
 
   printer { 'Dell_1355cn_Color_MFP_':
-      ensure       => present,
-      uri          => 'dnssd://Dell%201355cn%20Color%20MFP%20(A3%3AF9%3A5F)._pdl-datastream._tcp.local/',
+      ensure       => absent,
+      uri          => 'socket://della3f95f.theclarkhome.com:9100',
       description  => 'DELL Dell 1355cn Color MFP',
       location     => 'Study office',
       model        => 'lsb/usr/Xerox/Xerox-WorkCentre-6015B.ppd.gz',
-      shared       => undef,
+      shared       => true,
       error_policy => retry_job, # underscored version of error policy
       enabled      => true, # Enabled by default
       #options      => {  }, # Hash of options ( name => value ), supplied as -o flag to lpadmin.
@@ -62,7 +62,7 @@ class profile::print_server {
   }
 
   file { '/etc/avahi/services/AirPrint-Dell_1355cn_Color_MFP_.service':
-    ensure => present,
+    ensure => absent,
     source => 'puppet:///modules/profile/print_server/AirPrint-Dell_1355cn_Color_MFP_.service',
     notify => Service['avahi-daemon'],
   }

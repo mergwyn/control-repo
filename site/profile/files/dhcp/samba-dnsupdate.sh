@@ -190,43 +190,43 @@ else
     KLISTARG="-t"
 fi
 
-klist $KLISTARG || kinit -k -t "$KEYTAB" -c "$KRB5CC" "$PRINCIPAL" || { logger -s -p daemon.error -t dhcpd kinit for dynamic DNS failed; exit 11; }
+klist $KLISTARG || kinit -k -t "$KEYTAB" -c "$KRB5CC" "$PRINCIPAL" || { logger -p daemon.error -t dhcpd kinit for dynamic DNS failed; exit 11; }
 }
 
 
 add_host(){
-    logger -s -p daemon.info -t dhcpd Adding A record for host "$HNAME" with IP "$IP" to zone $ZONE on server $NAMESERVER
+    logger -p daemon.info -t dhcpd Adding A record for host "$HNAME" with IP "$IP" to zone $ZONE on server $NAMESERVER
     samba-tool dns add "$NAMESERVER" $ZONE "$HNAME" A "$IP" -k yes
 }
 
 
 delete_host(){
-    logger -s -p daemon.info -t dhcpd Removing A record for host "$HNAME" with IP "$IP" from zone $ZONE on server $NAMESERVER
+    logger -p daemon.info -t dhcpd Removing A record for host "$HNAME" with IP "$IP" from zone $ZONE on server $NAMESERVER
     samba-tool dns delete "$NAMESERVER" $ZONE "$HNAME" A "$IP" -k yes
 }
 
 
 update_host(){
-    logger -s -p daemon.info -t dhcpd Removing A record for host "$HNAME" with IP $CURIP from zone $ZONE on server $NAMESERVER
+    logger -p daemon.info -t dhcpd Removing A record for host "$HNAME" with IP $CURIP from zone $ZONE on server $NAMESERVER
     samba-tool dns delete "$NAMESERVER" $ZONE "$HNAME" A $CURIP -k yes
     add_host
 }
 
 
 add_ptr(){
-    logger -s -p daemon.info -t dhcpd Adding PTR record "$OCT4" with hostname "$HNAME" to zone "$RZONE" on server $NAMESERVER
+    logger -p daemon.info -t dhcpd Adding PTR record "$OCT4" with hostname "$HNAME" to zone "$RZONE" on server $NAMESERVER
     samba-tool dns add "$NAMESERVER" "$RZONE" "$OCT4" PTR "$HNAME.$DOMAIN" -k yes
 }
 
 
 delete_ptr(){
-    logger -s -p daemon.info -t dhcpd Removing PTR record "$OCT4" with hostname "$HNAME" from zone "$RZONE" on server $NAMESERVER
+    logger -p daemon.info -t dhcpd Removing PTR record "$OCT4" with hostname "$HNAME" from zone "$RZONE" on server $NAMESERVER
     samba-tool dns delete "$NAMESERVER" "$RZONE" "$OCT4" PTR "$HNAME.$DOMAIN" -k yes
 }
 
 
 update_ptr(){
-    logger -s -p daemon.info -t dhcpd Removing PTR record "$OCT4" with hostname $CURHNAME from zone "$RZONE" on server $NAMESERVER
+    logger -p daemon.info -t dhcpd Removing PTR record "$OCT4" with hostname $CURHNAME from zone "$RZONE" on server $NAMESERVER
     samba-tool dns delete "$NAMESERVER" "$RZONE" "$OCT4" PTR "$CURHNAME" -k yes
     add_ptr
 }

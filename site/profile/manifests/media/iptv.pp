@@ -9,18 +9,18 @@ class profile::media::iptv {
   $packages = [ 'curl', 'socat' ]
   package { $packages: ensure => present }
 
-  class{'::tvheadend':
-    release        => 'stable',
-    admin_password => 'L1nahswf.ve',
-  }
+#  class{'::tvheadend':
+#    release        => 'stable',
+#    admin_password => lookup('secrets::tvheadend'),
+#  }
 
   cron::job::multiple { 'xmltv':
     jobs        => [
-      {
-        command => "test -x ${codedir}/iptv/get-epg && ${codedir}/iptv/get-epg",
-        minute  => 30,
-        hour    => '*',
-      },
+#      {
+#        command => "test -x ${codedir}/iptv/get-epg && ${codedir}/iptv/get-epg",
+#        minute  => 30,
+#        hour    => '*',
+#      },
       {
         command => "test -x ${codedir}/iptv/get-channels && ${codedir}/iptv/get-channels",
         minute  => 20,

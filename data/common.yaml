@@ -1,4 +1,9 @@
 ---
+classes:
+  - profile::base::files
+  - profile::base::users
+  - profile::base::packages
+  - profile::base::hosts
 
 # environment
 defaults::workgroup:       'THECLARKHOME'
@@ -21,5 +26,11 @@ defaults::system_home_dir: '/root'
 defaults::media_user:      'media'
 defaults::media_group:     '513'
 
+
+lookup_options:
+  "^classes(.*)$":
+    merge: deep
+  "^profile::base::(.*)::(.*)$":
+    merge: deep
 
 #se vim: sw=2:ai:nu expandtab

@@ -1,0 +1,27 @@
+---
+
+classes:
+  - profile::base::dism
+
+#profile::base::dism::objects:
+#  Microsoft-Windows-Subsystem-Linux: 
+#    norestart: true
+
+profile::base::packages::objects:
+  rsat:
+    install_options:
+      - '-params'
+      - '"'
+      - '/AD'
+      - '/GP'
+      - '/DNS'
+      - '"'
+#  wsl:  
+#    notify: Reboot[after]
+#  wsl-ubuntu-1804:
+  wsl-ubuntu-1804: {}
+#    require: 
+#    - Package[wsl]
+#    - Reboot[before]
+
+# vim: sw=2:ai:nu expandtab

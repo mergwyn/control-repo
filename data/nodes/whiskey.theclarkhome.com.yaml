@@ -1,0 +1,7 @@
+---
+
+profile::base::packages::objects:
+  mp3gain-gui: {}
+  mp3tag: {}
+
+# vim: sw=2:ai:nu expandtab

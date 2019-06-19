@@ -7,7 +7,6 @@ class profile::ddclient {
     daemon_interval => 300,
     getip_from      => 'web',
     getip_options   => ['web=myip.dnsomatic.com'],
-    data_dir        => '/tmp/ddclient.cache',
     pid_file        => '/var/run/ddclient.pid',
     enable_ssl      => 'yes',
   }

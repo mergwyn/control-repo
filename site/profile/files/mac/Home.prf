@@ -30,6 +30,7 @@ ignore = Path Downloads
 ignore = Path Dropbox
 ignore = Path Hometest
 ignore = Path Library
+ignore = Path Google Drive
 ignore = Path googledrive
 ignore = Path Movies
 ignore = Path Music/iTunes/Album Artwork

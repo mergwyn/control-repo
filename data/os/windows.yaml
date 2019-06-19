@@ -1,0 +1,38 @@
+---
+
+classes:
+  - chocolatey
+  - profile::base::windows
+  - profile::zabbix::agent
+
+profile::base::files::defaults:
+  ensure: present
+profile::base::files::objects:
+
+profile::base::packages::defaults:
+  ensure: latest
+  provider: chocolatey
+  install_options:
+  - --no-progress
+profile::base::packages::objects:
+  chocolateygui: {}
+  firefox: {}
+  dropbox: {}
+  keeweb: {}
+  notepadplusplus: {}
+  mp3gain-gui: {}
+  mp3tag: {}
+  kitty: {}
+  zabbix-agent: {}
+
+# puppet agent
+puppet::puppet_server:                  "echo.%{trusted.domain}"
+puppet::manage_repos:                   false
+puppet::structured_facts:               true
+
+# zabbix agent
+zabbix::agent::hostname:                "%{trusted.certname}"
+zabbix::agent::server:                  "zulu,zulu.%{trusted.domain}"
+zabbix::agent::serveractive:            "zulu,zulu.%{trusted.domain}"
+
+# vim: sw=2:ai:nu expandtab

@@ -4,14 +4,12 @@
 #
 
 class profile::base::users (
-  $objects  = {},
-  $defaults = {},
+  Hash           $objects  = {},
+  Optional[Hash] $defaults = {},
 ) {
 
   unless empty ($objects) {
-    validate_raw_constructor ($objects)
-    validate_hash ($defaults)
-    create_resources(file, $objects, $defaults)
+    create_resources(user, $objects, $defaults)
   }
 
 }

@@ -7,7 +7,7 @@ class profile::samba::member {
     realm               => hiera('defaults::realm'),
     smbname             => $::facts['networking']['hostname'],
     sambaloglevel       => 2,
-    logtosyslog         => true,
+    logtosyslog         => false,
     sambaclassloglevel  => {
       'auth'    => 3,
       'idmap'   => 5,

@@ -3,20 +3,13 @@
 # 'create_resources' function.
 #
 
-class profile::base::packages (
+class profile::base::hosts (
   Hash           $objects  = {},
   Optional[Hash] $defaults = {},
 ) {
 
-  case $::kernel {
-    'Darwin': {
-      require homebrew
-    }
-    default: {
-    }
-  }
   unless empty ($objects) {
-    create_resources(package, $objects, $defaults)
+    create_resources(host, $objects, $defaults)
   }
 
 }

@@ -110,7 +110,7 @@ class profile::zfs_server {
   vcsrepo { "${codedir}/beadm":
       ensure   => latest,
       provider => git,
-      source   => 'https://github.com/mergwyn/beadm',
+      source   => 'https://github.com/TemptorSent/beadm',
       revision => 'master',
       require  => Package['git', 'gawk'],
   }
