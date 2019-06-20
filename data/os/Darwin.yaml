@@ -8,7 +8,7 @@ homebrew::github_token: "%{lookup('secrets::github::homebrew')}"
 # packages to be installed
 profile::base::packages::defaults:
   provider: homebrew
-  ensure: present
+  ensure: latest
 profile::base::packages::objects:
 #  git:
 #    provider: macports
