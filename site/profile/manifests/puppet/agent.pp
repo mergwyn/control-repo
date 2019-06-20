@@ -7,7 +7,6 @@ class profile::puppet::agent {
 
   # make sure we match server major version
   $ver = split($::serverversion, '.')
-  
   apt::pin { 'puppet':
     priority        => 501,
     packages        => 'puppet-agent',
