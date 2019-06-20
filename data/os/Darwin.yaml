@@ -13,7 +13,7 @@ profile::base::packages::objects:
 #  git:
 #    provider: macports
   unison: {}
-  puppetlabs/puppet/puppet-agent-5: {}
+  puppetlabs/puppet/puppet-agent-6: {}
   dropbox: {}
   keeweb: {}
   amazon-music: {}
