@@ -5,12 +5,13 @@ class profile::puppet::agent {
   include ::sudo
   include profile::puppet::repo
 
-  # make sure we match srver version
-  #
+  # make sure we match server major version
+  $ver = split($::serverversion, '.')
+  
   apt::pin { 'puppet':
     priority        => 501,
     packages        => 'puppet-agent',
-    release_version => "${serverversion}"
+    release_version => "${ver[1]}*"
   }
   package { 'puppetlabs-release-pc1': ensure => absent }
 
