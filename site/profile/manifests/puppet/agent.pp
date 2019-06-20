@@ -10,7 +10,7 @@ class profile::puppet::agent {
   apt::pin { 'puppet':
     priority        => 501,
     packages        => 'puppet-agent',
-    release_version => '5.5*'
+    release_version => "${serverversion}"
   }
   package { 'puppetlabs-release-pc1': ensure => absent }
 
