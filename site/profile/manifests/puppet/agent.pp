@@ -6,7 +6,7 @@ class profile::puppet::agent {
   include profile::puppet::repo
 
   # make sure we match server major version
-  $ver = split($::serverversion, '.')
+  $ver = split($::serverversion, '\.')
   apt::pin { 'puppet':
     priority        => 501,
     packages        => 'puppet-agent',
