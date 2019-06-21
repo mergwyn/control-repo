@@ -160,7 +160,7 @@ class profile::zfs_server {
   kmod::option { 'zfs_arc_min':
     module => 'zfs',
     option => 'zfs_arc_min',
-    value  => $::facts['memory']['system']['total_bytes']/8,
+    value  => $::facts['memory']['system']['total_bytes']/4,
     notify => Exec['update_initramfs_all']
   }
   exec { 'update_initramfs_all':
