@@ -23,7 +23,7 @@ managedmac::activedirectory::evaluate:                  "yes"
 managedmac::activedirectory::provider:                  dsconfigad
 managedmac::activedirectory::hostname:                  "%{trusted.domain}"
 managedmac::activedirectory::username:                  "administrator"
-managedmac::activedirectory::password:                  "%{lookup('secrets::admin')}"
+managedmac::activedirectory::password:                  "%{lookup('secrets::domain')}"
 managedmac::activedirectory::computer:                  "%{trusted.hostname}"
 managedmac::activedirectory::mount_style:               smb
 managedmac::activedirectory::create_mobile_account_at_login: true
