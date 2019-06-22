@@ -43,6 +43,9 @@ managedmac::activedirectory::domain_admin_group_list:
 #managedmac::loginhook::enable:                          true
 #managedmac::logouthook::enable:                         true
 #
+managedmac::security::ask_for_password:                 true
+managedmac::security::ask_for_password_delay:           300
+
 managedmac::screensharing::enable:                      true
 managedmac::ssh::enable:                                true
 #managedmac::ssh::sshd_config:                           'puppet:///modules/your_module/sshd_config'
