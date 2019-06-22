@@ -1,6 +1,6 @@
 ---
 
-homebrew::user:         'gary'
+homebrew::user:         'sadmin'
 homebrew::group:        'admin'
 homebrew::multiuser:    true
 homebrew::github_token: "%{lookup('secrets::github::homebrew')}"
