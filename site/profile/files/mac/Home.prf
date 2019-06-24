@@ -17,6 +17,7 @@ ignore = BelowPath .dropbox
 ignore = BelowPath .bundle
 ignore = BelowPath .config
 ignore = BelowPath .Mozilla
+ignore = BelowPath .git-credential-cache
 ignore = BelowPath .macromedia
 ignore = Path .ssh
 ignore = BelowPath .cups
