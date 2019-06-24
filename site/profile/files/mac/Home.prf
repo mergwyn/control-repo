@@ -8,6 +8,7 @@ include common
 ignore = Path .Filesync
 ignore = Path .SymAVQSFile
 ignore = Path .Trash
+ignore = BelowPath snap
 ignore = Path .account
 ignore = Path .bash_history
 ignore = BelowPath .bash_sessions
