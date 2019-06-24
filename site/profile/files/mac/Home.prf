@@ -14,6 +14,7 @@ ignore = Path .bash_history
 ignore = BelowPath .bash_sessions
 ignore = BelowPath .gdfuse/me/cache
 ignore = BelowPath .dropbox
+ignore = BelowPath .bundle
 ignore = BelowPath .config
 ignore = BelowPath .Mozilla
 ignore = BelowPath .macromedia
