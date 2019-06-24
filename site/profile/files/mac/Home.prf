@@ -12,6 +12,7 @@ ignore = BelowPath snap
 ignore = Path .account
 ignore = Path .bash_history
 ignore = BelowPath .bash_sessions
+ignore = BelowPath .AppleDB
 ignore = BelowPath .gdfuse/me/cache
 ignore = BelowPath .dropbox
 ignore = BelowPath .bundle
