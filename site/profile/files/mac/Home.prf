@@ -16,6 +16,7 @@ ignore = BelowPath .AppleDB
 ignore = BelowPath .gdfuse/me/cache
 ignore = BelowPath .dropbox
 ignore = BelowPath .gem
+ignore = BelowPath .pdk
 ignore = BelowPath .bundle
 ignore = BelowPath .config
 ignore = BelowPath .Mozilla
