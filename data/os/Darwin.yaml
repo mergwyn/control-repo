@@ -10,19 +10,18 @@ profile::base::packages::defaults:
   provider: homebrew
   ensure: latest
 profile::base::packages::objects:
-#  git:
-#    provider: macports
-  unison: {}
-  puppetlabs/puppet/puppet-agent-5:
-    ensure: absent
+  mergwyn/homebrew-cask/unison248: {}
   puppetlabs/puppet/puppet-agent-6: {}
-  dropbox: {}
   keeweb: {}
   amazon-music: {}
   firefox: {}
   whatsapp: {}
   homebrew/cask-drivers/sonos: {}
   aerial: {}
+  clover-configurator: {}
+  vlc: {}
+  homebrew/cask-versions/vmware-fusion8: {}
+  geekbench: {}
   google-chrome:
     ensure: absent
 
