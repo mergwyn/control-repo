@@ -20,7 +20,7 @@ profile::base::packages::objects:
   aerial: {}
   clover-configurator: {}
   vlc: {}
-  homebrew/cask-versions/vmware-fusion8: {}
+  #homebrew/cask-versions/vmware-fusion8: {}
   geekbench: {}
   google-chrome:
     ensure: absent
