@@ -19,7 +19,7 @@ class profile::puppet::server {
 
   # Configure puppetdb and its underlying database
   class { 'puppetdb':
-    listen_address => 0.0.0.0,
+    listen_address => '0.0.0.0',
   }
   # Configure the Puppet master to use puppetdb
   class { 'puppetdb::master::config': }
