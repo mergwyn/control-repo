@@ -3,6 +3,7 @@
 profile::base::packages::objects:
   clover-configurator: {}
   geekbench: {}
+  garmin-express: {}
   google-backup-and-sync: {}
   #homebrew/cask-versions/vmware-fusion8: {}
   onedrive: {}
