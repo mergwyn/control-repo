@@ -15,13 +15,9 @@ profile::base::packages::objects:
   keeweb: {}
   amazon-music: {}
   firefox: {}
-  whatsapp: {}
   homebrew/cask-drivers/sonos: {}
   aerial: {}
-  clover-configurator: {}
   vlc: {}
-  #homebrew/cask-versions/vmware-fusion8: {}
-  geekbench: {}
   google-chrome:
     ensure: absent
 
