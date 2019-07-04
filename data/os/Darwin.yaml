@@ -18,6 +18,8 @@ profile::base::packages::objects:
   homebrew/cask-drivers/sonos: {}
   aerial: {}
   vlc: {}
+  dropbox:
+    ensure: absent
   google-chrome:
     ensure: absent
 
