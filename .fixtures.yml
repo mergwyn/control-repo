@@ -1,0 +1,9 @@
+fixtures:
+  symlinks:
+    site: "#{source_dir}/site"
+#    r10k: "#{source_dir}/modules"
+#    my_module: "#{source_dir}"
+  forge_modules:
+    stdlib: "puppetlabs/stdlib"
+  repositories:
+    ddclient: 'https://github.com/mergwyn/puppet-ddclient'
