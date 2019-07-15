@@ -29,6 +29,7 @@ group :development do
   gem "puppet-module-win-dev-r#{minor_version}", '~> 0.3',       require: false, platforms: [:mswin, :mingw, :x64_mingw]
   gem "rake",                                                    require: false
   gem "r10k",                                                    require: false
+  gem "ra10ke",                                                  require: false
   gem "onceover",                                                require: false
 end
 
