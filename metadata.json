@@ -10,15 +10,9 @@
   ],
   "operatingsystem_support": [
     {
-      "operatingsystem": "Debian",
-      "operatingsystemrelease": [
-        "8"
-      ]
-    },
-    {
       "operatingsystem": "Ubuntu",
       "operatingsystemrelease": [
-        "16.04"
+        "18.04"
       ]
     },
     {
@@ -30,17 +24,15 @@
     {
       "operatingsystem": "Darwin",
       "operatingsystemrelease": [
-        "10.10",
-        "10.11",
-        "10.12",
-        "10.13"
+        "10.13",
+        "10.14"
       ]
     }
   ],
   "requirements": [
     {
       "name": "puppet",
-      "version_requirement": ">= 4.10.0 < 7.0.0"
+      "version_requirement": ">= 5.0.0 < 7.0.0"
     }
   ],
   "pdk-version": "1.11.1",

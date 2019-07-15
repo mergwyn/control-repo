@@ -1,0 +1,9 @@
+# Facts specified here will override the values provided by rspec-puppet-facts.
+---
+release: 'amd64'
+serverversion: '6.4.0'
+node: 'default.theclarkhome.com'
+#sshdsakey: ''
+#sshecdsakey: ''
+#sshed25519key: ''
+#interfaces: 'eth0'

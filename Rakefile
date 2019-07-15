@@ -76,3 +76,4 @@ EOM
 end
 
 require 'ra10ke'
+require 'onceover/rake_tasks'

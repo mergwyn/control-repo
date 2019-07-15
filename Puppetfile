@@ -84,6 +84,10 @@ mod 'webmin', :git => 'https://github.com/rehanone/puppet-webmin'
 #mod 'trlinkin-domain_membership', '1.1.2'
 mod 'wyrie-backuppc', '2.0.0'
 
+# puppet 6 core types
+mod 'puppetlabs-host_core', '1.0.2'
+mod 'puppetlabs-mount_core', '1.0.3'
+
 # tasks
 mod 'puppetlabs-bootstrap', '0.5.0'
 mod 'puppetlabs-exec', '0.4.0'
@@ -94,5 +98,6 @@ mod 'puppetlabs-dism', '1.3.1'
 mod 'puppetlabs-powershell', '2.3.0'
 mod 'puppetlabs-registry', '2.1.0'
 mod 'puppetlabs-concat', '6.0.0'
+mod 'puppetlabs-scheduled_task', '1.0.1'
 
 

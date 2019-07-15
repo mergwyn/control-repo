@@ -3,6 +3,9 @@ appveyor.yml:
   delete: true
 .gitlab-ci.yml:
   delete: true
+.gitignore:
+  required: &ignorepaths
+    - '.onceover/'
 .travis.yml:
   branches:
   - production
@@ -18,13 +21,13 @@ Gemfile:
     ':development':
       - gem: rake
       - gem: r10k
-      - gem: ra10ke
       - gem: onceover
 spec/spec_helper.rb:
   coverage_report: true
   minimum_code_coverage_percentage: 0
   strict_level: ":warning"
-  hiera_config: 'spec/fixtures/hiera.yaml'
+  hiera_config: 'spec/hiera.yaml'
 Rakefile:
   extras: 
   - require 'ra10ke'
+  - require 'onceover/rake_tasks'
