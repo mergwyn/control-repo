@@ -124,4 +124,7 @@ localpids() 	{ ps --no-headers axo pid,cgroup | egrep -v '[[:digit:]]* [[:digit:
 lps() 		{ ps -p $(localpids | paste -d, -s) $* ; }
 lpcount() 	{ localpids | wc -l; }
 
+# workaround for puppet bug, shoudl be fixed in 6.7.0
+[[ ${MANPATH} =~ ^/ ]] && MANPATH=:$MANPATH
+
 export -f localpids lps lpcount
