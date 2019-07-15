@@ -21,6 +21,7 @@ Gemfile:
     ':development':
       - gem: rake
       - gem: r10k
+      - gem: ra10ke
       - gem: onceover
 spec/spec_helper.rb:
   coverage_report: true
@@ -31,3 +32,4 @@ Rakefile:
   extras: 
   - require 'ra10ke'
   - require 'onceover/rake_tasks'
+  - FastGettext.default_text_domain = 'default-text-domain'

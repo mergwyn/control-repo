@@ -77,3 +77,4 @@ end
 
 require 'ra10ke'
 require 'onceover/rake_tasks'
+FastGettext.default_text_domain = 'default-text-domain'
