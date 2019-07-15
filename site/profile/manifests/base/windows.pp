@@ -12,7 +12,7 @@ class profile::base::windows {
 #    norestart => true,
 #  }
   scheduled_task { 'GPO Backup':
-    command     => "powershell.exe",
+    command     => 'powershell.exe',
     arguments   => "-ExecutionPolicy RemoteSigned \\\\${lookup('defaults::backup_server')}\\backup\\GPO\\GPOBackup.ps1",
     working_dir => "\\\\${lookup('defaults::backup_server')}\\backup\\${trusted['hostname']}\\GPO\\",
     enabled     => true,
