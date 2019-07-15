@@ -15,7 +15,7 @@ class profile::puppet::agent {
   package { 'puppetlabs-release-pc1': ensure => absent }
 
   file { '/etc/profile.d/puppet.sh':
-    ensure  => present,
+    ensure  => absent,
     content => "# Expand the PATH to include puppet binaries\nPATH=\$PATH:/opt/puppetlabs/bin:/opt/puppetlabs/puppet/bin\n"
   }
 }
