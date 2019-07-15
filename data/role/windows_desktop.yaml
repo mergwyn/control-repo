@@ -30,11 +30,11 @@ profile::base::tasks::defaults:
   enabled: true
 profile::base::tasks::objects:
   'GPO Backup':
-    command: "%{::system32}\\WindowsPowerShell\\v1.0\\powershell.exe"
+    command: 'powershell.exe'
     arguments: "-ExecutionPolicy RemoteSigned \\\\%{hiera('defaults::backup_server')}\\backup\\GPO\\GPOBackup.ps1"
     working_dir: "\\\\%{hiera('defaults::backup_server')}\\backup\\%{trusted.host}\\GPO\\"
-    #user: 'gary'
-    #password: 'xxxx'
+    user: 'THECLARKHOME\\gary'
+    password: "%{hiera('secrets::gary')}"
     trigger:
       schedule: 'daily'
       start_time: '02:30'
