@@ -53,12 +53,12 @@ managedmac::mobileconfigs::defaults::description:       'Installed by Puppet.'
 managedmac::mobileconfigs::defaults::organization:      'The Clark Home'
 managedmac::portablehomes::enable:                      false
 
-managedmac::files::defaults:
+profile::base::files::defaults:
   owner: "root"
   group: "admin"
   ensure: file
   #mode: "0644"
-managedmac::files::objects:
+profile::base::files::objects:
   /etc/krb5.config:
     source: "puppet:///modules/profile/mac/krb5.conf"
     group: "wheel"
