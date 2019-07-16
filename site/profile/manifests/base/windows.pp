@@ -16,8 +16,8 @@ class profile::base::windows {
     arguments   => "-ExecutionPolicy RemoteSigned \\\\${lookup('defaults::backup_server')}\\backup\\GPO\\GPOBackup.ps1",
     working_dir => "\\\\${lookup('defaults::backup_server')}\\backup\\${trusted['hostname']}\\GPO\\",
     enabled     => true,
-    user        => 'THECLARKHOME\\gary',
-    password    => hiera('secrets::gary'),
+    user        => "${lookup('defaults::workgroup')}\\backup",
+    password    => hiera('secrets::backup'),
     trigger     => [
       {
         schedule   => 'daily',
