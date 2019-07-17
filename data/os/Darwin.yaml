@@ -16,6 +16,7 @@ profile::base::packages::objects:
   amazon-music: {}
   firefox: {}
   homebrew/cask-drivers/sonos: {}
+  profilecreator: {}
   aerial: {}
   vlc: {}
   dropbox:
