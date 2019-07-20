@@ -154,6 +154,7 @@ zabbix::agent::server:                  "zulu,zulu.%{trusted.domain}"
 zabbix::agent::serveractive:            "zulu,zulu.%{trusted.domain}"
 zabbix::agent::enableremotecommands:    '1'
 zabbix::agent::zabbix_package_state:    'latest'
+zabbix::agent::hostmetadataitem:         'system.uname'
 
 profile::backuppc::scripts:             '/etc/backuppc/scripts'
 profile::backuppc::preuser:             "%{lookup('profile::backuppc::scripts')}/DumpPreUser"
