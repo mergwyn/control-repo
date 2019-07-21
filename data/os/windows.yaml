@@ -35,5 +35,7 @@ puppet::structured_facts:               true
 zabbix::agent::hostname:                "%{trusted.certname}"
 zabbix::agent::server:                  "zulu,zulu.%{trusted.domain}"
 zabbix::agent::serveractive:            "zulu,zulu.%{trusted.domain}"
+zabbix::agent::hostmetadata:            ":kernel=%{facts.kernel}:virtual=%{facts.virtual}"
+
 
 # vim: sw=2:ai:nu expandtab
