@@ -2,7 +2,7 @@
 
 class profile::zabbix::agent {
   case $facts['os']['name'] {
-    'Linux': {
+    'Ubuntu': {
       include zabbix::agent
       package {'zabbix-sender': }
 
