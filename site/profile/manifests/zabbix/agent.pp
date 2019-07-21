@@ -68,7 +68,7 @@ class profile::zabbix::agent {
           'Server'       => lookup('zabbix::agent::server'),
           'ServerActive' => lookup('zabbix::agent::serveractive'),
           'Hostname'     => lookup('zabbix::agent::hostname'),
-          'HostMetaData' => lookup('zabbix::agent::hostmetadata'),
+          'HostMetadata' => lookup('zabbix::agent::hostmetadata'),
         }
       }
       create_ini_settings($overrides, $defaults)
