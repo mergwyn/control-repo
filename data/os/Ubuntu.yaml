@@ -177,6 +177,10 @@ backuppc::client::dump_post_user_cmd:   '$sshPath -q -x -l backupp_client $host 
 backuppc::client::user_cmd_check_status: true
 backuppc::client::rsync_share_name:
   - '/'
+backuppc::client::rsync_args:
+  - '--one-file-system'
+  - '-F'
+
 backuppc::client::backup_files_exclude:
   - '.AppleDouble'
   - '.cache'
