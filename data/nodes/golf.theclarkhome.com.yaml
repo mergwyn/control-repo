@@ -18,4 +18,11 @@ network::interfaces_hash:
     bridge_fd:                  "0"
     bridge_stp:                 "off"
 
+backuppc::client::rsync_share_name:
+  - '/'
+  - '/boot/efi'
+  - '/boot/grub'
+  - '/var/cache'
+  - '/var/log'
+
 # vim: sw=2:ai:nu expandtab

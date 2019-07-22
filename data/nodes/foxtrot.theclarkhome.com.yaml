@@ -29,17 +29,20 @@ network::interfaces_hash:
 
 backuppc::client::rsync_share_name:
   - '/'
+  - '/boot/efi'
+  - '/boot/grub'
   - '/home'
   - '/home/ann'
   - '/home/gary'
   - '/home/gwyn'
   - '/home/merry'
   - '/srv/backup/GPO'
+  - '/srv/media'
   - '/srv/public'
+  - '/srv/virtual'
   - '/usr/src'
   - '/var/cache'
   - '/var/spool'
-  - '/srv/media'
-  - '/srv/virtual'
+  - '/var/log'
 
 # vim: sw=2:ai:nu expandtab
