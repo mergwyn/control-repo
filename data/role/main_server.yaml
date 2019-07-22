@@ -20,8 +20,8 @@ backuppc::server::full_keep_cnt:
   - 4
   - 0
   - 12
-backuppc::server::inc_age_max:                21
-backuppc::server::inc_keep_cnt:               6
+backuppc::server::incr_age_max:               21
+backuppc::server::incr_keep_cnt:              12
 backuppc::server::backup_zero_files_is_fatal: true
 backuppc::server::cgi_date_format_mmdd:       1
 backuppc::server::apache_configuration:       false
