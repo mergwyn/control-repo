@@ -26,5 +26,20 @@ network::interfaces_hash:
     bridge_fd:                  "0"
     bridge_stp:                 "off"
 
----
+
+backuppc::client::rsync_share_name:
+  - '/'
+  - '/home'
+  - '/home/ann'
+  - '/home/gary'
+  - '/home/gwyn'
+  - '/home/merry'
+  - '/srv/backup/GPO'
+  - '/srv/public'
+  - '/usr/src'
+  - '/var/cache'
+  - '/var/spool'
+  - '/srv/media'
+  - '/srv/virtual'
+
 # vim: sw=2:ai:nu expandtab
