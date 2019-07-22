@@ -162,6 +162,7 @@ profile::backuppc::postuser:            "%{lookup('profile::backuppc::scripts')}
 
 backuppc::client::backuppc_hostname:    "foxtrot.%{domain}"
 backuppc::client::system_account:       ''
+backuppc::client::config_name:          %{facts.networking.hostname}
 
 # vim: sw=2:ai:nu expandtab
 #
