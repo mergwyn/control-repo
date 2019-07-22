@@ -163,6 +163,8 @@ profile::backuppc::postuser:            "%{lookup('profile::backuppc::scripts')}
 backuppc::client::backuppc_hostname:    "foxtrot.%{domain}"
 backuppc::client::system_account:       ''
 backuppc::client::config_name:          "%{facts.networking.hostname}"
+backuppc::client::hosts_file_user:      'gary'
+backuppc::client::hosts_file_mote_users: 'backuppc'
 
 # vim: sw=2:ai:nu expandtab
 #
