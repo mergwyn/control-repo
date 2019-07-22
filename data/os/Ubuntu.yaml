@@ -165,6 +165,8 @@ backuppc::client::system_account:       ''
 backuppc::client::config_name:          "%{facts.networking.hostname}"
 backuppc::client::hosts_file_user:      'gary'
 backuppc::client::hosts_file_more_users: 'backuppc'
+backuppc::client::dump_pre_user_cmd:    '$sshPath -q -x -l root $host /bin/run-parts --report /etc/backuppc/scripts/DumpPreUser --arg=$type'
+backuppc::client::dump_post_user_cmd:   '$sshPath -q -x -l root $host /bin/run-parts --report /etc/backuppc/scripts/DumpPostUser --arg=$type --arg=$xferOK'
 backuppc::client::rsync_share_name:
   - '/'
 backuppc::client::backup_files_exclude:
