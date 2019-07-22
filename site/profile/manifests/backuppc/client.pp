@@ -20,7 +20,7 @@ class profile::backuppc::client (
     mode   => '0555',
   }
 
-  package { 'rsync': ensure => installed }
+  #package { 'rsync': ensure => installed }
 
 #  # backuppc ssh keys
 #  $system_account        = hiera('defaults::system_user')
