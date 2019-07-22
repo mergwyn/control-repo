@@ -161,7 +161,7 @@ profile::backuppc::preuser:             "%{lookup('profile::backuppc::scripts')}
 profile::backuppc::postuser:            "%{lookup('profile::backuppc::scripts')}/DumpPostUser"
 
 backuppc::client::backuppc_hostname:    "foxtrot.%{domain}"
-backuppc::client::system_account:       ''
+backuppc::client::system_account:       'root'
 backuppc::client::config_name:          "%{facts.networking.hostname}"
 backuppc::client::hosts_file_user:      'gary'
 backuppc::client::hosts_file_more_users: 'backuppc'
