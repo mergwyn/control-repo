@@ -6,4 +6,6 @@ classes:
   - profile::domain::sso
   - profile::backuppc::server
 
+
+backuppc::server::backuppc_password: "%{hiera('secrets::backuppc')}"
 # vim: sw=2:ai:nu expandtab

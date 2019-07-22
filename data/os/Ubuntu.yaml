@@ -159,6 +159,7 @@ zabbix::agent::hostmetadata:             ":kernel=%{facts.kernel}:virtual=%{fact
 profile::backuppc::scripts:             '/etc/backuppc/scripts'
 profile::backuppc::preuser:             "%{lookup('profile::backuppc::scripts')}/DumpPreUser"
 profile::backuppc::postuser:            "%{lookup('profile::backuppc::scripts')}/DumpPostUser"
+backuppc::client::backuppc_hostname:    "foxtrot.%{domain}"
 
 # vim: sw=2:ai:nu expandtab
 #

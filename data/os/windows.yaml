@@ -18,12 +18,12 @@ profile::base::packages::defaults:
 profile::base::packages::objects:
   chocolateygui: {}
   firefox: {}
-  dropbox: {}
   keeweb: {}
-  notepadplusplus: {}
+  kitty: {}
   mp3gain-gui: {}
   mp3tag: {}
-  kitty: {}
+  notepadplusplus: {}
+  puppet-agent: {}
   zabbix-agent: {}
 
 # puppet agent

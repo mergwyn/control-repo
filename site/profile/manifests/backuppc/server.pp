@@ -2,7 +2,6 @@
 class profile::backuppc::server {
 
   include profile::scripts
-  #TODO cron for GPO backup
 
   package { 'pigz': }
   package { 'libjson-perl': }
@@ -13,6 +12,7 @@ class profile::backuppc::server {
     enable => false,
   }
   include profile::web::nginx
+  include backuppc::server
 
   nginx::resource::server { 'backuppc':
     server_name          => [ $::facts['networking']['fqdn'] ],
@@ -92,32 +92,5 @@ class profile::backuppc::server {
     script_dir => '/etc/zabbix/scripts',
   }
 }
-
-#  # support for backuppc ssh keys
-#  $topdir = '/var/lib/backuppc'
-#
-#  # Export backuppc's authorized key to all clients
-#  # TODO don't rely on facter to obtain the ssh key.
-#  if $facts['backuppc_pubkey_rsa'] != undef {
-#    @@ssh_authorized_key { "backuppc_${facts['networking']['fqdn']}":
-#      ensure  => present,
-#      key     => $facts['backuppc_pubkey_rsa'],
-#      name    => "backuppc_${facts['networking']['fqdn']}",
-#      user    => 'backuppc',
-#      options => [
-#        #'command="~/backuppc.sh"',
-#        'no-agent-forwarding',
-#        'no-port-forwarding',
-#        'no-pty',
-#        'no-X11-forwarding',
-#      ],
-#      type    => 'ssh-rsa',
-#      tag     => "backuppc_${facts['networking']['fqdn']}",
-#    }
-#  }
-#
-#  # collect hostkeys
-#  #Sshkey <<| tag == "backuppc_sshkeys_${facts['networking']['fqdn']}" |>>
-#  Sshkey <<| |>>
 
 # vim: sw=2:ai:nu expandtab
