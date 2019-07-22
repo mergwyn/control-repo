@@ -5,7 +5,8 @@ class profile::backuppc::client (
   $postuser = "${scripts}/DumpPostUser",
   ) {
 
-  file {['/etc/backuppc',$scripts, $preuser, $postuser]:
+  include backuppc::client
+  file {[$scripts, $preuser, $postuser]:
     ensure  => directory,
     recurse => true,
   }
