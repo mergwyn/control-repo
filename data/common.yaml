@@ -33,5 +33,7 @@ lookup_options:
     merge: deep
   "^profile::base::(.*)::(.*)$":
     merge: deep
+  "^backupppc::client::(.*)$":
+    merge: deep
 
 #se vim: sw=2:ai:nu expandtab
