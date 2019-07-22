@@ -14,4 +14,7 @@ classes:
   - profile::backuppc::server
 
 backuppc::server::backuppc_password: "%{hiera('secrets::backuppc')}"
+backuppc::params::gzip_path:         '/usr/bin/pigz'
+
+
 # vim: sw=2:ai:nu expandtab
