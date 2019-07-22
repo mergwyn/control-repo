@@ -178,6 +178,16 @@ backuppc::client::user_cmd_check_status: true
 backuppc::client::rsync_share_name:
   - '/'
 backuppc::client::rsync_args:
+  - '--numeric-ids'
+  - '--perms'
+  - '--owner'
+  - '--group'
+  - '-D'
+  - '--links'
+  - '--hard-links'
+  - '--times'
+  - '--block-size=2048'
+  - '--recursive'
   - '--one-file-system'
   - '-F'
 
