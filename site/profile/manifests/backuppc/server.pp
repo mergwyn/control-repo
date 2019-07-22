@@ -12,7 +12,6 @@ class profile::backuppc::server {
     enable => false,
   }
   include profile::web::nginx
-  include backuppc::server
 
   nginx::resource::server { 'backuppc':
     server_name          => [ $::facts['networking']['fqdn'] ],
@@ -69,6 +68,8 @@ class profile::backuppc::server {
     comment    => 'BackupPC,,,',
     managehome => false,
   }
+  
+  include backuppc::server
 
   include sudo
   sudo::conf { 'zabbix-backuppc':
