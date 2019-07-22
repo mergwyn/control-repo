@@ -169,7 +169,7 @@ backuppc::client::
   $email_from_user_name  = '',
 backuppc::client::email_admin_user_name: 'backuppc'
 backuppc::client::email_destination_domain: "%{domain}"
-backuppc::client::system_additional_commands_noexec:
+backuppc::client::system_additional_commands:
  - '/bin/run-parts'
  - '/etc/backuppc/scripts/DumpPreUser/*'
 backuppc::client::dump_pre_user_cmd:    '$sshPath -q -x -l backupp_client $host /bin/run-parts --report /etc/backuppc/scripts/DumpPreUser --arg=$type'
