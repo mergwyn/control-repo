@@ -14,7 +14,8 @@ classes:
 profile::base::users::defaults:
   ensure: present
 profile::base::users::objects:
-  root:
+  root_password:
+    name: 'root'
     password: "%{lookup('defaults::sharedpassword')}"
   ubuntu:
     ensure: absent
