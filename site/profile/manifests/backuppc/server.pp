@@ -73,9 +73,9 @@ class profile::backuppc::server {
 
   $topdir = '/var/lib/backuppc'
   #Sshkey <<| tag == "backuppc_sshkeys_${facts['networking']['fqdn']}" |>> {
-  Sshkey <<| tag == 'backuppc_sshkeys_foxtrot.theclarkhome.com' |>> {
+  #Sshkey <<| tag == 'backuppc_sshkeys_foxtrot.theclarkhome.com' |>> {
+  Sshkey <<| |>> {
       #target => "${topdir}/.ssh/known_hosts"
-      provider => 'parsed',
       target   => '/tmp/known_hosts'
   }
 
