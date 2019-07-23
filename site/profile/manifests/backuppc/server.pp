@@ -68,7 +68,7 @@ class profile::backuppc::server {
     comment    => 'BackupPC,,,',
     managehome => false,
   }
-  
+
   include backuppc::server
 
   include sudo
