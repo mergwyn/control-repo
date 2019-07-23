@@ -49,7 +49,6 @@ class profile::backuppc::client (
       tag    => "backuppc_sshkeys_${backuppc_hostname}",
     }
   }
-  }
 }
 
 
