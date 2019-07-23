@@ -42,7 +42,7 @@ class profile::backuppc::client (
       require => File["${system_home_directory}/.ssh"]
     }
     @@sshkey { "${facts['networking']['fqdn']}_key":
-      ensure => true,
+      ensure => present,
       name   => $facts['networking']['fqdn'],
       type   => 'ssh-rsa',
       key    => $facts['ssh']['rsa']['key'],
