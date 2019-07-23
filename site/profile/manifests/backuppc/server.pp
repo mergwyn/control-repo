@@ -73,7 +73,7 @@ class profile::backuppc::server {
 
   $topdir = hiera(backuppc::params::topdir)
   Sshkey <<| tag == "backuppc_sshkeys_${facts['networking']['fqdn']}" |>> {
-      target => "${topdir}/.ssh/known_hosts"]
+      target => "${topdir}/.ssh/known_hosts"
   }
 
 
