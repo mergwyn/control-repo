@@ -72,9 +72,7 @@ class profile::backuppc::server {
   include backuppc::server
 
   $topdir = '/var/lib/backuppc'
-  #Sshkey <<| tag == "backuppc_sshkeys_${facts['networking']['fqdn']}" |>> {
-  #Sshkey <<| tag == 'backuppc_sshkeys_foxtrot.theclarkhome.com' |>> {
-  Sshkey <<| |>> {
+  Sshkey <<| tag == "backuppc_sshkeys_${facts['networking']['fqdn']}" |>> {
       target => "${topdir}/.ssh/known_hosts"
   }
 
