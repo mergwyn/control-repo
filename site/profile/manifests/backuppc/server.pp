@@ -71,7 +71,7 @@ class profile::backuppc::server {
 
   include backuppc::server
 
-  $topdir = hiera(backuppc::params::topdir)
+  $topdir = '/var/lib/backuppc'
   Sshkey <<| tag == "backuppc_sshkeys_${facts['networking']['fqdn']}" |>> {
       target => "${topdir}/.ssh/known_hosts"
   }
