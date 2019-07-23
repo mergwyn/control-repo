@@ -80,6 +80,7 @@ mod 'transmission', :git => 'https://github.com/mergwyn/puppet-transmission'
 mod 'webmin', :git => 'https://github.com/rehanone/puppet-webmin'
 #mod 'trlinkin-domain_membership', '1.1.2'
 mod 'wyrie-backuppc', '2.0.0'
+mod 'zack-exports', '1.0.1'
 
 # puppet 6 core types
 mod 'puppetlabs-host_core', '1.0.2'
