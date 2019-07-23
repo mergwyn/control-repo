@@ -42,8 +42,8 @@ class profile::backuppc::client (
       require => File["${system_home_directory}/.ssh"]
     }
     @@sshkey { "${facts['networking']['fqdn']}_key":
+      ensure => true,
       name   => $facts['networking']['fqdn'],
-      ensure => $ensure,
       type   => 'ssh-rsa',
       key    => $facts['ssh']['rsa']['key'],
       tag    => "backuppc_sshkeys_${backuppc_hostname}",
