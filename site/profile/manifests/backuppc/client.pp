@@ -23,7 +23,7 @@ class profile::backuppc::client (
 
   #package { 'rsync': ensure => installed }
 
-  if empty hiera('backuppc::client::system_account')
+  if empty(hiera('backuppc::client::system_account'))
   {
     # Need to manage .ssh keys outside of backuupc module
     $system_account        = hiera('defaults::system_user')
