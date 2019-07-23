@@ -71,6 +71,13 @@ class profile::backuppc::server {
 
   include backuppc::server
 
+  $topdir = hiera(backuppc::params::topdir)
+  Sshkey <<| tag == "backuppc_sshkeys_${facts['networking']['fqdn']}" |>> {
+      target => "${topdir}/.ssh/known_hosts"]
+  }
+
+
+  # zabbix config
   include sudo
   sudo::conf { 'zabbix-backuppc':
     content => 'zabbix  ALL=(ALL)       NOPASSWD:       /etc/zabbix/scripts/*',
