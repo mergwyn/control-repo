@@ -23,7 +23,6 @@ defaults::backup_server:   'foxtrot'
 defaults::backuppc_server: 'foxtrot.%{domain}'
 defaults::system_user:     'root'
 defaults::system_home_dir: '/root'
-defaults::system_home_dir: '/root'
 defaults::media_user:      'media'
 defaults::media_group:     '513'
 
