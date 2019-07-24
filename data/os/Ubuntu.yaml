@@ -107,7 +107,8 @@ profile::base::mail_client::relayhost:        '[smtp.virginmedia.com]:465'
 profile::base::mail_client::root_mail_recipient: "%{lookup('defaults::adminemail')}"
 
 # store ssh keys
-ssh::storeconfigs_enabled:              false
+ssh::client::storeconfigs_enabled:      false
+ssh::server::storeconfigs_enabled:      false
 
 # time related
 timezone::timezone:                     'Europe/London'
