@@ -5,7 +5,10 @@ class profile::backuppc::client (
   $postuser = "${scripts}/DumpPostUser",
   ) {
 
-  include backuppc::client
+  file {'/etc/backupppc_top':
+    name    => '/etc/backuppc',
+    ensure  => directory,
+    recurse => true,
   file {[$scripts, $preuser, $postuser]:
     ensure  => directory,
     recurse => true,
@@ -22,6 +25,7 @@ class profile::backuppc::client (
   }
 
   #package { 'rsync': ensure => installed }
+  include backuppc::client
 
   if empty(hiera('backuppc::client::system_account'))
   {
