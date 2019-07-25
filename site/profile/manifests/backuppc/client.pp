@@ -9,6 +9,7 @@ class profile::backuppc::client (
     name    => '/etc/backuppc',
     ensure  => directory,
     recurse => true,
+  }
   file {[$scripts, $preuser, $postuser]:
     ensure  => directory,
     recurse => true,
