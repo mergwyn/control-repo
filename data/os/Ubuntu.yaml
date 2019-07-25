@@ -44,7 +44,7 @@ profile::base::files::objects:
   # General
   /etc/landscape/client.conf:
     content: "[sysinfo]\nexclude_sysinfo_plugins = LandscapeLink\n"
-    require: "Package['landscape-common']"
+    require: Package[landscape-common]
   /etc/update-motd.d/10-help-text:
     ensure: absent
   /etc/legal:
