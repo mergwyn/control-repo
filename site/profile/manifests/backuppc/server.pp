@@ -69,6 +69,8 @@ class profile::backuppc::server {
     managehome => false,
   }
 
+  Package['openssh-server'] -> Package['backuppc']
+
   include backuppc::server
 
   $topdir = '/var/lib/backuppc'

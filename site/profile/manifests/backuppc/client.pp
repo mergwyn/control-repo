@@ -8,6 +8,7 @@ class profile::backuppc::client (
   file {'/etc/backupppc':
     ensure  => directory,
     recurse => true,
+    require => Package['openssh-server'],
   }
   file {[$scripts, $preuser, $postuser]:
     ensure  => directory,
