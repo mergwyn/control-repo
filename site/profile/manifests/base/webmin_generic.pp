@@ -43,7 +43,8 @@ class profile::base::webmin_generic {
     notify            => Service['webmin'],
   }
   file { '/etc/webmin/package-updates':
-    ensure => directory,
+    ensure  => directory,
+    require => Package['webmin'],
   }
   file { '/etc/webmin/package-updates/config':
     ensure  => present,
