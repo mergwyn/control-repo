@@ -14,13 +14,13 @@ class profile::base::webmin_generic {
   # for 2FA with google
   package { 'libauthen-oath-perl': }
 
-  class { 'webmin':
-    #usermin => 'disable',
-    require => [
-      Package['libauthen-oath-perl'],
-      Exec['apt_show_versions_clean'],
-    ],
-  }
+#  class { 'webmin':
+#    #usermin => 'disable',
+#    require => [
+#      Package['libauthen-oath-perl'],
+#      Exec['apt_show_versions_clean'],
+#    ],
+#  }
 
   # update config values
 
