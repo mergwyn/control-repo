@@ -14,6 +14,7 @@ class profile::backuppc::client (
   file {[$scripts, $preuser, $postuser]:
     ensure  => directory,
     recurse => true,
+    require => File ['/etc/backupppc'],
   }
   file {[ "${scripts}/PreUser", "${scripts}/PostUser"]:
     ensure => absent,
