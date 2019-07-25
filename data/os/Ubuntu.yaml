@@ -257,5 +257,37 @@ backuppc::client::backup_files_exclude:
   - 'opt/puppetlabs/puppet/cache'
   - 'media/.config/Radarr/logs*'
 
+webmin::repo_ensure:      'present'
+webmin::repo_manage:      true
+webmin::package_manage:   true
+webmin::package_ensure:   'latest'
+webmin::package_name:     'webmin'
+webmin::config_file:      '/etc/webmin/miniserv.conf'
+webmin::service_enable:   true
+webmin::service_ensure:   'running'
+webmin::service_manage:   true
+webmin::service_name:     'webmin'
+webmin::allowed_networks: []
+webmin::firewall_manage:  false
+webmin::service_port:     10000
+
+# Service Defaults
+webmin::ssl_enable:       true
+webmin::ssl_keyfile:      '/etc/webmin/miniserv.pem'
+webmin::ssl_certfile:     '/etc/webmin/miniserv.cert'
+webmin::ssl_chainfile:    '/etc/webmin/extracas.chain'
+webmin::ssl_reject_ssl2:  true
+webmin::ssl_reject_ssl3:  true
+webmin::ssl_reject_tls1:  true
+webmin::ssl_reject_tls11: true
+webmin::ssl_reject_tls12: false
+webmin::ssl_redirect:     true
+
+webmin::ssl_dependencies:
+  - 'libnet-ssleay-perl'
+  - 'libauthen-pam-perl'
+  - 'libpam-runtime'
+  - 'libio-pty-perl'
+
 # vim: sw=2:ai:nu expandtab
 #
