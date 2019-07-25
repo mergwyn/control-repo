@@ -5,10 +5,11 @@ class profile::backuppc::client (
   $postuser = "${scripts}/DumpPostUser",
   ) {
 
+  Package['openssh-server'] -> Class['profile::backuppc::client']
+
   file {'/etc/backupppc':
     ensure  => directory,
     recurse => true,
-    require => Package['openssh-server'],
   }
   file {[$scripts, $preuser, $postuser]:
     ensure  => directory,
