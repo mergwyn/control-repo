@@ -1,6 +1,8 @@
 #
 class profile::backuppc::server {
 
+  Class['profile::base::ssh-server'] -> Class['profile::backuppc::client']
+
   include profile::scripts
 
   package { 'pigz': }
@@ -68,8 +70,6 @@ class profile::backuppc::server {
     comment    => 'BackupPC,,,',
     managehome => false,
   }
-
-  Package['openssh-server'] -> Package['backuppc']
 
   include backuppc::server
 

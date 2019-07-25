@@ -5,7 +5,7 @@ class profile::backuppc::client (
   $postuser = "${scripts}/DumpPostUser",
   ) {
 
-  Package['openssh-server'] -> Class['profile::backuppc::client']
+  Class['profile::base::ssh-server'] -> Class['profile::backuppc::client']
 
   file {'/etc/backupppc':
     ensure  => directory,
