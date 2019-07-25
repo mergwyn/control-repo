@@ -1,20 +1,21 @@
 #
 class profile::backuppc::client (
-  $scripts  = '/etc/backuppc/scripts',
+  $config   = '/etc/backuppc',
+  $scripts  = "${config}/scripts",
   $preuser  = "${scripts}/DumpPreUser",
   $postuser = "${scripts}/DumpPostUser",
   ) {
 
   Class['profile::base::ssh_server'] -> Class['profile::backuppc::client']
 
-  file {'/etc/backupppc':
+  file {"${config}":
     ensure  => directory,
     recurse => true,
   }
   file {[$scripts, $preuser, $postuser]:
     ensure  => directory,
     recurse => true,
-    require => File['/etc/backupppc'],
+    require => File["${config}"],
   }
   file {[ "${scripts}/PreUser", "${scripts}/PostUser"]:
     ensure => absent,
