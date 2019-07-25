@@ -4,6 +4,7 @@
 class profile::base::webmin_generic {
   $adminemail = lookup('unattended_upgrades::email')
 
+  include ::webmin
   exec { 'apt_show_versions_clean':
     command   => 'apt-get purge -y apt-show-versions',
     path      => ['/usr/bin', '/sbin', '/bin'],
