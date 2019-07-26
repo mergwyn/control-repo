@@ -1,5 +1,6 @@
 ---
 classes:
-  - role::generic_server
+  - profile::base  # All roles should have the base profile
+  - profile::domain::sso
 
 # vim: sw=2:ai:nu expandtab
