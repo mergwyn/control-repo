@@ -12,117 +12,157 @@ classes:
   - profile::backuppc::client
 
 profile::base::users::defaults:
-  ensure: present
+  ensure:                                         present
 profile::base::users::objects:
   root_password:
-    name: 'root'
-    password: "%{lookup('defaults::sharedpassword')}"
+    name:                                         'root'
+    password:                                     "%{lookup('defaults::sharedpassword')}"
   ubuntu:
-    ensure: absent
+    ensure:                                       absent
   sadmin:
-    password: "%{lookup('defaults::sharedpassword')}"
-    groups: 'sudo'
-    uid: '1000'
-    managehome: true
+    password:                                     "%{lookup('defaults::sharedpassword')}"
+    groups:                                       'sudo'
+    uid:                                          '1000'
+    managehome:                                   true
 
 profile::base::files::defaults:
-  ensure: present
+  ensure:                                         present
 profile::base::files::objects:
   # relateded to users
   /root/.profile:
-    source: 'file:///etc/skel/.profile'
+    source:                                       'file:///etc/skel/.profile'
   /root/.bashrc:
-    source: 'puppet:///modules/profile/bashrc'
+    source:                                       'puppet:///modules/profile/bashrc'
   /root/.bash_aliases:
-    source: 'puppet:///modules/profile/bash_aliases'
+    source:                                       'puppet:///modules/profile/bash_aliases'
   /etc/skel/.bashrc:
-    source: 'puppet:///modules/profile/bashrc'
+    source:                                       'puppet:///modules/profile/bashrc'
   /etc/skel/.bash_aliases:
-    source: 'puppet:///modules/profile/bash_aliases'
+    source:                                       'puppet:///modules/profile/bash_aliases'
   /etc/vim/vimrc.local:
-    source: 'puppet:///modules/profile/vimrc.local'
+    source:                                       'puppet:///modules/profile/vimrc.local'
   # General
   /etc/landscape/client.conf:
-    content: "[sysinfo]\nexclude_sysinfo_plugins = LandscapeLink\n"
-    require: Package[landscape-common]
+    content:                                      "[sysinfo]\nexclude_sysinfo_plugins = LandscapeLink\n"
+    require:                                      Package[landscape-common]
   /etc/update-motd.d/10-help-text:
-    ensure: absent
+    ensure:                                       absent
   /etc/legal:
-    ensure: absent
+    ensure:                                       absent
 
 profile::base::packages::defaults:
-  ensure: present
+  ensure:                                         present
 profile::base::packages::objects:
-  openssh-server: {}
-  ubuntu-standard: {}
-  update-notifier-common: {}
-  landscape-common: {}
-  vim: {}
-  anacron: {}
-  gpg: {}
+  openssh-server:                                 {}
+  ubuntu-standard:                                {}
+  update-notifier-common:                         {}
+  landscape-common:                               {}
+  vim:                                            {}
+  anacron:                                        {}
+  gpg:                                            {}
   vim-tiny:
-    ensure: absent
+    ensure:                                       absent
   mlocate:
-    ensure: absent
+    ensure:                                       absent
 
 profile::base::hosts::defaults:
-  ensure: present
+  ensure:                                         present
 profile::base::hosts::objects:
   "%{trusted.hostname}":
-    ensure: absent
-    ip:     '127.0.1.1'
+    ensure:                                       absent
+    ip:                                           '127.0.1.1'
   "%{trusted.certname}":
-    ensure: present
-    ip:     '127.0.1.1'
-    host_aliases: "%{trusted.hostname}"
+    ensure:                                       present
+    ip:                                           '127.0.1.1'
+    host_aliases:                                 "%{trusted.hostname}"
   localhost:
-    ensure: absent
-    ip:     '127.0.0.1'
+    ensure:                                       absent
+    ip:                                           '127.0.0.1'
   localhost:
-    ip:     '127.0.0.1'
-    host_aliases: "localhost.%{trusted.domain}"
+    ip:                                           '127.0.0.1'
+    host_aliases:                                 "localhost.%{trusted.domain}"
   ip6-localhost:
-    ip:     '::1'
-    host_aliases: 'ip6-loopback'
+    ip:                                           '::1'
+    host_aliases:                                 'ip6-loopback'
   ip6-localnet:
-    ip: 'fe00::0'
+    ip:                                           'fe00::0'
   ip6-mcastprefix:
-    ip: 'ff00::0'
+    ip:                                           'ff00::0'
   ip6-allnodes:
-    ip: 'ff02::1'
+    ip:                                           'ff02::1'
   ip6-allrouters:
-    ip: 'ff02::2'
+    ip:                                           'ff02::2'
   ip6-allhosts:
-    ip: 'ff02::3'
+    ip:                                           'ff02::3'
 
 
 
 # puppet agent
-puppet::puppet_server:                  "echo.%{trusted.domain}"
-puppet::manage_repos:                   false
-puppet::structured_facts:               true
+puppet::puppet_server:                            "echo.%{trusted.domain}"
+puppet::manage_repos:                             false
+puppet::structured_facts:                         true
 
-profile::base::mail_client::myorigin:         "%{trusted.domain}"
+profile::base::mail_client::myorigin:             "%{trusted.domain}"
 profile::base::mail_client::password_credentials: "mergwyn@virginmedia.com:%{lookup('secrets::virgin')}"
-profile::base::mail_client::password_hash:    '/etc/postfix/sasl-passwords'
-profile::base::mail_client::relayhost:        '[smtp.virginmedia.com]:465'
-profile::base::mail_client::root_mail_recipient: "%{lookup('defaults::adminemail')}"
+profile::base::mail_client::password_hash:        '/etc/postfix/sasl-passwords'
+profile::base::mail_client::relayhost:            '[smtp.virginmedia.com]:465'
+profile::base::mail_client::root_mail_recipient:  "%{lookup('defaults::adminemail')}"
 
 # store ssh keys
-ssh::client::storeconfigs_enabled:      false
-ssh::server::storeconfigs_enabled:      false
+ssh::client::storeconfigs_enabled:                true
+ssh::server::storeconfigs_enabled:                true
+ssh::server:gssapiauthentication:                 'yes'
+ssh::server:gssapicleanupcredentials:             'yes'
+ssh::server:gssapikeyexchange:                    'yes'
+ssh::server:sshd_kerberos_authentication:         'yes'
+#KeyRegenerationInterval 3600
+ssh::server:config_permitemptypasswords:          'no'
+ssh::server:config_print_last_log:                'yes'
+#PubkeyAuthentication yes
+ssh::server_options:
+    options:
+      HostKey:
+        - /etc/ssh/ssh_host_rsa_key
+        - /etc/ssh/ssh_host_dsa_key
+        - /etc/ssh/ssh_host_ecdsa_key
+      GSSAPIAuthentication:                       yes
+      GSSAPICleanupCredentials:                   yes
+      GSSAPIKeyExchange:                          yes
+      HostbasedAuthentication:                    no
+      IgnoreRhosts:                               yes
+      KerberosAuthentication:                     yes
+      KeyRegenerationInterval:                    3600
+      LoginGraceTime:                             120
+      LogLevel:                                   INFO
+      PermitEmptyPasswords:                       no
+      PermitRootLogin:                            yes
+      PermitUserEnvironment:                      yes
+      PrintLastLog:                               yes
+      PrintMotd:                                  no
+      PubkeyAuthentication:                       yes
+      RhostsRSAAuthentication:                    no
+      RSAAuthentication:                          yes
+      ServerKeyBits:                              1024
+      StrictModes:                                yes
+      SyslogFacility:                             AUTH
+      TCPKeepAlive:                               yes
+      UseDNS:                                     no
+      UsePAM:                                     yes
+      UsePrivilegeSeparation:                     yes
+      X11DisplayOffset:                           10
+      X11Forwarding:                              yes
 
 # time related
-timezone::timezone:                     'Europe/London'
+timezone::timezone:                               'Europe/London'
 
-ntp::driftfile:                         '/var/lib/ntp/ntp.drift'
-ntp::logfile:                           '/var/log/ntp'
-ntp::ntpsigndsocket:                    '/var/lib/samba/ntp_signd/'
+ntp::driftfile:                                   '/var/lib/ntp/ntp.drift'
+ntp::logfile:                                     '/var/log/ntp'
+ntp::ntpsigndsocket:                              '/var/lib/samba/ntp_signd/'
 ntp::servers:
   - 127.127.1.0
   - foxtrot.%{trusted.domain}  iburst prefer
   - golf.%{trusted.domain}  iburst prefer
-ntp::fudge: 
+ntp::fudge:                                       
   - 127.127.1.0 stratum 10
 ntp::restrict:
   - default kod nomodify notrap nopeer mssntp
@@ -130,47 +170,47 @@ ntp::restrict:
   - foxtrot.%{trusted.domain} mask 255.255.255.255 nomodify notrap nopeer noquery
   - golf.%{trusted.domain} mask 255.255.255.255 nomodify notrap nopeer noquery
 
-unattended_upgrades::period:            '1'
-unattended_upgrades::autoremove:        true
-unattended_upgrades::email:             "%{lookup('defaults::adminemail')}"
+unattended_upgrades::period:                      '1'
+unattended_upgrades::autoremove:                  true
+unattended_upgrades::email:                       "%{lookup('defaults::adminemail')}"
 unattended_upgrades:
   repos:
     "%{lsbdistcodename}-security":
-      origin:                           'Ubuntu'
+      origin:                                     'Ubuntu'
     'Zabbix':
-      origin:                           'Zabbix'
+      origin:                                     'Zabbix'
   stable:
-      origin:                           'Jamie Cameron'
+      origin:                                     'Jamie Cameron'
 
 
 # set nginx package
-nginx::package_name:                    'nginx-extras'
+nginx::package_name:                              'nginx-extras'
 
-samba::params::sernetpkgs:              false
-samba::classic::domain:                 "%{lookup('defaults::workgroup')}"
-samba::classic::realm:                  "%{lookup('defaults::realm')}"
+samba::params::sernetpkgs:                        false
+samba::classic::domain:                           "%{lookup('defaults::workgroup')}"
+samba::classic::realm:                            "%{lookup('defaults::realm')}"
 
-mysql::server::manage_config_file:      false
+mysql::server::manage_config_file:                false
 
-zabbix::agent::zabbix_version:          '4.0'
-zabbix::agent::hostname:                "%{trusted.certname}"
-zabbix::agent::server:                  "zulu,zulu.%{trusted.domain}"
-zabbix::agent::serveractive:            "zulu,zulu.%{trusted.domain}"
-zabbix::agent::enableremotecommands:    '1'
-zabbix::agent::zabbix_package_state:    'latest'
-zabbix::agent::hostmetadata:             ":kernel=%{facts.kernel}:virtual=%{facts.virtual}"
+zabbix::agent::zabbix_version:                    '4.0'
+zabbix::agent::hostname:                          "%{trusted.certname}"
+zabbix::agent::server:                            "zulu,zulu.%{trusted.domain}"
+zabbix::agent::serveractive:                      "zulu,zulu.%{trusted.domain}"
+zabbix::agent::enableremotecommands:              '1'
+zabbix::agent::zabbix_package_state:              'latest'
+zabbix::agent::hostmetadata:                      ":kernel=%{facts.kernel}:virtual=%{facts.virtual}"
 
-profile::backuppc::scripts:             '/etc/backuppc/scripts'
-profile::backuppc::preuser:             "%{lookup('profile::backuppc::scripts')}/DumpPreUser"
-profile::backuppc::postuser:            "%{lookup('profile::backuppc::scripts')}/DumpPostUser"
+profile::backuppc::scripts:                       '/etc/backuppc/scripts'
+profile::backuppc::preuser:                       "%{lookup('profile::backuppc::scripts')}/DumpPreUser"
+profile::backuppc::postuser:                      "%{lookup('profile::backuppc::scripts')}/DumpPostUser"
 
-ssh::sshd_gssapiauthentication:         'yes'
-ssh::sshd_gssapicleanupcredentials:     'yes'
-ssh::sshd_gssapikeyexchange:            'yes'
-ssh::sshd_sshd_kerberos_authentication: 'yes'
+ssh::sshd_gssapiauthentication:                   'yes'
+ssh::sshd_gssapicleanupcredentials:               'yes'
+ssh::sshd_gssapikeyexchange:                      'yes'
+ssh::sshd_sshd_kerberos_authentication:           'yes'
 #KeyRegenerationInterval 3600
-ssh::sshd_config_permitemptypasswords:  'no'
-ssh::sshd_config_print_last_log:        'yes'
+ssh::sshd_config_permitemptypasswords:            'no'
+ssh::sshd_config_print_last_log:                  'yes'
 #PubkeyAuthentication yes
 #StrictModes yes
 #Subsystem sftp /usr/lib/openssh/sftp-server
@@ -181,19 +221,19 @@ ssh::sshd_config_print_last_log:        'yes'
 #X11DisplayOffset 10
 #X11Forwarding yes
 
-backuppc::client::backuppc_hostname:    "foxtrot.%{domain}"
-backuppc::client::system_account:       ''
-backuppc::client::config_name:          "%{facts.networking.hostname}"
-backuppc::client::hosts_file_user:      'gary'
-backuppc::client::hosts_file_more_users: 'backuppc'
-backuppc::client::email_admin_user_name: 'backuppc'
-backuppc::client::email_destination_domain: "%{domain}"
+backuppc::client::backuppc_hostname:              "foxtrot.%{domain}"
+backuppc::client::system_account:                 ''
+backuppc::client::config_name:                    "%{facts.networking.hostname}"
+backuppc::client::hosts_file_user:                'gary'
+backuppc::client::hosts_file_more_users:          'backuppc'
+backuppc::client::email_admin_user_name:          'backuppc'
+backuppc::client::email_destination_domain:       "%{domain}"
 backuppc::client::system_additional_commands:
  - '/bin/run-parts'
  - '/etc/backuppc/scripts/DumpPreUser/*'
-backuppc::client::dump_pre_user_cmd:    '$sshPath -q -x -l root $host /bin/run-parts --report /etc/backuppc/scripts/DumpPreUser --arg=$type'
-backuppc::client::dump_post_user_cmd:   '$sshPath -q -x -l root $host /bin/run-parts --report /etc/backuppc/scripts/DumpPostUser --arg=$type --arg=$xferOK'
-backuppc::client::user_cmd_check_status: true
+backuppc::client::dump_pre_user_cmd:              '$sshPath -q -x -l root $host /bin/run-parts --report /etc/backuppc/scripts/DumpPreUser --arg=$type'
+backuppc::client::dump_post_user_cmd:             '$sshPath -q -x -l root $host /bin/run-parts --report /etc/backuppc/scripts/DumpPostUser --arg=$type --arg=$xferOK'
+backuppc::client::user_cmd_check_status:          true
 backuppc::client::rsync_share_name:
   - '/'
 backuppc::client::rsync_args:
@@ -259,31 +299,31 @@ backuppc::client::backup_files_exclude:
   - 'opt/puppetlabs/puppet/cache'
   - 'media/.config/Radarr/logs*'
 
-webmin::repo_ensure:      'present'
-webmin::repo_manage:      true
-webmin::package_manage:   true
-webmin::package_ensure:   'latest'
-webmin::package_name:     'webmin'
-webmin::config_file:      '/etc/webmin/miniserv.conf'
-webmin::service_enable:   true
-webmin::service_ensure:   'running'
-webmin::service_manage:   true
-webmin::service_name:     'webmin'
-webmin::allowed_networks: []
-webmin::firewall_manage:  false
-webmin::service_port:     10000
+webmin::repo_ensure:                              'present'
+webmin::repo_manage:                              true
+webmin::package_manage:                           true
+webmin::package_ensure:                           'latest'
+webmin::package_name:                             'webmin'
+webmin::config_file:                              '/etc/webmin/miniserv.conf'
+webmin::service_enable:                           true
+webmin::service_ensure:                           'running'
+webmin::service_manage:                           true
+webmin::service_name:                             'webmin'
+webmin::allowed_networks:                         []
+webmin::firewall_manage:                          false
+webmin::service_port:                             10000
 
 # Service Defaults
-webmin::ssl_enable:       true
-webmin::ssl_keyfile:      '/etc/webmin/miniserv.pem'
-webmin::ssl_certfile:     '/etc/webmin/miniserv.cert'
-webmin::ssl_chainfile:    '/etc/webmin/extracas.chain'
-webmin::ssl_reject_ssl2:  true
-webmin::ssl_reject_ssl3:  true
-webmin::ssl_reject_tls1:  true
-webmin::ssl_reject_tls11: true
-webmin::ssl_reject_tls12: false
-webmin::ssl_redirect:     true
+webmin::ssl_enable:                               true
+webmin::ssl_keyfile:                              '/etc/webmin/miniserv.pem'
+webmin::ssl_certfile:                             '/etc/webmin/miniserv.cert'
+webmin::ssl_chainfile:                            '/etc/webmin/extracas.chain'
+webmin::ssl_reject_ssl2:                          true
+webmin::ssl_reject_ssl3:                          true
+webmin::ssl_reject_tls1:                          true
+webmin::ssl_reject_tls11:                         true
+webmin::ssl_reject_tls12:                         false
+webmin::ssl_redirect:                             true
 
 webmin::ssl_dependencies:
   - 'libnet-ssleay-perl'
@@ -291,5 +331,5 @@ webmin::ssl_dependencies:
   - 'libpam-runtime'
   - 'libio-pty-perl'
 
-# vim: sw=2:ai:nu expandtab
+# vim:                                            sw=2:ai:nu expandtab
 #
