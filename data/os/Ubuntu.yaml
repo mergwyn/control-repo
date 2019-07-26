@@ -112,36 +112,36 @@ profile::base::mail_client::root_mail_recipient:  "%{lookup('defaults::adminemai
 ssh::client::storeconfigs_enabled:                true
 ssh::server::storeconfigs_enabled:                true
 ssh::server_options:
-  HostKey:
-    - /etc/ssh/ssh_host_rsa_key
-    - /etc/ssh/ssh_host_dsa_key
-    - /etc/ssh/ssh_host_ecdsa_key
   GSSAPIAuthentication:                       yes
   GSSAPICleanupCredentials:                   yes
-  GSSAPIKeyExchange:                          yes
-  HostbasedAuthentication:                    no
-  IgnoreRhosts:                               yes
-  KerberosAuthentication:                     yes
-  KeyRegenerationInterval:                    3600
-  LoginGraceTime:                             120
-  LogLevel:                                   INFO
-  PermitEmptyPasswords:                       no
-  PermitRootLogin:                            yes
-  PermitUserEnvironment:                      yes
-  PrintLastLog:                               yes
-  PrintMotd:                                  no
-  PubkeyAuthentication:                       yes
-  RhostsRSAAuthentication:                    no
-  RSAAuthentication:                          yes
-  ServerKeyBits:                              1024
-  StrictModes:                                yes
-  SyslogFacility:                             AUTH
-  TCPKeepAlive:                               yes
-  UseDNS:                                     no
-  UsePAM:                                     yes
-  UsePrivilegeSeparation:                     yes
-  X11DisplayOffset:                           10
-  X11Forwarding:                              yes
+#  HostKey:
+#    - /etc/ssh/ssh_host_rsa_key
+#    - /etc/ssh/ssh_host_dsa_key
+#    - /etc/ssh/ssh_host_ecdsa_key
+#  GSSAPIKeyExchange:                          yes
+#  HostbasedAuthentication:                    no
+#  IgnoreRhosts:                               yes
+#  KerberosAuthentication:                     yes
+#  KeyRegenerationInterval:                    3600
+#  LoginGraceTime:                             120
+#  LogLevel:                                   INFO
+#  PermitEmptyPasswords:                       no
+#  PermitRootLogin:                            yes
+#  PermitUserEnvironment:                      yes
+#  PrintLastLog:                               yes
+#  PrintMotd:                                  no
+#  PubkeyAuthentication:                       yes
+#  RhostsRSAAuthentication:                    no
+#  RSAAuthentication:                          yes
+#  ServerKeyBits:                              1024
+#  StrictModes:                                yes
+#  SyslogFacility:                             AUTH
+#  TCPKeepAlive:                               yes
+#  UseDNS:                                     no
+#  UsePAM:                                     yes
+#  UsePrivilegeSeparation:                     yes
+#  X11DisplayOffset:                           10
+#  X11Forwarding:                              yes
 
 # time related
 timezone::timezone:                               'Europe/London'
