@@ -111,6 +111,8 @@ profile::base::mail_client::root_mail_recipient:  "%{lookup('defaults::adminemai
 # store ssh keys
 ssh::client::storeconfigs_enabled:                true
 ssh::client_options:
+  GSSAPIAuthentication:                           yes
+  GSSAPIDelegateCredentials:                      no
   HostbasedAuthentication:                        yes
   EnableSSHKeysign:                               yes
 ssh::server::storeconfigs_enabled:                true
