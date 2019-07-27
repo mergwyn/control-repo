@@ -8,14 +8,15 @@ class profile::backuppc::client (
 
   Class['profile::base::ssh_server'] -> Class['profile::backuppc::client']
 
-  file {$config:
+  file {'configdir':
     ensure  => directory,
+    name    => $config,
     recurse => true,
   }
   file {[$scripts, $preuser, $postuser]:
     ensure  => directory,
     recurse => true,
-    require => File[$config],
+    require => File['configdir'],
   }
   file {[ "${scripts}/PreUser", "${scripts}/PostUser"]:
     ensure => absent,
