@@ -110,12 +110,15 @@ profile::base::mail_client::root_mail_recipient:  "%{lookup('defaults::adminemai
 
 # store ssh keys
 ssh::client::storeconfigs_enabled:                true
+ssh::client_options:
+  HostbasedAuthentication:                        yes
+  EnableSSHKeysign:                               yes
 ssh::server::storeconfigs_enabled:                true
 ssh::server_options:
-  GSSAPIAuthentication:                       yes
-  GSSAPICleanupCredentials:                   yes
-  RhostsRSAAuthentication:                    yes
-  HostbasedAuthentication:                    yes
+  GSSAPIAuthentication:                           yes
+  GSSAPICleanupCredentials:                       yes
+  RhostsRSAAuthentication:                        yes
+  HostbasedAuthentication:                        yes
 #  HostKey:
 #    - /etc/ssh/ssh_host_rsa_key
 #    - /etc/ssh/ssh_host_dsa_key
