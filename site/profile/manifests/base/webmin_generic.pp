@@ -13,13 +13,7 @@ class profile::base::webmin_generic {
   # for 2FA with google
   package { 'libauthen-oath-perl': }
 
-  class { 'webmin':
-    #usermin => 'disable',
-    require => [
-      Package['libauthen-oath-perl'],
-      Exec['apt_show_versions_clean'],
-    ],
-  }
+  include ::webmin
 
   # update config values
 
@@ -49,7 +43,8 @@ class profile::base::webmin_generic {
     notify            => Service['webmin'],
   }
   file { '/etc/webmin/package-updates':
-    ensure => directory,
+    ensure  => directory,
+    require => Package['webmin'],
   }
   file { '/etc/webmin/package-updates/config':
     ensure  => present,

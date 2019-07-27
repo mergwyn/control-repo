@@ -1,14 +1,21 @@
 #
 class profile::backuppc::client (
-  $scripts  = '/etc/backuppc/scripts',
+  $config   = '/etc/backuppc',
+  $scripts  = "${config}/scripts",
   $preuser  = "${scripts}/DumpPreUser",
   $postuser = "${scripts}/DumpPostUser",
   ) {
 
-  include backuppc::client
+  Class['profile::base::ssh_server'] -> Class['profile::backuppc::client']
+
+  file {$config:
+    ensure  => directory,
+    recurse => true,
+  }
   file {[$scripts, $preuser, $postuser]:
     ensure  => directory,
     recurse => true,
+    require => File[$config],
   }
   file {[ "${scripts}/PreUser", "${scripts}/PostUser"]:
     ensure => absent,
@@ -22,6 +29,7 @@ class profile::backuppc::client (
   }
 
   #package { 'rsync': ensure => installed }
+  include backuppc::client
 
   if empty(hiera('backuppc::client::system_account'))
   {
