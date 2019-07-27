@@ -6,17 +6,15 @@ class profile::backuppc::client (
   $postuser = "${scripts}/DumpPostUser",
   ) {
 
-  Class['profile::base::ssh_server'] -> Class['profile::backuppc::client']
-
-  file {'configdir':
-    ensure  => directory,
-    name    => $config,
-    recurse => true,
-  }
+#  file {'configdir':
+#    ensure  => directory,
+#    name    => $config,
+#    recurse => true,
+#  }
   file {[$scripts, $preuser, $postuser]:
     ensure  => directory,
     recurse => true,
-    require => File['configdir'],
+    require => File['/etc/backuppc'],
   }
   file {[ "${scripts}/PreUser", "${scripts}/PostUser"]:
     ensure => absent,
