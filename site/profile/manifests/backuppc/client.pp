@@ -6,19 +6,18 @@ class profile::backuppc::client (
   $postuser = "${scripts}/DumpPostUser",
   ) {
 
-  file {'configdir':
-    ensure  => directory,
-    name    => $config,
-    force  =>  true,
+  if !defined(File[$config]) {
+    notice("Spotted File[${config}] not defined")
+    file {$config:
+      ensure  => directory,
+    }
+  } else {
+    notice("spotted File[${config}] already defined")
   }
+
   file {[$scripts, $preuser, $postuser]:
     ensure  => directory,
-    recurse => true,
-    require => File['configdir'],
-  }
-  file {[ "${scripts}/PreUser", "${scripts}/PostUser"]:
-    ensure => absent,
-    force  => true,
+    require => File[$config],
   }
 
   file { "${preuser}/S10dirsonly":
