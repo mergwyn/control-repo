@@ -9,12 +9,12 @@ class profile::backuppc::client (
   file {'configdir':
     ensure  => directory,
     name    => $config,
-    recurse => true,
+    force  =>  true,
   }
   file {[$scripts, $preuser, $postuser]:
     ensure  => directory,
     recurse => true,
-    require => File['/etc/backuppc'],
+    require => File['configdir'],
   }
   file {[ "${scripts}/PreUser", "${scripts}/PostUser"]:
     ensure => absent,
