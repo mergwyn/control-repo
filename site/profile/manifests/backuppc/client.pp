@@ -6,11 +6,11 @@ class profile::backuppc::client (
   $postuser = "${scripts}/DumpPostUser",
   ) {
 
-#  file {'configdir':
-#    ensure  => directory,
-#    name    => $config,
-#    recurse => true,
-#  }
+  file {'configdir':
+    ensure  => directory,
+    name    => $config,
+    recurse => true,
+  }
   file {[$scripts, $preuser, $postuser]:
     ensure  => directory,
     recurse => true,
