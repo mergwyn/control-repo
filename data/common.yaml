@@ -30,9 +30,12 @@ defaults::media_group:     '513'
 lookup_options:
   "^classes(.*)$":
     merge: deep
+    knockout_prefix: '--'
   "^profile::base::(.*)::(.*)$":
     merge: deep
+    knockout_prefix: '--'
   "^backupppc::client::(.*)$":
     merge: deep
+    knockout_prefix: '--'
 
 #se vim: sw=2:ai:nu expandtab
