@@ -19,7 +19,7 @@ classes:
 #    managehome:                                   false
 
 profile::base::files::objects:
-  /etc/backup: --
+  /etc/backup: '--'
 
 backuppc::server::backuppc_password:          "%{hiera('secrets::backuppc')}"
 backuppc::params::gzip_path:                  '/usr/bin/pigz'
