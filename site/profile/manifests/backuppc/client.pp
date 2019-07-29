@@ -6,14 +6,14 @@ class profile::backuppc::client (
   $postuser = "${scripts}/DumpPostUser",
   ) {
 
-  if !defined(File[$config]) {
-    notice("Spotted File[${config}] not defined")
-    file {$config:
-      ensure  => directory,
-    }
-  } else {
-    notice("spotted File[${config}] already defined")
-  }
+#  if !defined(File[$config]) {
+#    notice("Spotted File[${config}] not defined")
+#    file {$config:
+#      ensure  => directory,
+#    }
+#  } else {
+#    notice("spotted File[${config}] already defined")
+#  }
 
   file {[$scripts, $preuser, $postuser]:
     ensure  => directory,
