@@ -18,9 +18,6 @@ classes:
 #    uid:                                          '118'
 #    managehome:                                   false
 
-profile::base::files::objects:
-  /etc/backup: '--'
-
 backuppc::server::backuppc_password:          "%{hiera('secrets::backuppc')}"
 backuppc::params::gzip_path:                  '/usr/bin/pigz'
 backuppc::server::full_age_max:               370

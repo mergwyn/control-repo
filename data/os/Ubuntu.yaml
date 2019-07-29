@@ -49,8 +49,6 @@ profile::base::files::objects:
     ensure:                                       absent
   /etc/legal:
     ensure:                                       absent
-  /etc/backup:
-    ensure:                                       directory
 
 profile::base::packages::defaults:
   ensure:                                         present
