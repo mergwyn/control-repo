@@ -2,7 +2,7 @@
 
 classes:
   - network
-  - profile::backuppc::server
+  - role::backuppc_server
 
 network::interfaces_hash:
   enp3s0:
