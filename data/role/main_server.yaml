@@ -13,10 +13,10 @@ classes:
 
 #profile::base::users::objects:
 #  backuupc:
-#    password:                                     "%{lookup('defaults::sharedpassword')}"
-#    groups:                                       'sudo'
-#    uid:                                          '118'
-#    managehome:                                   false
+#    password:                                "%{lookup('defaults::sharedpassword')}"
+#    groups:                                  'sudo'
+#    uid:                                     '118'
+#    managehome:                              false
 
 backuppc::server::backuppc_password:          "%{hiera('secrets::backuppc')}"
 backuppc::params::gzip_path:                  '/usr/bin/pigz'
@@ -30,6 +30,21 @@ backuppc::server::incr_keep_cnt:              12
 backuppc::server::backup_zero_files_is_fatal: true
 backuppc::server::cgi_date_format_mmdd:       1
 backuppc::server::apache_configuration:       false
+backuppc::server::blackout_periods:
+  weekday:
+    hourBegin:                                7
+    hourEnd:                                  22
+    weekDays:
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+  weekend:
+    hourBegin:                                3
+    hourEnd:                                  22
+    weekDays:
+      - 0
+      - 6
 
-
-# vim: sw=2:ai:nu expandtab
+# vim:                                        sw=2:ai:nu expandtab
