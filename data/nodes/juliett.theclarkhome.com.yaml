@@ -3,4 +3,8 @@ classes:
   - profile::base  # All roles should have the base profile
   - profile::domain::sso
 
+backuppc::client::system_account:                 'backuppc_client'
+backuppc::client::dump_pre_user_cmd:              '$sshPath -q -x -l backuppc_client $host /bin/run-parts --report /etc/backuppc/scripts/DumpPreUser --arg=$type'
+backuppc::client::dump_post_user_cmd:             '$sshPath -q -x -l backuppc_client $host /bin/run-parts --report /etc/backuppc/scripts/DumpPostUser --arg=$type --arg=$xferOK'
+
 # vim: sw=2:ai:nu expandtab
