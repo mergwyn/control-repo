@@ -9,7 +9,7 @@ classes:
 zabbix::agent::serveractive:    'localhost'
 zabbix::agent::server:          'localhost'
 zabbix::database_name:          'zabbix'
-zabbix::database_password:      "%{hiera('secrets::mysql')}"
+zabbix::database_password:      "%{lookup('secrets::mysql')}"
 zabbix::database_type:          'mysql'
 zabbix::database_user:          'zabbix'
 zabbix::server::zabbix_version: '4.0'

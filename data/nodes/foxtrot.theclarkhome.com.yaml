@@ -14,11 +14,11 @@ network::interfaces_hash:
       - /sbin/ifconfig enp4s0 mtu 9004
   br0:
     ipaddress:                  "192.168.11.12"
-    netmask:                    "%{hiera('defaults::netmask')}"
-    gateway:                    "%{hiera('defaults::gateway')}"
-    network:                    "%{hiera('defaults::network')}"
-    dns_nameservers:            "%{hiera('defaults::dns_nameservers')}"
-    dns_search:                 "%{hiera('defaults::dns_search')}"
+    netmask:                    "%{lookup('defaults::netmask')}"
+    gateway:                    "%{lookup('defaults::gateway')}"
+    network:                    "%{lookup('defaults::network')}"
+    dns_nameservers:            "%{lookup('defaults::dns_nameservers')}"
+    dns_search:                 "%{lookup('defaults::dns_search')}"
     bridge_ports:
       - enp3s0
       - enp4s0

@@ -6,8 +6,8 @@ class profile::media::sickbeard_automator {
   $scriptdir = "${codedir}/scripts"
   $configdir = '/etc/sickbeard_mp4_automator'
   $logdir    = '/var/log/sickbeard_mp4_automator'
-  $owner     =  hiera('defaults::media_user')
-  $group     =  hiera('defaults::media_group')
+  $owner     =  lookup('defaults::media_user')
+  $group     =  lookup('defaults::media_group')
 
   include profile::git
   include profile::scripts

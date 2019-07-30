@@ -8,10 +8,10 @@ classes:
   - profile::samba::dc 
 
 samba::dc::role:                        'dc'
-samba::dc::domain:                      "%{hiera('defaults::workgroup')}"
-samba::dc::realm:                       "%{hiera('defaults::realm')}"
+samba::dc::domain:                      "%{lookup('defaults::workgroup')}"
+samba::dc::realm:                       "%{lookup('defaults::realm')}"
 samba::dc::loglevel:                    '1'
-samba::dc::adminpassword:               "%{hiera('secrets::domain')}"
+samba::dc::adminpassword:               "%{lookup('secrets::domain')}"
 samba::dc::dnsforwarder:                '208.67.222.222'
 samba::dc::serverservices:              's3fs, rpc, nbt, wrepl, ldap, cldap, kdc, drepl, winbind, ntp_signd, kcc, dnsupdate, dns'
 samba::dc::provisionargs:               '--use-xattrs=yes --use-ntvfs'

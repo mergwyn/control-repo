@@ -5,7 +5,7 @@ class profile::certificate_server {
   # sort out certificates first
   #class { '::letsencrypt':
   #  config => {
-  #    email  => hiera('defaults::adminemail'),
+  #    email  => lookup('defaults::adminemail'),
   #    server => 'https://acme-staging.api.letsencrypt.org/directory'
   #  }
   #}

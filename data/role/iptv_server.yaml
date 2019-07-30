@@ -7,6 +7,6 @@ classes:
   - profile::media::iptv
 
 tvheadend::release:                     'release'
-tvheadend::admin_password:              "%{hiera('secrets::tvheadend')}"
+tvheadend::admin_password:              "%{lookup('secrets::tvheadend')}"
 
 # vim: sw=2:ai:nu expandtab

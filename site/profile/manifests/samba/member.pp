@@ -3,8 +3,8 @@
 class profile::samba::member {
   class { '::samba::classic':
     # Mandatory parameters
-    domain              => hiera('defaults::workgroup'),
-    realm               => hiera('defaults::realm'),
+    domain              => lookup('defaults::workgroup'),
+    realm               => lookup('defaults::realm'),
     smbname             => $::facts['networking']['hostname'],
     sambaloglevel       => 2,
     logtosyslog         => false,
@@ -17,8 +17,8 @@ class profile::samba::member {
     security            => 'ADS',         # * security mode.
     krbconf             => true,         # * Deploy krb5.conf fil e (default: true)
     nsswitch            => false,         # * Add winbind to nsswitch,
-    adminuser           => hiera('defaults::adminuser'),
-    adminpassword       => hiera('secrets::domain'),
+    adminuser           => lookup('defaults::adminuser'),
+    adminpassword       => lookup('secrets::domain'),
     globaloptions       => {
       'kerberos method'      => 'secrets and keytab',
       'ntlm auth'            => 'yes',
@@ -47,7 +47,7 @@ class profile::samba::member {
     backend    => 'tdb',         # * idmap backend
   }
   ::samba::idmap { 'Domain DC':
-    domain      => hiera('defaults::workgroup'),  # * name of the Domain or '*'
+    domain      => lookup('defaults::workgroup'),  # * name of the Domain or '*'
     idrangemin  => 500,
     idrangemax  => 19999,
     backend     => 'ad',

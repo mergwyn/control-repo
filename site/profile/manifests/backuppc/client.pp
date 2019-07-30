@@ -27,9 +27,9 @@ class profile::backuppc::client (
   if empty(hiera('backuppc::client::system_account'))
   {
     # Need to manage .ssh keys outside of backuupc module
-    $system_account        = hiera('defaults::system_user')
-    $system_home_directory = hiera('defaults::system_home_dir')
-    $backuppc_hostname     = hiera('defaults::backuppc_server')
+    $system_account        = lookup('defaults::system_user')
+    $system_home_directory = lookup('defaults::system_home_dir')
+    $backuppc_hostname     = lookup('defaults::backuppc_server')
 
     file { "${system_home_directory}/.ssh":
       ensure => 'directory',

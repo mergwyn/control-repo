@@ -31,13 +31,13 @@ class profile::samba::dc {
     #}
     #class { '::samba::dc':
       #role               => 'join',
-      #domain             => hiera("workgroup"),
-      #realm              => hiera("realm"),
+      #domain             => lookup("workgroup"),
+      #realm              => lookup("realm"),
       #dnsbackend         => 'internal',
       #domainlevel        => '2008 R2',
       #sambaloglevel      => 2,
       #logtosyslog        => true,
-      #adminpassword      => hiera("adminpassword"),
+      #adminpassword      => lookup("adminpassword"),
 
       #ip                 => '192.168.199.80',
       #sambaclassloglevel => {

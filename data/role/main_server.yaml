@@ -18,7 +18,7 @@ classes:
 #    uid:                                     '118'
 #    managehome:                              false
 
-backuppc::server::backuppc_password:          "%{hiera('secrets::backuppc')}"
+backuppc::server::backuppc_password:          "%{lookup('secrets::backuppc')}"
 backuppc::params::gzip_path:                  '/usr/bin/pigz'
 backuppc::server::full_age_max:               370
 backuppc::server::full_keep_cnt:

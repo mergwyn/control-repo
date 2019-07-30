@@ -25,13 +25,13 @@ transmission::speed_limit_up:           250
 transmission::watch_dir:                "/srv/media/torrent/watch"
 
 #jackett
-jackett::user:             "%{hiera('defaults::media_user')}"
-jackett::group:            "%{hiera('defaults::media_group')}"
+jackett::user:             "%{lookup('defaults::media_user')}"
+jackett::group:            "%{lookup('defaults::media_group')}"
 jackett::keep:             2
 
 #radarr
-radarr::user:              "%{hiera('defaults::media_user')}"
-radarr::group:             "%{hiera('defaults::media_group')}"
+radarr::user:              "%{lookup('defaults::media_user')}"
+radarr::group:             "%{lookup('defaults::media_group')}"
 radarr::keep:              2
 
 # vim: sw=2:ai:nu expandtab

@@ -17,7 +17,7 @@ class profile::base::windows {
 #    working_dir => "\\\\${lookup('defaults::backup_server')}\\backup\\${trusted['hostname']}\\GPO\\",
 #    enabled     => true,
 #    user        => "${lookup('defaults::workgroup')}\\backup",
-#    password    => hiera('secrets::backup'),
+#    password    => lookup('secrets::backup'),
 #    trigger     => [
 #      {
 #        schedule   => 'daily',
