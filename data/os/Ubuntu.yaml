@@ -202,23 +202,7 @@ profile::backuppc::scripts:                       '/etc/backuppc/scripts'
 profile::backuppc::preuser:                       "%{lookup('profile::backuppc::scripts')}/DumpPreUser"
 profile::backuppc::postuser:                      "%{lookup('profile::backuppc::scripts')}/DumpPostUser"
 
-ssh::sshd_gssapiauthentication:                   'yes'
-ssh::sshd_gssapicleanupcredentials:               'yes'
-ssh::sshd_gssapikeyexchange:                      'yes'
-ssh::sshd_sshd_kerberos_authentication:           'yes'
-#KeyRegenerationInterval 3600
-ssh::sshd_config_permitemptypasswords:            'no'
-ssh::sshd_config_print_last_log:                  'yes'
-#PubkeyAuthentication yes
-#StrictModes yes
-#Subsystem sftp /usr/lib/openssh/sftp-server
-#TCPKeepAlive yes
-#UseDNS no
-#UsePAM yes
-#UsePrivilegeSeparation yes
-#X11DisplayOffset 10
-#X11Forwarding yes
-
+# backuppc client
 backuppc::client::backuppc_hostname:              "foxtrot.%{domain}"
 backuppc::client::system_account:                 'backuppc_client'
 backuppc::client::config_name:                    "%{facts.networking.hostname}"
@@ -297,6 +281,7 @@ backuppc::client::backup_files_exclude:
   - 'opt/puppetlabs/puppet/cache'
   - 'media/.config/Radarr/logs*'
 
+# webmin
 webmin::repo_ensure:                              'present'
 webmin::repo_manage:                              true
 webmin::package_manage:                           true
@@ -311,7 +296,7 @@ webmin::allowed_networks:                         []
 webmin::firewall_manage:                          false
 webmin::service_port:                             10000
 
-# Service Defaults
+# webmin Service Defaults
 webmin::ssl_enable:                               true
 webmin::ssl_keyfile:                              '/etc/webmin/miniserv.pem'
 webmin::ssl_certfile:                             '/etc/webmin/miniserv.cert'
