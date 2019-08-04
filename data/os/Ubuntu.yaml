@@ -119,7 +119,6 @@ ssh::server::storeconfigs_enabled:                true
 ssh::server_options:
   GSSAPIAuthentication:                           yes
   GSSAPICleanupCredentials:                       yes
-  RhostsRSAAuthentication:                        yes
   HostbasedAuthentication:                        yes
   UseDNS:                                         yes
 #  HostKey:
