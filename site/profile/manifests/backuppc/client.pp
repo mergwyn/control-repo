@@ -22,7 +22,7 @@ class profile::backuppc::client (
   }
 
   #package { 'rsync': ensure => installed }
-  include backuppc::client
+  #include backuppc::client
 
   if empty(hiera('backuppc::client::system_account'))
   {

@@ -71,7 +71,7 @@ class profile::backuppc::server {
     managehome => false,
   }
 
-  include backuppc::server
+  #include backuppc::server
 
 #  $topdir = '/var/lib/backuppc'
 #  Sshkey <<| tag == "backuppc_sshkeys_${facts['networking']['fqdn']}" |>> {
