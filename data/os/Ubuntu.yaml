@@ -121,6 +121,7 @@ ssh::server_options:
   GSSAPICleanupCredentials:                       yes
   RhostsRSAAuthentication:                        yes
   HostbasedAuthentication:                        yes
+  UseDNS:                                         yes
 #  HostKey:
 #    - /etc/ssh/ssh_host_rsa_key
 #    - /etc/ssh/ssh_host_dsa_key
@@ -144,7 +145,6 @@ ssh::server_options:
 #  StrictModes:                                yes
 #  SyslogFacility:                             AUTH
 #  TCPKeepAlive:                               yes
-#  UseDNS:                                     no
 #  UsePAM:                                     yes
 #  UsePrivilegeSeparation:                     yes
 #  X11DisplayOffset:                           10
