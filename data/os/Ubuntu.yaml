@@ -116,7 +116,6 @@ ssh::client_options:
   GSSAPIDelegateCredentials:                      no
   HostbasedAuthentication:                        yes
   EnableSSHKeysign:                               yes
-  UseDNS:                                         yes
 ssh::server::storeconfigs_enabled:                true
 ssh::server_options:
   GSSAPIAuthentication:                           yes
