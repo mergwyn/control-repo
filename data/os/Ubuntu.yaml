@@ -148,6 +148,23 @@ ssh::server_options:
 #  UsePrivilegeSeparation:                     yes
 #  X11DisplayOffset:                           10
 #  X11Forwarding:                              yes
+ssh::sshd_gssapiauthentication:                   'yes'
+ssh::sshd_gssapicleanupcredentials:               'yes'
+#ssh::sshd_gssapikeyexchange:                      'yes'
+ssh::sshd_kerberos_authentication:                'yes'
+ssh::sshd_hostbasedauthentication:                'yes'
+#KeyRegenerationInterval 3600
+ssh::sshd_config_permitemptypasswords:            'no'
+ssh::sshd_config_print_last_log:                  'yes'
+#PubkeyAuthentication yes
+#StrictModes yes
+#Subsystem sftp /usr/lib/openssh/sftp-server
+#TCPKeepAlive yes
+#UseDNS no
+#UsePAM yes
+#UsePrivilegeSeparation yes
+#X11DisplayOffset 10
+#X11Forwarding yes
 
 # time related
 timezone::timezone:                               'Europe/London'
@@ -203,7 +220,8 @@ profile::backuppc::postuser:                      "%{lookup('profile::backuppc::
 
 # backuppc client
 backuppc::client::backuppc_hostname:              "foxtrot.%{domain}"
-backuppc::client::system_account:                 'backuppc_client'
+#backuppc::client::system_account:                 'backuppc_client'
+backuppc::client::system_account:                 ''
 backuppc::client::config_name:                    "%{facts.networking.hostname}"
 backuppc::client::hosts_file_user:                'gary'
 backuppc::client::hosts_file_more_users:          'backuppc'
@@ -212,8 +230,8 @@ backuppc::client::email_destination_domain:       "%{domain}"
 backuppc::client::system_additional_commands:
  - '/bin/run-parts'
  - '/etc/backuppc/scripts/DumpPreUser/*'
-backuppc::client::dump_pre_user_cmd:              '$sshPath -q -x -l backuppc_client $host /bin/run-parts --report /etc/backuppc/scripts/DumpPreUser --arg=$type'
-backuppc::client::dump_post_user_cmd:             '$sshPath -q -x -l backuppc_client $host /bin/run-parts --report /etc/backuppc/scripts/DumpPostUser --arg=$type --arg=$xferOK'
+backuppc::client::dump_pre_user_cmd:              '$sshPath -q -x -l root $host /bin/run-parts --report /etc/backuppc/scripts/DumpPreUser --arg=$type'
+backuppc::client::dump_post_user_cmd:             '$sshPath -q -x -l root $host /bin/run-parts --report /etc/backuppc/scripts/DumpPostUser --arg=$type --arg=$xferOK'
 backuppc::client::user_cmd_check_status:          true
 backuppc::client::rsync_share_name:
   - '/'
