@@ -109,12 +109,14 @@ profile::base::mail_client::relayhost:            '[smtp.virginmedia.com]:465'
 profile::base::mail_client::root_mail_recipient:  "%{lookup('defaults::adminemail')}"
 
 # store ssh keys
+# saz-ssh
 ssh::client::storeconfigs_enabled:                true
 ssh::client_options:
   GSSAPIAuthentication:                           yes
   GSSAPIDelegateCredentials:                      no
   HostbasedAuthentication:                        yes
   EnableSSHKeysign:                               yes
+  UseDNS:                                         yes
 ssh::server::storeconfigs_enabled:                true
 ssh::server_options:
   GSSAPIAuthentication:                           yes
