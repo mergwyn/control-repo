@@ -2,9 +2,9 @@
 # TODO: complete testing of settings setup
 
 class profile::media::sabnzbdplus (
-  $user = 'media',
-  $group = '513',
-  $settings = {},
+  String $user = 'media',
+  String $group = '513',
+  Optional[Hash] $settings = {},
   ) {
 
   apt::ppa { 'ppa:jcfp/nobetas':
@@ -46,7 +46,6 @@ class profile::media::sabnzbdplus (
     ]
   }
 
-  validate_hash($settings)
   $defaults = { 'path' => '/home/media/.sabnzbd/sabnzbd.ini' }
   create_ini_settings($settings, $defaults)
 
