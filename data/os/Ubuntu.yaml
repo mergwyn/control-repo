@@ -53,7 +53,6 @@ profile::base::files::objects:
 profile::base::packages::defaults:
   ensure:                                         present
 profile::base::packages::objects:
-  openssh-server:                                 {}
   ubuntu-standard:                                {}
   update-notifier-common:                         {}
   landscape-common:                               {}
