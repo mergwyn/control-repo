@@ -147,23 +147,20 @@ ssh::server_options:
 #  UsePrivilegeSeparation:                     yes
 #  X11DisplayOffset:                           10
 #  X11Forwarding:                              yes
-ssh::sshd_gssapiauthentication:                   'yes'
-ssh::sshd_gssapicleanupcredentials:               'yes'
-#ssh::sshd_gssapikeyexchange:                      'yes'
-ssh::sshd_kerberos_authentication:                'yes'
-ssh::sshd_hostbasedauthentication:                'yes'
-#KeyRegenerationInterval 3600
-ssh::sshd_config_permitemptypasswords:            'no'
-ssh::sshd_config_print_last_log:                  'yes'
-#PubkeyAuthentication yes
-#StrictModes yes
-#Subsystem sftp /usr/lib/openssh/sftp-server
-#TCPKeepAlive yes
-#UseDNS no
-#UsePAM yes
-#UsePrivilegeSeparation yes
-#X11DisplayOffset 10
-#X11Forwarding yes
+# ssh client
+
+ssh::ssh_hostbasedauthentication:                 yes
+ssh::ssh_gssapiauthentication:                    yes
+ssh::ssh_ssh_gssapidelegatecredentials:           yes
+ssh::ssh_enable_ssh_keysign:                      yes
+
+# sshd server
+ssh::sshd_gssapiauthentication:                   yes
+ssh::sshd_gssapicleanupcredentials:               yes
+ssh::sshd_kerberos_authentication:                yes
+ssh::sshd_hostbasedauthentication:                yes
+ssh::sshd_config_permitemptypasswords:            no
+ssh::sshd_config_print_last_log:                  yes
 
 # time related
 timezone::timezone:                               'Europe/London'
