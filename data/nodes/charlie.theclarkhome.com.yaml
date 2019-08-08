@@ -4,9 +4,11 @@ profile::base::packages::objects:
   clover-configurator: {}
   geekbench: {}
   garmin-express: {}
-  google-backup-and-sync: {}
+  google-backup-and-sync: 
+    ensure: absent
   #homebrew/cask-versions/vmware-fusion8: {}
-  onedrive: {}
+  onedrive:
+    ensure: absent
   whatsapp: {}
 
 
