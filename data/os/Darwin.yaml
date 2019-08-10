@@ -5,6 +5,7 @@ profile::base::users::defaults:
 profile::base::users::objects:
   brew:
     gid: admin
+    password: "%{lookup('secrets::brew')}"
 
 homebrew::user:         'brew'
 homebrew::group:        'admin'
