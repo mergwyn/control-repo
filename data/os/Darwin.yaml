@@ -2,7 +2,7 @@
 
 profile::base::users::defaults:
   ensure: present
-profile::base::user::objects:
+profile::base::users::objects:
   brew: {}
 
 homebrew::user:         'brew'
