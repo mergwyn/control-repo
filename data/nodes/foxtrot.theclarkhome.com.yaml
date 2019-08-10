@@ -34,6 +34,7 @@ backuppc::client::rsync_share_name:
   - '/home'
   - '/home/ann'
   - '/home/gary'
+  - '/home/gary/odrive'
   - '/home/gwyn'
   - '/home/merry'
   - '/srv/backup/GPO'
@@ -44,5 +45,9 @@ backuppc::client::rsync_share_name:
   - '/var/cache'
   - '/var/spool'
   - '/var/log'
+
+backuppc::client::backup_files_exclude:
+  - '*.cloudf'
+  - '*.cloud'
 
 # vim: sw=2:ai:nu expandtab
