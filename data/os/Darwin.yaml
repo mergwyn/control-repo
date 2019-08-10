@@ -41,7 +41,7 @@ profile::base::files::objects:
     ensure:                         directory
     owner:                          brew
     group:                          admin
-    require:                        "User['brew']"
+    require:                        User[brew]
   /usr/local/lib/vim:
     ensure:                         directory
   /usr/local/lib/vim/vimrc.local:
