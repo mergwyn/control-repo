@@ -1,45 +1,46 @@
 ---
 
 profile::base::users::defaults:
-  ensure: present
+  ensure:                           present
 profile::base::users::objects:
   brew:
-    gid: admin
-    password: "%{lookup('secrets::brew')}"
-    iterations: 86956
-    salt: 'b78fbae626c563458942fea9b35f160ab02274e8e1c6b2403b9c7c93785a3915'
+    gid:                            'admin'
+    password:                       "%{lookup('secrets::brew')}"
+    iterations:                     86956
+    salt:                           'b78fbae626c563458942fea9b35f160ab02274e8e1c6b2403b9c7c93785a3915'
+    managehome:                     true
 
 
-homebrew::user:         'brew'
-homebrew::group:        'admin'
-homebrew::multiuser:    false
-homebrew::github_token: "%{lookup('secrets::github::homebrew')}"
+homebrew::user:                     'brew'
+homebrew::group:                    'admin'
+homebrew::multiuser:                false
+homebrew::github_token:             "%{lookup('secrets::github::homebrew')}"
 
 # packages to be installed
 profile::base::packages::defaults:
-  provider: homebrew
-  ensure: latest
+  provider:                         homebrew
+  ensure:                           latest
 profile::base::packages::objects:
-  mergwyn/homebrew-cask/unison248: {}
+  mergwyn/homebrew-cask/unison248:  {}
   puppetlabs/puppet/puppet-agent-6: {}
-  keeweb: {}
-  amazon-music: {}
-  firefox: {}
-  homebrew/cask-drivers/sonos: {}
-  profilecreator: {}
-  aerial: {}
-  vlc: {}
+  keeweb:                           {}
+  amazon-music:                     {}
+  firefox:                          {}
+  homebrew/cask-drivers/sonos:      {}
+  profilecreator:                   {}
+  aerial:                           {}
+  vlc:                              {}
   dropbox:
-    ensure: absent
+    ensure:                         absent
   google-chrome:
-    ensure: absent
+    ensure:                         absent
 
 profile::base::files::defaults:
-  ensure: present
+  ensure:                           present
 profile::base::files::objects:
   /usr/local/lib/vim:
-    ensure: directory
+    ensure:                         directory
   /usr/local/lib/vim/vimrc.local:
-    source: 'puppet:///modules/profile/vimrc.local'
+    source:                         'puppet:///modules/profile/vimrc.local'
 
-# vim: sw=2:ai:nu expandtab
+# vim:                              sw=2:ai:nu expandtab
