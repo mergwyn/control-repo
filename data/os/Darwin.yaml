@@ -3,10 +3,11 @@
 profile::base::users::defaults:
   ensure: present
 profile::base::users::objects:
-  brew: {}
+  brew:
+    group: admin
 
 homebrew::user:         'brew'
-homebrew::group:        'staff'
+homebrew::group:        'admin'
 homebrew::multiuser:    false
 homebrew::github_token: "%{lookup('secrets::github::homebrew')}"
 
