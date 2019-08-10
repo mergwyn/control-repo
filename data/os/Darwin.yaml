@@ -1,8 +1,13 @@
 ---
 
-homebrew::user:         'sadmin'
+profile::base::users::defaults:
+  ensure: present
+profile::base::user::objects:
+  brew: {}
+
+homebrew::user:         'brew'
 homebrew::group:        'admin'
-homebrew::multiuser:    true
+homebrew::multiuser:    false
 homebrew::github_token: "%{lookup('secrets::github::homebrew')}"
 
 # packages to be installed
