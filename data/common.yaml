@@ -37,8 +37,5 @@ lookup_options:
   "^backupppc::(.*)::backup_files_exclude$":
     merge: unique
     knockout_prefix: '--'
-  "^backupppc::client::(.*)$":
-    merge: deep
-    knockout_prefix: '--'
 
 #se vim: sw=2:ai:nu expandtab
