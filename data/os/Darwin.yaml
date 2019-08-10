@@ -6,7 +6,7 @@ profile::base::users::objects:
   brew: {}
 
 homebrew::user:         'brew'
-homebrew::group:        'admin'
+homebrew::group:        'staff'
 homebrew::multiuser:    false
 homebrew::github_token: "%{lookup('secrets::github::homebrew')}"
 
