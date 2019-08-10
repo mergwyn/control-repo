@@ -34,8 +34,8 @@ lookup_options:
   "^profile::base::(.*)::(.*)$":
     merge: deep
     knockout_prefix: '--'
-  "^backupppc::(.*)::backup_files_exclude$":
-    merge: unique
+  "^backuppc::(.*)::(.*)$":
+    merge: deep
     knockout_prefix: '--'
 
 #se vim: sw=2:ai:nu expandtab
