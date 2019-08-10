@@ -35,10 +35,10 @@ lookup_options:
     merge: deep
     knockout_prefix: '--'
   "^backupppc::(.*)$":
-    merge: deeper
+    merge: deep
     knockout_prefix: '--'
-  "^backupppc::(.*)::(.*)$":
-    merge: deeper
+  "^backupppc::client::(.*)$":
+    merge: deep
     knockout_prefix: '--'
 
 #se vim: sw=2:ai:nu expandtab
