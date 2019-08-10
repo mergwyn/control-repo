@@ -4,7 +4,7 @@ profile::base::users::defaults:
   ensure: present
 profile::base::users::objects:
   brew:
-    group: admin
+    gid: admin
 
 homebrew::user:         'brew'
 homebrew::group:        'admin'
