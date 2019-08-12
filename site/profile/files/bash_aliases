@@ -8,5 +8,21 @@ alias l='ls -CFsa'
 #alias most='du -hx --max-depth=1 . | sort -rh | head -10'
 alias most='du -kaxh --max-depth=1 | sort -rh | head -10'
 alias nodile='pmset noidle'
+alias odrive=/opt/odrive/bin/odrive
+
+boldecho() { echo $(tput smso)"$@"$(tput rmso) ; }
+listremotes() { lxc remote list | grep -v simplestreams | awk '/lxd/{print $2}'; }
+listcontainers() { lxc list -c ns ${1+${1}:} | awk '!/NAME/{ if ( $4 == "RUNNING" ) print $2}'; }
+
+listhosts()
+{
+  for remote in $(listremotes)
+  do
+    [[ ${remote} = "local" ]] && hostname || echo ${remote}
+    listcontainers ${remote}
+  done
+}
+
+
 
 set -o vi

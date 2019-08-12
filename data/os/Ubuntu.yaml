@@ -53,7 +53,6 @@ profile::base::files::objects:
 profile::base::packages::defaults:
   ensure:                                         present
 profile::base::packages::objects:
-  openssh-server:                                 {}
   ubuntu-standard:                                {}
   update-notifier-common:                         {}
   landscape-common:                               {}
@@ -149,6 +148,20 @@ ssh::server_options:
 #  UsePrivilegeSeparation:                     yes
 #  X11DisplayOffset:                           10
 #  X11Forwarding:                              yes
+# ssh client
+
+ssh::ssh_hostbasedauthentication:                 'yes'
+ssh::ssh_gssapiauthentication:                    'yes'
+ssh::ssh_ssh_gssapidelegatecredentials:           'yes'
+ssh::ssh_enable_ssh_keysign:                      'yes'
+
+# sshd server
+ssh::sshd_gssapiauthentication:                   'yes'
+ssh::sshd_gssapicleanupcredentials:               'yes'
+ssh::sshd_kerberos_authentication:                'yes'
+ssh::sshd_hostbasedauthentication:                'yes'
+ssh::sshd_config_permitemptypasswords:            'no'
+ssh::sshd_config_print_last_log:                  'yes'
 
 # time related
 timezone::timezone:                               'Europe/London'
@@ -204,7 +217,8 @@ profile::backuppc::postuser:                      "%{lookup('profile::backuppc::
 
 # backuppc client
 backuppc::client::backuppc_hostname:              "foxtrot.%{domain}"
-backuppc::client::system_account:                 'backuppc_client'
+#backuppc::client::system_account:                 'backuppc_client'
+backuppc::client::system_account:                 ''
 backuppc::client::config_name:                    "%{facts.networking.hostname}"
 backuppc::client::hosts_file_user:                'gary'
 backuppc::client::hosts_file_more_users:          'backuppc'
@@ -213,8 +227,8 @@ backuppc::client::email_destination_domain:       "%{domain}"
 backuppc::client::system_additional_commands:
  - '/bin/run-parts'
  - '/etc/backuppc/scripts/DumpPreUser/*'
-backuppc::client::dump_pre_user_cmd:              '$sshPath -q -x -l backuppc_client $host /bin/run-parts --report /etc/backuppc/scripts/DumpPreUser --arg=$type'
-backuppc::client::dump_post_user_cmd:             '$sshPath -q -x -l backuppc_client $host /bin/run-parts --report /etc/backuppc/scripts/DumpPostUser --arg=$type --arg=$xferOK'
+backuppc::client::dump_pre_user_cmd:              '$sshPath -q -x -l root $host /bin/run-parts --report /etc/backuppc/scripts/DumpPreUser --arg=$type'
+backuppc::client::dump_post_user_cmd:             '$sshPath -q -x -l root $host /bin/run-parts --report /etc/backuppc/scripts/DumpPostUser --arg=$type --arg=$xferOK'
 backuppc::client::user_cmd_check_status:          true
 backuppc::client::rsync_share_name:
   - '/'
