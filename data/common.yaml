@@ -34,7 +34,7 @@ lookup_options:
   "^profile::base::(.*)::(.*)$":
     merge: deep
     knockout_prefix: '--'
-  "^backupppc::client::(.*)$":
+  "^backuppc::(.*)::(.*)$":
     merge: deep
     knockout_prefix: '--'
 

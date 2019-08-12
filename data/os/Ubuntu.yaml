@@ -108,6 +108,7 @@ profile::base::mail_client::relayhost:            '[smtp.virginmedia.com]:465'
 profile::base::mail_client::root_mail_recipient:  "%{lookup('defaults::adminemail')}"
 
 # store ssh keys
+# saz-ssh
 ssh::client::storeconfigs_enabled:                true
 ssh::client_options:
   GSSAPIAuthentication:                           yes
@@ -264,7 +265,6 @@ backuppc::client::backup_files_exclude:
   - 'opt/puppetlabs/server/data/puppetserver/reports'
   - '.osync_workdir'
   - '*.ova'
-  - 'Plex Versions'
   - '*Recycle Bin*'
   - 'srv/backup'
   - '*.tar'
@@ -279,11 +279,6 @@ backuppc::client::backup_files_exclude:
   - 'var/lib/mlocate/mlocate.db*'
   - 'var/lib/mysql/zabbix*'
   - 'var/lib/php/sessions/*'
-  - 'var/lib/plexmediaserver/Library/Application Support/Plex Media Server/Cache'
-  - 'var/lib/plexmediaserver/Library/Application Support/Plex Media Server/Logs'
-  - 'var/lib/plexmediaserver/Library/Application Support/Plex Media Server/Media/localhost'
-  - 'var/lib/plexmediaserver/Library/Application Support/Plex Media Server/Metadata'
-  - 'var/lib/plexmediaserver/Library/Application Support/Plex Media Server/Plug-in Support/Caches'
   - 'var/tmp'
   - 'var/webmin/output'
   - '*.vdi'

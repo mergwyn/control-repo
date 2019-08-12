@@ -5,6 +5,7 @@ include common
 
 # Library folder items to exclude:
 
+ignore = BelowPath odrive
 ignore = Path .Filesync
 ignore = Path .SymAVQSFile
 ignore = Path .Trash

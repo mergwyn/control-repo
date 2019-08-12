@@ -4,7 +4,9 @@ profile::base::packages::objects:
   clover-configurator: {}
   geekbench: {}
   garmin-express: {}
-  google-backup-and-sync: 
+  amazon-photos:
+    ensure: absent
+  google-backup-and-sync:
     ensure: absent
   #homebrew/cask-versions/vmware-fusion8: {}
   onedrive:
