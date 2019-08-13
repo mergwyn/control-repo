@@ -226,8 +226,8 @@ backuppc::client::email_destination_domain:       "%{domain}"
 backuppc::client::system_additional_commands:
  - '/bin/run-parts'
  - '/etc/backuppc/scripts/DumpPreUser/*'
-backuppc::client::dump_pre_user_cmd:              '$sshPath -q -x -l root $host /bin/run-parts --report /etc/backuppc/scripts/DumpPreUser --arg=$type'
-backuppc::client::dump_post_user_cmd:             '$sshPath -q -x -l root $host /bin/run-parts --report /etc/backuppc/scripts/DumpPostUser --arg=$type --arg=$xferOK'
+backuppc::client::dump_pre_user_cmd:              '$sshPath -q -x -l backuppc_client $host /bin/run-parts --report /etc/backuppc/scripts/DumpPreUser --arg=$type'
+backuppc::client::dump_post_user_cmd:             '$sshPath -q -x -l backuppc_client $host /bin/run-parts --report /etc/backuppc/scripts/DumpPostUser --arg=$type --arg=$xferOK'
 backuppc::client::user_cmd_check_status:          true
 backuppc::client::rsync_share_name:
   - '/'
