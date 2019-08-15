@@ -1,11 +1,12 @@
 ---
 fixtures:
   symlinks:
+    profile: site/profile
     site: "#{source_dir}/site"
   repositories:
     managedmac:
       repo: https://github.com/henrydobson/managedmac
-      branch: puppetv4.5
+      ref: refs/heads/puppetv4.5
     jackett:
       repo: https://github.com/mergwyn/mergwyn-jackett
       ref: master
@@ -21,22 +22,22 @@ fixtures:
     tvheadend:
       repo: https://github.com/mergwyn/puppet-tvheadend
       ref: master
-    ssh:
-      repo: https://github.com/saz/puppet-ssh
-      ref: master
     transmission:
       repo: https://github.com/mergwyn/puppet-transmission
       ref: master
     webmin:
       repo: https://github.com/rehanone/puppet-webmin
       ref: master
+    backuppc:
+      repo: https://github.com/mergwyn/mergwyn-backuppc
+      ref: refs/heads/puppet6
   forge_modules:
     augeas:
       repo: camptocamp-augeas
-      ref: 1.7.0
+      ref: 1.8.0
     kmod:
       repo: camptocamp-kmod
-      ref: 2.3.0
+      ref: 2.3.1
     postfix:
       repo: camptocamp-postfix
       ref: 1.8.0
@@ -81,7 +82,7 @@ fixtures:
       ref: 5.0.0
     apt:
       repo: puppetlabs-apt
-      ref: 7.0.1
+      ref: 7.1.0
     augeas_core:
       repo: puppetlabs-augeas_core
       ref: 1.0.4
@@ -93,13 +94,13 @@ fixtures:
       ref: 0.5.0
     inifile:
       repo: puppetlabs-inifile
-      ref: 3.0.0
+      ref: 3.1.0
     mailalias_core:
       repo: puppetlabs-mailalias_core
       ref: 1.0.5
     mysql:
       repo: puppetlabs-mysql
-      ref: 10.0.0
+      ref: 10.1.0
     ntp:
       repo: puppetlabs-ntp
       ref: 8.0.0
@@ -111,10 +112,10 @@ fixtures:
       ref: 6.1.0
     puppetdb:
       repo: puppetlabs-puppetdb
-      ref: 7.3.0
+      ref: 7.4.0
     reboot:
       repo: puppetlabs-reboot
-      ref: 2.1.2
+      ref: 2.2.0
     ruby:
       repo: puppetlabs-ruby
       ref: 1.0.1
@@ -160,6 +161,9 @@ fixtures:
     zabbix:
       repo: puppet-zabbix
       ref: 6.7.0
+    ssh:
+      repo: ghoneycutt-ssh
+      ref: 3.61.0
     sudo:
       repo: saz-sudo
       ref: 6.0.0
@@ -184,9 +188,9 @@ fixtures:
     sysctl:
       repo: tpdownes-sysctl
       ref: 2.1.0
-    backuppc:
-      repo: wyrie-backuppc
-      ref: 2.0.0
+    exports:
+      repo: zack-exports
+      ref: 1.0.1
     host_core:
       repo: puppetlabs-host_core
       ref: 1.0.2
@@ -195,13 +199,13 @@ fixtures:
       ref: 1.0.3
     bootstrap:
       repo: puppetlabs-bootstrap
-      ref: 0.5.0
+      ref: 1.0.0
     exec:
       repo: puppetlabs-exec
       ref: 0.4.0
     chocolatey:
       repo: puppetlabs-chocolatey
-      ref: 3.3.0
+      ref: 4.0.0
     dism:
       repo: puppetlabs-dism
       ref: 1.3.1
@@ -213,7 +217,7 @@ fixtures:
       ref: 2.1.0
     concat:
       repo: puppetlabs-concat
-      ref: 6.0.0
+      ref: 6.1.0
     scheduled_task:
       repo: puppetlabs-scheduled_task
       ref: 1.0.1
