@@ -162,7 +162,7 @@ ssh::sshd_kerberos_authentication:                'yes'
 ssh::sshd_hostbasedauthentication:                'yes'
 ssh::sshd_config_permitemptypasswords:            'no'
 ssh::sshd_config_print_last_log:                  'yes'
-ssh::sshd_permit_user_environment:                'yes'
+ssh::sshd_config_permituserenvironment:           'yes'
 
 # time related
 timezone::timezone:                               'Europe/London'
