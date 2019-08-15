@@ -6,7 +6,7 @@ fixtures:
   repositories:
     managedmac:
       repo: https://github.com/henrydobson/managedmac
-      ref: refs/heads/puppetv4.5
+      branch: puppetv4.5
     jackett:
       repo: https://github.com/mergwyn/mergwyn-jackett
       ref: master
@@ -30,7 +30,7 @@ fixtures:
       ref: master
     backuppc:
       repo: https://github.com/mergwyn/mergwyn-backuppc
-      ref: refs/heads/puppet6
+      branch: puppet6
   forge_modules:
     augeas:
       repo: camptocamp-augeas
