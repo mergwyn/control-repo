@@ -21,6 +21,7 @@ ignore = BelowPath odrive
 ignore = BelowPath .odrive
 ignore = BelowPath .odrive-agent
 ignore = BelowPath .pdk
+ignore = BelowPath .puppetlabs
 ignore = BelowPath snap
 ignore = Path .account
 ignore = Path Applications
