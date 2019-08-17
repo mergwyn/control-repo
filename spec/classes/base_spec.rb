@@ -12,7 +12,6 @@ describe 'profile::base' do
         it { is_expected.to contain_class('profile::base::files') }
         it { is_expected.to contain_class('profile::base::packages') }
       end
-
     end
   end
 end
