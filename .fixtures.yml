@@ -27,7 +27,7 @@ fixtures:
       ref: master
     backuppc:
       repo: https://github.com/mergwyn/mergwyn-backuppc
-      branch: puppet6
+      branch: v3.0
   forge_modules:
     augeas:
       repo: camptocamp-augeas
