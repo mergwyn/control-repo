@@ -16,9 +16,6 @@ fixtures:
     ddclient:
       repo: https://github.com/mergwyn/puppet-ddclient
       ref: master
-    dhcp:
-      repo: https://github.com/mergwyn/puppet-dhcp
-      ref: master
     tvheadend:
       repo: https://github.com/mergwyn/puppet-tvheadend
       ref: master
@@ -77,6 +74,9 @@ fixtures:
     cron:
       repo: puppet-cron
       ref: 1.3.1
+    dhcp:
+      repo: puppet-dhcp
+      ref: 3.4.0
     apache:
       repo: puppetlabs-apache
       ref: 5.0.0
