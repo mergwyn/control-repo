@@ -15,7 +15,7 @@ network::interfaces_hash:
     netmask:                    "%{lookup('defaults::netmask')}"
     gateway:                    "%{lookup('defaults::gateway')}"
     network:                    "%{lookup('defaults::network')}"
-    dns_nameservers:            "192.168.11.22 192.168.11.21"
+    dns_nameservers:            "192.168.11.21 192.168.11.22"
     dns_search:                 "%{lookup('defaults::dns_search')}"
 
 # vim: sw=2:ai:nu expandtab
