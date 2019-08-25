@@ -3,6 +3,9 @@ fixtures:
   symlinks:
     site: "#{source_dir}/site"
   repositories:
+    dhcp:
+      repo: https://github.com/voxpupuli/puppet-dhcp
+      ref: master
     managedmac:
       repo: https://github.com/henrydobson/managedmac
       branch: puppetv4.5
@@ -70,9 +73,6 @@ fixtures:
     archive:
       repo: puppet-archive
       ref: 4.1.0
-    dhcp:
-      repo: puppet-dhcp
-      ref: 3.4.0
     cron:
       repo: puppet-cron
       ref: 1.3.1
