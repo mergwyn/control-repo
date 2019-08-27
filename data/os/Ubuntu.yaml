@@ -221,7 +221,7 @@ backuppc::client::backuppc_hostname:              "foxtrot.%{domain}"
 backuppc::client::system_account:                 ''
 backuppc::client::config_name:                    "%{facts.networking.hostname}"
 backuppc::client::hosts_file_user:                'gary'
-backuppc::client::hosts_file_more_users:          'backuppc'
+backuppc::client::hosts_file_more_users:          [ 'backuppc' ]
 backuppc::client::email_admin_user_name:          'backuppc'
 backuppc::client::email_destination_domain:       "%{domain}"
 backuppc::client::system_additional_commands:
@@ -230,22 +230,8 @@ backuppc::client::system_additional_commands:
 backuppc::client::dump_pre_user_cmd:              '$sshPath -q -x -l root $host /bin/run-parts --report /etc/backuppc/scripts/DumpPreUser --arg=$type'
 backuppc::client::dump_post_user_cmd:             '$sshPath -q -x -l root $host /bin/run-parts --report /etc/backuppc/scripts/DumpPostUser --arg=$type --arg=$xferOK'
 backuppc::client::user_cmd_check_status:          true
-backuppc::client::rsync_share_name:
-  - '/'
-backuppc::client::rsync_args:
-  - '--numeric-ids'
-  - '--perms'
-  - '--owner'
-  - '--group'
-  - '-D'
-  - '--links'
-  - '--hard-links'
-  - '--times'
-  - '--block-size=2048'
-  - '--recursive'
-  - '--one-file-system'
-  - '-F'
-
+backuppc::client::rsync_share_name:               [ '/' ]
+backuppc::client::rsync_args_extra:               [ '--recursive', '--one-file-system', '-F' ]
 backuppc::client::backup_files_exclude:
   - '.AppleDouble'
   - '.cache'
