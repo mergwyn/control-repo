@@ -1,18 +1,13 @@
 #
 class profile::backuppc::client (
-  $config   = '/etc/backuppc',
-  $scripts  = "${config}/scripts",
+  $scripts  = "/etc/backuppc-scripts",
   $preuser  = "${scripts}/DumpPreUser",
   $postuser = "${scripts}/DumpPostUser",
   ) {
 
-  file {$config:
-    ensure  => directory,
-  }
 
   file {[$scripts, $preuser, $postuser]:
     ensure  => directory,
-    require => File[$config],
   }
 
   file { "${preuser}/S10dirsonly":
