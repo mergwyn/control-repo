@@ -1,7 +1,7 @@
 #
 class profile::backuppc::server {
 
-  Class['profile::base::ssh_server'] -> Class['profile::backuppc::client']
+  Class['profile::base::ssh_server'] -> Class['profile::backuppc::server']
 
   include profile::scripts
 
@@ -43,23 +43,6 @@ class profile::backuppc::server {
     },
   }
 
-  mount { 'srv2':
-    ensure  => 'mounted',
-    name    => '/srv2',
-    device  => 'UUID=87be41fa-af64-4165-b8a4-1d27cba1f349',
-    fstype  => 'ext4',
-    options => 'defaults,user_xattr,acl',
-  }
-
-  mount { 'backuppc':
-    ensure  => 'mounted',
-    name    => '/var/lib/backuppc',
-    device  => '/srv2/backuppc',
-    fstype  => 'none',
-    options => 'bind,rw',
-    require => Mount['srv2'],
-  }
-
   group { 'backuppc':
     gid        => '127',
   }
@@ -69,7 +52,9 @@ class profile::backuppc::server {
     home       => '/var/lib/backuppc',
     comment    => 'BackupPC,,,',
     managehome => false,
+    require    => Group['backuppc'],
   }
+  User['backuppc'] -> Class['backuppc::server']
 
   include backuppc::server
 
