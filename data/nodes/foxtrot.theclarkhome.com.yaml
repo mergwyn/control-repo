@@ -28,16 +28,16 @@ profile::base::mounts::defaults:
   ensure: 'mounted'
 profile::base::mounts::objects:
   srv2:
-    name:     '/srv2',
-    device:   'UUID=87be41fa-af64-4165-b8a4-1d27cba1f349',
-    fstype:   'ext4',
-    options:  'defaults,user_xattr,acl',
+    name:     '/srv2'
+    device:   'UUID=87be41fa-af64-4165-b8a4-1d27cba1f349'
+    fstype:   'ext4'
+    options:  'defaults,user_xattr,acl'
   backuppc:
-    name:     '/var/lib/backuppc',
-    device:   '/srv2/backuppc',
-    fstype:   'none',
-    options:  'bind,rw',
-    require:  Mount['srv2'],
+    name:     '/var/lib/backuppc'
+    device:   '/srv2/backuppc'
+    fstype:   'none'
+    options:  'bind,rw'
+    require:  Mount['srv2']
 
 backuppc::server::backuppc_password:          "%{lookup('secrets::backuppc')}"
 backuppc::params::gzip_path:                  '/usr/bin/pigz'
