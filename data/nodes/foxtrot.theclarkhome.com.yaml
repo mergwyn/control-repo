@@ -2,16 +2,13 @@
 
 classes:
   - network
+  - profile::backuppc::server
 
 network::interfaces_hash:
   enp3s0:
     method:                     manual
-    pre_up:
-      - /sbin/ifconfig enp3s0 mtu 9004
   enp4s0:
     method:                     manual
-    pre_up:
-      - /sbin/ifconfig enp4s0 mtu 9004
   br0:
     ipaddress:                  "192.168.11.12"
     netmask:                    "%{lookup('defaults::netmask')}"
@@ -26,6 +23,38 @@ network::interfaces_hash:
     bridge_fd:                  "0"
     bridge_stp:                 "off"
 
+
+profile::base::mounts::defaults:
+  ensure: 'mounted'
+profile::base::mounts::objects:
+  srv2:
+    name:     '/srv2',
+    device:   'UUID=87be41fa-af64-4165-b8a4-1d27cba1f349',
+    fstype:   'ext4',
+    options:  'defaults,user_xattr,acl',
+  backuppc:
+    name:     '/var/lib/backuppc',
+    device:   '/srv2/backuppc',
+    fstype:   'none',
+    options:  'bind,rw',
+    require:  Mount['srv2'],
+
+backuppc::server::backuppc_password:          "%{lookup('secrets::backuppc')}"
+backuppc::params::gzip_path:                  '/usr/bin/pigz'
+backuppc::server::full_age_max:               370
+backuppc::server::full_keep_cnt:              [ 4, 0, 12]
+backuppc::server::incr_age_max:               21
+backuppc::server::incr_keep_cnt:              12
+backuppc::server::backup_zero_files_is_fatal: true
+backuppc::server::cgi_date_format_mmdd:       1
+backuppc::server::apache_configuration:       false
+backuppc::server::blackout_periods:
+  - hourBegin:                                7
+    hourEnd:                                  22.5
+    weekDays:                                 [ 1, 2, 3, 4, 5]
+  - hourBegin:                                3
+    hourEnd:                                  22.5
+    weekDays:                                 [ 0, 6] 
 
 backuppc::client::rsync_share_name:
   - '/'
@@ -50,4 +79,3 @@ backuppc::client::backup_files_exclude:
   - '*.cloudf'
   - '*.cloud'
 
-# vim: sw=2:ai:nu expandtab
