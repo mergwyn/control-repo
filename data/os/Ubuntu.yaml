@@ -221,7 +221,7 @@ backuppc::client::backuppc_hostname:              "foxtrot.%{domain}"
 backuppc::client::system_account:                 ''
 backuppc::client::config_name:                    "%{facts.networking.hostname}"
 backuppc::client::hosts_file_user:                'gary'
-backuppc::client::hosts_file_more_users:          [ 'backuppc' ]
+backuppc::client::hosts_file_more_users:          'backuppc'
 backuppc::client::email_admin_user_name:          'backuppc'
 backuppc::client::email_destination_domain:       "%{domain}"
 backuppc::client::system_additional_commands:
