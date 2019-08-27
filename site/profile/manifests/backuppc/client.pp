@@ -1,6 +1,6 @@
 #
 class profile::backuppc::client (
-  $scripts  = "/etc/backuppc-scripts",
+  $scripts  = '/etc/backuppc-scripts',
   $preuser  = "${scripts}/DumpPreUser",
   $postuser = "${scripts}/DumpPostUser",
   ) {
