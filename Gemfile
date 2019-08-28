@@ -32,6 +32,7 @@ group :development do
   gem "r10k",                                                    require: false
   gem "ra10ke",                                                  require: false
   gem "onceover",                                                require: false
+  gem "CFPropertyList",                                          require: false
 end
 
 puppet_version = ENV['PUPPET_GEM_VERSION']
