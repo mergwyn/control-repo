@@ -231,7 +231,7 @@ backuppc::client::dump_pre_user_cmd:              '$sshPath -q -x -l backuppc_cl
 backuppc::client::dump_post_user_cmd:             '$sshPath -q -x -l backuppc_client $host /bin/run-parts --report /etc/backuppc/scripts/DumpPostUser --arg=$type --arg=$xferOK'
 backuppc::client::user_cmd_check_status:          true
 backuppc::client::rsync_share_name:               [ '/' ]
-backuppc::client::rsync_client_cmd:               '$sshPath -o Compression=no -q -x -l -l backuppc_client $host $rsyncPath $argList+'
+backuppc::client::rsync_client_cmd:               '$sshPath -o Compression=no -q -x -l backuppc_client $host $rsyncPath $argList+'
 backuppc::client::rsync_args:
   - '--numeric-ids'
   - '--perms'
