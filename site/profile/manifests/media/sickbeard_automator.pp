@@ -33,14 +33,15 @@ class profile::media::sickbeard_automator {
   # Get the lastest version from github
   vcsrepo { $target:
     #ensure   => latest,
-    ensure   => '55e5948ff0042eef5190b3d613f247e6d8074d6d',
+    #revision => 'master',
+    ensure   => present,
+    revision => '55e5948ff0042eef5190b3d613f247e6d8074d6d',
     provider => git,
     require  => [
       Class['profile::git'],
       Package['ffmpeg'],
     ],
     source   => 'https://github.com/mdhiggins/sickbeard_mp4_automator',
-    revision => 'master',
     owner    => $owner,
     group    => $group,
   }
