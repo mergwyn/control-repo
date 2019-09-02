@@ -32,7 +32,8 @@ class profile::media::sickbeard_automator {
 
   # Get the lastest version from github
   vcsrepo { $target:
-    ensure   => latest,
+    #ensure   => latest,
+    ensure   => '55e5948ff0042eef5190b3d613f247e6d8074d6d',
     provider => git,
     require  => [
       Class['profile::git'],
