@@ -154,13 +154,13 @@ class profile::zfs_server {
   kmod::option { 'zfs_arc_max':
     module => 'zfs',
     option => 'zfs_arc_max',
-    value  => $::facts['memory']['system']['total_bytes']*0.7,
+    value  => $::facts['memory']['system']['total_bytes']%(100-30), # 70 %
     notify => Exec['update_initramfs_all']
   }
   kmod::option { 'zfs_arc_min':
     module => 'zfs',
     option => 'zfs_arc_min',
-    value  => $::facts['memory']['system']['total_bytes']*0.4,
+    value  => $::facts['memory']['system']['total_bytes']%(100-60), # 40 %
     notify => Exec['update_initramfs_all']
   }
   exec { 'update_initramfs_all':
