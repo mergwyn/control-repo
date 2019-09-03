@@ -150,9 +150,6 @@ class profile::zfs_server {
     content => 'zabbix	ALL=(root)	NOPASSWD:	/sbin/zfs'
   }
 
-  $max = $::facts['memory']['system']['total_bytes']%(100-30)
-  notice{"ZFS max is ${max}":}
-
   # set kernel parameters
   kmod::option { 'zfs_arc_max':
     module => 'zfs',
