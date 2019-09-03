@@ -157,13 +157,13 @@ class profile::zfs_server {
   kmod::option { 'zfs_arc_max':
     module => 'zfs',
     option => 'zfs_arc_max',
-    value  => $::facts['memory']['system']['total_bytes']*7/10),
+    value  => $::facts['memory']['system']['total_bytes']*7/10,
     notify => Exec['update_initramfs_all']
   }
   kmod::option { 'zfs_arc_min':
     module => 'zfs',
     option => 'zfs_arc_min',
-    value  => $::facts['memory']['system']['total_bytes']*4/10),
+    value  => $::facts['memory']['system']['total_bytes']*4/10,
     notify => Exec['update_initramfs_all']
   }
   exec { 'update_initramfs_all':
@@ -172,4 +172,3 @@ class profile::zfs_server {
   }
 
 }
-# vim: sw=2:ai:nu expandtab
