@@ -168,7 +168,7 @@ class profile::zfs_server {
   kmod::option { 'zfs_vdev_scheduler':
     module => 'zfs',
     option => 'zfs_vdev_scheduler',
-    value  => "noop",
+    value  => 'noop',
     notify => Exec['update_initramfs_all']
   }
   exec { 'update_initramfs_all':
