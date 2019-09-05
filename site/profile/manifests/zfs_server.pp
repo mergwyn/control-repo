@@ -165,6 +165,12 @@ class profile::zfs_server {
     value  => 0,
     notify => Exec['update_initramfs_all']
   }
+  kmod::option { 'zfs_vdev_scheduler':
+    module => 'zfs',
+    option => 'zfs_vdev_scheduler',
+    value  => "noop",
+    notify => Exec['update_initramfs_all']
+  }
   exec { 'update_initramfs_all':
     command     => '/usr/sbin/update-initramfs -k all -u',
     refreshonly => true
