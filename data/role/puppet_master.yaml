@@ -13,4 +13,4 @@ profile::base::packages::objects:
     provider: puppetserver_gem
 
 backuppc::client::backup_files_exclude:
-  - 'var/lib/postgres'
+  - 'var/lib/postgresql'
