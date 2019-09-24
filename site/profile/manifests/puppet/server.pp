@@ -52,7 +52,7 @@ class profile::puppet::server {
 
   file { "${preuser}/S21postgresql-backup":
     ensure  => present,
-    source  => 'puppet:///modules/profile/backuppc/S20postgresql-backup',
+    source  => 'puppet:///modules/profile/backuppc/S21postgresql-backup',
     mode    => '0555',
     require => Class['profile::backuppc::client'],
   }
