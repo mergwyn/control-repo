@@ -18,20 +18,8 @@ class profile::puppet::server {
   }
 
   # Configure puppetdb and its underlying database
-  $puppetdb_host = $::facts['networking']['fqdn']
-  $postgres_host = $::facts['networking']['fqdn']
-
-  class { 'puppetdb::database::postgresql': 
-    listen_addresses => $postgres_host,
-  }
-  class { 'puppetdb':
-    database_host  => $puppetdb_host,
-    listen_address => '0.0.0.0',
-  }
-  # Configure the Puppet master to use puppetdb
-  class { 'puppetdb::master::config':
-    puppetdb_server => $puppetdb_host,
-  }
+  include puppetdb
+  include puppetdb::master::config
 
   # Clean old reports
   include cron

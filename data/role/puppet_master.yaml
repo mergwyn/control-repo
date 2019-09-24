@@ -12,5 +12,10 @@ profile::base::packages::objects:
     ensure: present
     provider: puppetserver_gem
 
+puppetdb::database_host:                         "%{facts.networking.fqdn}"
+puppetdb::listen_address:                        '0.0.0.0'
+puppetdb::master::config:puppetdb_server:        "%{facts.networking.fqdn}"
+puppetdb::database::postgresql:listen_addresses: "%{facts.networking.fqdn}"
+
 backuppc::client::backup_files_exclude:
   - 'var/lib/postgresql'
