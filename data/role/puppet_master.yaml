@@ -7,4 +7,7 @@ classes:
   - profile::puppet::agent
   - profile::domain::sso
 
-# vim: sw=2:ai:nu expandtab
+profile::base::packages::objects:
+  CFPropertyList:
+    ensure: present
+    provider: puppetserver_gem
