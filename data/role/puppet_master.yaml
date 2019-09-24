@@ -11,3 +11,6 @@ profile::base::packages::objects:
   CFPropertyList:
     ensure: present
     provider: puppetserver_gem
+
+backuppc::client::backup_files_exclude:
+  - 'var/lib/postgres'

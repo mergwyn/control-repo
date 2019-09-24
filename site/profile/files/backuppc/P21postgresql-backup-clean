@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-DUMPDIR=/var/lib/postgres
+DUMPDIR=/var/backups
 
 echo "$0: $*"
 
