@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+DUMPDIR=/var/lib/postgres
+
+echo "$0: $*"
+
+rm $DUMPDIR/dump.postgresql.gz

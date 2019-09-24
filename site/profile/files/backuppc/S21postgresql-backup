@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+DUMPDIR=/var/lib/postgres
+USER=postgres
+
+echo "$0: $*"
+[ -d "$DUMPDIR" ] || exit 0
+
+su -m postgres <<!
+pg_dumpall --role="${USER}" -U "${USER}" |
+  gzip > $DUMPDIR/dump.$$.postgresql.gz
+  mv $DUMPDIR/dump.$$.postgresql.gz $DUMPDIR/dump.postgresql.gz
+!
