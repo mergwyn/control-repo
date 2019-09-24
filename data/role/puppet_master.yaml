@@ -5,7 +5,7 @@ classes:
   - profile::base  # All roles should have the base profile
   - profile::puppet::server
   - profile::puppet::agent
-  - profile::domain::sso
+  #- profile::domain::sso
 
 profile::base::packages::objects:
   CFPropertyList:
