@@ -25,8 +25,8 @@ class profile::puppet::server {
     listen_addresses => $postgres_host,
   }
   class { 'puppetdb':
-    puppetdb_server => $puppetdb_host,
-    listen_address  => '0.0.0.0',
+    database_host  => $puppetdb_host,
+    listen_address => '0.0.0.0',
   }
   # Configure the Puppet master to use puppetdb
   class { 'puppetdb::master::config':
