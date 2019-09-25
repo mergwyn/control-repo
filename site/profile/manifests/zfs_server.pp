@@ -58,7 +58,7 @@ class profile::zfs_server {
     ensure   => latest,
     provider => git,
     #source   => 'https://github.com/zfsonlinux/zfs-auto-snapshot',
-    source   => 'https://github.com/zfsonlinux/zfs-auto-snapshot',
+    source   => 'https://github.com/mergwyn/zfs-auto-snapshot',
     revision => 'master',
     require  => Package['git', 'gawk'],
   }
