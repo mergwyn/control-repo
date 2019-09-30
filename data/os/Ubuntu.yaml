@@ -220,6 +220,7 @@ profile::backuppc::postuser:                      "%{lookup('profile::backuppc::
 backuppc::client::backuppc_hostname:              "foxtrot.%{domain}"
 #backuppc::client::system_account:                 'backuppc_client'
 backuppc::client::system_account:                 ''
+backuppc::client::manage_sshkey:                  false
 backuppc::client::config_name:                    "%{facts.networking.hostname}"
 backuppc::client::hosts_file_user:                'gary'
 backuppc::client::hosts_file_more_users:          'backuppc'
