@@ -1,11 +1,8 @@
 ---
 fixtures:
   symlinks:
-    profile: site/profile
+    profile: "#{source_dir}/site/profile"
   repositories:
-    dhcp:
-      repo: https://github.com/voxpupuli/puppet-dhcp
-      ref: master
     managedmac:
       repo: https://github.com/henrydobson/managedmac
       branch: puppetv4.5
@@ -49,6 +46,12 @@ fixtures:
     portage:
       repo: gentoo-portage
       ref: 2.3.0
+    common:
+      repo: ghoneycutt-common
+      ref: 1.9.0
+    ssh:
+      repo: ghoneycutt-ssh
+      ref: 3.61.0
     augeasproviders_core:
       repo: herculesteam-augeasproviders_core
       ref: 2.5.0
@@ -163,9 +166,6 @@ fixtures:
     zabbix:
       repo: puppet-zabbix
       ref: 6.7.0
-    ssh:
-      repo: ghoneycutt-ssh
-      ref: 3.61.0
     sudo:
       repo: saz-sudo
       ref: 6.0.0
