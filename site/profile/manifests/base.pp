@@ -7,4 +7,3 @@ class profile::base {
   include profile::base::packages
 }
 
-# vim: sw=2:ai:nu expandtab
