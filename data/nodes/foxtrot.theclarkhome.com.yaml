@@ -41,7 +41,7 @@ profile::base::mounts::objects:
     device:   '/srv2/backuppc'
     fstype:   'none'
     options:  'bind,rw'
-    require:  Mount['srv2']
+    require:  Mount[srv2]
 
 backuppc::server::backuppc_password:          "%{lookup('secrets::backuppc')}"
 backuppc::params::gzip_path:                  '/usr/bin/pigz'
