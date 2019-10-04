@@ -72,9 +72,9 @@ class profile::zfs_server {
   file { "${mandir}/man8": ensure => directory, }
 
   file { "${mandir}/man8/zfs-auto-snapshot.8":
-    ensure => present,
-    mode   => '0644',
-    source => "file://${codedir}/zfs-auto-snapshot/src/zfs-auto-snapshot.8",
+    ensure  => present,
+    mode    => '0644',
+    source  => "file://${codedir}/zfs-auto-snapshot/src/zfs-auto-snapshot.8",
     require => Vcsrepo["${codedir}/zfs-auto-snapshot"],
   }
 
