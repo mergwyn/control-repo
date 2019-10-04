@@ -9,7 +9,7 @@ class profile::base::mounts (
 ) {
 
   unless empty ($objects) {
-    create_resources(mounts, $objects, $defaults)
+    create_resources(mount, $objects, $defaults)
   }
 
 }
