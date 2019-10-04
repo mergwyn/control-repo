@@ -13,8 +13,6 @@ appveyor.yml:
   - development
   notifications:
     email:
-      recipients:
-      - gary@theclarkhome.com
       on_success: change # default: change
       on_failure: always # default: always
 Gemfile:
