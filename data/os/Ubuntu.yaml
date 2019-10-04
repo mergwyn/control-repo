@@ -233,7 +233,6 @@ backuppc::client::dump_pre_user_cmd:              "$sshPath -q -x -l root $host 
 backuppc::client::dump_post_user_cmd:             "$sshPath -q -x -l root $host /bin/run-parts --report %{lookup('profile::backuppc::scripts')}/DumpPostUser --arg=$type --arg=$xferOK"
 backuppc::client::user_cmd_check_status:          true
 backuppc::client::rsync_share_name:               [ '/' ]
-backuppc::client::rsync_args_extra:               [ '--recursive', '--one-file-system', '-F' ]
 backuppc::client::backup_files_exclude:
   - '.AppleDouble'
   - '.cache'

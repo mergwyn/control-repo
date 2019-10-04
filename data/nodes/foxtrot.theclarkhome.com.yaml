@@ -46,6 +46,7 @@ profile::base::mounts::objects:
 backuppc::server::backuppc_password:          "%{lookup('secrets::backuppc')}"
 backuppc::params::gzip_path:                  '/usr/bin/pigz'
 backuppc::server::full_age_max:               370
+backuppc::server::rsync_args_extra:           [ '--recursive', '--one-file-system', '-F' ]
 backuppc::server::full_keep_cnt:              [ 4, 0, 12]
 backuppc::server::incr_age_max:               21
 backuppc::server::incr_keep_cnt:              12
