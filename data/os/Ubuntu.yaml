@@ -163,6 +163,7 @@ ssh::sshd_kerberos_authentication:                'yes'
 ssh::sshd_hostbasedauthentication:                'yes'
 ssh::sshd_config_permitemptypasswords:            'no'
 ssh::sshd_config_print_last_log:                  'yes'
+ssh::sshd_config_permituserenvironment:           'yes'
 
 # time related
 timezone::timezone:                               'Europe/London'
@@ -218,7 +219,6 @@ profile::backuppc::postuser:                      "%{lookup('profile::backuppc::
 
 # backuppc client
 backuppc::client::backuppc_hostname:              "foxtrot.%{domain}"
-#backuppc::client::system_account:                 'backuppc_client'
 backuppc::client::system_account:                 ''
 backuppc::client::manage_sshkey:                  false
 backuppc::client::config_name:                    "%{facts.networking.hostname}"

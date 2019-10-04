@@ -3,8 +3,8 @@
 network::interfaces_hash:
   enp3s0:
     method:                     manual
-    pre_up:
-      - /sbin/ifconfig enp3s0 mtu 9004
+#    pre_up:
+#      - /sbin/ifconfig enp3s0 mtu 9004
   br0:
     ipaddress:                  "192.168.11.11"
     netmask:                    "%{lookup('defaults::netmask')}"

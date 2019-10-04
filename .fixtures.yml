@@ -3,6 +3,9 @@ fixtures:
   symlinks:
     profile: site/profile
   repositories:
+    dhcp:
+      repo: https://github.com/voxpupuli/puppet-dhcp
+      ref: master
     managedmac:
       repo: https://github.com/henrydobson/managedmac
       branch: puppetv4.5

@@ -9,13 +9,13 @@ dhcp::failover::peer_address: 192.168.11.22
 network::interfaces_hash:
   eth0:
     method:                     static
-    pre_up:                     
-      - /sbin/ifconfig eth0 mtu 9004
+#    pre_up:                     
+#      - /sbin/ifconfig eth0 mtu 9004
     ipaddress:                  "192.168.11.21"
     netmask:                    "%{lookup('defaults::netmask')}"
     gateway:                    "%{lookup('defaults::gateway')}"
     network:                    "%{lookup('defaults::network')}"
-    dns_nameservers:            "192.168.11.21 192.168.11.22"
+    dns_nameservers:            "192.168.11.22 192.168.11.21"
     dns_search:                 "%{lookup('defaults::dns_search')}"
 
 # vim: sw=2:ai:nu expandtab

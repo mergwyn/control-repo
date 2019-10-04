@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+DUMPDIR=/var/backups
+USER=postgres
+
+echo "$0: $*"
+[ -d "$DUMPDIR" ] || exit 0
+
+su postgres -c "pg_dumpall --role=${USER} --username=${USER}" |
+  gzip > $DUMPDIR/dump.$$.postgresql.gz
+mv $DUMPDIR/dump.$$.postgresql.gz $DUMPDIR/dump.postgresql.gz
