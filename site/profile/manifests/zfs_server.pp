@@ -75,6 +75,7 @@ class profile::zfs_server {
     ensure => present,
     mode   => '0644',
     source => "file://${codedir}/zfs-auto-snapshot/src/zfs-auto-snapshot.8",
+    require => Vcsrepo["${codedir}/zfs-auto-snapshot"],
   }
 
   cron::job {'zfs-auto-snapshot':
