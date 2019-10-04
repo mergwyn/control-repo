@@ -45,7 +45,5 @@ branches:
     - development
 notifications:
   email:
-    recipients:
-    - gary@theclarkhome.com
     on_success: change
     on_failure: always

@@ -2,7 +2,6 @@
 fixtures:
   symlinks:
     profile: site/profile
-    site: "#{source_dir}/site"
   repositories:
     managedmac:
       repo: https://github.com/henrydobson/managedmac
@@ -70,7 +69,7 @@ fixtures:
       ref: 3.0.0
     archive:
       repo: puppet-archive
-      ref: 4.1.0
+      ref: 4.2.0
     cron:
       repo: puppet-cron
       ref: 1.3.1
@@ -79,7 +78,7 @@ fixtures:
       ref: 3.4.0
     apache:
       repo: puppetlabs-apache
-      ref: 5.0.0
+      ref: 5.1.0
     apt:
       repo: puppetlabs-apt
       ref: 7.1.0
@@ -88,7 +87,7 @@ fixtures:
       ref: 1.0.4
     firewall:
       repo: puppetlabs-firewall
-      ref: 2.0.0
+      ref: 2.1.0
     git:
       repo: puppetlabs-git
       ref: 0.5.0
@@ -100,16 +99,16 @@ fixtures:
       ref: 1.0.5
     mysql:
       repo: puppetlabs-mysql
-      ref: 10.1.0
+      ref: 10.2.0
     ntp:
       repo: puppetlabs-ntp
-      ref: 8.0.0
+      ref: 8.1.0
     pe_gem:
       repo: puppetlabs-pe_gem
       ref: 0.2.0
     postgresql:
       repo: puppetlabs-postgresql
-      ref: 6.1.0
+      ref: 6.2.0
     puppetdb:
       repo: puppetlabs-puppetdb
       ref: 7.4.0
@@ -124,7 +123,7 @@ fixtures:
       ref: 1.0.2
     stdlib:
       repo: puppetlabs-stdlib
-      ref: 6.0.0
+      ref: 6.1.0
     translate:
       repo: puppetlabs-translate
       ref: 2.0.0
@@ -178,7 +177,7 @@ fixtures:
       ref: 1.3.1
     debconf:
       repo: stm-debconf
-      ref: 2.3.0
+      ref: 3.0.0
     homebrew:
       repo: thekevjames-homebrew
       ref: 1.8.3
@@ -202,10 +201,10 @@ fixtures:
       ref: 1.0.0
     exec:
       repo: puppetlabs-exec
-      ref: 0.4.0
+      ref: 0.5.0
     chocolatey:
       repo: puppetlabs-chocolatey
-      ref: 4.0.0
+      ref: 4.1.0
     dism:
       repo: puppetlabs-dism
       ref: 1.3.1
@@ -220,4 +219,4 @@ fixtures:
       ref: 6.1.0
     scheduled_task:
       repo: puppetlabs-scheduled_task
-      ref: 1.0.1
+      ref: 2.0.0
