@@ -118,9 +118,9 @@ fixtures:
     puppetdb:
       repo: puppetlabs-puppetdb
       ref: 7.4.0
-    reboot:
-      repo: puppetlabs-reboot
-      ref: 2.2.0
+    #reboot:
+    #  repo: puppetlabs-reboot
+    #  ref: 2.2.0
     ruby:
       repo: puppetlabs-ruby
       ref: 1.0.1
