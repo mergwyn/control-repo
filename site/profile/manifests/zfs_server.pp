@@ -62,9 +62,10 @@ class profile::zfs_server {
     require  => Package['git', 'gawk'],
   }
   file { "${bindir}/zfs-auto-snapshot":
-    ensure => present,
-    mode   => '0755',
-    source => "file://${codedir}/zfs-auto-snapshot/src/zfs-auto-snapshot.sh",
+    ensure  => present,
+    mode    => '0755',
+    source  => "file://${codedir}/zfs-auto-snapshot/src/zfs-auto-snapshot.sh",
+    require => Vcsrepo["${codedir}/zfs-auto-snapshot"],
   }
   file { '/sbin/zfs-auto-snapshot': ensure => absent, }
 
