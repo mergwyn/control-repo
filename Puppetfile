@@ -75,11 +75,11 @@ mod 'thekevjames-homebrew', '1.8.3'
 mod 'thias-libvirt', '1.0.0'
 mod 'tpdownes-sysctl', '2.1.0'
 mod 'transmission', :git => 'https://github.com/mergwyn/puppet-transmission'
-#mod 'webmin', :git => 'https://github.com/mergwyn/puppet-webmin' #, :ref => 'patch-1'
+#mod 'webmin', :git => 'https://github.com/mergwyn/puppet-webmin' #, :branch => 'patch-1'
 mod 'webmin', :git => 'https://github.com/rehanone/puppet-webmin'
 #mod 'trlinkin-domain_membership', '1.1.2'
 #mod 'wyrie-backuppc', '2.0.0'
-mod 'backuppc', :git => 'https://github.com/mergwyn/mergwyn-backuppc', :ref => 'refs/heads/v3.0'
+mod 'backuppc', :git => 'https://github.com/mergwyn/mergwyn-backuppc', :branch => 'v3.0'
 mod 'zack-exports', '1.0.1'
 
 # puppet 6 core types
