@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+DUMPDIR=/var/backups
+
+echo "$0: $*"
+
+rm $DUMPDIR/dump.postgresql.gz

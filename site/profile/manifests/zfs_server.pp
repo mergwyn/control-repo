@@ -62,18 +62,20 @@ class profile::zfs_server {
     require  => Package['git', 'gawk'],
   }
   file { "${bindir}/zfs-auto-snapshot":
-    ensure => present,
-    mode   => '0755',
-    source => "file://${codedir}/zfs-auto-snapshot/src/zfs-auto-snapshot.sh",
+    ensure  => present,
+    mode    => '0755',
+    source  => "file://${codedir}/zfs-auto-snapshot/src/zfs-auto-snapshot.sh",
+    require => Vcsrepo["${codedir}/zfs-auto-snapshot"],
   }
   file { '/sbin/zfs-auto-snapshot': ensure => absent, }
 
   file { "${mandir}/man8": ensure => directory, }
 
   file { "${mandir}/man8/zfs-auto-snapshot.8":
-    ensure => present,
-    mode   => '0644',
-    source => "file://${codedir}/zfs-auto-snapshot/src/zfs-auto-snapshot.8",
+    ensure  => present,
+    mode    => '0644',
+    source  => "file://${codedir}/zfs-auto-snapshot/src/zfs-auto-snapshot.8",
+    require => Vcsrepo["${codedir}/zfs-auto-snapshot"],
   }
 
   cron::job {'zfs-auto-snapshot':
@@ -154,19 +156,42 @@ class profile::zfs_server {
   kmod::option { 'zfs_arc_max':
     module => 'zfs',
     option => 'zfs_arc_max',
-    value  => $::facts['memory']['system']['total_bytes']/2,
+    #value  => $::facts['memory']['system']['total_bytes']*7/10,
+    value  => 0,
     notify => Exec['update_initramfs_all']
   }
   kmod::option { 'zfs_arc_min':
     module => 'zfs',
     option => 'zfs_arc_min',
-    value  => $::facts['memory']['system']['total_bytes']/4,
+    #value  => $::facts['memory']['system']['total_bytes']*4/10,
+    value  => 0,
+    notify => Exec['update_initramfs_all']
+  }
+  kmod::option { 'zfs_vdev_scheduler':
+    module => 'zfs',
+    option => 'zfs_vdev_scheduler',
+    value  => 'noop',
+    notify => Exec['update_initramfs_all']
+  }
+  # use the prefetch method
+  kmod::option { 'zfs_prefetch_disable':
+    module => 'zfs',
+    option => 'zfs_prefetch_disable',
+    value  => 0,
+    notify => Exec['update_initramfs_all']
+  }
+  # max write speed to l2arc
+  # tradeoff between write/read and durability of ssd (?)
+  # default : 8 * 1024 * 1024
+  # setting here : 500 * 1024 * 1024
+  kmod::option { 'l2arc_write_max':
+    module => 'zfs',
+    option => 'l2arc_write_max',
+    value  => 524288000,
     notify => Exec['update_initramfs_all']
   }
   exec { 'update_initramfs_all':
     command     => '/usr/sbin/update-initramfs -k all -u',
     refreshonly => true
   }
-
 }
-# vim: sw=2:ai:nu expandtab
