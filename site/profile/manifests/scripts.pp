@@ -24,6 +24,7 @@ class profile::scripts {
                QUALITY_M3U="${lookup('secrets::iptv::m3u::quality')}"
                QUALITY_EPG="${lookup('secrets::iptv::epg::quality')}"
                OCDTV_M3U="${lookup('secrets::iptv::m3u::ocdtv')}"
+               OCDTV_EPG="${lookup('secrets::iptv::epg::ocdtv')}"
                ROUTES=(
                \$QUALITY_M3U
                \$OCDTV_M3U
