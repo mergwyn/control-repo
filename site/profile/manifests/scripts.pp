@@ -23,8 +23,10 @@ class profile::scripts {
                MAGIC_EPG="${lookup('secrets::iptv::epg::magic')}"
                QUALITY_M3U="${lookup('secrets::iptv::m3u::quality')}"
                QUALITY_EPG="${lookup('secrets::iptv::epg::quality')}"
+               OCDTV_M3U="${lookup('secrets::iptv::m3u::ocdtv')}"
                ROUTES=(
                \$QUALITY_M3U
+               \$OCDTV_M3U
                )
                | EOT
   }
