@@ -7,8 +7,8 @@ classes:
 managedmac::organization:                               "The Clark family"
 managedmac::ntp::enable:                                true
 managedmac::ntp::servers:
-  - bravo.%{::domain}
-  - alpha.%{::domain}
+  - "bravo.%{trusted.domain}"
+  - "alpha.%{trusted.domain}"
   - time.euro.apple.com
   - time.apple.com
 
