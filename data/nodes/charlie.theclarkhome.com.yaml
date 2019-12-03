@@ -8,10 +8,7 @@ profile::base::packages::objects:
     ensure: absent
   google-backup-and-sync:
     ensure: absent
-  #homebrew/cask-versions/vmware-fusion8: {}
+  homebrew/cask-versions/vmware-fusion: {}
   onedrive:
     ensure: absent
   whatsapp: {}
-
-
-# vim: sw=2:ai:nu expandtab
