@@ -8,7 +8,7 @@ profile::base::packages::objects:
     ensure: absent
   google-backup-and-sync:
     ensure: absent
-  homebrew/cask-versions/vmware-fusion: {}
+  vmware-fusion: {}
   onedrive:
     ensure: absent
   whatsapp: {}
