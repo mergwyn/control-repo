@@ -1,12 +1,12 @@
 #
 
 class profile::base::windows {
-  reboot { 'before':
-    when  => pending,
-  }
-  reboot { 'after':
-    when  => refreshed,
-  }
+#  reboot { 'before':
+#    when  => pending,
+#  }
+#  reboot { 'after':
+#    when  => refreshed,
+#  }
 #  dism {'Microsoft-Windows-Subsystem-Linux':
 #    ensure    => present,
 #    norestart => true,
@@ -26,5 +26,3 @@ class profile::base::windows {
 #    ],
 #  }
 }
-
-# vim: sw=2:ai:nu expandtab

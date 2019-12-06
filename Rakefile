@@ -85,5 +85,6 @@ EOM
 end
 
 require 'ra10ke'
+Ra10ke::RakeTask.new
 require 'onceover/rake_tasks'
 FastGettext.default_text_domain = 'default-text-domain'

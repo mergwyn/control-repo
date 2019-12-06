@@ -19,8 +19,7 @@ class profile::backuppc::client (
   #package { 'rsync': ensure => installed }
   include backuppc::client
 
-  if empty(hiera('backuppc::client::system_account'))
-  {
+  if lookup('backuppc::client::system_account') {
     # Need to manage .ssh keys outside of backuupc module
     $system_account        = lookup('defaults::system_user')
     $system_home_directory = lookup('defaults::system_home_dir')
@@ -39,6 +38,3 @@ class profile::backuppc::client (
     }
   }
 }
-
-
-# vim: sw=2:ai:nu expandtab
