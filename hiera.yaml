@@ -3,23 +3,25 @@ version: 5
 
 defaults: 
   datadir: data
+  data_hash: yaml_data
 
 hierarchy: 
-  - name: "YAML hierarchy"
+  - name: 'Secure'
     lookup_key: eyaml_lookup_key 
     path: 'secrets.yaml'
     options:
       pkcs7_private_key: /etc/puppetlabs/secure/keys/private_key.pkcs7.pem
       pkcs7_public_key:  /etc/puppetlabs/secure/keys/public_key.pkcs7.pem
-  - name: "Nodes"
-    path: "nodes/%{trusted.certname}.yaml"
-  - name: "Roles"
+  - name: 'Per node data'
+    paths:
+      - "nodes/%{trusted.certname}.yaml"
+  - name: "Roles data"
     paths:
       - "role/%{trusted.extensions.pp_role}-%{trusted.extensions.pp_env}.yaml"
       - "role/%{trusted.extensions.pp_role}.yaml"
   - name: "Physical/Virtual"
     path: "virtual/%{facts.virtual}_%{facts.os.name}.yaml"
-  - name: "osfamily/major release"
+  - name: 'osfamily/major release'
     paths:
       - "os/%{facts.os.family}/%{facts.os.release.major}.yaml"
         # Used for Darwin
@@ -28,7 +30,7 @@ hierarchy:
       - "os/%{facts.os.family}/%{facts.kernelrelease}.yaml"
         # Used to distinguish between Debian and Ubuntu
       - "os/%{facts.os.name}/%{facts.os.release.major}.yaml"
-  - name: "osfamily"
+  - name: 'Name/Family (eg Debian/Ubuntu)'
     paths:
       - "os/%{facts.os.family}.yaml"
       - "os/%{facts.os.name}.yaml"
@@ -36,3 +38,4 @@ hierarchy:
     path: "zfs_%{zfs_version}.yaml"
   - name: 'common'
     path: 'common.yaml'
+
