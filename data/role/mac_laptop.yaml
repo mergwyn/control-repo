@@ -5,12 +5,12 @@ classes:
   - profile::mac::managedmac
 
 managedmac::organization:                               "The Clark family"
-#managedmac::ntp::enable:                                true
-#managedmac::ntp::servers:
-#  - bravo.%{::domain}
-#  - alpha.%{::domain}
-#  - time.euro.apple.com
-#  - time.apple.com
+managedmac::ntp::enable:                                true
+managedmac::ntp::servers:
+  - "bravo.%{trusted.domain}"
+  - "alpha.%{trusted.domain}"
+  - time.euro.apple.com
+  - time.apple.com
 
 managedmac::loginwindow::loginwindow_text:              "This is %{trusted.hostname}"
 managedmac::loginwindow::show_name_and_password_fields: true

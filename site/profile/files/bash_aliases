@@ -9,6 +9,9 @@ alias l='ls -CFsa'
 alias most='du -kaxh --max-depth=1 | sort -rh | head -10'
 alias nodile='pmset noidle'
 alias odrive=/opt/odrive/bin/odrive
+alias disk_iostat='iostat $(lsblk --nodeps -n -o name --include 8 |sort)'
+alias brew='sudo -u brew -i $(which brew)'
+alias be='pdk bundle exec'
 
 boldecho() { echo $(tput smso)"$@"$(tput rmso) ; }
 listremotes() { lxc remote list | grep -v simplestreams | awk '/lxd/{print $2}'; }

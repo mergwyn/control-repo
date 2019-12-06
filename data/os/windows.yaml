@@ -25,6 +25,8 @@ profile::base::packages::objects:
   notepadplusplus: {}
   puppet-agent: {}
   zabbix-agent: {}
+  dropbox:
+    ensure: absent
 
 # puppet agent
 puppet::puppet_server:                  "echo.%{trusted.domain}"
