@@ -12,12 +12,12 @@ class profile::media::sickbeard_automator {
   include profile::git
   include profile::scripts
 
-  apt::ppa { 'ppa:jonathonf/ffmpeg-4':
+  apt::ppa { 'ppa:awyr/ffmpeg-4':
     package_manage => true
   }
   package { 'ffmpeg':
     ensure  => present,
-    require => Apt::Ppa['ppa:jonathonf/ffmpeg-4'],
+    require => Apt::Ppa['ppa:awyr/ffmpeg-4'],
   }
 
   # cron job to run scripts

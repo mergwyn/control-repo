@@ -23,7 +23,7 @@ class profile::backuppc::client (
     # Need to manage .ssh keys outside of backuupc module
     $system_account        = lookup('defaults::system_user')
     $system_home_directory = lookup('defaults::system_home_dir')
-    $backuppc_hostname     = lookup('defaults::backuppc_server')
+    $backuppc_hostname     = lookup('backuppc::client::backuppc_hostname')
 
     file { "${system_home_directory}/.ssh":
       ensure => 'directory',
