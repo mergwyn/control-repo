@@ -12,13 +12,13 @@ class profile::media::sickbeard_automator {
   include profile::git
   include profile::scripts
 
-  apt::ppa { 'ppa:awyr/ffmpeg-4':
-    package_manage => true
-  }
-  package { 'ffmpeg':
-    ensure  => present,
-    require => Apt::Ppa['ppa:awyr/ffmpeg-4'],
-  }
+  #apt::ppa { 'ppa:awyr/ffmpeg-4':
+  #  package_manage => true
+  #}
+  #package { 'ffmpeg':
+  #  ensure  => present,
+  #  require => Apt::Ppa['ppa:awyr/ffmpeg-4'],
+  #}
 
   # cron job to run scripts
   include cron
@@ -39,7 +39,7 @@ class profile::media::sickbeard_automator {
     provider => git,
     require  => [
       Class['profile::git'],
-      Package['ffmpeg'],
+  #    Package['ffmpeg'],
     ],
     source   => 'https://github.com/mdhiggins/sickbeard_mp4_automator',
     owner    => $owner,
@@ -76,5 +76,3 @@ class profile::media::sickbeard_automator {
     require => File[$logdir],
   }
 }
-
-# vim: sw=2:ai:nu expandtab
