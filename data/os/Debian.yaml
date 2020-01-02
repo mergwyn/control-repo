@@ -192,7 +192,7 @@ samba::classic::realm:                            "%{lookup('defaults::realm')}"
 
 mysql::server::manage_config_file:                false
 
-zabbix::agent::zabbix_version:                    '4.0'
+zabbix::agent::zabbix_version:                    '4.4'
 zabbix::agent::hostname:                          "%{trusted.certname}"
 zabbix::agent::server:                            "zulu,zulu.%{trusted.domain}"
 zabbix::agent::serveractive:                      "zulu,zulu.%{trusted.domain}"
