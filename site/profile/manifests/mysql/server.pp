@@ -64,11 +64,12 @@ class profile::mysql::server {
     require => Class['profile::backuppc::client'],
   }
 
-  zabbix::userparameters { 'userparameter_mysql':
-    source => 'puppet:///modules/profile/zabbix_agent/userparameter_mysql.conf',
+  zabbix::userparameters { 'template_db_mysql':
+    source  => 'puppet:///modules/profile/zabbix_agent/template_db_mysql.conf',
+    require => Class['profile::zabbix::agent'],
   }
   file {'/var/lib/zabbix/.my.cnf':
-    content => sprintf("[mysql]\nuser=zabbix_admin\npassword%s\n",hiera('secrets::mysql')),
+    content => sprintf("[mysql]\nuser=zbx_monitor\npassword=%s\n",hiera('secrets::mysql')),
     mode    => '0555',
     require => Class['profile::zabbix::agent'],
   }
