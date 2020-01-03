@@ -69,7 +69,7 @@ class profile::mysql::server {
     require => Class['profile::zabbix::agent'],
   }
   file {'/var/lib/zabbix/.my.cnf':
-    content => sprintf("[mysql]\nuser=zbx_monitor\npassword=%s\n",hiera('secrets::mysql')),
+    content => sprintf("[client]\nuser=zbx_monitor\npassword=%s\n",hiera('secrets::mysql')),
     mode    => '0555',
     require => Class['profile::zabbix::agent'],
   }
