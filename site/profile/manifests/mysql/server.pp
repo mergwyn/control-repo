@@ -44,7 +44,7 @@ class profile::mysql::server {
       #'settings2' => {
       #  'ensure' => 'absent'
       #}
-    }
+    },
   }
   create_ini_settings($overrides, $defaults)
 
@@ -64,5 +64,12 @@ class profile::mysql::server {
     require => Class['profile::backuppc::client'],
   }
 
+  zabbix::userparameters { 'userparameter_mysql':
+    source => 'puppet:///modules/profile/zabbix_agent/userparameter_mysql.conf',
+  }
+  file {'/var/lib/zabbix/.my.cnf':
+    content => sprintf("[mysql]\nuser=zabbix_admin\npassword%s\n",hiera('secrets::mysql')),
+    mode    => '0555',
+    require => Class['profile::zabbix::agent'],
+  }
 }
-# vim: sw=2:ai:nu expandtab

@@ -15,8 +15,8 @@ class profile::zfs_server {
     notify  => Exec['zfs_share-a'],
     changes => [
       'set ZFS_SHARE yes',
-      'set ZFS_UNSHARE yes'
-    ]
+      'set ZFS_UNSHARE yes',
+    ],
   }
 
   $codedir='/opt/code'
@@ -87,22 +87,22 @@ class profile::zfs_server {
   file { '/etc/cron.hourly/zfs-auto-snapshot':
     ensure  => present,
     mode    => '0555',
-    content => "#!/bin/sh\nexec zfs-auto-snapshot --quiet --syslog --label=02 --keep=24 //\n"
+    content => "#!/bin/sh\nexec zfs-auto-snapshot --quiet --syslog --label=02 --keep=24 //\n",
   }
   file { '/etc/cron.daily/zfs-auto-snapshot':
     ensure  => present,
     mode    => '0555',
-    content => "#!/bin/sh\nexec zfs-auto-snapshot --quiet --syslog --label=03 --keep=14 //\n"
+    content => "#!/bin/sh\nexec zfs-auto-snapshot --quiet --syslog --label=03 --keep=14 //\n",
   }
   file { '/etc/cron.weekly/zfs-auto-snapshot':
     ensure  => present,
     mode    => '0555',
-    content => "#!/bin/sh\nexec zfs-auto-snapshot --quiet --syslog --label=04 --keep=8 //\n"
+    content => "#!/bin/sh\nexec zfs-auto-snapshot --quiet --syslog --label=04 --keep=8 //\n",
   }
   file { '/etc/cron.monthly/zfs-auto-snapshot':
     ensure  => present,
     mode    => '0555',
-    content => "#!/bin/sh\nexec zfs-auto-snapshot --quiet --syslog --label=05 --keep=12 //\n"
+    content => "#!/bin/sh\nexec zfs-auto-snapshot --quiet --syslog --label=05 --keep=12 //\n",
   }
 
   # beadm boot environments
@@ -134,7 +134,7 @@ class profile::zfs_server {
   file { '/etc/beadm.conf':
     ensure  => present,
     mode    => '0555',
-    content => "#\nGRUB=YES\n"
+    content => "#\nGRUB=YES\n",
   }
 
   # zabbix support
@@ -146,10 +146,10 @@ class profile::zfs_server {
   }
 
   sudo::conf { 'zabbix-zpool':
-    content => 'zabbix  ALL=(root)      NOPASSWD:       /sbin/zpool'
+    content => 'zabbix  ALL=(root)      NOPASSWD:       /sbin/zpool',
   }
   sudo::conf { 'zabbix-zfs':
-    content => 'zabbix	ALL=(root)	NOPASSWD:	/sbin/zfs'
+    content => 'zabbix	ALL=(root)	NOPASSWD:	/sbin/zfs',
   }
 
   # set kernel parameters
@@ -158,27 +158,27 @@ class profile::zfs_server {
     option => 'zfs_arc_max',
     #value  => $::facts['memory']['system']['total_bytes']*7/10,
     value  => 0,
-    notify => Exec['update_initramfs_all']
+    notify => Exec['update_initramfs_all'],
   }
   kmod::option { 'zfs_arc_min':
     module => 'zfs',
     option => 'zfs_arc_min',
     #value  => $::facts['memory']['system']['total_bytes']*4/10,
     value  => 0,
-    notify => Exec['update_initramfs_all']
+    notify => Exec['update_initramfs_all'],
   }
   kmod::option { 'zfs_vdev_scheduler':
     module => 'zfs',
     option => 'zfs_vdev_scheduler',
     value  => 'noop',
-    notify => Exec['update_initramfs_all']
+    notify => Exec['update_initramfs_all'],
   }
   # use the prefetch method
   kmod::option { 'zfs_prefetch_disable':
     module => 'zfs',
     option => 'zfs_prefetch_disable',
     value  => 0,
-    notify => Exec['update_initramfs_all']
+    notify => Exec['update_initramfs_all'],
   }
   # max write speed to l2arc
   # tradeoff between write/read and durability of ssd (?)
@@ -188,10 +188,10 @@ class profile::zfs_server {
     module => 'zfs',
     option => 'l2arc_write_max',
     value  => 524288000,
-    notify => Exec['update_initramfs_all']
+    notify => Exec['update_initramfs_all'],
   }
   exec { 'update_initramfs_all':
     command     => '/usr/sbin/update-initramfs -k all -u',
-    refreshonly => true
+    refreshonly => true,
   }
 }
