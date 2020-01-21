@@ -25,9 +25,10 @@ class profile::scripts {
                QUALITY_EPG="${lookup('secrets::iptv::epg::quality')}"
                OCDTV_M3U="${lookup('secrets::iptv::m3u::ocdtv')}"
                OCDTV_EPG="${lookup('secrets::iptv::epg::ocdtv')}"
+               NORD_M3U="${lookup('secrets::iptv::m3u::nord')}"
+               NORD_EPG="${lookup('secrets::iptv::epg::nord')}"
                ROUTES=(
-               \$QUALITY_M3U
-               \$OCDTV_M3U
+               \$NORD_M3U
                )
                | EOT
   }
