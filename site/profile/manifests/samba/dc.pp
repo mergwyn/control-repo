@@ -7,13 +7,15 @@ class profile::samba::dc {
   # TODO add unison replcaition script and cron entry
 
   # support for samba backup as part of backuppc run
-  $scripts='/etc/backuppc/scripts/'
+  $scripts='/etc/backuppc-scripts/'
   $preuser="${scripts}DumpPreUser/"
   $postuser="${scripts}DumpPostUser/"
 
   $oldfiles = [
     '/var/lib/samba/sysvol/theclarkhome.com/scripts/samba4_backup',
-    '/etc/cron.daily/samba4-backup'
+    '/etc/cron.daily/samba4-backup',
+    '/etc/backuppc/scripts/DumpPreUser/S30samba_backup',
+    '/etc/backuppc/scripts/DumpPostUser//P30samba_clean'
   ]
   file {$oldfiles: ensure => absent, }
 
