@@ -88,13 +88,19 @@ dhcp::hosts:
   humax:
     #ddns_hostname: humax
     mac: 80:1f:02:21:a1:74
-  Lounge-sonos-playbar:
+  lounge-sonos-playbar:
     mac: 00:0e:58:bc:b4:dc
+    option:
+      domain-name-servers: 8.8.8.8
   lounge-sonos-play1-ls:
     mac: 00:0e:58:c9:f0:9a
+    option:
+      domain-name-servers: 8.8.8.8
   lounge-sonos-play1-rs:
     mac: 94:9F:3E:12:FA:8A
+    option:
+      domain-name-servers: 8.8.8.8
   kitchen-sonos-playone:
     mac: 78:28:CA:CB:8B:94
-
-# vim: sw=2:ai:nu expandtab
+    option:
+      domain-name-servers: 8.8.8.8
