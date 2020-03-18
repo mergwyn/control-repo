@@ -15,7 +15,6 @@ transmission::user:                     "media"
 transmission::group:                    "513"
 transmission::download_dir:             "/srv/media/torrent/complete"
 transmission::incomplete_dir:           "/srv/media/torrent/incomplete"
-#transmission::ratio_limit:              0.4000
 transmission::ratio_limit:              0.6
 transmission::rpc_enable_auth:          false
 transmission::rpc_password:             "{9611e36bfc22b97aed5386263ce806ad4ccf1a27qaqXGcAK"
@@ -43,6 +42,3 @@ backuppc::client::backup_files_exclude:
   - 'var/lib/plexmediaserver/Library/Application Support/Plex Media Server/Media/localhost'
   - 'var/lib/plexmediaserver/Library/Application Support/Plex Media Server/Metadata'
   - 'var/lib/plexmediaserver/Library/Application Support/Plex Media Server/Plug-in Support/Caches'
-
-
-# vim: sw=2:ai:nu expandtab
