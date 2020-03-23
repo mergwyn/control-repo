@@ -28,6 +28,7 @@ profile::base::packages::objects:
   homebrew/cask-drivers/sonos:      {}
   profilecreator:                   {}
   aerial:                           {}
+  skype:                            {}
   vlc:                              {}
   dropbox:
     ensure:                         absent
