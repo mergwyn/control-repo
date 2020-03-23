@@ -4,11 +4,5 @@ profile::base::packages::objects:
   clover-configurator: {}
   geekbench: {}
   garmin-express: {}
-  amazon-photos:
-    ensure: absent
-  google-backup-and-sync:
-    ensure: absent
   vmware-fusion: {}
-  onedrive:
-    ensure: absent
   whatsapp: {}

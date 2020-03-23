@@ -34,6 +34,13 @@ profile::base::packages::objects:
     ensure:                         absent
   google-chrome:
     ensure:                         absent
+  amazon-photos:
+    ensure:                         absent
+  google-backup-and-sync:
+    ensure:                         absent
+  onedrive:
+    ensure:                         absent
+
 
 profile::base::files::defaults:
   ensure:                           present
