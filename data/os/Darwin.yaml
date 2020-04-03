@@ -15,33 +15,6 @@ homebrew::group:                    'admin'
 homebrew::multiuser:                false
 homebrew::github_token:             "%{lookup('secrets::github::homebrew')}"
 
-# packages to be installed
-profile::base::packages::defaults:
-  provider:                         homebrew
-  ensure:                           latest
-profile::base::packages::objects:
-  mergwyn/homebrew-cask/unison248:  {}
-  puppetlabs/puppet/puppet-agent-6: {}
-  keeweb:                           {}
-  amazon-music:                     {}
-  firefox:                          {}
-  homebrew/cask-drivers/sonos:      {}
-  profilecreator:                   {}
-  aerial:                           {}
-  skype:                            {}
-  vlc:                              {}
-  dropbox:
-    ensure:                         absent
-  google-chrome:
-    ensure:                         absent
-  amazon-photos:
-    ensure:                         absent
-  google-backup-and-sync:
-    ensure:                         absent
-  onedrive:
-    ensure:                         absent
-
-
 profile::base::files::defaults:
   ensure:                           present
 profile::base::files::objects:

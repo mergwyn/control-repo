@@ -4,6 +4,34 @@
 classes:
   - profile::mac::managedmac
 
+# packages to be installed
+profile::base::packages::defaults:
+  provider:                         homebrew
+  ensure:                           latest
+profile::base::packages::objects:
+  mergwyn/homebrew-cask/unison248:  {}
+  puppetlabs/puppet/puppet-agent-6: {}
+  keeweb:                           {}
+  amazon-music:                     {}
+  firefox:                          {}
+  homebrew/cask-drivers/sonos:      {}
+  profilecreator:                   {}
+  aerial:                           {}
+  skype:                            {}
+  zoomus:                           {}
+  vlc:                              {}
+  dropbox:
+    ensure:                         absent
+  google-chrome:
+    ensure:                         absent
+  amazon-photos:
+    ensure:                         absent
+  google-backup-and-sync:
+    ensure:                         absent
+  onedrive:
+    ensure:                         absent
+
+
 managedmac::organization:                               "The Clark family"
 managedmac::ntp::enable:                                true
 managedmac::ntp::servers:
