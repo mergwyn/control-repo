@@ -82,6 +82,7 @@ mod 'webmin', :git => 'https://github.com/rehanone/puppet-webmin'
 #mod 'wyrie-backuppc', '2.0.0'
 mod 'backuppc', :git => 'https://github.com/mergwyn/mergwyn-backuppc'
 mod 'zack-exports', '1.0.1'
+mod 'zehweh-netplan', '1.0.0'
 
 # puppet 6 core types
 mod 'puppetlabs-host_core', '1.0.3'
