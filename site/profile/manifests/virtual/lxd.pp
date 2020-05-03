@@ -23,10 +23,10 @@ class profile::virtual::lxd {
     refreshonly => true,
   }
 
+  $bindir='/usr/local/bin'
 #'  include profile::git
 #'
 #'  $codedir='/opt/code/lxdsnap'
-#'  $bindir='/usr/local/bin'
 #'
 #'  # lxd snap related commands
 #'  vcsrepo { $codedir:
@@ -78,4 +78,3 @@ class profile::virtual::lxd {
     source => 'puppet:///modules/profile/upgrade_lxd'
   }
 }
-# vim: sw=2:ai:nu expandtab
