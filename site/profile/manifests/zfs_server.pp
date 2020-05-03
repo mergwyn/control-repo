@@ -32,7 +32,10 @@ class profile::zfs_server {
   file { '/etc/cron.monthly/zfs-montly-report.sh': ensure  => absent, }
   file { '/etc/cron.monthly/zfs-montly-report':
     ensure  => present,
-    content => "#!/bin/sh\n/usr/local/bin/zfs_report.sh\n",
+    content => @("EOT"/$),
+               #!/bin/sh
+               /usr/local/bin/zfs_report.sh
+               | EOT
     mode    => '0775',
   }
 
@@ -87,22 +90,38 @@ class profile::zfs_server {
   file { '/etc/cron.hourly/zfs-auto-snapshot':
     ensure  => present,
     mode    => '0555',
-    content => "#!/bin/sh\nwhich zfs-auto-snapshot > /dev/null || exit 0\nexec zfs-auto-snapshot --quiet --syslog --label=02 --keep=24 //\n",
+    content => @("EOT"/$),
+               #!/bin/sh
+               which zfs-auto-snapshot > /dev/null || exit 0
+               exec zfs-auto-snapshot --quiet --syslog --label=02 --keep=24 //
+               | EOT
   }
   file { '/etc/cron.daily/zfs-auto-snapshot':
     ensure  => present,
     mode    => '0555',
-    content => "#!/bin/sh\nwhich zfs-auto-snapshot > /dev/null || exit 0\nexec zfs-auto-snapshot --quiet --syslog --label=03 --keep=14 //\n",
+    content => @("EOT"/$),
+               #!/bin/sh
+               which zfs-auto-snapshot > /dev/null || exit 0
+               exec zfs-auto-snapshot --quiet --syslog --label=03 --keep=14 //
+               | EOT
   }
   file { '/etc/cron.weekly/zfs-auto-snapshot':
     ensure  => present,
     mode    => '0555',
-    content => "#!/bin/sh\nwhich zfs-auto-snapshot > /dev/null || exit 0\nexec zfs-auto-snapshot --quiet --syslog --label=04 --keep=8 //\n",
+    content => @("EOT"/$),
+               #!/bin/sh
+               which zfs-auto-snapshot > /dev/null || exit 0
+               exec zfs-auto-snapshot --quiet --syslog --label=04 --keep=8 //
+               | EOT
   }
   file { '/etc/cron.monthly/zfs-auto-snapshot':
     ensure  => present,
     mode    => '0555',
-    content => "#!/bin/sh\nwhich zfs-auto-snapshot > /dev/null || exit 0\nexec zfs-auto-snapshot --quiet --syslog --label=05 --keep=12 //\n",
+    content => @("EOT"/$),
+               #!/bin/sh
+               which zfs-auto-snapshot > /dev/null || exit 0
+               exec zfs-auto-snapshot --quiet --syslog --label=05 --keep=12 //
+               | EOT
   }
 
 #  # beadm boot environments
