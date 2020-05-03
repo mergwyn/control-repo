@@ -28,6 +28,16 @@ netplan::bridges:
         stp: false
         forward_delay: 0
 
+lxd::preseed:
+  storage_pools:
+  - config:
+      source: rpool/lxd
+      volatile.initial_source: rpool/lxd
+      zfs.pool_name: rpool/lxd
+    description: ""
+    name: default
+    driver: zfs
+
 backuppc::client::rsync_share_name:
   - '/'
   - '/boot'

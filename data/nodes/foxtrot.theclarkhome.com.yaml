@@ -43,6 +43,24 @@ profile::base::mounts::objects:
     options:  'bind,rw'
     require:  Mount[srv2]
 
+lxd::preseed:
+  storage_pools:
+  - config:
+      source: srv/lxd
+      volatile.initial_source: srv/lxd
+      zfs.pool_name: srv/lxd
+    description: ""
+    name: default
+    driver: zfs
+  - config:
+      source: rpool/lxd
+      volatile.initial_source: rpool/lxd
+      volume.zfs.use_refquota: "true"
+      zfs.pool_name: rpool/lxd
+    description: ""
+    name: ssd
+    driver: zfs
+
 backuppc::server::backuppc_password:          "%{lookup('secrets::backuppc')}"
 backuppc::params::gzip_path:                  '/usr/bin/pigz'
 backuppc::server::full_age_max:               370
