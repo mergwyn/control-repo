@@ -26,7 +26,7 @@ netplan::bridges:
           - 192.168.11.22
       parameters:
         stp: false
-        forward-delay: 0
+        forward_delay: 0
 
 backuppc::client::rsync_share_name:
   - '/'
