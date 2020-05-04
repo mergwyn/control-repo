@@ -82,10 +82,14 @@ class profile::zfs_server {
 #  }
 #
   cron::job {'zfs-auto-snapshot':
-    environment => [ 'PATH="/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin"'],
-    command     => 'which zfs-auto-snapshot > /dev/null || exit 0 ; zfs-auto-snapshot --quiet --syslog --label=01 --keep=4  //',
+    environment => [ 'PATH="/usr/bin:/bin:/usr/sbin:/sbin:/usr/sbin:/usr/local/bin"'],
     user        => 'root',
     minute      => '*/15',
+    command     => @("EOT"/L)
+                   which zfs-auto-snapshot > /dev/null || exit 0 ; \
+                   zfs-auto-snapshot --quiet --syslog --label=01 --keep=4  // && \
+                   zsysctl boot update-menu 2>&1 | grep -v 'INFO Updating GRUB menu'
+                   | EOT<
   }
   file { '/etc/cron.hourly/zfs-auto-snapshot':
     ensure  => present,
@@ -93,7 +97,8 @@ class profile::zfs_server {
     content => @("EOT"/$),
                #!/bin/sh
                which zfs-auto-snapshot > /dev/null || exit 0
-               exec zfs-auto-snapshot --quiet --syslog --label=02 --keep=24 //
+               exec zfs-auto-snapshot --quiet --syslog --label=02 --keep=24 // &&
+               zsysctl boot update-menu 2>&1 | grep -v 'Updating GRUB menu'
                | EOT
   }
   file { '/etc/cron.daily/zfs-auto-snapshot':
@@ -102,7 +107,8 @@ class profile::zfs_server {
     content => @("EOT"/$),
                #!/bin/sh
                which zfs-auto-snapshot > /dev/null || exit 0
-               exec zfs-auto-snapshot --quiet --syslog --label=03 --keep=14 //
+               exec zfs-auto-snapshot --quiet --syslog --label=03 --keep=14 // &&
+               zsysctl boot update-menu 2>&1 | grep -v 'Updating GRUB menu'
                | EOT
   }
   file { '/etc/cron.weekly/zfs-auto-snapshot':
@@ -111,7 +117,8 @@ class profile::zfs_server {
     content => @("EOT"/$),
                #!/bin/sh
                which zfs-auto-snapshot > /dev/null || exit 0
-               exec zfs-auto-snapshot --quiet --syslog --label=04 --keep=8 //
+               exec zfs-auto-snapshot --quiet --syslog --label=04 --keep=8 // &&
+               zsysctl boot update-menu 2>&1 | grep -v 'Updating GRUB menu'
                | EOT
   }
   file { '/etc/cron.monthly/zfs-auto-snapshot':
@@ -120,7 +127,8 @@ class profile::zfs_server {
     content => @("EOT"/$),
                #!/bin/sh
                which zfs-auto-snapshot > /dev/null || exit 0
-               exec zfs-auto-snapshot --quiet --syslog --label=05 --keep=12 //
+               exec zfs-auto-snapshot --quiet --syslog --label=05 --keep=12 // &&
+               zsysctl boot update-menu 2>&1 | grep -v 'Updating GRUB menu'
                | EOT
   }
 
