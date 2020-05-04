@@ -97,7 +97,7 @@ class profile::zfs_server {
     content => @("EOT"/$),
                #!/bin/sh
                which zfs-auto-snapshot > /dev/null || exit 0
-               exec zfs-auto-snapshot --quiet --syslog --label=02 --keep=24 // &&
+               zfs-auto-snapshot --quiet --syslog --label=02 --keep=24 // &&
                zsysctl boot update-menu 2>&1 | grep -v 'Updating GRUB menu'
                | EOT
   }
@@ -107,7 +107,7 @@ class profile::zfs_server {
     content => @("EOT"/$),
                #!/bin/sh
                which zfs-auto-snapshot > /dev/null || exit 0
-               exec zfs-auto-snapshot --quiet --syslog --label=03 --keep=14 // &&
+               zfs-auto-snapshot --quiet --syslog --label=03 --keep=14 // &&
                zsysctl boot update-menu 2>&1 | grep -v 'Updating GRUB menu'
                | EOT
   }
@@ -117,7 +117,7 @@ class profile::zfs_server {
     content => @("EOT"/$),
                #!/bin/sh
                which zfs-auto-snapshot > /dev/null || exit 0
-               exec zfs-auto-snapshot --quiet --syslog --label=04 --keep=8 // &&
+               zfs-auto-snapshot --quiet --syslog --label=04 --keep=8 // &&
                zsysctl boot update-menu 2>&1 | grep -v 'Updating GRUB menu'
                | EOT
   }
@@ -127,7 +127,7 @@ class profile::zfs_server {
     content => @("EOT"/$),
                #!/bin/sh
                which zfs-auto-snapshot > /dev/null || exit 0
-               exec zfs-auto-snapshot --quiet --syslog --label=05 --keep=12 // &&
+               zfs-auto-snapshot --quiet --syslog --label=05 --keep=12 // &&
                zsysctl boot update-menu 2>&1 | grep -v 'Updating GRUB menu'
                | EOT
   }
