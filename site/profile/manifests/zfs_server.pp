@@ -89,7 +89,7 @@ class profile::zfs_server {
                    which zfs-auto-snapshot > /dev/null || exit 0 ; \
                    zfs-auto-snapshot --quiet --syslog --label=01 --keep=4  // && \
                    zsysctl boot update-menu 2>&1 | grep -v 'INFO Updating GRUB menu'
-                   | EOT<
+                   | EOT
   }
   file { '/etc/cron.hourly/zfs-auto-snapshot':
     ensure  => present,
