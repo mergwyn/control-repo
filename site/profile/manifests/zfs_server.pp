@@ -88,7 +88,7 @@ class profile::zfs_server {
     command     => @("EOT"/L)
                    which zfs-auto-snapshot > /dev/null || exit 0 ; \
                    zfs-auto-snapshot --quiet --syslog --label=01 --keep=4  // && \
-                   zsysctl boot update-menu 2>&1 | grep -v 'INFO Updating GRUB menu'
+                   zsysctl boot update-menu 2>&1 | grep -v 'Updating GRUB menu'
                    | EOT
   }
   file { '/etc/cron.hourly/zfs-auto-snapshot':
