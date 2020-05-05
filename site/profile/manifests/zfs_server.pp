@@ -88,7 +88,7 @@ class profile::zfs_server {
     command     => @("EOT"/L)
                    which zfs-auto-snapshot > /dev/null || exit 0 ; \
                    zfs-auto-snapshot --quiet --syslog --label=01 --keep=4  // && \
-                   zsysctl boot update-menu 2>&1 | grep -v 'Updating GRUB menu'
+                   zsysctl boot update-menu 2>&1 | sed '/Updating GRUB menu/d'
                    | EOT
   }
   file { '/etc/cron.hourly/zfs-auto-snapshot':
@@ -98,7 +98,7 @@ class profile::zfs_server {
                #!/bin/sh
                which zfs-auto-snapshot > /dev/null || exit 0
                zfs-auto-snapshot --quiet --syslog --label=02 --keep=24 // &&
-               zsysctl boot update-menu 2>&1 | grep -v 'Updating GRUB menu'
+               zsysctl boot update-menu 2>&1 | sed '/Updating GRUB menu/d'
                | EOT
   }
   file { '/etc/cron.daily/zfs-auto-snapshot':
@@ -108,7 +108,7 @@ class profile::zfs_server {
                #!/bin/sh
                which zfs-auto-snapshot > /dev/null || exit 0
                zfs-auto-snapshot --quiet --syslog --label=03 --keep=14 // &&
-               zsysctl boot update-menu 2>&1 | grep -v 'Updating GRUB menu'
+               zsysctl boot update-menu 2>&1 | sed '/Updating GRUB menu/d'
                | EOT
   }
   file { '/etc/cron.weekly/zfs-auto-snapshot':
@@ -118,7 +118,7 @@ class profile::zfs_server {
                #!/bin/sh
                which zfs-auto-snapshot > /dev/null || exit 0
                zfs-auto-snapshot --quiet --syslog --label=04 --keep=8 // &&
-               zsysctl boot update-menu 2>&1 | grep -v 'Updating GRUB menu'
+               zsysctl boot update-menu 2>&1 | sed '/Updating GRUB menu/d'
                | EOT
   }
   file { '/etc/cron.monthly/zfs-auto-snapshot':
@@ -128,7 +128,7 @@ class profile::zfs_server {
                #!/bin/sh
                which zfs-auto-snapshot > /dev/null || exit 0
                zfs-auto-snapshot --quiet --syslog --label=05 --keep=12 // &&
-               zsysctl boot update-menu 2>&1 | grep -v 'Updating GRUB menu'
+               zsysctl boot update-menu 2>&1 | sed '/Updating GRUB menu/d'
                | EOT
   }
 
