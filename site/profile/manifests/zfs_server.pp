@@ -40,11 +40,11 @@ class profile::zfs_server {
   }
 
 #  # grub menu generation
-#  file { '/etc/grub.d/42_zfs_select':
-#    ensure => present,
-#    source => 'puppet:///modules/profile/zfs/42_zfs_select',
-#    mode   => '0755',
-#  }
+  file { '/etc/grub.d/42_zfs_select':
+    ensure => present,
+    source => 'puppet:///modules/profile/zfs/42_zfs_select',
+    mode   => '0755',
+  }
 #  file { '/etc/grub.d/43_zfs_snap':
 #    ensure => present,
 #    source => 'puppet:///modules/profile/zfs/43_zfs_snap',
