@@ -87,6 +87,7 @@ mod 'zehweh-netplan', '1.0.0'
 # puppet 6 core types
 mod 'puppetlabs-host_core', '1.0.3'
 mod 'puppetlabs-mount_core', '1.0.4'
+mod 'puppetlabs-cron_core', '1.0.4'
 
 # tasks
 mod 'puppetlabs-bootstrap', '2.1.0'
@@ -98,5 +99,5 @@ mod 'puppetlabs-dism', '1.3.1'
 mod 'puppetlabs-registry', '3.1.0'
 mod 'puppetlabs-concat', '6.2.0'
 mod 'puppetlabs-scheduled_task', '2.0.1'
-#mod 'puppetlabs-powershell', '3.0.1'
+mod 'puppetlabs-powershell', '3.0.1'
 #mod 'puppetlabs-pwshlib', '0.4.1'
