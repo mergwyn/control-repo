@@ -6,28 +6,30 @@ linux_classes:
 netplan::version: 2
 netplan::renderer: networkd
 netplan::ethernets:
-    enp3s0:
-      dhcp4: no
+  enp3s0:
+    dhcp4: no
+  eth0:    {}
 netplan::bridges:
-    br0:
-      interfaces:
-        - enp3s0
-      dhcp4: no
-      dhcp6: no
+  br0:
+    interfaces:
+      - enp3s0
+    dhcp4: no
+    dhcp6: no
+    addresses:
+      - 192.168.11.11/16
+    gateway4: 192.168.11.254
+    nameservers:
+      search:
+        - theclarkhome.com
+        - local
       addresses:
-        - 192.168.11.11/16
-      gateway4: 192.168.11.254
-      nameservers:
-        search:
-          - theclarkhome.com
-          - local
-        addresses:
-          - 192.168.11.21
-          - 192.168.11.22
-      parameters:
-        stp: false
-        forward_delay: 0
+        - 192.168.11.21
+        - 192.168.11.22
+    parameters:
+      stp: false
+      forward_delay: 0
 
+# Config for lxd server
 lxd::preseed:
   storage_pools:
   - config:

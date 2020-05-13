@@ -25,6 +25,15 @@ profile::base::packages::objects:
   update-notifier-common:                         {}
   landscape-common:                               {}
 
+# Default to basic dhcp on eth0 - this works for containers
+# Disable eth0 higher up in hierarchy if not needed
+netplan::version: 2
+netplan::renderer: networkd
+netplan::ethernets:
+  eth0:
+    dhcp4: true
+
+
 # Note storage_pools must be defined in node
 lxd::preseed:
   config:
