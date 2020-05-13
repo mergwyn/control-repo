@@ -8,7 +8,7 @@ netplan::renderer: networkd
 netplan::ethernets:
   enp3s0:
     dhcp4: no
-  eth0:    {}
+  eth0: {}
 netplan::bridges:
   br0:
     interfaces:
