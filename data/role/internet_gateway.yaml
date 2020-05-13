@@ -6,6 +6,20 @@ classes:
   - profile::reverse_proxy
   - profile::ddclient
 
-# vim: sw=2:ai:nu expandtab
+letsencrypt::renew_cron_ensure: 'present'
+letsencrypt::renew_cron_minute: 0
+letsencrypt::renew_cron_hour: 6
+letsencrypt::renew_cron_monthday: '1-31/2'
+letsencrypt:
+  config:
+    email:  "${lookup('defaults::adminemail')}"
+    server: 'https://acme-v01.api.letsencrypt.org/directory'
 
-# vim: sw=2:ai:nu expandtab
+# TODO: move this somewhere sensible or build domain array from hash
+letsencrypt::certonly:
+  "%{trusted.certname}":
+    plugin:  'nginx'
+    domains:  
+      - "%{trusted.domain}"
+      - "%{trusted.certname}"
+
