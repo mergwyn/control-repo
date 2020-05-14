@@ -1,25 +1,4 @@
 ---
 classes:
   - profile::base  # All roles should have the base profile
-  - profile::domain::sso
-  - profile::backuppc::server
 
-backuppc::client::backuppc_hostname:          "%{trusted.certname}"
-
-backuppc::params::gzip_path:                  '/usr/bin/pigz'
-
-backuppc::server::apache_configuration:       false
-backuppc::server::backuppc_password:          "%{lookup('secrets::backuppc')}"
-backuppc::server::backup_zero_files_is_fatal: true
-backuppc::server::cgi_date_format_mmdd:       1
-backuppc::server::full_age_max:               370
-backuppc::server::full_keep_cnt:              [4,0,12]
-backuppc::server::incr_age_max:               21
-backuppc::server::incr_keep_cnt:              12
-backuppc::server::blackout_periods:
-  - hourBegin:                                7
-    hourEnd:                                  22
-    weekDays:                                 [1,2,3,4,5]
-  - hourBegin:                                3
-    hourEnd:                                  22
-    weekDays:                                 [0,6]
