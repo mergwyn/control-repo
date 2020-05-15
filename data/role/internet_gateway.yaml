@@ -5,15 +5,15 @@ classes:
   - profile::base  # All roles should have the base profile
   - profile::reverse_proxy
   - profile::ddclient
+  - profile::certificate_server
 
 letsencrypt::renew_cron_ensure: 'present'
 letsencrypt::renew_cron_minute: 0
 letsencrypt::renew_cron_hour: 6
 letsencrypt::renew_cron_monthday: '1-31/2'
-letsencrypt:
-  config:
-    email:  "${lookup('defaults::adminemail')}"
-    server: 'https://acme-v01.api.letsencrypt.org/directory'
+letsencrypt::config:
+  email:  "ca@%{domain}"
+  server: 'https://acme-v01.api.letsencrypt.org/directory'
 
 # TODO: move this somewhere sensible or build domain array from hash
 letsencrypt::certonly:
