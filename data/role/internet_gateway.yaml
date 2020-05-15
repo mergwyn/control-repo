@@ -23,3 +23,7 @@ letsencrypt::certonly:
       - "%{trusted.domain}"
       - "%{trusted.certname}"
 
+lookup_options:
+  "^letsencrypt::config:$":
+    merge: deep
+    knockout_prefix: '--'
