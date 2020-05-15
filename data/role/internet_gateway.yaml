@@ -13,7 +13,6 @@ letsencrypt::renew_cron_hour: 6
 letsencrypt::renew_cron_monthday: '1-31/2'
 letsencrypt::config:
   email:  "ca@%{domain}"
-  server: 'https://acme-v01.api.letsencrypt.org/directory'
 
 # TODO: move this somewhere sensible or build domain array from hash
 letsencrypt::certonly:
