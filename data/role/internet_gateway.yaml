@@ -24,6 +24,6 @@ letsencrypt::certonly:
       - "%{trusted.certname}"
 
 lookup_options:
-  "^letsencrypt::config:$":
+  "^letsencrypt::config$":
     merge: deep
     knockout_prefix: '--'
