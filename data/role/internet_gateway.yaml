@@ -25,8 +25,9 @@ profile::certificate_server::domains:
 nginx::server_purge: true
 nginx::nginx_locations:
   'well-known-papa':
-    location: "/var/www/%{trusted.certname}/.well-known"
-    server: "%{trusted.certname}"
+    www_root: '/var/www/html'
+    location: '/$host/.well-known'
+    server:   "%{trusted.certname}"
 
 nginx::nginx_servers:
   papa:
