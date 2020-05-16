@@ -3,9 +3,9 @@
 
 classes:
   - profile::base  # All roles should have the base profile
-  - profile::reverse_proxy
   - profile::ddclient
   - profile::certificate_server
+  - nginx
 
 letsencrypt::renew_cron_ensure: 'present'
 letsencrypt::renew_cron_minute: 0
@@ -18,6 +18,70 @@ letsencrypt::config:
 profile::certificate_server::domains:
   - "%{trusted.domain}"
   - "%{trusted.certname}"
+  - "zulu.%{trusted.domain}"
+  - "foxtrot.%{trusted.domain}"
+  - "tango.%{trusted.domain}"
+
+nginx::nginx_servers:
+  'zulu':
+    server:      "zulu.%{trusted.domain}"
+    listen_port: 80
+    proxy      : "http://zulu.%{trusted.domain}:80"
+  'foxtrot':
+    server:      "foxtrot.%{trusted.domain}"
+    listen_port: 80
+    proxy      : "http://foxtrot.%{trusted.domain}:80"
+  'echo':
+    server:      "echo.%{trusted.domain}"
+    listen_port: 80
+    proxy      : "http://echo.%{trusted.domain}:80"
+# tango related
+  'sabnzbd.tango':
+    listen_port: 8080
+    server:      "tango.%{trusted.domain}"
+    proxy      : "http://tango.%{trusted.domain}:8080"
+  'radarr.tango':
+    listen_port: 7878
+    server:      "tango.%{trusted.domain}"
+    proxy      : "http://tango.%{trusted.domain}:7878"
+  'sonarr.tango':
+    listen_port: 8989
+    server:      "tango.%{trusted.domain}"
+    proxy      : "http://tango.%{trusted.domain}:8989"
+  'transmission.tango':
+    listen_port: 9091
+    server:      "tango.%{trusted.domain}"
+    proxy      : "http://tango.%{trusted.domain}:9091"
+
+#
+#  nginx::resource::upstream { 'plex_upstream':
+#    members => [ "tango.$::domain:32400", ],
+#  }
+#  nginx::resource::server { 'plex.tango':
+#    listen_port => 32400,
+#    server_name => [ "tango.$::domain" ],
+#    access_log  => 'off',
+#    locations   => {
+#      '/web' => {
+#        location            => '/web',
+#        proxy               => "http://tango.$::domain:32400",
+#        proxy_buffering     => 'off',
+#        proxy_redirect      => 'off',
+#        proxy_http_version  => '1.1',
+#        proxy_set_header    => [
+#          'X-Forwarded-For $proxy_add_x_forwarded_for',
+#          'Upgrade $http_upgrade',
+#          'Connection $http_connection',
+#          'X-Real-IP $remote_addr',
+#          'Host $http_host',
+#        ],
+#        location_cfg_append => {
+#    #      'if ($http_x_plex_device_name == "")' => '{rewrite ^/$ https://$http_host/web/index.html}',
+#          'proxy_cookie_path' => '/web/ /',
+#        },
+#      },
+#    },
+#  }
 
 lookup_options:
   "^letsencrypt::config$":

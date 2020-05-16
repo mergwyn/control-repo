@@ -1,19 +1,14 @@
 #
 
-class profile::certificate_server {
+class profile::certificate_server (
+  Array[Stdlib::Fqdn] $domains = []
+) {
 
   include letsencrypt
 
-  $domain = $::facts['networking']['domain']
-  letsencrypt::certonly { 'home':
+  letsencrypt::certonly { $trusted['certname']:
     plugin               => 'nginx',
-    domains              => [
-      $facts['networking']['fqdn'],
-      "echo.${domain}",
-      "foxtrot.${domain}",
-      "tango.${domain}",
-      "vpn.${domain}"
-    ],
+    domains              => $domains,
     manage_cron          => true,
     cron_before_command  => 'service nginx stop',
     cron_success_command => '/bin/systemctl reload nginx.service',
