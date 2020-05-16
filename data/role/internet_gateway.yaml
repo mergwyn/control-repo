@@ -30,32 +30,32 @@ nginx::nginx_locations:
 
 nginx::nginx_servers:
   papa:
-    server_name: "%{trusted.certname}"
+    server_name: [ "%{trusted.certname}" ]
     listen_port: 80
   zulu:
-    server_name: "zulu.%{trusted.domain}"
+    server_name: [ "zulu.%{trusted.domain}" ]
     listen_port: 80
     proxy      : "http://zulu.%{trusted.domain}:80"
   foxtrot:
-    server_name: "foxtrot.%{trusted.domain}"
+    server_name: [ "foxtrot.%{trusted.domain}" ]
     listen_port: 80
     proxy      : "http://foxtrot.%{trusted.domain}:80"
   echo:
-    server_name: "echo.%{trusted.domain}"
+    server_name: [ "echo.%{trusted.domain}" ]
     listen_port: 80
     proxy      : "http://echo.%{trusted.domain}:80"
 # tango related
   'sabnzbd.tango':
     listen_port: 8080
-    server_name: "tango.%{trusted.domain}"
+    server_name: [ "tango.%{trusted.domain}" ]
     proxy      : "http://tango.%{trusted.domain}:8080"
   'radarr.tango':
     listen_port: 7878
-    server_name: "tango.%{trusted.domain}"
+    server_name: [ "tango.%{trusted.domain}" ]
     proxy      : "http://tango.%{trusted.domain}:7878"
   'sonarr.tango':
     listen_port: 8989
-    server_name: "tango.%{trusted.domain}"
+    server_name: [ "tango.%{trusted.domain}" ]
     proxy      : "http://tango.%{trusted.domain}:8989"
   'transmission.tango':
     listen_port: 9091
