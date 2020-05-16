@@ -30,7 +30,7 @@ nginx::nginx_locations:
     server:   "%{trusted.certname}"
 
 nginx::nginx_servers:
-  papa:
+  "%{trusted.certname}":
     server_name: [ "%{trusted.certname}" ]
     listen_port: 80
   zulu:
