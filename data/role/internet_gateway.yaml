@@ -11,9 +11,9 @@ profile::base::files::defaults:
   ensure: directory
   require: Package[nginx-common]
 profile::base::files::objects:
-  '/var/www/html/letsencrypt/':
-  '/var/www/html/letsencrypt/.well-known':
-  '/var/www/html/letsencrypt/.well-known/acme-challenge/':
+  '/var/www/html/letsencrypt/': {}
+  '/var/www/html/letsencrypt/.well-known': {}
+  '/var/www/html/letsencrypt/.well-known/acme-challenge/': {}
 
 letsencrypt::renew_cron_ensure: 'present'
 letsencrypt::renew_cron_minute: 0
