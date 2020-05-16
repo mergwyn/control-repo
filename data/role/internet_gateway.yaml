@@ -10,13 +10,13 @@ classes:
 profile::base::files::objects:
   '/var/www/html/letsencrypt/': 
     ensure: directory
-    require: Package[nginx-common]
+    require: Package[nginx]
   '/var/www/html/letsencrypt/.well-known': 
     ensure: directory
-    require: Package[nginx-common]
+    require: Package[nginx]
   '/var/www/html/letsencrypt/.well-known/acme-challenge/':
     ensure: directory
-    require: Package[nginx-common]
+    require: Package[nginx]
 
 letsencrypt::renew_cron_ensure: 'present'
 letsencrypt::renew_cron_minute: 0
