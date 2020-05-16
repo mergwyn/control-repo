@@ -7,6 +7,18 @@ classes:
   - profile::certificate_server
   - nginx
 
+files:
+  '/var/www/html/letsencrypt/':
+    ensure: directory
+    require: Class[nginx]
+  '/var/www/html/letsencrypt/.well-known':
+    ensure: directory
+    require: Class[nginx]
+  '/var/www/html/letsencrypt/.well-known/acme-challenge/':
+    ensure: directory
+    require: Class[nginx]
+
+
 letsencrypt::renew_cron_ensure: 'present'
 letsencrypt::renew_cron_minute: 0
 letsencrypt::renew_cron_hour: 6
@@ -27,19 +39,19 @@ nginx::server_purge: true
 nginx::nginx_locations:
   'well-known':
     location: '^~ /.well-known/acme-challenge/'
-    www_root: '/usr/share/nginx/html/letsencrypt/'
+    www_root: '/var/www/html/letsencrypt/'
     server:
       - "%{trusted.hostname}"
-      - 'echo'
     location_custom_cfg_append:
      'default_type' : '"text/plain";'
 
 nginx::nginx_servers:
   "%{trusted.hostname}":
     server_name: [ "%{trusted.certname}" ]
-    listen_port: 80
-    ssl_cert:    '/etc/letsencrypt/live/yankee.theclarkhome.com/fullchain.pem'
-    ssl_key:     '/etc/letsencrypt/live/yankee.theclarkhome.com/privkey.pem'
+    listen_port:  80
+    ssl_redirect: true
+    ssl_cert:     "/etc/letsencrypt/live/%{trusted.certname}/fullchain.pem"
+    ssl_key:      "/etc/letsencrypt/live/%{trusted.certname}/privkey.pem"
   zulu:
     server_name: [ "zulu.%{trusted.domain}" ]
     listen_port: 80
