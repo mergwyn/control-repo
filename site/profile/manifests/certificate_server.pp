@@ -2,14 +2,7 @@
 
 class profile::certificate_server {
 
-  # sort out certificates first
-  include letsencypt
-  #class { '::letsencrypt':
-  #  config => {
-  #    email  => lookup('defaults::adminemail'),
-  #    server => 'https://acme-staging.api.letsencrypt.org/directory'
-  #  }
-  #}
+  include letsencrypt
 
   $domain = $::facts['networking']['domain']
   letsencrypt::certonly { 'home':

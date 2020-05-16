@@ -15,12 +15,9 @@ letsencrypt::config:
   email:  "ca@%{domain}"
 
 # TODO: move this somewhere sensible or build domain array from hash
-letsencrypt::certonly:
-  "%{trusted.certname}":
-    plugin:  'nginx'
-    domains:  
-      - "%{trusted.domain}"
-      - "%{trusted.certname}"
+profile::certificate_server::domains:
+  - "%{trusted.domain}"
+  - "%{trusted.certname}"
 
 lookup_options:
   "^letsencrypt::config$":
