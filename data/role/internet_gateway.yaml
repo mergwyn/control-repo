@@ -10,14 +10,13 @@ classes:
 files:
   '/var/www/html/letsencrypt/':
     ensure: directory
-    require: Class[nginx]
+    require: Package[nginx-common]
   '/var/www/html/letsencrypt/.well-known':
     ensure: directory
-    require: Class[nginx]
+    require: Package[nginx-common]
   '/var/www/html/letsencrypt/.well-known/acme-challenge/':
     ensure: directory
-    require: Class[nginx]
-
+    require: Package[nginx-common]
 
 letsencrypt::renew_cron_ensure: 'present'
 letsencrypt::renew_cron_minute: 0
