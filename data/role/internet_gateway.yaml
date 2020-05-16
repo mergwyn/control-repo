@@ -7,16 +7,13 @@ classes:
   - profile::certificate_server
   - nginx
 
-files:
+profile::base::files::defaults:
+  ensure: directory
+  require: Package[nginx-common]
+profile::base::files::objects:
   '/var/www/html/letsencrypt/':
-    ensure: directory
-    require: Package[nginx-common]
   '/var/www/html/letsencrypt/.well-known':
-    ensure: directory
-    require: Package[nginx-common]
   '/var/www/html/letsencrypt/.well-known/acme-challenge/':
-    ensure: directory
-    require: Package[nginx-common]
 
 letsencrypt::renew_cron_ensure: 'present'
 letsencrypt::renew_cron_minute: 0
