@@ -28,13 +28,13 @@ nginx::nginx_locations:
     location: '^~ /.well-known/acme-challenge/'
     www_root: '/usr/share/nginx/html/letsencrypt/'
     server:
-      - "%{trusted.certname}"
-      - "echo.%{trusted.domain}"
+      - "%{trusted.hostname}"
+      - 'echo'
     location_custom_cfg_append:
      'default_type' : '"text/plain";'
 
 nginx::nginx_servers:
-  "%{trusted.certname}":
+  "%{trusted.hostname}":
     server_name: [ "%{trusted.certname}" ]
     listen_port: 80
   zulu:
