@@ -59,7 +59,7 @@ nginx::nginx_servers:
     proxy      : "http://tango.%{trusted.domain}:8989"
   'transmission.tango':
     listen_port: 9091
-    server_name: "tango.%{trusted.domain}"
+    server_name: [ "tango.%{trusted.domain}" ]
     proxy      : "http://tango.%{trusted.domain}:9091"
 
 
