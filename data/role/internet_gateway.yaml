@@ -18,6 +18,7 @@ letsencrypt::config:
 profile::certificate_server::domains:
 #  - "%{trusted.domain}"
   - "%{trusted.certname}"
+  - "echo.%{trusted.domain}"
 #  - "zulu.%{trusted.domain}"
 #  - "foxtrot.%{trusted.domain}"
 #  - "tango.%{trusted.domain}"
