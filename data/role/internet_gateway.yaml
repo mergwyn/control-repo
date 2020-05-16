@@ -16,42 +16,45 @@ letsencrypt::config:
 
 # TODO: move this somewhere sensible or build domain array from hash
 profile::certificate_server::domains:
-  - "%{trusted.domain}"
+#  - "%{trusted.domain}"
   - "%{trusted.certname}"
-  - "zulu.%{trusted.domain}"
-  - "foxtrot.%{trusted.domain}"
-  - "tango.%{trusted.domain}"
+#  - "zulu.%{trusted.domain}"
+#  - "foxtrot.%{trusted.domain}"
+#  - "tango.%{trusted.domain}"
 
 nginx::server_purge: true
 nginx::nginx_servers:
-  "zulu.%{trusted.domain}":
+  zulu:
+    server_name: "zulu.%{trusted.domain}"
     listen_port: 80
     proxy      : "http://zulu.%{trusted.domain}:80"
-  "foxtrot.%{trusted.domain}":
+  foxtrot:
+    server_name: "foxtrot.%{trusted.domain}"
     listen_port: 80
     proxy      : "http://foxtrot.%{trusted.domain}:80"
-  "echo.%{trusted.domain}":
+  echo:
+    server_name: "echo.%{trusted.domain}"
     listen_port: 80
     proxy      : "http://echo.%{trusted.domain}:80"
 # tango related
-#  'sabnzbd.tango':
-#    listen_port: 8080
-#    server:      "tango.%{trusted.domain}"
-#    proxy      : "http://tango.%{trusted.domain}:8080"
-#  'radarr.tango':
-#    listen_port: 7878
-#    server:      "tango.%{trusted.domain}"
-#    proxy      : "http://tango.%{trusted.domain}:7878"
-#  'sonarr.tango':
-#    listen_port: 8989
-#    server:      "tango.%{trusted.domain}"
-#    proxy      : "http://tango.%{trusted.domain}:8989"
-#  'transmission.tango':
-#    listen_port: 9091
-#    server:      "tango.%{trusted.domain}"
-#    proxy      : "http://tango.%{trusted.domain}:9091"
-#
-#
+  'sabnzbd.tango':
+    listen_port: 8080
+    server_name: "tango.%{trusted.domain}"
+    proxy      : "http://tango.%{trusted.domain}:8080"
+  'radarr.tango':
+    listen_port: 7878
+    server_name: "tango.%{trusted.domain}"
+    proxy      : "http://tango.%{trusted.domain}:7878"
+  'sonarr.tango':
+    listen_port: 8989
+    server_name: "tango.%{trusted.domain}"
+    proxy      : "http://tango.%{trusted.domain}:8989"
+  'transmission.tango':
+    listen_port: 9091
+    server_name: "tango.%{trusted.domain}"
+    proxy      : "http://tango.%{trusted.domain}:9091"
+
+
 #  nginx::resource::upstream { 'plex_upstream':
 #    members => [ "tango.$::domain:32400", ],
 #  }
