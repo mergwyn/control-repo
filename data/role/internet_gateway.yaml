@@ -38,6 +38,9 @@ nginx::nginx_servers:
   "%{trusted.hostname}":
     server_name: [ "%{trusted.certname}" ]
     listen_port: 80
+    ssl:         true
+    ssl_cert: '/etc/letsencrypt/live/yankee.theclarkhome.com/fullchain.pem'
+    ssl_key: '/etc/letsencrypt/live/yankee.theclarkhome.com/privkey.pem'
   zulu:
     server_name: [ "zulu.%{trusted.domain}" ]
     listen_port: 80
@@ -48,6 +51,7 @@ nginx::nginx_servers:
     proxy      : "http://foxtrot.%{trusted.domain}:80"
   echo:
     server_name: [ "echo.%{trusted.domain}" ]
+    ssl:         true
     listen_port: 80
     proxy      : "http://echo.%{trusted.domain}:80"
 # tango related
