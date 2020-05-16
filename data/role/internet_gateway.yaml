@@ -22,6 +22,7 @@ profile::certificate_server::domains:
   - "foxtrot.%{trusted.domain}"
   - "tango.%{trusted.domain}"
 
+nginx::server_purge: true
 nginx::nginx_servers:
   'zulu':
     server:      "zulu.%{trusted.domain}"
