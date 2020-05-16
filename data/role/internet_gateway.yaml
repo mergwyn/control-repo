@@ -25,8 +25,9 @@ profile::certificate_server::domains:
 nginx::server_purge: true
 nginx::nginx_locations:
   'well-known-papa':
-    www_root: '/var/www/html'
-    location: '/$host/.well-known'
+    location: '^~ /.well-known/acme-challenge/'
+    default_type: 'text/plain'
+    root: '/opt/share/nginx/www/html//letsencrypt/$host'
     server:   "%{trusted.certname}"
 
 nginx::nginx_servers:
