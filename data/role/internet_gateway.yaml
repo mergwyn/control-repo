@@ -23,7 +23,15 @@ profile::certificate_server::domains:
 #  - "tango.%{trusted.domain}"
 
 nginx::server_purge: true
+nginx::nginx_locations:
+  'well-known-papa':
+    location: "/var/www/${trusted.certname}/.well-known"
+    server: "${trusted.certname}"
+
 nginx::nginx_servers:
+  papa:
+    server_name: "%{trusted.certname}"
+    listen_port: 80
   zulu:
     server_name: "zulu.%{trusted.domain}"
     listen_port: 80

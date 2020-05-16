@@ -1,5 +1,4 @@
 #
-
 class profile::certificate_server (
   Array[Stdlib::Fqdn] $domains = []
 ) {
@@ -14,5 +13,4 @@ class profile::certificate_server (
     cron_success_command => '/bin/systemctl reload nginx.service',
     suppress_cron_output => true,
   }
-
 }
