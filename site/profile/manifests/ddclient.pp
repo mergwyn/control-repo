@@ -16,7 +16,7 @@ class profile::ddclient {
     server   => 'dynamicdns.park-your-domain.com',
     protocol => 'namecheap',
     password => lookup('secrets::namecheap'),
-    hostname => 'webmin,zulu,tango,papa,foxtrot,echo,vpn',
+    hostname => 'webmin,zulu,tango,papa,foxtrot,echo,yankee',
   }
   ddclient::host { 'opendns':
     login    => 'mergwyn',
