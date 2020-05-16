@@ -26,7 +26,7 @@ nginx::server_purge: true
 nginx::nginx_locations:
   'well-known-papa':
     location: '^~ /.well-known/acme-challenge/'
-    www_root: '/usr/share/nginx/html/letsencrypt/$host'
+    www_root: '/usr/share/nginx/html/letsencrypt/yankee'
     server:   "%{trusted.certname}"
     location_custom_cfg_append:
      'default_type' : '"text/plain";'
