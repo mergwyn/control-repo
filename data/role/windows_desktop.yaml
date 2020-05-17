@@ -39,4 +39,3 @@ profile::base::tasks::objects:
       schedule: 'daily'
       start_time: '02:30'
 
-# vim: sw=2:ai:nu expandtab

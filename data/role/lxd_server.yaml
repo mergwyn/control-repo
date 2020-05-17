@@ -6,4 +6,3 @@ classes:
   - profile::domain::sso
   - profile::virtual::lxd
 
-# vim: sw=2:ai:nu expandtab

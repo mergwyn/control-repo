@@ -1,28 +1,60 @@
 ---
 
-network::interfaces_hash:
+linux_classes:
+  - netplan
+
+netplan::version: 2
+netplan::renderer: networkd
+netplan::ethernets:
   enp3s0:
-    method:                     manual
-#    pre_up:
-#      - /sbin/ifconfig enp3s0 mtu 9004
+    dhcp4: no
+netplan::bridges:
   br0:
-    ipaddress:                  "192.168.11.11"
-    netmask:                    "%{lookup('defaults::netmask')}"
-    gateway:                    "%{lookup('defaults::gateway')}"
-    network:                    "%{lookup('defaults::network')}"
-    dns_nameservers:            "%{lookup('defaults::dns_nameservers')}"
-    dns_search:                 "%{lookup('defaults::dns_search')}"
-    bridge_ports:
+    interfaces:
       - enp3s0
-    bridge_maxwait:             "0"
-    bridge_fd:                  "0"
-    bridge_stp:                 "off"
+    dhcp4: no
+    dhcp6: no
+    addresses:
+      - 192.168.11.11/16
+    gateway4: 192.168.11.254
+    nameservers:
+      search:
+        - theclarkhome.com
+        - local
+      addresses:
+        - 192.168.11.21
+        - 192.168.11.22
+    parameters:
+      stp: false
+      forward_delay: 0
+
+# Config for lxd server
+lxd::preseed:
+  storage_pools:
+  - config:
+      source: rpool/lxd
+      volatile.initial_source: rpool/lxd
+      zfs.pool_name: rpool/lxd
+    description: ""
+    name: default
+    driver: zfs
 
 backuppc::client::rsync_share_name:
   - '/'
+  - '/boot'
+  - '/root'
+  - '/home/sadmin'
+  - '/srv'
+  - '/usr/local'
   - '/boot/efi'
-  - '/boot/grub'
-  - '/var/cache'
+  - '/var/lib'
+  - '/var/spool'
+  - '/var/games'
+  - '/var/snap'
+  - '/var/www'
   - '/var/log'
-
-# vim: sw=2:ai:nu expandtab
+  - '/var/mail'
+  - '/var/lib/AccountsService'
+  - '/var/lib/apt'
+  - '/var/lib/NetworkManager'
+  - '/var/lib/dpkg'

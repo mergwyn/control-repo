@@ -4,4 +4,3 @@
 classes:
   - profile::base  # All roles should have the base profile
 
-# vim: sw=2:ai:nu expandtab

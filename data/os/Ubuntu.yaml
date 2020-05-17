@@ -24,3 +24,32 @@ profile::base::packages::objects:
   ubuntu-standard:                                {}
   update-notifier-common:                         {}
   landscape-common:                               {}
+
+# Note storage_pools must be defined in node
+lxd::preseed:
+  config:
+    core.https_address: '[::]:8443'
+    core.trust_password: true
+  networks: []
+  profiles:
+  - config:
+      boot.autostart.delay: "30"
+      snapshots.expiry: 2d
+      snapshots.schedule: 15 * * * * 
+    description: Default LXD profile
+    devices:
+      eth0:
+        name: eth0
+        nictype: bridged
+        parent: br0 
+        type: nic 
+      root:
+        path: /
+        pool: default
+        type: disk
+    name: default
+
+lookup_options:
+  "^lxd::preseed$":
+    merge: deep
+    knockout_prefix: '--'

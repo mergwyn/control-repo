@@ -1,0 +1,17 @@
+---
+
+linux_classes:
+  - netplan
+
+# Default setup is dhcp on primary network
+# Set ethernets higher up on hierachy for briudges etc
+netplan::version: 2
+netplan::renderer: networkd
+netplan::ethernets:
+  "%{facts.networking.primary}":
+    dhcp4: true
+
+lookup_options:
+  "^netplan::ethernets$":
+    merge: first
+    knockout_prefix: '--'

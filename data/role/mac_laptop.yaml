@@ -119,4 +119,3 @@ profile::base::files::objects:
   /Library/Logs/unison.log:
     mode: "0666"
 
-# vim: sw=2:ai:nu expandtab

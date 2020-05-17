@@ -9,4 +9,3 @@ classes:
 tvheadend::release:                     'release'
 tvheadend::admin_password:              "%{lookup('secrets::tvheadend')}"
 
-# vim: sw=2:ai:nu expandtab

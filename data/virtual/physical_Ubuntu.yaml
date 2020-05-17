@@ -30,4 +30,3 @@ profile::base::files::objects:
     ensure: present
     source: 'puppet:///modules/profile/11-media-by-label-auto-mount.rules'
 
-# vim: sw=2:ai:nu expandtab
