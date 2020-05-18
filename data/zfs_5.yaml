@@ -2,5 +2,113 @@
 
 classes:
   - profile::zfs_server
+  - kmod
 
-# vim: sw=2:ai:nu expandtab
+profile::base::files::objects:
+  '/etc/grub.d/42_zfs_select':
+    ensure:  present
+    source:  'puppet:///modules/profile/zfs/42_zfs_select'
+    mode:    '0755'
+  '/usr/local/bin/zfs_report.sh':
+    ensure:  present
+    source:  'puppet:///modules/profile/zfs/zfs_report.sh'
+    mode:    '0775'
+  '/etc/cron.monthly/zfs-montly-report.sh':
+    ensure:  absent
+  '/etc/cron.monthly/zfs-montly-report':
+    ensure:  present
+    content: |
+             #!/bin/sh
+             /usr/local/bin/zfs_report.sh
+    mode:   '0775'
+  '/etc/cron.hourly/zfs-auto-snapshot':
+    ensure:  present
+    content: |
+             #!/bin/sh
+             which zfs-auto-snapshot > /dev/null || exit 0
+             zfs-auto-snapshot --quiet --syslog --label=02 --keep=24 // &&
+             zsysctl boot update-menu 2>&1 | sed '/Updating GRUB menu/d'
+    mode:    '0555'
+  '/etc/cron.daily/zfs-auto-snapshot':
+    ensure:  present
+    content: |
+             #!/bin/sh
+             which zfs-auto-snapshot > /dev/null || exit 0
+             zfs-auto-snapshot --quiet --syslog --label=03 --keep=14 // &&
+             zsysctl boot update-menu 2>&1 | sed '/Updating GRUB menu/d'
+    mode:    '0555'
+  '/etc/cron.weekly/zfs-auto-snapshot':
+    ensure:  present
+    content: |
+             #!/bin/sh
+             which zfs-auto-snapshot > /dev/null || exit 0
+             zfs-auto-snapshot --quiet --syslog --label=04 --keep=8 // &&
+             zsysctl boot update-menu 2>&1 | sed '/Updating GRUB menu/d'
+    mode:    '0555'
+  '/etc/cron.monthly/zfs-auto-snapshot':
+    ensure:  present
+    content: |
+             #!/bin/sh
+             which zfs-auto-snapshot > /dev/null || exit 0
+             zfs-auto-snapshot --quiet --syslog --label=05 --keep=12 // &&
+             zsysctl boot update-menu 2>&1 | sed '/Updating GRUB menu/d'
+    mode:    '0555'
+
+cron::job:
+  'zfs-auto-snapshot':
+    user:        root
+    minute:      '*/15'
+    command:     |
+                 which zfs-auto-snapshot > /dev/null || exit 0 ; \
+                 zfs-auto-snapshot --quiet --syslog --label=01 --keep=4  // && \
+                 zsysctl boot update-menu 2>&1 | sed '/Updating GRUB menu/d'
+    environment: [ 'PATH="/usr/bin:/bin:/usr/sbin:/sbin:/usr/sbin:/usr/local/bin"' ]
+
+sudo::configs:
+  'zabbix-zpool':
+    content: 'zabbix  ALL=(root)      NOPASSWD:       /sbin/zpool'
+  'zabbix-zfs':
+    content: 'zabbix  ALL=(root)      NOPASSWD:       /sbin/zfs'
+
+zabbix::userparameter:
+  data:
+    zfs-auto:
+      source: 'puppet:///modules/profile/zfs/zfs-auto.conf'
+    zfs-health:
+      content: 'UserParameter=zpool.health[*],sudo zpool list -H -o health \${1}\n'
+
+#kmod::list_of_options:
+# 'zfs_arc_max':
+#    module:  'zfs'
+#    option: 'zfs_arc_max'
+#    #value: $::facts['memory']['system']['total_bytes']*7/10
+#    value: 0
+#    #notify: Exec['update_initramfs_all']
+#  'zfs_arc_min':
+#    module: 'zfs'
+#    option: 'zfs_arc_min'
+#    #value: $::facts['memory']['system']['total_bytes']*3/10
+#    value: 0
+#    #notify: Exec['update_initramfs_all']
+#  'zfs_vdev_scheduler':
+#    module: 'zfs'
+#    option: 'zfs_vdev_scheduler'
+#    value: 'noop'
+#    #notify: Exec['update_initramfs_all']
+#  # use the prefetch method
+#  'zfs_prefetch_disable':
+#    module: 'zfs'
+#    option: 'zfs_prefetch_disable'
+#    value: 0
+#    #notify: Exec['update_initramfs_all']
+#  }
+#  # max write speed to l2arc
+#  # tradeoff between write/read and durability of ssd (?)
+#  # default : 8 * 1024 * 1024
+#  # setting here : 500 * 1024 * 1024
+#  'l2arc_write_max':
+#    module: 'zfs'
+#    option: 'l2arc_write_max'
+#    value: 524288000
+#    #notify: Exec['update_initramfs_all']
+#

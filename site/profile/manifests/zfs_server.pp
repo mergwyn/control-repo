@@ -23,28 +23,28 @@ class profile::zfs_server {
   $bindir='/usr/local/bin'
   $mandir='/usr/local/share/man'
 
-  # monthly report
-  file { '/usr/local/bin/zfs_report.sh':
-    ensure => present,
-    source => 'puppet:///modules/profile/zfs/zfs_report.sh',
-    mode   => '0775',
-  }
-  file { '/etc/cron.monthly/zfs-montly-report.sh': ensure  => absent, }
-  file { '/etc/cron.monthly/zfs-montly-report':
-    ensure  => present,
-    content => @("EOT"/$),
-               #!/bin/sh
-               /usr/local/bin/zfs_report.sh
-               | EOT
-    mode    => '0775',
-  }
-
-#  # grub menu generation
-  file { '/etc/grub.d/42_zfs_select':
-    ensure => present,
-    source => 'puppet:///modules/profile/zfs/42_zfs_select',
-    mode   => '0755',
-  }
+#  # monthly report
+#  file { '/usr/local/bin/zfs_report.sh':
+#    ensure => present,
+#    source => 'puppet:///modules/profile/zfs/zfs_report.sh',
+#    mode   => '0775',
+#  }
+#  file { '/etc/cron.monthly/zfs-montly-report.sh': ensure  => absent, }
+#  file { '/etc/cron.monthly/zfs-montly-report':
+#    ensure  => present,
+#    content => @("EOT"/$),
+#               #!/bin/sh
+#               /usr/local/bin/zfs_report.sh
+#               | EOT
+#    mode    => '0775',
+#  }
+#
+##  # grub menu generation
+#  file { '/etc/grub.d/42_zfs_select':
+#    ensure => present,
+#    source => 'puppet:///modules/profile/zfs/42_zfs_select',
+#    mode   => '0755',
+#  }
 #  file { '/etc/grub.d/43_zfs_snap':
 #    ensure => present,
 #    source => 'puppet:///modules/profile/zfs/43_zfs_snap',
@@ -81,56 +81,56 @@ class profile::zfs_server {
 #    require => Vcsrepo["${codedir}/zfs-auto-snapshot"],
 #  }
 #
-  cron::job {'zfs-auto-snapshot':
-    environment => [ 'PATH="/usr/bin:/bin:/usr/sbin:/sbin:/usr/sbin:/usr/local/bin"'],
-    user        => 'root',
-    minute      => '*/15',
-    command     => @("EOT"/L)
-                   which zfs-auto-snapshot > /dev/null || exit 0 ; \
-                   zfs-auto-snapshot --quiet --syslog --label=01 --keep=4  // && \
-                   zsysctl boot update-menu 2>&1 | sed '/Updating GRUB menu/d'
-                   | EOT
-  }
-  file { '/etc/cron.hourly/zfs-auto-snapshot':
-    ensure  => present,
-    mode    => '0555',
-    content => @("EOT"/$),
-               #!/bin/sh
-               which zfs-auto-snapshot > /dev/null || exit 0
-               zfs-auto-snapshot --quiet --syslog --label=02 --keep=24 // &&
-               zsysctl boot update-menu 2>&1 | sed '/Updating GRUB menu/d'
-               | EOT
-  }
-  file { '/etc/cron.daily/zfs-auto-snapshot':
-    ensure  => present,
-    mode    => '0555',
-    content => @("EOT"/$),
-               #!/bin/sh
-               which zfs-auto-snapshot > /dev/null || exit 0
-               zfs-auto-snapshot --quiet --syslog --label=03 --keep=14 // &&
-               zsysctl boot update-menu 2>&1 | sed '/Updating GRUB menu/d'
-               | EOT
-  }
-  file { '/etc/cron.weekly/zfs-auto-snapshot':
-    ensure  => present,
-    mode    => '0555',
-    content => @("EOT"/$),
-               #!/bin/sh
-               which zfs-auto-snapshot > /dev/null || exit 0
-               zfs-auto-snapshot --quiet --syslog --label=04 --keep=8 // &&
-               zsysctl boot update-menu 2>&1 | sed '/Updating GRUB menu/d'
-               | EOT
-  }
-  file { '/etc/cron.monthly/zfs-auto-snapshot':
-    ensure  => present,
-    mode    => '0555',
-    content => @("EOT"/$),
-               #!/bin/sh
-               which zfs-auto-snapshot > /dev/null || exit 0
-               zfs-auto-snapshot --quiet --syslog --label=05 --keep=12 // &&
-               zsysctl boot update-menu 2>&1 | sed '/Updating GRUB menu/d'
-               | EOT
-  }
+#  cron::job {'zfs-auto-snapshot':
+#    environment => [ 'PATH="/usr/bin:/bin:/usr/sbin:/sbin:/usr/sbin:/usr/local/bin"'],
+#    user        => 'root',
+#    minute      => '*/15',
+#    command     => @("EOT"/L)
+#                   which zfs-auto-snapshot > /dev/null || exit 0 ; \
+#                   zfs-auto-snapshot --quiet --syslog --label=01 --keep=4  // && \
+#                   zsysctl boot update-menu 2>&1 | sed '/Updating GRUB menu/d'
+#                   | EOT
+#  }
+#  file { '/etc/cron.hourly/zfs-auto-snapshot':
+#    ensure  => present,
+#    mode    => '0555',
+#    content => @("EOT"/$),
+#               #!/bin/sh
+#               which zfs-auto-snapshot > /dev/null || exit 0
+#               zfs-auto-snapshot --quiet --syslog --label=02 --keep=24 // &&
+#               zsysctl boot update-menu 2>&1 | sed '/Updating GRUB menu/d'
+#               | EOT
+#  }
+#  file { '/etc/cron.daily/zfs-auto-snapshot':
+#    ensure  => present,
+#    mode    => '0555',
+#    content => @("EOT"/$),
+#               #!/bin/sh
+#               which zfs-auto-snapshot > /dev/null || exit 0
+#               zfs-auto-snapshot --quiet --syslog --label=03 --keep=14 // &&
+#               zsysctl boot update-menu 2>&1 | sed '/Updating GRUB menu/d'
+#               | EOT
+#  }
+#  file { '/etc/cron.weekly/zfs-auto-snapshot':
+#    ensure  => present,
+#    mode    => '0555',
+#    content => @("EOT"/$),
+#               #!/bin/sh
+#               which zfs-auto-snapshot > /dev/null || exit 0
+#               zfs-auto-snapshot --quiet --syslog --label=04 --keep=8 // &&
+#               zsysctl boot update-menu 2>&1 | sed '/Updating GRUB menu/d'
+#               | EOT
+#  }
+#  file { '/etc/cron.monthly/zfs-auto-snapshot':
+#    ensure  => present,
+#    mode    => '0555',
+#    content => @("EOT"/$),
+#               #!/bin/sh
+#               which zfs-auto-snapshot > /dev/null || exit 0
+#               zfs-auto-snapshot --quiet --syslog --label=05 --keep=12 // &&
+#               zsysctl boot update-menu 2>&1 | sed '/Updating GRUB menu/d'
+#               | EOT
+#  }
 
 #  # beadm boot environments
 #
@@ -165,19 +165,19 @@ class profile::zfs_server {
 #  }
 
   # zabbix support
-  zabbix::userparameters { 'zfs-auto':
-    source => 'puppet:///modules/profile/zfs/zfs-auto.conf',
-  }
-  zabbix::userparameters { 'zfs-health':
-    content => "UserParameter=zpool.health[*],sudo zpool list -H -o health \${1}\n",
-  }
+#  zabbix::userparameters { 'zfs-auto':
+#    source => 'puppet:///modules/profile/zfs/zfs-auto.conf',
+#  }
+#  zabbix::userparameters { 'zfs-health':
+#    content => "UserParameter=zpool.health[*],sudo zpool list -H -o health \${1}\n",
+#  }
 
-  sudo::conf { 'zabbix-zpool':
-    content => 'zabbix  ALL=(root)      NOPASSWD:       /sbin/zpool',
-  }
-  sudo::conf { 'zabbix-zfs':
-    content => 'zabbix	ALL=(root)	NOPASSWD:	/sbin/zfs',
-  }
+#  sudo::conf { 'zabbix-zpool':
+#    content => 'zabbix  ALL=(root)      NOPASSWD:       /sbin/zpool',
+#  }
+#  sudo::conf { 'zabbix-zfs':
+#    content => 'zabbix	ALL=(root)	NOPASSWD:	/sbin/zfs',
+#  }
 
 #  # set kernel parameters
 #  kmod::option { 'zfs_arc_max':
