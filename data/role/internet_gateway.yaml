@@ -18,10 +18,11 @@ profile::base::files::objects:
     ensure: directory
     require: Package[nginx]
 
-letsencrypt::renew_cron_ensure: 'present'
-letsencrypt::renew_cron_minute: 0
-letsencrypt::renew_cron_hour: 6
+letsencrypt::renew_cron_ensure:   'present'
+letsencrypt::renew_cron_minute:   0
+letsencrypt::renew_cron_hour:     6
 letsencrypt::renew_cron_monthday: '1-31/2'
+letsencrypt::manage_cron:         true
 letsencrypt::config:
   email:  "ca@%{domain}"
 
