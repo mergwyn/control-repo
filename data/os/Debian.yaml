@@ -185,6 +185,7 @@ unattended_upgrades:
 
 # set nginx package
 nginx::package_name:                              'nginx-extras'
+nginx::include_modules_enabled:                   true
 
 samba::params::sernetpkgs:                        false
 samba::classic::domain:                           "%{lookup('defaults::workgroup')}"
