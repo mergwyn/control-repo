@@ -25,7 +25,6 @@ defaults::system_home_dir: '/root'
 defaults::media_user:      'media'
 defaults::media_group:     '513'
 
-
 lookup_options:
   "^classes(.*)$":
     merge: deep
@@ -33,3 +32,8 @@ lookup_options:
   "^profile::base::(.*)::(.*)$":
     merge: deep
     knockout_prefix: '--'
+    lookup_options:
+  sudo::configs:
+    merge:
+      strategy: deep
+      merge_hash_arrays: true
