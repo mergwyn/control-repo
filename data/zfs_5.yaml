@@ -5,10 +5,12 @@ classes:
   - kmod
 
 profile::base::files::objects:
+  # Grub menu support
   '/etc/grub.d/42_zfs_select':
     ensure:  present
     source:  'puppet:///modules/profile/zfs/42_zfs_select'
     mode:    '0755'
+  # zfs monthly reporting
   '/usr/local/bin/zfs_report.sh':
     ensure:  present
     source:  'puppet:///modules/profile/zfs/zfs_report.sh'
@@ -21,6 +23,7 @@ profile::base::files::objects:
              #!/bin/sh
              /usr/local/bin/zfs_report.sh
     mode:   '0775'
+  # ZFS auto snapshot
   '/etc/cron.hourly/zfs-auto-snapshot':
     ensure:  present
     content: |
@@ -64,6 +67,19 @@ cron::job:
                  zsysctl boot update-menu 2>&1 | sed '/Updating GRUB menu/d'
     environment: [ 'PATH="/usr/bin:/bin:/usr/sbin:/sbin:/usr/sbin:/usr/local/bin"' ]
 
+# TODO: Need to implement create resources to consume this and remove from profile::zfs_server
+shellvar::data:
+  'ZFS_SHARE':
+    ensure: present
+    target: '/etc/default/zfs'
+    value:  'yes'
+  'ZFS_UNSHARE':
+    ensure: present
+    target: '/etc/default/zfs'
+    value:  'yes'
+
+
+# Zabbix support
 sudo::configs:
   'zabbix-zpool':
     content: 'zabbix  ALL=(root)      NOPASSWD:       /sbin/zpool'
@@ -77,6 +93,9 @@ zabbix::userparameter:
     zfs-health:
       content: 'UserParameter=zpool.health[*],sudo zpool list -H -o health \${1}\n'
 
+# Setting kernel options
+# TODO: update_initramfs_all is still in profile::zfs_server
+# TODO: can values be calculated from facts
 #kmod::list_of_options:
 # 'zfs_arc_max':
 #    module:  'zfs'

@@ -2,13 +2,8 @@
 
 class profile::web::nginx {
 
+  # TODO: move to hiera
   include nginx
-  # define nginx config
-  #class { 'nginx':
-  #  nginx_cfg_prepend => {
-  #    include => [ '/etc/nginx/modules-enabled/*.conf' ],
-  #  }
-  #}
   package { [ 'fcgiwrap' ]: }
 }
 
