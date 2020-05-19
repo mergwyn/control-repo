@@ -69,11 +69,11 @@ cron::job:
 
 # TODO: Need to implement create resources to consume this and remove from profile::zfs_server
 shellvar::data:
-  'ZFS_SHARE':
+  'ZFS_SHARE_TEST':
     ensure: present
     target: '/etc/default/zfs'
     value:  'yes'
-  'ZFS_UNSHARE':
+  'ZFS_UNSHARE_TEST':
     ensure: present
     target: '/etc/default/zfs'
     value:  'yes'
