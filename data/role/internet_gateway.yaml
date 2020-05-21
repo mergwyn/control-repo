@@ -97,8 +97,8 @@ nginx::nginx_servers:
     proxy:        "http://tango.%{trusted.domain}:9091"
     ssl:          true
     ssl_redirect: true
-    ssl_cert:     "/etc/letsencrypt/live/%{trusted.certname}/fullchain.pem"
-    ssl_key:      "/etc/letsencrypt/live/%{trusted.certname}/privkey.pem"
+    ssl_cert:     "/etc/letsencrypt/live/tango.%{trusted.domain}/fullchain.pem"
+    ssl_key:      "/etc/letsencrypt/live/tango.%{trusted.domain}/privkey.pem"
 
 
 #  nginx::resource::upstream { 'plex_upstream':
