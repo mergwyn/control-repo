@@ -19,7 +19,7 @@ profile::base::files::objects:
     require: Package[nginx]
 
 profile::base::packages::objects:
-  python-certbot-nginx:
+  python3-certbot-nginx:
     ensure: present
 
 letsencrypt::renew_cron_ensure:   'present'
@@ -32,12 +32,12 @@ letsencrypt::config:
 
 # Certificates to gather
 profile::certificate_server::domains:
-  - "%{trusted.domain}"
+#  - "%{trusted.domain}"
   - "%{trusted.certname}"
   - "tango.%{trusted.domain}"
-  - "echo.%{trusted.domain}"
-  - "zulu.%{trusted.domain}"
-  - "foxtrot.%{trusted.domain}"
+#  - "echo.%{trusted.domain}"
+#  - "zulu.%{trusted.domain}"
+#  - "foxtrot.%{trusted.domain}"
 
 nginx::server_purge: true
 nginx::nginx_locations:
@@ -90,16 +90,14 @@ nginx::nginx_servers:
     ssl_cert:     "/etc/letsencrypt/live/%{trusted.certname}/fullchain.pem"
     ssl_key:      "/etc/letsencrypt/live/%{trusted.certname}/privkey.pem"
   tango-transmission-9091:
-    listen_port: 9091
-    server_name: [ "tango.%{trusted.domain}" ]
-    proxy      : "http://tango.%{trusted.domain}:9091"
-  tango-transmission-9091-ssl:
-    listen_port: 9091
+    listen_port:  9091
     server_name:  [ "tango.%{trusted.domain}" ]
     proxy      :  "http://tango.%{trusted.domain}:9091"
-    ssl_redirect: true
-    ssl_cert:     "/etc/letsencrypt/live/%{trusted.certname}/fullchain.pem"
-    ssl_key:      "/etc/letsencrypt/live/%{trusted.certname}/privkey.pem"
+#  tango-transmission-9091-ssl:
+#    listen_port:  9091
+#    server_name:  [ "tango.%{trusted.domain}" ]
+#    ssl_cert:     "/etc/letsencrypt/live/%{trusted.certname}/fullchain.pem"
+#    ssl_key:      "/etc/letsencrypt/live/%{trusted.certname}/privkey.pem"
 
 
 #  nginx::resource::upstream { 'plex_upstream':
