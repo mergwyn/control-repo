@@ -3,6 +3,7 @@
 classes:
   - profile::zfs_server
   - kmod
+  - augeasproviders_shellvar
 
 profile::base::files::objects:
   # Grub menu support
@@ -67,17 +68,21 @@ cron::job:
                  zsysctl boot update-menu 2>&1 | sed '/Updating GRUB menu/d'
     environment: [ 'PATH="/usr/bin:/bin:/usr/sbin:/sbin:/usr/sbin:/usr/local/bin"' ]
 
-# TODO: Need to implement create resources to consume this and remove from profile::zfs_server
-shellvar::data:
+augeausproviders_shellvar::objects:
+  'ZFS_SHARE':
+    target: '/etc/default/zfs'
+    ensure: present
+    value:  'yes'
+  'ZFS_UNSHARE':
+    target: '/etc/default/zfs'
+    ensure: present
+    value:  'yes'
   'ZFS_SHARE_TEST':
-    ensure: present
     target: '/etc/default/zfs'
-    value:  'yes'
+    ensure: absent
   'ZFS_UNSHARE_TEST':
-    ensure: present
     target: '/etc/default/zfs'
-    value:  'yes'
-
+    ensure: absent
 
 # Zabbix support
 sudo::configs:
