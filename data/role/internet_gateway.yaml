@@ -18,6 +18,10 @@ profile::base::files::objects:
     ensure: directory
     require: Package[nginx]
 
+profile::base::packages::objects:
+  python-certbot-nginx:
+    ensure: present
+
 letsencrypt::renew_cron_ensure:   'present'
 letsencrypt::renew_cron_minute:   0
 letsencrypt::renew_cron_hour:     6
@@ -30,10 +34,10 @@ letsencrypt::config:
 profile::certificate_server::domains:
 #  - "%{trusted.domain}"
   - "%{trusted.certname}"
+  - "tango.%{trusted.domain}"
 #  - "echo.%{trusted.domain}"
 #  - "zulu.%{trusted.domain}"
 #  - "foxtrot.%{trusted.domain}"
-#  - "tango.%{trusted.domain}"
 
 nginx::server_purge: true
 nginx::nginx_locations:
