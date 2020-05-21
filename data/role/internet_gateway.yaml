@@ -78,15 +78,15 @@ nginx::nginx_servers:
     listen_port: 8080
     server_name: [ "tango.%{trusted.domain}" ]
     proxy      : "http://tango.%{trusted.domain}:8080"
-  tango-radarr7878:
+  tango-radarr:
     listen_port: 7878
     server_name: [ "tango.%{trusted.domain}" ]
     proxy      : "http://tango.%{trusted.domain}:7878"
-  tango-sonarr8989:
+  tango-sonarr:
     listen_port: 8989
     server_name: [ "tango.%{trusted.domain}" ]
     proxy      : "http://tango.%{trusted.domain}:8989"
-#  tango-transmission-9091:
+#  tango-transmission:
 #    listen_port:  9091
 #    server_name:  [ "tango.%{trusted.domain}" ]
 #    proxy      :  "http://tango.%{trusted.domain}:9091"
