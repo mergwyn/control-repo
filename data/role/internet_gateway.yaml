@@ -30,14 +30,14 @@ letsencrypt::manage_cron:         true
 letsencrypt::config:
   email:  "ca@%{domain}"
 
-# TODO: move this somewhere sensible or build domain array from hash
+# Certificates to gather
 profile::certificate_server::domains:
-#  - "%{trusted.domain}"
+  - "%{trusted.domain}"
   - "%{trusted.certname}"
   - "tango.%{trusted.domain}"
-#  - "echo.%{trusted.domain}"
-#  - "zulu.%{trusted.domain}"
-#  - "foxtrot.%{trusted.domain}"
+  - "echo.%{trusted.domain}"
+  - "zulu.%{trusted.domain}"
+  - "foxtrot.%{trusted.domain}"
 
 nginx::server_purge: true
 nginx::nginx_locations:
