@@ -74,31 +74,31 @@ nginx::nginx_servers:
   tango:
     server_name: [ "tango.%{trusted.domain}" ]
     listen_port: 80
-  tango-sabnzbd-80:
+  tango-sabnzbd:
     listen_port: 8080
     server_name: [ "tango.%{trusted.domain}" ]
     proxy      : "http://tango.%{trusted.domain}:8080"
-  tango-radarr-7878:
+  tango-radarr7878:
     listen_port: 7878
     server_name: [ "tango.%{trusted.domain}" ]
     proxy      : "http://tango.%{trusted.domain}:7878"
-  tango-sonarr-8989:
+  tango-sonarr8989:
     listen_port: 8989
     server_name: [ "tango.%{trusted.domain}" ]
     proxy      : "http://tango.%{trusted.domain}:8989"
-  tango-transmission-9091:
-    listen_port:  9091
-    server_name:  [ "tango.%{trusted.domain}" ]
-    proxy      :  "http://tango.%{trusted.domain}:9091"
-#  tango-transmission:
-#    server_name:  [ "tango.%{trusted.domain}" ]
+#  tango-transmission-9091:
 #    listen_port:  9091
-#    ssl_port:     9092
-#    proxy:        "http://tango.%{trusted.domain}:9091"
-#    ssl:          true
-#    ssl_redirect: true
-#    ssl_cert:     "/etc/letsencrypt/live/%{trusted.certname}/fullchain.pem"
-#    ssl_key:      "/etc/letsencrypt/live/%{trusted.certname}/privkey.pem"
+#    server_name:  [ "tango.%{trusted.domain}" ]
+#    proxy      :  "http://tango.%{trusted.domain}:9091"
+  tango-transmission:
+    server_name:  [ "tango.%{trusted.domain}" ]
+    listen_port:  9091
+    ssl_port:     9092
+    proxy:        "http://tango.%{trusted.domain}:9091"
+    ssl:          true
+    ssl_redirect: true
+    ssl_cert:     "/etc/letsencrypt/live/%{trusted.certname}/fullchain.pem"
+    ssl_key:      "/etc/letsencrypt/live/%{trusted.certname}/privkey.pem"
 
 
 #  nginx::resource::upstream { 'plex_upstream':
