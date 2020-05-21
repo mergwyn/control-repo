@@ -68,7 +68,7 @@ cron::job:
                  zsysctl boot update-menu 2>&1 | sed '/Updating GRUB menu/d'
     environment: [ 'PATH="/usr/bin:/bin:/usr/sbin:/sbin:/usr/sbin:/usr/local/bin"' ]
 
-augeausproviders_shellvar::objects:
+augeasproviders_shellvar::objects:
   'ZFS_SHARE':
     target: '/etc/default/zfs'
     ensure: present
