@@ -29,6 +29,7 @@ letsencrypt::renew_cron_monthday: '1-31/2'
 letsencrypt::manage_cron:         true
 letsencrypt::config:
   email:  "ca@%{domain}"
+  server: 'https://acme-v02.api.letsencrypt.org/directory'
 
 # Certificates to gather
 profile::certificate_server::domains:
@@ -55,6 +56,7 @@ nginx::nginx_servers:
   "%{trusted.hostname}":
     server_name: [ "%{trusted.certname}" ]
     listen_port:  80
+    ssl:          true
     ssl_redirect: true
     ssl_cert:     "/etc/letsencrypt/live/%{trusted.certname}/fullchain.pem"
     ssl_key:      "/etc/letsencrypt/live/%{trusted.certname}/privkey.pem"
@@ -97,8 +99,8 @@ nginx::nginx_servers:
     proxy:        "http://tango.%{trusted.domain}:9091"
     ssl:          true
     ssl_redirect: true
-    ssl_cert:     "/etc/letsencrypt/live/tango.%{trusted.domain}/fullchain.pem"
-    ssl_key:      "/etc/letsencrypt/live/tango.%{trusted.domain}/privkey.pem"
+    ssl_cert:     "/etc/letsencrypt/live/%{trusted.certname}/fullchain.pem"
+    ssl_key:      "/etc/letsencrypt/live/%{trusted.certname}/privkey.pem"
 
 
 #  nginx::resource::upstream { 'plex_upstream':
