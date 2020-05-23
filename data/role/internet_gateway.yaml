@@ -18,6 +18,10 @@ profile::base::files::objects:
     ensure: directory
     require: Package[nginx]
 
+profile::base::packages::objects:
+  python3-certbot-nginx:
+    ensure: present
+
 letsencrypt::renew_cron_ensure:   'present'
 letsencrypt::renew_cron_minute:   0
 letsencrypt::renew_cron_hour:     6
@@ -26,14 +30,14 @@ letsencrypt::manage_cron:         true
 letsencrypt::config:
   email:  "ca@%{domain}"
 
-# TODO: move this somewhere sensible or build domain array from hash
+# Certificates to gather
 profile::certificate_server::domains:
 #  - "%{trusted.domain}"
   - "%{trusted.certname}"
+  - "tango.%{trusted.domain}"
 #  - "echo.%{trusted.domain}"
 #  - "zulu.%{trusted.domain}"
 #  - "foxtrot.%{trusted.domain}"
-#  - "tango.%{trusted.domain}"
 
 nginx::server_purge: true
 nginx::nginx_locations:
@@ -70,22 +74,31 @@ nginx::nginx_servers:
   tango:
     server_name: [ "tango.%{trusted.domain}" ]
     listen_port: 80
-  sabnzbd.tango:
+  tango-sabnzbd:
     listen_port: 8080
     server_name: [ "tango.%{trusted.domain}" ]
     proxy      : "http://tango.%{trusted.domain}:8080"
-  radarr.tango:
+  tango-radarr:
     listen_port: 7878
     server_name: [ "tango.%{trusted.domain}" ]
     proxy      : "http://tango.%{trusted.domain}:7878"
-  sonarr.tango:
+  tango-sonarr:
     listen_port: 8989
     server_name: [ "tango.%{trusted.domain}" ]
     proxy      : "http://tango.%{trusted.domain}:8989"
-  transmission.tango:
-    listen_port: 9091
-    server_name: [ "tango.%{trusted.domain}" ]
-    proxy      : "http://tango.%{trusted.domain}:9091"
+#  tango-transmission:
+#    listen_port:  9091
+#    server_name:  [ "tango.%{trusted.domain}" ]
+#    proxy      :  "http://tango.%{trusted.domain}:9091"
+  tango-transmission:
+    server_name:  [ "tango.%{trusted.domain}" ]
+    listen_port:  9092
+    ssl_port:     9091
+    proxy:        "http://tango.%{trusted.domain}:9091"
+    ssl:          true
+    ssl_redirect: true
+    ssl_cert:     "/etc/letsencrypt/live/tango.%{trusted.domain}/fullchain.pem"
+    ssl_key:      "/etc/letsencrypt/live/tango.%{trusted.domain}/privkey.pem"
 
 
 #  nginx::resource::upstream { 'plex_upstream':
