@@ -94,14 +94,14 @@ nginx::nginx_servers:
 #    proxy      :  "http://tango.%{trusted.domain}:9091"
   tango-transmission:
     server_name:  [ "tango.%{trusted.domain}" ]
-    listen_port:  9092
-    ssl_port:     9091
+    listen_port:  9091
+    ssl_port:     9092
     proxy:        "http://tango.%{trusted.domain}:9091/"
     ssl:          true
     ssl_redirect: true
     ssl_cert:     "/etc/letsencrypt/live/%{trusted.certname}/fullchain.pem"
     ssl_key:      "/etc/letsencrypt/live/%{trusted.certname}/privkey.pem"
-    proxy_redirect: "https://tango.%{trusted.domain}:9092/ http://tango.%{trusted.domain}:9091/"
+#    proxy_redirect: "https://tango.%{trusted.domain}:9092/ http://tango.%{trusted.domain}:9091/"
 
 
 #  nginx::resource::upstream { 'plex_upstream':
