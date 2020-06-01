@@ -33,12 +33,12 @@ letsencrypt::config:
 
 # Certificates to gather
 profile::certificate_server::domains:
-#  - "%{trusted.domain}"
+  - "%{trusted.domain}"
   - "%{trusted.certname}"
-  - "tango.%{trusted.domain}"
 #  - "echo.%{trusted.domain}"
-#  - "zulu.%{trusted.domain}"
-#  - "foxtrot.%{trusted.domain}"
+  - "foxtrot.%{trusted.domain}"
+  - "tango.%{trusted.domain}"
+  - "zulu.%{trusted.domain}"
 
 nginx::server_purge: true
 nginx::nginx_locations:
@@ -47,10 +47,12 @@ nginx::nginx_locations:
     www_root: '/var/www/html/letsencrypt/'
     server:
       - "%{trusted.hostname}"
-      - echo
+      # - echo
+      - foxtrot
       - tango
+      - zulu
     location_custom_cfg_append:
-     'default_type' : '"text/plain";'
+     'default_type' : 'text/plain;'
 
 nginx::nginx_servers:
   "%{trusted.hostname}":
@@ -68,10 +70,10 @@ nginx::nginx_servers:
     server_name: [ "foxtrot.%{trusted.domain}" ]
     listen_port: 80
     proxy      : "http://foxtrot.%{trusted.domain}:80/"
-  echo:
-    server_name: [ "echo.%{trusted.domain}" ]
-    listen_port: 80
-    proxy      : "http://echo.%{trusted.domain}:80/"
+#  echo:
+#    server_name: [ "echo.%{trusted.domain}" ]
+#    listen_port: 80
+#    proxy      : "http://echo.%{trusted.domain}:80/"
 # tango related
   tango:
     server_name: [ "tango.%{trusted.domain}" ]
@@ -101,8 +103,6 @@ nginx::nginx_servers:
     ssl_redirect: true
     ssl_cert:     "/etc/letsencrypt/live/%{trusted.certname}/fullchain.pem"
     ssl_key:      "/etc/letsencrypt/live/%{trusted.certname}/privkey.pem"
-#    proxy_redirect: "https://tango.%{trusted.domain}:9092/ http://tango.%{trusted.domain}:9091/"
-
 
 #  nginx::resource::upstream { 'plex_upstream':
 #    members => [ "tango.$::domain:32400", ],
