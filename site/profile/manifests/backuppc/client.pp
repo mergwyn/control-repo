@@ -27,7 +27,6 @@ class profile::backuppc::client (
     backup_files_exclude       => $backup_files_exclude,
     system_account             => '',
     manage_sshkey              => false,
-    config_name                => $facts['networking']['hostname'],
     hosts_file_user            => 'gary',
     hosts_file_more_users      => 'backuppc',
     email_admin_user_name      => 'backuppc',
