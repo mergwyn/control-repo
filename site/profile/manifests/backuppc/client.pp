@@ -5,7 +5,7 @@ class profile::backuppc::client (
   Stdlib::Absolutepath $postuser                        = "${scripts}/DumpPostUser",
   Backuppc::ShareName $rsync_share_name                 = '/',
   Optional[Backuppc::BackupFiles] $backup_files_exclude = undef,
-  Stdlib::Fqdn $backuppc_hostname                       = undef,
+  Stdlib::Fqdn $backuppc_hostname,
   ) {
 
   file {[$scripts, $preuser, $postuser]:
@@ -26,11 +26,11 @@ class profile::backuppc::client (
     backup_files_exclude       => $backup_files_exclude,
     system_account             => '',
     manage_sshkey              => false,
-    config_name                => facts['networking']['hostname'],
+    config_name                => $facts['networking']['hostname'],
     hosts_file_user            => 'gary',
     hosts_file_more_users      => 'backuppc',
     email_admin_user_name      => 'backuppc',
-    email_destn_domain         => $::domain,
+    email_destn_domain         => $facts['networking']['domain'],
     system_additional_commands => [
       '/bin/run-parts',
       '/etc/backuppc/scripts/DumpPreUser/*',
@@ -45,7 +45,6 @@ class profile::backuppc::client (
     # Need to manage .ssh keys outside of backuupc module
     $system_account        = lookup('defaults::system_user')
     $system_home_directory = lookup('defaults::system_home_dir')
-    $backuppc_hostname     = lookup('backuppc::client::backuppc_hostname')
 
     file { "${system_home_directory}/.ssh":
       ensure => 'directory',
