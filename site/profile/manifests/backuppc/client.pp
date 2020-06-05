@@ -30,7 +30,7 @@ class profile::backuppc::client (
     hosts_file_user            => 'gary',
     hosts_file_more_users      => 'backuppc',
     email_admin_user_name      => 'backuppc',
-    email_user_dest_domain     => $facts['networking']['domain'],
+    email_user_dest_domain     => "@${facts['networking']['domain']}",
     system_additional_commands => [
       '/bin/run-parts',
       '/etc/backuppc/scripts/DumpPreUser/*',
