@@ -21,7 +21,10 @@ profile::base::files::objects:
 profile::base::packages::objects:
   python3-certbot-nginx:
     ensure: present
+  python3-miniupnpc:
+    ensure: present
 
+#TODO: add hook to link ssl options to snippets
 letsencrypt::renew_cron_ensure:   'present'
 letsencrypt::renew_cron_minute:   0
 letsencrypt::renew_cron_hour:     6
@@ -39,6 +42,13 @@ profile::certificate_server::domains:
   - "foxtrot.%{trusted.domain}"
   - "tango.%{trusted.domain}"
   - "zulu.%{trusted.domain}"
+
+profile::base::files::objects:
+  "/etc/nginx/options-ssl-nginx.conf":
+     content: |
+              ssl_certificate           /etc/letsencrypt/live/%{trusted.certname}/fullchain.pem;
+              ssl_certificate_key       /etc/letsencrypt/live/%{trusted.certname}/privkey.pem;
+
 
 nginx::server_purge: true
 nginx::nginx_locations:
@@ -62,6 +72,8 @@ nginx::nginx_servers:
     ssl_redirect: true
     ssl_cert:     "/etc/letsencrypt/live/%{trusted.certname}/fullchain.pem"
     ssl_key:      "/etc/letsencrypt/live/%{trusted.certname}/privkey.pem"
+    include_files:
+      - "/etc/nginx/snippets/options-ssl-nginx.conf*"
   zulu:
     server_name: [ "zulu.%{trusted.domain}" ]
     listen_port: 80

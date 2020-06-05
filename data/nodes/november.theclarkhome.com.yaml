@@ -2,4 +2,4 @@
 classes:
   - profile::base  # All roles should have the base profile
 
-backuppc::client::backuppc_hostname:          "yankee.%{domain}"
+profile::backuppc::client::backuppc_hostname:          "yankee.%{domain}"

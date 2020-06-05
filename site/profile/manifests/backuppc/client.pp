@@ -1,10 +1,12 @@
 #
 class profile::backuppc::client (
-  $scripts  = '/etc/backuppc-scripts',
-  $preuser  = "${scripts}/DumpPreUser",
-  $postuser = "${scripts}/DumpPostUser",
+  Stdlib::Absolutepath $scripts                         = '/etc/backuppc-scripts',
+  Stdlib::Absolutepath $preuser                         = "${scripts}/DumpPreUser",
+  Stdlib::Absolutepath $postuser                        = "${scripts}/DumpPostUser",
+  Backuppc::ShareName $rsync_share_name                 = '/',
+  Optional[Backuppc::BackupFiles] $backup_files_exclude = undef,
+  Stdlib::Fqdn $backuppc_hostname                       = undef,
   ) {
-
 
   file {[$scripts, $preuser, $postuser]:
     ensure  => directory,
@@ -16,8 +18,28 @@ class profile::backuppc::client (
     mode   => '0555',
   }
 
+  $dump_cmd = "\$sshPath -q -x -l root \$host /bin/run-parts --report ${scripts}"
+
   #package { 'rsync': ensure => installed }
-  include backuppc::client
+  class { 'backuppc::client':
+    rsync_share_name           => $rsync_share_name,
+    backup_files_exclude       => $backup_files_exclude,
+    system_account             => '',
+    manage_sshkey              => false,
+    config_name                => facts['networking']['hostname'],
+    hosts_file_user            => 'gary',
+    hosts_file_more_users      => 'backuppc',
+    email_admin_user_name      => 'backuppc',
+    email_destn_domain         => $::domain,
+    system_additional_commands => [
+      '/bin/run-parts',
+      '/etc/backuppc/scripts/DumpPreUser/*',
+    ],
+    dump_pre_user_cmd          => "${dump_cmd}/DumpPreUser --arg=\$type",
+    dump_post_user_cmd         => "${dump_cmd}/DumpPostUser --arg=\$type --arg=\$xferOK",
+    user_cmd_check_status      => true,
+    rsync_args_extra           => [ '--recursive', '--one-file-system', '-F' ],
+  }
 
   if lookup('backuppc::client::system_account') {
     # Need to manage .ssh keys outside of backuupc module

@@ -203,28 +203,9 @@ zabbix::agent::enableremotecommands:              '1'
 zabbix::agent::zabbix_package_state:              'latest'
 zabbix::agent::hostmetadata:                      ":kernel=%{facts.kernel}:virtual=%{facts.virtual}"
 
-profile::backuppc::scripts:                       '/etc/backuppc-scripts'
-profile::backuppc::preuser:                       "%{lookup('profile::backuppc::scripts')}/DumpPreUser"
-profile::backuppc::postuser:                      "%{lookup('profile::backuppc::scripts')}/DumpPostUser"
-
 # backuppc client
-backuppc::client::backuppc_hostname:              "foxtrot.%{domain}"
-backuppc::client::system_account:                 ''
-backuppc::client::manage_sshkey:                  false
-backuppc::client::config_name:                    "%{facts.networking.hostname}"
-backuppc::client::hosts_file_user:                'gary'
-backuppc::client::hosts_file_more_users:          'backuppc'
-backuppc::client::email_admin_user_name:          'backuppc'
-backuppc::client::email_destn_domain:             "@%{domain}"
-backuppc::client::system_additional_commands:
- - '/bin/run-parts'
- - '/etc/backuppc/scripts/DumpPreUser/*'
-backuppc::client::dump_pre_user_cmd:              "$sshPath -q -x -l root $host /bin/run-parts --report %{lookup('profile::backuppc::scripts')}/DumpPreUser --arg=$type"
-backuppc::client::dump_post_user_cmd:             "$sshPath -q -x -l root $host /bin/run-parts --report %{lookup('profile::backuppc::scripts')}/DumpPostUser --arg=$type --arg=$xferOK"
-backuppc::client::user_cmd_check_status:          true
-backuppc::client::rsync_share_name:               [ '/' ]
-backuppc::client::rsync_args_extra:               [ '--recursive', '--one-file-system', '-F' ]
-backuppc::client::backup_files_exclude:
+profile::backuppc::client::backuppc_hostname:     "foxtrot.%{domain}"
+profile::backuppc::client::backup_files_exclude:
   - '.AppleDouble'
   - '.cache'
   - '*.converted'
