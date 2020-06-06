@@ -7,15 +7,15 @@ class profile::platform::baseline (
 ){
 
   # Global
-  class {'::time':
-    servers => $timeservers,
-  }
+  #class {'::time':
+  #  servers => $timeservers,
+  #}
 
   class {'::profile::puppet::agent':
     ensure => $puppet_agent,
   }
 
-  # add sensu client
+  # add zabbix client
   if $enable_monitoring {
     include ::profile::zabbix::agent
   }
