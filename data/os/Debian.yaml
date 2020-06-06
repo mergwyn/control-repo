@@ -8,7 +8,7 @@ classes:
   - profile::base::ssh_server
   - profile::base::mail_client
   - profile::base::unattended_upgrades
-  - profile::base::webmin_generic
+  - profile::service::webmin
   - profile::zabbix::agent
   - profile::backuppc::client
 
@@ -83,17 +83,17 @@ profile::base::hosts::objects:
     ip:                                           'ff02::3'
 
 
-
-# puppet agent
-puppet::puppet_server:                            "echo.%{trusted.domain}"
-puppet::manage_repos:                             false
-puppet::structured_facts:                         true
-
 profile::base::mail_client::myorigin:             "%{trusted.domain}"
 profile::base::mail_client::password_credentials: "mergwyn@virginmedia.com:%{lookup('secrets::virgin')}"
 profile::base::mail_client::password_hash:        '/etc/postfix/sasl-passwords'
 profile::base::mail_client::relayhost:            '[smtp.virginmedia.com]:465'
 profile::base::mail_client::root_mail_recipient:  "%{lookup('defaults::adminemail')}"
+
+
+# puppet agent
+puppet::puppet_server:                            "echo.%{trusted.domain}"
+puppet::manage_repos:                             false
+puppet::structured_facts:                         true
 
 # store ssh keys
 # saz-ssh
@@ -249,37 +249,4 @@ profile::backuppc::client::backup_files_exclude:
     - 'var/tmp'
     - 'var/webmin/output'
     - 'opt/puppetlabs/puppet/cache'
-
-# webmin
-webmin::repo_ensure:                              'present'
-webmin::repo_manage:                              true
-webmin::package_manage:                           true
-webmin::package_ensure:                           'latest'
-webmin::package_name:                             'webmin'
-webmin::config_file:                              '/etc/webmin/miniserv.conf'
-webmin::service_enable:                           true
-webmin::service_ensure:                           'running'
-webmin::service_manage:                           true
-webmin::service_name:                             'webmin'
-webmin::allowed_networks:                         []
-webmin::firewall_manage:                          false
-webmin::service_port:                             10000
-
-# webmin Service Defaults
-webmin::ssl_enable:                               true
-webmin::ssl_keyfile:                              '/etc/webmin/miniserv.pem'
-webmin::ssl_certfile:                             '/etc/webmin/miniserv.cert'
-webmin::ssl_chainfile:                            '/etc/webmin/extracas.chain'
-webmin::ssl_reject_ssl2:                          true
-webmin::ssl_reject_ssl3:                          true
-webmin::ssl_reject_tls1:                          true
-webmin::ssl_reject_tls11:                         true
-webmin::ssl_reject_tls12:                         false
-webmin::ssl_redirect:                             true
-
-webmin::ssl_dependencies:
-  - 'libnet-ssleay-perl'
-  - 'libauthen-pam-perl'
-  - 'libpam-runtime'
-  - 'libio-pty-perl'
 
