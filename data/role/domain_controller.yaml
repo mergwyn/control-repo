@@ -2,10 +2,12 @@
 ---
 
 classes:
-  - profile::base  # All roles should have the base profile
+  - profile::platform::baseline  # All roles should have the base profile
   - profile::network::dhcpd
   - profile::domain::sso
   - profile::samba::dc 
+  - profile::zabbix::agent
+  - profile::backuppc::client
 
 samba::dc::role:                        'dc'
 samba::dc::domain:                      "%{lookup('defaults::workgroup')}"

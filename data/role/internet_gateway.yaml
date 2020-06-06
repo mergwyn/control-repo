@@ -2,9 +2,11 @@
 ---
 
 classes:
-  - profile::base  # All roles should have the base profile
+  - profile::platform::baseline  # All roles should have the base profile
   - profile::ddclient
   - profile::certificate_server
+  - profile::zabbix::agent
+  - profile::backuppc::client
   - nginx
 
 profile::base::files::objects:

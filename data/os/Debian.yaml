@@ -2,16 +2,6 @@
 
 classes:
   - timezone
-  - profile::os::debian::base
-  - profile::base::mounts
-  - profile::puppet::agent
-  - profile::base::avahi
-  - profile::base::ssh_server
-  - profile::base::mail_client
-  - profile::base::unattended_upgrades
-  - profile::service::webmin
-  - profile::zabbix::agent
-  - profile::backuppc::client
 
 profile::base::users::defaults:
   ensure:                                         present

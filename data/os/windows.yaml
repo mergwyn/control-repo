@@ -2,9 +2,6 @@
 
 classes:
   - chocolatey
-  - profile::os::windows::tasks
-  - profile::os::windows::base
-  - profile::zabbix::agent
 
 profile::base::files::defaults:
   ensure: present

@@ -2,7 +2,7 @@
 ---
 
 classes:
-  - profile::base  # All roles should have the base profile
+  - profile::platform::baseline  # All roles should have the base profile
   - profile::domain::sso
   - profile::nfs_server
   - profile::backuppc::server
@@ -10,6 +10,8 @@ classes:
   - profile::photos
   - profile::mac::timemachine_server
   - profile::virtual::lxd
+  - profile::zabbix::agent
+  - profile::backuppc::client
 
 #profile::base::users::objects:
 #  backuupc:
