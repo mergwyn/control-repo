@@ -12,7 +12,7 @@ class profile::platform::baseline (
   #}
 
   class {'::profile::puppet::agent':
-    ensure => $puppet_agent,
+    #ensure => $puppet_agent,
   }
 
   # add zabbix client
