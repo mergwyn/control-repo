@@ -1,6 +1,6 @@
 #
 
-class profile::base::linux {
+class profile::os::debian::base {
   # core stuff
   host { $facts['networking']['hostname']:
     ensure => absent,
@@ -12,5 +12,3 @@ class profile::base::linux {
     ip           => '127.0.1.1',
   }
 }
-
-# vim: sw=2:ai:nu expandtab

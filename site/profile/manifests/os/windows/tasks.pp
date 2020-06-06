@@ -3,7 +3,7 @@
 # 'create_resources' function.
 #
 
-class profile::base::tasks (
+class profile::os::windows::tasks (
   Hash           $objects  = {},
   Optional[Hash] $defaults = {},
 ) {
@@ -19,5 +19,3 @@ class profile::base::tasks (
   }
 
 }
-
-# vim: sw=2:ai:nu expandtab

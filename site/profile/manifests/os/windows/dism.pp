@@ -3,7 +3,7 @@
 # 'create_resources' function.
 #
 
-class profile::base::dism (
+class profile::os::windows::dism (
   Hash           $objects  = {},
   Optional[Hash] $defaults = {},
 ) {
@@ -17,4 +17,3 @@ class profile::base::dism (
   }
 }
 
-# vim: sw=2:ai:nu expandtab

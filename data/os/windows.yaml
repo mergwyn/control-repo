@@ -2,8 +2,8 @@
 
 classes:
   - chocolatey
-  - profile::base::tasks
-  - profile::base::windows
+  - profile::os::windows::tasks
+  - profile::os::windows::base
   - profile::zabbix::agent
 
 profile::base::files::defaults:

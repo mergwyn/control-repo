@@ -2,6 +2,7 @@
 
 classes:
   - timezone
+  - profile::os::debian::base
   - profile::base::mounts
   - profile::puppet::agent
   - profile::base::avahi
