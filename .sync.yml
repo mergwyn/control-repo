@@ -10,7 +10,7 @@ appveyor.yml:
 .travis.yml:
   branches:
   - production
-  - development
+  - /^dev/
   notifications:
     email:
       on_success: change # default: change

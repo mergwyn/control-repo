@@ -1,0 +1,47 @@
+# Classes to be tested
+classes:
+  - /^role::/
+
+# Nodes to tests classes on, this refers to a 'factset' or 'nodeset'
+# depending on whether you are running 'spec' or 'acceptance' tests
+nodes:
+  - Ubuntu-18.04-64
+  - windows-10-64
+
+# You can group classes here to save typing
+class_groups:
+  windows_classes:
+    - role::windows_desktop
+  darwin_classes:
+    - role::mac_laptop
+  non_ubuntu_classes:
+    - role::windows_desktop
+    - role::mac_laptop
+  ubuntu_classes:
+    include: 'all_classes'
+    exclude: 'non_ubuntu_classes'
+   
+
+# You can group nodes here to save typing
+# We have created a 'non_windows_nodes' group because we can't
+# give you Windows vagrant boxes to test with because licensing,
+# we can give you fact sets though so go crazy with spec testing!
+node_groups:
+  ubuntu_nodes:
+    - Ubuntu-18.04-64
+  non_ubuntu_nodes:
+    include: 'all_nodes'
+    exclude: 'ubuntu_nodes'
+  windows_nodes:
+    - windows-10-64
+  non_windows_nodes:
+    include: 'all_nodes'
+    exclude: 'windows_nodes'
+
+test_matrix:
+  - ubuntu_nodes:
+      classes: 'ubuntu_classes'
+      tests: 'spec'
+  - windows_nodes:
+      classes: 'windows_classes'
+      tests: 'spec'
