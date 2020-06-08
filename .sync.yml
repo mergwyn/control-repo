@@ -10,7 +10,6 @@ appveyor.yml:
 .travis.yml:
   includes:
     - script: bundle exec onceover run spec --force --parallel
-  bundler_args: --without development --path vendor/bundle
   cache:
     bundler: true
   branches:

@@ -14,7 +14,7 @@ before_install:
   - bundle -v
 script:
   - 'bundle exec rake $CHECK'
-bundler_args: --without development --path vendor/bundle
+bundler_args: --without system_tests
 rvm:
   - 2.5.7
 stages:
