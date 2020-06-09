@@ -6,7 +6,7 @@ fixtures:
     role: "#{source_dir}/site/role"
   repositories:
     ssh:
-      repo: https://github.com/apache/puppet-module-ssh/
+      repo: https://github.com/mergwyn/puppet-module-ssh/
       branch: master
     augeasproviders_shellvar:
       repo: https://github.com/mergwyn/augeasproviders_shellvar
