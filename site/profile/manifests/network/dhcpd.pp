@@ -1,8 +1,8 @@
 #
 
 class profile::network::dhcpd (
-  Optional[Enum['primary','secondary']] $role,
-  Optional[Stdlib::IP::Address]        $peer_address,
+  Optional[Enum['primary','secondary']] $role         = undef,
+  Optional[Stdlib::IP::Address]         $peer_address = undef,
   ) {
   $owner = 'dhcpd'
   $group = 'dhcpd'
@@ -27,7 +27,7 @@ class profile::network::dhcpd (
     gateway  => '192.168.11.254',
     failover => 'dhcp-failover',
   }
-  if $role {
+  if ($role and $peer_address) {
     class { 'dhcp::failover':
       role         => $role,
       peer_address => $peer_address,

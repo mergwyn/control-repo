@@ -11,18 +11,10 @@ class profile::platform::baseline (
   #  servers => $timeservers,
   #}
 
-  class {'::profile::puppet::agent':
-    #ensure => $puppet_agent,
-  }
-
-  # add zabbix client
-  if $enable_monitoring {
-    include ::profile::zabbix::agent
-  }
 
   # OS Specific
-  case $::kernel {
-    'Linux':   {
+  case $facts['os']['family']{
+    'Debian':   {
       include ::profile::platform::baseline::linux
     }
     'Darwin':   {

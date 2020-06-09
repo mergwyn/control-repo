@@ -8,8 +8,6 @@ appveyor.yml:
     - '.onceover/'
     - 'spec/fixtures'
 .travis.yml:
-#  includes:
-#    - script: bundle exec onceover run spec --force --parallel
   cache:
     bundler: true
   branches:
@@ -28,7 +26,7 @@ Gemfile:
       - gem: onceover
       - gem: CFPropertyList
 spec/spec_helper.rb:
-  coverage_report: true
+  coverage_report: false
   minimum_code_coverage_percentage: 0
   strict_level: ":warning"
   hiera_config: "spec/hiera.yaml" 

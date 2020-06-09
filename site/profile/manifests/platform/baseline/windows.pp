@@ -4,7 +4,8 @@ class profile::platform::baseline::windows {
 
   include profile::os::windows::tasks
   include profile::os::windows::base
-  include profile::zabbix::agent
+# TODO: review included profiles
+  #include profile::zabbix::agent
 
 
 #  include ::profile::platform::baseline::windows::bootstrap
