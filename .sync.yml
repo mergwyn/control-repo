@@ -8,8 +8,8 @@ appveyor.yml:
     - '.onceover/'
     - 'spec/fixtures'
 .travis.yml:
-  includes:
-    - script: bundle exec onceover run spec --force --parallel
+#  includes:
+#    - script: bundle exec onceover run spec --force --parallel
   cache:
     bundler: true
   branches:
