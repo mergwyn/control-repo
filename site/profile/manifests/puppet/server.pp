@@ -46,9 +46,9 @@ class profile::puppet::server {
     port       => 80,
   }
 
-  $scripts=hiera('profile::backuppc::scripts')
-  $preuser=hiera('profile::backuppc::preuser')
-  $postuser=hiera('profile::backuppc::postuser')
+  $scripts  = hiera('profile::backuppc::client::scripts')
+  $preuser  = hiera('profile::backuppc::client::preuser')
+  $postuser = hiera('profile::backuppc::client::postuser')
 
   file { "${preuser}/S21postgresql-backup":
     ensure  => present,

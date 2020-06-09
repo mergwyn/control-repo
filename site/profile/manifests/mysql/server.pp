@@ -48,8 +48,9 @@ class profile::mysql::server {
   }
   create_ini_settings($overrides, $defaults)
 
-  $scripts=hiera('profile::backuppc::scripts')
-  $preuser=hiera('profile::backuppc::preuser')
+  $scripts  = hiera('profile::backuppc::client::scripts')
+  $preuser  = hiera('profile::backuppc::client::preuser')
+
   file { "${preuser}/S20mysql-backup":
     ensure  => present,
     source  => 'puppet:///modules/profile/backuppc/S20mysql-backup',
