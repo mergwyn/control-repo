@@ -2,7 +2,7 @@
 ---
 
 classes:
-  - profile::profile::baseline  # All roles should have the base profile
+  - profile::platform::baseline  # All roles should have the base profile
   - profile::domain::sso
   - profile::zabbix::server
   - profile::zabbix::agent
