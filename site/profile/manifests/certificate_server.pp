@@ -3,7 +3,7 @@ class profile::certificate_server (
   Array[Stdlib::Fqdn] $domains = []
 ) {
 
-  class { letsencrypt:
+  class { 'letsencrypt':
     email                =>  "ca@${facts['domain']}",
   }
 
