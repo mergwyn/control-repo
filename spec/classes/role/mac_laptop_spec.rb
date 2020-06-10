@@ -2,7 +2,6 @@ require 'spec_helper'
 
 describe 'role::mac_laptop' do
   on_supported_os.each do |os, os_facts|
-
     next unless os_facts[:osfamily] == 'Darwin'
 
     context "on #{os}" do
