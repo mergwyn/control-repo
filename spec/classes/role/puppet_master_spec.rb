@@ -10,7 +10,7 @@ describe 'role::puppet_master' do
       # Puppet::Util::Log.newdestination(:console)
 
       let(:facts) { os_facts }
-      let(:trusted_facts) { { 'pp_role' => '/puppet_master' } }
+      let(:trusted_facts) { { 'pp_role' => 'puppet_master' } }
 
       # Comment out to display all available resources easily
       # it { pp catalogue.resources }

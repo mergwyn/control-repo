@@ -10,7 +10,7 @@ describe 'role::domain_controller' do
       # Puppet::Util::Log.newdestination(:console)
 
       let(:facts) { os_facts }
-      let(:trusted_facts) { { 'pp_role' => '/domain_controller' } }
+      let(:trusted_facts) { { 'pp_role' => 'domain_controller' } }
 
       # Comment out to display all available resources easily
       # it { pp catalogue.resources }

@@ -10,7 +10,7 @@ describe 'role::mac_laptop' do
       # Puppet::Util::Log.newdestination(:console)
 
       let(:facts) { os_facts }
-      let(:trusted_facts) { { 'pp_role' => '/mac_laptop' } }
+      let(:trusted_facts) { { 'pp_role' => 'mac_laptop' } }
 
       # Comment out to display all available resources easily
       # it { pp catalogue.resources }

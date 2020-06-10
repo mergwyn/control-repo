@@ -10,7 +10,7 @@ describe 'role::print_server' do
       # Puppet::Util::Log.newdestination(:console)
 
       let(:facts) { os_facts }
-      let(:trusted_facts) { { 'pp_role' => '/print_server' } }
+      let(:trusted_facts) { { 'pp_role' => 'print_server' } }
 
       # Comment out to display all available resources easily
       # it { pp catalogue.resources }

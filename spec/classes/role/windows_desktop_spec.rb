@@ -10,7 +10,7 @@ describe 'role::windows_desktop' do
       # Puppet::Util::Log.newdestination(:console)
 
       let(:facts) { os_facts }
-      let(:trusted_facts) { { 'pp_role' => '/windows_desktop' } }
+      let(:trusted_facts) { { 'pp_role' => 'windows_desktop' } }
 
       # Comment out to display all available resources easily
       # it { pp catalogue.resources }

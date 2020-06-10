@@ -10,7 +10,7 @@ describe 'role::zabbix_server' do
       # Puppet::Util::Log.newdestination(:console)
 
       let(:facts) { os_facts }
-      let(:trusted_facts) { { 'pp_role' => '/zabbix_server' } }
+      let(:trusted_facts) { { 'pp_role' => 'zabbix_server' } }
 
       # Comment out to display all available resources easily
       # it { pp catalogue.resources }

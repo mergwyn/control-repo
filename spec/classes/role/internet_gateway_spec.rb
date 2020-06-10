@@ -10,7 +10,7 @@ describe 'role::internet_gateway' do
       # Puppet::Util::Log.newdestination(:console)
 
       let(:facts) { os_facts }
-      let(:trusted_facts) { { 'pp_role' => '/internet_gateway' } }
+      let(:trusted_facts) { { 'pp_role' => 'internet_gateway' } }
 
       # Comment out to display all available resources easily
       # it { pp catalogue.resources }
