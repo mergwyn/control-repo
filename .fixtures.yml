@@ -1,12 +1,12 @@
 ---
 fixtures:
   symlinks:
-    site: "#{source_dir}/site"
-    profile: "#{source_dir}/site/profile"
+    #data: "#{source_dir}/data"
     role: "#{source_dir}/site/role"
+    profile: "#{source_dir}/site/profile"
   repositories:
     ssh:
-      repo: https://github.com/mergwyn/puppet-module-ssh/
+      repo: https://github.com/mergwyn/puppet-module-ssh
       branch: master
     augeasproviders_shellvar:
       repo: https://github.com/mergwyn/augeasproviders_shellvar
