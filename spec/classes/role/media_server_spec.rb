@@ -14,7 +14,7 @@ describe 'role::media_server' do
       let(:trusted_facts) { { 'pp_role' => '/media_server' } }
 
       # Comment out to display all available resources easily
-      it { pp catalogue.resources }
+      # it { pp catalogue.resources }
 
       it { is_expected.to compile.with_all_deps }
     end
