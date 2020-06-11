@@ -1,5 +1,6 @@
 #
-class profile::apparmor {
+class profile::platform::baseline::debian::apparmor {
+
   package { 'apparmor': }
 
   service { 'apparmor':
@@ -9,4 +10,3 @@ class profile::apparmor {
   }
 
 }
-# vim: sw=2:ai:nu expandtab
