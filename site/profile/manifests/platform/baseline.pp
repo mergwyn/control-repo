@@ -15,7 +15,7 @@ class profile::platform::baseline (
   # OS Specific
   case $facts['os']['family']{
     'Debian':   {
-      include ::profile::platform::baseline::linux
+      include ::profile::platform::baseline::debian
     }
     'Darwin':   {
       include ::profile::platform::baseline::darwin

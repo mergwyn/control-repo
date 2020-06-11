@@ -1,6 +1,7 @@
 #
 class role::main_server {
   include profile::platform::baseline  # All roles should have the base profile
+  include profile::platform::baseline::debian::zfs
   include profile::domain::sso
   include profile::nfs_server
   include profile::backuppc::server

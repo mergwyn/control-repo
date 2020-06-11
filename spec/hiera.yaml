@@ -10,7 +10,7 @@ hierarchy:
       - 'secrets.yaml'
       - "nodes/%{trusted.certname}-%{environment}.yaml"
       - "nodes/%{trusted.certname}.yaml"
-      - "role/%{trusted.extensions.pp_role}-%{environment}.yaml"
+      - "%{environment}.yaml"
       - "role/%{trusted.extensions.pp_role}.yaml"
       - "virtual/%{facts.virtual}_%{facts.os.name}.yaml"
       - "os/%{facts.os.family}/%{facts.os.release.major}.yaml"
@@ -19,6 +19,5 @@ hierarchy:
       - "os/%{facts.os.name}/%{facts.os.release.major}.yaml"
       - "os/%{facts.os.family}.yaml"
       - "os/%{facts.os.name}.yaml"
-      - "zfs_%{zfs_version}.yaml"
       - 'common.yaml'
 

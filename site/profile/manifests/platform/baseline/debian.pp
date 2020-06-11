@@ -1,6 +1,6 @@
 #
 
-class profile::platform::baseline::linux {
+class profile::platform::baseline::debian {
 
   include profile::os::debian::base
   include profile::base::mounts

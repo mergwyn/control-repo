@@ -16,9 +16,10 @@ hierarchy:
     paths:
       - "nodes/%{trusted.certname}-%{environment}.yaml"
       - "nodes/%{trusted.certname}.yaml"
+  - name: "Environment based settings"
+      - "%{environment}.yaml"
   - name: "Roles data"
     paths:
-      - "role/%{trusted.extensions.pp_role}-%{environment}.yaml"
       - "role/%{trusted.extensions.pp_role}.yaml"
   - name: "Physical/Virtual"
     path: "virtual/%{facts.virtual}_%{facts.os.name}.yaml"
@@ -35,8 +36,6 @@ hierarchy:
     paths:
       - "os/%{facts.os.family}.yaml"
       - "os/%{facts.os.name}.yaml"
-  - name: "ZFS"
-    path: "zfs_%{zfs_version}.yaml"
   - name: 'common'
     path: 'common.yaml'
 
