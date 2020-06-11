@@ -2,10 +2,12 @@
 ---
 
 classes:
-  - profile::base  # All roles should have the base profile
-  - profile::domain::dhcpd
+  - profile::platform::baseline  # All roles should have the base profile
+  - profile::network::dhcpd
   - profile::domain::sso
   - profile::samba::dc 
+  - profile::zabbix::agent
+  - profile::backuppc::client
 
 samba::dc::role:                        'dc'
 samba::dc::domain:                      "%{lookup('defaults::workgroup')}"
@@ -16,92 +18,3 @@ samba::dc::dnsforwarder:                '208.67.222.222'
 samba::dc::serverservices:              's3fs, rpc, nbt, wrepl, ldap, cldap, kdc, drepl, winbind, ntp_signd, kcc, dnsupdate, dns'
 samba::dc::provisionargs:               '--use-xattrs=yes --use-ntvfs'
 
-# DHCP failover settings - failover ip addresses set in per node yaml
-dhcp::failover::port:         647
-dhcp::failover::mclt:         3600
-
-dhcp::interfaces:
- - "%{facts.networking.primary}"
-dhcp::nameservers:
- - 192.168.11.22  # bravo
- - 192.168.11.21  # alpha
- - 208.67.222.222 # OpendDNS fallback for dhcp clients
-dhcp::ntpservers:
- - "foxtrot.%{trusted.domain}"
- - "golf.%{trusted.domain}"
-dhcp::default_lease_time:      14400
-
-dhcp::pools:
-  "%{trusted.domain}":
-    network:  192.168.11.0
-    mask:     255.255.255.0
-    range:    '192.168.11.100 192.168.11.199'
-    gateway:  192.168.11.254
-    failover: 'dhcp-failover'
-
-dhcp::extra_config:
-  - 'include "/etc/dhcp/dhcpd.samba_ddns";'
-  #- "option netbios_nameservers 192.168.11.22, 192.168.11.21;"
-
-dhcp::hosts:
-  LGwebOSTV:
-    mac: 7c:1c:4e:48:06:e2
-    options:
-      routers: 192.168.11.250 # Note change of gateway for VPN
-  india:
-    mac: 00:16:3e:93:c6:21
-    ip:  192.168.11.41
-    options:
-      routers: 192.168.11.250 # Note change of gateway for VPN
-  # Hosts with fixed ip
-  switch1:
-    mac: 00:8e:f2:59:c7:98
-    ip:  192.168.11.1
-  switch2:
-    mac: a0:40:a0:71:7e:ce
-    ip:  192.168.11.2
-  echo:
-    mac: 00:16:3e:60:37:e3
-    ip:  192.168.11.44
-  tango:
-    mac: 00:16:3e:01:f8:9a
-    ip:  192.168.11.42
-  zulu:
-    mac: 00:16:3e:98:92:d8
-    ip:  192.168.11.45
-  mike:
-    mac: 52:54:00:53:b7:0a
-    ip:  192.168.11.20
-  papa:
-    mac: 00:16:3e:fc:2a:87
-    ip:  192.168.11.240
-  romeo:
-    mac: 00:16:3e:fb:dc:5e
-    ip:  192.168.11.250
-  # Hosts that just need names
-  DELLA3F95F:
-    mac: 08:00:37:a3:f9:5f
-  s685ip:
-    mac: 00:01:e3:9a:f9:c1
-  #humax-lan:
-  #  ddns_hostname: humax
-  #  mac: dc:d3:21:57:55:46
-  humax:
-    #ddns_hostname: humax
-    mac: 80:1f:02:21:a1:74
-  lounge-sonos-playbar:
-    mac: 00:0e:58:bc:b4:dc
-    options:
-      domain-name-servers: 8.8.8.8
-  lounge-sonos-play1-ls:
-    mac: 00:0e:58:c9:f0:9a
-    options:
-      domain-name-servers: 8.8.8.8
-  lounge-sonos-play1-rs:
-    mac: 94:9F:3E:12:FA:8A
-    options:
-      domain-name-servers: 8.8.8.8
-  kitchen-sonos-playone:
-    mac: 78:28:CA:CB:8B:94
-    options:
-      domain-name-servers: 8.8.8.8

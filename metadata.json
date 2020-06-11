@@ -24,8 +24,9 @@
     {
       "operatingsystem": "Darwin",
       "operatingsystemrelease": [
-        "10.13",
-        "10.14"
+        "16",
+        "17",
+        "18"
       ]
     }
   ],

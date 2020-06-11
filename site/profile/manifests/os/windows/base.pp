@@ -1,6 +1,6 @@
 #
 
-class profile::base::windows {
+class profile::os::windows::base {
 #  reboot { 'before':
 #    when  => pending,
 #  }

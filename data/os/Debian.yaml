@@ -2,15 +2,6 @@
 
 classes:
   - timezone
-  - profile::base::mounts
-  - profile::puppet::agent
-  - profile::base::avahi
-  - profile::base::ssh_server
-  - profile::base::mail_client
-  - profile::base::unattended_upgrades
-  - profile::base::webmin_generic
-  - profile::zabbix::agent
-  - profile::backuppc::client
 
 profile::base::users::defaults:
   ensure:                                         present
@@ -83,17 +74,20 @@ profile::base::hosts::objects:
     ip:                                           'ff02::3'
 
 
-
-# puppet agent
-puppet::puppet_server:                            "echo.%{trusted.domain}"
-puppet::manage_repos:                             false
-puppet::structured_facts:                         true
-
 profile::base::mail_client::myorigin:             "%{trusted.domain}"
 profile::base::mail_client::password_credentials: "mergwyn@virginmedia.com:%{lookup('secrets::virgin')}"
 profile::base::mail_client::password_hash:        '/etc/postfix/sasl-passwords'
 profile::base::mail_client::relayhost:            '[smtp.virginmedia.com]:465'
 profile::base::mail_client::root_mail_recipient:  "%{lookup('defaults::adminemail')}"
+
+profile::backuppc::client::scripts:                '/etc/backuppc-scripts'
+profile::backuppc::client::preuser:                "%{lookup('profile::backuppc::client::scripts')}/DumpPreUser"
+profile::backuppc::client::postuser:               "%{lookup('profile::backuppc::client::scripts')}/DumpPostUser"
+
+# puppet agent
+puppet::puppet_server:                            "echo.%{trusted.domain}"
+puppet::manage_repos:                             false
+puppet::structured_facts:                         true
 
 # store ssh keys
 # saz-ssh
@@ -203,102 +197,50 @@ zabbix::agent::enableremotecommands:              '1'
 zabbix::agent::zabbix_package_state:              'latest'
 zabbix::agent::hostmetadata:                      ":kernel=%{facts.kernel}:virtual=%{facts.virtual}"
 
-profile::backuppc::scripts:                       '/etc/backuppc-scripts'
-profile::backuppc::preuser:                       "%{lookup('profile::backuppc::scripts')}/DumpPreUser"
-profile::backuppc::postuser:                      "%{lookup('profile::backuppc::scripts')}/DumpPostUser"
-
 # backuppc client
-backuppc::client::backuppc_hostname:              "foxtrot.%{domain}"
-backuppc::client::system_account:                 ''
-backuppc::client::manage_sshkey:                  false
-backuppc::client::config_name:                    "%{facts.networking.hostname}"
-backuppc::client::hosts_file_user:                'gary'
-backuppc::client::hosts_file_more_users:          'backuppc'
-backuppc::client::email_admin_user_name:          'backuppc'
-backuppc::client::email_destn_domain:             "@%{domain}"
-backuppc::client::system_additional_commands:
- - '/bin/run-parts'
- - '/etc/backuppc/scripts/DumpPreUser/*'
-backuppc::client::dump_pre_user_cmd:              "$sshPath -q -x -l root $host /bin/run-parts --report %{lookup('profile::backuppc::scripts')}/DumpPreUser --arg=$type"
-backuppc::client::dump_post_user_cmd:             "$sshPath -q -x -l root $host /bin/run-parts --report %{lookup('profile::backuppc::scripts')}/DumpPostUser --arg=$type --arg=$xferOK"
-backuppc::client::user_cmd_check_status:          true
-backuppc::client::rsync_share_name:               [ '/' ]
-backuppc::client::rsync_args_extra:               [ '--recursive', '--one-file-system', '-F' ]
-backuppc::client::backup_files_exclude:
-  - '.AppleDouble'
-  - '.cache'
-  - '*.converted'
-  - '*.original'
-  - 'Downloads'
-  - 'exclude'
-  - '.fsck'
-  - 'gsyncit.log*'
-  - '.journal'
-  - '*.ldb'
-  - 'Library/Caches'
-  - 'Library*/Mail/Caches'
-  - 'Library*/Mail/V3'
-  - '*/lost+found*'
-  - 'nobackup'
-  - 'opt/puppetlabs/server/data/puppetserver/reports'
-  - '.osync_workdir'
-  - '*.ova'
-  - '*Recycle Bin*'
-  - 'srv/backup'
-  - '*.tar'
-  - 'tmp'
-  - '.Trash'
-  - '*/trashbox*'
-  - 'var/lib/apt/lists'
-  - 'var/lib/dkms/open-vm-tools'
-  - 'var/lib/dkms/spl'
-  - 'var/lib/dkms/zfs'
-  - 'var/lib/minidlna/art_cache'
-  - 'var/lib/mlocate/mlocate.db*'
-  - 'var/lib/mysql/zabbix*'
-  - 'var/lib/php/sessions/*'
-  - 'var/tmp'
-  - 'var/webmin/output'
-  - '*.vdi'
-  - '*.vmdk'
-  - '.zfs'
-  - 'Movies'
-  - 'TV Shows'
-  - 'opt/puppetlabs/puppet/cache'
-  - 'media/.config/Radarr/logs*'
+profile::backuppc::client::backuppc_hostname:     "foxtrot.%{domain}"
+profile::backuppc::client::backup_files_exclude:
+  '*':
+    - '.AppleDouble'
+    - '.cache'
+    - '*.converted'
+    - '*.original'
+    - 'Downloads'
+    - 'exclude'
+    - '.fsck'
+    - 'gsyncit.log*'
+    - '.journal'
+    - '*.ldb'
+    - 'Library/Caches'
+    - 'Library*/Mail/Caches'
+    - 'Library*/Mail/V3'
+    - '*/lost+found*'
+    - 'nobackup'
+    - '.osync_workdir'
+    - '*.ova'
+    - '*Recycle Bin*'
+    - 'srv/backup'
+    - '*.tar'
+    - 'tmp'
+    - '.Trash'
+    - '*/trashbox*'
+    - '*.vdi'
+    - '*.vmdk'
+    - '.zfs'
+    - 'Movies'
+    - 'TV Shows'
+    - 'media/.config/Radarr/logs*'
+  '/':
+    - 'opt/puppetlabs/server/data/puppetserver/reports'
+    - 'var/lib/apt/lists'
+    - 'var/lib/dkms/open-vm-tools'
+    - 'var/lib/dkms/spl'
+    - 'var/lib/dkms/zfs'
+    - 'var/lib/minidlna/art_cache'
+    - 'var/lib/mlocate/mlocate.db*'
+    - 'var/lib/mysql/zabbix*'
+    - 'var/lib/php/sessions/*'
+    - 'var/tmp'
+    - 'var/webmin/output'
+    - 'opt/puppetlabs/puppet/cache'
 
-# webmin
-webmin::repo_ensure:                              'present'
-webmin::repo_manage:                              true
-webmin::package_manage:                           true
-webmin::package_ensure:                           'latest'
-webmin::package_name:                             'webmin'
-webmin::config_file:                              '/etc/webmin/miniserv.conf'
-webmin::service_enable:                           true
-webmin::service_ensure:                           'running'
-webmin::service_manage:                           true
-webmin::service_name:                             'webmin'
-webmin::allowed_networks:                         []
-webmin::firewall_manage:                          false
-webmin::service_port:                             10000
-
-# webmin Service Defaults
-webmin::ssl_enable:                               true
-webmin::ssl_keyfile:                              '/etc/webmin/miniserv.pem'
-webmin::ssl_certfile:                             '/etc/webmin/miniserv.cert'
-webmin::ssl_chainfile:                            '/etc/webmin/extracas.chain'
-webmin::ssl_reject_ssl2:                          true
-webmin::ssl_reject_ssl3:                          true
-webmin::ssl_reject_tls1:                          true
-webmin::ssl_reject_tls11:                         true
-webmin::ssl_reject_tls12:                         false
-webmin::ssl_redirect:                             true
-
-webmin::ssl_dependencies:
-  - 'libnet-ssleay-perl'
-  - 'libauthen-pam-perl'
-  - 'libpam-runtime'
-  - 'libio-pty-perl'
-
-# vim:                                            sw=2:ai:nu expandtab
-#

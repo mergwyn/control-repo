@@ -46,7 +46,7 @@ branches:
     - master
     - /^v\d/
     - production
-    - development
+    - /^dev/
 notifications:
   email:
     on_success: change

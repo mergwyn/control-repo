@@ -3,7 +3,9 @@ class profile::certificate_server (
   Array[Stdlib::Fqdn] $domains = []
 ) {
 
-  include letsencrypt
+  class { 'letsencrypt':
+    email                =>  "ca@${facts['domain']}",
+  }
 
   letsencrypt::certonly { $trusted['certname']:
     plugin               => 'nginx',

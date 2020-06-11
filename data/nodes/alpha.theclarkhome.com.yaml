@@ -3,8 +3,8 @@
 classes:
   - network
 
-dhcp::failover::role:         primary
-dhcp::failover::peer_address: 192.168.11.22
+profile::network::dhcpd::role:         primary
+profile::network::dhcpd::peer_address: 192.168.11.22
 
 network::interfaces_hash:
   eth0:
@@ -18,4 +18,3 @@ network::interfaces_hash:
     dns_nameservers:            "192.168.11.22 192.168.11.21"
     dns_search:                 "%{lookup('defaults::dns_search')}"
 
-# vim: sw=2:ai:nu expandtab

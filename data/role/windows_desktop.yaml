@@ -1,9 +1,11 @@
 ---
 
 classes:
-  - profile::base::dism
+  - profile::platform::baseline
+  - profile::os::windows::dism
+  - profile::os::windows::tasks
 
-#profile::base::dism::objects:
+#profile::os::windows::dism::objects:
 #  Microsoft-Windows-Subsystem-Linux: 
 #    norestart: true
 
@@ -25,10 +27,10 @@ profile::base::packages::objects:
 #    - Reboot[before]
 
 
-profile::base::tasks::defaults:
+profile::os::windows::tasks::defaults:
   ensure: present
   enabled: true
-profile::base::tasks::objects:
+profile::os::windows::tasks::objects:
   'GPO Backup':
     command: "%{::system32}\\WindowsPowerShell\\v1.0\\powershell.exe"
     arguments: "-ExecutionPolicy RemoteSigned \\\\%{lookup('defaults::backup_server')}\\backup\\GPO\\GPOBackup.ps1"

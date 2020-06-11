@@ -2,6 +2,8 @@
 ---
 
 classes:
-  - profile::base  # All roles should have the base profile
+  - profile::platform::baseline  # All roles should have the base profile
+  - profile::zabbix::agent
+  - profile::backuppc::client
   - profile::print_server
 

@@ -56,7 +56,30 @@ class profile::backuppc::server {
   }
   User['backuppc'] -> Class['backuppc::server']
 
-  include backuppc::server
+  class { 'backuppc::server':
+    backuppc_password          => lookup('secrets::backuppc'),
+    gzip_path                  => '/usr/bin/pigz',
+    full_age_max               => 370,
+    rsync_args_extra           => [ '--recursive', '--one-file-system', '-F' ],
+    full_keep_cnt              => [ 4, 0, 12],
+    incr_age_max               => 21,
+    incr_keep_cnt              => 12,
+    backup_zero_files_is_fatal => true,
+    cgi_date_format_mmdd       => 1,
+    apache_configuration       => false,
+    blackout_periods           => [
+      {
+        hourBegin => 7.0,
+        hourEnd   => 22.5,
+        weekDays  => [ 1, 2, 3, 4, 5],
+      },
+      {
+        hourBegin => 3,
+        hourEnd   => 22.5,
+        weekDays  => [ 0, 6],
+      },
+    ],
+  }
 
 #  $topdir = '/var/lib/backuppc'
 #  Sshkey <<| tag == "backuppc_sshkeys_${facts['networking']['fqdn']}" |>> {
@@ -87,5 +110,3 @@ class profile::backuppc::server {
     script_dir => '/etc/zabbix/scripts',
   }
 }
-
-# vim: sw=2:ai:nu expandtab

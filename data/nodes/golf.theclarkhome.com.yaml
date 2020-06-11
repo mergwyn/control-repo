@@ -39,7 +39,7 @@ lxd::preseed:
     name: default
     driver: zfs
 
-backuppc::client::rsync_share_name:
+profile::backuppc::client::rsync_share_name:
   - '/'
   - '/boot'
   - '/root'

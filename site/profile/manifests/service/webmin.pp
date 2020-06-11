@@ -1,7 +1,6 @@
 #
-# TODO: move to hiera?
 
-class profile::base::webmin_generic {
+class profile::service::webmin {
   $adminemail = lookup('unattended_upgrades::email')
 
   exec { 'apt_show_versions_clean':
@@ -13,7 +12,7 @@ class profile::base::webmin_generic {
   # for 2FA with google
   package { 'libauthen-oath-perl': }
 
-  include ::webmin
+  include webmin
 
   # update config values
 
@@ -60,4 +59,3 @@ class profile::base::webmin_generic {
   }
 
 }
-# vim: sw=2:ai:nu expandtab
