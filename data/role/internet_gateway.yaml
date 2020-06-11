@@ -60,7 +60,7 @@ nginx::nginx_locations:
     server:
       - "%{trusted.hostname}"
       # - echo
-      # - foxtrot
+      - foxtrot
       - tango
       - zulu
     location_custom_cfg_append:

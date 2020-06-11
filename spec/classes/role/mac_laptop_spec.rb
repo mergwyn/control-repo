@@ -11,6 +11,7 @@ describe 'role::mac_laptop' do
 
       let(:facts) { os_facts }
       let(:trusted_facts) { { 'pp_role' => 'mac_laptop' } }
+      let(:node) { 'unittest.theclarkhome.com' }
 
       # Comment out to display all available resources easily
       # it { pp catalogue.resources }

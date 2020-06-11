@@ -11,6 +11,7 @@ describe 'role::main_server' do
 
       let(:facts) { os_facts }
       let(:trusted_facts) { { 'pp_role' => 'main_server' } }
+      let(:node) { 'unittest.theclarkhome.com' }
 
       # Comment out to display all available resources easily
       # it { pp catalogue.resources }

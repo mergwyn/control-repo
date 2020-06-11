@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'role::windows_desktop' do
   on_supported_os.each do |os, os_facts|
-    next unless os_facts[:osfamily] == 'windows'
+    next unless os_facts[:osfamily] == 'Debian'
 
     context "on #{os}" do
       # add these two lines in a single test block to enable puppet and hiera debug mode
@@ -11,6 +11,7 @@ describe 'role::windows_desktop' do
 
       let(:facts) { os_facts }
       let(:trusted_facts) { { 'pp_role' => 'windows_desktop' } }
+      let(:node) { 'unittest.theclarkhome.com' }
 
       # Comment out to display all available resources easily
       # it { pp catalogue.resources }

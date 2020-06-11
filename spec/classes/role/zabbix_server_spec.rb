@@ -11,6 +11,7 @@ describe 'role::zabbix_server' do
 
       let(:facts) { os_facts }
       let(:trusted_facts) { { 'pp_role' => 'zabbix_server' } }
+      let(:node) { 'unittest.theclarkhome.com' }
 
       # Comment out to display all available resources easily
       # it { pp catalogue.resources }
