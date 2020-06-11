@@ -112,7 +112,7 @@ class profile::network::dhcpd (
   }
 
   # need to make sure apparmor is updated to allow the scripts to fire
-  include profile::apparmor
+  include profile::platform::baseline::debian::apparmor
   file { '/etc/apparmor.d/local/usr.sbin.dhcpd':
     ensure  => file,
     notify  => Service['apparmor'],
@@ -122,4 +122,3 @@ class profile::network::dhcpd (
   }
 
 }
-# vim: sw=2:ai:nu expandtab

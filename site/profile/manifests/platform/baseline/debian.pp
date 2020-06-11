@@ -2,6 +2,8 @@
 
 class profile::platform::baseline::debian {
 
+  include profile::platform::baseline::debian::apparmor
+
   include profile::os::debian::base
   include profile::base::mounts
   include profile::base::ssh_server

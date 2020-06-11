@@ -1,5 +1,6 @@
 #
 class profile::platform::baseline::debian::apparmor {
+
   package { 'apparmor': }
 
   service { 'apparmor':

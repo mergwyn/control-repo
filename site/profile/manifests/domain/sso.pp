@@ -57,7 +57,7 @@ class profile::domain::sso {
     ],
   }
 
-  include profile::apparmor
+  include profile::platform::baseline::debian::apparmor
   file { '/etc/apparmor.d/local/usr.sbin.sssd':
     ensure  => file,
     notify  => Service['sssd', 'apparmor'],
