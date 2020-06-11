@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'role::windows_desktop' do
   on_supported_os.each do |os, os_facts|
-    next unless os_facts[:osfamily] == 'Debian'
+    next unless os_facts[:osfamily] == 'windows'
 
     context "on #{os}" do
       # add these two lines in a single test block to enable puppet and hiera debug mode
