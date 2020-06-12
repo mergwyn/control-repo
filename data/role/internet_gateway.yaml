@@ -1,10 +1,4 @@
 #
 ---
 
-classes:
-  - profile::platform::baseline  # All roles should have the base profile
-  - profile::ddclient
-  - profile::app::reverse_proxy
-  - profile::zabbix::agent
-  - profile::backuppc::client
 

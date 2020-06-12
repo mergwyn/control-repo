@@ -1,15 +1,6 @@
 #
 ---
 
-classes:
-  - profile::platform::baseline  # All roles should have the base profile
-  - profile::domain::sso
-  - profile::media::transcoder
-  - profile::media::downloader
-  - profile::zabbix::agent
-  - profile::backuppc::client
-#TODO: add plex
-
 # transmission
 transmission::config_dir:               "/home/media/.config/transmission-daemon"
 transmission::umask:                    "2"
