@@ -80,6 +80,7 @@ profile::backuppc::client::rsync_share_name:
   - '/var/log'
 
 profile::backuppc::client::backup_files_exclude:
-  - '*.cloudf'
-  - '*.cloud'
+  '*':
+    - '*.cloudf'
+    - '*.cloud'
 
