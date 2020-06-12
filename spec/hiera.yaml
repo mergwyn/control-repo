@@ -14,8 +14,6 @@ hierarchy:
       - "role/%{trusted.extensions.pp_role}.yaml"
       - "virtual/%{facts.virtual}_%{facts.os.name}.yaml"
       - "os/%{facts.os.family}/%{facts.os.release.major}.yaml"
-      - "os/%{facts.os.family}/%{macosx_productversion_major}.yaml"
-      - "os/%{facts.os.family}/%{facts.kernelrelease}.yaml"
       - "os/%{facts.os.name}/%{facts.os.release.major}.yaml"
       - "os/%{facts.os.family}.yaml"
       - "os/%{facts.os.name}.yaml"

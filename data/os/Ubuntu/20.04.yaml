@@ -1,6 +1,6 @@
 ---
 
-linux_classes:
+classes:
   - netplan
 
 # Default setup is dhcp on primary network

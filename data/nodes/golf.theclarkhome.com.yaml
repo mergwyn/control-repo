@@ -1,6 +1,6 @@
 ---
 
-linux_classes:
+classes:
   - netplan
 
 netplan::version: 2

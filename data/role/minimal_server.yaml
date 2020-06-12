@@ -1,6 +1,0 @@
-#
----
-
-classes:
-  - profile::platform::baseline  # All roles should have the base profile
-
