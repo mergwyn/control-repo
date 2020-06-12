@@ -1,6 +1,9 @@
 #
 ---
 
+classes:
+  - profile::platform::baseline
+  - profile::mac::managedmac
 
 # packages to be installed
 profile::base::packages::defaults:

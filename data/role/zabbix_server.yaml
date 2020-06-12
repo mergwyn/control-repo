@@ -1,6 +1,12 @@
 #
 ---
 
+classes:
+  - profile::platform::baseline  # All roles should have the base profile
+  - profile::domain::sso
+  - profile::zabbix::server
+  - profile::zabbix::agent
+  - profile::backuppc::client
 
 zabbix::agent::serveractive:    'localhost'
 zabbix::agent::server:          'localhost'

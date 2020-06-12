@@ -1,4 +1,9 @@
 #
 ---
 
+classes:
+  - profile::platform::baseline  # All roles should have the base profile
+  - profile::router
+  - profile::zabbix::agent
+  - profile::backuppc::client
 

@@ -1,5 +1,11 @@
 #
 ---
 
-
+classes:
+  - profile::platform::baseline  # All roles should have the base profile
+  - profile::platform::baseline::debian::zfs
+  - profile::domain::sso
+  - profile::virtual::lxd
+  - profile::zabbix::agent
+  - profile::backuppc::client
 
