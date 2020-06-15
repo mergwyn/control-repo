@@ -15,7 +15,7 @@ class profile::platform::baseline::darwin::brew {
     github_token => lookup('secrets::github::homebrew'),
     require      => [
       Exec['brew xcode git install'],
-      #User['brew'],
+      User['brew'],
     ],
   }
 }
