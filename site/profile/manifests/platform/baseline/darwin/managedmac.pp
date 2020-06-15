@@ -1,7 +1,8 @@
 #
 # TODO: remove, not used?
 
-class profile::mac::managedmac {
+class profile::platform::baseline::darwin::managedmac {
+
   package { 'jdbc-sqlite3':
     ensure   => 'installed',
     provider => 'gem',
@@ -11,6 +12,8 @@ class profile::mac::managedmac {
     ensure   => 'installed',
     provider => 'gem',
   }
+
+
   include managedmac
+
 }
-# vim: sw=2:ai:nu expandtab
