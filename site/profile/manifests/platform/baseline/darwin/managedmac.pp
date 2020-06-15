@@ -16,4 +16,10 @@ class profile::platform::baseline::darwin::managedmac {
 
   include managedmac
 
+
+  File {
+    owner => 'root',
+    group => 'admin',
+    ensure => file,
+  }
 }
