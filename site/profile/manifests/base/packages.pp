@@ -10,7 +10,7 @@ class profile::base::packages (
 
   case $::kernel {
     'Darwin': {
-      require homebrew
+      include profile::platform::baseline::darwin::brew
     }
     default: {
     }
