@@ -89,49 +89,8 @@ puppet::puppet_server:                            "echo.%{trusted.domain}"
 puppet::manage_repos:                             false
 puppet::structured_facts:                         true
 
-# store ssh keys
-# saz-ssh
-ssh::client::storeconfigs_enabled:                true
-ssh::client_options:
-  GSSAPIAuthentication:                           yes
-  GSSAPIDelegateCredentials:                      no
-  HostbasedAuthentication:                        yes
-  EnableSSHKeysign:                               yes
-ssh::server::storeconfigs_enabled:                true
-ssh::server_options:
-  GSSAPIAuthentication:                           yes
-  GSSAPICleanupCredentials:                       yes
-  HostbasedAuthentication:                        yes
-  UseDNS:                                         yes
-#  HostKey:
-#    - /etc/ssh/ssh_host_rsa_key
-#    - /etc/ssh/ssh_host_dsa_key
-#    - /etc/ssh/ssh_host_ecdsa_key
-#  GSSAPIKeyExchange:                          yes
-#  HostbasedAuthentication:                    no
-#  IgnoreRhosts:                               yes
-#  KerberosAuthentication:                     yes
-#  KeyRegenerationInterval:                    3600
-#  LoginGraceTime:                             120
-#  LogLevel:                                   INFO
-#  PermitEmptyPasswords:                       no
-#  PermitRootLogin:                            yes
-#  PermitUserEnvironment:                      yes
-#  PrintLastLog:                               yes
-#  PrintMotd:                                  no
-#  PubkeyAuthentication:                       yes
-#  RhostsRSAAuthentication:                    no
-#  RSAAuthentication:                          yes
-#  ServerKeyBits:                              1024
-#  StrictModes:                                yes
-#  SyslogFacility:                             AUTH
-#  TCPKeepAlive:                               yes
-#  UsePAM:                                     yes
-#  UsePrivilegeSeparation:                     yes
-#  X11DisplayOffset:                           10
-#  X11Forwarding:                              yes
-# ssh client
 
+# ssh client
 ssh::ssh_hostbasedauthentication:                 'yes'
 ssh::ssh_gssapiauthentication:                    'yes'
 ssh::ssh_ssh_gssapidelegatecredentials:           'yes'

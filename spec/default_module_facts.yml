@@ -8,3 +8,5 @@ jackett_version: '0.16.656'
 radarr_version: '0.2.0.1480'
 samba_version: '4.7.6'
 ssh_version: '7.6'
+
+has_compiler: true

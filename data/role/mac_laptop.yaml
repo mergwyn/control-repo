@@ -1,35 +1,6 @@
 #
 ---
 
-
-# packages to be installed
-profile::base::packages::defaults:
-  provider:                         homebrew
-  ensure:                           latest
-profile::base::packages::objects:
-  mergwyn/homebrew-cask/unison248:  {}
-  puppetlabs/puppet/puppet-agent-6: {}
-  keeweb:                           {}
-  amazon-music:                     {}
-  firefox:                          {}
-  homebrew/cask-drivers/sonos:      {}
-  profilecreator:                   {}
-  aerial:                           {}
-  skype:                            {}
-  zoomus:                           {}
-  vlc:                              {}
-  dropbox:
-    ensure:                         absent
-  google-chrome:
-    ensure:                         absent
-  amazon-photos:
-    ensure:                         absent
-  google-backup-and-sync:
-    ensure:                         absent
-  onedrive:
-    ensure:                         absent
-
-
 managedmac::organization:                               "The Clark family"
 managedmac::ntp::enable:                                true
 managedmac::ntp::servers:
@@ -78,42 +49,4 @@ managedmac::ssh::enable:                                true
 managedmac::mobileconfigs::defaults::description:       'Installed by Puppet.'
 managedmac::mobileconfigs::defaults::organization:      'The Clark Home'
 managedmac::portablehomes::enable:                      false
-
-profile::base::files::defaults:
-  owner: "root"
-  group: "admin"
-  ensure: file
-  #mode: "0644"
-profile::base::files::objects:
-  /etc/krb5.config:
-    source: "puppet:///modules/profile/mac/krb5.conf"
-    group: "wheel"
-  /etc/ssh/ssh_config:
-    source: "puppet:///modules/profile/mac/ssh_config"
-    group: "wheel"
-  /usr/local/share/com.theclarkhome.prefsync.plist:
-    source: "puppet:///modules/profile/mac/com.theclarkhome.prefsync.plist"
-  /usr/local/share/com.theclarkhome.logoutwatcher.plist:
-    source: "puppet:///modules/profile/mac/com.theclarkhome.logoutwatcher.plist"
-  /usr/local/share/Home.prf:
-    source: "puppet:///modules/profile/mac/Home.prf"
-  /usr/local/share/default.prf:
-    source: "puppet:///modules/profile/mac/default.prf"
-  /usr/local/share/Preferences.prf:
-    source: "puppet:///modules/profile/mac/Preferences.prf"
-  /usr/local/share/common.prf:
-    source: "puppet:///modules/profile/mac/common.prf"
-  /usr/local/bin/UnisonHomeSync.sh:
-    source: "puppet:///modules/profile/mac/UnisonHomeSync.sh"
-    mode: "0775"
-  /usr/local/bin/SetupHomeSync.sh:
-    source: "puppet:///modules/profile/mac/SetupHomeSync.sh"
-    mode: "0775"
-  /usr/local/bin/logoutwatcher.sh:
-    source: "puppet:///modules/profile/mac/logoutwatcher.sh"
-    mode: "0775"
-  /etc/newsyslog.d/unison.conf:
-    source: "puppet:///modules/profile/mac/unison.conf"
-  /Library/Logs/unison.log:
-    mode: "0666"
 
