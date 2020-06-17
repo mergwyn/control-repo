@@ -16,9 +16,9 @@ class profile::platform::baseline::darwin::packages {
   package { 'zoomus': }
   package { 'vlc': }
   package { 'keeweb': }
-  package { 'mergwyn/homebrew-cask/unison248':  provder => tap }
-  package { 'puppetlabs/puppet/puppet-agent-6': provder => tap }
-  package { 'homebrew/cask-drivers/sonos':      provder => tap }
+  package { 'mergwyn/homebrew-cask/unison248':  provider => tap }
+  package { 'puppetlabs/puppet/puppet-agent-6': provider => tap }
+  package { 'homebrew/cask-drivers/sonos':      provider => tap }
 
   package { 'dropbox':                ensure => absent }
   package { 'google-chrome':          ensure => absent }
