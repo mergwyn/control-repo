@@ -7,8 +7,6 @@ class profile::platform::baseline::darwin::packages {
   Package {
     provider => homebrew,
     ensure   => latest,
-    user     => 'brew',
-    require  => User['brew'],
   }
 
   package { 'mergwyn/homebrew-cask/unison248': }
