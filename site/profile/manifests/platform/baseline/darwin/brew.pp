@@ -23,12 +23,6 @@ class profile::platform::baseline::darwin::brew {
 #    require  => Archive[$package],
 #  }
 
-  exec {'brew xcode git install':
-    path    => $facts['path'],
-    command => 'xcode-select --install',
-    creates => '/usr/bin/git',
-  }
-
   $home = '/Users/brew'
 
   user {'brew':
