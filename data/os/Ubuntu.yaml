@@ -1,11 +1,5 @@
 ---
 
-profile::base::users::defaults:
-  ensure:                                         present
-profile::base::users::objects:
-  ubuntu:
-    ensure:                                       absent
-
 profile::base::files::defaults:
   ensure:                                         present
 profile::base::files::objects:
