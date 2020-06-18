@@ -32,7 +32,6 @@ class profile::platform::baseline::darwin::brew {
     iterations => 86956,
     salt       => 'b78fbae626c563458942fea9b35f160ab02274e8e1c6b2403b9c7c93785a3915',
     home       => $home,
-    require    => File[$home],
   }
 
   file { $home:
