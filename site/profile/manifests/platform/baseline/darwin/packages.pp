@@ -9,7 +9,8 @@ class profile::platform::baseline::darwin::packages {
     ensure   => latest,
   }
 
-  package { 'amazon-music': }
+  #package { 'amazon-music': }
+  package { 'git': }
   package { 'firefox': }
   package { 'aerial': }
   package { 'skype': }
