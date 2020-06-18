@@ -12,8 +12,8 @@ class profile::platform::baseline::darwin::brew {
   $packagename='git-osx-installer'
   $package="/var/cache/${packagename}.dmg"
 
-  archive {"${package}":
-    ensure =>   present,
+  archive {$package:
+    ensure   =>   present,
     provider => 'curl',
     source   => "https://sourceforge.net/projects/${packagename}/files/latest/download",
   }
