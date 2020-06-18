@@ -89,22 +89,6 @@ puppet::puppet_server:                            "echo.%{trusted.domain}"
 puppet::manage_repos:                             false
 puppet::structured_facts:                         true
 
-
-# ssh client
-ssh::ssh_hostbasedauthentication:                 'yes'
-ssh::ssh_gssapiauthentication:                    'yes'
-ssh::ssh_ssh_gssapidelegatecredentials:           'yes'
-ssh::ssh_enable_ssh_keysign:                      'yes'
-
-# sshd server
-ssh::sshd_gssapiauthentication:                   'yes'
-ssh::sshd_gssapicleanupcredentials:               'yes'
-ssh::sshd_kerberos_authentication:                'yes'
-ssh::sshd_hostbasedauthentication:                'yes'
-ssh::sshd_config_permitemptypasswords:            'no'
-ssh::sshd_config_print_last_log:                  'yes'
-ssh::sshd_config_permituserenvironment:           'yes'
-
 # time related
 timezone::timezone:                               'Europe/London'
 
