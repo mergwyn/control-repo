@@ -10,7 +10,7 @@ class profile::platform::baseline::darwin::brew {
 
 
   $packagename='git-osx-installer'
-  $package="/var/cache/${packagename}.dmg"
+  $package="/opt/puppetlabs/puppet/cache/${packagename}.dmg"
 
   archive {$package:
     ensure   =>   present,
