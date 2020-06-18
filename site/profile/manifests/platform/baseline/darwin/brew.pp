@@ -8,6 +8,21 @@ class profile::platform::baseline::darwin::brew {
     creates => '/usr/bin/git',
   }
 
+  $packagename='git-osx-installer'
+  $package="/opt/puppetlabs/puppet/cache/${packagename}.dmg"
+
+#  archive {$package:
+#    ensure   =>   present,
+#    provider => 'curl',
+#    source   => "https://sourceforge.net/projects/${packagename}/files/latest/download",
+#  }
+#  package { $packagename:
+#    ensure   => installed,
+#    provider => pkgdmg,
+#    source   => $package,
+#    require  => Archive[$package],
+#  }
+
   $home = '/Users/brew'
 
   user {'brew':
@@ -31,6 +46,7 @@ class profile::platform::baseline::darwin::brew {
     multiuser    => true,
     github_token => lookup('secrets::github::homebrew'),
     require      => [
+#      Package[$packagename],
       Exec['brew xcode git install'],
       User['brew'],
     ],
