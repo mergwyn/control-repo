@@ -10,17 +10,18 @@ class profile::platform::baseline::darwin::brew {
 
 
   $packagename='git-osx-installer'
-  $package="/var/cache/${packagename}"
+  $package="/var/cache/${packagename}.dmg"
 
-  #archive {"${package}":
-  #  ensure =>   present,
-  #  provider => 'curl',
-  #  source   => "https://sourceforge.net/projects/${packagename}/files/latest/download",
-  #}
+  archive {"${package}":
+    ensure =>   present,
+    provider => 'curl',
+    source   => "https://sourceforge.net/projects/${packagename}/files/latest/download",
+  }
   package { $packagename:
     ensure   => installed,
     provider => pkgdmg,
-    source   => "https://sourceforge.net/projects/${packagename}/files/latest/download",
+    source   => $package,
+    require  => Archive[$package],
   }
 
   $home = '/Users/brew'
@@ -31,6 +32,7 @@ class profile::platform::baseline::darwin::brew {
     iterations => 86956,
     salt       => 'b78fbae626c563458942fea9b35f160ab02274e8e1c6b2403b9c7c93785a3915',
     home       => $home,
+    require    => File[$home],
   }
 
   file { $home:
