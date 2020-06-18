@@ -8,6 +8,21 @@ class profile::platform::baseline::darwin::brew {
     creates => '/usr/bin/git',
   }
 
+
+  $packagename='git-osx-installer'
+  $package="/var/cache/${packagename}"
+
+  #archive {"${package}":
+  #  ensure =>   present,
+  #  provider => 'curl',
+  #  source   => "https://sourceforge.net/projects/${packagename}/files/latest/download",
+  #}
+  package { $packagename:
+    ensure   => installed,
+    provider => pkgdmg,
+    source   => "https://sourceforge.net/projects/${packagename}/files/latest/download",
+  }
+
   $home = '/Users/brew'
 
   user {'brew':
@@ -31,7 +46,7 @@ class profile::platform::baseline::darwin::brew {
     multiuser    => true,
     github_token => lookup('secrets::github::homebrew'),
     require      => [
-      Exec['brew xcode git install'],
+      Package[$packagename],
       User['brew'],
     ],
   }
