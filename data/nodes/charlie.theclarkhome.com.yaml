@@ -1,5 +1,8 @@
 ---
 
+profile::base::packages::defaults:
+  ensure: present
+  provider: homebrew
 profile::base::packages::objects:
   clover-configurator: {}
   geekbench: {}
