@@ -50,10 +50,6 @@ profile::base::mail_client::password_hash:        '/etc/postfix/sasl-passwords'
 profile::base::mail_client::relayhost:            '[smtp.virginmedia.com]:465'
 profile::base::mail_client::root_mail_recipient:  "%{lookup('defaults::adminemail')}"
 
-profile::backuppc::client::scripts:                '/etc/backuppc-scripts'
-profile::backuppc::client::preuser:                "%{lookup('profile::backuppc::client::scripts')}/DumpPreUser"
-profile::backuppc::client::postuser:               "%{lookup('profile::backuppc::client::scripts')}/DumpPostUser"
-
 # puppet agent
 puppet::puppet_server:                            "echo.%{trusted.domain}"
 puppet::manage_repos:                             false
