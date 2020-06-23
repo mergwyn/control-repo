@@ -9,7 +9,7 @@ class profile::platform::baseline::darwin::timemachine (
 
   exec {'set timemachine quota':
     path    => $facts['path'],
-    unless  => "test $(defaults read /Library/Preferences/com.apple.TimeMachine MaxSize 2>/dev/null) -eq ${quota} ]",
+    onlyif  => "test $(defaults read /Library/Preferences/com.apple.TimeMachine MaxSize 2>/dev/null) -ne ${quota} ]",
     command => "defaults write /Library/Preferences/com.apple.TimeMachine MaxSize ${quota}",
   }
 
