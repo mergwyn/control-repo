@@ -15,6 +15,8 @@ class profile::platform::baseline (
   # OS Specific
   case $facts['os']['family']{
     'Debian':   {
+# TODO Make puppet agent cross platform
+      include ::profile::puppet::agent
       include ::profile::platform::baseline::debian
     }
     'Darwin':   {

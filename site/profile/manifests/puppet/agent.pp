@@ -18,5 +18,16 @@ class profile::puppet::agent {
     ensure  => present,
     content => "# Expand the PATH to include extra puppet binaries\nPATH=\$PATH:/opt/puppetlabs/puppet/bin\n"
   }
+
+  include sudo
+  sudo::conf { 'puppet':
+    content => 'zabbix  ALL=(root)      NOPASSWD:       /opt/puppetlabs/puppet/bin/ruby'
+  }
+
+  $ruby = '/opt/puppetlabs/puppet/bin/ruby'
+  $cmd  = "${ruby} -rjson -ryaml -e \"puts JSON.pretty_generate(YAML.load_file('${settings::lastrunfile}'))\""
+  zabbix::userparameters { 'puppet-health':
+    content => "UserParameter=puppet.health[*],sudo ${cmd}"
+  }
+
 }
-# vim: sw=2:ai:nu expandtab
