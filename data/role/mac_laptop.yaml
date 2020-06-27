@@ -1,52 +1,6 @@
 #
 ---
 
+# TODO mamagedmac looks up these two values explcitly from hiera - need to refactor
 managedmac::organization:                               "The Clark family"
 managedmac::ntp::enable:                                true
-managedmac::ntp::servers:
-  - "bravo.%{trusted.domain}"
-  - "alpha.%{trusted.domain}"
-  - time.euro.apple.com
-  - time.apple.com
-
-managedmac::loginwindow::loginwindow_text:              "This is %{trusted.hostname}"
-managedmac::loginwindow::show_name_and_password_fields: true
-managedmac::loginwindow::enable_fast_user_switching:    true
-managedmac::loginwindow::hide_admin_users:              false
-
-managedmac::activedirectory::enable:                    true
-#managedmac::activedirectory::evaluate:                 "%{::domain_available?}"
-managedmac::activedirectory::evaluate:                  "yes"
-managedmac::activedirectory::provider:                  dsconfigad
-managedmac::activedirectory::hostname:                  "%{trusted.domain}"
-managedmac::activedirectory::username:                  "administrator"
-managedmac::activedirectory::password:                  "%{lookup('secrets::domain')}"
-managedmac::activedirectory::computer:                  "%{trusted.hostname}"
-managedmac::activedirectory::mount_style:               smb
-managedmac::activedirectory::create_mobile_account_at_login: true
-managedmac::activedirectory::force_home_local:          true
-managedmac::activedirectory::warn_user_before_creating_ma: true
-managedmac::activedirectory::useuncpath:                false
-managedmac::activedirectory::use_windows_unc_path:      true
-managedmac::activedirectory::default_user_shell:        "/bin/bash"
-managedmac::activedirectory::map_uid_attribute:         "uidNumber"
-managedmac::activedirectory::map_gid_attribute:         "gidNumber"
-managedmac::activedirectory::map_ggid_attribute:        "gidNumber"
-managedmac::activedirectory::domain_admin_group_list:
-  - THECLARKHOME\Administrators
-  - THECLARKHOME\Domain Admins
-  - THECLARKHOME\Enterprise Admins
-
-#managedmac::loginhook::enable:                          true
-#managedmac::logouthook::enable:                         true
-#
-managedmac::security::ask_for_password:                 true
-managedmac::security::ask_for_password_delay:           0
-
-managedmac::screensharing::enable:                      true
-managedmac::ssh::enable:                                true
-#managedmac::ssh::sshd_config:                           'puppet:///modules/your_module/sshd_config'
-managedmac::mobileconfigs::defaults::description:       'Installed by Puppet.'
-managedmac::mobileconfigs::defaults::organization:      'The Clark Home'
-managedmac::portablehomes::enable:                      false
-
