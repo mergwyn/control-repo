@@ -25,7 +25,7 @@ class profile::puppet::agent {
   }
 
   $ruby = '/opt/puppetlabs/puppet/bin/ruby'
-  $lastrunfile = "${settings::lastrunfile}" # TODO This gives the wrong value for some reason
+  #$lastrunfile = "${settings::lastrunfile}" # TODO This gives the wrong value for some reason
   $lastrunfile = '/opt/puppetlabs/puppet/cache/state/last_run_summary.yaml'
   $cmd  = "${ruby} -rjson -ryaml -e \"puts JSON.pretty_generate(YAML.load_file('${lastrunfile}'))\""
   zabbix::userparameters { 'puppet-health':
