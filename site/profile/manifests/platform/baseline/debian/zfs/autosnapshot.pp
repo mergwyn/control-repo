@@ -9,7 +9,7 @@ class profile::platform::baseline::debian::zfs::autosnapshot {
                #!/bin/sh
                which zfs-auto-snapshot > /dev/null || exit 0
                zfs-auto-snapshot --quiet --syslog --label=02 --keep=24 // &&
-               zsysctl boot update-menu 2>&1 | sed '/Updating GRUB menu/d'
+               zsysctl boot update-menu 2>&1 | sed '/GRUB menu/d'
                | EOT
   }
   file {'/etc/cron.daily/zfs-auto-snapshot':
@@ -19,7 +19,7 @@ class profile::platform::baseline::debian::zfs::autosnapshot {
                #!/bin/sh
                which zfs-auto-snapshot > /dev/null || exit 0
                zfs-auto-snapshot --quiet --syslog --label=03 --keep=14 // &&
-               zsysctl boot update-menu 2>&1 | sed '/Updating GRUB menu/d'
+               zsysctl boot update-menu 2>&1 | sed '/GRUB menu/d'
                | EOT
   }
   file {'/etc/cron.weekly/zfs-auto-snapshot':
@@ -29,7 +29,7 @@ class profile::platform::baseline::debian::zfs::autosnapshot {
                #!/bin/sh
                which zfs-auto-snapshot > /dev/null || exit 0
                zfs-auto-snapshot --quiet --syslog --label=04 --keep=8 // &&
-               zsysctl boot update-menu 2>&1 | sed '/Updating GRUB menu/d'
+               zsysctl boot update-menu 2>&1 | sed '/GRUB menu/d'
                | EOT
   }
   file {'/etc/cron.monthly/zfs-auto-snapshot':
@@ -39,7 +39,7 @@ class profile::platform::baseline::debian::zfs::autosnapshot {
                #!/bin/sh
                which zfs-auto-snapshot > /dev/null || exit 0
                zfs-auto-snapshot --quiet --syslog --label=05 --keep=12 // &&
-               zsysctl boot update-menu 2>&1 | sed '/Updating GRUB menu/d'
+               zsysctl boot update-menu 2>&1 | sed '/GRUB menu/d'
                | EOT
   }
 
@@ -50,7 +50,7 @@ class profile::platform::baseline::debian::zfs::autosnapshot {
     command     => @("EOT"/),
                    which zfs-auto-snapshot > /dev/null || exit 0 ; \
                    zfs-auto-snapshot --quiet --syslog --label=01 --keep=4  // && \
-                   zsysctl boot update-menu 2>&1 | sed '/Updating GRUB menu/d'
+                   zsysctl boot update-menu 2>&1 | sed '/GRUB menu/d'
                    | EOT
   }
 
