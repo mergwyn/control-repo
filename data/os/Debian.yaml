@@ -57,8 +57,6 @@ samba::params::sernetpkgs:                        false
 samba::classic::domain:                           "%{lookup('defaults::workgroup')}"
 samba::classic::realm:                            "%{lookup('defaults::realm')}"
 
-mysql::server::manage_config_file:                false
-
 zabbix::agent::zabbix_version:                    '4.4'
 zabbix::agent::hostname:                          "%{trusted.certname}"
 zabbix::agent::server:                            "zulu,zulu.%{trusted.domain}"

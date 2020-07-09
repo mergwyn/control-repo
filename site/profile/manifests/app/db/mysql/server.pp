@@ -2,7 +2,9 @@
 
 class profile::app::db::mysql::server {
 
-  include mysql::server
+  mysql::server { 'mysql server':
+    manage_config_file => false,
+  }
 
   $defaults = {
     'path'         => '/etc/mysql/mysql.conf.d/overrides.cnf',
