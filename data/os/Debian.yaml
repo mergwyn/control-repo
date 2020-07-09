@@ -34,19 +34,6 @@ profile::app::backuppc::client::scripts:                '/etc/backuppc-scripts'
 profile::app::backuppc::client::preuser:                "%{lookup('profile::app::backuppc::client::scripts')}/DumpPreUser"
 profile::app::backuppc::client::postuser:               "%{lookup('profile::app::backuppc::client::scripts')}/DumpPostUser"
 
-unattended_upgrades::period:                      '1'
-unattended_upgrades::autoremove:                  true
-unattended_upgrades::email:                       "%{lookup('defaults::adminemail')}"
-unattended_upgrades:
-  repos:
-    "%{lsbdistcodename}-security":
-      origin:                                     'Ubuntu'
-    'Zabbix':
-      origin:                                     'Zabbix'
-  stable:
-      origin:                                     'Jamie Cameron'
-
-
 # set nginx package
 nginx::package_name:                              'nginx-extras'
 nginx::nginx_cfg_prepend:
