@@ -18,11 +18,11 @@ class profile::platform::baseline::debian::ntp (
   }
 
   class { 'ntp':
-    ntpsigndsocket => '/var/lib/samba/ntp_signd/',
-    servers        => [ $local_clock ] + $network_servers,
-    prefer         => $servers,
-    burst          => true,
-    fudge          => [ "${local_clock} stratum 10" ],
-    restrict       => $restrict,
+    ntpsigndsocket    => '/var/lib/samba/ntp_signd/',
+    servers           => [ $local_clock ] + $network_servers,
+    preferred_servers => $servers,
+    burst             => true,
+    fudge             => [ "${local_clock} stratum 10" ],
+    restrict          => $restrict,
   }
 }
