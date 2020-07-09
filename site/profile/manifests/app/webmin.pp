@@ -1,6 +1,6 @@
-#
+# @summary webmin settings
 
-class profile::service::webmin {
+class profile::app::webmin {
   $adminemail = lookup('unattended_upgrades::email')
 
   exec { 'apt_show_versions_clean':
