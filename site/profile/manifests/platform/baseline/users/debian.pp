@@ -11,13 +11,13 @@ class profile::platform::baseline::users::debian {
     password => lookup('defaults::sharedpassword'),
   }
 
+  User { 'ubuntu': ensure => absent }
   User { 'sadmin':
     password   => lookup('defaults::sharedpassword'),
     groups     => 'sudo',
     uid        => 1000,
     managehome => true,
   }
-  User { 'ubuntu': ensure => absent }
 
 # These files are all related to user profiles
   File {
