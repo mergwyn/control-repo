@@ -14,7 +14,7 @@ class profile::platform::baseline::debian::ntp (
   ]
 
   $network_servers.each |String $server| {
-    $restrict = $restict + [ "${server}   mask 255.255.255.255    nomodify notrap nopeer noquery" ]
+    $restrict = $restrict + [ "${server}   mask 255.255.255.255    nomodify notrap nopeer noquery" ]
   }
 
   class { 'ntp':
