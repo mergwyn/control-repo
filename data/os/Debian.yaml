@@ -2,17 +2,6 @@
 classes:
   - timezone
 
-profile::base::packages::defaults:
-  ensure:                                         present
-profile::base::packages::objects:
-  vim:                                            {}
-  anacron:                                        {}
-  gpg:                                            {}
-  vim-tiny:
-    ensure:                                       absent
-  mlocate:
-    ensure:                                       absent
-
 profile::base::hosts::defaults:
   ensure:                                         present
 profile::base::hosts::objects:

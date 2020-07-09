@@ -4,6 +4,7 @@ class profile::platform::baseline::debian {
 
   include profile::platform::baseline::users::debian
   include profile::platform::baseline::debian::apparmor
+  include profile::platform::baseline::debian::packages
 
   include profile::os::debian::base
   include profile::base::mounts
