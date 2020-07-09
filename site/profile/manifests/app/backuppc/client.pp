@@ -1,5 +1,5 @@
 #
-class profile::backuppc::client (
+class profile::app::backuppc::client (
   Stdlib::Absolutepath $scripts                         = '/etc/backuppc-scripts',
   Stdlib::Absolutepath $preuser                         = "${scripts}/DumpPreUser",
   Stdlib::Absolutepath $postuser                        = "${scripts}/DumpPostUser",

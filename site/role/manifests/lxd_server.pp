@@ -5,5 +5,5 @@ class role::lxd_server {
   include profile::domain::sso
   include profile::virtual::lxd
   include profile::zabbix::agent
-  include profile::backuppc::client
+  include profile::app::backuppc::client
 }

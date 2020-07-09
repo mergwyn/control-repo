@@ -60,7 +60,7 @@ lxd::preseed:
     name: ssd
     driver: zfs
 
-profile::backuppc::client::rsync_share_name:
+profile::app::backuppc::client::rsync_share_name:
   - '/'
   - '/boot/efi'
   - '/boot/grub'
@@ -79,7 +79,7 @@ profile::backuppc::client::rsync_share_name:
   - '/var/spool'
   - '/var/log'
 
-profile::backuppc::client::backup_files_exclude:
+profile::app::backuppc::client::backup_files_exclude:
   '*':
     - '*.cloudf'
     - '*.cloud'

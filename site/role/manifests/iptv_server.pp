@@ -4,5 +4,5 @@ class role::iptv_server {
   include profile::domain::sso
   include profile::media::iptv
   include profile::zabbix::agent
-  include profile::backuppc::client
+  include profile::app::backuppc::client
 }

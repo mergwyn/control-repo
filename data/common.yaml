@@ -31,10 +31,10 @@ lookup_options:
   "^profile::base::(.*)::(.*)$":
     merge: deep
     knockout_prefix: '--'
-  "^profile::backuppc::client::rsync_share_name::(.*)$":
+  "^profile::app::backuppc::client::rsync_share_name::(.*)$":
     merge: deep
     knockout_prefix: '--'
-  profile::backuppc::client::backup_files_exclude:
+  profile::app::backuppc::client::backup_files_exclude:
     merge: deep
     knockout_prefix: '--'
   sudo::configs:

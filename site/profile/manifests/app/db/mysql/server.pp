@@ -48,21 +48,21 @@ class profile::app::db::mysql::server {
   }
   create_ini_settings($overrides, $defaults)
 
-  $scripts  = hiera('profile::backuppc::client::scripts')
-  $preuser  = hiera('profile::backuppc::client::preuser')
+  $scripts  = hiera('profile::app::backuppc::client::scripts')
+  $preuser  = hiera('profile::app::backuppc::client::preuser')
 
   file { "${preuser}/S20mysql-backup":
     ensure  => present,
     source  => 'puppet:///modules/profile/backuppc/S20mysql-backup',
     mode    => '0555',
-    require => Class['profile::backuppc::client'],
+    require => Class['profile::app::backuppc::client'],
   }
 
   file { "${scripts}/S20mysql-backup-password":
     ensure  => present,
     content => sprintf("PASSWORD=%s\n",hiera('secrets::mysql')),
     mode    => '0555',
-    require => Class['profile::backuppc::client'],
+    require => Class['profile::app::backuppc::client'],
   }
 
   zabbix::userparameters { 'template_db_mysql':

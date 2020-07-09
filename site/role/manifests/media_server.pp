@@ -5,5 +5,5 @@ class role::media_server {
   include profile::media::transcoder
   include profile::media::downloader
   include profile::zabbix::agent
-  include profile::backuppc::client
+  include profile::app::backuppc::client
 }

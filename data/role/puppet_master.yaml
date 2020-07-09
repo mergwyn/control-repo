@@ -10,6 +10,6 @@ profile::base::packages::objects:
 puppetdb::listen_address:                        '0.0.0.0'
 puppetdb::master::config:puppetdb_server:        "%{facts.networking.fqdn}"
 
-profile::backuppc::client::backup_files_exclude:
+profile::app::backuppc::client::backup_files_exclude:
   '/':
     - 'var/lib/postgresql'

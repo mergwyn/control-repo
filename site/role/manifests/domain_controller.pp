@@ -5,5 +5,5 @@ class role::domain_controller {
   include profile::domain::sso
   include profile::app::samba::dc
   include profile::zabbix::agent
-  include profile::backuppc::client
+  include profile::app::backuppc::client
 }

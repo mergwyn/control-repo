@@ -1,7 +1,7 @@
 #
-class profile::backuppc::server {
+class profile::app::backuppc::server {
 
-  Class['profile::base::ssh_server'] -> Class['profile::backuppc::server']
+  Class['profile::base::ssh_server'] -> Class['profile::app::backuppc::server']
 
   include profile::scripts
 

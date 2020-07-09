@@ -72,9 +72,9 @@ ntp::restrict:
   - golf.%{trusted.domain} mask 255.255.255.255 nomodify notrap nopeer noquery
 
 # TODO turn into common settings 
-profile::backuppc::client::scripts:                '/etc/backuppc-scripts'
-profile::backuppc::client::preuser:                "%{lookup('profile::backuppc::client::scripts')}/DumpPreUser"
-profile::backuppc::client::postuser:               "%{lookup('profile::backuppc::client::scripts')}/DumpPostUser"
+profile::app::backuppc::client::scripts:                '/etc/backuppc-scripts'
+profile::app::backuppc::client::preuser:                "%{lookup('profile::app::backuppc::client::scripts')}/DumpPreUser"
+profile::app::backuppc::client::postuser:               "%{lookup('profile::app::backuppc::client::scripts')}/DumpPostUser"
 
 unattended_upgrades::period:                      '1'
 unattended_upgrades::autoremove:                  true
@@ -110,8 +110,8 @@ zabbix::agent::zabbix_package_state:              'latest'
 zabbix::agent::hostmetadata:                      ":kernel=%{facts.kernel}:virtual=%{facts.virtual}"
 
 # backuppc client
-profile::backuppc::client::backuppc_hostname:     "foxtrot.%{domain}"
-profile::backuppc::client::backup_files_exclude:
+profile::app::backuppc::client::backuppc_hostname:     "foxtrot.%{domain}"
+profile::app::backuppc::client::backup_files_exclude:
   '*':
     - '.AppleDouble'
     - '.cache'

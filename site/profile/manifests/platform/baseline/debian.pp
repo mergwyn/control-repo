@@ -12,6 +12,6 @@ class profile::platform::baseline::debian {
   include profile::base::unattended_upgrades
   include profile::base::avahi
   #include profile::service::webmin
-  #include profile::backuppc::client
+  #include profile::app::backuppc::client
 
 }

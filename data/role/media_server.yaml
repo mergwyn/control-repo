@@ -29,7 +29,7 @@ radarr::keep:              2
 
 
 # backuppc excludes
-profile::backuppc::client::backup_files_exclude:
+profile::app::backuppc::client::backup_files_exclude:
   '*':
     - 'Plex Versions'
   '/':
