@@ -1,6 +1,6 @@
 #
 
-class profile::mysql::server {
+class profile::app::db::mysql::server {
 
   include mysql::server
 
