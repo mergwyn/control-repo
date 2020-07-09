@@ -3,10 +3,6 @@
 class profile::app::timemachine {
 
   $path = '/srv/timemachine'
-  file { $path:
-    ensure => directory,
-    owner  => 'timemachine',
-  }
 
   if versioncmp($facts['samba_version'], '4.8') >= 0 {
 # Use SMB for TimeMachine
@@ -27,6 +23,11 @@ class profile::app::timemachine {
 
   } else {
 # Use AFP for TimeMachine
+    file { $path:
+      ensure => directory,
+      owner  => 'timemachine',
+    }
+
     package { [ 'netatalk' ] : }
     service { [ 'netatalk' ] : }
 
