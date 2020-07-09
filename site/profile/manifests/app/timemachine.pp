@@ -14,7 +14,6 @@ class profile::app::timemachine {
 
     ::samba::share { 'timemachine':
         path    => $path,
-        require => File[$path],
         options => {
           'commment'           => 'Time Machine',
           'vfs objects'        => 'catia fruit streams_xattr',
