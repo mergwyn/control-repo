@@ -2,7 +2,7 @@
 
 class profile::app::db::mysql::server {
 
-  mysql::server { 'mysql server':
+  class { 'mysql::server':
     manage_config_file => false,
   }
 
@@ -42,10 +42,6 @@ class profile::app::db::mysql::server {
       'innodb_buffer_pool_size'        => '1792M',
       'innodb_buffer_pool_instances'   => '1',
       'server_id'                      => '1',
-      #'setting1'  => 'value1',
-      #'settings2' => {
-      #  'ensure' => 'absent'
-      #}
     },
   }
   create_ini_settings($overrides, $defaults)
