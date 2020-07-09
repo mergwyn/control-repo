@@ -1,3 +1,5 @@
+# @summary ntp settings
+
 class profile::platform::baseline::debian::ntp (
   Optional[Array[String]] $servers = lookup('defaults::time_servers')
 ) {
