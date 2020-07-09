@@ -1,6 +1,6 @@
 #
 
-class profile::samba::member {
+class profile::app::samba::member {
   class { '::samba::classic':
     # Mandatory parameters
     domain              => lookup('defaults::workgroup'),

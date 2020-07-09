@@ -1,8 +1,10 @@
 #
 
-class profile::mysql::server {
+class profile::app::db::mysql::server {
 
-  include mysql::server
+  class { 'mysql::server':
+    manage_config_file => false,
+  }
 
   $defaults = {
     'path'         => '/etc/mysql/mysql.conf.d/overrides.cnf',
@@ -40,29 +42,25 @@ class profile::mysql::server {
       'innodb_buffer_pool_size'        => '1792M',
       'innodb_buffer_pool_instances'   => '1',
       'server_id'                      => '1',
-      #'setting1'  => 'value1',
-      #'settings2' => {
-      #  'ensure' => 'absent'
-      #}
     },
   }
   create_ini_settings($overrides, $defaults)
 
-  $scripts  = hiera('profile::backuppc::client::scripts')
-  $preuser  = hiera('profile::backuppc::client::preuser')
+  $scripts  = hiera('profile::app::backuppc::client::scripts')
+  $preuser  = hiera('profile::app::backuppc::client::preuser')
 
   file { "${preuser}/S20mysql-backup":
     ensure  => present,
     source  => 'puppet:///modules/profile/backuppc/S20mysql-backup',
     mode    => '0555',
-    require => Class['profile::backuppc::client'],
+    require => Class['profile::app::backuppc::client'],
   }
 
   file { "${scripts}/S20mysql-backup-password":
     ensure  => present,
     content => sprintf("PASSWORD=%s\n",hiera('secrets::mysql')),
     mode    => '0555',
-    require => Class['profile::backuppc::client'],
+    require => Class['profile::app::backuppc::client'],
   }
 
   zabbix::userparameters { 'template_db_mysql':

@@ -2,48 +2,6 @@
 classes:
   - timezone
 
-profile::base::packages::defaults:
-  ensure:                                         present
-profile::base::packages::objects:
-  vim:                                            {}
-  anacron:                                        {}
-  gpg:                                            {}
-  vim-tiny:
-    ensure:                                       absent
-  mlocate:
-    ensure:                                       absent
-
-profile::base::hosts::defaults:
-  ensure:                                         present
-profile::base::hosts::objects:
-  "%{trusted.hostname}":
-    ensure:                                       absent
-    ip:                                           '127.0.1.1'
-  "%{trusted.certname}":
-    ensure:                                       present
-    ip:                                           '127.0.1.1'
-    host_aliases:                                 "%{trusted.hostname}"
-  localhost:
-    ensure:                                       absent
-    ip:                                           '127.0.0.1'
-  localhost:
-    ip:                                           '127.0.0.1'
-    host_aliases:                                 "localhost.%{trusted.domain}"
-  ip6-localhost:
-    ip:                                           '::1'
-    host_aliases:                                 'ip6-loopback'
-  ip6-localnet:
-    ip:                                           'fe00::0'
-  ip6-mcastprefix:
-    ip:                                           'ff00::0'
-  ip6-allnodes:
-    ip:                                           'ff02::1'
-  ip6-allrouters:
-    ip:                                           'ff02::2'
-  ip6-allhosts:
-    ip:                                           'ff02::3'
-
-
 profile::base::mail_client::myorigin:             "%{trusted.domain}"
 profile::base::mail_client::password_credentials: "mergwyn@virginmedia.com:%{lookup('secrets::virgin')}"
 profile::base::mail_client::password_hash:        '/etc/postfix/sasl-passwords'
@@ -58,36 +16,10 @@ puppet::structured_facts:                         true
 # time related
 timezone::timezone:                               'Europe/London'
 
-ntp::ntpsigndsocket:                              '/var/lib/samba/ntp_signd/'
-ntp::servers:
-  - 127.127.1.0
-  - foxtrot.%{trusted.domain}  iburst prefer
-  - golf.%{trusted.domain}  iburst prefer
-ntp::fudge:                                       
-  - 127.127.1.0 stratum 10
-ntp::restrict:
-  - default kod nomodify notrap nopeer mssntp
-  - 127.0.0.1
-  - foxtrot.%{trusted.domain} mask 255.255.255.255 nomodify notrap nopeer noquery
-  - golf.%{trusted.domain} mask 255.255.255.255 nomodify notrap nopeer noquery
-
 # TODO turn into common settings 
-profile::backuppc::client::scripts:                '/etc/backuppc-scripts'
-profile::backuppc::client::preuser:                "%{lookup('profile::backuppc::client::scripts')}/DumpPreUser"
-profile::backuppc::client::postuser:               "%{lookup('profile::backuppc::client::scripts')}/DumpPostUser"
-
-unattended_upgrades::period:                      '1'
-unattended_upgrades::autoremove:                  true
-unattended_upgrades::email:                       "%{lookup('defaults::adminemail')}"
-unattended_upgrades:
-  repos:
-    "%{lsbdistcodename}-security":
-      origin:                                     'Ubuntu'
-    'Zabbix':
-      origin:                                     'Zabbix'
-  stable:
-      origin:                                     'Jamie Cameron'
-
+profile::app::backuppc::client::scripts:                '/etc/backuppc-scripts'
+profile::app::backuppc::client::preuser:                "%{lookup('profile::app::backuppc::client::scripts')}/DumpPreUser"
+profile::app::backuppc::client::postuser:               "%{lookup('profile::app::backuppc::client::scripts')}/DumpPostUser"
 
 # set nginx package
 nginx::package_name:                              'nginx-extras'
@@ -99,8 +31,6 @@ samba::params::sernetpkgs:                        false
 samba::classic::domain:                           "%{lookup('defaults::workgroup')}"
 samba::classic::realm:                            "%{lookup('defaults::realm')}"
 
-mysql::server::manage_config_file:                false
-
 zabbix::agent::zabbix_version:                    '4.4'
 zabbix::agent::hostname:                          "%{trusted.certname}"
 zabbix::agent::server:                            "zulu,zulu.%{trusted.domain}"
@@ -110,8 +40,8 @@ zabbix::agent::zabbix_package_state:              'latest'
 zabbix::agent::hostmetadata:                      ":kernel=%{facts.kernel}:virtual=%{facts.virtual}"
 
 # backuppc client
-profile::backuppc::client::backuppc_hostname:     "foxtrot.%{domain}"
-profile::backuppc::client::backup_files_exclude:
+profile::app::backuppc::client::backuppc_hostname:     "foxtrot.%{domain}"
+profile::app::backuppc::client::backup_files_exclude:
   '*':
     - '.AppleDouble'
     - '.cache'

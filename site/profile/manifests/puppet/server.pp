@@ -46,22 +46,22 @@ class profile::puppet::server {
     port       => 80,
   }
 
-  $scripts  = hiera('profile::backuppc::client::scripts')
-  $preuser  = hiera('profile::backuppc::client::preuser')
-  $postuser = hiera('profile::backuppc::client::postuser')
+  $scripts  = hiera('profile::app::backuppc::client::scripts')
+  $preuser  = hiera('profile::app::backuppc::client::preuser')
+  $postuser = hiera('profile::app::backuppc::client::postuser')
 
   file { "${preuser}/S21postgresql-backup":
     ensure  => present,
     source  => 'puppet:///modules/profile/backuppc/S21postgresql-backup',
     mode    => '0555',
-    require => Class['profile::backuppc::client'],
+    require => Class['profile::app::backuppc::client'],
   }
 
   file { "${postuser}/P21postgresql-backup-clean":
     ensure  => present,
     source  => 'puppet:///modules/profile/backuppc/P21postgresql-backup-clean',
     mode    => '0555',
-    require => Class['profile::backuppc::client'],
+    require => Class['profile::app::backuppc::client'],
   }
 
 }

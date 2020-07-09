@@ -4,5 +4,5 @@ class role::zabbix_server {
   include profile::domain::sso
   include profile::zabbix::server
   include profile::zabbix::agent
-  include profile::backuppc::client
+  include profile::app::backuppc::client
 }

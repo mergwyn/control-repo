@@ -2,7 +2,6 @@
 classes:
   - profile::base::files
   - profile::base::packages
-  - profile::base::hosts
 
 # environment
 defaults::workgroup:       'THECLARKHOME'
@@ -23,6 +22,9 @@ defaults::system_user:     'root'
 defaults::system_home_dir: '/root'
 defaults::media_user:      'media'
 defaults::media_group:     '513'
+defaults::time_servers:
+  - "alpha.%{trusted.domain}"
+  - "bravo.%{trusted.domain}"
 
 lookup_options:
   "^classes(.*)$":
@@ -31,10 +33,10 @@ lookup_options:
   "^profile::base::(.*)::(.*)$":
     merge: deep
     knockout_prefix: '--'
-  "^profile::backuppc::client::rsync_share_name::(.*)$":
+  "^profile::app::backuppc::client::rsync_share_name::(.*)$":
     merge: deep
     knockout_prefix: '--'
-  profile::backuppc::client::backup_files_exclude:
+  profile::app::backuppc::client::backup_files_exclude:
     merge: deep
     knockout_prefix: '--'
   sudo::configs:

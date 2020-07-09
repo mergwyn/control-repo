@@ -4,5 +4,5 @@ class role::internet_gateway {
   include profile::ddclient
   include profile::app::reverse_proxy
   include profile::zabbix::agent
-  include profile::backuppc::client
+  include profile::app::backuppc::client
 }

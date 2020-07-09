@@ -7,7 +7,7 @@ class profile::app::timemachine {
 
   if versioncmp($facts['samba_version'], '4.8') >= 0 {
 # Use SMB for TimeMachine
-    include profile::samba::member
+    include profile::app::samba::member
 
     ::samba::share { 'timemachine':
         path    => $path,
