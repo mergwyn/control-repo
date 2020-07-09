@@ -4,7 +4,7 @@
 class profile::platform::baseline::debian::unattended_upgrades {
   include apt
   class {'::unattended_upgrades':
-    update  => '1',
+    update  => 1,
     auto    => {
       remove => true,
     },
