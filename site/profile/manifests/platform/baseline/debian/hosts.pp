@@ -16,10 +16,6 @@ class profile::platform::baseline::debian::hosts {
     host_aliases => $trusted['hostname'],
   }
   host { 'localhost':
-    ensure => absent,
-    ip     => '127.0.0.1',
-  }
-  host { 'localhost':
     ip           => '127.0.0.1',
     host_aliases => "localhost.${trusted['domain']}",
   }
