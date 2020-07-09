@@ -7,6 +7,7 @@ class profile::platform::baseline::debian {
   include profile::platform::baseline::debian::packages
   include profile::platform::baseline::debian::hosts
   include profile::platform::baseline::debian::unattended_upgrades
+  include profile::platform::baseline::debian::ntp
 
   include profile::os::debian::base
   include profile::base::mounts
