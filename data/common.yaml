@@ -2,7 +2,6 @@
 classes:
   - profile::base::files
   - profile::base::packages
-  - profile::base::hosts
 
 # environment
 defaults::workgroup:       'THECLARKHOME'

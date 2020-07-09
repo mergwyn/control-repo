@@ -2,37 +2,6 @@
 classes:
   - timezone
 
-profile::base::hosts::defaults:
-  ensure:                                         present
-profile::base::hosts::objects:
-  "%{trusted.hostname}":
-    ensure:                                       absent
-    ip:                                           '127.0.1.1'
-  "%{trusted.certname}":
-    ensure:                                       present
-    ip:                                           '127.0.1.1'
-    host_aliases:                                 "%{trusted.hostname}"
-  localhost:
-    ensure:                                       absent
-    ip:                                           '127.0.0.1'
-  localhost:
-    ip:                                           '127.0.0.1'
-    host_aliases:                                 "localhost.%{trusted.domain}"
-  ip6-localhost:
-    ip:                                           '::1'
-    host_aliases:                                 'ip6-loopback'
-  ip6-localnet:
-    ip:                                           'fe00::0'
-  ip6-mcastprefix:
-    ip:                                           'ff00::0'
-  ip6-allnodes:
-    ip:                                           'ff02::1'
-  ip6-allrouters:
-    ip:                                           'ff02::2'
-  ip6-allhosts:
-    ip:                                           'ff02::3'
-
-
 profile::base::mail_client::myorigin:             "%{trusted.domain}"
 profile::base::mail_client::password_credentials: "mergwyn@virginmedia.com:%{lookup('secrets::virgin')}"
 profile::base::mail_client::password_hash:        '/etc/postfix/sasl-passwords'
