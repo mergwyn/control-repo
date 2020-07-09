@@ -16,19 +16,6 @@ puppet::structured_facts:                         true
 # time related
 timezone::timezone:                               'Europe/London'
 
-ntp::ntpsigndsocket:                              '/var/lib/samba/ntp_signd/'
-ntp::servers:
-  - 127.127.1.0
-  - foxtrot.%{trusted.domain}  iburst prefer
-  - golf.%{trusted.domain}  iburst prefer
-ntp::fudge:                                       
-  - 127.127.1.0 stratum 10
-ntp::restrict:
-  - default kod nomodify notrap nopeer mssntp
-  - 127.0.0.1
-  - foxtrot.%{trusted.domain} mask 255.255.255.255 nomodify notrap nopeer noquery
-  - golf.%{trusted.domain} mask 255.255.255.255 nomodify notrap nopeer noquery
-
 # TODO turn into common settings 
 profile::app::backuppc::client::scripts:                '/etc/backuppc-scripts'
 profile::app::backuppc::client::preuser:                "%{lookup('profile::app::backuppc::client::scripts')}/DumpPreUser"
