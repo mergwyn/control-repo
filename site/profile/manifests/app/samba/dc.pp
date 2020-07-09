@@ -1,7 +1,7 @@
 # 
 # TODO: complete dev and test
 
-class profile::samba::dc {
+class profile::app::samba::dc {
 
   package { 'unison': }
   # TODO add unison replcaition script and cron entry
