@@ -3,6 +3,7 @@
 class profile::app::timemachine {
 
   $path = '/srv/timemachine'
+  $owner = 'timemachine'
 
   if versioncmp($facts['samba_version'], '4.8') >= 0 {
 # Use SMB for TimeMachine
@@ -10,6 +11,8 @@ class profile::app::timemachine {
 
     ::samba::share { 'timemachine':
         path    => $path,
+        owner   => $owner,
+        mode    => '0755',
         options => {
           'commment'           => 'Time Machine',
           'vfs objects'        => 'catia fruit streams_xattr',
@@ -25,7 +28,7 @@ class profile::app::timemachine {
 # Use AFP for TimeMachine
     file { $path:
       ensure => directory,
-      owner  => 'timemachine',
+      owner  => $owner,
     }
 
     package { [ 'netatalk' ] : }
@@ -68,7 +71,7 @@ class profile::app::timemachine {
 # TODO: use parameter for TM quota ?
 
   file { "${path}/.com.apple.TimeMachine.quota.plist":
-    owner   => 'timemachine',
+    owner   => $owner,
     mode    => '0600',
     require => File[$path],
     content => @("EOT"/)
@@ -83,7 +86,7 @@ class profile::app::timemachine {
   }
 
   file { "${path}/.com.apple.timemachine.supported":
-    owner   => 'timemachine',
+    owner   => $owner,
     mode    => '0600',
     require => File[$path],
   }
