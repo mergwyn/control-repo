@@ -3,7 +3,7 @@
 class profile::app::unison {
 
   if $facts['os']['family'] != 'Darwin' {
-    fail('profile::platform::app::unison is only for Darwin')
+    fail("${title} is only for Darwin")
   }
 
   file { '/usr/local/share/com.theclarkhome.prefsync.plist':

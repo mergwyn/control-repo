@@ -2,6 +2,10 @@
 #
 class profile::app::reverse_proxy {
 
+  if $facts['os']['family'] != 'Debian' {
+    fail("${title} is only for Debian")
+  }
+
   if !defined(Class['ngnix']) {
     class{'nginx': server_purge => true, }
   }
