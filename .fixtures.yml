@@ -2,8 +2,8 @@
 fixtures:
   symlinks:
     #data: "#{source_dir}/data"
-    role: "#{source_dir}/site/role"
-    profile: "#{source_dir}/site/profile"
+    role: "#{source_dir}/site-modules/role"
+    profile: "#{source_dir}/site-modules/profile"
   repositories:
     ssh:
       repo: https://github.com/mergwyn/puppet-module-ssh

@@ -1,7 +1,11 @@
 #
 class profile::app::backuppc::server {
 
-  Class['profile::base::ssh_server'] -> Class['profile::app::backuppc::server']
+  if $facts['os']['family'] != 'Debian' {
+    fail("${title} is only for Debian")
+  }
+
+  Class['profile::platform::baseline::debian::ssh'] -> Class['profile::app::backuppc::server']
 
   include profile::scripts
 
