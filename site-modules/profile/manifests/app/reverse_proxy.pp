@@ -33,7 +33,7 @@ class profile::app::reverse_proxy {
 # The hook below on certificate creation works together with the include_files in the host
   file { '/etc/nginx/options-ssl-nginx.conf':
     require => Package[nginx],
-    content => @("EOT"/$),
+    content => @("EOT"/),
                ssl_certificate           /etc/letsencrypt/live/${trusted['certname']}/fullchain.pem;
                ssl_certificate_key       /etc/letsencrypt/live/${trusted['certname']}/privkey.pem;
                | EOT
