@@ -1,6 +1,6 @@
 #
 
-class profile::ddclient {
+class profile::app::ddclient {
 
   class { 'ddclient':
     hosts_config    => 'concat',
@@ -27,4 +27,3 @@ class profile::ddclient {
   }
 
 }
-# vim: sw=2:ai:nu expandtab
