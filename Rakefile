@@ -86,5 +86,4 @@ EOM
   end
 end
 
-require 'onceover/rake_tasks'
 FastGettext.default_text_domain = 'default-text-domain'
