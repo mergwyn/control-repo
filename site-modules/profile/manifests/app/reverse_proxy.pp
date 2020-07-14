@@ -51,11 +51,11 @@ class profile::app::reverse_proxy {
   letsencrypt::certonly { $trusted['certname']:
     plugin               => 'nginx',
     domains              => [
-                              '%{trusted.domain}',
-                              '%{trusted.certname}',
-                              'foxtrot.%{trusted.domain}',
-                              'tango.%{trusted.domain}',
-                              'zulu.%{trusted.domain}',
+                              $trusted['domain'],
+                              $trusted['certname'],
+                              "foxtrot.${$trusted['domain']}",
+                              "tango.${$trusted['domain']}",
+                              "zulu.${$trusted['domain']}",
 #  "echo.%{trusted.domain}"
                             ],
     manage_cron          => true,
@@ -63,7 +63,7 @@ class profile::app::reverse_proxy {
     suppress_cron_output => true,
   }
 
-  $certdir = '/etc/letsencrypt/live/%{trusted.certname}'
+  $certdir = "/etc/letsencrypt/live/${trusted['certname']}"
   $pem     = "${certdir}/fullchain.pem"
   $key     = "${certdir}/privkey.pem"
 
