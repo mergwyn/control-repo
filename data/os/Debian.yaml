@@ -1,20 +1,9 @@
-
-classes:
-  - timezone
-
-profile::base::mail_client::myorigin:             "%{trusted.domain}"
-profile::base::mail_client::password_credentials: "mergwyn@virginmedia.com:%{lookup('secrets::virgin')}"
-profile::base::mail_client::password_hash:        '/etc/postfix/sasl-passwords'
-profile::base::mail_client::relayhost:            '[smtp.virginmedia.com]:465'
-profile::base::mail_client::root_mail_recipient:  "%{lookup('defaults::adminemail')}"
+---
 
 # puppet agent
 puppet::puppet_server:                            "echo.%{trusted.domain}"
 puppet::manage_repos:                             false
 puppet::structured_facts:                         true
-
-# time related
-timezone::timezone:                               'Europe/London'
 
 # TODO turn into common settings 
 profile::app::backuppc::client::scripts:                '/etc/backuppc-scripts'

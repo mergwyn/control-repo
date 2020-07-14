@@ -6,7 +6,7 @@ class profile::platform::baseline::debian::ssh {
   class { 'ssh':
     ssh_hostbasedauthentication       => 'yes',
     ssh_gssapiauthentication          => 'yes',
-    ssh_ssh_gssapidelegatecredentials => 'yes',
+    ssh_gssapidelegatecredentials     => 'yes',
     ssh_enable_ssh_keysign            => 'yes',
 
     sshd_gssapiauthentication         => 'yes',

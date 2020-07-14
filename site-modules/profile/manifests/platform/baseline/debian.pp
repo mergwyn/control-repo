@@ -8,11 +8,11 @@ class profile::platform::baseline::debian {
   include profile::platform::baseline::debian::hosts
   include profile::platform::baseline::debian::unattended_upgrades
   include profile::platform::baseline::debian::ntp
+  include profile::platform::baseline::debian::timezone
+  include profile::platform::baseline::debian::postfix
+  include profile::platform::baseline::debian::ssh
 
-  include profile::os::debian::base
   include profile::base::mounts
-  include profile::base::ssh_server
-  include profile::base::mail_client
   include profile::base::avahi
   #include profile::service::webmin
   #include profile::app::backuppc::client

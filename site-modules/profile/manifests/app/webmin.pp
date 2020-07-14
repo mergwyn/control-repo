@@ -1,6 +1,11 @@
 # @summary webmin settings
 
 class profile::app::webmin {
+
+  if $facts['os']['family'] != 'Debian' {
+    fail("${title} is only for Debian")
+  }
+
   $adminemail = lookup('unattended_upgrades::email')
 
   exec { 'apt_show_versions_clean':

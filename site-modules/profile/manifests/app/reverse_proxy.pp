@@ -2,6 +2,10 @@
 #
 class profile::app::reverse_proxy {
 
+  if $facts['os']['family'] != 'Debian' {
+    fail("${title} is only for Debian")
+  }
+
   if !defined(Class['ngnix']) {
     class{'nginx': server_purge => true, }
   }
@@ -29,7 +33,7 @@ class profile::app::reverse_proxy {
 # The hook below on certificate creation works together with the include_files in the host
   file { '/etc/nginx/options-ssl-nginx.conf':
     require => Package[nginx],
-    content => @("EOT"/$),
+    content => @("EOT"/),
                ssl_certificate           /etc/letsencrypt/live/${trusted['certname']}/fullchain.pem;
                ssl_certificate_key       /etc/letsencrypt/live/${trusted['certname']}/privkey.pem;
                | EOT
@@ -47,11 +51,11 @@ class profile::app::reverse_proxy {
   letsencrypt::certonly { $trusted['certname']:
     plugin               => 'nginx',
     domains              => [
-                              '%{trusted.domain}',
-                              '%{trusted.certname}',
-                              'foxtrot.%{trusted.domain}',
-                              'tango.%{trusted.domain}',
-                              'zulu.%{trusted.domain}',
+                              $trusted['domain'],
+                              $trusted['certname'],
+                              "foxtrot.${$trusted['domain']}",
+                              "tango.${$trusted['domain']}",
+                              "zulu.${$trusted['domain']}",
 #  "echo.%{trusted.domain}"
                             ],
     manage_cron          => true,
@@ -59,7 +63,7 @@ class profile::app::reverse_proxy {
     suppress_cron_output => true,
   }
 
-  $certdir = '/etc/letsencrypt/live/%{trusted.certname}'
+  $certdir = "/etc/letsencrypt/live/${trusted['certname']}"
   $pem     = "${certdir}/fullchain.pem"
   $key     = "${certdir}/privkey.pem"
 

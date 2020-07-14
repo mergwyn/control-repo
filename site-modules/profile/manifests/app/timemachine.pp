@@ -2,6 +2,10 @@
 
 class profile::app::timemachine {
 
+  if $facts['os']['family'] != 'Debian' {
+    fail("${title} is only for Debian")
+  }
+
   $path = '/srv/timemachine'
   $owner = 'timemachine'
 

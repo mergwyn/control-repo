@@ -1,17 +1,16 @@
-# postfix for mail
+# @summary postfix for mail
 
-class profile::base::mail_client (
-  $password_credentials = undef,
-  $password_hash        = '/etc/postfix/sasl-passwords',
-  $relayhost            = undef,
-  $root_mail_recipient  = undef,
-  ) {
+class profile::platform::baseline::debian::postfix {
+
+  $password_credentials = "mergwyn@virginmedia.com:${lookup('secrets::virgin')}"
+  $relayhost            = '[smtp.virginmedia.com]:465'
+  $password_hash        = '/etc/postfix/sasl-passwords'
 
   class { 'postfix':
-    myorigin            => $::domain,
+    myorigin            => $trusted['domain'],
     relayhost           => $relayhost,
-    mydestination       => "\$myhostname, ${::fqdn}, localhost.${::domain}, localhost",
-    root_mail_recipient => $root_mail_recipient,
+    mydestination       => "\$myhostname, ${trusted['certname']}, localhost.${trusted['domain']}, localhost",
+    root_mail_recipient => lookup('defaults::adminemail'),
     manage_root_alias   => true,
     mta                 => true,
   }
@@ -20,7 +19,9 @@ class profile::base::mail_client (
     ensure  => 'present',
     content => "${relayhost}    ${password_credentials}\n"
   }
+
   package { 'libsasl2-modules': ensure => present, }
+
   postfix::config {
     'smtp_sasl_password_maps':          value => "hash:${password_hash}";
     'smtp_sasl_auth_enable':            value => 'yes';
@@ -29,5 +30,3 @@ class profile::base::mail_client (
     'smtp_tls_wrappermode':             value => 'yes';
   }
 }
-#
-# vim: sw=2:ai:nu expandtab
