@@ -24,6 +24,7 @@ Gemfile:
 #      - gem: r10k
 #      - gem: ra10ke
 #      - gem: onceover
+      - gem: 'puppetlabs_spec_helper'
       - gem: CFPropertyList
 spec/spec_helper.rb:
   coverage_report: false
