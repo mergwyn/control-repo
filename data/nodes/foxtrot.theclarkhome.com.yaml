@@ -1,13 +1,16 @@
 ---
 
-netplan::ethernets:
+classes:
+  - profile::platform:::baseline::debian::netplan
+
+profile::platform:::baseline::debian::netplan::ethernets:
   enp3s0:
     dhcp4: no
     mtu: 9000
   enp4s0:
     dhcp4: no
     mtu: 9000
-netplan::bridges:
+profile::platform:::baseline::debian::netplan::bridges:
   br0:
     interfaces:
       - enp3s0
@@ -19,8 +22,12 @@ netplan::bridges:
       - 192.168.11.12/16
     gateway4: "%{lookup('defaults::gateway')}"
     nameservers:
-      search: "%{lookup('defaults::search')}"
-      addresses: "%{lookup('defaults::addresses')}"
+      search:
+        - theclarkhome.com
+        - local
+      addresses:
+        - 192.168.11.21
+        - 192.168.11.22
     parameters:
       stp: false
       forward_delay: 0
