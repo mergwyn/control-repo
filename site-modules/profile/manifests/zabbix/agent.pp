@@ -4,7 +4,10 @@ class profile::zabbix::agent (
   $server = 'zulu'
 ) {
 
-  $serverstring = "${server},${server}.${trusted['domain']}"
+  $serverstring = $server ? {
+    $trusted['hostname'] => 'localhost',
+    default              => "${server},${server}.${trusted['domain']}",
+  }
   $hostmetadata = ":kernel=${facts['kernel']}:virtual=${facts['virtual']}"
 
   case $facts['os']['name'] {
