@@ -29,8 +29,8 @@ defaults::system_home_dir: '/root'
 defaults::media_user:      'media'
 defaults::media_group:     '513'
 defaults::time_servers:
-  - "alpha.%{trusted.domain}"
-  - "bravo.%{trusted.domain}"
+  - "foxtrot.%{trusted.domain}"
+  - "golf.%{trusted.domain}"
 
 lookup_options:
   "^classes(.*)$":
