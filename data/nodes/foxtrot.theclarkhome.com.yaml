@@ -1,31 +1,29 @@
 ---
 
-classes:
-  - network
-
-network::interfaces_hash:
+netplan::ethernets:
   enp3s0:
-    method:                     manual
-#    pre_up:
-#      - /sbin/ifconfig enp3s0 mtu 9004
+    dhcp4: no
+    mtu: 9000
   enp4s0:
-    method:                     manual
-#    pre_up:
-#      - /sbin/ifconfig enp4s0 mtu 9004
+    dhcp4: no
+    mtu: 9000
+netplan::bridges:
   br0:
-    ipaddress:                  "192.168.11.12"
-    netmask:                    "%{lookup('defaults::netmask')}"
-    gateway:                    "%{lookup('defaults::gateway')}"
-    network:                    "%{lookup('defaults::network')}"
-    dns_nameservers:            "%{lookup('defaults::dns_nameservers')}"
-    dns_search:                 "%{lookup('defaults::dns_search')}"
-    bridge_ports:
+    interfaces:
       - enp3s0
       - enp4s0
-    bridge_maxwait:             "0"
-    bridge_fd:                  "0"
-    bridge_stp:                 "off"
-
+    mtu: 9000
+    dhcp4: no
+    dhcp6: no
+    addresses: 
+      - 192.168.11.12/16
+    gateway4: "%{lookup('defaults::gateway')}"
+    nameservers:
+      search: "%{lookup('defaults::search')}"
+      addresses: "%{lookup('defaults::addresses')}"
+    parameters:
+      stp: false
+      forward_delay: 0
 
 profile::base::mounts::defaults:
   ensure: 'mounted'

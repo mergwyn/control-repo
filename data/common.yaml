@@ -15,7 +15,13 @@ defaults::sharedpassword:  '$6$s/krC.bq$NiiWBAjU9pC3OkFTOVrgRpSiS6fpTi4jIgY50K6/
 defaults::netmask:         '255.255.0.0'
 defaults::gateway:         '192.168.11.254'
 defaults::network:         '192.168.11.0'
+defaults::search:
+  - theclarkhome.com
+  - local
 defaults::dns_search:      'theclarkhome.com local'
+defaults::addresses:
+  - 192.168.11.21
+  - 192.168.11.22
 defaults::dns_nameservers: '192.168.11.21 192.168.11.22'
 defaults::backup_server:   'foxtrot'
 defaults::system_user:     'root'

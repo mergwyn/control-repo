@@ -1,17 +1,14 @@
 ---
 
-classes:
-  - netplan
-
-netplan::version: 2
-netplan::renderer: networkd
 netplan::ethernets:
   enp3s0:
     dhcp4: no
+    mtu: 9000
 netplan::bridges:
   br0:
     interfaces:
       - enp3s0
+    mtu: 9000
     dhcp4: no
     dhcp6: no
     addresses:
