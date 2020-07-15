@@ -1,13 +1,13 @@
 ---
 
 classes:
-  - profile::platform:::baseline::debian::netplan
+  - profile::platform::baseline::debian::netplan
 
-profile::platform:::baseline::debian::netplan::ethernets:
+profile::platform::baseline::debian::netplan::ethernets:
   enp3s0:
     dhcp4: no
     mtu: 9000
-profile::platform:::baseline::debian::netplan::bridges:
+profile::platform::baseline::debian::netplan::bridges:
   br0:
     interfaces:
       - enp3s0
