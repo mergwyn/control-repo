@@ -1,7 +1,6 @@
 ---
 
 classes:
-  - network
   - profile::platform::baseline::debian::netplan
 
 profile::network::dhcpd::role:         secondary
