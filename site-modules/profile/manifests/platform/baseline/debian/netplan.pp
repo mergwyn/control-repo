@@ -1,4 +1,13 @@
 # @summary netplan settings
+#
+# @param ethernets
+#
+# netplan module compliant hash specifying the ethernets
+#
+# @param bridges
+#
+# netplan module compliant hash specifying the bridges
+#
 
 class profile::platform::baseline::debian::netplan (
   Optional[Hash] $ethernets = { $facts['networking']['primary'] => { dhcp4 => true } },
@@ -10,10 +19,19 @@ class profile::platform::baseline::debian::netplan (
   }
 
   package { 'netplan.io': }
+
+  service { 'systemd-networkd':
+    enable => true,
+    start  => true,
+  }
+
   class { 'netplan':
     version   => 2,
-    renderer  => 'networkd',
+    renderer  => networkd,
     ethernets => $ethernets,
     bridges   => $bridges,
   }
+
+  package { 'ifupdown': ensure => absent }
+
 }
