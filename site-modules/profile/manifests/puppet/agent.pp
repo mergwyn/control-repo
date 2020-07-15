@@ -8,15 +8,15 @@ class profile::puppet::agent {
   # make sure we match server major version
   $ver = split($::serverversion, '\.')
   apt::pin { 'puppet':
-    priority        => 501,
-    packages        => 'puppet-agent',
-    release_version => "${ver[0]}*"
+    priority => 501,
+    packages => 'puppet-agent',
+    version  => "${ver[0]}*"
   }
 # TODO: remove workaround
   apt::pin { 'puppet-6.16':
-    priority        => 999,
-    packages        => 'puppet-agent',
-    release_version => '6.16.*'
+    priority => 999,
+    packages => 'puppet-agent',
+    version  => '6.16.*'
   }
   package { 'puppetlabs-release-pc1': ensure => absent }
 
