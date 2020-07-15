@@ -1,17 +1,17 @@
 ---
 
 classes:
-  - netplan
+  - profile::platform::baseline::debian::netplan
 
-netplan::version: 2
-netplan::renderer: networkd
-netplan::ethernets:
+profile::platform::baseline::debian::netplan::ethernets:
   enp3s0:
     dhcp4: no
-netplan::bridges:
+    mtu: 9000
+profile::platform::baseline::debian::netplan::bridges:
   br0:
     interfaces:
       - enp3s0
+    mtu: 9000
     dhcp4: no
     dhcp6: no
     addresses:

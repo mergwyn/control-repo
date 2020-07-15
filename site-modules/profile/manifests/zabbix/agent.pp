@@ -1,9 +1,25 @@
 #
 
-class profile::zabbix::agent {
+class profile::zabbix::agent (
+  $server = 'zulu'
+) {
+
+  $serverstring = "${server},${server}.${trusted['domain']}"
+  $hostmetadata = ":kernel=${facts['kernel']}:virtual=${facts['virtual']}"
+
   case $facts['os']['name'] {
     'Ubuntu': {
-      include zabbix::agent
+
+      class { 'zabbix::agent':
+        zabbix_version       => '4.4',
+        hostname             => $trusted['certname'],
+        server               => $serverstring,
+        serveractive         => $serverstring,
+        enableremotecommands => '1',
+        zabbix_package_state => 'latest',
+        hostmetadata         => $hostmetadata,
+      }
+
       package {'zabbix-sender': }
 
       $etc='/etc/zabbix'
@@ -65,10 +81,10 @@ class profile::zabbix::agent {
       }
       $overrides = {
         '' => {
-          'Server'       => lookup('zabbix::agent::server'),
-          'ServerActive' => lookup('zabbix::agent::serveractive'),
-          'Hostname'     => lookup('zabbix::agent::hostname'),
-          'HostMetadata' => lookup('zabbix::agent::hostmetadata'),
+          'Hostname'     => $trusted['certname'],
+          'Server'       => $serverstring,
+          'ServerActive' => $serverstring,
+          'HostMetadata' => $hostmetadata,
         }
       }
       create_ini_settings($overrides, $defaults)
@@ -77,4 +93,3 @@ class profile::zabbix::agent {
     default: {}
   }
 }
-# vim: sw=2:ai:nu expandtab
