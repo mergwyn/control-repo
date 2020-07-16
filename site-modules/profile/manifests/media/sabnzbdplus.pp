@@ -1,5 +1,6 @@
 #
 # TODO: complete testing of settings setup
+# TODO install from snap store
 
 class profile::media::sabnzbdplus (
   String $user = 'media',
