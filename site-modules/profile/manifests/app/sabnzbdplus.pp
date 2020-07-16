@@ -15,7 +15,7 @@ class profile::app::sabnzbdplus (
   package { 'sabnzbdplus': ensure  => absent, }
 
 # Allow to run as a different user
-  $service = snap.sabnzbd.sabnzbd.service
+  $service = "snap.sabnzbd.sabnzbd.service"
   systemd::dropin_file { 'media-user.conf':
       unit    => $service,
       content => @("EOT"/),
@@ -33,6 +33,11 @@ class profile::app::sabnzbdplus (
   package { 'sabnzbd':
     ensure   => present,
     provider => snap,
+  }
+
+  service { $service:
+    ensure => running,
+    enable => true,
   }
 
 # Process settings
