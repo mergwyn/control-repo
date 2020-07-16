@@ -1,11 +1,14 @@
 ---
 
+# TODO work out why zabbix_version is not getting set correctly in manifest
+zabbix::agent::zabbix_version: '4.5'
+
 # puppet agent
 puppet::puppet_server:                            "echo.%{trusted.domain}"
 puppet::manage_repos:                             false
 puppet::structured_facts:                         true
 
-# TODO turn into common settings 
+# TODO turn backuppc::client::scripts into common settings 
 profile::app::backuppc::client::scripts:                '/etc/backuppc-scripts'
 profile::app::backuppc::client::preuser:                "%{lookup('profile::app::backuppc::client::scripts')}/DumpPreUser"
 profile::app::backuppc::client::postuser:               "%{lookup('profile::app::backuppc::client::scripts')}/DumpPostUser"
