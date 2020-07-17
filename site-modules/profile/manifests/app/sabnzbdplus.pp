@@ -47,7 +47,7 @@ class profile::app::sabnzbdplus (
   }
 
 # Keep this separate to allow wait for 
-  $service_user = "sabnzbds@${user}.service"
+  $service_user = "sabnzbd@${user}.service"
 
   systemd::dropin_file { 'wait-ssd.conf':
       unit    => $service,
