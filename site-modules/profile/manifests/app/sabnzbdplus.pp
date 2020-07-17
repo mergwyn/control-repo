@@ -1,6 +1,6 @@
+# @summary set up nzb downloader
 #
 # TODO: complete testing of settings setup
-# TODO install from snap store
 
 class profile::app::sabnzbdplus (
   String $user  = lookup('defaults::media_user'),
@@ -12,32 +12,28 @@ class profile::app::sabnzbdplus (
   apt::ppa { [ 'ppa:jcfp/nobetas', 'ppa:jcfp/sab-addons' ]:
     ensure => absent,
   }
-  package { 'sabnzbdplus': ensure  => absent, }
 
-# Allow to run as a different user
-  $service = "snap.sabnzbd.sabnzbd.service"
-  systemd::dropin_file { 'media-user.conf':
+  package { 'sabnzbdplus':
+    ensure  => present,
+  }
+
+# Run as a different user
+  $service = 'sabnzbdplus@.service'
+  $service_user = "sabnzbdplus@${user}.service"
+
+  systemd::dropin_file { 'wait-ssd.conf':
       unit    => $service,
       content => @("EOT"/),
                  [Unit]
                  After=nss-user-lookup.target
-
-                 [Service]
-                 User=${media}
-                 Group=${group}
                  | EOT
-      notify  => Service[$service],
+      notify  => Service[$service_user],
   }
 
-# Install from snap
-  package { 'sabnzbd':
-    ensure   => present,
-    provider => snap,
-  }
-
-  service { $service:
-    ensure => running,
-    enable => true,
+  service { $service_user:
+    ensure  => running,
+    enable  => true,
+    require => Package['sabnzbdplus'],
   }
 
 # Process settings
