@@ -11,7 +11,7 @@ class profile::platform::baseline::debian::zfs::trim {
     source => 'puppet:///modules/profile/zfs/trim',
   }
 
-  cron::job { 'zfs-trim':
+  cron { 'zfs-trim':
 # trim the fourth Sunday of every month.
     user        => root,
     minute      => '24',
