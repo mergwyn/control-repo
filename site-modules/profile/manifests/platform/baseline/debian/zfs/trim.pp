@@ -16,7 +16,7 @@ class profile::platform::baseline::debian::zfs::trim {
     user        => root,
     minute      => '24',
     hour        => '0',
-    day         => '22-28',
+    monthday    => '22-28',
     environment => [ 'PATH="/usr/bin:/bin:/usr/sbin:/sbin:/usr/sbin:/usr/local/bin"' ],
     command     => "if [ $(date +\\%w) -eq 0 ] && [ -x ${script} ]; then ${script}; fi",
   }
