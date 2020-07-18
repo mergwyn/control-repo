@@ -11,12 +11,12 @@ class profile::platform::baseline::debian::zfs::trim {
     source => 'puppet:///modules/profile/zfs/trim',
   }
 
-  cron { 'zfs-trim':
+  cron::job { 'zfs-trim':
 # trim the fourth Sunday of every month.
     user        => root,
     minute      => '24',
     hour        => '0',
-    monthday    => '22-28',
+    date        => '22-28',
     environment => [ 'PATH="/usr/bin:/bin:/usr/sbin:/sbin:/usr/sbin:/usr/local/bin"' ],
     command     => "if [ $(date +\\%w) -eq 0 ] && [ -x ${script} ]; then ${script}; fi",
   }
