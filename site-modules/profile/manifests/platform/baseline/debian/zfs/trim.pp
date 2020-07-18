@@ -18,6 +18,6 @@ class profile::platform::baseline::debian::zfs::trim {
     hour        => '0',
     day         => '22-28',
     environment => [ 'PATH="/usr/bin:/bin:/usr/sbin:/sbin:/usr/sbin:/usr/local/bin"' ],
-    command     => "if [ $(date +\%w) -eq 0 ] && [ -x ${script} ]; then ${script}; fi",
+    command     => "if [ $(date +\\%w) -eq 0 ] && [ -x ${script} ]; then ${script}; fi",
   }
 }
