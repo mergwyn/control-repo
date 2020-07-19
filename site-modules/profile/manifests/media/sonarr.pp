@@ -1,6 +1,7 @@
 #
 
 # TODO settings, systemd unit file
+# TODO install from snap store
 
 class profile::media::sonarr (
   $user  = 'media',
