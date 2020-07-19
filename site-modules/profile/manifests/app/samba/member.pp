@@ -6,13 +6,8 @@ class profile::app::samba::member {
     domain              => lookup('defaults::workgroup'),
     realm               => lookup('defaults::realm'),
     smbname             => $::facts['networking']['hostname'],
-    sambaloglevel       => 2,
+    sambaloglevel       => 1,
     logtosyslog         => false,
-    sambaclassloglevel  => {
-      'auth'    => 3,
-      'idmap'   => 5,
-      'winbind' => 3,
-    },
     strictrealm         => false,         # * Check for Strict Realm (default: true)
     security            => 'ADS',         # * security mode.
     krbconf             => true,         # * Deploy krb5.conf fil e (default: true)
