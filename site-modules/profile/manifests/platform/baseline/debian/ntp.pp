@@ -1,8 +1,7 @@
 # @summary ntp settings
 
-class profile::platform::baseline::debian::ntp (
-  Optional[Array[String]] $servers = undef,
-) {
+class profile::platform::baseline::debian::ntp
+{
 
 # ntp for physical machines only
   if $facts['virtual'] != 'physical' {
@@ -10,11 +9,8 @@ class profile::platform::baseline::debian::ntp (
   }
   else {
     $local_clock = '127.127.1.0'
-    $network_servers = ($servers) ? {
-      true  => $servers + lookup('ntp::servers'),
-      false => lookup('ntp::servers'),
-    }
-
+    #$network_servers = $servers + lookup('ntp::servers'),
+    $network_servers = lookup('ntp::servers')
 
     $restrict_default = [
       'default kod nomodify notrap nopeer mssntp',
@@ -26,7 +22,7 @@ class profile::platform::baseline::debian::ntp (
 
     class { 'ntp':
       ntpsigndsocket    => '/var/lib/samba/ntp_signd/',
-      preferred_servers => $servers,
+      preferred_servers => $network_servers,
       servers           => [ $local_clock ] + $network_servers,
       restrict          => $restrict_default + $restrict,
       fudge             => [ "${local_clock} stratum 10" ],
