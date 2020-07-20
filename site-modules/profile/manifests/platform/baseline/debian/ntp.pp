@@ -10,7 +10,11 @@ class profile::platform::baseline::debian::ntp (
   }
   else {
     $local_clock = '127.127.1.0'
-    $network_servers = $servers + lookup('ntp::servers')
+    $network_servers = ($servers) ? {
+      true  => $servers + lookup('ntp::servers'),
+      false => lookup('ntp::servers'),
+    }
+
 
     $restrict_default = [
       'default kod nomodify notrap nopeer mssntp',
