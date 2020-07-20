@@ -1,7 +1,7 @@
 # @summary ntp settings
 
 class profile::platform::baseline::debian::ntp (
-  Optional[Array[String]] $servers = lookup('defaults::time_servers')
+  Optional[Array[String]] $servers,
 ) {
 
 # ntp for physical machines only

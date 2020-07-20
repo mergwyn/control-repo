@@ -30,7 +30,7 @@ defaults::media_user:      'media'
 defaults::media_group:     '513'
 
 # Local timeservers to use
-#defaults::time_servers:
+#profile::platform::baseline::debian::ntp::servers:
 #  - "foxtrot.%{trusted.domain}"
 #  - "golf.%{trusted.domain}"
 
