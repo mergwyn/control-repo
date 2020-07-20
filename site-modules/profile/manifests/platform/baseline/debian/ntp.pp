@@ -6,7 +6,7 @@ class profile::platform::baseline::debian::ntp (
 
 # ntp for physical machines only
   if $facts['virtual'] != 'physical' {
-    class { 'ntp': ensure => absent }
+    package { 'ntp': ensure => absent }
   }
   else {
     $local_clock = '127.127.1.0'
