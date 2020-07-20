@@ -1,7 +1,7 @@
 # @summary ntp settings
 
 class profile::platform::baseline::debian::ntp (
-  Optional[Array[String]] $servers,
+  Optional[Array[String]] $servers = undef,
 ) {
 
 # ntp for physical machines only
