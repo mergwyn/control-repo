@@ -10,6 +10,6 @@ class profile::media::downloader () {
   include profile::media::couchpotato
   include profile::app::sabnzbdplus
   include profile::media::sonarr
-  include profile::media::transmission
+  include profile::app::transmission
 }
 # vim: sw=2:ai:nu expandtab
