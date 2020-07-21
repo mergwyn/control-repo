@@ -6,9 +6,9 @@ class profile::app::transmission  {
 # TODO: settings
   include ::transmission
 
-  $service = 'transmission-daemon.service'
+  $service = 'transmission-daemon'
   systemd::dropin_file { 'transmission-sssd-wait.conf':
-      unit    => $service,
+      unit    => "${service}.service",
       content => @("EOT"/),
                  [Unit]
                  After=nss-user-lookup.target
