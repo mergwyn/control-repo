@@ -25,24 +25,25 @@ class profile::media::sonarr (
   systemd::unit_file { 'sonarr.service':
     enable  => true,
     active  => true,
-    content => "
-[Unit]
-Description=Sonarr Daemon
-RequiresMountsFor=/srv/media /home/media
-
-[Service]
-User=${user}
-Group=${group}
-Restart=on-failure
-RestartSec=5
-Type=simple
-ExecStart=/usr/bin/mono /opt/NzbDrone/NzbDrone.exe -nobrowser
-KillMode=process
-TimeoutStopSec=20
-
-[Install]
-WantedBy=multi-user.target
-",
+    content => @("EOT"),
+               [Unit]
+               Description=Sonarr Daemon
+               RequiresMountsFor=/srv/media /home/media
+               After=nss-user-lookup.target
+ 
+               [Service]
+               User=${user}
+               Group=${group}
+               Restart=on-failure
+               RestartSec=5
+               Type=simple
+               ExecStart=/usr/bin/mono /opt/NzbDrone/NzbDrone.exe -nobrowser
+               KillMode=process
+               TimeoutStopSec=20
+ 
+               [Install]
+               WantedBy=multi-user.target
+               | EOT
   }
 
   # finally install package and start service

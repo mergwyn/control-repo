@@ -29,6 +29,7 @@ class profile::media::couchpotato (
       [Unit]
       Description=couchpotato daemon
       RequiresMountsFor=/srv/media /home/media
+      After=nss-user-lookup.target
 
       [Service]
       User=${user}
