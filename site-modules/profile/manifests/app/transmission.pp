@@ -7,7 +7,7 @@ class profile::app::transmission  {
   include ::transmission
 
   $service = 'transmission-daemon'
-  systemd::dropin_file { 'sssd-wait.conf':
+  systemd::dropin_file { 'transmission-sssd-wait.conf':
       unit    => $service,
       content => @("EOT"/),
                  [Unit]

@@ -49,13 +49,16 @@ class profile::app::sabnzbdplus (
 # Keep this separate to allow wait for 
   $service_user = "sabnzbd@${user}.service"
 
-  systemd::dropin_file { 'wait-ssd.conf':
+  systemd::dropin_file { 'sabnazbd-sssd-wait.conf':
       unit    => $service,
       content => @("EOT"/),
                  [Unit]
                  After=nss-user-lookup.target
                  | EOT
       notify  => Service[$service_user],
+  }
+  file { "/etc/systemd/system/${service}.d/wait-ssd.conf":
+    ensure => absent,
   }
 
   service { $service_user:
