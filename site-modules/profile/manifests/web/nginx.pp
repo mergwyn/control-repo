@@ -7,10 +7,14 @@ class profile::web::nginx {
   package { [ 'fcgiwrap' ]: }
 
   $service_name = 'nginx.service'
-  systemd::unit_file { $service_name:
-    content => "[Service]\nRuntimeDirectory=nginx\n"
-  }
-  ~> service { $service_name:
+  $service = 'nginx.service'
+  systemd::dropin_file { 'nginx-runtime.conf':
+      unit    => $service_name,
+      content => @("EOT"/),
+                 [Service]
+                 RuntimeDirectory=nginx
+                 | EOT
+  } ~> service { $service_name:
     ensure => 'running',
   }
 
