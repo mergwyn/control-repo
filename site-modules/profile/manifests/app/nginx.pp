@@ -1,6 +1,6 @@
 #
 
-class profile::web::nginx {
+class profile::app::nginx {
 
   # TODO: move to hiera
   include nginx

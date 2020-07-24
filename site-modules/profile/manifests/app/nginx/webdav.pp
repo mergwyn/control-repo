@@ -1,7 +1,7 @@
 #
 
-class profile::web::webdav{
-  include profile::web::nginx
+class profile::app::nginx::webdav{
+  include profile::app::nginx
 
   nginx::resource::server { 'webdav':
     server_name          => [ $::facts['networking']['fqdn'] ],
@@ -26,5 +26,3 @@ class profile::web::webdav{
   }
 }
 
-#
-# vim:  sw=2:ai:nu expandtab

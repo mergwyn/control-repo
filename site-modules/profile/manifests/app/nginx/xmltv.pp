@@ -1,7 +1,7 @@
 #
 
-class profile::web::xmltv {
-  include profile::web::nginx
+class profile::app::nginx::xmltv {
+  include profile::app::nginx
 
   nginx::resource::server { 'xmltv':,
     server_name          => [ $::facts['networking']['fqdn'] ],
@@ -23,6 +23,3 @@ class profile::web::xmltv {
     }
   }
 }
-
-#
-# vim:  sw=2:ai:nu expandtab

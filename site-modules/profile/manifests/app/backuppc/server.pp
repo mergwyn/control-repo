@@ -17,7 +17,7 @@ class profile::app::backuppc::server {
     ensure => 'stopped',
     enable => false,
   }
-  include profile::web::nginx
+  include profile::app::nginx
 
   nginx::resource::server { 'backuppc':
     server_name          => [ $::facts['networking']['fqdn'] ],

@@ -31,5 +31,5 @@ class profile::app::iptv {
   }
 
   #TODO xteve?
-  include profile::web::xmltv
+  include profile::app::nginx::xmltv
 }
