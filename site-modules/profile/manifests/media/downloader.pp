@@ -8,7 +8,7 @@ class profile::media::downloader () {
   include profile::media::sonarr
   include profile::media::couchpotato
   include profile::app::sabnzbdplus
-  include profile::media::sonarr
+  include profile::app::sonarr
   include profile::app::transmission
   include profile::app::radarr
 }
