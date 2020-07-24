@@ -1,6 +1,6 @@
 #
 
-class profile::media::downloader () {
+class profile::app::downloader () {
 
   #TODO insert dependency on mono into module
   include profile::app::mono
