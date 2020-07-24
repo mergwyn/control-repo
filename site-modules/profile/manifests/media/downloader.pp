@@ -6,7 +6,7 @@ class profile::media::downloader () {
   include profile::media::mono
   include ::jackett
   include profile::media::sonarr
-  include profile::media::couchpotato
+  include profile::app::couchpotato
   include profile::app::sabnzbdplus
   include profile::app::sonarr
   include profile::app::transmission
