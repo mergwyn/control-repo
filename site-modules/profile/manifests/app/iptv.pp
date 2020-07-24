@@ -1,6 +1,6 @@
 #
 
-class profile::media::iptv {
+class profile::app::iptv {
   include cron
   include profile::scripts
 
@@ -30,9 +30,6 @@ class profile::media::iptv {
     environment => [ 'PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"' ],
   }
 
-  #TODO tvhproxy
-  #TODO telly
+  #TODO xteve?
   include profile::web::xmltv
 }
-
-# vim: sw=2:ai:nu expandtab

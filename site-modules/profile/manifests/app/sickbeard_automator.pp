@@ -1,5 +1,5 @@
 #
-class profile::media::sickbeard_automator {
+class profile::app::sickbeard_automator {
 
   $codedir   = '/opt/'
   $target    = "${codedir}/sickbeard_mp4_automator"
