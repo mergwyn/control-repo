@@ -17,7 +17,7 @@ class profile::platform::baseline::darwin::packages {
   package { 'zoomus': }
   package { 'vlc': }
   package { 'keeweb': }
-  package { 'mergwyn/homebrew-cask/unison248':  }
+  package { 'unison': }
   package { 'puppetlabs/puppet/puppet-agent-6': }
   package { 'homebrew/cask-drivers/sonos':      }
 
