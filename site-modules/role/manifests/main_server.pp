@@ -5,7 +5,7 @@ class role::main_server {
   include profile::domain::sso
   include profile::nfs_server
   include profile::app::backuppc::server
-  include profile::web::webdav
+  include profile::app::nginx::webdav
   include profile::photos
   include profile::app::timemachine
   include profile::virtual::lxd

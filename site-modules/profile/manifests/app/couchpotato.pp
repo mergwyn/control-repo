@@ -1,7 +1,8 @@
-# vim: sw=2:ai:nu expandtab
+# @summary couchpotato settings
+#
 # TODO settings, systemd service file (external or ERB?)
 
-class profile::media::couchpotato (
+class profile::app::couchpotato (
   $user = media,
   $group = '513',
   $data  = '/var/cache/couchpotato',

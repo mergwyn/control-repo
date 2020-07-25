@@ -1,6 +1,6 @@
 #
 
-class profile::web::nginx {
+class profile::app::nginx {
 
   # TODO: move to hiera
   include nginx
@@ -13,6 +13,7 @@ class profile::web::nginx {
       content => @("EOT"/),
                  [Service]
                  RuntimeDirectory=nginx
+                 ExecStartPre=-/bin/chmod 755 /run/nginx
                  | EOT
   } ~> service { $service_name:
     ensure => 'running',

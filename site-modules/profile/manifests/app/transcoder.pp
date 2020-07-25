@@ -1,6 +1,6 @@
 #
 
-class profile::media::transcoder {
+class profile::app::transcoder {
 
   $codedir = '/opt'
   $scriptdir = "${codedir}/scripts"
@@ -8,7 +8,7 @@ class profile::media::transcoder {
 
   include profile::git
   include profile::scripts
-  include profile::media::sickbeard_automator
+  include profile::app::sickbeard_automator
 
   package { $packages: ensure => present }
 

@@ -1,7 +1,7 @@
+# @summary mono
 #
-# TODO: 
 
-class profile::media::mono () {
+class profile::app::mono () {
 
   $distro= $::facts['os']['distro']['codename']
   apt::source { 'mono-official-stable':
@@ -16,4 +16,3 @@ class profile::media::mono () {
   package { [ 'mono-complete' ] : }
 
 }
-# vim: sw=2:ai:nu expandtab
