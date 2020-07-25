@@ -13,7 +13,7 @@ class profile::app::nginx {
       content => @("EOT"/),
                  [Service]
                  RuntimeDirectory=nginx
-                 ExecStartPre=-/bin/chmod 755 /run/nginx
+                 ExecStartPre=-/bin/chmod -R 755 /run/nginx
                  | EOT
   } ~> service { $service_name:
     ensure => 'running',
