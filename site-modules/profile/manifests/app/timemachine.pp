@@ -18,19 +18,13 @@ class profile::app::timemachine {
         owner   => $owner,
         mode    => '0755',
         options => {
-          'commment'                                  => 'Time Machine',
-          'vfs objects'                               => 'catia fruit streams_xattr',
-          'fruit:time machine'                        => 'yes',
-          'fruit:model'                               => 'MacSamba',
-          'fruit:metadata'                            => 'stream',
-          'fruit:posix_rename'                        => 'yes',
-          'fruit:veto_appledouble'                    => 'no',
-          'fruit:wipe_intentionally_left_blank_rfork' => 'yes',
-          'fruit:delete_empty_adfiles'                => 'yes',
-          'browseable'                                => 'yes',
-          'writeable'                                 => 'yes',
-          'create mask'                               => '0600',
-          'directory mask'                            => '0700',
+          'comment'            => 'Time Machine',
+          'vfs objects'        => 'catia fruit streams_xattr',
+          'fruit:time machine' => 'yes',
+          'browseable'         => 'yes',
+          'writeable'          => 'yes',
+          'create mask'        => '0600',
+          'directory mask'     => '0700',
         }
     }
 
