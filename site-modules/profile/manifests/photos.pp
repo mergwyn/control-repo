@@ -13,7 +13,7 @@ class profile::photos {
 
   package { [ 'exiftran', 'exiv2' ]: }
 
-  include profile::scripts
+  include profile::app::scripts
   $codedir='/opt/scripts'
 
   cron::job {'photo-upload':

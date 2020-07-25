@@ -7,7 +7,7 @@ class profile::app::backuppc::server {
 
   Class['profile::platform::baseline::debian::ssh'] -> Class['profile::app::backuppc::server']
 
-  include profile::scripts
+  include profile::app::scripts
 
   package { 'pigz': }
   package { 'libjson-perl': }
