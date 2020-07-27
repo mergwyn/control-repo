@@ -1,6 +1,6 @@
 #
 
-class profile::scripts {
+class profile::app::scripts {
 
   include profile::git
 

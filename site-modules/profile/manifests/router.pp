@@ -3,7 +3,7 @@
 class profile::router {
 
   include cron
-  include profile::scripts
+  include profile::app::scripts
   $codedir='/opt/scripts'
 
   $aptpackages = [

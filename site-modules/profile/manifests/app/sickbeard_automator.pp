@@ -10,7 +10,7 @@ class profile::app::sickbeard_automator {
   $group     =  lookup('defaults::media_group')
 
   include profile::git
-  include profile::scripts
+  include profile::app::scripts
 
   #apt::ppa { 'ppa:awyr/ffmpeg-4':
   #  package_manage => true

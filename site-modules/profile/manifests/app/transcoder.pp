@@ -7,7 +7,7 @@ class profile::app::transcoder {
   $packages = [ 'nfs-common' ]
 
   include profile::git
-  include profile::scripts
+  include profile::app::scripts
   include profile::app::sickbeard_automator
 
   package { $packages: ensure => present }

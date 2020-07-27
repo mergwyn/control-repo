@@ -15,21 +15,31 @@ class profile::app::samba::member {
     adminuser           => lookup('defaults::adminuser'),
     adminpassword       => lookup('secrets::domain'),
     globaloptions       => {
-      'kerberos method'      => 'secrets and keytab',
-      'ntlm auth'            => 'yes',
+      'kerberos method'                           => 'secrets and keytab',
+      'ntlm auth'                                 => 'yes',
+      'ea support'                                => 'yes',
+      # Apple support related
+      'vfs objects'                               => 'fruit streams_xattr',
+      'fruit:time machine'                        => 'yes',
+      'fruit:model'                               => 'MacSamba',
+      'fruit:metadata'                            => 'stream',
+      'fruit:posix_rename'                        => 'yes',
+      'fruit:veto_appledouble'                    => 'no',
+      'fruit:wipe_intentionally_left_blank_rfork' => 'yes',
+      'fruit:delete_empty_adfiles'                => 'yes',
       # disable printing
-      'load printers'        => 'no',
-      'printing'             => 'bsd',
-      'printcap name'        => '/dev/null',
-      'disable spoolss'      => 'yes',
+      'load printers'                             => 'no',
+      'printing'                                  => 'bsd',
+      'printcap name'                             => '/dev/null',
+      'disable spoolss'                           => 'yes',
       # tuning
-      'min receivefile size' => '16384',
-      'use sendfile'         => true,
-      'aio read size'        => '16384',
-      'aio write size'       => '16384',
-      'max xmit'             => '65536',
+      'min receivefile size'                      => '16384',
+      'use sendfile'                              => true,
+      'aio read size'                             => '16384',
+      'aio write size'                            => '16384',
+      'max xmit'                                  => '65536',
       # include local configs
-      'include'              => '/etc/samba/conf.d/shares.conf',
+      'include'                                   => '/etc/samba/conf.d/shares.conf',
     },                # * Custom options in section [global]
     globalabsentoptions => [
       'map untrusted to domain',              # * Remove default settings put

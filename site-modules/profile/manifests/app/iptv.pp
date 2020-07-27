@@ -2,7 +2,7 @@
 
 class profile::app::iptv {
   include cron
-  include profile::scripts
+  include profile::app::scripts
 
   $codedir='/opt/scripts'
 

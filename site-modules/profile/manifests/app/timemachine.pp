@@ -11,26 +11,19 @@ class profile::app::timemachine {
 
   if versioncmp($facts['samba_version'], '4.8') >= 0 {
 # Use SMB for TimeMachine
-    include profile::app::samba::member
+    include profile::app::samba
 
     ::samba::share { 'timemachine':
         path    => $path,
         owner   => $owner,
         mode    => '0755',
         options => {
-          'commment'                                  => 'Time Machine',
-          'vfs objects'                               => 'catia fruit streams_xattr',
-          'fruit:time machine'                        => 'yes',
-          'fruit:model'                               => 'MacSamba',
-          'fruit:metadata'                            => 'stream',
-          'fruit:posix_rename'                        => 'yes',
-          'fruit:veto_appledouble'                    => 'no',
-          'fruit:wipe_intentionally_left_blank_rfork' => 'yes',
-          'fruit:delete_empty_adfiles'                => 'yes',
-          'browseable'                                => 'yes',
-          'writeable'                                 => 'yes',
-          'create mask'                               => '0600',
-          'directory mask'                            => '0700',
+          'comment'            => 'Time Machine',
+          'fruit:time machine' => 'yes',
+          'browseable'         => 'yes',
+          'writeable'          => 'yes',
+          'create mask'        => '0600',
+          'directory mask'     => '0700',
         }
     }
 
