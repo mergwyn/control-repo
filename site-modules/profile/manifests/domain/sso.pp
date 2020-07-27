@@ -1,16 +1,9 @@
 #
 
 class profile::domain::sso {
-  $type = lookup( { 'name' => 'samba::dc::role', 'default_value' => 'member' } )
 
-  case $type {
-    'member': { $require = 'profile::app::samba::member' }
-    default:  { $require = 'profile::app::samba::dc' }
-  }
-  include $require
-  #notify {"samba:dc:role $type for $::fqdn requires $require":}
-  #
-  Class[$require] ~> Class['profile::domain::sso']
+  include profile::app::samba
+  Class['profile::app::samba'] ~> Class['profile::domain::sso']
 
   exec { 'create_keytab':
     command => '/usr/bin/net ads keytab create -P',
