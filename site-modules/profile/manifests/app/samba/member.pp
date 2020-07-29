@@ -46,34 +46,35 @@ class profile::app::samba::member {
       'admin users'                               => '"admin","THECLARKHOME\administrator","THECLARKHOME\gary"',
       'kernel oplocks'                            => 'no',
       'unix extensions'                           => 'no',
-      'veto oplock files'                         => @(EOT),
-                                                     /*.mdb/
-                                                     *.MDB/
-                                                     *.idx/
-                                                     *.dbf/
-                                                     *.cdx/
-                                                     *.fpt/
-                                                     *.IDX/
-                                                     *.DBF/
-                                                     *.CDX/
+      'veto oplock files'                         => @(EOT/L),
+                                                     /*.mdb/\
+                                                     *.MDB/\
+                                                     *.idx/\
+                                                     *.dbf/\
+                                                     *.cdx/\
+                                                     *.fpt/\
+                                                     *.IDX/\
+                                                     *.DBF/\
+                                                     *.CDX/\
                                                      *.FPT/
-                                                     | EOT
-      'veto files'                                => @(EOT),
-                                                     /.zfs/
-                                                     $RECYCLE.BIN/
-                                                     Network Trash Folder/
-                                                     Temporary Items/
-                                                     .AppleDouble/
-                                                     .AppleDesktop/
-                                                     Network Trash Folder/
-                                                     TheVolumeSettingsFolder/
-                                                     Icon?/
-                                                     .Trashes/
-                                                     ._.Trashes/
-                                                     :2eDS_Store/
-                                                     .DS_Store/
+                                                     |- EOT
+      'veto files'                                => @(EOT/L),
+                                                     /.zfs/\
+                                                     $RECYCLE.BIN/\
+                                                     Network Trash Folder/\
+                                                     Temporary Items/\
+                                                     .AppleDouble/\
+                                                     .AppleDesktop/\
+                                                     Network Trash Folder/\
+                                                     TheVolumeSettingsFolder/\
+                                                     Icon?/\
+                                                     .Trashes/\
+                                                     ._.Trashes/\
+                                                     :2eDS_Store/\
+                                                     .DS_Store/\
                                                      ._*/
-                                                     | EOT
+                                                     |- EOT
+
     },
     globalabsentoptions => [
       'map untrusted to domain',              # * Remove default settings put
