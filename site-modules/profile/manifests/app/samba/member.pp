@@ -18,9 +18,10 @@ class profile::app::samba::member {
       'kerberos method'                           => 'secrets and keytab',
       'ntlm auth'                                 => 'yes',
       'ea support'                                => 'yes',
-      # Apple support related
-      'vfs objects'                               => 'fruit streams_xattr',
-      'fruit:time machine'                        => 'yes',
+      'vfs objects'                               => 'fruit streams_xattr acl_xattr',
+      'acl_xattr:ignore system acls'              => 'yes',
+      # Fruit settings
+      'fruit:rersource'                           => 'xattr',
       'fruit:model'                               => 'MacSamba',
       'fruit:metadata'                            => 'stream',
       'fruit:posix_rename'                        => 'yes',
@@ -38,9 +39,43 @@ class profile::app::samba::member {
       'aio read size'                             => '16384',
       'aio write size'                            => '16384',
       'max xmit'                                  => '65536',
-      # include local configs
-      'include'                                   => '/etc/samba/conf.d/shares.conf',
-    },                # * Custom options in section [global]
+      # Other settings
+      'map acl inherit'                           => 'Yes',
+      'store dos attributes'                      => 'Yes',
+      'inherit acls'                              => 'true',
+      'admin users'                               => '"admin","THECLARKHOME\administrator","THECLARKHOME\gary"',
+      'kernel oplocks'                            => 'no',
+      'unix extensions'                           => 'no',
+      'veto oplock files'                         => @(EOT/L),
+                                                     /*.mdb/\
+                                                     *.MDB/\
+                                                     *.idx/\
+                                                     *.dbf/\
+                                                     *.cdx/\
+                                                     *.fpt/\
+                                                     *.IDX/\
+                                                     *.DBF/\
+                                                     *.CDX/\
+                                                     *.FPT/
+                                                     |- EOT
+      'veto files'                                => @(EOT/L),
+                                                     /.zfs/\
+                                                     $RECYCLE.BIN/\
+                                                     Network Trash Folder/\
+                                                     Temporary Items/\
+                                                     .AppleDouble/\
+                                                     .AppleDesktop/\
+                                                     Network Trash Folder/\
+                                                     TheVolumeSettingsFolder/\
+                                                     Icon?/\
+                                                     .Trashes/\
+                                                     ._.Trashes/\
+                                                     :2eDS_Store/\
+                                                     .DS_Store/\
+                                                     ._*/
+                                                     |- EOT
+
+    },
     globalabsentoptions => [
       'map untrusted to domain',              # * Remove default settings put
     ]
@@ -60,4 +95,3 @@ class profile::app::samba::member {
     #unix_nss_info => yes,
   }
 }
-# vim: sw=2:ai:nu expandtab
