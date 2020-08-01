@@ -18,11 +18,9 @@ class profile::router {
   # make sure routes are up to date
   cron::job { 'iptv-routes':
     command     => "test -x ${codedir}/iptv/getroutes && ${codedir}/iptv/getroutes",
-    minute      => 51,
-    hour        => '*/6',
+    minute      => 30,
+    hour        => '4,12,16',
     environment => [ 'PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"' ],
   }
 
 }
-#
-# vim: sw=2:ai:nu expandtab

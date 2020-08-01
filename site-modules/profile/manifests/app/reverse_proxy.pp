@@ -1,6 +1,7 @@
-#
-#
+# @summary certificates and reverse proxy
+
 class profile::app::reverse_proxy {
+# TODO find a way of providing a common list of certs
 
   if $facts['os']['family'] != 'Debian' {
     fail("${title} is only for Debian")
@@ -31,7 +32,8 @@ class profile::app::reverse_proxy {
 
 # This options file allows for a working nginx config even if the certs do not exist
 # The hook below on certificate creation works together with the include_files in the host
-  file { '/etc/nginx/options-ssl-nginx.conf':
+  $nginx_conf = '/etc/nginx/options-ssl-nginx.conf'
+  file { $nginx_conf:
     require => Package[nginx],
     content => @("EOT"/),
                ssl_certificate           /etc/letsencrypt/live/${trusted['certname']}/fullchain.pem;
@@ -39,9 +41,20 @@ class profile::app::reverse_proxy {
                | EOT
   }
 
+  file { '/etc/letsencrypt/renewal-hooks/deploy/nginx-conf':
+    require => File[$nginx_conf],
+    content => @("EOT"/),
+               #!/usr/bin/env bash
+               if [[ -f ${nginx_conf} ]] 
+               then
+                 ln -s ${nginx_conf} /etc/nginx/snippets
+                 systemctl restart nginx
+               fi
+               | EOT
+  }
+
   class { 'letsencrypt':
     email               => "ca@${facts['domain']}",
-#TODO: add hook to link ssl options to snippets
     renew_cron_ensure   => 'present',
     renew_cron_minute   => 0,
     renew_cron_hour     => 6,
