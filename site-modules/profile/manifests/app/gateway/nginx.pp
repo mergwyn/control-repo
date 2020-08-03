@@ -1,6 +1,6 @@
-# @summary certificates and reverse proxy
+# @summary Set up secure nginx reverse proxy
 
-class profile::app::reverse_proxy {
+class profile::app::gateway::nginx {
 # TODO find a way of providing a common list of certs
 
   if $facts['os']['family'] != 'Debian' {
@@ -28,54 +28,11 @@ class profile::app::reverse_proxy {
     require => Package[nginx],
   }
 
-  package { 'python3-certbot-nginx': }
-
-# This options file allows for a working nginx config even if the certs do not exist
-# The hook below on certificate creation works together with the include_files in the host
+# TODO pass in as parameter
   $nginx_conf = '/etc/nginx/options-ssl-nginx.conf'
-  file { $nginx_conf:
-    require => Package[nginx],
-    content => @("EOT"/),
-               ssl_certificate           /etc/letsencrypt/live/${trusted['certname']}/fullchain.pem;
-               ssl_certificate_key       /etc/letsencrypt/live/${trusted['certname']}/privkey.pem;
-               | EOT
-  }
 
-  file { '/etc/letsencrypt/renewal-hooks/deploy/nginx-conf':
-    require => File[$nginx_conf],
-    content => @("EOT"/),
-               #!/usr/bin/env bash
-               if [[ -f ${nginx_conf} ]] 
-               then
-                 ln -s ${nginx_conf} /etc/nginx/snippets
-                 systemctl restart nginx
-               fi
-               | EOT
-  }
 
-  class { 'letsencrypt':
-    email               => "ca@${facts['domain']}",
-    renew_cron_ensure   => 'present',
-    renew_cron_minute   => 0,
-    renew_cron_hour     => 6,
-    renew_cron_monthday => '1-31/2',
-  }
-
-  letsencrypt::certonly { $trusted['certname']:
-    plugin               => 'nginx',
-    domains              => [
-                              $trusted['domain'],
-                              $trusted['certname'],
-                              "foxtrot.${$trusted['domain']}",
-                              "tango.${$trusted['domain']}",
-                              "zulu.${$trusted['domain']}",
-#  "echo.%{trusted.domain}"
-                            ],
-    manage_cron          => true,
-    cron_success_command => 'systemctl reload nginx',
-    suppress_cron_output => true,
-  }
-
+# TODO pass certdir as parameter?
   $certdir = "/etc/letsencrypt/live/${trusted['certname']}"
   $pem     = "${certdir}/fullchain.pem"
   $key     = "${certdir}/privkey.pem"
@@ -97,8 +54,8 @@ class profile::app::reverse_proxy {
     listen_port   => 80,
     ssl           => true,
     ssl_redirect  => true,
-    ssl_cert      => $pem,
-    ssl_key       => $key,
+    ssl_cert      => false,
+    ssl_key       => false,
     include_files => [ '/etc/nginx/snippets/options-ssl-nginx.conf*' ]
   }
 
@@ -134,14 +91,15 @@ class profile::app::reverse_proxy {
     proxy       => "http://tango.${trusted['domain']}:8989",
   }
   nginx::resource::server { 'tango-transmission':
-    server_name  => [ "tango.${trusted['domain']}" ],
-    listen_port  => 9091,
-    proxy        => "http://tango.${trusted['domain']}:9091",
-    ssl_port     => 9092,
-    ssl          => true,
-    ssl_redirect => true,
-    ssl_cert     => $pem,
-    ssl_key      => $key,
+    server_name   => [ "tango.${trusted['domain']}" ],
+    listen_port   => 9091,
+    proxy         => "http://tango.${trusted['domain']}:9091",
+    ssl_port      => 9092,
+    ssl           => true,
+    ssl_redirect  => true,
+    ssl_cert      => false,
+    ssl_key       => false,
+    include_files => [ '/etc/nginx/snippets/options-ssl-nginx.conf*' ]
   }
 #  #
 ##  nginx::resource::upstream { 'plex_upstream':
