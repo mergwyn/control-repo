@@ -15,6 +15,7 @@ class profile::app::samba::shares {
 
   samba::share { 'users':
     path    => '/home',
+    mode    => '0755',
     options => {
       'comment'                   => 'Private user folder',
       'read only'                 => 'No',
