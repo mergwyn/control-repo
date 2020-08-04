@@ -31,7 +31,6 @@ class profile::app::transmission (
   }
 
   systemd::dropin_file { 'transmission-sssd-wait.conf':
-    name    => 'sssd-wait.conf',
     unit    => "${service}.service",
     content => @("EOT"/),
                [Unit]
@@ -40,7 +39,6 @@ class profile::app::transmission (
     notify  => Service[$service],
   }
   systemd::dropin_file { 'transmission-user.conf':
-    name    => 'user.conf',
     unit    => "${service}.service",
     content => @("EOT"/),
                [Service]
