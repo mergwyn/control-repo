@@ -2,14 +2,16 @@
 #
 
 class profile::app::transmission (
-  String $service  = 'transmission-daemon',
+  String $owner   = 'media',
+  String $group   = '513',
+  String $service = 'transmission-daemon',
   ) {
 
   class { 'transmission':
     home_dir                   => '/home/media/.config/transmission-daemon',
     umask                      => 2,
-    owner                      => 'media',
-    group                      => '513',
+    owner                      => $owner,
+    group                      => $group,
 
     download_root              => '/srv/media/torrent/',
     download_dir               => 'complete',
@@ -29,12 +31,23 @@ class profile::app::transmission (
   }
 
   systemd::dropin_file { 'transmission-sssd-wait.conf':
-      unit    => "${service}.service",
-      content => @("EOT"/),
-                 [Unit]
-                 After=nss-user-lookup.target
-                 | EOT
-      notify  => Service[$service],
+    name    => 'sssd-wait.conf',
+    unit    => "${service}.service",
+    content => @("EOT"/),
+               [Unit]
+               After=nss-user-lookup.target
+               | EOT
+    notify  => Service[$service],
+  }
+  systemd::dropin_file { 'transmission-user.conf':
+    name    => 'user.conf',
+    unit    => "${service}.service",
+    content => @("EOT"/),
+               [Service]
+               User=${owner}
+               Group=${group}
+               | EOT
+    notify  => Service[$service],
   }
 
 }

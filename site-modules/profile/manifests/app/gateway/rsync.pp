@@ -6,8 +6,11 @@ class profile::app::gateway::rsync {
     fail("${title} is only for Debian")
   }
 
+  class { 'rsync::server': }
+
   # TODO pass path in as parameter?
   $base = '/etc/letsencrypt/live/'
+
   rsync::server::module { 'cert':
     path           => $base,
     incoming_chmod => false,
