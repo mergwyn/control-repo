@@ -27,7 +27,7 @@ fixtures:
       repo: https://github.com/voxpupuli/puppet-dhcp
       branch: master
     transmission:
-      repo: https://github.com/mergwyn/puppet-transmission
+      repo: https://github.com/craigwatson/puppet-transmission
       branch: master
     webmin:
       repo: https://github.com/rehanone/puppet-webmin
