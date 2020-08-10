@@ -6,7 +6,7 @@ classes:
 # environment
 defaults::workgroup:       'THECLARKHOME'
 defaults::realm:           'THECLARKHOME.COM'
-defaults::puppetmaster:    'echo.%{domain}'
+defaults::puppetmaster:    'echo.%{trusted.domain}'
 # user
 defaults::adminemail:      'root@%{domain}'
 defaults::adminuser:       'administrator'
