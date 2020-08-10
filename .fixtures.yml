@@ -6,34 +6,34 @@ fixtures:
   repositories:
     transmission:
       repo: https://github.com/craigwatson/puppet-transmission
-      ref: master
+      branch: master
     ssh:
       repo: https://github.com/mergwyn/puppet-module-ssh
-      ref: master
+      branch: master
     augeasproviders_shellvar:
       repo: https://github.com/mergwyn/augeasproviders_shellvar
-      ref: master
+      branch: master
     managedmac:
       repo: https://github.com/mergwyn/mergwyn-managedmac
-      ref: v0.8.2
+      branch: v0.8.2
     jackett:
       repo: https://github.com/mergwyn/mergwyn-jackett
-      ref: master
+      branch: master
     radarr:
       repo: https://github.com/mergwyn/mergwyn-radarr
-      ref: master
+      branch: master
     ddclient:
       repo: https://github.com/mergwyn/puppet-ddclient
-      ref: master
+      branch: master
     dhcp:
       repo: https://github.com/voxpupuli/puppet-dhcp
-      ref: master
+      branch: master
     webmin:
       repo: https://github.com/rehanone/puppet-webmin
-      ref: master
+      branch: master
     backuppc:
       repo: https://github.com/mergwyn/mergwyn-backuppc
-      ref: master
+      branch: master
   forge_modules:
     augeas:
       repo: camptocamp-augeas
