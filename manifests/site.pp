@@ -1,7 +1,11 @@
 #
 
 lookup('classes', Array[String], 'deep', []).contain
-include "role::${$trusted['extensions']['pp_role']}"
+if $trusted['extensions']['pp_role'] {
+  include "role::${$trusted['extensions']['pp_role']}"
+} else {
+  warn("pp_role is not set")
+}
 
 node default {
 
