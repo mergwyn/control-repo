@@ -58,7 +58,7 @@ fixtures:
       ref: 1.9.0
     ssh:
       repo: ghoneycutt-ssh
-      ref: 3.61.2
+      ref: 3.62.0
     augeasproviders_core:
       repo: herculesteam-augeasproviders_core
       ref: 2.6.0

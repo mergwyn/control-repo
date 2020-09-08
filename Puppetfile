@@ -10,7 +10,7 @@ mod 'CraigWatson1987-transmission', :git => 'https://github.com/craigwatson/pupp
 mod 'example42-network', '3.5.3'
 mod 'gentoo-portage', '2.3.0'
 mod 'ghoneycutt-common', '1.9.0'
-mod 'ghoneycutt-ssh', '3.61.2'
+mod 'ghoneycutt-ssh', '3.62.0'
 mod 'herculesteam-augeasproviders_core', '2.6.0'
 mod 'herculesteam-augeasproviders_pam', '2.2.1'
 #mod 'herculesteam-augeasproviders_shellvar', '4.0.0'
