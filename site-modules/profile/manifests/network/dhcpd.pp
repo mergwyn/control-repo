@@ -50,7 +50,7 @@ class profile::network::dhcpd (
   dhcp::host { 'india':
     mac     => '00:16:3e:93:c6:21',
     ip      => '192.168.11.41',
-    options => { routers => '192.168.11.250' }
+    #options => { routers => '192.168.11.250' }
   }
 
   # Hosts that just need names,
