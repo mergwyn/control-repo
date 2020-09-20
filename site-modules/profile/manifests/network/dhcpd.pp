@@ -48,9 +48,14 @@ class profile::network::dhcpd (
     mac     => '7c:1c:4e:48:06:e2',
     options => { routers => '192.168.11.250' }
   }
+  dhcp::host { 'india':
+    mac     => '00:16:3e:93:c6:21',
+    ip      => '192.168.11.41',
+    options => { routers => '192.168.11.250' }
+  }
   dhcp::host { 'tango':
     mac     => '00:16:3e:01:f8:9a',
-    options => { routers => '192.168.11.41' }
+    options => { routers => '192.168.11.250' }
   }
 
   # Hosts that just need names,
