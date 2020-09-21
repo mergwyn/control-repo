@@ -7,9 +7,6 @@ fixtures:
     transmission:
       repo: https://github.com/craigwatson/puppet-transmission
       branch: master
-    ssh:
-      repo: https://github.com/mergwyn/puppet-module-ssh
-      branch: master
     augeasproviders_shellvar:
       repo: https://github.com/mergwyn/augeasproviders_shellvar
       branch: master
