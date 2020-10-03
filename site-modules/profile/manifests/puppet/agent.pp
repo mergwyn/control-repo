@@ -18,6 +18,7 @@ class profile::puppet::agent {
 #    packages => 'puppet-agent',
 #    version  => '6.16.*'
 # }
+  apt::pin { 'puppet-6.16': ensure => absent }
   package { 'puppetlabs-release-pc1': ensure => absent }
 
   file { '/etc/profile.d/puppet.sh':
