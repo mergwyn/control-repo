@@ -13,11 +13,11 @@ class profile::puppet::agent {
     version  => "${ver[0]}*"
   }
 # TODO: remove workaround
-  apt::pin { 'puppet-6.16':
-    priority => 999,
-    packages => 'puppet-agent',
-    version  => '6.16.*'
-  }
+#  apt::pin { 'puppet-6.16':
+#    priority => 999,
+#    packages => 'puppet-agent',
+#    version  => '6.16.*'
+# }
   package { 'puppetlabs-release-pc1': ensure => absent }
 
   file { '/etc/profile.d/puppet.sh':
