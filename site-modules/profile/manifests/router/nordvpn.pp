@@ -3,18 +3,26 @@
 class profile::router::nordvpn {
 
 # Install software
+  exec { 'apt-get-update':
+    command     => '/usr/bin/apt-get update',
+    refreshonly => true,
+  }
+  $version = 'nordvpn-release_1.0.0_all.deb'
+  $repo = "https://repo.nordvpn.com/deb/nordvpn/debian/pool/main/${version}"
+  $source = "/opt/puppetlabs/puppet/cache/${version}"
+  archive {$source:
+    ensure => present,
+    source => $repo,
+    notify => Exec['apt-get-update'],
+  }
+
   $aptpackages = [
     'net-tools',
     'traceroute',
+    'nordvpn',
   ]
   package { $aptpackages: ensure   => present, }
 
-  $version = 'nordvpn-release_1.0.0_all.deb'
-  $repo = "https://repo.nordvpn.com/deb/nordvpn/debian/pool/main/${version}"
-  package {'nordvpn':
-    provider => dpkg,
-    source   => $repo,
-  }
 
 # Setup nord
 #nordvpn login
