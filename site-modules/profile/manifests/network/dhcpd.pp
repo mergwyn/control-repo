@@ -41,7 +41,8 @@ class profile::network::dhcpd (
   dhcp::host { 'switch2': mac => 'a0:40:a0:71:7e:ce', ip => '192.168.11.2', }
   dhcp::host { 'papa':    mac => '00:16:3e:fc:2a:87', ip => '192.168.11.240', }
   dhcp::host { 'romeo':   mac => '00:16:3e:fb:dc:5e', ip => '192.168.11.250', }
-  dhcp::host { 'yankee':  mac => '00:16:3e:97:62:2b', ip => '192.168.11.251', }
+  dhcp::host { 'juliet':  mac => '00:16:3e:8d:d3:af', ip => '192.168.11.251', }
+  dhcp::host { 'yankee':  mac => '00:16:3e:97:62:2b', ip => '192.168.11.252', }
 
   # Hosts with different gateway (VPN)
   dhcp::host { 'LGwebOSTV':
