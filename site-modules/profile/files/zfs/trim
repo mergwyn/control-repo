@@ -5,5 +5,5 @@ zpool list -H -o health,name 2>&1 | \
   awk 'BEGIN {FS="\t"} {if ($1 ~ /^ONLINE/) print $2}' | \
 while read -r pool
 do
-  ( zpool get all rpool | grep -sq trim ) && zpool trim "$pool"
+  ( zpool get all "$pool" | grep -sq trim ) && zpool trim "$pool"
 done
