@@ -58,6 +58,10 @@ class profile::network::dhcpd (
     mac     => '00:16:3e:01:f8:9a',
     options => { routers => '192.168.11.250' }
   }
+    dhcp::host { 'kilo':
+    mac     => '00:16:3e:5c:39:e0',
+    options => { routers => '192.168.11.251' }
+  }
 
   # Hosts that just need names,
   dhcp::host { 'DELLA3F95F':            mac => '08:00:37:a3:f9:5f' }
