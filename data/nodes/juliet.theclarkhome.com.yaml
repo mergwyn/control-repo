@@ -1,0 +1,4 @@
+---
+
+profile::router::type: nordvpn
+profile::router::iptv: false
