@@ -19,13 +19,14 @@ class profile::router::nordvpn {
   $aptpackages = [
     'net-tools',
     'traceroute',
+    'iptables-persistent',
     'nordvpn',
   ]
   package { $aptpackages: ensure   => present, }
 
 
 # Setup nord
-#nordvpn login
+#nordvpn login -u-username <value> --password <value>
 #nordvpn connect
 #nordvpn whitelist add subnet 192.168.11.0/24
 #nordvpn set technology NordLynx
