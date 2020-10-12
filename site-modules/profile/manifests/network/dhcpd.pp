@@ -61,7 +61,10 @@ class profile::network::dhcpd (
   }
     dhcp::host { 'kilo':
     mac     => '00:16:3e:5c:39:e0',
-    options => { routers => '192.168.11.253' }
+    options => {
+      routers     => '192.168.11.253'
+      nameservers => '192.168.11.253',
+    }
   }
 
   # Hosts that just need names,
