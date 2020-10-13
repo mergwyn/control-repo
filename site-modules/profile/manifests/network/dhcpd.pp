@@ -43,6 +43,7 @@ class profile::network::dhcpd (
   dhcp::host { 'romeo':   mac => '00:16:3e:fb:dc:5e', ip => '192.168.11.250', }
   dhcp::host { 'juliet':  mac => '00:16:3e:8d:d3:af', ip => '192.168.11.251', }
   dhcp::host { 'yankee':  mac => '00:16:3e:97:62:2b', ip => '192.168.11.252', }
+  dhcp::host { 'victor':  mac => '00:16:3e:9a:b2:5a', ip => '192.168.11.253', }
 
   # Hosts with different gateway (VPN)
   dhcp::host { 'LGwebOSTV':
@@ -57,6 +58,13 @@ class profile::network::dhcpd (
   dhcp::host { 'tango':
     mac     => '00:16:3e:01:f8:9a',
     options => { routers => '192.168.11.250' }
+  }
+    dhcp::host { 'kilo':
+    mac     => '00:16:3e:5c:39:e0',
+    options => {
+      routers             => '192.168.11.253',
+      domain-name-servers => '192.168.11.253',
+    }
   }
 
   # Hosts that just need names,
