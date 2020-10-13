@@ -1,6 +1,6 @@
 #
 
-class profile::network::dhcpd (
+class profile::app::dhcpd (
   Optional[Enum['primary','secondary']] $role         = undef,
   Optional[Stdlib::IP::Address]         $peer_address = undef,
   ) {
@@ -41,9 +41,6 @@ class profile::network::dhcpd (
   dhcp::host { 'switch2': mac => 'a0:40:a0:71:7e:ce', ip => '192.168.11.2', }
   dhcp::host { 'papa':    mac => '00:16:3e:fc:2a:87', ip => '192.168.11.240', }
   dhcp::host { 'romeo':   mac => '00:16:3e:fb:dc:5e', ip => '192.168.11.250', }
-  dhcp::host { 'juliet':  mac => '00:16:3e:8d:d3:af', ip => '192.168.11.251', }
-  dhcp::host { 'yankee':  mac => '00:16:3e:97:62:2b', ip => '192.168.11.252', }
-  dhcp::host { 'victor':  mac => '00:16:3e:9a:b2:5a', ip => '192.168.11.253', }
 
   # Hosts with different gateway (VPN)
   dhcp::host { 'LGwebOSTV':
@@ -59,13 +56,7 @@ class profile::network::dhcpd (
     mac     => '00:16:3e:01:f8:9a',
     options => { routers => '192.168.11.250' }
   }
-    dhcp::host { 'kilo':
-    mac     => '00:16:3e:5c:39:e0',
-    options => {
-      routers             => '192.168.11.253',
-      domain-name-servers => '192.168.11.253',
-    }
-  }
+  profile::app::dhcpd::vpnhost { 'kilo': mac => '00:16:3e:5c:39:e0' }
 
   # Hosts that just need names,
   dhcp::host { 'DELLA3F95F':            mac => '08:00:37:a3:f9:5f' }
