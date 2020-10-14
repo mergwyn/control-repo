@@ -43,10 +43,8 @@ class profile::app::dhcpd (
   dhcp::host { 'romeo':   mac => '00:16:3e:fb:dc:5e', ip => '192.168.11.250', }
 
   # Hosts with different gateway (VPN)
-  dhcp::host { 'LGwebOSTV':
-    mac     => '7c:1c:4e:48:06:e2',
-    options => { routers => '192.168.11.250' }
-  }
+  profile::app::dhcpd::vpnhost { 'LGwebOSTV': mac => '7c:1c:4e:48:06:e2', }
+  profile::app::dhcpd::vpnhost { 'kilo':      mac => '00:16:3e:5c:39:e0' }
   dhcp::host { 'india':
     mac     => '00:16:3e:93:c6:21',
     ip      => '192.168.11.41',
@@ -56,7 +54,6 @@ class profile::app::dhcpd (
     mac     => '00:16:3e:01:f8:9a',
     options => { routers => '192.168.11.250' }
   }
-  profile::app::dhcpd::vpnhost { 'kilo': mac => '00:16:3e:5c:39:e0' }
 
   # Hosts that just need names,
   dhcp::host { 'DELLA3F95F':            mac => '08:00:37:a3:f9:5f' }
