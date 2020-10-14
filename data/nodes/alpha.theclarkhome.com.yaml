@@ -3,8 +3,8 @@
 classes:
   - profile::platform::baseline::debian::netplan
 
-profile::network::dhcpd::role:         primary
-profile::network::dhcpd::peer_address: 192.168.11.22
+profile::app::dhcpd::role:         primary
+profile::app::dhcpd::peer_address: 192.168.11.22
 
 profile::platform::baseline::debian::netplan::ethernets:
   eth0:
