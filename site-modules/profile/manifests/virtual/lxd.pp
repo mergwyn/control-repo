@@ -31,7 +31,7 @@ class profile::virtual::lxd {
     environment => [ 'PATH="/usr/sbin:/usr/bin:/sbin:/bin"' ],
     command     => '/opt/scripts/bin/lxdbackup',
     user        => 'gary',
-    minute      => 45,
+    minute      => fqdn_rand(59, 'lxdbackup'),
     hour        => 2,
   }
 
