@@ -24,6 +24,17 @@ class profile::virtual::lxd {
   }
 
   $bindir='/usr/local/bin'
+
+  include profile::app::scripts
+  include cron
+  cron::job { 'lxdbackup':
+    environment => [ 'PATH="/usr/sbin:/usr/bin:/sbin:/bin"' ],
+    command     => '/opt/scripts/bin/lxdbackup',
+    user        => 'gary',
+    minute      => 45,
+    hour        => 2,
+  }
+
 #'  include profile::git
 #'
 #'  $codedir='/opt/code/lxdsnap'
