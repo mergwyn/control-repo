@@ -32,7 +32,7 @@ class profile::virtual::lxd {
     command     => '/opt/scripts/bin/lxdbackup',
     user        => 'gary',
     minute      => fqdn_rand(59, 'lxdbackup'),
-    hour        => 2,
+    hour        => fqdn_rand(5, 'lxdbackup'),
   }
 
 #'  include profile::git
