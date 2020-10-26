@@ -40,7 +40,7 @@ class profile::virtual::lxd {
   include profile::app::scripts
   include cron
   cron::job { 'lxdbackup':
-    environment => [ 'PATH="/usr/sbin:/usr/bin:/sbin:/bin"' ],
+    environment => [ 'PATH="usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin"', ],
     command     => '/opt/scripts/bin/lxdbackup',
     user        => 'gary',
     minute      => fqdn_rand(59, 'lxdbackup'),
