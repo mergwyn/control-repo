@@ -55,7 +55,7 @@ class profile::app::dhcpd (
 # Hosts with different gateway (VPN)
   profile::app::dhcpd::vpnhost { 'india':        mac => '00:16:3e:93:c6:21', ip  => '192.168.11.41', }
   profile::app::dhcpd::vpnhost { 'kilo':         mac => '00:16:3e:5c:39:e0', }
-  profile::app::dhcpd::vpnhost { 'tango':        mac => '00:16:3e:01:f8:9a', }
+  #profile::app::dhcpd::vpnhost { 'tango':        mac => '00:16:3e:01:f8:9a', }
   profile::app::dhcpd::vpnhost { 'LGwebOSTV':    mac => '7c:1c:4e:48:06:e2', }
   profile::app::dhcpd::vpnhost { 'bedroom-roku': mac => '10:59:32:02:bb:2a', }
   profile::app::dhcpd::vpnhost { 'kitchen-roku': mac => 'c8:3a:6b:58:ef:9e', }
