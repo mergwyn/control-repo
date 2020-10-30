@@ -9,6 +9,7 @@ class role::main_server {
 
   include profile::app::backuppc::server
   include profile::app::backuppc::client
+  include profile::app::gpo::clean
   include profile::app::timemachine
   include profile::app::samba::shares
   include profile::app::nginx::webdav
