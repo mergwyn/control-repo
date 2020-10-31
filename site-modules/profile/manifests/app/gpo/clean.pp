@@ -1,7 +1,7 @@
 #
 class profile::app::gpo::clean {
 
-  $codedir   = '/opt/'
+  $scriptdir = '/opt/scripts'
   $owner     = 'gary'
 
   # cron job to run scripts
