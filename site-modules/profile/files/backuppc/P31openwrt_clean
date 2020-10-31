@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# Script to take a backup of any running openwrt containers
+# Intended to run as part of backuppc post script to remove successfully backed up files
+
+readonly where=/var/backups
+
+level=$1
+status=$2
+echo "$0: $level $status"
+
+[[ ${status} = 1 ]] && rm "$where/openwrt-backup-*"

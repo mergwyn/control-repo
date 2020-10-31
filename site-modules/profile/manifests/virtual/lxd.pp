@@ -52,4 +52,20 @@ class profile::virtual::lxd {
     mode   => '0555',
     source => 'puppet:///modules/profile/upgrade_lxd'
   }
+
+  # support for openwrt backup as part of backuppc run
+  $scripts='/etc/backuppc-scripts/'
+  $preuser="${scripts}DumpPreUser/"
+  $postuser="${scripts}DumpPostUser/"
+
+  file { "${preuser}/S31openwrt_backup":
+    ensure => present,
+    source => 'puppet:///modules/profile/backuppc/S31openwrt_backup',
+    mode   => '0555',
+  }
+  file { "${postuser}/P31openwrt_clean":
+    ensure => present,
+    source => 'puppet:///modules/profile/backuppc/P31openwrt_clean',
+    mode   => '0555',
+  }
 }

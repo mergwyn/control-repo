@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+# Script to take a backup of any running openwrt containers
+# Intended to run as part of backuppc pre script
+
+readonly where=/var/backups
+readonly when=$(date +%d%m%y)
+
+
+echo "$0: $*"
+
+cd "$where" || exit 1
+
+# Get list of running containers
+container_list() {
+  lxc list -c ns | awk '!/NAME/{ if ( $4 == "RUNNING" ) print $2}';
+}
+
+declare -a containers
+mapfile -t containers < <(container_list)
+
+for container in "${containers[@]}"; do
+  case $(lxc exec "${container}" -- sed -ne '/^NAME=/s/.*="\(.*\)"$/\1/p' /etc/os-release) in
+  OpenWrt)
+    backupname="openwrt-backup-${container}-${when}.tar.gz"
+    backup="/tmp/${backupname}"
+
+    lxc exec "${container}" -- sysupgrade -b "${backup}"
+    lxc file pull "${container}${backup}" "${where}/"
+    chmod go-rwx "${where}/${backupname}"
+    ;;
+  esac
+done
