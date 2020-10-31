@@ -6,7 +6,7 @@ class profile::app::gpo::clean {
 
   # cron job to run scripts
   include cron
-  include profile::scripts
+  include profile::app::scripts
 
   cron::job { 'GPO':
     environment => [ 'PATH="/usr/sbin:/usr/bin:/sbin:/bin"' ],
