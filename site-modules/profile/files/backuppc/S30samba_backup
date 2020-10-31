@@ -17,81 +17,85 @@
 #
 
 FROMWHERE=/var/lib/samba
-case `hostname -s` in
+_hostname=$(hostname -s)
+case $_hostname in
 foxtrot)
-	WHERE=/srv/backup/`hostname -s`
-	;;
+  WHERE=/srv/backup/${_hostname}
+  ;;
 *)
-	WHERE=/var/backups
-	;;
+  WHERE=/var/backups
+  ;;
 esac
-if [ -n "$1" ] && [ "$1" = "-h" -o "$1" = "--usage" ]; then
-	echo "samba_backup [provisiondir] [destinationdir]"
-	echo "Will backup your provision located in provisiondir to archive stored in destinationdir"
-	echo "Default provisiondir: $FROMWHERE"
-	echo "Default destinationdir: $WHERE"
-	exit 0
+if [ -n "$1" ] ; then
+  if [ "$1" = "-h" ] || [ "$1" = "--usage" ]; then
+    echo "samba_backup [provisiondir] [destinationdir]"
+    echo "Will backup your provision located in provisiondir to archive stored in destinationdir"
+    echo "Default provisiondir: $FROMWHERE"
+    echo "Default destinationdir: $WHERE"
+    exit 0
+  fi
 fi
 
-[ -n "$1" -a -d "$1" ]&&FROMWHERE=$1
-[ -n "$2" -a -d "$2" ]&&WHERE=$2
+if [ -n "$1" ] && [ -d "$1" ]; then FROMWHERE=$1; fi
+if [ -n "$2" ] && [ -d "$2" ]; then WHERE=$2; fi
 
-echo $0: $FROMWHERE $WHERE
+echo "$0: $FROMWHERE $WHERE"
 
 DIRS="private sysvol"
 #Number of days to keep the backup
 DAYS="-daystart -mtime +2"
-WHEN=`date +%d%m%y`
+WHEN=$(date +%d%m%y)
 
-cd $FROMWHERE
+cd "$FROMWHERE" || exit 1
 for d in $DIRS;do
-        relativedirname=`find . -type d -name "$d" -prune`
-        relativedirname=${relativedirname:-./$d/*}
-	n=`echo $d | sed 's/\//_/g'`
-	case "$d" in
-	"private")
-		for db in tdb ldb
-		do
-			find $relativedirname -name "*.$db.bak" -exec rm {} \;
-			for ldb in `find $relativedirname -name "*.$db" ! -name '*netlogon_creds_cli.tdb'`; do
-				tdbbackup $ldb
-				if [ $? -ne 0 ]; then
-					echo "Error while backuping $ldb"
-					exit 1
-				fi
-			done
-		done
-		tar -cjf ${WHERE}/samba4_${n}.${WHEN}.tar.bz2  $relativedirname \
-			--exclude='*.ldb' --exclude='*.tdb' --exclude=*.tmp --exclude=./private/smbd.tmp --exclude=ldapi \
-			>/dev/null 2>&1
-		res=$?
-		case $res in
-		0)	;;
-		1)	#echo "Error $res while archiving ${WHERE}/samba4_${n}.${WHEN}.tar.bz2"
-			;;
-		*)	echo "Error $res while archiving ${WHERE}/samba4_${n}.${WHEN}.tar.bz2"
+  relativedirname=$(find . -type d -name "$d" -prune)
+  relativedirname=${relativedirname:-./$d/*}
+  n=$(echo "$d" | sed 's/\//_/g')
+  case "$d" in
+  "private")
+    for db in tdb ldb
+    do
+      find "$relativedirname" -name "*.$db.bak" -exec rm {} \;
+      find "$relativedirname" -name "*.$db" ! -name '*netlogon_creds_cli.tdb' |
+      while read -r ldb ; do
+        if tdbbackup "$ldb"; then
+          echo "Error while backuping $ldb"
+          exit 1
+        fi
+      done
+    done
+    tar -cjf \
+      --exclude='*.ldb' --exclude='*.tdb' --exclude='*.tmp' --exclude=./private/smbd.tmp --exclude=ldapi --exclude='*.sock'\
+      "${WHERE}/samba4_${n}.${WHEN}.tar.bz2"  "$relativedirname" \
+      >/dev/null 2>&1
+    res=$?
+    case $res in
+    0)  ;;
+    1)  #echo "Error $res while archiving ${WHERE}/samba4_${n}.${WHEN}.tar.bz2"
+      ;;
+    *)  echo "Error $res while archiving ${WHERE}/samba4_${n}.${WHEN}.tar.bz2"
                         exit 1
-			;;
-		esac
-		find $relativedirname -name "*.ldb.bak" -exec rm {} \;
-		find $relativedirname -name "*.tdb.bak" -exec rm {} \;
-		find $WHERE -name "samba4_*bz2" $DAYS -exec rm  {} \; >/dev/null 2>&1
-		;;
-	*)
-		TARGET=${WHERE}/${n}.${WHEN}
-		tar --exclude=.osync_monitor --exclude=.osync_workdir -cjf ${TARGET}.tar.bz2  $relativedirname #>/dev/null 2>&1
-		res=$?
-		case $res in
-		0)	;;
-		1)	echo "Error $res while archiving ${TARGET}.tar.bz2"
-			;;
-		*)	echo "Error $res while archiving ${TARGET}.tar.bz2"
-			exit 1
-			;;
-		esac
-		find $WHERE -name "${n}*bz2" $DAYS -exec rm  {} \; >/dev/null 2>&1
-		;;
-	esac
+      ;;
+    esac
+    find "$relativedirname" -name "*.ldb.bak" -exec rm {} \;
+    find "$relativedirname" -name "*.tdb.bak" -exec rm {} \;
+    find "$WHERE" -name "samba4_*bz2" "$DAYS" -exec rm  {} \; >/dev/null 2>&1
+    ;;
+  *)
+    TARGET="${WHERE}/${n}.${WHEN}"
+    tar --exclude=.osync_monitor --exclude=.osync_workdir -cjf "${TARGET}.tar.bz2"  "$relativedirname" #>/dev/null 2>&1
+    res=$?
+    case $res in
+    0)  ;;
+    1)  echo "Error $res while archiving ${TARGET}.tar.bz2"
+      ;;
+    *)  echo "Error $res while archiving ${TARGET}.tar.bz2"
+      exit 1
+      ;;
+    esac
+    find "$WHERE" -name "${n}*bz2" "$DAYS" -exec rm  {} \; >/dev/null 2>&1
+    ;;
+  esac
 done
 
 
