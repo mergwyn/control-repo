@@ -8,4 +8,6 @@ level=$1
 status=$2
 echo "$0: $level $status"
 
-[[ ${status} = 1 ]] && rm "$where/openwrt-backup-"*
+if [[ ${status} = 1 ]] ; then
+  rm "$where/openwrt-backup-"* || true
+fi
