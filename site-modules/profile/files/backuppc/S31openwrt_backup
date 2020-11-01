@@ -21,12 +21,22 @@ mapfile -t containers < <(container_list)
 for container in "${containers[@]}"; do
   case $(lxc exec "${container}" -- sed -ne '/^NAME=/s/.*="\(.*\)"$/\1/p' /etc/os-release) in
   OpenWrt)
+    # shellcheck disable=SC2012
+    last=$(ls -t openwrt-backup-"${container}"-*.tar.gz | head -1)
+    echo "Running sysupgrade -b for ${container}"
     backupname="openwrt-backup-${container}-${when}.tar.gz"
     backup="/tmp/${backupname}"
 
     lxc exec "${container}" -- sysupgrade -b "${backup}"
     lxc file pull "${container}${backup}" "${where}/"
-    chmod go-rwx "${where}/${backupname}"
+    chmod go-rwx "${backupname}"
+    if [[ -z "${last}" ]] ; then
+      if ! diff "${last}" "${backupname}" ; then
+        echo backup not changed, deleting "${backupname}"
+        rm "${backupname}"
+      fi
+    fi
+    date > openwrt-last
     ;;
   esac
 done
