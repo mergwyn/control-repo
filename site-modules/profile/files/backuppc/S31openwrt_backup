@@ -30,7 +30,7 @@ for container in "${containers[@]}"; do
     lxc exec "${container}" -- sysupgrade -b "${backup}"
     lxc file pull "${container}${backup}" "${where}/"
     chmod go-rwx "${backupname}"
-    if [[ -z "${last}" ]] ; then
+    if [[ -n "${last}" ]] ; then
       if ! diff "${last}" "${backupname}" ; then
         echo backup not changed, deleting "${backupname}"
         rm "${backupname}"
