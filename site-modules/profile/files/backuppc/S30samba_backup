@@ -93,7 +93,7 @@ for d in $DIRS;do
       exit 1
       ;;
     esac
-    find "$WHERE" -name "${n}*bz2" "$DAYS" -exec rm  {} \; >/dev/null 2>&1
+    find "$WHERE" -name "${n}*bz2" "$DAYS" -exec rm  {} \; >/dev/null 2>&1 || true
     ;;
   esac
 done
