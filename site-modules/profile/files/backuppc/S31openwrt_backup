@@ -31,12 +31,16 @@ for container in "${containers[@]}"; do
     lxc file pull "${container}${backup}" "${where}/"
     chmod go-rwx "${backupname}"
     if [[ -n "${last}" ]] ; then
-      if ! diff "${last}" "${backupname}" ; then
+      if diff "${last}" "${backupname}" ; then
         echo backup not changed, deleting "${backupname}"
         rm "${backupname}"
       fi
     fi
-    date > openwrt-last
+    mapfile -t backups < <(ls "openwrt-backup-${container}"*)
+    for ((n=3; n<=${#backups[@]}; n++)); do
+      rm "${backups[$n]}"
+    done
+    date > "openwrt-${container}-last"
     ;;
   esac
 done
