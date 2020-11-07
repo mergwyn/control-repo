@@ -24,7 +24,7 @@ class profile::app::iptv {
       {
         command => "test -x ${codedir}/iptv/get-channels && ${codedir}/iptv/get-channels",
         minute  => 20,
-        hour    => '4,12,16',
+        hour    => '*',
       },
     ],
     environment => [ 'PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"' ],
