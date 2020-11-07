@@ -19,6 +19,9 @@ profile::base::packages::objects:
   update-notifier-common:                         {}
   landscape-common:                               {}
 
+# TODO workaround - Focal has removed python-pip so don't trty to manage
+python::manage_pip_package: false
+
 # Note storage_pools must be defined in node
 lxd::preseed:
   config:
