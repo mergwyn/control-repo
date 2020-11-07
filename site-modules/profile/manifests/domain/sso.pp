@@ -61,19 +61,22 @@ class profile::domain::sso {
 
   # work around for cron starting before sssd
   $crondir = '/etc/systemd/system/cron.service.d'
-  if $::facts['os']['release']['full'] == '16.04' or
-    $::facts['os']['release']['full'] == '18.04'  {
-    include cron
-    ::systemd::dropin_file { 'sssd-wait.conf':
-      unit    => 'cron.service',
-      content => "[Unit]\nAfter=nss-user-lookup.target\n",
-      notify  => Service['cron'],
-    } #~> service {'cron': ensure    => 'running', }
-    file { "${crondir}/ssdwait.conf": ensure => absent }
-  } else {
-    file { "${crondir}/sssd-wait.conf": ensure => absent }
-    file { $crondir: ensure => absent }
+  case $::facts['os']['release']['full'] {
+    '16.04', '18.04', '20.04': {
+      include cron
+      ::systemd::dropin_file { 'sssd-wait.conf':
+        unit    => 'cron.service',
+        content => "[Unit]\nAfter=nss-user-lookup.target\n",
+        notify  => Service['cron'],
+      } #~> service {'cron': ensure    => 'running', }
+      file { "${crondir}/ssdwait.conf": ensure => absent }
+    }
+    default: {
+      file { "${crondir}/sssd-wait.conf": ensure => absent }
+      file { $crondir: ensure => absent, force => true }
+    }
   }
+
   # work aorund for bug where ssd pid file is not handled
   ::systemd::dropin_file { 'sssd-pidfile.conf':
     unit    => 'sssd.service',
@@ -81,4 +84,3 @@ class profile::domain::sso {
     notify  => Service['sssd'],
   }
 }
-# vim: sw=2:ai:nu expandtab
