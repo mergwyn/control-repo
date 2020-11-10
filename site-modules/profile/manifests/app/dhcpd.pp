@@ -15,9 +15,9 @@ class profile::app::dhcpd (
 
   class { 'dhcp':
     interfaces         => [ $facts['networking']['primary'] ],
-    # nameservers        => [ '192.168.11.22', '192.168.11.21' ],
-    nameservers        => [ '192.168.11.21' ],
+    nameservers        => [ '192.168.11.22', '192.168.11.21' ],
     ntpservers         => [ "foxtrot.${domain}", "golf.${domain}" ],
+    dnssearchdomains   => [ $domain, 'local' ],
     default_lease_time => 14400,
     extra_config       => [ 'include "/etc/dhcp/dhcpd.samba_ddns";' ],
   }
