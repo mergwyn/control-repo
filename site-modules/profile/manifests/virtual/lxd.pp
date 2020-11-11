@@ -63,7 +63,7 @@ class profile::virtual::lxd {
     mode   => '0555',
   }
 
-  $scripts = [
+  $lxdscripts = [
     'allcontainers',
     'allhosts',
     'allremotes',
@@ -72,11 +72,11 @@ class profile::virtual::lxd {
     'upgrade_lxd'
   ]
 
-  $scripts.each |String $script| {
-    file {"${bindir}/${script}":
+  $lxdscripts.each |String $lxdscript| {
+    file {"${bindir}/${lxdscript}":
       ensure => present,
       mode   => '0555',
-      source => "puppet:///modules/profile/lxd/${script}",
+      source => "puppet:///modules/profile/lxd/${lxdscript}",
     }
   }
 
