@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+PATH=$PATH:$(dirname "$0")
+
+boldecho() { echo "$(tput smso)$*$(tput rmso)" ; }
+
+for remote in $(listremotes); do
+  #for c in $(lxc list -c n --format csv volatile.last_state.power=RUNNING ${remote}:)
+  for c in $(lxc list -c ns "${remote}": | awk '!/NAME/{ if ( $4 == "RUNNING" ) print $2}') ; do
+    target=${remote}:${c}
+    boldecho executing: lxc exec "${target}" -- bash -c "$*" >&2
+    lxc exec "${target}" -- bash -c "$*" 
+  done
+done

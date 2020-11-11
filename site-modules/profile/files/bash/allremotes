@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+PATH=$PATH:$(dirname "$0")
+
+boldecho() { echo "$(tput smso)$*$(tput rmso)" ; }
+
+for remote in $(listremotes) ; do
+  if [[ ${remote} = "local" ]] ; then
+    boldecho "executing: $*"  >&2
+    bash -c "$*"
+  else
+    boldecho "executing: ssh -q -t ${remote} $*"  >&2
+    ssh -q -t "${remote}" "$*" 
+  fi
+done

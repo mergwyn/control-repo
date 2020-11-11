@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+if [[ $# -gt 0 ]] ; then
+  REMOTES=( "$@" )
+else
+  mapfile -t  REMOTES < <(listremotes) 
+fi
+for remote in "${REMOTES[@]}" ; do
+  for c in $(lxc list -c ns "${remote}:" | awk '!/NAME/{ if ( $4 == "RUNNING" ) print $2}') ; do
+    echo "${remote}:${c}"
+  done
+done

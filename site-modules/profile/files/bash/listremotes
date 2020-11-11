@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+lxc remote list | awk '/lxd/{print $2}'
