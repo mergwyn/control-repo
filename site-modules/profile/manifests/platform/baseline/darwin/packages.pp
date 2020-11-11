@@ -20,6 +20,8 @@ class profile::platform::baseline::darwin::packages {
   package { 'unison': }
   package { 'puppetlabs/puppet/puppet-agent-6': }
   package { 'homebrew/cask-drivers/sonos':      }
+  package { 'plex': }
+
 
   package { 'dropbox':                ensure => absent }
   package { 'google-chrome':          ensure => absent }
@@ -27,5 +29,6 @@ class profile::platform::baseline::darwin::packages {
   package { 'google-backup-and-sync': ensure => absent }
   package { 'onedrive':               ensure => absent }
   package { 'profilecreator':         ensure => absent }
+  package { 'plex-media-server':      ensure => absent }
 
 }
