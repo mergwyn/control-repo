@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+allremotes "sudo apt-get -qq update ; sudo apt-get -qq -y upgrade && sudo apt-get -qq -y clean && sudo apt-get -qq -y autoclean"
+allcontainers "sudo apt-get -qq update ; sudo apt-get -qq -y upgrade && sudo apt-get -qq -y clean && sudo apt-get -qq -y autoclean"

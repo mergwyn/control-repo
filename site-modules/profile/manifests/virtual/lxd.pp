@@ -47,12 +47,6 @@ class profile::virtual::lxd {
     hour        => fqdn_rand(5, 'lxdbackup'),
   }
 
-  file { "${bindir}/upgrade_lxd":
-    ensure => present,
-    mode   => '0555',
-    source => 'puppet:///modules/profile/upgrade_lxd'
-  }
-
   # support for openwrt backup as part of backuppc run
   $scripts='/etc/backuppc-scripts/'
   $preuser="${scripts}DumpPreUser/"
@@ -68,4 +62,22 @@ class profile::virtual::lxd {
     source => 'puppet:///modules/profile/backuppc/P31openwrt_clean',
     mode   => '0555',
   }
+
+  $scripts = [
+    'allcontainers',
+    'allhosts',
+    'allremotes',
+    'listcontainers',
+    'listremotes',
+    'upgrade_lxd'
+  ]
+
+  $scripts.each |String $script| {
+    file {"${bindir}/${script}":
+      ensure => present,
+      mode   => '0555',
+      source => "puppet:///modules/profile/lxd/${script}",
+    }
+  }
+
 }
