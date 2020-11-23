@@ -90,8 +90,8 @@ do
     make_entry "" ${BE} "${DIST}, boot environment ${BE}"
   else
     be="${BE##*/}"
-    MOUNT="beadm mount ${be}"
-    UMOUNT="beadm umount "${be}""
+    MOUNT="$(which beadm) mount ${be}"
+    UMOUNT="$(which beadm) umount "${be}""
     make_entry ${MNTDIR} ${BE} "${DIST}, boot environment ${BE}"
   fi
 #  COUNT=0 # to make sure we don't output empt submenus
