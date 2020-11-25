@@ -1,6 +1,6 @@
 #
 
-class profile::router::openvpn {
+class profile::infrastructure::router::openvpn {
 
   $aptpackages = [
     'ufw',

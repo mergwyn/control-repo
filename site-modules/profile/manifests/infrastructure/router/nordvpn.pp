@@ -1,6 +1,6 @@
 #
 
-class profile::router::nordvpn {
+class profile::infrastructure::router::nordvpn {
 
 # Install software
   exec { 'apt-get-update':

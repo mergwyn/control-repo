@@ -1,13 +1,13 @@
 #
 
-class profile::router (
+class profile::infrastructure::router (
   Boolean $iptv = true,
   Enum['openvpn','nordvpn'] $type = 'openvpn',
 ) {
 
   case $type  {
-    'openvpn': { include profile::router::openvpn }
-    'nordvpn': { include profile::router::nordvpn }
+    'openvpn': { include profile::infrastructure::router::openvpn }
+    'nordvpn': { include profile::infrastructure::router::nordvpn }
     default:   { fail("${type} is not supported") }
   }
 
