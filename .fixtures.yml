@@ -7,9 +7,6 @@ fixtures:
     transmission:
       repo: https://github.com/craigwatson/puppet-transmission
       branch: master
-    augeasproviders_shellvar:
-      repo: https://github.com/mergwyn/augeasproviders_shellvar
-      branch: master
     managedmac:
       repo: https://github.com/mergwyn/mergwyn-managedmac
       branch: v0.8.2
@@ -35,6 +32,9 @@ fixtures:
     augeas:
       repo: camptocamp-augeas
       ref: 1.9.0
+    augeasproviders_shellvar:
+      repo: herculesteam-augeasproviders_shellvar
+      ref: 4.0.0
     kmod:
       repo: camptocamp-kmod
       ref: 2.5.0
