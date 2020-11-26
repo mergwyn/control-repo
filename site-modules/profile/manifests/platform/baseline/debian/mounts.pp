@@ -3,7 +3,7 @@
 # 'create_resources' function.
 #
 
-class profile::base::mounts (
+class profile::platform::baseline::debian::mounts (
   Hash           $objects  = {},
   Optional[Hash] $defaults = {},
 ) {
@@ -13,5 +13,3 @@ class profile::base::mounts (
   }
 
 }
-
-# vim: sw=2:ai:nu expandtab

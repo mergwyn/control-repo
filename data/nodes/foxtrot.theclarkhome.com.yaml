@@ -32,9 +32,9 @@ profile::platform::baseline::debian::netplan::bridges:
       stp: false
       forward_delay: 0
 
-profile::base::mounts::defaults:
+profile::platform::baseline::debian::mounts::defaults:
   ensure: 'mounted'
-profile::base::mounts::objects:
+profile::platform::baseline::debian::mounts::objects:
   srv2:
     name:     '/srv2'
     device:   'UUID=87be41fa-af64-4165-b8a4-1d27cba1f349'

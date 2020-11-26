@@ -41,6 +41,9 @@ lookup_options:
   "^profile::base::(.*)::(.*)$":
     merge: deep
     knockout_prefix: '--'
+  profile::platform::baseline::debian::mounts:
+    merge: deep
+    knockout_prefix: '--'
   "^profile::app::backuppc::client::rsync_share_name::(.*)$":
     merge: deep
     knockout_prefix: '--'

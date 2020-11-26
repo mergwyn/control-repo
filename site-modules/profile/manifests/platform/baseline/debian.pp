@@ -11,9 +11,9 @@ class profile::platform::baseline::debian {
   include profile::platform::baseline::debian::timezone
   include profile::platform::baseline::debian::postfix
   include profile::platform::baseline::debian::ssh
+  include profile::platform::baseline::debian::mounts
   # TODO: include profile::platform::baseline::debian::netplan
 
-  include profile::base::mounts
   include profile::base::avahi
   #include profile::service::webmin
   #include profile::app::backuppc::client
