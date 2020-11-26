@@ -12,9 +12,9 @@ profile::base::files::objects:
   /etc/legal:
     ensure:                                       absent
 
-profile::base::packages::defaults:
+profile::platform::baseline::packages::defaults:
   ensure:                                         present
-profile::base::packages::objects:
+profile::platform::baseline::packages::objects:
   ubuntu-standard:                                {}
   update-notifier-common:                         {}
   landscape-common:                               {}

@@ -1,9 +1,9 @@
 #
-# Dynamically create Puppet File resources using the Puppet built-in
+# Dynamically create Puppet Package resources using the Puppet built-in
 # 'create_resources' function.
 #
 
-class profile::base::packages (
+class profile::platform::baseline::packages (
   Hash           $objects  = {},
   Optional[Hash] $defaults = {},
 ) {
@@ -20,5 +20,3 @@ class profile::base::packages (
   }
 
 }
-
-# vim: sw=2:ai:nu expandtab

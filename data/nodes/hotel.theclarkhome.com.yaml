@@ -1,6 +1,5 @@
 ---
 
-profile::base::packages::objects:
+profile::platform:baseline::packages::objects:
   todobackup: {}  # todo backup fails to install
 
-# vim: sw=2:ai:nu expandtab

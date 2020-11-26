@@ -4,7 +4,7 @@
 #  Microsoft-Windows-Subsystem-Linux: 
 #    norestart: true
 
-profile::base::packages::objects:
+profile::platform::baseline::packages::objects:
   rsat:
     install_options:
       - '-params'

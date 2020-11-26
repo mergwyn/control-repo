@@ -2,7 +2,7 @@
 ---
 
 
-profile::base::packages::objects:
+profile::platform::baseline::packages::objects:
   CFPropertyList:
     ensure: present
     provider: puppetserver_gem

@@ -7,12 +7,12 @@ profile::base::files::defaults:
   ensure: present
 profile::base::files::objects:
 
-profile::base::packages::defaults:
+profile::platform::baseline::packages::defaults:
   ensure: latest
   provider: chocolatey
   install_options:
   - --no-progress
-profile::base::packages::objects:
+profile::platform::baseline::packages::objects:
   chocolateygui: {}
   firefox: {}
   keeweb: {}

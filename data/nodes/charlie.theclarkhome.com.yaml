@@ -1,9 +1,9 @@
 ---
 
-profile::base::packages::defaults:
+profile::platform::baseline::packages::defaults:
   ensure: present
   provider: homebrew
-profile::base::packages::objects:
+profile::platform::baseline::packages::objects:
   clover-configurator:
     ensure: absent
   opencore-configurator: {}

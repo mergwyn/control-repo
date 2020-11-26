@@ -1,7 +1,6 @@
 ---
 classes:
   - profile::base::files
-  - profile::base::packages
 
 # environment
 defaults::workgroup:       'THECLARKHOME'
@@ -39,6 +38,9 @@ lookup_options:
     merge: deep
     knockout_prefix: '--'
   "^profile::base::(.*)::(.*)$":
+    merge: deep
+    knockout_prefix: '--'
+  profile::platform::baseline::packages:
     merge: deep
     knockout_prefix: '--'
   profile::platform::baseline::debian::mounts:
