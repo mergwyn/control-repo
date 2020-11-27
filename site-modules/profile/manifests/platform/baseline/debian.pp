@@ -12,6 +12,8 @@ class profile::platform::baseline::debian {
   include profile::platform::baseline::debian::postfix
   include profile::platform::baseline::debian::ssh
   include profile::platform::baseline::debian::mounts
+  include profile::platform::baseline::debian::logrotate
+
   # TODO: include profile::platform::baseline::debian::netplan
 
   include profile::app::avahi
