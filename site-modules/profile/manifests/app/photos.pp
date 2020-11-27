@@ -1,7 +1,8 @@
 #
 # TODO: complete testing of settings setup
+# TODO: most of this is not used anymore - convert to odrive
 
-class profile::photos {
+class profile::app::photos {
   apt::ppa { 'ppa:nilarimogard/webupd8':
     #package_manage => true
   }
@@ -24,4 +25,3 @@ class profile::photos {
     hour        => '*/3',
   }
 }
-# vim: sw=2:ai:nu expandtab

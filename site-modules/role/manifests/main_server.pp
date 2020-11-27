@@ -14,5 +14,5 @@ class role::main_server {
   include profile::app::timemachine
   include profile::app::samba::shares
   include profile::app::nginx::webdav
-  include profile::photos
+  include profile::app::photos
 }
