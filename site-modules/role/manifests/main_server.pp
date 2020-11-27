@@ -2,6 +2,7 @@
 class role::main_server {
   include profile::platform::baseline
   include profile::platform::baseline::debian::zfs
+  include profile::platform::baseline::debian::nfs_server
 
   include profile::domain::sso
   include profile::zabbix::agent
@@ -13,6 +14,5 @@ class role::main_server {
   include profile::app::timemachine
   include profile::app::samba::shares
   include profile::app::nginx::webdav
-  include profile::nfs_server
   include profile::photos
 }
