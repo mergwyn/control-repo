@@ -14,7 +14,7 @@ class profile::platform::baseline::debian {
   include profile::platform::baseline::debian::mounts
   # TODO: include profile::platform::baseline::debian::netplan
 
-  include profile::base::avahi
+  include profile::app::avahi
   #include profile::service::webmin
   #include profile::app::backuppc::client
 

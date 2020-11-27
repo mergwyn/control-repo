@@ -1,6 +1,6 @@
 #
 
-class profile::base::avahi {
+class profile::app::avahi {
 
   package { 'avahi-daemon-install':
     name            => 'avahi-daemon',
