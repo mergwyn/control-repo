@@ -1,8 +1,8 @@
 ---
 
-profile::base::files::defaults:
+profile::platform::baseline::files::defaults:
   ensure:                                         present
-profile::base::files::objects:
+profile::platform::baseline::files::objects:
   # General
   /etc/landscape/client.conf:
     content:                                      "[sysinfo]\nexclude_sysinfo_plugins = LandscapeLink\n"

@@ -1,6 +1,4 @@
 ---
-classes:
-  - profile::base::files
 
 # environment
 defaults::workgroup:       'THECLARKHOME'
@@ -37,7 +35,7 @@ lookup_options:
   "^classes(.*)$":
     merge: deep
     knockout_prefix: '--'
-  "^profile::base::(.*)::(.*)$":
+  profile::platform::baseline::files:
     merge: deep
     knockout_prefix: '--'
   profile::platform::baseline::packages:

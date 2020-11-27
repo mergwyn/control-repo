@@ -3,7 +3,7 @@
 # 'create_resources' function.
 #
 
-class profile::base::files (
+class profile::platform::baseline::files (
   Hash           $objects  = {},
   Optional[Hash] $defaults = {},
 ) {
@@ -13,5 +13,3 @@ class profile::base::files (
   }
 
 }
-
-# vim: sw=2:ai:nu expandtab

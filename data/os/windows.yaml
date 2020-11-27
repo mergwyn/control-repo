@@ -3,9 +3,9 @@
 classes:
   - chocolatey
 
-profile::base::files::defaults:
+profile::platform::baseline::files::defaults:
   ensure: present
-profile::base::files::objects:
+profile::platform::baseline::files::objects:
 
 profile::platform::baseline::packages::defaults:
   ensure: latest

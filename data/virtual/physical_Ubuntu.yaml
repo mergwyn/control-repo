@@ -9,7 +9,7 @@ sysctl::values:
   vm.dirty_ratio:
     value: '15'
 
-profile::base::files::objects:
+profile::platform::baseline::files::objects:
   '/etc/udev/rules.d/11-media-by-label-auto-mount.rules':
     ensure: present
     source: 'puppet:///modules/profile/11-media-by-label-auto-mount.rules'

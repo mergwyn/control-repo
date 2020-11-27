@@ -1,9 +1,9 @@
 ---
 
 
-profile::base::files::defaults:
+profile::platform::baseline::files::defaults:
   ensure:                           present
-profile::base::files::objects:
+profile::platform::baseline::files::objects:
   /usr/local/lib/vim:
     ensure:                         directory
   /usr/local/lib/vim/vimrc.local:
