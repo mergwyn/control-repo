@@ -1,6 +1,6 @@
 #
 
-class profile::print_server {
+class profile::app::cups {
   #include cups::install
   #include cups
   class { 'cups': }
@@ -19,7 +19,7 @@ class profile::print_server {
 
   file { "${dir}/${package}":
     ensure => present,
-    source => "puppet:///modules/profile/print_server/${package}",
+    source => "puppet:///modules/profile/cups/${package}",
   }
 
   #service { 'cups':
@@ -38,7 +38,7 @@ class profile::print_server {
   file { '/etc/cups/cupsd.conf':
     ensure => present,
     notify => Service[ 'cups' ],
-    source => 'puppet:///modules/profile/print_server/cupsd.conf',
+    source => 'puppet:///modules/profile/cups/cupsd.conf',
   }
 
   printer { 'Dell_1355cn_Color_MFP_':
@@ -63,10 +63,8 @@ class profile::print_server {
 
   file { '/etc/avahi/services/AirPrint-Dell_1355cn_Color_MFP_.service':
     ensure => absent,
-    source => 'puppet:///modules/profile/print_server/AirPrint-Dell_1355cn_Color_MFP_.service',
+    source => 'puppet:///modules/profile/cups/AirPrint-Dell_1355cn_Color_MFP_.service',
     notify => Service['avahi-daemon'],
   }
 
 }
-#
-# vim: sw=2:ai:nu expandtab
