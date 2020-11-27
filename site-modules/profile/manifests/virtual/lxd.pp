@@ -25,7 +25,7 @@ class profile::virtual::lxd {
 
   $bindir='/usr/local/bin'
 
-  include profile::git
+  include profile::app::git
 
   $codedir='/opt/lxdbackup'
 

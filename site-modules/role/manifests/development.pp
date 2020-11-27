@@ -2,6 +2,6 @@
 class role::development {
   include profile::platform::baseline
   include profile::domain::sso
-  include profile::git
+  include profile::app::git
 # TODO: git, others etc?
 }

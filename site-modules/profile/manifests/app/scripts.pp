@@ -2,7 +2,7 @@
 
 class profile::app::scripts {
 
-  include profile::git
+  include profile::app::git
 
   $codedir='/opt/scripts'
 

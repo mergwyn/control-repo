@@ -9,7 +9,7 @@ class profile::app::sickbeard_automator {
   $owner     =  lookup('defaults::media_user')
   $group     =  lookup('defaults::media_group')
 
-  include profile::git
+  include profile::app::git
   include profile::app::scripts
 
   #apt::ppa { 'ppa:awyr/ffmpeg-4':
@@ -38,7 +38,7 @@ class profile::app::sickbeard_automator {
     revision => '55e5948ff0042eef5190b3d613f247e6d8074d6d',
     provider => git,
     require  => [
-      Class['profile::git'],
+      Class['profile::app::git'],
   #    Package['ffmpeg'],
     ],
     source   => 'https://github.com/mdhiggins/sickbeard_mp4_automator',

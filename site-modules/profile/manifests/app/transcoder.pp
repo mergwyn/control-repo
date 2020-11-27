@@ -6,7 +6,7 @@ class profile::app::transcoder {
   $scriptdir = "${codedir}/scripts"
   $packages = [ 'nfs-common' ]
 
-  include profile::git
+  include profile::app::git
   include profile::app::scripts
   include profile::app::sickbeard_automator
 
