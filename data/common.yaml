@@ -35,21 +35,6 @@ lookup_options:
   "^classes(.*)$":
     merge: deep
     knockout_prefix: '--'
-  profile::platform::baseline::files:
-    merge: deep
-    knockout_prefix: '--'
-  profile::platform::baseline::packages:
-    merge: deep
-    knockout_prefix: '--'
-  profile::platform::baseline::debian::mounts:
-    merge: deep
-    knockout_prefix: '--'
-  "^profile::app::backuppc::client::rsync_share_name::(.*)$":
-    merge: deep
-    knockout_prefix: '--'
-  profile::app::backuppc::client::backup_files_exclude:
-    merge: deep
-    knockout_prefix: '--'
   sudo::configs:
     merge:
       strategy: deep
