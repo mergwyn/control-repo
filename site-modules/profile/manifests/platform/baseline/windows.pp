@@ -3,6 +3,7 @@
 class profile::platform::baseline::windows {
 
   include profile::platform::baseline::windows::tasks
+  include profile::platform::baseline::windows::packages
   include profile::platform::baseline::windows::dism
   include profile::platform::baseline::windows::base
 # TODO: review included profiles

@@ -1,30 +1,5 @@
 ---
 
-classes:
-  - chocolatey
-
-profile::platform::baseline::files::defaults:
-  ensure: present
-profile::platform::baseline::files::objects:
-
-profile::platform::baseline::packages::defaults:
-  ensure: latest
-  provider: chocolatey
-  install_options:
-  - --no-progress
-profile::platform::baseline::packages::objects:
-  chocolateygui: {}
-  firefox: {}
-  keeweb: {}
-  kitty: {}
-  mp3gain-gui: {}
-  mp3tag: {}
-  notepadplusplus: {}
-  puppet-agent: {}
-  zabbix-agent: {}
-  dropbox:
-    ensure: absent
-
 # puppet agent
 puppet::puppet_server:                  "echo.%{trusted.domain}"
 puppet::manage_repos:                   false

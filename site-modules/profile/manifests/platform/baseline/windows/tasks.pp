@@ -1,5 +1,4 @@
-#
-# Dynamically create Puppet File resources using the Puppet built-in
+# Dynamically create Puppet task resources using the Puppet built-in
 # 'create_resources' function.
 #
 
@@ -11,10 +10,11 @@ class profile::platform::baseline::windows::tasks (
   case $::kernel {
     'windows': {
       scheduled_task { 'GPO Backup':
+        ensure      => present,
+        enabled     => true,
         command     => "${::system32}\\WindowsPowerShell\\v1.0\\powershell.exe",
         arguments   => "-ExecutionPolicy RemoteSigned \\\\${lookup('defaults::backup_server')}\\backup\\GPO\\GPOBackup.ps1",
         working_dir => "\\\\${lookup('defaults::backup_server')}\\backup\\${trusted['hostname']}\\GPO\\",
-        enabled     => true,
         user        => "${lookup('defaults::workgroup')}\\backup",
         password    => lookup('secrets::backup'),
         trigger     => [

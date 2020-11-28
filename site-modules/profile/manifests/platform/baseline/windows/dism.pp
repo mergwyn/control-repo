@@ -8,10 +8,10 @@ class profile::platform::baseline::windows::dism (
   Optional[Hash] $defaults = {},
 ) {
 
-  dism {'Microsoft-Windows-Subsystem-Linux':
-    ensure    => present,
-    norestart => true,
-  }
+#  dism {'Microsoft-Windows-Subsystem-Linux':
+#    ensure    => present,
+#    norestart => true,
+#  }
 
   $objects.each |String $key, Hash $value| {
     $ensure = pick($value['ensure'], 'present')

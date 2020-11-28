@@ -1,8 +1,5 @@
 ---
 
-# TODO work out why zabbix_version is not getting set correctly in manifest
-zabbix::agent::zabbix_version: '4.4'
-
 # puppet agent
 puppet::puppet_server:                            "echo.%{trusted.domain}"
 puppet::manage_repos:                             false
