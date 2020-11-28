@@ -2,8 +2,9 @@
 
 class profile::platform::baseline::windows {
 
-  include profile::os::windows::tasks
-  include profile::os::windows::base
+  include profile::platform::baseline::windows::tasks
+  include profile::platform::baseline::windows::dism
+  include profile::platform::baseline::windows::base
 # TODO: review included profiles
   #include profile::zabbix::agent
 
