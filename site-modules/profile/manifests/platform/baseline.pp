@@ -21,6 +21,8 @@ class profile::platform::baseline (
       fail('Unsupported operating system!')
     }
   }
+  
+  include profile::platform::baseline::files
   include profile::platform::baseline::packages
 
 }
