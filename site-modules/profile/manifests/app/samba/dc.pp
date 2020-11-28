@@ -3,8 +3,8 @@
 
 class profile::app::samba::dc {
 
-  package { 'unison': }
   # TODO add unison replcaition script and cron entry
+  package { 'unison': }
 
   # support for samba backup as part of backuppc run
   $scripts='/etc/backuppc-scripts/'
@@ -29,57 +29,67 @@ class profile::app::samba::dc {
     source => 'puppet:///modules/profile/backuppc/P30samba_clean',
     mode   => '0555',
   }
-    #class { '::samba::dc':
-    #}
-    #class { '::samba::dc':
-      #role               => 'join',
-      #domain             => lookup("workgroup"),
-      #realm              => lookup("realm"),
-      #dnsbackend         => 'internal',
-      #domainlevel        => '2008 R2',
-      #sambaloglevel      => 2,
-      #logtosyslog        => true,
-      #adminpassword      => lookup("adminpassword"),
+  #class { '::samba::dc':
+    #domain             => $trusted['domain'],
+    #realm              => lookup("default::realm"),
+    #adminpassword      => lookup("secrets::adminpassword"),
+    #dnsbackend         => 'internal',
+    #dnsforwarder       => '8.8.8.8',
+    #domainlevel        => '2008 R2',
+    #domainprovargs     => '--use-xattrs=yes --use-ntvfs',
+    #sambaloglevel      => 1,
+    #logtosyslog        => true,
+    #sambaclassloglevel => {
+    #  'dns'   => 2,
+    #  'idmap' => 2,
+    #  'auth'  => 3,
+    #},
+# TODO check that these are all needed
+    #globaloptions       => {
+      #'client use spnego' => 'no',
+      #'kerberos method'   => 'secrets and keytab',
+      #'lm announce'       => 'no',
+      #'ntlm auth'         => 'no',
+      #'client ntlmv2 auth' => 'yes',
+      #'server services'   => 's3fs, rpc, nbt, wrepl, ldap, cldap, kdc, drepl, winbindd, ntp_signd, kcc, dnsupdate, dns'
+    #},
+# TODO check if options are needed here
+    #netlogonoptions       => {},
+    #sysvoloptions         => {},
 
-      #ip                 => '192.168.199.80',
-      #sambaclassloglevel => {
-      #  'smb'   => 2,
-      #  'idmap' => 2,
-      #},
-      #dnsforwarder       => '192.168.199.42',
-    #}
+  #}
 
-    #class { '::samba::dc::ppolicy':
-    #  ppolicycomplexity    => 'on',
-    #  ppolicyplaintext     => 'off',
-    #  ppolicyhistorylength => 12,
-    #  ppolicyminpwdlength  => 10,
-    #  ppolicyminpwdage     => 1,
-    #  ppolicymaxpwdage     => 90,
-    #}
+# TODO migrate rest of setup script
+  #class { '::samba::dc::ppolicy':
+  #  ppolicycomplexity    => 'on',
+  #  ppolicyplaintext     => 'off',
+  #  ppolicyhistorylength => 12,
+  #  ppolicyminpwdlength  => 10,
+  #  ppolicyminpwdage     => 1,
+  #  ppolicymaxpwdage     => 90,
+  #}
 
-    #smb_user { 'administrator':
-    #  ensure     => present,
-    #  password   => 'c0mPL3xe_P455woRd',
-    #  attributes => {
-    #    uidNumber        => '15220',
-    #    gidNumber        => '15220',
-    #    msSFU30NisDomain => 'dc',
-    #    scriptPath       => 'login1.cmd',
-    #  },
-    #  groups     => ['domain users', 'administrators'],
-    #}
+  #smb_user { 'administrator':
+  #  ensure     => present,
+  #  password   => 'c0mPL3xe_P455woRd',
+  #  attributes => {
+  #    uidNumber        => '15220',
+  #    gidNumber        => '15220',
+  #    msSFU30NisDomain => 'dc',
+  #    scriptPath       => 'login1.cmd',
+  #  },
+  #  groups     => ['domain users', 'administrators'],
+  #}
 
-    #smb_group { 'mygroup':
-    #  ensure     => present,
-    #  scope      => 'Domain',
-    #  type       => 'Security',
-    #  attributes => {
-    #    gidNumber        => '15222',
-    #    msSFU30NisDomain => 'dc',
-    #  },
-    #  groups     => ['domain users', 'administrators'],
-    #}
+  #smb_group { 'mygroup':
+  #  ensure     => present,
+  #  scope      => 'Domain',
+  #  type       => 'Security',
+  #  attributes => {
+  #    gidNumber        => '15222',
+  #    msSFU30NisDomain => 'dc',
+  #  },
+  #  groups     => ['domain users', 'administrators'],
+  #}
 
 }
-# vim: sw=2:ai:nu expandtab
