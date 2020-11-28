@@ -1,7 +1,7 @@
 #
 class role::media_server {
   include profile::platform::baseline  # All roles should have the base profile
-  include profile::domain::sso
+  include profile::app::sssd
   include profile::app::transcoder
   include profile::app::downloader
   include profile::zabbix::agent

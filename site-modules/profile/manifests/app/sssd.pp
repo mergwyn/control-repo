@@ -1,9 +1,9 @@
 #
 
-class profile::domain::sso {
+class profile::app::sssd {
 
   include profile::app::samba
-  Class['profile::app::samba'] ~> Class['profile::domain::sso']
+  Class['profile::app::samba'] ~> Class['profile::app::sssd']
 
   exec { 'create_keytab':
     command => '/usr/bin/net ads keytab create -P',

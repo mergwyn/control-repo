@@ -4,7 +4,7 @@ class role::main_server {
   include profile::platform::baseline::debian::zfs
   include profile::platform::baseline::debian::nfs_server
 
-  include profile::domain::sso
+  include profile::app::sssd
   include profile::zabbix::agent
   include profile::virtual::lxd
 

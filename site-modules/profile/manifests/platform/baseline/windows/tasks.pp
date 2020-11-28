@@ -11,7 +11,7 @@ class profile::platform::baseline::windows::tasks (
   case $::kernel {
     'windows': {
       scheduled_task { 'GPO Backup':
-        command     => "$::system32\\WindowsPowerShell\\v1.0\\powershell.exe",
+        command     => "${::system32}\\WindowsPowerShell\\v1.0\\powershell.exe",
         arguments   => "-ExecutionPolicy RemoteSigned \\\\${lookup('defaults::backup_server')}\\backup\\GPO\\GPOBackup.ps1",
         working_dir => "\\\\${lookup('defaults::backup_server')}\\backup\\${trusted['hostname']}\\GPO\\",
         enabled     => true,

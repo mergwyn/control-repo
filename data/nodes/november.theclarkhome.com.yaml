@@ -1,6 +1,6 @@
 ---
 classes:
-  - profile::domain::sso
+  - profile::app::sssd
   - profile::app::sabnzbdplus
 
 #profile::app::backuppc::client::backuppc_hostname:          "yankee.%{domain}"
