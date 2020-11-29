@@ -7,7 +7,7 @@ class profile::platform::baseline::windows {
   include profile::platform::baseline::windows::dism
   include profile::platform::baseline::windows::base
 # TODO: review included profiles
-  #include profile::zabbix::agent
+  #include profile::app::zabbix::agent
 
 
 #  include ::profile::platform::baseline::windows::bootstrap

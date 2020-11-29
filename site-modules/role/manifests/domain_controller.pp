@@ -4,6 +4,6 @@ class role::domain_controller {
   include profile::app::dhcpd
   include profile::app::sssd
   include profile::app::samba::dc
-  include profile::zabbix::agent
+  include profile::app::zabbix::agent
   include profile::app::backuppc::client
 }

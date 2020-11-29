@@ -4,6 +4,6 @@ class role::lxd_server {
   include profile::platform::baseline::debian::zfs
   include profile::app::sssd
   include profile::virtual::lxd
-  include profile::zabbix::agent
+  include profile::app::zabbix::agent
   include profile::app::backuppc::client
 }

@@ -65,11 +65,11 @@ class profile::app::db::mysql::server {
 
   zabbix::userparameters { 'template_db_mysql':
     source  => 'puppet:///modules/profile/zabbix_agent/template_db_mysql.conf',
-    require => Class['profile::zabbix::agent'],
+    require => Class['profile::app::zabbix::agent'],
   }
   file {'/var/lib/zabbix/.my.cnf':
     content => sprintf("[client]\nuser=zbx_monitor\npassword=%s\n",hiera('secrets::mysql')),
     mode    => '0555',
-    require => Class['profile::zabbix::agent'],
+    require => Class['profile::app::zabbix::agent'],
   }
 }

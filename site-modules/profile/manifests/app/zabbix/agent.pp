@@ -1,6 +1,6 @@
 #
 
-class profile::zabbix::agent (
+class profile::app::zabbix::agent (
   $server = 'zulu'
 ) {
 
