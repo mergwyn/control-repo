@@ -9,7 +9,7 @@ class profile::platform::baseline::debian::sysctl {
 
   case $facts['virtual'] {
     'physical': {
-      include systctl
+      include sysctl
       sysctl::configuration { 'vm.swappiness':  value => '1', }
       sysctl::configuration { 'vm.dirty_ratio': value => '15', }
     }
