@@ -1,7 +1,7 @@
 #
 # TODO: delete?
 
-class profile::virtual::libvirt {
+class profile::platform::baseline::debian::virtual::libvirt {
 #  include '::libvirt' 
   class { '::libvirt':
     listen_tls => false,

@@ -1,6 +1,6 @@
 #
 
-class profile::virtual::docker {
+class profile::platform::baseline::debian::virtual::docker {
 
   #include ::snapd
   #$snappackages = [ 'frr' ]

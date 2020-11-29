@@ -6,7 +6,7 @@ class role::main_server {
 
   include profile::app::sssd
   include profile::app::zabbix::agent
-  include profile::virtual::lxd
+  include profile::platform::baseline::debian::virtual::lxd
 
   include profile::app::backuppc::server
   include profile::app::backuppc::client

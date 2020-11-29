@@ -1,6 +1,6 @@
 #
 
-class profile::virtual::lxd {
+class profile::platform::baseline::debian::virtual::lxd {
   package { [ 'bridge-utils' ]: }
   package { [ 'criu' ]: ensure => absent, }
 

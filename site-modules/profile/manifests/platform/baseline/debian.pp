@@ -13,6 +13,8 @@ class profile::platform::baseline::debian {
   include profile::platform::baseline::debian::ssh
   include profile::platform::baseline::debian::mounts
   include profile::platform::baseline::debian::logrotate
+  include profile::platform::baseline::debian::sysctl
+  include profile::platform::baseline::debian::usb
 
   # TODO: include profile::platform::baseline::debian::netplan
 
