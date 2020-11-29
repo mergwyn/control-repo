@@ -32,10 +32,8 @@ class profile::app::sickbeard_automator {
 
   # Get the lastest version from github
   vcsrepo { $target:
-    #ensure   => latest,
-    #revision => 'master',
-    ensure   => present,
-    revision => '55e5948ff0042eef5190b3d613f247e6d8074d6d',
+    ensure   => latest,
+    revision => 'master',
     provider => git,
     require  => [
       Class['profile::app::git'],
