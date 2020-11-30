@@ -2,17 +2,18 @@
 
 class profile::platform::baseline::debian::packages {
 
+  $install_packages = [
+    'vim',
+    'anacron',
+    'gpg',
+    'jq',
+  ]
+  package { $installpackages: ensure => present }
 
-# packages to be installed
-  Package {
-    ensure   => present,
-  }
-
-  package { 'vim': }
-  package { 'anacron': }
-  package { 'gpg': }
-
-  package { 'vim-tiny': ensure => absent }
-  package { 'mlocate':  ensure => absent }
+  $remove_packages = [
+    'vim-tiny',
+    'mlocate',
+  ]
+  package { $remove_packages: ensure => absent }
 
 }
