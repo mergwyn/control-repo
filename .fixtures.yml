@@ -29,6 +29,9 @@ fixtures:
       repo: https://github.com/mergwyn/mergwyn-backuppc
       branch: master
   forge_modules:
+    githubreleases:
+      repo: dodevops-githubreleases
+      ref: 4.0.0
     augeas:
       repo: camptocamp-augeas
       ref: 1.9.0
