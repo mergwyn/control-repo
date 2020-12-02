@@ -8,12 +8,12 @@ class profile::platform::baseline::debian::packages {
     'gpg',
     'jq',
   ]
-  package { $installpackages: ensure => present }
+  package { $install_packages : ensure => present }
 
   $remove_packages = [
     'vim-tiny',
     'mlocate',
   ]
-  package { $remove_packages: ensure => absent }
+  package { $remove_packages : ensure => absent }
 
 }
