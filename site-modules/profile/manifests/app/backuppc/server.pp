@@ -52,7 +52,7 @@ class profile::app::backuppc::server {
   }
   user { 'backuppc':
     groups     => 'backuppc',
-    uid        => '118',
+    uid        => '997',
     home       => '/var/lib/backuppc',
     comment    => 'BackupPC,,,',
     managehome => false,
