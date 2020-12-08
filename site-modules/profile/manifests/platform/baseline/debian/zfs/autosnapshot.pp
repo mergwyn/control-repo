@@ -28,7 +28,7 @@ class profile::platform::baseline::debian::zfs::autosnapshot {
     content => @("EOT"/),
                #!/bin/sh
                which zfs-auto-snapshot > /dev/null || exit 0
-               zfs-auto-snapshot --quiet --syslog --label=04 --keep=8 // &&
+               zfs-auto-snapshot --quiet --syslog --label=04 --keep=4 // &&
                zsysctl boot update-menu 2>&1 | sed '/GRUB menu/d'
                | EOT
   }
@@ -38,7 +38,7 @@ class profile::platform::baseline::debian::zfs::autosnapshot {
     content => @("EOT"/),
                #!/bin/sh
                which zfs-auto-snapshot > /dev/null || exit 0
-               zfs-auto-snapshot --quiet --syslog --label=05 --keep=12 // &&
+               zfs-auto-snapshot --quiet --syslog --label=05 --keep=6 // &&
                zsysctl boot update-menu 2>&1 | sed '/GRUB menu/d'
                | EOT
   }
