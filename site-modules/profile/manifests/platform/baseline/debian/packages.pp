@@ -7,6 +7,7 @@ class profile::platform::baseline::debian::packages {
     'anacron',
     'gpg',
     'jq',
+    'sysstat',
   ]
   package { $install_packages : ensure => present }
 
