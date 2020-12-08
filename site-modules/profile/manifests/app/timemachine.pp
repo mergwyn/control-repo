@@ -11,6 +11,7 @@ class profile::app::timemachine {
   $path = '/srv/timemachine'
   $owner = 'timemachine'
 
+  if $facts['samba_version'] {
   if versioncmp($facts['samba_version'], '4.8') >= 0 {
 # Use SMB for TimeMachine
     include profile::app::samba
@@ -94,6 +95,7 @@ class profile::app::timemachine {
     owner   => $owner,
     mode    => '0600',
     require => File[$path],
+  }
   }
 
 }
