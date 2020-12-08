@@ -6,7 +6,7 @@ class profile::app::timemachine {
     fail("${title} is only for Debian")
   }
   
-  Class [profile::app::samba] -> Class[profile::app::timemachine]
+  Class['profile::app::samba'] -> Class['profile::app::timemachine']
 
   $path = '/srv/timemachine'
   $owner = 'timemachine'
