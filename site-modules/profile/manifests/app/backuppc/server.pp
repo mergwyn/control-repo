@@ -48,7 +48,7 @@ class profile::app::backuppc::server {
   }
 
   group { 'backuppc':
-    gid        => '127',
+    gid        => '199',
   }
   user { 'backuppc':
     groups     => 'backuppc',
