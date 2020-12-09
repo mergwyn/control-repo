@@ -77,6 +77,9 @@ fixtures:
     alternatives:
       repo: puppet-alternatives
       ref: 3.0.0
+    autofs:
+      repo: puppet-autofs
+      ref: 6.0.0
     archive:
       repo: puppet-archive
       ref: 4.6.0
