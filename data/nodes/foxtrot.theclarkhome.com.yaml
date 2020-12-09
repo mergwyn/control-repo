@@ -32,11 +32,6 @@ profile::platform::baseline::debian::netplan::bridges:
       stp: false
       forward_delay: 0
 
-profile::platform::baseline::files::objects:
-  '/var/lib/backuppc':
-    ensure: 'directory'
-    force: true
-
 profile::platform::baseline::debian::mounts::defaults:
   ensure: 'mounted'
 profile::platform::baseline::debian::mounts::objects:
@@ -53,21 +48,34 @@ profile::platform::baseline::debian::mounts::objects:
     require:  Mount[srv2]
 
 lxd::preseed:
+  networks:
+  - config:
+      ipv4.address: 10.230.201.1/24
+      ipv4.nat: "true"
+      ipv6.address: none
+      ipv6.nat: "true"
+    description: ""
+    name: lxdbr0
+    type: bridge
+    project: default
   storage_pools:
   - config:
       source: srv/lxd
       volatile.initial_source: srv/lxd
+      volume.zfs.use_refquota: "true"
+      volume.zfs.remove_snapshots: "true"
       zfs.pool_name: srv/lxd
     description: ""
-    name: default
+    name: srv
     driver: zfs
   - config:
       source: rpool/lxd
       volatile.initial_source: rpool/lxd
       volume.zfs.use_refquota: "true"
+      volume.zfs.remove_snapshots: "true"
       zfs.pool_name: rpool/lxd
     description: ""
-    name: ssd
+    name: rpool
     driver: zfs
 
 profile::app::backuppc::client::rsync_share_name:
