@@ -1,6 +1,9 @@
 # @summary Set up secure nginx reverse proxy
 
-class profile::app::nginx::gateway {
+class profile::app::nginx::gateway (
+  Stdlib::Absolutepath $nginx_conf = '/etc/nginx/options-ssl-nginx.conf',
+  Stdlib::Absolutepath $certdir    = "/etc/letsencrypt/live/${trusted['certname']}",
+) {
 # TODO find a way of providing a common list of certs
 
   if $facts['os']['family'] != 'Debian' {
@@ -10,9 +13,7 @@ class profile::app::nginx::gateway {
   if !defined(Class['ngnix']) {
     class{'nginx': server_purge => true, }
   }
-  else {
-    include profile::app::nginx
-  }
+  include profile::app::nginx
 
 # Create the directories for the well known location used by letsencrypt
   file {'/var/www/html/letsencrypt/':
@@ -28,15 +29,10 @@ class profile::app::nginx::gateway {
     require => Package[nginx],
   }
 
-# TODO pass in as parameter
-  $nginx_conf = '/etc/nginx/options-ssl-nginx.conf'
-
-
-# TODO pass certdir as parameter?
-  $certdir = "/etc/letsencrypt/live/${trusted['certname']}"
   $pem     = "${certdir}/fullchain.pem"
   $key     = "${certdir}/privkey.pem"
 
+# TODO pass in hosts as variable?
   nginx::resource::location { 'well-known':
     location                   => '^~ /.well-known/acme-challenge/',
     www_root                   => '/var/www/html/letsencrypt/',
