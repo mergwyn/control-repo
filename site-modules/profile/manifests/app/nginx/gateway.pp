@@ -1,6 +1,6 @@
 # @summary Set up secure nginx reverse proxy
 
-class profile::app::gateway::nginx {
+class profile::app::nginx::gateway {
 # TODO find a way of providing a common list of certs
 
   if $facts['os']['family'] != 'Debian' {
@@ -11,7 +11,7 @@ class profile::app::gateway::nginx {
     class{'nginx': server_purge => true, }
   }
   else {
-    include nginx
+    include profile::app::nginx
   }
 
 # Create the directories for the well known location used by letsencrypt

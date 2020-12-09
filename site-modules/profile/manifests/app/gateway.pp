@@ -7,6 +7,6 @@ class profile::app::gateway {
   }
 
   include profile::app::gateway::certs
-  include profile::app::gateway::nginx
+  include profile::app::nginx::gateway
 
 }
