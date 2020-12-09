@@ -13,6 +13,7 @@ class profile::app::backuppc::server (
   include profile::app::scripts
 
   package { 'pigz': }
+  package { 'par2': }
   package { 'libjson-perl': }
 
   # this assumes web server is defined and is nginx
