@@ -5,6 +5,6 @@ class profile::platform::baseline::debian::autofs {
 
   autofs::mount { 'net':
     mount   => '/net',
-    options => '-hosts'
+    mapfile => '-hosts'
   }
 }
