@@ -9,7 +9,7 @@ class profile::app::odrive (
   # automatically start daemon
   systemd::unit_file { 'odrive-agent@.service':
     enable  => true,
-    active  => true,
+    active  => false,
     content => @("EOT"),
                [Unit]
                Description=odrive Sync Agent daemon for %I
@@ -30,7 +30,7 @@ class profile::app::odrive (
 
   systemd::unit_file { 'odrive-monitor@.service':
     enable  => true,
-    active  => true,
+    active  => false,
     content => @("EOT"),
                [Unit]
                Description=odrive monitoring daemon for %i
