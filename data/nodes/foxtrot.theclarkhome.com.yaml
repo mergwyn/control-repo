@@ -32,6 +32,11 @@ profile::platform::baseline::debian::netplan::bridges:
       stp: false
       forward_delay: 0
 
+profile::platform::baseline::files::objects:
+  '/var/lib/backuppc':
+    ensure: 'directory'
+    force: true
+
 profile::platform::baseline::debian::mounts::defaults:
   ensure: 'mounted'
 profile::platform::baseline::debian::mounts::objects:

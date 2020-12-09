@@ -1,5 +1,8 @@
 #
-class profile::app::backuppc::server {
+class profile::app::backuppc::server (
+  $uid = 997,
+  $gid = 199,
+) {
 
   if $facts['os']['family'] != 'Debian' {
     fail("${title} is only for Debian")
@@ -48,17 +51,18 @@ class profile::app::backuppc::server {
   }
 
   group { 'backuppc':
-    gid        => '199',
+    gid        => $gid,
   }
   user { 'backuppc':
     groups     => 'backuppc',
-    uid        => '997',
+    uid        => $uid,
     home       => '/var/lib/backuppc',
     comment    => 'BackupPC,,,',
     managehome => false,
     require    => Group['backuppc'],
   }
-  User['backuppc'] -> Class['backuppc::server']
+  User['backuppc']
+  -> Class['backuppc::server']
 
   class { 'backuppc::server':
     backuppc_password          => lookup('secrets::backuppc'),
