@@ -4,9 +4,10 @@ class profile::app::gpo::clean {
   $scriptdir = '/opt/scripts'
   $owner     = 'gary'
 
-  # cron job to run scripts
+  # dependencies
   include cron
   include profile::app::scripts
+  package {'xml2': }
 
   cron::job { 'GPO':
     environment => [ 'PATH="/usr/sbin:/usr/bin:/sbin:/bin"' ],
