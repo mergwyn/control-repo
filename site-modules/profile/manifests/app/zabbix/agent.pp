@@ -16,6 +16,7 @@ class profile::app::zabbix::agent (
       class { 'zabbix::agent':
         zabbix_version       => '4.4',
         hostname             => $trusted['certname'],
+        hostinterface        => $trusted['certname'],
         server               => $serverstring,
         serveractive         => $serverstring,
         enableremotecommands => '1',
