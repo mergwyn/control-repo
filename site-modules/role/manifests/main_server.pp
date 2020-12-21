@@ -19,5 +19,6 @@ class role::main_server {
   include profile::app::photos
   include profile::app::samba::shares
   include profile::app::timemachine
+  include profile::app::unison
 
 }

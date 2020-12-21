@@ -8,7 +8,6 @@ class profile::platform::baseline::debian::packages {
     'gpg',
     'jq',
     'sysstat',
-    'unison', # TODO foxtrot only?
   ]
   package { $install_packages : ensure => present }
 

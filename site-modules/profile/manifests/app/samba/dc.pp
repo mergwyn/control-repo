@@ -4,7 +4,7 @@
 class profile::app::samba::dc {
 
   # TODO add unison replcaition script and cron entry
-  package { 'unison': }
+  include profile::app::unison
 
   # support for samba backup as part of backuppc run
   $scripts='/etc/backuppc-scripts/'
