@@ -52,7 +52,7 @@ class profile::app::unison {
       $archive_name = "/unison.latest.${edition}.tar.gz"
       $archive_path = "${facts['puppet_vardir']}/${archive_name}"
       $install_path = '/usr/local'
-      $creates      = "${install_path}/Radarr"
+      $creates      = "${install_path}/bin/unison"
 
       githubreleases_download { $archive_path:
         author            => 'bcpierce00',
@@ -65,9 +65,6 @@ class profile::app::unison {
         extract      => true,
         extract_path => $install_path,
         cleanup      => false,
-        user         => $::radarr::user,
-        group        => $::radarr::group,
-        notify       => Service['radarr.service'],
         subscribe    => Githubreleases_download[$archive_path],
       }
         # TODO add configuration
