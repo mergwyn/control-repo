@@ -45,11 +45,11 @@ class profile::app::unison {
       package { 'unison': ensure => absent, }
 
       case $facts['os']['architecture'] {
-        'amd64': { $edition = 'ocaml-4.10.0+x86_64.linux' }
+        'amd64': { $edition = 'unison-v2.51.3+ocaml-4.10.0+x86_64.linux.static' }
         default: { }
       }
 
-      $archive_name = "/unison.latest.${edition}.tar.gz"
+      $archive_name = "${edition}.tar.gz"
       $archive_path = "${facts['puppet_vardir']}/${archive_name}"
       $install_path = '/usr'
       $creates      = "${install_path}/bin/unison"
