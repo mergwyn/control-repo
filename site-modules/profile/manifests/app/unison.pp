@@ -51,7 +51,7 @@ class profile::app::unison {
 
       $archive_name = "/unison.latest.${edition}.tar.gz"
       $archive_path = "${facts['puppet_vardir']}/${archive_name}"
-      $install_path = '/usr/local'
+      $install_path = '/usr'
       $creates      = "${install_path}/bin/unison"
 
       githubreleases_download { $archive_path:
