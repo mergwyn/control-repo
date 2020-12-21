@@ -42,8 +42,35 @@ class profile::app::unison {
       }
     }
     'Debian': {
-      package { 'unison': }
-      # TODO add configuration
+      package { 'unison': ensure => absent, }
+
+      case $facts['os']['architecture'] {
+        'amd64': { $edition = 'ocaml-4.10*x86_64.linux' }
+        default: { }
+      }
+
+      $archive_name = "/unison.latest.${edition}.tar.gz"
+      $archive_path = "${facts['puppet_vardir']}/${archive_name}"
+      $install_path = '/usr/local'
+      $creates      = "${install_path}/Radarr"
+
+      githubreleases_download { $archive_path:
+        author            => 'bcpierce00',
+        repository        => 'unison',
+        asset             => true,
+        asset_filepattern => $edition,
+      }
+      -> archive { $archive_name:
+        source       => "file://${archive_path}",
+        extract      => true,
+        extract_path => $install_path,
+        cleanup      => false,
+        user         => $::radarr::user,
+        group        => $::radarr::group,
+        notify       => Service['radarr.service'],
+        subscribe    => Githubreleases_download[$archive_path],
+      }
+        # TODO add configuration
     }
     default: {
       fail("OS Family: ${facts['os']['family']} not supported by ${::class}")
