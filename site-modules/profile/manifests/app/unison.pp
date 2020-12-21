@@ -49,7 +49,7 @@ class profile::app::unison {
         default: { }
       }
 
-      $archive_name = "${edition}.tar.gz"
+      $archive_name = "/${edition}.tar.gz"
       $archive_path = "${facts['puppet_vardir']}/${archive_name}"
       $install_path = '/usr'
       $creates      = "${install_path}/bin/unison"
@@ -60,7 +60,7 @@ class profile::app::unison {
         asset             => true,
         asset_filepattern => $edition,
       }
-      archive { $archive_path:
+      archive { $archive_name:
         source       => "file://${archive_path}",
         extract      => true,
         extract_path => $install_path,
