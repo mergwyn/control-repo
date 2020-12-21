@@ -45,7 +45,7 @@ class profile::app::unison {
       package { 'unison': ensure => absent, }
 
       case $facts['os']['architecture'] {
-        'amd64': { $edition = 'ocaml-4.10.1+x86_64.linux' }
+        'amd64': { $edition = 'ocaml-4.10.0+x86_64.linux' }
         default: { }
       }
 
