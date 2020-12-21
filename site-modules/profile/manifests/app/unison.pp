@@ -60,7 +60,7 @@ class profile::app::unison {
         asset             => true,
         asset_filepattern => $edition,
       }
-      archive { $archive_name:
+      archive { $archive_path:
         source       => "file://${archive_path}",
         extract      => true,
         extract_path => $install_path,
