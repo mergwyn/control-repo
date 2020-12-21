@@ -45,7 +45,7 @@ class profile::app::unison {
       package { 'unison': ensure => absent, }
 
       case $facts['os']['architecture'] {
-        'amd64': { $edition = 'ocaml-4.10.**x86_64.linux' }
+        'amd64': { $edition = 'ocaml-4.10.1+x86_64.linux' }
         default: { }
       }
 
@@ -60,7 +60,7 @@ class profile::app::unison {
         asset             => true,
         asset_filepattern => $edition,
       }
-      -> archive { $archive_name:
+      archive { $archive_name:
         source       => "file://${archive_path}",
         extract      => true,
         extract_path => $install_path,
