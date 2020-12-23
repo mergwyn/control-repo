@@ -54,7 +54,7 @@ class profile::app::unison {
       $creates      = "${install_path}/bin/unison"
 
       archive { $archive_path:
-        source       => "file://${archive_path}",
+        source       => $url,
         extract      => true,
         extract_path => $install_path,
         cleanup      => false,
