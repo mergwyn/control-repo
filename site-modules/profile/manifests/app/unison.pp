@@ -58,6 +58,7 @@ class profile::app::unison {
         extract      => true,
         extract_path => $install_path,
         cleanup      => false,
+        creates      => $creates,
       }
       # TODO add configuration
     }
