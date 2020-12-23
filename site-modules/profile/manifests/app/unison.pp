@@ -45,29 +45,21 @@ class profile::app::unison {
       package { 'unison': ensure => absent, }
 
       case $facts['os']['architecture'] {
-        'amd64': { $edition = 'unison-v2.51.3+ocaml-4.10.0+x86_64.linux.static' }
+        'amd64': { $archive_name = 'unison-v2.51.3+ocaml-4.10.0+x86_64.linux.static.tar.gz' }
         default: { }
       }
-
-      $archive_name = "${edition}.tar.gz"
+      $url = "https://github.com/bcpierce00/unison/releases/download/v2.51.3/${archive_name}"
       $archive_path = "${facts['puppet_vardir']}/${archive_name}"
       $install_path = '/usr'
       $creates      = "${install_path}/bin/unison"
 
-      githubreleases_download { $archive_path:
-        author            => 'bcpierce00',
-        repository        => 'unison',
-        asset             => true,
-        asset_filepattern => $edition,
-      }
-      -> archive { $archive_path:
+      archive { $archive_path:
         source       => "file://${archive_path}",
         extract      => true,
         extract_path => $install_path,
         cleanup      => false,
-        subscribe    => Githubreleases_download[$archive_path],
       }
-        # TODO add configuration
+      # TODO add configuration
     }
     default: {
       fail("OS Family: ${facts['os']['family']} not supported by ${::class}")
