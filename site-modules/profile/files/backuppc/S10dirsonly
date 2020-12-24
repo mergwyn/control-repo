@@ -17,7 +17,7 @@ for root in ${fs} ; do
       touch "${root}${dir}/.sentinel"
     fi
     for d in $(find ${root}${dir} -type d -print) ; do
-      echo $d
+      #echo $d
       cat > ${d}/.rsync-filter <<!
 + */
 + .sentinel
