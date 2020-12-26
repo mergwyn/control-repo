@@ -24,7 +24,7 @@ class profile::app::samba::shares {
       'directory mask'            => '0775',
       # shadow_copy2 acl_xattr needed for windows',
       # remainder needed for MacOS',
-      'vfs objects'               => 'shadow_copy2 acl_xattr catia fruit streams_xattr',
+      'vfs objects'               => 'shadow_copy2 streams_xattr acl_xattr catia',
       'shadow:format'             => 'zfs-auto-snap_%S-%Y-%m-%d-%H%M',
       'shadow:localtime'          => 'no',
       'shadow:snapdirseverywhere' => 'yes',
