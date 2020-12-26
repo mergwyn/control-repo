@@ -21,9 +21,8 @@ class profile::app::samba::member {
       'vfs objects'                               => 'fruit streams_xattr acl_xattr',
       'acl_xattr:ignore system acls'              => 'yes',
       # Fruit settings
-      'fruit:rersource'                           => 'xattr',
-      'fruit:model'                               => 'file',
-      #'fruit:model'                               => 'MacSamba',
+      'fruit:resource'                            => 'xattr',
+      'fruit:model'                               => 'MacSamba',
       'fruit:metadata'                            => 'stream',
       'fruit:posix_rename'                        => 'yes',
       'fruit:veto_appledouble'                    => 'no',
