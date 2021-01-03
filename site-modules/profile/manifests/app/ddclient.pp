@@ -16,14 +16,14 @@ class profile::app::ddclient {
     server   => 'dynamicdns.park-your-domain.com',
     protocol => 'namecheap',
     password => lookup('secrets::namecheap'),
-    hostname => 'webmin,zulu,tango,papa,foxtrot,echo,yankee',
+    hostname => 'webmin,zulu,papa,foxtrot,echo,yankee',
   }
-  ddclient::host { 'opendns':
-    login    => 'mergwyn',
-    password => lookup('secrets::opendns'),
-    protocol => 'dyndns2',
-    server   => 'updates.opendns.com',
-    hostname => 'Home',
-  }
+#  ddclient::host { 'opendns':
+#    login    => 'mergwyn',
+#    password => lookup('secrets::opendns'),
+#    protocol => 'dyndns2',
+#    server   => 'updates.opendns.com',
+#    hostname => 'Home',
+#  }
 
 }
