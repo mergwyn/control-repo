@@ -25,7 +25,7 @@ class profile::app::ddclient (
     server   => 'dynamicdns.park-your-domain.com',
     protocol => 'namecheap',
     password => lookup('secrets::namecheap'),
-    hostname => join($servers, ",")
+    hostname => join($servers, ',')
   }
 #  ddclient::host { 'opendns':
 #    login    => 'mergwyn',
