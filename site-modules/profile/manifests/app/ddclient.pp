@@ -1,6 +1,15 @@
 #
 
-class profile::app::ddclient {
+class profile::app::ddclient (
+  Array[String] $servers = [
+    'webmin',
+    'zulu',
+    'papa',
+    'foxtrot',
+    'echo',
+    'yankee',
+  ]
+) {
 
   class { 'ddclient':
     hosts_config    => 'concat',
@@ -16,7 +25,7 @@ class profile::app::ddclient {
     server   => 'dynamicdns.park-your-domain.com',
     protocol => 'namecheap',
     password => lookup('secrets::namecheap'),
-    hostname => 'webmin,zulu,papa,foxtrot,echo,yankee',
+    hostname => join($servers, ",")
   }
 #  ddclient::host { 'opendns':
 #    login    => 'mergwyn',
