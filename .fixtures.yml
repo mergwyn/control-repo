@@ -6,41 +6,35 @@ fixtures:
   repositories:
     transmission:
       repo: https://github.com/craigwatson/puppet-transmission
-      branch: master
+      ref: master
     managedmac:
       repo: https://github.com/mergwyn/mergwyn-managedmac
       branch: v0.8.2
     jackett:
       repo: https://github.com/mergwyn/mergwyn-jackett
-      branch: master
+      ref: master
     radarr:
       repo: https://github.com/mergwyn/mergwyn-radarr
-      branch: master
+      ref: master
     ddclient:
       repo: https://github.com/mergwyn/puppet-ddclient
-      branch: master
+      ref: master
     dhcp:
       repo: https://github.com/voxpupuli/puppet-dhcp
-      branch: master
-    webmin:
-      repo: https://github.com/rehanone/puppet-webmin
-      branch: master
-    backuppc:
-      repo: https://github.com/mergwyn/mergwyn-backuppc
-      branch: master
+      ref: master
     zabbix:
       repo: https://github.com/voxpupuli/puppet-zabbix
-      branch: master
+      ref: master
+    webmin:
+      repo: https://github.com/rehanone/puppet-webmin
+      ref: master
+    backuppc:
+      repo: https://github.com/mergwyn/mergwyn-backuppc
+      ref: master
   forge_modules:
-    githubreleases:
-      repo: dodevops-githubreleases
-      ref: 4.0.0
     augeas:
       repo: camptocamp-augeas
       ref: 1.9.0
-    augeasproviders_shellvar:
-      repo: herculesteam-augeasproviders_shellvar
-      ref: 4.0.0
     kmod:
       repo: camptocamp-kmod
       ref: 2.5.0
@@ -50,9 +44,12 @@ fixtures:
     systemd:
       repo: camptocamp-systemd
       ref: 2.10.0
+    githubreleases:
+      repo: dodevops-githubreleases
+      ref: 4.0.0
     network:
       repo: example42-network
-      ref: 3.5.3
+      ref: 3.6.0
     portage:
       repo: gentoo-portage
       ref: 2.3.0
@@ -68,6 +65,9 @@ fixtures:
     augeasproviders_pam:
       repo: herculesteam-augeasproviders_pam
       ref: 2.2.1
+    augeasproviders_shellvar:
+      repo: herculesteam-augeasproviders_shellvar
+      ref: 4.0.0
     samba:
       repo: kakwa-samba
       ref: 2.0.0
@@ -80,54 +80,54 @@ fixtures:
     alternatives:
       repo: puppet-alternatives
       ref: 3.0.0
-    autofs:
-      repo: puppet-autofs
-      ref: 6.0.0
     archive:
       repo: puppet-archive
       ref: 4.6.0
+    autofs:
+      repo: puppet-autofs
+      ref: 6.0.0
     cron:
       repo: puppet-cron
       ref: 2.0.0
     apache:
       repo: puppetlabs-apache
-      ref: 5.6.0
+      ref: 5.8.0
     apt:
       repo: puppetlabs-apt
-      ref: 7.6.0
+      ref: 7.7.0
     augeas_core:
       repo: puppetlabs-augeas_core
       ref: 1.1.1
     firewall:
       repo: puppetlabs-firewall
-      ref: 2.7.0
+      ref: 2.8.0
     git:
       repo: puppetlabs-git
       ref: 0.5.0
     inifile:
       repo: puppetlabs-inifile
-      ref: 4.3.0
+      ref: 4.4.0
     mailalias_core:
       repo: puppetlabs-mailalias_core
       ref: 1.0.6
     mysql:
       repo: puppetlabs-mysql
-      ref: 10.8.0
+      ref: 10.9.0
     ntp:
       repo: puppetlabs-ntp
-      ref: 8.4.0
+      ref: 8.5.0
     postgresql:
       repo: puppetlabs-postgresql
       ref: 6.8.0
     puppetdb:
       repo: puppetlabs-puppetdb
-      ref: 7.6.0
+      ref: 7.7.1
     puppetserver_gem:
       repo: puppetlabs-puppetserver_gem
       ref: 1.1.1
     reboot:
       repo: puppetlabs-reboot
-      ref: 3.0.0
+      ref: 3.1.0
     ruby:
       repo: puppetlabs-ruby
       ref: 1.0.1
@@ -178,7 +178,7 @@ fixtures:
       ref: 6.0.0
     timezone:
       repo: saz-timezone
-      ref: 6.0.0
+      ref: 6.1.0
     sssd:
       repo: sgnl05-sssd
       ref: 3.1.0
@@ -217,22 +217,22 @@ fixtures:
       ref: 0.8.0
     chocolatey:
       repo: puppetlabs-chocolatey
-      ref: 5.1.1
+      ref: 5.2.0
     dism:
       repo: puppetlabs-dism
       ref: 1.3.1
     registry:
       repo: puppetlabs-registry
-      ref: 3.1.1
+      ref: 3.2.0
     concat:
       repo: puppetlabs-concat
-      ref: 6.2.0
+      ref: 6.4.0
     scheduled_task:
       repo: puppetlabs-scheduled_task
-      ref: 2.2.1
+      ref: 2.3.1
     powershell:
       repo: puppetlabs-powershell
-      ref: 4.0.0
+      ref: 4.1.0
     pwshlib:
       repo: puppetlabs-pwshlib
-      ref: 0.5.1
+      ref: 0.6.3
