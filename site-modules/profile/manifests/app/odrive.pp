@@ -67,39 +67,8 @@ class profile::app::odrive (
 
   $install_path = "${codedir}/bin"
 
-  $agent_source       = 'https://dl.odrive.com/odriveagent-lnx-64'
-  $agent_archive      = basename($agent_source)
-  $agent_archive_path = "${facts['puppet_vardir']}/${agent_archive}"
-  $creates_agent      = "${install_path}/odriveagent"
-
-  file { $install_path:
-    ensure => directory,
-  }
-
-  archive { $agent_archive:
-    path         => $agent_archive_path,
-    source       => $agent_source,
-    extract      => true,
-    extract_path => $install_path,
-    creates      => $creates_agent,
-    cleanup      => true,
-# TODO notify and require?
-  }
-
-  $cli_source       = 'https://dl.odrive.com/odrivecli-lnx-64'
-  $cli_archive      = basename($cli_source)
-  $cli_archive_path = "${facts['puppet_vardir']}/${cli_archive}"
-  $creates_cli      = "${install_path}/odrive"
-
-  archive { $cli_archive:
-    path         => $cli_archive_path,
-    source       => $cli_source,
-    extract      => true,
-    extract_path => $install_path,
-    creates      => $creates_cli,
-    cleanup      => true,
-# TODO notify and require?
-  }
+  profile::app::odrive::install { 'odriveagent': install_path => $install_path }
+  profile::app::odrive::install { 'odrivecli':   install_path => $install_path }
 
   $users.each |String $user| {
     service { "odrive-agent@${user}":
