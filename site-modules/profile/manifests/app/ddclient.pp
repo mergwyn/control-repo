@@ -1,14 +1,7 @@
 #
 
 class profile::app::ddclient (
-  Array[String] $servers = [
-    'webmin',
-    'zulu',
-    'papa',
-    'foxtrot',
-    'echo',
-    'yankee',
-  ]
+  Array[Stdlib::Fqdn] $servers = [ $trusted['hostname'] ],
 ) {
 
   class { 'ddclient':
