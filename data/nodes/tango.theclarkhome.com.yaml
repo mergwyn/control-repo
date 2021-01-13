@@ -1,5 +1,5 @@
 ---
 
-profile::app:ddclient::servers:
+profile::app::ddclient::servers:
   - "%{trusted.hostname}"
   - plex
