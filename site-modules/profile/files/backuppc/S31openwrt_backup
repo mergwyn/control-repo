@@ -3,7 +3,7 @@
 # Intended to run as part of backuppc pre script
 
 readonly where=/var/backups
-readonly when=$(date +%d%m%y)
+readonly when=$(date +%y%m%d)
 
 
 echo "$0: $*"
@@ -30,14 +30,15 @@ for container in "${containers[@]}"; do
     lxc exec "${container}" -- sysupgrade -b "${backup}"
     lxc file pull "${container}${backup}" "${where}/"
     chmod go-rwx "${backupname}"
-    if [[ -n "${last}" ]] ; then
+    if [[ -n "${last}" && "${last}" != ${backupname} ]] ; then
       if diff "${last}" "${backupname}" ; then
         echo backup not changed, deleting "${backupname}"
         rm "${backupname}"
       fi
     fi
-    mapfile -t backups < <(ls "openwrt-backup-${container}"*)
-    for ((n=3; n<=${#backups[@]}; n++)); do
+    mapfile -t backups < <(ls -r "openwrt-backup-${container}"*)
+    for ((n=3; n<${#backups[@]}; n++)); do
+      echo "deleting old backup ${backups[$n]}"
       rm "${backups[$n]}"
     done
     date > "openwrt-${container}-last"
