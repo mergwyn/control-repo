@@ -7,12 +7,14 @@
 #   ipv4 address (ipv6 not supported)
 #
 define profile::app::samba::dnsentry (
-  Optional[Stdlib::Fqdn]  $host      = $name,
+  Stdlib::Fqdn            $host      = $title,
   Stdlib::IP::Address::V4 $ipaddress = undef,
 ) {
-  $octets = split($ipaddress, '.')
+  $octet = split($ipaddress, '\.')
 # TODO can use join for this?
-  $revzone = "${octets[2]}.${octets[1]}.${octets[0]}.in-addr.arpa"
+  $revzone = "${octet[2]}.${octet[1]}.${octet[0]}.in-addr.arpa"
+
+  notify{"ipaddress is ${ipaddress}, spilt is ${octet}": loglevel => debug, withpath => true,}
 
   samba::dc::dnsentry { $host:
     zone   => $trusted['domain'],
@@ -22,7 +24,7 @@ define profile::app::samba::dnsentry (
   }
   samba::dc::dnsentry { "${host} rev":
     zone   => $revzone,
-    host   => $octets[3],
+    host   => $octet[3],
     type   => 'PTR',
     record => "${host}.${trusted['domain']}"
   }
