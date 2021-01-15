@@ -1,4 +1,6 @@
 # 
+# @summary Sets up a samba AD
+#
 # TODO: complete dev and test
 
 class profile::app::samba::dc {
@@ -92,4 +94,5 @@ class profile::app::samba::dc {
   #  groups     => ['domain users', 'administrators'],
   #}
 
+  include profile::app::samba::hosts
 }
