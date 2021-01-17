@@ -36,7 +36,7 @@ for container in "${containers[@]}"; do
         rm "${backupname}"
       fi
     fi
-    mapfile -t backups < <(ls -r "openwrt-backup-${container}"*)
+    mapfile -t backups < <(ls -tr "openwrt-backup-${container}"*)
     for ((n=3; n<${#backups[@]}; n++)); do
       echo "deleting old backup ${backups[$n]}"
       rm "${backups[$n]}"
