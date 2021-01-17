@@ -3,7 +3,7 @@
 define profile::app::dhcpd::vpnhost (
   Stdlib::MAC                      $mac     = undef,
   Optional[Stdlib::IP::Address::V4] $ip      = undef,
-  Stdlib::IP::Address::V4          $gateway = '192.168.11.251'
+  Stdlib::IP::Address::V4          $gateway = '192.168.11.252'
   ) {
 
   dhcp::host { $title:
