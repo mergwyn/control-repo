@@ -18,12 +18,8 @@ profile::platform::baseline::debian::netplan::bridges:
       - 192.168.11.11/16
     gateway4: "%{lookup('defaults::gateway')}"
     nameservers:
-      search:
-        - theclarkhome.com
-        - local
-      addresses:
-        - 192.168.11.21
-        - 192.168.11.22
+      search: "%{alias('defaults::dns::search')}"
+      addresses: "%{alias('defaults::dns::nameservers')}"
     parameters:
       stp: false
       forward_delay: 0
