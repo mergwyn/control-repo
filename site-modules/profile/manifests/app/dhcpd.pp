@@ -25,7 +25,7 @@ class profile::app::dhcpd (
     network  => '192.168.11.0',
     mask     => '255.255.255.0',
     range    => '192.168.11.100 192.168.11.199',
-    gateway  => '192.168.11.254',
+    gateway  => lookup('defaults::gateway'),
     failover => 'dhcp-failover',
   }
   if ($role and $peer_address) {
@@ -38,8 +38,8 @@ class profile::app::dhcpd (
   }
 
 # Hosts with fixed ip
-  dhcp::host { 'switch1': mac => '00:8e:f2:59:c7:98', ip => '192.168.11.1', }
-  dhcp::host { 'switch2': mac => 'a0:40:a0:71:7e:ce', ip => '192.168.11.2', }
+  dhcp::host { 'switch1': mac => '00:8e:f2:59:c7:98', ip => '192.168.11.2', }
+  dhcp::host { 'switch2': mac => 'a0:40:a0:71:7e:ce', ip => '192.168.11.3', }
   dhcp::host { 'papa':    mac => '00:16:3e:fc:2a:87', ip => '192.168.11.240', }
   dhcp::host { 'romeo':   mac => '00:16:3e:fb:dc:5e', ip => '192.168.11.250', }
 

@@ -16,10 +16,9 @@ defaults::search:
   - theclarkhome.com
   - local
 defaults::dns_search:      "%{trusted.domain} local"
-defaults::addresses:
+defaults::dns_nameservers:
   - 192.168.11.21
   - 192.168.11.22
-defaults::dns_nameservers: '192.168.11.21 192.168.11.22'
 defaults::backup_server:   'foxtrot'
 defaults::system_user:     'root'
 defaults::system_home_dir: '/root'
