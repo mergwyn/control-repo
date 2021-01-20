@@ -11,10 +11,10 @@ defaults::sharedpassword:  '$6$s/krC.bq$NiiWBAjU9pC3OkFTOVrgRpSiS6fpTi4jIgY50K6/
 # network
 defaults::netmask:         '255.255.0.0'
 defaults::gateway:         '192.168.11.254'
+defaults::vpn_gateway:     '192.168.11.252'
 defaults::network:         '192.168.11.0'
-defaults::dns_search:      "%{trusted.domain} local"
 defaults::dns::search:
-  - theclarkhome.com
+  - "%{trusted.domain}"
   - local
 defaults::dns::nameservers:
   - 192.168.11.21
