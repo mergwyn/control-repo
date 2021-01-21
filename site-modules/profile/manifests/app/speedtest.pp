@@ -20,6 +20,6 @@ class profile::app::speedtest {
   }
 
   zabbix::userparameters { 'speedtest':
-    content => "UserParameter=speedtest.data.[*],sudo cat ${datafile}\n"
+    content => "UserParameter=speedtest.data,sudo cat ${datafile}\n"
   }
 }
