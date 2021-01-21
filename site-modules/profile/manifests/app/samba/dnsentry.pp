@@ -15,7 +15,7 @@ define profile::app::samba::dnsentry (
   $revzone = "${octet[2]}.${octet[1]}.${octet[0]}.in-addr.arpa"
 
   notify {'dnsentry':
-    message => "ipaddress is ${ipaddress}, split is ${octet}",
+    message  => "ipaddress is ${ipaddress}, split is ${octet}",
     loglevel => debug,
     withpath => true,
   }
