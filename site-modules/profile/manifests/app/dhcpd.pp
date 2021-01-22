@@ -53,6 +53,8 @@ class profile::app::dhcpd (
   dhcp::host { 'lounge-sonos-play1-ls': mac => '00:0e:58:c9:f0:9a' }
   dhcp::host { 'lounge-sonos-play1-rs': mac => '94:9F:3E:12:FA:8A' }
   dhcp::host { 'kitchen-sonos-playone': mac => '78:28:CA:CB:8B:94' }
+  dhcp::host { 'bedroom-HS100':         mac => '0C:80:63:0C:40:16' }
+  dhcp::host { 'lounge-HS100':          mac => 'D8:0D:17:56:A3:DC' }
 
 # Hosts with different gateway (VPN)
   profile::app::dhcpd::vpnhost { 'india':        mac => '00:16:3e:93:c6:21', ip => '192.168.11.41', }
