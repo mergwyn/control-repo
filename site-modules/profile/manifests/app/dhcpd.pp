@@ -20,6 +20,7 @@ class profile::app::dhcpd (
     dnssearchdomains   => [ $domain, 'local' ],
     default_lease_time => 14400,
     extra_config       => [ 'include "/etc/dhcp/dhcpd.samba_ddns";' ],
+    omapi_port         => 7911,
   }
   dhcp::pool { $domain:
     network  => '192.168.11.0',
@@ -33,7 +34,8 @@ class profile::app::dhcpd (
       role         => $role,
       peer_address => $peer_address,
       port         => 647,
-      mclt         => 3600,
+      #mclt         => 3600,
+      load_split   => 255,
     }
   }
 
