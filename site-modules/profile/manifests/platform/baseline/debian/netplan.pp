@@ -12,6 +12,7 @@
 class profile::platform::baseline::debian::netplan (
   Optional[Hash] $ethernets = { $facts['networking']['primary'] => { dhcp4 => true } },
   Optional[Hash] $bridges   = undef,
+  Optional[Hash] $bonds   = undef,
 ) {
 
   if $facts['os']['name'] != 'Ubuntu' {
@@ -30,6 +31,7 @@ class profile::platform::baseline::debian::netplan (
     renderer  => networkd,
     ethernets => $ethernets,
     bridges   => $bridges,
+    bonds     => $bonds,
   }
 
   package { 'ifupdown': ensure => absent }

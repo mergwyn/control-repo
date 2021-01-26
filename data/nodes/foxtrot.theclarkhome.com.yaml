@@ -10,11 +10,20 @@ profile::platform::baseline::debian::netplan::ethernets:
   enp4s0:
     dhcp4: no
     mtu: 9000
-profile::platform::baseline::debian::netplan::bridges:
-  br0:
+profile::platform::baseline::debian::netplan::bonds:
+  bond0:
     interfaces:
       - enp3s0
       - enp4s0
+    mtu: 9000
+    parameters:
+      #mode: active-backup
+      mode: balance-alb
+      primary: enp3s0
+profile::platform::baseline::debian::netplan::bridges:
+  br0:
+    interfaces:
+      - bond0
     mtu: 9000
     dhcp4: no
     dhcp6: no
