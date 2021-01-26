@@ -11,6 +11,13 @@ class profile::infrastructure::router::openvpn {
   package { $aptpackages: ensure   => present, }
   #
   #TODO configure ufw
+  shellvar { 'net/ipv4/ip_forward':
+    ensure    => present,
+    target    => '/etc/ufw/sysctl.conf',
+    value     => '1',
+    uncomment => true,
+  }
+
   #TODO configure openvpn
 # wget https://downloads.nordcdn.com/configs/archives/servers/ovpn.zip
 # unzip ovpn.zip
