@@ -40,8 +40,8 @@ class profile::app::dhcpd (
   }
 
 # Hosts with fixed ip
-  dhcp::host { 'switch1': mac => '00:8e:f2:59:c7:98', ip => '192.168.11.2', }
-  dhcp::host { 'switch2': mac => 'a0:40:a0:71:7e:ce', ip => '192.168.11.3', }
+  dhcp::host { 'switch1': mac => '00:8e:f2:59:c7:98', }
+  dhcp::host { 'switch2': mac => 'a0:40:a0:71:7e:ce', ip => '192.168.11.2', }
   dhcp::host { 'papa':    mac => '00:16:3e:fc:2a:87', ip => '192.168.11.240', }
   dhcp::host { 'romeo':   mac => '00:16:3e:fb:dc:5e', ip => '192.168.11.250', }
 
@@ -60,9 +60,6 @@ class profile::app::dhcpd (
   profile::app::dhcpd::vpnhost { 'india':        mac => '00:16:3e:93:c6:21', ip => '192.168.11.41', }
   profile::app::dhcpd::vpnhost { 'tango':        mac => '00:16:3e:01:f8:9a', ip => '192.168.11.42', }
   profile::app::dhcpd::vpnhost { 'kilo':         mac => '00:16:3e:5c:39:e0', }
-  #profile::app::dhcpd::vpnhost { 'LGwebOSTV':    mac => '7c:1c:4e:48:06:e2', }
-  #profile::app::dhcpd::vpnhost { 'bedroom-roku': mac => '10:59:32:02:bb:2a', }
-  #profile::app::dhcpd::vpnhost { 'kitchen-roku': mac => 'c8:3a:6b:58:ef:9e', }
 
 # export keytab to allow script to run
   exec { 'chown_dhcp_keytab':
