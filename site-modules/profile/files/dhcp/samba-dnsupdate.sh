@@ -227,7 +227,7 @@ case "$ACTION" in
       if [[ ${CURIP} != ${IP} ]]; then
         update_host
       else
-        log_info "${HNAME}/${IP} does not need to be updated"
+        log_info "A record for ${HNAME}/${IP} does not need to be updated"
       fi
     else
       add_host
@@ -239,7 +239,7 @@ case "$ACTION" in
       if [[ ${CURHNAME} != ${HNAME}.${DOMAIN} ]]; then 
         update_ptr
       else
-        log_info "${HNAME}/${IP} does not need to be updated"
+        log_info "PTR record for ${HNAME}/${IP} does not need to be updated"
       fi
     else
       add_ptr
