@@ -17,8 +17,8 @@ log_info()  { log -p daemon.info "$@" ; }
 
 log_info "$(basename $0): $*"
 
-SLEEPTIME=5
-$(egrep '^[ ]*secondary;' /etc/dhcp/dhcpd.conf > /dev/null) && SLEEPTIME=20
+SLEEPTIME=1
+$(egrep '^[ ]*secondary;' /etc/dhcp/dhcpd.conf > /dev/null) && SLEEPTIME=10
 sleep "$SLEEPTIME"
 
 checkvalues() {
