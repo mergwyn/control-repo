@@ -11,16 +11,20 @@
 # will receive addresses from this DHCP server. Instructions are found here:
 # https://wiki.archlinux.org/index.php/Samba_4_Active_Directory_Domain_Controller#DHCP
 
-logger -p daemon.info -t dhcpd "$0: $*"
+log()       { logger -t "dhcpd[$$]" "$@" ; }
+log_error() { log -p daemon.error "$@" ; }
+log_info()  { log -p daemon.info "$@" ; }
+
+log_info "$(basename $0): $*"
 
 SLEEPTIME=5
 $(egrep '^[ ]*secondary;' /etc/dhcp/dhcpd.conf > /dev/null) && SLEEPTIME=20
 sleep "$SLEEPTIME"
 
 checkvalues() {
-  [ -z "${2}" ] && echo "Error: argument '${1}' requires a parameter." && exit 1
+  [ -z "${2}" ] && log_error -s "Error: argument '${1}' requires a parameter." && exit 1
   case ${2} in
-    -*) echo "Error: Invalid parameter '${2}' passed to ${1}."
+    -*) log_error -s "Error: Invalid parameter '${2}' passed to ${1}."
         exit 1 ;;
     *)  return 0 ;;
   esac
@@ -124,32 +128,31 @@ while [ -n "$1" ]; do
       shift 2
     ;;
     *)
-      echo "Error!!! Unknown command line opion!"
-      echo "Try" `basename $0` "--help."
+      log_error -s "Error!!! Unknown command line opion!"
+      log_error -s "Try" `basename $0` "--help."
       exit 1
     ;;
   esac
 done
 
 # Sanity checking
-[ -z "$ACTION" ] && echo "Error: action not set." && exit 2
+[ -z "$ACTION" ] && log_error -s "Error: action not set." && exit 2
 case "$ACTION" in
   add | Add | ADD)                      ACTION=ADD ;;
   del | delete | Delete | DEL | DELETE) ACTION=DEL ;;
-  *)                                    echo "Error: invalid action \"$ACTION\"." && exit 3
+  *)                                    log_error -s "Error: invalid action \"$ACTION\"." && exit 3
   ;;
 esac
 
-[ -z "$KRB5CC" ] && KRB5CC=/run/dhcpd.krb5cc
-[ -z "$DOMAIN" ] && echo "Error: invalid domain." && exit 4
-[ -z "$HNAME" ] && [ "$ACTION" == "ADD" ] && \
-     echo "Error: hostname not set." && exit 5
-[ -z "$IP" ] && echo "Error: IP address not set." && exit 6
-[ -z "$KEYTAB" ] && KEYTAB=/etc/dhcp/dhcpd.keytab
-[ -z "$NAMESERVER" ] && echo "Error: nameservers not set." && exit 7
-[ -z "$PRINCIPAL" ] && echo "Error: principal not set." && exit 8
-[ -z "$REALM" ] && echo "Error: realm not set." && exit 9
-[ -z "$ZONE" ] && echo "Error: zone not set." && exit 10
+[ -z "$KRB5CC" ]     && KRB5CC=/run/dhcpd.krb5cc
+[ -z "$DOMAIN" ]     && log_error -s "Error: invalid domain." && exit 4
+[ -z "$HNAME" ]      && [ "$ACTION" == "ADD" ] && log_error -s "Error: hostname not set." && exit 5
+[ -z "$IP" ]         && log_error -s "Error: IP address not set." && exit 6
+[ -z "$KEYTAB" ]     && KEYTAB=/etc/dhcp/dhcpd.keytab
+[ -z "$NAMESERVER" ] && log_error -s "Error: nameservers not set." && exit 7
+[ -z "$PRINCIPAL" ]  && log_error -s "Error: principal not set." && exit 8
+[ -z "$REALM" ]      && log_error -s "Error: realm not set." && exit 9
+[ -z "$ZONE" ]       && log_error -s "Error: zone not set." && exit 10
 
 # Disassemble IP for reverse lookups
 OCT1=$(echo "$IP" | cut -d . -f 1)
@@ -170,26 +173,26 @@ kerberos_creds() {
 
   klist $KLISTARG\
     || kinit -k -t "$KEYTAB" -c "$KRB5CC" "$PRINCIPAL"\
-    || { logger -p daemon.error -t dhcpd "kinit for dynamic DNS failed"; exit 11; }
+    || { log_error "kinit for dynamic DNS failed"; exit 11; }
 
 }
 
 add_host() {
-  logger -p daemon.info -t dhcpd "Adding A record for host '$HNAME' with IP '$IP' to zone $ZONE on server $NAMESERVER"
+  log_info "Adding A record for host '$HNAME' with IP '$IP' to zone $ZONE on server $NAMESERVER"
   samba-tool dns add "$NAMESERVER" $ZONE "$HNAME" A "$IP" -k yes
 }
 
 delete_host(){
   for ip in $IP ; do
-    logger -p daemon.info -t dhcpd "Removing A record for host '$HNAME' with IP '$ip' from zone $ZONE on server $NAMESERVER"
+    log_info "Removing A record for host '$HNAME' with IP '$ip' from zone $ZONE on server $NAMESERVER"
     samba-tool dns delete "$NAMESERVER" $ZONE "$HNAME" A "$ip" -k yes
   done
 }
 
 update_host(){
-  logger -p daemon.info -t dhcpd "Updating A record for host '$HNAME' with IP $CURIP from zone $ZONE on server $NAMESERVER"
+  log_info "Updating A record for host '$HNAME' with IP $CURIP from zone $ZONE on server $NAMESERVER"
   for ip in $CURIP ; do
-    logger -p daemon.info -t dhcpd "Removing A record for host '$HNAME' with IP $ip from zone $ZONE on server $NAMESERVER"
+    log_info "Removing A record for host '$HNAME' with IP $ip from zone $ZONE on server $NAMESERVER"
     samba-tool dns delete "$NAMESERVER" $ZONE "$HNAME" A $ip -k yes
   done
   add_host
@@ -197,19 +200,19 @@ update_host(){
 
 
 add_ptr(){
-  logger -p daemon.info -t dhcpd "Adding PTR record '$OCT4' with hostname '$HNAME' to zone '$RZONE' on server $NAMESERVER"
+  log_info "Adding PTR record '$OCT4' with hostname '$HNAME' to zone '$RZONE' on server $NAMESERVER"
   samba-tool dns add "$NAMESERVER" "$RZONE" "$OCT4" PTR "$HNAME.$DOMAIN" -k yes
 }
 
 delete_ptr(){
-  logger -p daemon.info -t dhcpd "Removing PTR record '$OCT4' with hostname '$HNAME' from zone '$RZONE' on server $NAMESERVER"
+  log_info "Removing PTR record '$OCT4' with hostname '$HNAME' from zone '$RZONE' on server $NAMESERVER"
   samba-tool dns delete "$NAMESERVER" "$RZONE" "$OCT4" PTR "$HNAME.$DOMAIN" -k yes
 }
 
 update_ptr(){
-  logger -p daemon.info -t dhcpd "Updating PTR record '$OCT4' with hostname $CURHNAME from zone '$RZONE' on server $NAMESERVER"
+  log_info "Updating PTR record '$OCT4' with hostname $CURHNAME from zone '$RZONE' on server $NAMESERVER"
   for hname in $CURHNAME ; do
-    logger -p daemon.info -t dhcpd "Removing PTR record '$OCT4' with hostname $hname from zone '$RZONE' on server $NAMESERVER"
+    log_info "Removing PTR record '$OCT4' with hostname $hname from zone '$RZONE' on server $NAMESERVER"
     samba-tool dns delete "$NAMESERVER" "$RZONE" "$OCT4" PTR "$hname" -k yes
   done
   add_ptr
@@ -221,7 +224,7 @@ case "$ACTION" in
     host -t A "$HNAME.$DOMAIN" > /dev/null
     if [ "${?}" == 0 ]; then
       CURIP=$(host -t A "$HNAME.$DOMAIN" | cut -d " " -f 4 )
-      if [[ "$CURIP" != "$IP" ]]; then
+      if [[ ${CURIP} != ${IP} ]]; then
         update_host
       fi
     else
@@ -231,7 +234,7 @@ case "$ACTION" in
     host -t PTR "$IP" > /dev/null
     if [ "${?}" == 0 ]; then
       CURHNAME=$(host -t PTR "$IP" | cut -d " " -f 5 | rev | cut -c 2- | rev)
-      if [[ "$CURHNAME" != "$HNAME.$DOMAIN" ]]; then 
+      if [[ ${CURHNAME} != ${HNAME}.${DOMAIN} ]]; then 
         update_ptr
       fi
     else
@@ -254,4 +257,5 @@ case "$ACTION" in
     ;;
 esac
 
+log_info "$(basename $0): finished"
 # End samba-dnsupdate.sh
