@@ -226,6 +226,8 @@ case "$ACTION" in
       CURIP=$(host -t A "$HNAME.$DOMAIN" | cut -d " " -f 4 )
       if [[ ${CURIP} != ${IP} ]]; then
         update_host
+      else
+        log_info "${HNAME}/${IP} does not need to be updated"
       fi
     else
       add_host
@@ -236,6 +238,8 @@ case "$ACTION" in
       CURHNAME=$(host -t PTR "$IP" | cut -d " " -f 5 | rev | cut -c 2- | rev)
       if [[ ${CURHNAME} != ${HNAME}.${DOMAIN} ]]; then 
         update_ptr
+      else
+        log_info "${HNAME}/${IP} does not need to be updated"
       fi
     else
       add_ptr
@@ -253,7 +257,7 @@ case "$ACTION" in
     fi
     ;;
   *)
-    echo "Error: Invalid action '$ACTION'!" && exit 12
+    log_error -s "Error: Invalid action '$ACTION'!" && exit 12
     ;;
 esac
 
