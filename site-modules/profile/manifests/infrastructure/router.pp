@@ -47,10 +47,11 @@ class profile::infrastructure::router (
   }
 
 # Add forward rule
-  sysctl { 'net.ipv4.ip_forward':
-    ensure => present,
-    value  => '1',
-    target => '/etc/ufw/sysctl.conf',
+  ini_setting { 'net.ipv4.ip_forward':
+    ensure  => present,
+    path    => '/etc/ufw/sysctl.conf',
+    setting => 'net/ipv4/ip_forward',
+    value   => '1',
   }
 
 #TODO
