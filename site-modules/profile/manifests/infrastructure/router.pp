@@ -66,13 +66,13 @@ class profile::infrastructure::router (
 # don't delete the 'COMMIT' line or these nat table rules won't be processed
 COMMIT
 "
-  file_line { 'ufw-ipv6':
-    line    => $nat_rule,
-    match   => '^IPV6=',
-    path    => '/etc//ufw/before.rules',
-    notify  => Service['ufw'],
-    require => Package['ufw']
-  }
+#  file_line { 'ufw-ipv6':
+#    line    => $nat_rule,
+#    match   => '^IPV6=',
+#    path    => '/etc//ufw/before.rules',
+#    notify  => Service['ufw'],
+#    require => Package['ufw']
+#  }
 
 
 
