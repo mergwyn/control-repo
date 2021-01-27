@@ -47,11 +47,10 @@ class profile::infrastructure::router (
   }
 
 # Add forward rule
-  shellvar { 'net/ipv4/ip_forward':
-    ensure    => present,
-    target    => '/etc/ufw/sysctl.conf',
-    value     => '1',
-    uncomment => true,
+  sysctl { 'net.ipv4.ip_forward':
+    ensure => present,
+    value  => '1',
+    target => '/etc/ufw/sysctl.conf',
   }
 
 #TODO
@@ -84,18 +83,18 @@ COMMIT
   }
 
 # TODO remove this
-  if $iptv {
-    include cron
-    include profile::app::scripts
-    $codedir='/opt/scripts'
-
-    # make sure routes are up to date
-    cron::job { 'iptv-routes':
-      command     => "test -x ${codedir}/iptv/getroutes && ${codedir}/iptv/getroutes",
-      minute      => 30,
-      hour        => '4,12,16',
-      environment => [ 'PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"' ],
-    }
-  }
+#  if $iptv {
+#    include cron
+#    include profile::app::scripts
+#    $codedir='/opt/scripts'
+#
+#    # make sure routes are up to date
+#    cron::job { 'iptv-routes':
+#      command     => "test -x ${codedir}/iptv/getroutes && ${codedir}/iptv/getroutes",
+#      minute      => 30,
+#      hour        => '4,12,16',
+#      environment => [ 'PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"' ],
+#    }
+#  }
 
 }
