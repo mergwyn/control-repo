@@ -4,9 +4,6 @@ fixtures:
     role: "#{source_dir}/site-modules/role"
     profile: "#{source_dir}/site-modules/profile"
   repositories:
-    attachmentgenie-ufw:
-      repo: https://github.com/kogitoapp/attachmentgenie-ufw
-      ref: master
     transmission:
       repo: https://github.com/craigwatson/puppet-transmission
       ref: master
@@ -33,6 +30,9 @@ fixtures:
       ref: master
     backuppc:
       repo: https://github.com/mergwyn/mergwyn-backuppc
+      ref: master
+    ufw:
+      repo: https://github.com/kogitoapp/attachmentgenie-ufw
       ref: master
   forge_modules:
     augeas:
