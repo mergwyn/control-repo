@@ -3,6 +3,7 @@
 class profile::app::samba::hosts
 {
 # TODO read from hiera or exported resource?
+  profile::app::samba::dnsentry { 'romeo':    ipaddress => '192.168.11.1' }
   profile::app::samba::dnsentry { 'golf':    ipaddress => '192.168.11.11' }
   profile::app::samba::dnsentry { 'foxtrot': ipaddress => '192.168.11.12' }
   profile::app::samba::dnsentry { 'juliet':  ipaddress => '192.168.11.251' }
