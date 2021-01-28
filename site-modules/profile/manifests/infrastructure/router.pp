@@ -5,25 +5,8 @@ class profile::infrastructure::router (
   Enum['openvpn','nordvpn','none'] $type = 'none',
 ) {
 
-  $aptpackages = [
-    'ufw',
-  ]
-  package { $aptpackages: ensure   => present, }
-
-
-  # Enable UFW
-  exec { 'ufw-enable':
-    command => 'ufw --force enable',
-    unless  => 'ufw status | grep -q "Status: active"',
-    path    => '/bin:/usr/bin:/sbin:/usr/sbin',
-    require => Package['ufw']
-  }
-
-  # Define service
-  service { 'ufw':
-    ensure  => 'running',
-    enable  => true,
-    require => Package['ufw']
+  class { 'ufw':
+    forward => 'ACCEPT',
   }
 
   # Disable IPv6
@@ -36,25 +19,23 @@ class profile::infrastructure::router (
     require   => Package['ufw']
   }
 
-  # Set forward policy
-  shellvar { 'DEFAULT_FORWARD_POLICY':
-    ensure    => present,
-    value     => 'ACCEPT',
-    target    => '/etc/default/ufw',
-    uncomment => true,
-    notify    => Service['ufw'],
-    require   => Package['ufw']
-  }
-
 # Add forward rule
   ini_setting { 'net.ipv4.ip_forward':
     ensure  => present,
     path    => '/etc/ufw/sysctl.conf',
     setting => 'net/ipv4/ip_forward',
     value   => '1',
+    notify  => Service['ufw'],
+    require => Package['ufw']
   }
 
-#TODO
+
+# Rules
+  ufw::allow { 'allow-all-from-trusted':
+    from => '192.168.11.0/24'
+  }
+
+#TODO: only needed for VPN?
   $nat_rule = "
 # nat Table rules
 *nat
@@ -73,7 +54,6 @@ COMMIT
 #    notify  => Service['ufw'],
 #    require => Package['ufw']
 #  }
-
 
 
   case $type  {

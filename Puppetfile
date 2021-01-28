@@ -2,6 +2,7 @@
 #forge 'http://forge.puppetlabs.com'
 
 #mod 'andschwa-unattended_upgrades', '0.2.3'
+mod 'attachmentgenie-ufw', :git => 'https://github.com/kogitoapp/attachmentgenie-ufw'
 mod 'camptocamp-augeas', '1.9.0'
 mod 'camptocamp-kmod', '2.5.0'
 mod 'camptocamp-postfix', '1.10.0'
