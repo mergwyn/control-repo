@@ -230,7 +230,7 @@ case "$ACTION" in
       if [[ ${CURIP} != ${IP} ]]; then
         update_host
       else
-        log_info "A record for ${HNAME}:${IP} does not need to be updated"
+        log_info "A record for ${HNAME}/${IP} does not need to be updated"
       fi
     else
       add_host
