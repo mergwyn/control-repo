@@ -19,16 +19,61 @@ class profile::app::dhcpd (
     ntpservers         => [ "foxtrot.${domain}", "golf.${domain}" ],
     dnssearchdomains   => [ $domain, 'local' ],
     default_lease_time => 14400,
-    extra_config       => [ 'include "/etc/dhcp/dhcpd.samba_ddns";' ],
+    extra_config       => [
+      'include "/etc/dhcp/dhcpd.shared";',
+      'include "/etc/dhcp/dhcpd.samba_ddns";',
+    ],
     omapi_port         => 7911,
   }
-  dhcp::pool { $domain:
-    network  => '192.168.11.0',
-    mask     => '255.255.255.0',
-    range    => '192.168.11.100 192.168.11.199',
-    gateway  => lookup('defaults::gateway'),
-    failover => 'dhcp-failover',
+
+  file { '/etc/dhcp/dhcpd.shared':
+    ensure  => file,
+    require => Package['isc-dhcp-server'],
+    notify  => Service['isc-dhcp-server'],
+    owner   => $owner,
+    group   => $group,
+    content => @(EOT),
+                shared-network my-net {
+                  subnet 192.168.11.0 netmask 255.255.255.0 {
+                    pool
+                    {
+                      failover peer "dhcp-failover";
+                      deny dynamic bootp clients;
+                      range 192.168.11.100 192.168.11.199;
+                    }
+
+                    option subnet-mask 255.255.255.0;
+                    option routers 192.168.11.254;
+                  }
+                  subnet 10.58.0.0 netmask 255.255.0.0 {
+                    pool
+                    {
+                      failover peer "dhcp-failover";
+                      deny dynamic bootp clients;
+                      range 10.58.0.100 10.58.0.199;
+                    }
+
+                    option subnet-mask 255.255.0.0;
+                    option routers 10.58.10.1;
+                  }
+                }
+                | EOT
   }
+
+#  dhcp::pool { '192.168.11.0':
+#    network  => '192.168.11.0',
+#    mask     => '255.255.255.0',
+#    range    => [ '192.168.11.100', '192.168.11.199' ],
+#    gateway  => lookup('defaults::gateway'),
+#    failover => 'dhcp-failover',
+#  }
+#  dhcp::pool { '10.58.0.0':
+#    network  => '10.58.0.0',
+#    mask     => '255.255.0.0',
+#    range    => [ '10.58.0.100', '10.58.0.199' ],
+#    gateway  => '10.58.10.1',
+#    failover => 'dhcp-failover',
+#  }
   if ($role and $peer_address) {
     class { 'dhcp::failover':
       role         => $role,
@@ -57,7 +102,7 @@ class profile::app::dhcpd (
   dhcp::host { 'lounge-HS100':          mac => 'D8:0D:17:56:A3:DC' }
 
 # Hosts with different gateway (VPN)
-  profile::app::dhcpd::vpnhost { 'india':        mac => '00:16:3e:93:c6:21', ip => '192.168.11.41', }
+  profile::app::dhcpd::vpnhost { 'india':        mac => '00:16:3e:93:c6:21', }
   profile::app::dhcpd::vpnhost { 'tango':        mac => '00:16:3e:01:f8:9a', ip => '192.168.11.42', }
   profile::app::dhcpd::vpnhost { 'kilo':         mac => '00:16:3e:5c:39:e0', }
 
