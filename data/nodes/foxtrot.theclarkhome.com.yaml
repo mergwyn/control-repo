@@ -32,7 +32,9 @@ profile::platform::baseline::debian::netplan::bridges:
     gateway4: "%{lookup('defaults::gateway')}"
     nameservers:
       search: "%{alias('defaults::dns::search')}"
-      addresses: "%{alias('defaults::dns::nameservers')}"
+      addresses: 
+        - "%{lookup('defaults::dns::nameservers.1')}"
+        - "%{lookup('defaults::dns::nameservers.0')}"
     parameters:
       stp: false
       forward_delay: 0
