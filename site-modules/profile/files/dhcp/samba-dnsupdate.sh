@@ -156,16 +156,14 @@ esac
 
 # Disassemble IP for reverse lookups
 declare -a octets
-readarray -d. -t octets <<< "${IP}"
+readarray -d. -t octets < <(printf '%s' "${IP}")
 
 # TODO: work this out correctly from netmask?
 case ${octets[0]} in
 10) RZONE="${octets[1]}.${octets[0]}.in-addr.arpa"
-    PTR="${octets[3]}.${octets[2]}"
-    ;;
+    PTR="${octets[3]}.${octets[2]}" ;;
 *)  RZONE="${octets[2]}.${octets[1]}.${octets[0]}.in-addr.arpa"
-    PTR="${octets[3]}"
-    ;;
+    PTR="${octets[3]}" ;;
 esac
 
 kerberos_creds() {
