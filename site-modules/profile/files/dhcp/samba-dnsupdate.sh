@@ -156,14 +156,16 @@ esac
 
 # Disassemble IP for reverse lookups
 declare -a octets
-readarray -d. -t octets <<<"${IP}"
+readarray -d. -t octets <<< "${IP}"
 
 # TODO: work this out correctly from netmask?
-case ${octet[0]} in
-10) RZONE="${octet[1]}.${octet[0]}.in-addr.arpa"
-    PTR="${octet[3]}.${octet[2]}";;
-*)  RZONE="${octet[2]}.${octet[1]}.${octet[0]}.in-addr.arpa"
-    PTR="${octet[3]}";;
+case ${octets[0]} in
+10) RZONE="${octets[1]}.${octets[0]}.in-addr.arpa"
+    PTR="${octets[3]}.${octets[2]}"
+    ;;
+*)  RZONE="${octets[2]}.${octets[1]}.${octets[0]}.in-addr.arpa"
+    PTR="${octets[3]}"
+    ;;
 esac
 
 kerberos_creds() {
@@ -230,7 +232,7 @@ case "$ACTION" in
       if [[ ${CURIP} != ${IP} ]]; then
         update_host
       else
-        log_info "A record for ${HNAME}/${IP} does not need to be updated"
+        log_info "A record for ${HNAME}:${IP} does not need to be updated"
       fi
     else
       add_host
