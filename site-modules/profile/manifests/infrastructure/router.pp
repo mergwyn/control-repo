@@ -32,7 +32,8 @@ class profile::infrastructure::router (
 
 # Rules
   ufw::allow { 'allow-all-from-trusted':
-    from => '192.168.11.0/24'
+    from => '192.168.11.0/24',
+    to   => 'any',
   }
 
 #TODO: only needed for VPN?
