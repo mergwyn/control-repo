@@ -1,3 +1,5 @@
 #!/usr/bin/env bash
 
-lxc remote list | awk '/lxd/{print $2}'
+lxc remote list --format json \
+  | jq -cr 'to_entries[] | select (.value.Protocol != "simplestreams") | .key'
+
