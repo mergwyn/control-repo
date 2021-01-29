@@ -155,11 +155,16 @@ esac
 [ -z "$ZONE" ]       && log_error -s "Error: zone not set." && exit 10
 
 # Disassemble IP for reverse lookups
-OCT1=$(echo "$IP" | cut -d . -f 1)
-OCT2=$(echo "$IP" | cut -d . -f 2)
-OCT3=$(echo "$IP" | cut -d . -f 3)
-OCT4=$(echo "$IP" | cut -d . -f 4)
-RZONE="$OCT3.$OCT2.$OCT1.in-addr.arpa"
+declare -a octets
+readarray -d. -t octets <<<"${IP}"
+
+# TODO: work this out correctly from netmask?
+case ${octet[0]} in
+10) RZONE="${octet[1]}.${octet[0]}.in-addr.arpa"
+    PTR="${octet[3]}.${octet[2]}";;
+*)  RZONE="${octet[2]}.${octet[1]}.${octet[0]}.in-addr.arpa"
+    PTR="${octet[3]}";;
+esac
 
 kerberos_creds() {
   export KRB5_KTNAME="$KEYTAB"
@@ -183,38 +188,36 @@ add_host() {
 }
 
 delete_host(){
-  for ip in $IP ; do
+  todelete=$*
+  for ip in ${todelete} ; do
     log_info "Removing A record for host '$HNAME' with IP '$ip' from zone $ZONE on server $NAMESERVER"
     samba-tool dns delete "$NAMESERVER" $ZONE "$HNAME" A "$ip" -k yes
   done
 }
 
 update_host(){
-  log_info "Updating A record for host '$HNAME' with IP $CURIP from zone $ZONE on server $NAMESERVER"
-  for ip in $CURIP ; do
-    log_info "Removing A record for host '$HNAME' with IP $ip from zone $ZONE on server $NAMESERVER"
-    samba-tool dns delete "$NAMESERVER" $ZONE "$HNAME" A $ip -k yes
-  done
-  add_host
+  log_info "Updating A Precord for host '$HNAME' with IP $CURIP from zone $ZONE on server $NAMESERVER"
+  delete_host ${CURIP}
+  add_host 
 }
 
 
 add_ptr(){
-  log_info "Adding PTR record '$OCT4' with hostname '$HNAME' to zone '$RZONE' on server $NAMESERVER"
-  samba-tool dns add "$NAMESERVER" "$RZONE" "$OCT4" PTR "$HNAME.$DOMAIN" -k yes
+  log_info "Adding PTR record '$PTR' with hostname '$HNAME' to zone '$RZONE' on server $NAMESERVER"
+  samba-tool dns add "$NAMESERVER" "$RZONE" "$PTR" PTR "$HNAME.$DOMAIN" -k yes
 }
 
 delete_ptr(){
-  log_info "Removing PTR record '$OCT4' with hostname '$HNAME' from zone '$RZONE' on server $NAMESERVER"
-  samba-tool dns delete "$NAMESERVER" "$RZONE" "$OCT4" PTR "$HNAME.$DOMAIN" -k yes
+  host=$*
+  for host in ${hosts} ; do
+    log_info "Removing PTR record '$PTR' with hostname '$host' from zone '$RZONE' on server $NAMESERVER"
+    samba-tool dns delete "$NAMESERVER" "$RZONE" "$PTR" PTR "$host.$DOMAIN" -k yes
+  done
 }
 
 update_ptr(){
-  log_info "Updating PTR record '$OCT4' with hostname $CURHNAME from zone '$RZONE' on server $NAMESERVER"
-  for hname in $CURHNAME ; do
-    log_info "Removing PTR record '$OCT4' with hostname $hname from zone '$RZONE' on server $NAMESERVER"
-    samba-tool dns delete "$NAMESERVER" "$RZONE" "$OCT4" PTR "$hname" -k yes
-  done
+  log_info "Updating PTR record '$PTR' with hostname $CURHNAME from zone '$RZONE' on server $NAMESERVER"
+  delete_ptr ${CURHNAME}
   add_ptr
 }
 
@@ -239,7 +242,7 @@ case "$ACTION" in
       if [[ ${CURHNAME} != ${HNAME}.${DOMAIN} ]]; then 
         update_ptr
       else
-        log_info "PTR record for ${HNAME}/${IP} does not need to be updated"
+        log_info "PTR record for ${PTR}/${HNAME}/${RZONE} does not need to be updated"
       fi
     else
       add_ptr
@@ -249,11 +252,11 @@ case "$ACTION" in
     kerberos_creds
     host -t A "$HNAME.$DOMAIN" > /dev/null
     if [ "${?}" == 0 ]; then
-      delete_host
+      delete_host ${IP}
     fi
     host -t PTR "$IP" > /dev/null
     if [ "${?}" == 0 ]; then
-      delete_ptr
+      delete_ptr ${HNAME}
     fi
     ;;
   *)
