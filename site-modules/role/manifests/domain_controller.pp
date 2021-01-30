@@ -1,7 +1,7 @@
 #
 class role::domain_controller {
   include profile::platform::baseline  # All roles should have the base profile
-  # TODO: reinstate include profile::app::dhcpd
+  include profile::app::dhcpd
   include profile::app::sssd
   include profile::app::samba::dc
   include profile::app::zabbix::agent
