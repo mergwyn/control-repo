@@ -192,13 +192,13 @@ class profile::app::dhcpd (
                /etc/dhcp/dhcp-dyndns.sh ix,
                /bin/grep rix,
                /usr/sbin/samba rix,
-               /usr/bin/awk rix,
                /usr/bin/mawk rix,
                /bin/hostname rix,
                /usr/bin/wbinfo rix,
                /usr/bin/heimtools rix,
                /usr/bin/logger rix,
-               /usr/bin/kinit.heimdal rix,
+               /usr/bin/klist rix,
+               /usr/bin/kinit rix,
                /bin/date rix,
                /dev/tty wr,
                /dev/urandom w,
@@ -206,6 +206,7 @@ class profile::app::dhcpd (
                /usr/bin/kinit w,
                /run/samba/winbindd/pipe wr,
                /var/lib/sss/pubconf/kdcinfo.* r,
+               /etc/dhcp.keytab r,
                | EOT
   }
 
