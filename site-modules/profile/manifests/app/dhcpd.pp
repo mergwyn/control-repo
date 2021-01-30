@@ -192,7 +192,7 @@ class profile::app::dhcpd (
                /etc/dhcp/dhcp-dyndns.sh ix,
                /bin/grep rix,
                /usr/sbin/samba rix,
-               /usr/bin/gawk rix,
+               /usr/bin/awk rix,
                /bin/hostname rix,
                /usr/bin/wbinfo rix,
                /usr/bin/heimtools rix,
