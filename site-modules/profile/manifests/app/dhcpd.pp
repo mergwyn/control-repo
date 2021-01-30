@@ -193,6 +193,7 @@ class profile::app::dhcpd (
                /bin/grep rix,
                /usr/sbin/samba rix,
                /usr/bin/awk rix,
+               /usr/bin/mawk rix,
                /bin/hostname rix,
                /usr/bin/wbinfo rix,
                /usr/bin/heimtools rix,
@@ -204,6 +205,7 @@ class profile::app::dhcpd (
                /proc/** r,
                /usr/bin/kinit w,
                /run/samba/winbindd/pipe wr,
+               /var/lib/sss/pubconf/kdcinfo.* r,
                | EOT
   }
 
