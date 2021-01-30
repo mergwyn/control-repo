@@ -170,11 +170,11 @@ class profile::app::dhcpd (
                | EOT
   }
 
-  file { '/etc/dhcp/dhcp-dydns.sh':
+  file { '/etc/dhcp/dhcp-dyndns.sh':
     ensure => file,
     owner  => $owner,
     group  => $group,
-    source => 'puppet:///modules/profile/dhcp//etc/dhcp/dhcp-dydns.sh',
+    source => 'puppet:///modules/profile/dhcp/dhcp-dyndns.sh',
   }
 
   file { '/etc/dhcp/dhcpd-update-samba-dns.conf': ensure => absent }
@@ -189,7 +189,7 @@ class profile::app::dhcpd (
     owner   => 'root',
     group   => 'root',
     content => @(EOT)
-               /etc/dhcp/dhcp-dydns.sh ix,
+               /etc/dhcp/dhcp-dyndns.sh ix,
                /bin/grep rix,
                /usr/sbin/samba rix,
                /usr/bin/gawk rix,
