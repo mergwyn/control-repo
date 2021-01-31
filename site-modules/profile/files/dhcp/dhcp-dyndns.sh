@@ -96,7 +96,7 @@ rev_zone_info () {
            exit 1
            ;;
     esac
-    log_debug " ZoneIP: $ZoneIP, RZIP: $RZIP IP2add:$IP2add" 
+    log_debug "Reverse zone info found ZoneIP:$ZoneIP, RZIP:$RZIP, IP2add:$IP2add" 
 }
 
 BINDIR=$(samba -b | grep 'BINDIR' | grep -v 'SBINDIR' | awk '{print $NF}')
