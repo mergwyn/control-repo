@@ -201,6 +201,7 @@ class profile::app::dhcpd (
                /proc/** r,
                /run/samba/winbindd/pipe wr,
                /tmp/dhcp-dyndns.cc rwk,
+               /usr/bin r,
                /usr/bin/heimtools rix,
                /usr/bin/host rix,
                /usr/bin/kinit rix,
@@ -210,7 +211,7 @@ class profile::app::dhcpd (
                /usr/bin/mawk rix,
                /usr/bin/samba-tool rix,
                /usr/bin/wbinfo rix,
-               /usr/local/lib/python3.8/dist-packages/** r,
+               /usr/local/lib/python3.8/dist-packages r,
                /usr/sbin/samba rix,
                /var/lib/sss/pubconf/kdcinfo.* r,
                | EOT
