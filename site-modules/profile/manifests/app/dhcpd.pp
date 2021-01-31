@@ -206,7 +206,8 @@ class profile::app::dhcpd (
                /usr/bin/kinit w,
                /run/samba/winbindd/pipe wr,
                /var/lib/sss/pubconf/kdcinfo.* r,
-               /etc/dhcp.keytab r,
+               /etc/dhcp.keytab rk,
+               /tmp/dhcp-dyndns.cc rwk,
                | EOT
   }
 
