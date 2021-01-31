@@ -54,9 +54,16 @@ class profile::app::sssd {
   file { '/etc/apparmor.d/local/usr.sbin.sssd':
     ensure  => file,
     notify  => Service['sssd', 'apparmor'],
-    content => "  /var/lib/samba/private/krb5.conf r,\n",
     owner   => 'root',
     group   => 'root',
+    content => @("EOT"),
+               /etc/group r,
+               /etc/hosts r,
+               /etc/krb5.conf r,
+               /proc/*/cmdline r,
+               /var/lib/samba/private/krb5.conf r,
+               /var/lib/sss/pubconf/** rw,
+               | EOT
   }
 
   # work around for cron starting before sssd
