@@ -193,17 +193,17 @@ case "${action}" in
         # check for dots
         if [[ $A_REC == *.* ]]; then
             log_info "Found A record, deleting ${name} A ${ip}"
-            samba-tool dns delete "${Server}" "${domain}" "${name}" A "${ip}" -k yes
+            samba-tool dns delete "${Server}" "${domain}" "${name}" A "${ip}" -k yes -d 1
             result1="$?"
         else
             result1=0
         fi
         log_notice "adding ${name} A ${ip}"
-        samba-tool dns add "${Server}" "${domain}" "${name}" A "${ip}" -k yes
+        samba-tool dns add "${Server}" "${domain}" "${name}" A "${ip}" -k yes -d 1
         result2="$?"
 
         # get existing reverse zones (if any)
-        ReverseZones=$(samba-tool dns zonelist "${Server}" --reverse | grep 'pszZoneName' | awk '{print $NF}')
+        ReverseZones=$(samba-tool dns zonelist "${Server}" --reverse -d1 | grep 'pszZoneName' | awk '{print $NF}')
         if [ -z "$ReverseZones" ]; then
             log_info "No reverse zone found, not updating"
             result3='0'
@@ -217,13 +217,13 @@ case "${action}" in
                   retval="$?"
                   if [ "$retval" -eq 0 ]; then
                       log_info "Found PTR record, deleting ${IP2add} PTR ${name}.${domain}"
-                      samba-tool dns delete "${Server}" "${revzone}" "${IP2add}" PTR "${name}.${domain}" -k yes
+                      samba-tool dns delete "${Server}" "${revzone}" "${IP2add}" PTR "${name}.${domain}" -k yes -d 1
                       result3="$?"
                   else
                       result3='0'
                   fi
                   log_info "Adding ${IP2add} PTR ${name}.${domain}"
-                  samba-tool dns add "${Server}" "${revzone}" "${IP2add}" PTR "${name}.${domain}" -k yes
+                  samba-tool dns add "${Server}" "${revzone}" "${IP2add}" PTR "${name}.${domain}" -k yes -d 1
                   result4="$?"
                   break
               else
@@ -236,10 +236,10 @@ case "${action}" in
         _KERBEROS
 
         log_info "Deleting ${name} A ${ip}"
-        samba-tool dns delete "${Server}" "${domain}" "${name}" A "${ip}" -k yes
+        samba-tool dns delete "${Server}" "${domain}" "${name}" A "${ip}" -k yes -d 1
         result1="$?"
         # get existing reverse zones (if any)
-        ReverseZones=$(samba-tool dns zonelist "${Server}" --reverse | grep 'pszZoneName' | awk '{print $NF}')
+        ReverseZones=$(samba-tool dns zonelist "${Server}" --reverse -d 1 | grep 'pszZoneName' | awk '{print $NF}')
         if [ -z "$ReverseZones" ]; then
             log_error "No reverse zone found, not updating"
             result2='0'
@@ -252,7 +252,7 @@ case "${action}" in
                   retval="$?"
                   if [ "$retval" -eq 0 ]; then
                       log_info "Deleting ${IP2add} PTR ${name}.${domain}"
-                      samba-tool dns delete "${Server}" "${revzone}" "${IP2add}" PTR "${name}.${domain}" -k yes
+                      samba-tool dns delete "${Server}" "${revzone}" "${IP2add}" PTR "${name}.${domain}" -k yes -d 1
                       result2="$?"
                   else
                       result2='0'
