@@ -7,7 +7,7 @@ class profile::app::dhcpd (
   $owner = 'dhcpd'
   $group = 'dhcpd'
   $perms = "${owner}.${group}"
-  $keytab = '/etc/dhcp/dhcpd.keytab'
+  $keytab = '/etc/dhcp.keytab'
 
 
   # Core dhcpd configuration
@@ -86,7 +86,7 @@ class profile::app::dhcpd (
 
 # Hosts with fixed ip
   dhcp::host { 'papa':    mac => '00:16:3e:fc:2a:87', ip => '192.168.11.240', }
-  dhcp::host { 'romeo':   mac => '00:16:3e:fb:dc:5e', ip => '192.168.11.250', }
+  #dhcp::host { 'romeo':   mac => '00:16:3e:fb:dc:5e', ip => '192.168.11.250', }
 
 # Hosts that just need names,
   dhcp::host { 'switch1':               mac => '00:8e:f2:59:c7:98' }
@@ -102,9 +102,10 @@ class profile::app::dhcpd (
   dhcp::host { 'lounge-HS100':          mac => 'D8:0D:17:56:A3:DC' }
 
 # Hosts with different gateway (VPN)
-  profile::app::dhcpd::vpnhost { 'india':        mac => '00:16:3e:93:c6:21', }
-  profile::app::dhcpd::vpnhost { 'tango':        mac => '00:16:3e:01:f8:9a', ip => '192.168.11.42', }
-  profile::app::dhcpd::vpnhost { 'kilo':         mac => '00:16:3e:5c:39:e0', }
+# TODO move vpn hosts to new VLAN
+  profile::app::dhcpd::vpnhost { 'india': mac => '00:16:3e:93:c6:21', }
+  profile::app::dhcpd::vpnhost { 'tango': mac => '00:16:3e:01:f8:9a', ip => '192.168.11.42', }
+  profile::app::dhcpd::vpnhost { 'kilo':  mac => '00:16:3e:5c:39:e0', }
 
 # export keytab to allow script to run
   exec { 'chown_dhcp_keytab':
@@ -114,7 +115,7 @@ class profile::app::dhcpd (
   }
   exec { 'export_dhcp_keytab':
     path    => '/bin:/sbin:/usr/bin:/usr/sbin',
-    creates => '/etc/dhcp/dhcpd.keytab',
+    creates => $keytab,
     command => "samba-tool domain exportkeytab \
 		${keytab} --principal=dhcp",
     notify  => Exec['chown_dhcp_keytab'],
@@ -125,44 +126,95 @@ class profile::app::dhcpd (
     ensure  => file,
     require => Package['isc-dhcp-server'],
     notify  => Service['isc-dhcp-server'],
-    source  => 'puppet:///modules/profile/dhcp/dhcpd.samba_ddns',
     owner   => $owner,
     group   => $group,
+    content => @(EOT)
+               on commit {
+                 set noname = concat("dhcp-", binary-to-ascii(10, 8, "-", leased-address));
+                 set ClientIP = binary-to-ascii(10, 8, ".", leased-address);
+                 set ClientDHCID = concat (
+                   suffix (concat ("0", binary-to-ascii (16, 8, "", substring(hardware,1,1))),2), ":",
+                   suffix (concat ("0", binary-to-ascii (16, 8, "", substring(hardware,2,1))),2), ":",
+                   suffix (concat ("0", binary-to-ascii (16, 8, "", substring(hardware,3,1))),2), ":",
+                   suffix (concat ("0", binary-to-ascii (16, 8, "", substring(hardware,4,1))),2), ":",
+                   suffix (concat ("0", binary-to-ascii (16, 8, "", substring(hardware,5,1))),2), ":",
+                   suffix (concat ("0", binary-to-ascii (16, 8, "", substring(hardware,6,1))),2)
+                 );
+                 set ClientName = pick-first-value(option host-name, config-option-host-name, client-name, noname);
+                 log(concat("Commit: IP: ", ClientIP, " DHCID: ", ClientDHCID, " Name: ", ClientName));
+                 execute("/etc/dhcp/dhcp-dyndns.sh", "add", ClientIP, ClientDHCID, ClientName);
+               }
+ 
+               on release {
+                 set ClientIP = binary-to-ascii(10, 8, ".", leased-address);
+                 set ClientDHCID = concat (
+                   suffix (concat ("0", binary-to-ascii (16, 8, "", substring(hardware,1,1))),2), ":",
+                   suffix (concat ("0", binary-to-ascii (16, 8, "", substring(hardware,2,1))),2), ":",
+                   suffix (concat ("0", binary-to-ascii (16, 8, "", substring(hardware,3,1))),2), ":",
+                   suffix (concat ("0", binary-to-ascii (16, 8, "", substring(hardware,4,1))),2), ":",
+                   suffix (concat ("0", binary-to-ascii (16, 8, "", substring(hardware,5,1))),2), ":",
+                   suffix (concat ("0", binary-to-ascii (16, 8, "", substring(hardware,6,1))),2)
+                 );
+                 log(concat("Release: IP: ", ClientIP));
+                 execute("/etc/dhcp/dhcp-dyndns.sh", "delete", ClientIP, ClientDHCID);
+               }
+ 
+               on expiry {
+                 set ClientIP = binary-to-ascii(10, 8, ".", leased-address);
+                 # cannot get a ClientMac here, apparently this only works when actually receiving a packet
+                 log(concat("Expired: IP: ", ClientIP));
+                 # cannot get a ClientName here, for some reason that always fails
+                 # however the dhcp update script will obtain the short hostname.
+                 execute("/etc/dhcp/dhcp-dyndns.sh", "delete", ClientIP, "", "0");
+               }
+               | EOT
   }
-  file { "/etc/dhcp/dhcpd.${::domain}": ensure  => absent, }
-  #Concat::Fragment dhcp_hosts <<| tag == "vpn"|>>
 
-  file { '/etc/dhcp/dhcpd-update-samba-dns.conf':
+  file { '/etc/dhcp/dhcp-dyndns.sh':
     ensure => file,
     owner  => $owner,
     group  => $group,
-    source => 'puppet:///modules/profile/dhcp/dhcpd-update-samba-dns.conf',
+    source => 'puppet:///modules/profile/dhcp/dhcp-dyndns.sh',
   }
 
-  file { '/etc/dhcp/dhcpd-update-samba-dns.sh':
-    ensure => file,
-    mode   => '0755',
-    owner  => $owner,
-    group  => $group,
-    source => 'puppet:///modules/profile/dhcp/dhcpd-update-samba-dns.sh',
-  }
-
-  file { '/etc/dhcp/samba-dnsupdate.sh':
-    ensure => file,
-    mode   => '0755',
-    owner  => $owner,
-    group  => $group,
-    source => 'puppet:///modules/profile/dhcp/samba-dnsupdate.sh',
-  }
+  file { '/etc/dhcp/dhcpd-update-samba-dns.conf': ensure => absent }
+  file { '/etc/dhcp/dhcpd-update-samba-dns.sh':   ensure => absent }
+  file { '/etc/dhcp/samba-dnsupdate.sh':          ensure => absent }
 
   # need to make sure apparmor is updated to allow the scripts to fire
   include profile::platform::baseline::debian::apparmor
   file { '/etc/apparmor.d/local/usr.sbin.dhcpd':
     ensure  => file,
     notify  => Service['apparmor'],
-    content => "  /etc/dhcp/dhcpd-update-samba-dns.sh krwux, \n",
     owner   => 'root',
     group   => 'root',
+    content => @(EOT)
+               /etc/dhcp/dhcp-dyndns.sh ix,
+               /bin/date rix,
+               /bin/grep rix,
+               /bin/hostname rix,
+               /bin/sed rix,
+               /bin/uname rix,
+               /dev/tty wr,
+               /dev/urandom w,
+               /etc/dhcp.keytab rk,
+               /proc/** r,
+               /run/samba/winbindd/pipe wr,
+               /tmp/dhcp-dyndns.cc rwk,
+               /usr/bin/ r,
+               /usr/bin/heimtools rix,
+               /usr/bin/host rix,
+               /usr/bin/kinit rix,
+               /usr/bin/kinit w,
+               /usr/bin/klist rix,
+               /usr/bin/logger rix,
+               /usr/bin/mawk rix,
+               /usr/bin/samba-tool rix,
+               /usr/bin/wbinfo rix,
+               /usr/local/lib/python3.8/dist-packages r,
+               /usr/sbin/samba rix,
+               /var/lib/sss/pubconf/kdcinfo.* r,
+               | EOT
   }
 
 }
