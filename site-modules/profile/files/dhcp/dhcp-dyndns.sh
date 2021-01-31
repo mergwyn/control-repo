@@ -32,12 +32,19 @@ Add_macAddress='no'
 #                                                                        #
 ##########################################################################
 
+log()       { logger -t "dyndns[$$]" "$@" ; }
+log_error() { log -p user.error -s "$@" ; }
+log_notice(){ log -p user.notice "$@" ; }
+log_info()  { log -p user.info "$@" ; }
+log_debug() { log -p user.debug "$@" ; }
+
 usage() {
 echo "USAGE:"
 echo "  $(basename "$0") add ip-address dhcid|mac-address hostname"
 echo "  $(basename "$0") delete ip-address dhcid|mac-address"
 }
 
+log_info "DHCP-DNS Update started: $*"
 
 dhcpduser=dhcp
 
@@ -46,15 +53,15 @@ _KERBEROS () {
 test=$(date +%d'-'%m'-'%y' '%H':'%M':'%S)
 
 # Check for valid kerberos ticket
-#logger "${test} [dyndns] : Running check for valid kerberos ticket"
+log_info "Running check for valid kerberos ticket"
 klist -c "${KRB5CCNAME}" -s
 retval="$?"
 if [ "$retval" != "0" ]; then
-    logger "${test} [dyndns] : Getting new ticket, old one has expired"
+    log_info "Getting new ticket, old one has expired"
     kinit -F -k -t /etc/${dhcpduser}.keytab "${SETPRINCIPAL}"
     retval="$?"
     if [ "$retval" != "0" ]; then
-        logger "${test} [dyndns] : dhcpd kinit for dynamic DNS failed"
+        log_error "dhcpd kinit for dynamic DNS failed with $retval"
         exit 1
     fi
 fi
@@ -69,7 +76,6 @@ rev_zone_info () {
     rzonenum=$(echo "$rzoneip" | sed 's/\./ /g')
     local words=($rzonenum)
     local numwords="${#words[@]}"
-    echo Got $numwords
     case "$numwords" in
         1) # single ip rev zone '192'
            ZoneIP=$(echo "${IP}" | awk -F '.' '{print $1}')
@@ -90,10 +96,7 @@ rev_zone_info () {
            exit 1
            ;;
     esac
-    echo "$ZoneIP"
-    echo "$RZIP"
-    echo "$IP2add" 
-
+    log_debug " ZoneIP: $ZoneIP, RZIP: $RZIP IP2add:$IP2add" 
 }
 
 BINDIR=$(samba -b | grep 'BINDIR' | grep -v 'SBINDIR' | awk '{print $NF}')
@@ -105,8 +108,8 @@ Server=$(hostname -s)
 # DNS domain
 domain=$(hostname -d)
 if [ -z "${domain}" ]; then
-    logger "Cannot obtain domain name, is DNS set up correctly?"
-    logger "Cannot continue... Exiting."
+    log_error "Cannot obtain domain name, is DNS set up correctly?"
+    log_error "Cannot continue... Exiting."
     exit 1
 fi
 # Samba realm
@@ -121,23 +124,23 @@ SETPRINCIPAL="${dhcpduser}@${REALM}"
 # krbcc ticket cache : /tmp/dhcp-dyndns.cc
 TESTUSER="$($WBINFO -u | grep ${dhcpduser})"
 if [ -z "${TESTUSER}" ]; then
-    logger "No AD dhcp user exists, need to create it first.. exiting."
-    logger "you can do this by typing the following commands"
-    logger "kinit Administrator@${REALM}"
-    logger "samba-tool user create ${dhcpduser} --random-password --description='Unprivileged user for DNS updates via ISC DHCP server'"
-    logger "samba-tool user setexpiry ${dhcpduser} --noexpiry"
-    logger "samba-tool group addmembers DnsAdmins ${dhcpduser}"
+    log_error "No AD dhcp user exists, need to create it first.. exiting."
+    log_error "you can do this by typing the following commands"
+    log_error "kinit Administrator@${REALM}"
+    log_error "samba-tool user create ${dhcpduser} --random-password --description='Unprivileged user for DNS updates via ISC DHCP server'"
+    log_error "samba-tool user setexpiry ${dhcpduser} --noexpiry"
+    log_error "samba-tool group addmembers DnsAdmins ${dhcpduser}"
     exit 1
 fi
 
 # Check for Kerberos keytab
 if [ ! -f /etc/${dhcpduser}.keytab ]; then
-    echo "Required keytab /etc/${dhcpduser}.keytab not found, it needs to be created."
-    echo "Use the following commands as root"
-    echo "samba-tool domain exportkeytab --principal=${SETPRINCIPAL} /etc/${dhcpduser}.keytab"
-    echo "chown XXXX:XXXX /etc/${dhcpduser}.keytab"
-    echo "Replace 'XXXX:XXXX' with the user & group that dhcpd runs as on your distro"
-    echo "chmod 400 /etc/${dhcpduser}.keytab"
+    log_error "Required keytab /etc/${dhcpduser}.keytab not found, it needs to be created."
+    log_error "Use the following commands as root"
+    log_error "samba-tool domain exportkeytab --principal=${SETPRINCIPAL} /etc/${dhcpduser}.keytab"
+    log_error "chown XXXX:XXXX /etc/${dhcpduser}.keytab"
+    log_error "Replace 'XXXX:XXXX' with the user & group that dhcpd runs as on your distro"
+    log_error "chmod 400 /etc/${dhcpduser}.keytab"
     exit 1
 fi
 
@@ -166,7 +169,7 @@ fi
 
 # exit if name contains a space
 case ${name} in
-  *\ * ) logger "Invalid hostname '${name}' ...Exiting"
+  *\ * ) log_error "Invalid hostname '${name}' ...Exiting"
          exit
          ;;
   #  * ) : ;;
@@ -175,10 +178,10 @@ esac
 # exit if $name starts with 'dhcp'
 # if you do not want computers without a hostname in AD
 # uncomment the following block of code.
-#if [[ $name == dhcp* \]]; then
-#    logger "not updating DNS record in AD, invalid name"
-#    exit 0
-#fi
+if [[ ${name} == dhcp* ]]; then
+    log_notice "not updating DNS record in AD, invalid name"
+    exit 0
+fi
 
 ## update ##
 case "${action}" in
@@ -189,18 +192,20 @@ case "${action}" in
         A_REC=$(host -t A "${name}" | awk '{print $NF}')
         # check for dots
         if [[ $A_REC == *.* ]]; then
+            log_info "Found A record, deleting ${name} A ${ip}"
             samba-tool dns delete "${Server}" "${domain}" "${name}" A "${ip}" -k yes
             result1="$?"
         else
             result1=0
         fi
+        log_notice "adding ${name} A ${ip}"
         samba-tool dns add "${Server}" "${domain}" "${name}" A "${ip}" -k yes
         result2="$?"
 
         # get existing reverse zones (if any)
         ReverseZones=$(samba-tool dns zonelist "${Server}" --reverse | grep 'pszZoneName' | awk '{print $NF}')
         if [ -z "$ReverseZones" ]; then
-            echo "No reverse zone found, not updating"
+            log_info "No reverse zone found, not updating"
             result3='0'
             result4='0'
         else
@@ -211,11 +216,13 @@ case "${action}" in
                   host -t PTR "${ip}" > /dev/null 2>&1
                   retval="$?"
                   if [ "$retval" -eq 0 ]; then
+                      log_info "Found PTR record, deleting ${IP2add} PTR ${name}.${domain}"
                       samba-tool dns delete "${Server}" "${revzone}" "${IP2add}" PTR "${name}.${domain}" -k yes
                       result3="$?"
                   else
                       result3='0'
                   fi
+                  log_info "Adding ${IP2add} PTR ${name}.${domain}"
                   samba-tool dns add "${Server}" "${revzone}" "${IP2add}" PTR "${name}.${domain}" -k yes
                   result4="$?"
                   break
@@ -228,12 +235,13 @@ case "${action}" in
  delete)
         _KERBEROS
 
+        log_info "Deleting ${name} A ${ip}"
         samba-tool dns delete "${Server}" "${domain}" "${name}" A "${ip}" -k yes
         result1="$?"
         # get existing reverse zones (if any)
         ReverseZones=$(samba-tool dns zonelist "${Server}" --reverse | grep 'pszZoneName' | awk '{print $NF}')
         if [ -z "$ReverseZones" ]; then
-            logger "No reverse zone found, not updating"
+            log_error "No reverse zone found, not updating"
             result2='0'
         else
             for revzone in $ReverseZones
@@ -243,6 +251,7 @@ case "${action}" in
                   host -t PTR "${ip}" > /dev/null 2>&1
                   retval="$?"
                   if [ "$retval" -eq 0 ]; then
+                      log_info "Deleting ${IP2add} PTR ${name}.${domain}"
                       samba-tool dns delete "${Server}" "${revzone}" "${IP2add}" PTR "${name}.${domain}" -k yes
                       result2="$?"
                   else
@@ -258,7 +267,7 @@ case "${action}" in
         result4='0'
         ;;
       *)
-        logger "Invalid action specified"
+        log_error "Invalid action specified"
         exit 103
         ;;
 esac
@@ -266,10 +275,10 @@ esac
 result="${result1}:${result2}:${result3}:${result4}"
 
 if [ "${result}" != "0:0:0:0" ]; then
-    logger "DHCP-DNS Update failed: ${result}"
+    log_error "DHCP-DNS Update failed: ${result}"
     exit 1
 else
-    logger "DHCP-DNS Update succeeded"
+    log_notice "DHCP-DNS Update succeeded"
 fi
  
 if [ "$Add_macAddress" != 'no' ]; then
@@ -279,7 +288,7 @@ if [ "$Add_macAddress" != 'no' ]; then
             # Computer object not found with the 'ieee802Device' objectclass, does the computer actually exist, it should.
             Computer_Object=$(ldbsearch -k yes -H ldap://"$Server" "(&(objectclass=computer)(cn=$name))" | grep -v '#' | grep -v 'ref:')
             if [ -z "$Computer_Object" ]; then
-                logger "Computer '$name' not found. Exiting."
+                log_error "Computer '$name' not found. Exiting."
                 exit 68
             else
                 DN=$(echo "$Computer_Object" | grep 'dn:')
@@ -297,19 +306,19 @@ macAddress: $DHCID"
                 echo "$objldif" | ldbmodify -k yes -H ldap://"$Server"
                 ret="$?"
                 if [ "$ret" -ne 0 ]; then
-                    logger "Error modifying Computer objectclass $name in AD."
+                    log_error "Error modifying Computer objectclass $name in AD."
                     exit "${ret}"
                 fi
                 sleep 2
                 echo "$attrldif" | ldbmodify -k yes -H ldap://"$Server"
                 ret="$?"
                 if [ "$ret" -ne 0 ]; then
-                    logger "Error modifying Computer attribute $name in AD."
+                    log_error "Error modifying Computer attribute $name in AD."
                     exit "${ret}"
                 fi
                 unset objldif
                 unset attrldif
-                logger "Successfully modified Computer $name in AD"
+                log_notice "Successfully modified Computer $name in AD"
             fi
         else
             DN=$(echo "$Computer_Object" | grep 'dn:')
@@ -321,15 +330,15 @@ macAddress: $DHCID"
             echo "$attrldif" | ldbmodify -k yes -H ldap://"$Server"
             ret="$?"
             if [ "$ret" -ne 0 ]; then
-                logger "Error modifying Computer attribute $name in AD."
+                log_error "Error modifying Computer attribute $name in AD."
                 exit "${ret}"
             fi
             unset attrldif
-            logger "Successfully modified Computer $name in AD"
+            log_notice "Successfully modified Computer $name in AD"
         fi
     else
         # $DHCID not set
-        logger "Error: DHCID not supplied, required to store in AD."
+        log_error "Error: DHCID not supplied, required to store in AD."
         usage
         exit 1
     fi
