@@ -60,7 +60,9 @@ class profile::app::sssd {
                /etc/group r,
                /etc/hosts r,
                /etc/krb5.conf r,
+               /etc/sssd/conf.d/ r,
                /proc/*/cmdline r,
+               /usr/libexec/sssd/* ix,
                /var/lib/samba/private/krb5.conf r,
                /var/lib/sss/pubconf/** rw,
                | EOT
