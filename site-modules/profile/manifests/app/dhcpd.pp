@@ -212,6 +212,7 @@ class profile::app::dhcpd (
                /usr/bin/samba-tool rix,
                /usr/bin/wbinfo rix,
                /usr/local/lib/python3.8/dist-packages r,
+               /usr/local/lib/python3.8/dist-packages/ r,
                /usr/sbin/samba rix,
                /var/lib/sss/pubconf/kdcinfo.* r,
                | EOT
