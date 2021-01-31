@@ -194,6 +194,7 @@ class profile::app::dhcpd (
                /bin/grep rix,
                /bin/hostname rix,
                /bin/sed rix,
+               /bin/uname rix,
                /dev/tty wr,
                /dev/urandom w,
                /etc/dhcp.keytab rk,
@@ -209,6 +210,7 @@ class profile::app::dhcpd (
                /usr/bin/mawk rix,
                /usr/bin/samba-tool rix,
                /usr/bin/wbinfo rix,
+               /usr/local/lib/python3.8/dist-packages/** r,
                /usr/sbin/samba rix,
                /var/lib/sss/pubconf/kdcinfo.* r,
                | EOT
