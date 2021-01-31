@@ -201,7 +201,7 @@ class profile::app::dhcpd (
                /proc/** r,
                /run/samba/winbindd/pipe wr,
                /tmp/dhcp-dyndns.cc rwk,
-               /usr/bin r,
+               /usr/bin/ r,
                /usr/bin/heimtools rix,
                /usr/bin/host rix,
                /usr/bin/kinit rix,
