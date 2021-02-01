@@ -12,7 +12,7 @@ class profile::app::sssd {
   class { '::sssd':
     config => {
       'sssd'                    => {
-        'services'            => ['nss', 'pam'],
+#        'services'            => ['nss', 'pam'],
         'config_file_version' => 2,
         'domains'             => $::domain,
       },
