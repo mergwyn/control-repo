@@ -192,8 +192,10 @@ case "${action}" in
         A_REC=$(host -t A "${name}" | awk '{print $NF}')
         # check for dots
         if [[ $A_REC == *.* ]]; then
-            log_info "Found A record, deleting ${name} A ${ip}"
-            samba-tool dns delete "${Server}" "${domain}" "${name}" A "${ip}" -k yes -d 1
+	    for oldip in ${A_REC} ; do
+		log_info "Found A record, deleting ${name} A ${oldip}"
+		samba-tool dns delete "${Server}" "${domain}" "${name}" A "${oldip}" -k yes -d 0
+	    done
             result1="$?"
         else
             result1=0
@@ -209,26 +211,33 @@ case "${action}" in
             result3='0'
             result4='0'
         else
-            for revzone in $ReverseZones
-            do
-              rev_zone_info "$revzone" "${ip}"
-              if [[ ${ip} = $ZoneIP* ]] && [ "$ZoneIP" = "$RZIP" ]; then
-                  host -t PTR "${ip}" > /dev/null 2>&1
-                  retval="$?"
-                  if [ "$retval" -eq 0 ]; then
-                      log_info "Found PTR record, deleting ${IP2add} PTR ${name}.${domain}"
-                      samba-tool dns delete "${Server}" "${revzone}" "${IP2add}" PTR "${name}.${domain}" -k yes -d 1
-                      result3="$?"
-                  else
-                      result3='0'
-                  fi
-                  log_info "Adding ${IP2add} PTR ${name}.${domain}"
-                  samba-tool dns add "${Server}" "${revzone}" "${IP2add}" PTR "${name}.${domain}" -k yes -d 1
-                  result4="$?"
-                  break
-              else
-                  continue
-              fi
+	    # Take care of deleting, checking for a previous IP in different rzone
+	    for oldip in ${A_REC:-${ip}} ; do
+		for revzone in $ReverseZones ; do
+		    rev_zone_info "$revzone" "${oldip}"
+		    if [[ ${oldip} = $ZoneIP* ]] && [ "$ZoneIP" = "$RZIP" ]; then
+			host -t PTR "${oldip}" > /dev/null 2>&1
+			retval="$?"
+			if [ "$retval" -eq 0 ]; then
+			    log_info "Found PTR record, deleting ${IP2add} PTR ${name}.${domain}"
+			    samba-tool dns delete "${Server}" "${revzone}" "${IP2add}" PTR "${name}.${domain}" -k yes -d 1
+			    result3="$?"
+			else
+			    result3='0'
+			fi
+		    fi
+		done
+	    done
+            for revzone in $ReverseZones ; do
+                rev_zone_info "$revzone" "${ip}"
+                if [[ ${ip} = $ZoneIP* ]] && [ "$ZoneIP" = "$RZIP" ]; then
+                    log_info "Adding ${IP2add} PTR ${name}.${domain}"
+                    samba-tool dns add "${Server}" "${revzone}" "${IP2add}" PTR "${name}.${domain}" -k yes -d 1
+                    result4="$?"
+                    break
+                else
+                    continue
+                fi
             done
         fi
         ;;
