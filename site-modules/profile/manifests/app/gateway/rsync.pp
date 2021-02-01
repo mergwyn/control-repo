@@ -15,7 +15,7 @@ class profile::app::gateway::rsync {
     path           => $base,
     incoming_chmod => false,
     outgoing_chmod => false,
-    hosts_allow    => [ '192.168.11.0/16' ],
+    hosts_allow    => [ "${facts['networking']['os']}/${lookup('defaults::bits')}" ],
     hosts_deny     => [ '*' ],
     list           => 'true',
     use_chroot     => 'no',

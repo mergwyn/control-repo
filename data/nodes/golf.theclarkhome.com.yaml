@@ -15,7 +15,7 @@ profile::platform::baseline::debian::netplan::bridges:
     dhcp4: no
     dhcp6: no
     addresses:
-      - 192.168.11.11/16
+      - "%{lookup('defaults::subnet')}.11/%{lookup('defaults::bits')}"
     gateway4: "%{lookup('defaults::gateway')}"
     nameservers:
       search: "%{alias('defaults::dns::search')}"
