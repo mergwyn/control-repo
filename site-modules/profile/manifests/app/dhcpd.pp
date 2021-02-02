@@ -203,6 +203,7 @@ class profile::app::dhcpd (
                /usr/local/lib/python3.8/dist-packages r,
                /usr/local/lib/python3.8/dist-packages/ r,
                /usr/sbin/samba rix,
+               /var/lib/samba/private/krb5.conf r,
                /var/lib/sss/pubconf/kdcinfo.* r,
                | EOT
   }
