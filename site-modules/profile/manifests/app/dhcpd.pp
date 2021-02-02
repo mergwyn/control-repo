@@ -129,7 +129,7 @@ class profile::app::dhcpd (
                    suffix (concat ("0", binary-to-ascii (16, 8, "", substring(hardware,5,1))),2), ":",
                    suffix (concat ("0", binary-to-ascii (16, 8, "", substring(hardware,6,1))),2)
                  );
-                 set ClientName = pick-first-value(option host-name, config-option-host-name, client-name, noname);
+                 set ClientName = pick-first-value(ddns-hostname, option host-name, config-option-host-name, client-name, noname);
                  log(concat("Commit: IP: ", ClientIP, " DHCID: ", ClientDHCID, " Name: ", ClientName));
                  execute("/etc/dhcp/dhcp-dyndns.sh", "add", ClientIP, ClientDHCID, ClientName);
                }
