@@ -1,11 +1,12 @@
 # @summary Add dnsentries
 
-class profile::app::samba::hosts
-{
+class profile::app::samba::hosts(
+  $subnet =  lookup('defaults::subnet'),
+) {
 # TODO read from hiera or exported resource?
-  profile::app::samba::dnsentry { 'romeo':    ipaddress => '192.168.11.1' }
-  profile::app::samba::dnsentry { 'golf':    ipaddress => '192.168.11.11' }
-  profile::app::samba::dnsentry { 'foxtrot': ipaddress => '192.168.11.12' }
-  profile::app::samba::dnsentry { 'juliet':  ipaddress => '192.168.11.251' }
-  profile::app::samba::dnsentry { 'victor':  ipaddress => '192.168.11.252' }
+  profile::app::samba::dnsentry { 'romeo':   ipaddress => "${subnet}.1" }
+  profile::app::samba::dnsentry { 'golf':    ipaddress => "${subnet}.11" }
+  profile::app::samba::dnsentry { 'foxtrot': ipaddress => "${subnet}.12" }
+  profile::app::samba::dnsentry { 'juliet':  ipaddress => "${subnet}.251" }
+  profile::app::samba::dnsentry { 'victor':  ipaddress => "${subnet}.252" }
 }

@@ -4,14 +4,16 @@ classes:
   - profile::platform::baseline::debian::netplan
 
 profile::app::dhcpd::role:         secondary
-profile::app::dhcpd::peer_address: 192.168.11.21
+profile::app::dhcpd::peer_address: "%{lookup('defaults::dns::nameservers.0')}"
 
 profile::platform::baseline::debian::netplan::ethernets:
   eth0:
     dhcp4: no
     addresses:
-      - 192.168.11.22/16
+      - "%{lookup('defaults::dns::nameservers.1')}/%{lookup('defaults::bits')}"
     gateway4: "%{lookup('defaults::gateway')}"
     nameservers:
       search: "%{alias('defaults::dns::search')}"
-      addresses: "%{alias('defaults::dns::nameservers')}"
+      addresses:
+        - "%{lookup('defaults::dns::nameservers.0')}"
+        - '127.0.0.1'

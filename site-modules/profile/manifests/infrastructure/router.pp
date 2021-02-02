@@ -32,7 +32,7 @@ class profile::infrastructure::router (
 
 # Rules
   ufw::allow { 'allow-all-from-trusted':
-    from  => '192.168.11.0/24',
+    from  => "${facts['networking']['network']}/${lookup('defaults::bits')}",
     ip    => 'any',
     proto => 'any',
   }
