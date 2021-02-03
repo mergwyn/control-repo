@@ -17,10 +17,10 @@ class profile::app::dhcpd (
     interfaces         => [ $facts['networking']['primary'] ],
     nameservers        => lookup('defaults::dns::nameservers'),
     ntpservers         => [ "foxtrot.${domain}", "golf.${domain}" ],
-    dnssearchdomains   => [ $domain, 'local' ],
+    dnssearchdomains   => lookup('defaults::dns::search'),
     default_lease_time => 14400,
     extra_config       => [
-      'include "/etc/dhcp/dhcpd.shared";',
+      #'include "/etc/dhcp/dhcpd.shared";',
       'include "/etc/dhcp/dhcpd.samba_ddns";',
     ],
   }
@@ -48,13 +48,13 @@ class profile::app::dhcpd (
                 | EOT
   }
 
-#  dhcp::pool { '192.168.11.0':
-#    network  => '192.168.11.0',
-#    mask     => '255.255.255.0',
-#    range    => [ '192.168.11.100', '192.168.11.199' ],
-#    gateway  => lookup('defaults::gateway'),
-#    failover => 'dhcp-failover',
-#  }
+  dhcp::pool { lookup('defaults::network'):
+    network  => lookup('defaults::network'),
+    mask     => lookup('defaults::subnet'),
+    range    => [ "${lookup('defaults::network')}.100", "${lookup('defaults::network')}.199" ],
+    gateway  => lookup('defaults::gateway'),
+    failover => 'dhcp-failover',
+  }
 #  dhcp::pool { '10.58.0.0':
 #    network  => '10.58.0.0',
 #    mask     => '255.255.0.0',
