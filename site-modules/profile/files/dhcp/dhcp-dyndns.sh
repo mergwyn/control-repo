@@ -32,6 +32,7 @@ Add_macAddress='no'
 #                                                                        #
 ##########################################################################
 
+
 log()       { logger -t "dyndns[$$]" "$@" ; }
 log_error() { log -p user.error -s "$@" ; }
 log_notice(){ log -p user.notice "$@" ; }
@@ -45,6 +46,9 @@ echo "  $(basename "$0") delete ip-address dhcid|mac-address"
 }
 
 log_info "DHCP-DNS Update started: $*"
+
+$(egrep '^[ ]*secondary;' /etc/dhcp/dhcpd.conf > /dev/null) && SLEEPTIME=10
+sleep ${SLEEPTIME:-0}
 
 dhcpduser=dhcp
 
