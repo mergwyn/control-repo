@@ -51,7 +51,7 @@ class profile::app::dhcpd (
   dhcp::pool { lookup('defaults::network'):
     network  => lookup('defaults::network'),
     mask     => '255.255.255.0',
-    range    => [ "${lookup('defaults::subnet')}.100", "${lookup('defaults::subnet')}.199" ],
+    range    => [ "${lookup('defaults::subnet')}.100 ${lookup('defaults::subnet')}.199" ],
     gateway  => lookup('defaults::gateway'),
     failover => 'dhcp-failover',
   }
@@ -68,7 +68,7 @@ class profile::app::dhcpd (
       peer_address => $peer_address,
       port         => 647,
       #mclt         => 3600,
-      load_split   => 255,
+      load_split   => 128,
     }
   }
 
