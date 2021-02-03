@@ -50,7 +50,7 @@ class profile::app::dhcpd (
 
   dhcp::pool { lookup('defaults::network'):
     network  => lookup('defaults::network'),
-    mask     => lookup('defaults::subnet'),
+    mask     => lookup('defaults::netmask'),
     range    => [ "${lookup('defaults::network')}.100", "${lookup('defaults::network')}.199" ],
     gateway  => lookup('defaults::gateway'),
     failover => 'dhcp-failover',
