@@ -186,9 +186,11 @@ class profile::app::dhcpd (
     content => @(EOT)
                /etc/dhcp/dhcp-dyndns.sh ix,
                /bin/date rix,
+               /bin/egrep rix,
                /bin/grep rix,
                /bin/hostname rix,
                /bin/sed rix,
+               /bin/sleep rix,
                /bin/uname rix,
                /dev/tty wr,
                /dev/urandom w,
