@@ -12,7 +12,7 @@ defaults::sharedpassword:  '$6$s/krC.bq$NiiWBAjU9pC3OkFTOVrgRpSiS6fpTi4jIgY50K6/
 defaults::netmask:         '255.255.0.0'
 defaults::bits:            '24'
 defaults::subnet:          '192.168.11'
-defaults::gateway:         "%{lookup('defaults::subnet')}.254"
+defaults::gateway:         "%{lookup('defaults::subnet')}.1"
 defaults::vpn_gateway:     "%{lookup('defaults::subnet')}.252"
 defaults::network:         "%{lookup('defaults::subnet')}.0"
 defaults::dns::search:
