@@ -37,7 +37,8 @@ log()       { logger -t "dyndns[$$]" "$@" ; }
 log_error() { log -p user.error -s "$@" ; }
 log_notice(){ log -p user.notice "$@" ; }
 log_info()  { log -p user.info "$@" ; }
-log_debug() { log -p user.debug "$@" ; }
+#log_debug() { : ; #log -p user.debug "$@" ; }
+log_debug() { : ; }
 
 usage() {
 echo "USAGE:"
@@ -47,8 +48,7 @@ echo "  $(basename "$0") delete ip-address dhcid|mac-address"
 
 log_info "DHCP-DNS Update started: $*"
 
-$(egrep '^[ ]*secondary;' /etc/dhcp/dhcpd.conf > /dev/null) && SLEEPTIME=10
-sleep ${SLEEPTIME:-0}
+$(grep -E '^[ ]*secondary;' /etc/dhcp/dhcpd.conf > /dev/null) && sleep 10
 
 dhcpduser=dhcp
 
@@ -57,7 +57,7 @@ _KERBEROS () {
 test=$(date +%d'-'%m'-'%y' '%H':'%M':'%S)
 
 # Check for valid kerberos ticket
-log_info "Running check for valid kerberos ticket"
+log_debug "Running check for valid kerberos ticket"
 klist -c "${KRB5CCNAME}" -s
 retval="$?"
 if [ "$retval" != "0" ]; then
@@ -183,7 +183,7 @@ esac
 # if you do not want computers without a hostname in AD
 # uncomment the following block of code.
 if [[ ${name} == dhcp* ]]; then
-    log_notice "not updating DNS record in AD, invalid name"
+    log_notice "Not updating DNS record in AD, invalid name ${name}"
     exit 0
 fi
 
@@ -223,7 +223,7 @@ case "${action}" in
 			host -t PTR "${oldip}" > /dev/null 2>&1
 			retval="$?"
 			if [ "$retval" -eq 0 ]; then
-			    log_info "Found PTR record, deleting ${IP2add} PTR ${name}.${domain}"
+			    log_info "Found PTR record, deleting ${IP2add} PTR ${name}.${domain} from ${revzone}"
 			    samba-tool dns delete "${Server}" "${revzone}" "${IP2add}" PTR "${name}.${domain}" -k yes -d 1
 			    result3="$?"
 			else
@@ -235,7 +235,7 @@ case "${action}" in
             for revzone in $ReverseZones ; do
                 rev_zone_info "$revzone" "${ip}"
                 if [[ ${ip} = $ZoneIP* ]] && [ "$ZoneIP" = "$RZIP" ]; then
-                    log_info "Adding ${IP2add} PTR ${name}.${domain}"
+                    log_info "Adding ${IP2add} PTR ${name}.${domain} to ${revzone}"
                     samba-tool dns add "${Server}" "${revzone}" "${IP2add}" PTR "${name}.${domain}" -k yes -d 1
                     result4="$?"
                     break
@@ -264,7 +264,7 @@ case "${action}" in
                   host -t PTR "${ip}" > /dev/null 2>&1
                   retval="$?"
                   if [ "$retval" -eq 0 ]; then
-                      log_info "Deleting ${IP2add} PTR ${name}.${domain}"
+                      log_info "Deleting ${IP2add} PTR ${name}.${domain} from ${revzone}"
                       samba-tool dns delete "${Server}" "${revzone}" "${IP2add}" PTR "${name}.${domain}" -k yes -d 1
                       result2="$?"
                   else
