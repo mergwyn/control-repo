@@ -37,13 +37,6 @@ class profile::infrastructure::router (
     proto => 'any',
   }
 
-# Rules
-  ufw::allow { 'allow-all-from-alternate':
-    from  => '10.58.0.0/16',
-    ip    => 'any',
-    proto => 'any',
-  }
-
 #TODO: only needed for VPN?
   $nat_rule = "
 # nat Table rules
