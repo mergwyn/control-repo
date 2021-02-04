@@ -1,4 +1,0 @@
----
-
-profile::infrastructure::router::type: nordvpn
-profile::infrastructure::router::iptv: false
