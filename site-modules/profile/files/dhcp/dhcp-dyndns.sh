@@ -223,7 +223,7 @@ case "${action}" in
         A_REC=$(host -t A "${name}" | awk '{print $NF}')
         # check for dots
         if [[ ${A_REC} == ${ip} ]] ; then
-            log_info "A record for $[name] ${ip} does not need to be updated"
+            log_info "A record for ${name} ${ip} does not need to be updated"
         else
             if [[ ${A_REC} == *.* ]]; then
                 for curip in ${A_REC} ; do
