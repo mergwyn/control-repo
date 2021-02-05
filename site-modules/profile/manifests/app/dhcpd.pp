@@ -189,7 +189,6 @@ class profile::app::dhcpd (
     group   => 'root',
     content => @(EOT)
                /etc/dhcp/dhcp-dyndns.sh ix,
-               /bin/cur rix,
                /bin/date rix,
                /bin/egrep rix,
                /bin/grep rix,
@@ -204,6 +203,7 @@ class profile::app::dhcpd (
                /run/samba/winbindd/pipe wr,
                /tmp/dhcp-dyndns.cc rwk,
                /usr/bin/ r,
+               /bin/bin/cut rix,
                /usr/bin/heimtools rix,
                /usr/bin/host rix,
                /usr/bin/kinit rix,
