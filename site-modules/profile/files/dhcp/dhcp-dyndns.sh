@@ -37,8 +37,8 @@ log()       { logger -t "dyndns[$$]" "$@" ; }
 log_error() { log -p user.error -s "$@" ; }
 log_notice(){ log -p user.notice "$@" ; }
 log_info()  { log -p user.info "$@" ; }
-#log_debug() { : ; #log -p user.debug "$@" ; }
 log_debug() { : ; }
+log_debug() { log -p user.debug "$@" ; }
 
 usage() {
 echo "USAGE:"
@@ -71,36 +71,62 @@ if [ "$retval" != "0" ]; then
 fi
 }
 
+printip () {
+    local addr
+    for (( i=1; i<=$#;i++ )) ; do
+	addr="${addr:+$addr.}${!i}" 
+    done
+    printf $addr
+} 2> /dev/null
+reverseip () {
+    local addr
+    for (( i=$#; i>0;i-- )) ; do
+	addr="${addr:+$addr.}${!i}" 
+    done
+    printf $addr
+} 2> /dev/null
+
 rev_zone_info () {
     local RevZone="$1"
     local IP="$2"
     local rzoneip
-    rzoneip=$(echo "$RevZone" | sed 's/\.in-addr.arpa//')
-    local rzonenum
-    rzonenum=$(echo "$rzoneip" | sed 's/\./ /g')
-    local words=($rzonenum)
-    local numwords="${#words[@]}"
-    case "$numwords" in
-        1) # single ip rev zone '192'
-           ZoneIP=$(echo "${IP}" | awk -F '.' '{print $1}')
-           RZIP=$(echo "${rzoneip}" | awk -F '.' '{print $3}')
-           IP2add=$(echo "${IP}" | awk -F '.' '{print $4"."$3"."$2}')
-           ;;
-        2) # double ip rev zone '168.192'
-           ZoneIP=$(echo "${IP}" | awk -F '.' '{print $1"."$2}')
-           RZIP=$(echo "${rzoneip}" | awk -F '.' '{print $2"."$1}')
-           IP2add=$(echo "${IP}" | awk -F '.' '{print $4"."$3}')
-           ;;
-        3) # triple ip rev zone '0.168.192'
-           ZoneIP=$(echo "${IP}" | awk -F '.' '{print $1"."$2"."$3}')
-           RZIP=$(echo "${rzoneip}" | awk -F '.' '{print $3"."$2"."$1}')
-           IP2add=$(echo "${IP}" | awk -F '.' '{print $4}')
-           ;;
-        *) # should never happen
-           exit 1
-           ;;
-    esac
+    local numwords
+
+    readarray -d. -t rzoneip < <(printf '%s' "${RevZone%%'.in-addr.arpa'}")
+    numwords=${#rzoneip[@]}
+    RZIP=$(reverseip ${rzoneip[@]})
+
+    local octets=(${IP//./ })
+    ZoneIP=$(printip "${octets[@]:0:${numwords}}" )
+    IP2add=$(reverseip ${octets[@]:((numwords)):((4-numwords))})
     log_debug "Reverse zone info found ZoneIP:$ZoneIP, RZIP:$RZIP, IP2add:$IP2add" 
+
+#    rzoneip=$(echo "$RevZone" | sed 's/\.in-addr.arpa//')
+#    local rzonenum
+#    rzonenum=$(echo "$rzoneip" | sed 's/\./ /g')
+#    local words=($rzonenum)
+#    local numwords="${#words[@]}"
+#    case "$numwords" in
+#        1) # single ip rev zone '192'
+#           ZoneIP=$(echo "${IP}" | awk -F '.' '{print $1}')
+#           RZIP=$(echo "${rzoneip}" | awk -F '.' '{print $3}')
+#           IP2add=$(echo "${IP}" | awk -F '.' '{print $4"."$3"."$2}')
+#           ;;
+#        2) # double ip rev zone '168.192'
+#           ZoneIP=$(echo "${IP}" | awk -F '.' '{print $1"."$2}')
+#           RZIP=$(echo "${rzoneip}" | awk -F '.' '{print $2"."$1}')
+#           IP2add=$(echo "${IP}" | awk -F '.' '{print $4"."$3}')
+#           ;;
+#        3) # triple ip rev zone '0.168.192'
+#           ZoneIP=$(echo "${IP}" | awk -F '.' '{print $1"."$2"."$3}')
+#           RZIP=$(echo "${rzoneip}" | awk -F '.' '{print $3"."$2"."$1}')
+#           IP2add=$(echo "${IP}" | awk -F '.' '{print $4}')
+#           ;;
+#        *) # should never happen
+#           exit 1
+#           ;;
+#    esac
+#    log_debug "Reverse zone info found ZoneIP:$ZoneIP, RZIP:$RZIP, IP2add:$IP2add" 
 }
 
 BINDIR=$(samba -b | grep 'BINDIR' | grep -v 'SBINDIR' | awk '{print $NF}')
@@ -187,6 +213,7 @@ if [[ ${name} == dhcp* ]]; then
     exit 0
 fi
 
+declare -i result1=0 result2=0 result3=0 result4=0
 ## update ##
 case "${action}" in
     add)
@@ -195,54 +222,61 @@ case "${action}" in
         # does host have an existing 'A' record ?
         A_REC=$(host -t A "${name}" | awk '{print $NF}')
         # check for dots
-        if [[ $A_REC == *.* ]]; then
-	    for oldip in ${A_REC} ; do
-		log_info "Found A record, deleting ${name} A ${oldip}"
-		samba-tool dns delete "${Server}" "${domain}" "${name}" A "${oldip}" -k yes -d 0
-	    done
-            result1="$?"
+        if [[ ${A_REC} == ${ip} ]] ; then
+            log_info "A record for $[name] ${ip} does not need to be updated"
         else
-            result1=0
+            if [[ ${A_REC} == *.* ]]; then
+                for curip in ${A_REC} ; do
+                    log_info "Found A record, deleting ${name} A ${curip}"
+                    samba-tool dns delete "${Server}" "${domain}" "${name}" A "${curip}" -k yes -d 0
+                done
+                (( result1 += "$?" ))
+            fi
+            log_notice "adding ${name} A ${ip}"
+            samba-tool dns add "${Server}" "${domain}" "${name}" A "${ip}" -k yes -d 1
+            (( result2 += "$?" ))
         fi
-        log_notice "adding ${name} A ${ip}"
-        samba-tool dns add "${Server}" "${domain}" "${name}" A "${ip}" -k yes -d 1
-        result2="$?"
 
         # get existing reverse zones (if any)
         ReverseZones=$(samba-tool dns zonelist "${Server}" --reverse -d1 | grep 'pszZoneName' | awk '{print $NF}')
         if [ -z "$ReverseZones" ]; then
             log_info "No reverse zone found, not updating"
-            result3='0'
-            result4='0'
         else
-	    # Take care of deleting, checking for a previous IP in different rzone
-	    for oldip in ${A_REC:-${ip}} ; do
-		for revzone in $ReverseZones ; do
-		    rev_zone_info "$revzone" "${oldip}"
-		    if [[ ${oldip} = $ZoneIP* ]] && [ "$ZoneIP" = "$RZIP" ]; then
-			host -t PTR "${oldip}" > /dev/null 2>&1
-			retval="$?"
-			if [ "$retval" -eq 0 ]; then
-			    log_info "Found PTR record, deleting ${IP2add} PTR ${name}.${domain} from ${revzone}"
-			    samba-tool dns delete "${Server}" "${revzone}" "${IP2add}" PTR "${name}.${domain}" -k yes -d 1
-			    result3="$?"
-			else
-			    result3='0'
-			fi
-		    fi
-		done
-	    done
-            for revzone in $ReverseZones ; do
-                rev_zone_info "$revzone" "${ip}"
-                if [[ ${ip} = $ZoneIP* ]] && [ "$ZoneIP" = "$RZIP" ]; then
-                    log_info "Adding ${IP2add} PTR ${name}.${domain} to ${revzone}"
-                    samba-tool dns add "${Server}" "${revzone}" "${IP2add}" PTR "${name}.${domain}" -k yes -d 1
-                    result4="$?"
-                    break
-                else
-                    continue
-                fi
-            done
+            current_name=$(host -t PTR "${ip}" | cut -d " " -f 5)
+            current_name=${current_name::-1} # Last character is a period and needs to be stripped
+            if [[ ${name}.${domain} == ${current_name} ]] ; then
+                log_info "PTR record for ${name} ${ip} does not need to be updated"
+            else
+		if [[ ${A_REC} != *.* ]]; then
+		    A_REC=${ip}
+		fi
+                # Take care of deleting, checking for a previous IP in different rzone
+                for curip in ${A_REC} ; do
+                    for revzone in $ReverseZones ; do
+                        rev_zone_info "$revzone" "${curip}"
+                        if [[ ${ZoneIP} == ${RZIP} ]] && [[ ${curip} == $ZoneIP* ]] ;then
+			    host -t PTR "${curip}" > /dev/null 2>&1
+			    retval="$?"
+			    if [ "$retval" -eq 0 ]; then
+				log_info "Found PTR record, deleting ${IP2add} PTR ${name}.${domain} from ${revzone}"
+				samba-tool dns delete "${Server}" "${revzone}" "${IP2add}" PTR "${name}.${domain}" -k yes -d 1
+				(( result3 += "$?" ))
+                            fi
+                        fi
+                    done
+                done
+                for revzone in $ReverseZones ; do
+                    rev_zone_info "$revzone" "${ip}"
+                    if [[ ${ip} == $ZoneIP* ]] && [ "$ZoneIP" = "$RZIP" ]; then
+                        log_info "Adding ${IP2add} PTR ${name}.${domain} to ${revzone}"
+                        samba-tool dns add "${Server}" "${revzone}" "${IP2add}" PTR "${name}.${domain}" -k yes -d 1
+                        (( result4 += "$?" ))
+                        break
+                    else
+                        continue
+                    fi
+                done
+            fi
         fi
         ;;
  delete)
@@ -250,34 +284,26 @@ case "${action}" in
 
         log_info "Deleting ${name} A ${ip}"
         samba-tool dns delete "${Server}" "${domain}" "${name}" A "${ip}" -k yes -d 1
-        result1="$?"
+        (( result1 += "$?" ))
         # get existing reverse zones (if any)
         ReverseZones=$(samba-tool dns zonelist "${Server}" --reverse -d 1 | grep 'pszZoneName' | awk '{print $NF}')
         if [ -z "$ReverseZones" ]; then
             log_error "No reverse zone found, not updating"
-            result2='0'
         else
             for revzone in $ReverseZones
             do
               rev_zone_info "$revzone" "${ip}"
-              if [[ ${ip} = $ZoneIP* ]] && [ "$ZoneIP" = "$RZIP" ]; then
+              if [[ ${ip} == $ZoneIP* ]] && [ "$ZoneIP" == "$RZIP" ]; then
                   host -t PTR "${ip}" > /dev/null 2>&1
                   retval="$?"
                   if [ "$retval" -eq 0 ]; then
                       log_info "Deleting ${IP2add} PTR ${name}.${domain} from ${revzone}"
                       samba-tool dns delete "${Server}" "${revzone}" "${IP2add}" PTR "${name}.${domain}" -k yes -d 1
-                      result2="$?"
-                  else
-                      result2='0'
+                      (( result2 += "$?" ))
                   fi
-                  break
-              else
-                  continue
               fi
             done
         fi
-        result3='0'
-        result4='0'
         ;;
       *)
         log_error "Invalid action specified"
