@@ -189,6 +189,7 @@ class profile::app::dhcpd (
     group   => 'root',
     content => @(EOT)
                /etc/dhcp/dhcp-dyndns.sh ix,
+               /bin/cur rix,
                /bin/date rix,
                /bin/egrep rix,
                /bin/grep rix,
