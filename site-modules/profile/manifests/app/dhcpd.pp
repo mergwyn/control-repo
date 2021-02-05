@@ -203,7 +203,7 @@ class profile::app::dhcpd (
                /run/samba/winbindd/pipe wr,
                /tmp/dhcp-dyndns.cc rwk,
                /usr/bin/ r,
-               /bin/bin/cut rix,
+               /usr/bin/cut rix,
                /usr/bin/heimtools rix,
                /usr/bin/host rix,
                /usr/bin/kinit rix,
