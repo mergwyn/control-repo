@@ -163,7 +163,7 @@ class profile::app::dhcpd (
                  log(concat("Expired: IP: ", ClientIP));
                  # cannot get a ClientName here, for some reason that always fails
                  # however the dhcp update script will obtain the short hostname.
-                 execute("/etc/dhcp/dhcp-dyndns.sh", "delete", ClientIP, "", "0");
+                 execute("/etc/dhcp/dhcp-dyndns.sh", "delete", ClientIP, "0");
                }
                | EOT
   }
