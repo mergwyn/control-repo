@@ -153,8 +153,15 @@ class profile::app::dhcpd (
                    suffix (concat ("0", binary-to-ascii (16, 8, "", substring(hardware,5,1))),2), ":",
                    suffix (concat ("0", binary-to-ascii (16, 8, "", substring(hardware,6,1))),2)
                  );
+                 set ClientName = pick-first-value(
+                   ddns-hostname,
+                   host-decl-name,
+                   option host-name,
+                   config-option-host-name,
+                   client-name, noname
+                 );
                  log(concat("Release: IP: ", ClientIP));
-                 execute("/etc/dhcp/dhcp-dyndns.sh", "delete", ClientIP, ClientDHCID);
+                 execute("/etc/dhcp/dhcp-dyndns.sh", "delete", ClientIP, ClientDHCID, ClientName);
                }
  
                on expiry {
@@ -163,7 +170,14 @@ class profile::app::dhcpd (
                  log(concat("Expired: IP: ", ClientIP));
                  # cannot get a ClientName here, for some reason that always fails
                  # however the dhcp update script will obtain the short hostname.
-                 execute("/etc/dhcp/dhcp-dyndns.sh", "delete", ClientIP, "0");
+                 set ClientName = pick-first-value(
+                   ddns-hostname,
+                   host-decl-name,
+                   option host-name,
+                   config-option-host-name,
+                   client-name, noname
+                 );
+                 execute("/etc/dhcp/dhcp-dyndns.sh", "delete", ClientIP, "0", ClientName);
                }
                | EOT
   }
