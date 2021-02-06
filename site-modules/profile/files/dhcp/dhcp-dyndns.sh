@@ -1,6 +1,7 @@
 #!/bin/bash
 # shellcheck disable=SC2001
 
+set -o pipefail
 # /usr/local/bin/dhcp-dyndns.sh
 
 # This script is for secure DDNS updates on Samba,
@@ -191,6 +192,10 @@ fi
 if [ -z "${name}" ]; then
     if [ "${action}" = "delete" ]; then
         name=$(host -t PTR "${ip}" | awk '{print $NF}' | awk -F '.' '{print $1}')
+	if [[ $? != 0 ]] ; then
+	    log_error "Name not supllied for delete and unable to find hostname (${name}) for $ip"
+	    exit 1
+	fi
     else
         usage
         exit 1
