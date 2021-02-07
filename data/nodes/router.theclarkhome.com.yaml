@@ -8,22 +8,7 @@ profile::platform::baseline::debian::netplan::ethernets:
     dhcp6: no
     addresses:
       - 10.58.0.2/16
-    gateway4: 192.168.11.254
+    gateway4: 10.58.0.1
     nameservers:
       search: "%{alias('defaults::dns::search')}"
       addresses: "%{alias('defaults::dns::nameservers')}"
-profile::platform::baseline::debian::netplan::vlans:
-  veth0:
-    id: 0
-    link: eth0
-    addresses:
-    - 192.168.11.2/24
-    gateway4: 192.168.11.254
-    nameservers:
-      addresses:
-      - 192.168.11.22
-      - 192.168.11.21
-      search:
-      - theclarkhome.com
-      - local
-
