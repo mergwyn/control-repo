@@ -213,10 +213,10 @@ esac
 # exit if $name starts with 'dhcp'
 # if you do not want computers without a hostname in AD
 # uncomment the following block of code.
-if [[ ${name} == dhcp* ]]; then
-    log_notice "Not updating DNS record in AD, invalid name ${name}"
-    exit 0
-fi
+#if [[ ${name} == dhcp* ]]; then
+#    log_notice "Not updating DNS record in AD, invalid name ${name}"
+#    exit 0
+#fi
 
 declare -i result1=0 result2=0 result3=0 result4=0
 ## update ##
