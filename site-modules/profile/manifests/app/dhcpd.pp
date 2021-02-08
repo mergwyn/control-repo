@@ -82,7 +82,7 @@ class profile::app::dhcpd (
 
 # Hosts that just need names,
   #dhcp::host { 'switch1':               mac => '00:8e:f2:59:c7:98' }
-  #dhcp::host { 'switch2':               mac => 'a0:40:a0:71:7e:ce' }
+  dhcp::host { 'switch2':               mac => 'a0:40:a0:71:7e:ce' }
   #dhcp::host { 'DELLA3F95F':            mac => '08:00:37:a3:f9:5f' }
   #dhcp::host { 's685ip':                mac => '00:01:e3:9a:f9:c1' }
   dhcp::host { 'humax':                 mac => '80:1f:02:21:a1:74' }
