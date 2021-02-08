@@ -35,21 +35,21 @@ Add_macAddress='no'
 
 
 log()       { logger -t "dyndns[$$]" "$@" ; }
-log_error() { log -p user.error -s "$@" ; }
+log_error() { log -p user.error "$@" ; }
 log_notice(){ log -p user.notice "$@" ; }
 log_info()  { log -p user.info "$@" ; }
-log_debug() { : ; }
 log_debug() { log -p user.debug "$@" ; }
+log_debug() { : ; }
 
 usage() {
-echo "USAGE:"
-echo "  $(basename "$0") add ip-address dhcid|mac-address hostname"
-echo "  $(basename "$0") delete ip-address dhcid|mac-address"
+    echo "USAGE:"
+    echo "  $(basename "$0") add ip-address dhcid|mac-address hostname"
+    echo "  $(basename "$0") delete ip-address dhcid|mac-address"
 }
 
 log_info "DHCP-DNS Update started: $*"
 
-$(grep -E '^[ ]*secondary;' /etc/dhcp/dhcpd.conf > /dev/null) && sleep 10
+$(grep -E '^[ ]*secondary;' /etc/dhcp/dhcpd.conf > /dev/null) && sleep 15
 
 dhcpduser=dhcp
 
