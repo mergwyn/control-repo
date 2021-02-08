@@ -42,7 +42,7 @@ class profile::app::dhcpd (
                     }
 
                     option subnet-mask 255.255.255.0;
-                    option routers 192.168.11.254;
+                    option routers 192.168.11.1;
                   }
 #                  subnet 10.58.0.0 netmask 255.255.0.0 {
 #                    pool
