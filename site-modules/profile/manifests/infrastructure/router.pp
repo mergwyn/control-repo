@@ -5,58 +5,36 @@ class profile::infrastructure::router (
   Enum['openvpn','nordvpn','none'] $type = 'none',
 ) {
 
-  class { 'ufw':
-    forward => 'ACCEPT',
+  include sysctl
+  sysctl::configuration { 'net.ipv4.ip_forward':  value => '1', }
+
+  include firewall
+  resources { 'firewall': purge => true, }
+
+  firewall {'100 FORWARD for eth0':
+    chain   => 'FORWARD',
+    source  => '10.58.0.0/16',
+    iniface => 'eth0',
+    jump    => 'ACCEPT',
   }
-
-  # Disable IPv6
-  shellvar { 'IPV6':
-    ensure    => present,
-    value     => 'no',
-    target    => '/etc/default/ufw',
-    uncomment => true,
-    notify    => Service['ufw'],
-    require   => Package['ufw']
+  firewall {'110 FORWARD for eth0.1':
+    chain   => 'FORWARD',
+    source  => '192.168.11.0/24',
+    iniface => 'eth0.1',
+    jump    => 'ACCEPT',
   }
-
-# Add forward rule
-  ini_setting { 'net.ipv4.ip_forward':
-    ensure  => present,
-    path    => '/etc/ufw/sysctl.conf',
-    setting => 'net/ipv4/ip_forward',
-    value   => '1',
-    notify  => Service['ufw'],
-    require => Package['ufw']
+  firewall {'200 nat for eth0':
+    table   => 'nat',
+    chain   => 'POSTROUTING',
+    iniface => 'eth0',
+    jump    => 'MASQUERADE',
   }
-
-
-# Rules
-  ufw::allow { 'allow-all-from-trusted':
-    from  => "${facts['networking']['network']}/${lookup('defaults::bits')}",
-    ip    => 'any',
-    proto => 'any',
+  firewall {'210 nat for eth0.1':
+    table   => 'nat',
+    chain   => 'POSTROUTING',
+    iniface => 'eth0.1',
+    jump    => 'MASQUERADE',
   }
-
-#TODO: only needed for VPN?
-  $nat_rule = "
-# nat Table rules
-*nat
-:POSTROUTING ACCEPT [0:0]
- 
-# Forward traffic from eth1 through eth0.
--A POSTROUTING -s 10.0.125.0/24 -o eth1 -j MASQUERADE
- 
-# don't delete the 'COMMIT' line or these nat table rules won't be processed
-COMMIT
-"
-#  file_line { 'ufw-ipv6':
-#    line    => $nat_rule,
-#    match   => '^IPV6=',
-#    path    => '/etc//ufw/before.rules',
-#    notify  => Service['ufw'],
-#    require => Package['ufw']
-#  }
-
 
   case $type  {
     'none':    { }
