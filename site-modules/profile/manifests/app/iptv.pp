@@ -27,7 +27,7 @@ class profile::app::iptv {
         hour    => '*/6',
       },
     ],
-    environment => [ 'PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"' ],
+    environment => [ 'PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/puppetlabs/bin:/opt/puppetlabs/puppet/bin"' ],
   }
 
   #TODO xteve?
