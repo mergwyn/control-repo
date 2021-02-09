@@ -14,18 +14,5 @@ alias brew='sudo -u brew -i $(which brew)'
 alias be='pdk bundle exec'
 
 boldecho() { echo $(tput smso)"$@"$(tput rmso) ; }
-listremotes() { lxc remote list | grep -v simplestreams | awk '/lxd/{print $2}'; }
-listcontainers() { lxc list -c ns ${1+${1}:} | awk '!/NAME/{ if ( $4 == "RUNNING" ) print $2}'; }
-
-listhosts()
-{
-  for remote in $(listremotes)
-  do
-    [[ ${remote} = "local" ]] && hostname || echo ${remote}
-    listcontainers ${remote}
-  done
-}
-
-
 
 set -o vi
