@@ -116,23 +116,23 @@ class profile::app::dhcpd (
   $clientip = "set ClientIP = binary-to-ascii(10, 8, '.', leased-address)"
   $clientdhcid = @(EOT)
     set ClientDHCID = concat (
-      suffix (concat ('0', binary-to-ascii (16, 8, '', substring(hardware,1,1))),2), ':',
-      suffix (concat ('0', binary-to-ascii (16, 8, '', substring(hardware,2,1))),2), ':',
-      suffix (concat ('0', binary-to-ascii (16, 8, '', substring(hardware,3,1))),2), ':',
-      suffix (concat ('0', binary-to-ascii (16, 8, '', substring(hardware,4,1))),2), ':',
-      suffix (concat ('0', binary-to-ascii (16, 8, '', substring(hardware,5,1))),2), ':',
-      suffix (concat ('0', binary-to-ascii (16, 8, '', substring(hardware,6,1))),2)
-    )
-    | EOT
+        suffix (concat ('0', binary-to-ascii (16, 8, '', substring(hardware,1,1))),2), ':',
+        suffix (concat ('0', binary-to-ascii (16, 8, '', substring(hardware,2,1))),2), ':',
+        suffix (concat ('0', binary-to-ascii (16, 8, '', substring(hardware,3,1))),2), ':',
+        suffix (concat ('0', binary-to-ascii (16, 8, '', substring(hardware,4,1))),2), ':',
+        suffix (concat ('0', binary-to-ascii (16, 8, '', substring(hardware,5,1))),2), ':',
+        suffix (concat ('0', binary-to-ascii (16, 8, '', substring(hardware,6,1))),2)
+      )
+    | -EOT
   $clientname = @(EOT)
     set ClientName = pick-first-value(
-      ddns-hostname,
-      host-decl-name,
-      option host-name,
-      config-option-host-name,
-      client-name, noname
-    )
-    | EOT
+        ddns-hostname,
+        host-decl-name,
+        option host-name,
+        config-option-host-name,
+        client-name, noname
+      )
+    | -EOT
 
   # config files
   file { '/etc/dhcp/dhcpd.samba_ddns':
@@ -141,7 +141,7 @@ class profile::app::dhcpd (
     notify  => Service['isc-dhcp-server'],
     owner   => $owner,
     group   => $group,
-    content => @(EOT)
+    content => @("EOT")
                on commit {
                  ${noname};
                  ${clientip};
