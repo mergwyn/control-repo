@@ -49,10 +49,10 @@ class profile::app::gateway::certs {
   letsencrypt::certonly { $trusted['certname']:
     plugin               => 'nginx',
     domains              => [
-                              $trusted['domain'],
+#                              $trusted['domain'],
                               $trusted['certname'],
                               "foxtrot.${$trusted['domain']}",
-                              "tango.${$trusted['domain']}",
+#                              "tango.${$trusted['domain']}",
                               "zulu.${$trusted['domain']}",
 #  "echo.%{trusted.domain}"
                             ],
