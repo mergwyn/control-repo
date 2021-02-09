@@ -112,16 +112,16 @@ class profile::app::dhcpd (
 		${keytab} --principal=dhcp",
     notify  => Exec['chown_dhcp_keytab'],
   }
-  $noname = "set noname = concat('dhcp-', binary-to-ascii(10, 8, '-', leased-address))"
-  $clientip = "set ClientIP = binary-to-ascii(10, 8, '.', leased-address)"
+  $noname = 'set noname = concat("dhcp-", binary-to-ascii(10, 8, "-", leased-address))'
+  $clientip = 'set ClientIP = binary-to-ascii(10, 8, ".", leased-address)'
   $clientdhcid = @(EOT)
     set ClientDHCID = concat (
-        suffix (concat ('0', binary-to-ascii (16, 8, '', substring(hardware,1,1))),2), ':',
-        suffix (concat ('0', binary-to-ascii (16, 8, '', substring(hardware,2,1))),2), ':',
-        suffix (concat ('0', binary-to-ascii (16, 8, '', substring(hardware,3,1))),2), ':',
-        suffix (concat ('0', binary-to-ascii (16, 8, '', substring(hardware,4,1))),2), ':',
-        suffix (concat ('0', binary-to-ascii (16, 8, '', substring(hardware,5,1))),2), ':',
-        suffix (concat ('0', binary-to-ascii (16, 8, '', substring(hardware,6,1))),2)
+        suffix (concat ("0", binary-to-ascii (16, 8, "", substring(hardware,1,1))),2), ":",
+        suffix (concat ("0", binary-to-ascii (16, 8, "", substring(hardware,2,1))),2), ":",
+        suffix (concat ("0", binary-to-ascii (16, 8, "", substring(hardware,3,1))),2), ":",
+        suffix (concat ("0", binary-to-ascii (16, 8, "", substring(hardware,4,1))),2), ":",
+        suffix (concat ("0", binary-to-ascii (16, 8, "", substring(hardware,5,1))),2), ":",
+        suffix (concat ("0", binary-to-ascii (16, 8, "", substring(hardware,6,1))),2)
       )
     | -EOT
   $clientname = @(EOT)
