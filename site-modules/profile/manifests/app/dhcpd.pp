@@ -112,6 +112,27 @@ class profile::app::dhcpd (
 		${keytab} --principal=dhcp",
     notify  => Exec['chown_dhcp_keytab'],
   }
+  $noname = "set noname = concat('dhcp-', binary-to-ascii(10, 8, '-', leased-address))"
+  $clientip = "set ClientIP = binary-to-ascii(10, 8, '.', leased-address)"
+  $clientdhcid = @(EOT)
+    set ClientDHCID = concat (
+      suffix (concat ('0', binary-to-ascii (16, 8, '', substring(hardware,1,1))),2), ':',
+      suffix (concat ('0', binary-to-ascii (16, 8, '', substring(hardware,2,1))),2), ':',
+      suffix (concat ('0', binary-to-ascii (16, 8, '', substring(hardware,3,1))),2), ':',
+      suffix (concat ('0', binary-to-ascii (16, 8, '', substring(hardware,4,1))),2), ':',
+      suffix (concat ('0', binary-to-ascii (16, 8, '', substring(hardware,5,1))),2), ':',
+      suffix (concat ('0', binary-to-ascii (16, 8, '', substring(hardware,6,1))),2)
+    )
+    | EOT
+  $clientname = @(EOT)
+    set ClientName = pick-first-value(
+      ddns-hostname,
+      host-decl-name,
+      option host-name,
+      config-option-host-name,
+      client-name, noname
+    )
+    | EOT
 
   # config files
   file { '/etc/dhcp/dhcpd.samba_ddns':
@@ -122,50 +143,25 @@ class profile::app::dhcpd (
     group   => $group,
     content => @(EOT)
                on commit {
-                 set noname = concat("dhcp-", binary-to-ascii(10, 8, "-", leased-address));
-                 set ClientIP = binary-to-ascii(10, 8, ".", leased-address);
-                 set ClientDHCID = concat (
-                   suffix (concat ("0", binary-to-ascii (16, 8, "", substring(hardware,1,1))),2), ":",
-                   suffix (concat ("0", binary-to-ascii (16, 8, "", substring(hardware,2,1))),2), ":",
-                   suffix (concat ("0", binary-to-ascii (16, 8, "", substring(hardware,3,1))),2), ":",
-                   suffix (concat ("0", binary-to-ascii (16, 8, "", substring(hardware,4,1))),2), ":",
-                   suffix (concat ("0", binary-to-ascii (16, 8, "", substring(hardware,5,1))),2), ":",
-                   suffix (concat ("0", binary-to-ascii (16, 8, "", substring(hardware,6,1))),2)
-                 );
-                 set ClientName = pick-first-value(
-                   ddns-hostname,
-                   host-decl-name,
-                   option host-name,
-                   config-option-host-name,
-                   client-name, noname
-                 );
+                 ${noname};
+                 ${clientip};
+                 ${clientdhcid};
+                 ${clientname};
                  log(concat("Commit: IP: ", ClientIP, " DHCID: ", ClientDHCID, " Name: ", ClientName));
                  execute("/etc/dhcp/dhcp-dyndns.sh", "add", ClientIP, ClientDHCID, ClientName);
                }
  
                on release {
-                 set ClientIP = binary-to-ascii(10, 8, ".", leased-address);
-                 set ClientDHCID = concat (
-                   suffix (concat ("0", binary-to-ascii (16, 8, "", substring(hardware,1,1))),2), ":",
-                   suffix (concat ("0", binary-to-ascii (16, 8, "", substring(hardware,2,1))),2), ":",
-                   suffix (concat ("0", binary-to-ascii (16, 8, "", substring(hardware,3,1))),2), ":",
-                   suffix (concat ("0", binary-to-ascii (16, 8, "", substring(hardware,4,1))),2), ":",
-                   suffix (concat ("0", binary-to-ascii (16, 8, "", substring(hardware,5,1))),2), ":",
-                   suffix (concat ("0", binary-to-ascii (16, 8, "", substring(hardware,6,1))),2)
-                 );
-                 set ClientName = pick-first-value(
-                   ddns-hostname,
-                   host-decl-name,
-                   option host-name,
-                   config-option-host-name,
-                   client-name, noname
-                 );
+                 ${noname};
+                 ${clientip};
+                 ${clientdhcid};
+                 ${clientname};
                  log(concat("Release: IP: ", ClientIP));
                  execute("/etc/dhcp/dhcp-dyndns.sh", "delete", ClientIP, ClientDHCID, ClientName);
                }
  
                on expiry {
-                 set ClientIP = binary-to-ascii(10, 8, ".", leased-address);
+                 ${clientip};
                  # cannot get a ClientMac here, apparently this only works when actually receiving a packet
                  log(concat("Expired: IP: ", ClientIP));
                  # cannot get a ClientName here, for some reason that always fails
