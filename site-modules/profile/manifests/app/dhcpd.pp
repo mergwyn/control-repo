@@ -77,8 +77,8 @@ class profile::app::dhcpd (
   }
 
 # Hosts with fixed ip
-  dhcp::host { 'papa':    mac => '00:16:3e:fc:2a:87', ip => '192.168.11.240', }
-  #dhcp::host { 'romeo':   mac => '00:16:3e:fb:dc:5e', ip => '192.168.11.250', }
+  dhcp::host { 'papa':    mac => '00:16:3e:fc:2a:87', ip => '10.58.0.10', }
+  #dhcp::host { 'romeo':   mac => '00:16:3e:fb:dc:5e', ip => '10.58.0.250', }
 
 # Hosts that just need names,
   #dhcp::host { 'switch1':               mac => '00:8e:f2:59:c7:98' }
@@ -96,7 +96,7 @@ class profile::app::dhcpd (
 # Hosts with different gateway (VPN)
 # TODO move vpn hosts to new VLAN
   profile::app::dhcpd::vpnhost { 'india': mac => '00:16:3e:93:c6:21', }
-  profile::app::dhcpd::vpnhost { 'tango': mac => '00:16:3e:01:f8:9a', ip => '192.168.11.42', }
+  profile::app::dhcpd::vpnhost { 'tango': mac => '00:16:3e:01:f8:9a', ip => '10.58.0.30', }
   profile::app::dhcpd::vpnhost { 'kilo':  mac => '00:16:3e:5c:39:e0', }
 
 # export keytab to allow script to run
