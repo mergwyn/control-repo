@@ -20,7 +20,8 @@ defaults::dns::search:
   - local
 defaults::dns::nameservers:
   - "%{lookup('defaults::subnet')}.21"
-  - "%{lookup('defaults::subnet')}.22"
+  - '10.58.0.22'
+  #- "%{lookup('defaults::subnet')}.22"
 defaults::backup_server:   'foxtrot'
 defaults::system_user:     'root'
 defaults::system_home_dir: '/root'
