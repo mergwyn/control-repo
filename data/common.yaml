@@ -9,23 +9,18 @@ defaults::adminemail:      "root@%{trusted.domain}"
 defaults::adminuser:       'administrator'
 defaults::sharedpassword:  '$6$s/krC.bq$NiiWBAjU9pC3OkFTOVrgRpSiS6fpTi4jIgY50K6/J3sz21nmJbNphZI4hZlJqbr0to2tNXZjbjcia3idbonxV1'
 # network
-#defaults::netmask:         '255.255.0.0'
-#defaults::bits:            '24'
-#defaults::subnet:          '192.168.11'
 defaults::netmask:         '255.255.0.0'
 defaults::bits:            '16'
 defaults::subnet:          '10.58.0'
 defaults::gateway:         "%{lookup('defaults::subnet')}.1"
-#defaults::vpn_gateway:     "%{lookup('defaults::subnet')}.252"
-defaults::vpn_gateway:     "192.168.11.252"
+defaults::vpn_gateway:     "%{lookup('defaults::subnet')}.252"
 defaults::network:         "%{lookup('defaults::subnet')}.0"
 defaults::dns::search:
   - "%{trusted.domain}"
   - local
 defaults::dns::nameservers:
   - "%{lookup('defaults::subnet')}.21"
-  - '10.58.0.22'
-  #- "%{lookup('defaults::subnet')}.22"
+  - "%{lookup('defaults::subnet')}.22"
 defaults::backup_server:   'foxtrot'
 defaults::system_user:     'root'
 defaults::system_home_dir: '/root'
