@@ -20,52 +20,52 @@ class profile::app::dhcpd (
     dnssearchdomains   => lookup('defaults::dns::search'),
     default_lease_time => 14400,
     extra_config       => [
-      'include "/etc/dhcp/dhcpd.shared";',
+#      'include "/etc/dhcp/dhcpd.shared";',
       'include "/etc/dhcp/dhcpd.samba_ddns";',
     ],
   }
 
-  file { '/etc/dhcp/dhcpd.shared':
-    ensure  => file,
-    require => Package['isc-dhcp-server'],
-    notify  => Service['isc-dhcp-server'],
-    owner   => $owner,
-    group   => $group,
-    content => @(EOT),
-                shared-network my-net {
-                  subnet 192.168.11.0 netmask 255.255.255.0 {
-                    pool
-                    {
-                      failover peer "dhcp-failover";
-                      deny dynamic bootp clients;
-                      range 192.168.11.100 192.168.11.199;
-                    }
-
-                    option subnet-mask 255.255.255.0;
-                    option routers 192.168.11.1;
-                  }
-                  subnet 10.58.0.0 netmask 255.255.0.0 {
-                    pool
-                    {
-                      failover peer "dhcp-failover";
-                      deny dynamic bootp clients;
-                      range 10.58.0.100 10.58.0.199;
-                    }
-
-                    option subnet-mask 255.255.0.0;
-                    option routers 10.58.0.1;
-                  }
-                }
-                | EOT
-  }
-
-#  dhcp::pool { lookup('defaults::network'):
-#    network  => lookup('defaults::network'),
-#    mask     => '255.255.255.0',
-#    range    => [ "${lookup('defaults::subnet')}.100 ${lookup('defaults::subnet')}.199" ],
-#    gateway  => lookup('defaults::gateway'),
-#    failover => 'dhcp-failover',
+#  file { '/etc/dhcp/dhcpd.shared':
+#    ensure  => file,
+#    require => Package['isc-dhcp-server'],
+#    notify  => Service['isc-dhcp-server'],
+#    owner   => $owner,
+#    group   => $group,
+#    content => @(EOT),
+#                shared-network my-net {
+#                  subnet 192.168.11.0 netmask 255.255.255.0 {
+#                    pool
+#                    {
+#                      failover peer "dhcp-failover";
+#                      deny dynamic bootp clients;
+#                      range 192.168.11.100 192.168.11.199;
+#                    }
+#
+#                    option subnet-mask 255.255.255.0;
+#                    option routers 192.168.11.1;
+#                  }
+#                  subnet 10.58.0.0 netmask 255.255.0.0 {
+#                    pool
+#                    {
+#                      failover peer "dhcp-failover";
+#                      deny dynamic bootp clients;
+#                      range 10.58.0.100 10.58.0.199;
+#                    }
+#
+#                    option subnet-mask 255.255.0.0;
+#                    option routers 10.58.0.1;
+#                  }
+#                }
+#                | EOT
 #  }
+
+  dhcp::pool { lookup('defaults::network'):
+    network  => lookup('defaults::network'),
+    mask     => lookup('defaults::netmask'),
+    range    => [ "${lookup('defaults::subnet')}.100 ${lookup('defaults::subnet')}.199" ],
+    gateway  => lookup('defaults::gateway'),
+    failover => 'dhcp-failover',
+  }
   if ($role and $peer_address) {
     class { 'dhcp::failover':
       role         => $role,
