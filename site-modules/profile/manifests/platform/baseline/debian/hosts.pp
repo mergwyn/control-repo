@@ -2,6 +2,11 @@
 
 class profile::platform::baseline::debian::hosts {
 
+  $ip = $trusted['extensions']['pp_role'] ? {
+    'domain_controller' => $facts['networking']['ip'],
+    default             => '127.0.1.1',
+  }
+
   Host {
     ensure   => present,
   }
@@ -12,7 +17,7 @@ class profile::platform::baseline::debian::hosts {
   }
   host { $trusted['certname']:
     ensure       => present,
-    ip           => '127.0.1.1',
+    ip           => $ip,
     host_aliases => $trusted['hostname'],
   }
   host { 'localhost':
