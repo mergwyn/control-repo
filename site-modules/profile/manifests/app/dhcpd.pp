@@ -44,17 +44,17 @@ class profile::app::dhcpd (
                     option subnet-mask 255.255.255.0;
                     option routers 192.168.11.1;
                   }
-#                  subnet 10.58.0.0 netmask 255.255.0.0 {
-#                    pool
-#                    {
-#                      failover peer "dhcp-failover";
-#                      deny dynamic bootp clients;
-#                      range 10.58.0.100 10.58.0.199;
-#                    }
-#
-#                    option subnet-mask 255.255.0.0;
-#                    option routers 10.58.0.1 10.58.0.2;
-#                  }
+                  subnet 10.58.0.0 netmask 255.255.0.0 {
+                    pool
+                    {
+                      failover peer "dhcp-failover";
+                      deny dynamic bootp clients;
+                      range 10.58.0.100 10.58.0.199;
+                    }
+
+                    option subnet-mask 255.255.0.0;
+                    option routers 10.58.0.1;
+                  }
                 }
                 | EOT
   }
