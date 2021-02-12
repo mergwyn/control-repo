@@ -19,7 +19,9 @@ class profile::app::dhcpd (
     ntpservers         => [ "foxtrot.${domain}", "golf.${domain}" ],
     dnssearchdomains   => lookup('defaults::dns::search'),
     default_lease_time => 14400,
+    min_lease_time     => 14400,
     extra_config       => [
+      'min-lease-time 3600;',
 #      'include "/etc/dhcp/dhcpd.shared";',
       'include "/etc/dhcp/dhcpd.samba_ddns";',
     ],
