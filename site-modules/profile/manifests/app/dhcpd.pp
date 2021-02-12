@@ -18,8 +18,8 @@ class profile::app::dhcpd (
     nameservers        => lookup('defaults::dns::nameservers'),
     ntpservers         => [ "foxtrot.${domain}", "golf.${domain}" ],
     dnssearchdomains   => lookup('defaults::dns::search'),
-    default_lease_time => 14400,
-    min_lease_time     => 14400,
+    default_lease_time => 28800,
+    max_lease_time     => 86400,
     extra_config       => [
       'min-lease-time 3600;',
 #      'include "/etc/dhcp/dhcpd.shared";',
