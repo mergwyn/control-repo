@@ -22,44 +22,9 @@ class profile::app::dhcpd (
     max_lease_time     => 86400,
     extra_config       => [
       'min-lease-time 3600;',
-#      'include "/etc/dhcp/dhcpd.shared";',
       'include "/etc/dhcp/dhcpd.samba_ddns";',
     ],
   }
-
-#  file { '/etc/dhcp/dhcpd.shared':
-#    ensure  => file,
-#    require => Package['isc-dhcp-server'],
-#    notify  => Service['isc-dhcp-server'],
-#    owner   => $owner,
-#    group   => $group,
-#    content => @(EOT),
-#                shared-network my-net {
-#                  subnet 192.168.11.0 netmask 255.255.255.0 {
-#                    pool
-#                    {
-#                      failover peer "dhcp-failover";
-#                      deny dynamic bootp clients;
-#                      range 192.168.11.100 192.168.11.199;
-#                    }
-#
-#                    option subnet-mask 255.255.255.0;
-#                    option routers 192.168.11.1;
-#                  }
-#                  subnet 10.58.0.0 netmask 255.255.0.0 {
-#                    pool
-#                    {
-#                      failover peer "dhcp-failover";
-#                      deny dynamic bootp clients;
-#                      range 10.58.0.100 10.58.0.199;
-#                    }
-#
-#                    option subnet-mask 255.255.0.0;
-#                    option routers 10.58.0.1;
-#                  }
-#                }
-#                | EOT
-#  }
 
   dhcp::pool { lookup('defaults::network'):
     network  => lookup('defaults::network'),
@@ -87,6 +52,7 @@ class profile::app::dhcpd (
   dhcp::host { 'switch2':               mac => 'a0:40:a0:71:7e:ce' }
   #dhcp::host { 'DELLA3F95F':            mac => '08:00:37:a3:f9:5f' }
   #dhcp::host { 's685ip':                mac => '00:01:e3:9a:f9:c1' }
+  dhcp::host { 'robovac':               mac => '80:7d:3a:3b:67:3c' }
   dhcp::host { 'humax':                 mac => '80:1f:02:21:a1:74' }
   dhcp::host { 'lounge-sonos-playbar':  mac => '00:0e:58:bc:b4:dc' }
   dhcp::host { 'lounge-sonos-play1-ls': mac => '00:0e:58:c9:f0:9a' }
