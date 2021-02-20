@@ -6,7 +6,7 @@ class profile::app::iptv {
 
   $codedir='/opt/scripts'
 
-  $packages = [ 'curl', 'socat' ]
+  $packages = [ 'socat' ]
   package { $packages: ensure => present }
 
 #  class{'::tvheadend':
