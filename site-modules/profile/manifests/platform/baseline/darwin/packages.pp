@@ -4,7 +4,7 @@ class profile::platform::baseline::darwin::packages {
 
 
   Package {
-    provider => homebrew,
+    provider => brewcask,
     ensure   => latest,
   }
 
@@ -20,17 +20,17 @@ class profile::platform::baseline::darwin::packages {
 
 # packages to be installed
   #package { 'amazon-music': }
-  package { 'git': }
+  package { 'git': provider => 'brew' }
+  package { 'unison': provider => 'brew' }
+
   package { 'firefox': }
   package { 'aerial': }
   package { 'skype': }
   package { 'zoom': }
   package { 'vlc': }
   package { 'keeweb': }
-  package { 'unison': }
   package { 'puppetlabs/puppet/puppet-agent-6': }
   package { 'homebrew/cask-drivers/sonos':      }
   package { 'plex': }
-
 
 }
