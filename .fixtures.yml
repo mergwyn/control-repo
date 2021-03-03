@@ -74,6 +74,9 @@ fixtures:
     augeasproviders_shellvar:
       repo: herculesteam-augeasproviders_shellvar
       ref: 4.0.0
+    ugeasproviders_sysctl:
+      repo: herculesteam-augeasproviders_sysctl
+      ref: 2.6.0
     samba:
       repo: kakwa-samba
       ref: 2.0.0
@@ -197,9 +200,6 @@ fixtures:
     libvirt:
       repo: thias-libvirt
       ref: 1.0.0
-    sysctl:
-      repo: tpdownes-sysctl
-      ref: 2.1.0
     exports:
       repo: zack-exports
       ref: 1.0.1

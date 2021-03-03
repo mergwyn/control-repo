@@ -5,8 +5,12 @@ class profile::infrastructure::router (
   Enum['openvpn','nordvpn','none'] $type = 'none',
 ) {
 
-#  include sysctl
-#  sysctl::configuration { 'net.ipv4.ip_forward':  value => '1', }
+  sysctl { "net.ipv4.ip_forward":
+    ensure => present,
+    value  => "1",
+    target => "/etc//ufw/sysctl.conf",
+  }
+
 #
 #  include firewall
 #  resources { 'firewall': purge => true, }

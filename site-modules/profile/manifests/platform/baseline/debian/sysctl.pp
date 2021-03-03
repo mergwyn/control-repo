@@ -9,9 +9,8 @@ class profile::platform::baseline::debian::sysctl {
 
   case $facts['virtual'] {
     'physical': {
-      include sysctl
-      sysctl::configuration { 'vm.swappiness':  value => '1', }
-      sysctl::configuration { 'vm.dirty_ratio': value => '15', }
+      sysctl{ 'vm.swappiness':  ensure => present, value => '1', }
+      sysctl{ 'vm.dirty_ratio': ensure => present, value => '15', }
     }
     default: {
     }
