@@ -2,6 +2,8 @@
 
 class profile::infrastructure::router::privatvpn {
 
+  include profile::infrastructure::router::openvpn
+
 # TODO Install confia:  wget 'http://privatevpn.com/client/PrivateVPN-TUN.zip' -O $openvpn/PrivateVPN-TUN.zipg
 # TODO get credentials
 # TODO add port 1195
