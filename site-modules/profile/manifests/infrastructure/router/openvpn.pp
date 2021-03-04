@@ -8,26 +8,18 @@ class profile::infrastructure::router::openvpn {
     'ca-certificates',
   ]
   package { $aptpackages: ensure   => present, }
-  #
 
-  #TODO configure openvpn
-# wget https://downloads.nordcdn.com/configs/archives/servers/ovpn.zip
-# unzip ovpn.zip
-# rm ovpn.zip
-# set up configuration file
-#  ==> creds <==
-#username
-#password
-#
-#==> fastest.server <==
-#config /etc/openvpn/ovpn_udp/uk1928.nordvpn.com.udp.ovpn
-#
-#==> nordvpn.conf <==
-#config /etc/openvpn/client/fastest.server
-## Use local credentials
-#auth-user-pass /etc/openvpn/client/creds
-#==> /etc/systemd/system/openvpn-client@.service.d/disable-limitnproc.conf
-#[Service]
-#LimitNPROC=infinity
+# Common firewall settings for vpn
+  firewalld_zone {'public':
+    interfaces => ['tun0'],
+  }
+
+  firewalld_service {'Allow openvpn in the public Zone':
+    ensure  => present,
+    zone    => 'public',
+    service => 'openvpn',
+  }
+
+  # TODO install https://github.com/jonathanio/update-systemd-resolved
 
 }
