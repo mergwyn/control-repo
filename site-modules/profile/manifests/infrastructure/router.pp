@@ -2,7 +2,7 @@
 
 class profile::infrastructure::router (
   Boolean $iptv = true,
-  Enum['privavpn','none'] $type = 'none',
+  Enum['privatvpn','none'] $type = 'none',
 ) {
 
   class {'firewalld':
