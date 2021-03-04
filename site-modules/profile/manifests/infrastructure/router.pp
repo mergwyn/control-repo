@@ -13,7 +13,7 @@ class profile::infrastructure::router (
 
 # Attach interface to internal zone
   firewalld_zone {'internal':
-    interfaces => [facts(['networking']['primary'])],
+    interfaces => [$facts['networking']['primary']],
     masquerade => true,
   }
 
