@@ -15,6 +15,23 @@ class profile::infrastructure::router (
   }
   firewalld_zone { 'public':
     interfaces => ['tun0'],
+    masquerade => true,
+  }
+  firewalld_service { 'Disallow SSH in the public Zone':
+    ensure  => absent,
+    zone    => 'public',
+    service => 'ssh',
+  }
+  firewalld_service { 'Disallow dhcpv6-client in the public Zone':
+    ensure  => absent,
+    zone    => 'public',
+    service => 'dhcpv6-client',
+  }
+
+  firewalld_service { 'Allow plex in the public Zone':
+    ensure  => present,
+    zone    => 'public',
+    service => 'plex',
   }
 
 #  class { 'ufw':
