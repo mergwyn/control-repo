@@ -98,6 +98,9 @@ fixtures:
     cron:
       repo: puppet-cron
       ref: 2.0.0
+    firewalld:
+      repo: puppet-firewalld
+      ref: 4.4.0
     apache:
       repo: puppetlabs-apache
       ref: 5.8.0
@@ -107,9 +110,6 @@ fixtures:
     augeas_core:
       repo: puppetlabs-augeas_core
       ref: 1.1.1
-    firewall:
-      repo: puppetlabs-firewall
-      ref: 2.8.0
     git:
       repo: puppetlabs-git
       ref: 0.5.0
