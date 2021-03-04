@@ -10,13 +10,11 @@ class profile::infrastructure::router (
     default_service_zone => 'public',
     default_port_zone    => 'public',
   }
-# TODO get interface from facts
+
+# Attach interface to internal zone
   firewalld_zone {'internal':
-    interfaces => ['eth0'],
+    interfaces => [facts(['networking']['primary'])],
     masquerade => true,
-  }
-  firewalld_zone {'public':
-    interfaces => ['tun0'],
   }
 
 # Lockdown services
