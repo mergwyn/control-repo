@@ -30,10 +30,12 @@ class profile::infrastructure::router (
   }
 
 # TODO move this to app modules and sonsume exported resources
-  firewalld_service {'Allow plex in the public Zone':
+  firewalld_rich_rule {'Allow plex to plexserver from public zone':
     ensure  => present,
     zone    => 'public',
+    dest    => '10.58.0.30',
     service => 'plex',
+    action  => 'accept',
   }
   firewalld_service {'Allow http in the public Zone':
     ensure  => present,
