@@ -7,9 +7,9 @@ class profile::infrastructure::router::privatvpn {
 # TODO Install confia:  wget 'http://privatevpn.com/client/PrivateVPN-TUN.zip' -O $openvpn/PrivateVPN-TUN.zipg
 # TODO get credentials
 # TODO add port 1195
-  firewalld_port {'Open port 1195 in the public Zone':
+  firewalld_port {'Open port 1195 in the external Zone':
     ensure   => 'present',
-    zone     => 'public',
+    zone     => 'external',
     port     => 1195,
     protocol => 'udp',
   }

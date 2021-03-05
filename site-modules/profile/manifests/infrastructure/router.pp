@@ -41,13 +41,13 @@ class profile::infrastructure::router (
 ) {
 
   class {'firewalld':
+    default_zone => 'home',
 # TODO add hashes for configuration
   }
 
 # Attach interface to home zone
   firewalld_zone {'home':
     interfaces => [$facts['networking']['primary']],
-    masquerade => true,
   }
 
 # Lockdown services

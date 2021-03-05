@@ -10,13 +10,13 @@ class profile::infrastructure::router::openvpn {
   package { $aptpackages: ensure   => present, }
 
 # Common firewall settings for vpn
-  firewalld_zone {'public':
+  firewalld_zone {'external':
     interfaces => ['tun0'],
   }
 
-  firewalld_service {'Allow openvpn in the public Zone':
+  firewalld_service {'Allow openvpn in the external Zone':
     ensure  => present,
-    zone    => 'public',
+    zone    => 'external',
     service => 'openvpn',
   }
 
