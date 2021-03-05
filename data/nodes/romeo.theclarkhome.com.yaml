@@ -12,3 +12,6 @@ profile::platform::baseline::debian::netplan::ethernets:
     nameservers:
       search: "%{alias('defaults::dns::search')}"
       addresses: "%{alias('defaults::dns::nameservers')}"
+  eth1:
+    dhcp4: true
+    dhcp6: no
