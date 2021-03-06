@@ -41,7 +41,6 @@ class profile::infrastructure::router (
 ) {
 
   class {'firewalld':
-    default_zone => 'home',
 # TODO add hashes for configuration
   }
 
