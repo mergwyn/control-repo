@@ -7,7 +7,7 @@ class profile::app::openvpn::forwards {
 
 # TODO move this to app modules and sonsume exported resources
   [ 'plex', 'transmission-client' ].each |String $service| {
-    firewalld_rich_rule {"Forward ${service} from external zone to $plex":
+    firewalld_rich_rule {"Forward ${service} from external zone to ${plex}":
       ensure  => present,
       zone    => 'external',
       dest    => $plex,

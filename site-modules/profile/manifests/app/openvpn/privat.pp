@@ -2,16 +2,38 @@
 
 class profile::app::openvpn::privat {
 
-  service { 'openvpn-client@privat.service':
+  $service = 'openvpn-client@privat.service'
+
+# TODO Install config:  wget 'http://privatevpn.com/client/PrivateVPN-TUN.zip' -O $openvpn/PrivateVPN-TUN.zipg
+
+  file {'/etc/openvpn/client/privat.auth':
+    require => Package['openvpn'],
+    notify  => Service[$service],
+    content => @("EOT"/),
+               ${lookup('secrets::privatvpn::user')}
+               ${lookup('secrets::privatvpn::password')}"
+               | EOT
+  }
+  file {'/etc/openvpn/client/privat.conf':
+    require => Package['openvpn'],
+    notify  => Service[$service],
+    content => @("EOT"/),
+               remote uk-lon.pvdata.host 1195 udp
+               config  '/etc/openvpn/client/PrivateVPN-TUN/UDP/PrivateVPN-UK-London 1-TUN-1194.ovpn'
+               comp-lzo no
+               auth-user-pass '/etc/openvpn/client/privat.auth'
+               config '/etc/openvpn/scripts/update-systemd-resolved.conf'
+               dhcp-option DOMAIN-ROUTE .
+               | EOT
+  }
+
+  service { $service:
     ensure    => running,
     enable    => true,
     require   => Package['openvpn'],
     subscribe => Systemd::Dropin_file['openvpn-client-nproc.conf'],
   }
 
-# TODO Install confia:  wget 'http://privatevpn.com/client/PrivateVPN-TUN.zip' -O $openvpn/PrivateVPN-TUN.zipg
-# TODO get credentials
-# TODO add port 1195
   firewalld_port {'Open port 1195 in the public Zone':
     ensure   => 'present',
     zone     => 'public',
@@ -24,18 +46,5 @@ class profile::app::openvpn::privat {
     port     => 1195,
     protocol => 'udp',
   }
-# TODO setup config file
-#cat <<! >$openvpn/privat.conf
-#remote uk-lon.pvdata.host 1195 udp
-#config  "${openvpn}/PrivateVPN-TUN/UDP/PrivateVPN-UK-London 1-TUN-1194.ovpn"
-#auth-user-pass '/etc/openvpn/privat.auth'
-#comp-lzo no
-#script-security 2
-#up /etc/openvpn/update-resolv-conf # use systemd version
-#down /etc/openvpn/update-resolv-conf # use systemd version
-#down-pre
-#!
-
-# TODO setup local DNS for local domain
 
 }

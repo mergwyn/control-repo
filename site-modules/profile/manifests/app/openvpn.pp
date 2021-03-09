@@ -119,16 +119,14 @@ class profile::app::openvpn (
   include profile::app::openvpn::forwards
 
 ###### unbound setup
-#TODO unbound setup
-#server:
-#	interface: 10.58.0.3
-#	access-control: 10.58.0.0/16 allow
-#	Access-control: 127.0.0.0/8 allow
-#	do-not-query-localhost: no
-#	val-permissive-mode: yes
-#forward-zone:
-#	name: "."
-#	forward-addr: 127.0.0.53
-
+  class { 'unbound':
+    interface              => [ $facts['networking']['ip'] ],
+    access                 => [ "${lookup('defaults::cidr')}", '127.0.0.0/8' ],
+    do_not_query_localhost => false,
+    val_permissive_mode    => true,
+  }
+  unbound::forward { '.':
+    address => [ '127.0.0.53' ],
+  }
 
 }
