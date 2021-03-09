@@ -72,7 +72,7 @@ class profile::app::openvpn (
     revision => 'master',
   }
   exec { 'make update-systemd-resolved':
-    path        => ['/usr/bin', '/usr/sbin',],
+    path        => ['/bin', '/sbin', '/usr/bin', '/usr/sbin'],
     cwd         => '/opt/update-systemd-resolved',
     subscribe   => Vcsrepo['/opt/update-systemd-resolved'],
     require     => Package['make'],
