@@ -102,6 +102,7 @@ class profile::app::openvpn (
   }
   firewalld_service {'Allow https in the home Zone':
     ensure  => present,
+    zone    => 'home',
     service => 'https',
   }
   firewalld_service {'Allow ssh in the home Zone':
