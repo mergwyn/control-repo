@@ -4,10 +4,12 @@ class profile::app::openvpn::privat {
 
   $service = 'openvpn-client@privat.service'
 
-  $url          = 'http://privatevpn.com/client/PrivateVPN-TUN.zip'
+  $archive      = 'PrivateVPN-TUN.zip'
+  $archive_name = "${archive}.zip"
+  $url          = "http://privatevpn.com/client/${archive_name}"
   $archive_path = "${facts['puppet_vardir']}/${archive_name}"
   $install_path = '/etc/openvpn/client'
-  $creates      = "${install_path}/PrivateVPN-TUN"
+  $creates      = "${install_path}/${archive}"
   archive { $archive_path:
     source       => $url,
     extract      => true,
