@@ -14,11 +14,11 @@ class profile::app::openvpn::forwards {
     action  => 'accept',
   }
 
-  firewalld_rich_rule {'Forward transmission from external zone':
+  firewalld_rich_rule {'Forward transmission-client from external zone':
     ensure  => present,
     zone    => 'external',
     dest    => $plex,
-    service => 'transmission',
+    service => 'transmission-client',
     action  => 'accept',
   }
 
