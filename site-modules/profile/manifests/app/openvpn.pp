@@ -90,9 +90,7 @@ class profile::app::openvpn (
   }
 
 # home zone services and ports
-  $home_services = [ 'dns', 'http', 'https', 'ssh', 'zabbix_agent' ]
-
-  $home_services.each |String $service| {
+  [ 'dns', 'http', 'https', 'ssh', 'zabbix-agent' ].each |String $service| {
     firewalld_service {"Allow ${service} in the home Zone":
       ensure  => present,
       zone    => 'home',
@@ -101,9 +99,7 @@ class profile::app::openvpn (
   }
 
 # External zone services and ports
-  $external_services = [ 'openvpn', 'http', 'https' ]
-
-  $external_services.each |String $service| {
+  [ 'openvpn', 'http', 'https' ].each |String $service| {
     firewalld_service {"Allow ${service} in the external Zone":
       ensure  => present,
       zone    => 'external',
@@ -112,9 +108,7 @@ class profile::app::openvpn (
   }
 
 # public zone services and ports
-  $public_services = [ 'openvpn' ]
-
-  $public_services.each |String $service| {
+  [ 'openvpn' ].each |String $service| {
     firewalld_service {"Allow ${service} in the public Zone":
       ensure  => present,
       zone    => 'public',
