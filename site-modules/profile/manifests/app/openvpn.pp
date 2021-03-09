@@ -69,7 +69,7 @@ class profile::app::openvpn (
     provider => git,
     require  => Package['git'],
     source   => 'https://github.com/jonathanio/update-systemd-resolved',
-    revision => 'main',
+    revision => 'master',
   }
   exec { 'make update-systemd-resolved':
     path        => ['/usr/bin', '/usr/sbin',],
