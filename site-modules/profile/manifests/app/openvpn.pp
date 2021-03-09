@@ -48,6 +48,21 @@ class profile::app::openvpn (
   ]
   package { $aptpackages: ensure   => present, }
 
+  $service = 'openvpn-client@.service'
+
+  systemd::dropin_file { 'openvpn-client-nproc.conf':
+    unit    => $service,
+    content => @("EOT"/),
+               [Service]
+               LimitNPROC=infinity
+               | EOT
+  }
+  file { "/etc/systemd/system/${service}.d/override.conf": ensure => absent, }
+
+##### privat vpn setup
+#TODO privat vpn setup
+  include profile::app::openvpn::privat
+
 # TODO install https://github.com/jonathanio/update-systemd-resolved
 
 ###### Firewall setup
@@ -132,13 +147,14 @@ class profile::app::openvpn (
     service => 'https',
   }
 
-
 # public zone services and ports
   firewalld_service {'Allow openvpn in the public Zone':
     ensure  => present,
     zone    => 'public',
     service => 'openvpn',
   }
+
+  include profile::app::openvpn::forwards
 
 ###### unbound setup
 #TODO unbound setup
@@ -152,8 +168,5 @@ class profile::app::openvpn (
 #	name: "."
 #	forward-addr: 127.0.0.53
 
-
-##### privat vpn setup
-#TODO privat vpn setup
 
 }

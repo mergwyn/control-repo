@@ -2,9 +2,22 @@
 
 class profile::app::openvpn::privat {
 
+  service { 'openvpn-client@privat.service':
+    ensure    => running,
+    enable    => true,
+    require   => Package['openvpn'],
+    subscribe => Systemd::Dropin_file['openvpn-client-nproc.conf'],
+  }
+
 # TODO Install confia:  wget 'http://privatevpn.com/client/PrivateVPN-TUN.zip' -O $openvpn/PrivateVPN-TUN.zipg
 # TODO get credentials
 # TODO add port 1195
+  firewalld_port {'Open port 1195 in the public Zone':
+    ensure   => 'present',
+    zone     => 'public',
+    port     => 1195,
+    protocol => 'udp',
+  }
   firewalld_port {'Open port 1195 in the external Zone':
     ensure   => 'present',
     zone     => 'external',
