@@ -2,7 +2,7 @@
 #
 
 class profile::platform::baseline::debian::sysctl (
-  Boolean $disable_ipv6 = true
+  Integer $disable_ipv6 = 1
 ) {
 
   if $facts['os']['family'] != 'Debian' {
