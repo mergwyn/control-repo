@@ -62,18 +62,20 @@ class profile::app::openvpn (
   include profile::app::openvpn::privat
 
 # Install https://github.com/jonathanio/update-systemd-resolved
-  package {'make': ensure => present }
+  include profile::app::git
+  package {'make': }
   vcsrepo { '/opt/update-systemd-resolved':
-      ensure   => latest,
-      provider => git,
-      require  => Package['git'],
-      source   => 'https://github.com/jonathanio/update-systemd-resolved',
-      revision => 'main',
+    ensure   => latest,
+    provider => git,
+    require  => Package['git'],
+    source   => 'https://github.com/jonathanio/update-systemd-resolved',
+    revision => 'main',
   }
   exec { 'make update-systemd-resolved':
     path        => ['/usr/bin', '/usr/sbin',],
     cwd         => '/opt/update-systemd-resolved',
     subscribe   => Vcsrepo['/opt/update-systemd-resolved'],
+    require     => Package['make'],
     refreshonly => true,
   }
 
