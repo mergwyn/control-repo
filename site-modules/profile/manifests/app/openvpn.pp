@@ -110,6 +110,11 @@ class profile::app::openvpn (
     zone    => 'home',
     service => 'ssh',
   }
+  firewalld_service {'Allow zabbix-agent in the home Zone':
+    ensure  => present,
+    zone    => 'home',
+    service => 'zabbix-agent',
+  }
 
 # External zone services and ports
   firewalld_service {'Allow openvpn in the external Zone':
