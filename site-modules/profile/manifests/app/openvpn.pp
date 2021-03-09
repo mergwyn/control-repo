@@ -90,54 +90,36 @@ class profile::app::openvpn (
   }
 
 # home zone services and ports
-  firewalld_service {'Allow dns in the home Zone':
-    ensure  => present,
-    zone    => 'home',
-    service => 'dns',
-  }
-  firewalld_service {'Allow http in the home Zone':
-    ensure  => present,
-    zone    => 'home',
-    service => 'http',
-  }
-  firewalld_service {'Allow https in the home Zone':
-    ensure  => present,
-    zone    => 'home',
-    service => 'https',
-  }
-  firewalld_service {'Allow ssh in the home Zone':
-    ensure  => present,
-    zone    => 'home',
-    service => 'ssh',
-  }
-  firewalld_service {'Allow zabbix-agent in the home Zone':
-    ensure  => present,
-    zone    => 'home',
-    service => 'zabbix-agent',
+  $home_services = [ 'dns', 'http', 'https', 'ssh', 'zabbix_agent' ]
+
+  $home_services.each |String $service| {
+    firewalld_service {"Allow ${service} in the home Zone":
+      ensure  => present,
+      zone    => 'home',
+      service => $service,
+    }
   }
 
 # External zone services and ports
-  firewalld_service {'Allow openvpn in the external Zone':
-    ensure  => present,
-    zone    => 'external',
-    service => 'openvpn',
-  }
-  firewalld_service {'Allow http in the external Zone':
-    ensure  => present,
-    zone    => 'external',
-    service => 'http',
-  }
-  firewalld_service {'Allow https in the external Zone':
-    ensure  => present,
-    zone    => 'external',
-    service => 'https',
+  $external_services = [ 'openvpn', 'http', 'https' ]
+
+  $external_services.each |String $service| {
+    firewalld_service {"Allow ${service} in the external Zone":
+      ensure  => present,
+      zone    => 'external',
+      service => $service,
+    }
   }
 
 # public zone services and ports
-  firewalld_service {'Allow openvpn in the public Zone':
-    ensure  => present,
-    zone    => 'public',
-    service => 'openvpn',
+  $public_services = [ 'openvpn' ]
+
+  $public_services.each |String $service| {
+    firewalld_service {"Allow ${service} in the public Zone":
+      ensure  => present,
+      zone    => 'public',
+      service => $service,
+    }
   }
 
   include profile::app::openvpn::forwards
