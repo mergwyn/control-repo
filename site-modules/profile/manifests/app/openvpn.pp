@@ -57,12 +57,27 @@ class profile::app::openvpn (
                LimitNPROC=infinity
                | EOT
   }
-  file { "/etc/systemd/system/${service}.d/override.conf": ensure => absent, }
 
 ##### privat vpn setup
   include profile::app::openvpn::privat
 
-# TODO install https://github.com/jonathanio/update-systemd-resolved
+# Install https://github.com/jonathanio/update-systemd-resolved
+  package {'make': ensure => present }
+  vcsrepo { '/opt/update-systemd-resolved':
+      ensure   => latest,
+      provider => git,
+      require  => Package['git'],
+      source   => 'https://github.com/jonathanio/update-systemd-resolved',
+      revision => 'main',
+  }
+  exec { 'make update-systemd-resolved':
+    path         => ['/usr/bin', '/usr/sbin',],
+    cwd          => '/opt/update-systemd-resolved',
+    subscribe    => Vcsrepo['/opt/update-systemd-resolved'],
+    refresh_only => true,
+  }
+
+# TODO dnsleak
 
 ###### Firewall setup
   class {'firewalld':

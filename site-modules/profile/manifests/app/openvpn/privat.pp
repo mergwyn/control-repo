@@ -4,7 +4,17 @@ class profile::app::openvpn::privat {
 
   $service = 'openvpn-client@privat.service'
 
-# TODO Install config:  wget 'http://privatevpn.com/client/PrivateVPN-TUN.zip' -O $openvpn/PrivateVPN-TUN.zipg
+  $url          = 'http://privatevpn.com/client/PrivateVPN-TUN.zip'
+  $archive_path = "${facts['puppet_vardir']}/${archive_name}"
+  $install_path = '/etc/openvpn/client'
+  $creates      = "${install_path}/PrivateVPN-TUN"
+  archive { $archive_path:
+    source       => $url,
+    extract      => true,
+    extract_path => $install_path,
+    cleanup      => false,
+    creates      => $creates,
+  }
 
   file {'/etc/openvpn/client/privat.auth':
     require => Package['openvpn'],
