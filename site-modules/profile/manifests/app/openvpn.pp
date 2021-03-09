@@ -71,10 +71,10 @@ class profile::app::openvpn (
       revision => 'main',
   }
   exec { 'make update-systemd-resolved':
-    path         => ['/usr/bin', '/usr/sbin',],
-    cwd          => '/opt/update-systemd-resolved',
-    subscribe    => Vcsrepo['/opt/update-systemd-resolved'],
-    refresh_only => true,
+    path        => ['/usr/bin', '/usr/sbin',],
+    cwd         => '/opt/update-systemd-resolved',
+    subscribe   => Vcsrepo['/opt/update-systemd-resolved'],
+    refreshonly => true,
   }
 
 # TODO dnsleak
