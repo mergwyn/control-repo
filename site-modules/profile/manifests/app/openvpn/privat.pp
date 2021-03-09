@@ -11,7 +11,7 @@ class profile::app::openvpn::privat {
     notify  => Service[$service],
     content => @("EOT"/),
                ${lookup('secrets::privatvpn::user')}
-               ${lookup('secrets::privatvpn::password')}"
+               ${lookup('secrets::privatvpn::password')}
                | EOT
   }
   file {'/etc/openvpn/client/privat.conf':
