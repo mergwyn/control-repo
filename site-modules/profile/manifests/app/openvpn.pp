@@ -60,7 +60,6 @@ class profile::app::openvpn (
   file { "/etc/systemd/system/${service}.d/override.conf": ensure => absent, }
 
 ##### privat vpn setup
-#TODO privat vpn setup
   include profile::app::openvpn::privat
 
 # TODO install https://github.com/jonathanio/update-systemd-resolved
@@ -88,15 +87,6 @@ class profile::app::openvpn (
     purge_rich_rules => true,
     purge_services   => true,
     purge_ports      => true,
-  }
-
-# TODO move this to app modules and sonsume exported resources
-  firewalld_rich_rule {'Allow plex to plexserver from external zone':
-    ensure  => present,
-    zone    => 'external',
-    dest    => '10.58.0.30',
-    service => 'plex',
-    action  => 'accept',
   }
 
 # home zone services and ports
