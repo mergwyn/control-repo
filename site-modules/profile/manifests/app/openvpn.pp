@@ -36,7 +36,7 @@
 #   available options and should be used sparingly.
 
 class profile::app::openvpn (
-  String[1] $lan = $facts['networking']['primary'],
+  String[1] $lan = 'eth0',
   String[1] $wan = 'eth1',
   String[1] $vpn = 'tun0',
 ) {
@@ -137,7 +137,7 @@ class profile::app::openvpn (
 
 ###### unbound setup
   class { 'unbound':
-    interface              => [ $facts['networking']['ip'] ],
+    interface              => [ "${lookup('defaults::vpn_gateway')}" ],
     access                 => [ "${lookup('defaults::cidr')}", '127.0.0.0/8' ],
     do_not_query_localhost => false,
     val_permissive_mode    => true,
