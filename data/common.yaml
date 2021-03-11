@@ -13,7 +13,7 @@ defaults::netmask:         '255.255.0.0'
 defaults::bits:            '16'
 defaults::subnet:          '10.58.0'
 defaults::gateway:         "%{lookup('defaults::subnet')}.1"
-defaults::vpn_gateway:     "%{lookup('defaults::subnet')}.252"
+defaults::vpn_gateway:     "%{lookup('defaults::subnet')}.3"
 defaults::network:         "%{lookup('defaults::subnet')}.0"
 defaults::cidr:            "%{lookup('defaults::network')}/%{lookup('defaults::bits')}"
 defaults::dns::search:

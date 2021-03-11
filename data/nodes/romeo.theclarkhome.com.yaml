@@ -5,13 +5,8 @@ classes:
 
 profile::platform::baseline::debian::netplan::ethernets:
   eth0:
+    dhcp4: true
     dhcp6: no
-    addresses:
-      - "%{lookup('defaults::subnet')}.3/%{lookup('defaults::bits')}"
-    gateway4: "%{lookup('defaults::gateway')}"
-    nameservers:
-      search: "%{alias('defaults::dns::search')}"
-      addresses: "%{alias('defaults::dns::nameservers')}"
   eth1:
     dhcp4: true
     dhcp6: no

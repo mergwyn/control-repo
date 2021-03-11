@@ -6,10 +6,8 @@ classes:
 profile::platform::baseline::debian::netplan::ethernets:
   eth0:
     dhcp6: no
-    addresses:
-      - 10.58.0.80/16
-    gateway4: 10.58.0.3
+    addresses: [ "%{lookup('defaults::subnet')}.80/%{lookup('defaults::bits')}" ]
+    gateway4: "%{alias('defaults::vpn_gateway')}"
     nameservers:
       search: "%{alias('defaults::dns::search')}"
-      addresses: 10.58.0.3
-      #addresses: "%{alias('defaults::dns::nameservers')}"
+      addresses: [ "%{alias('defaults::vpn_gateway')}" ]
