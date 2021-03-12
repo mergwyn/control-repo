@@ -137,7 +137,7 @@ class profile::app::openvpn (
 
 ###### unbound setup
   class { 'unbound':
-    interface              => [ $facts['networking'][$lan]['ip'] ],
+    interface              => [ $facts['networking']['interfaces'][$lan]['ip'] ],
     access                 => [ "${lookup('defaults::cidr')}", '127.0.0.0/8' ],
     do_not_query_localhost => false,
     val_permissive_mode    => true,
