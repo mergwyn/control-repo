@@ -16,7 +16,7 @@ class profile::app::openvpn::forwards {
 #    }
 #  }
 
-  [ 8989, 7878 , 8080, 32400, 51413 ].each |Integer $port| {
+  [ 32400, 51413 ].each |Integer $port| {
     firewalld_rich_rule {"Forward tcp ${port} from external zone to ${proxy}":
       ensure       => present,
       zone         => 'external',
@@ -24,15 +24,17 @@ class profile::app::openvpn::forwards {
         'port'     => $port,
         'protocol' => 'tcp',
         'to_port'  => $port,
-        'to_addr'  => $proxy,
+        'to_addr'  => $plex,
       },
     }
-    firewalld_rich_rule {"Forward udp ${port} from external zone to ${proxy}":
+  }
+  [ 8989, 7878 , 8080 ].each |Integer $port| {
+    firewalld_rich_rule {"Forward tcp ${port} from external zone to ${proxy}":
       ensure       => present,
       zone         => 'external',
       forward_port => {
         'port'     => $port,
-        'protocol' => 'udp',
+        'protocol' => 'tcp',
         'to_port'  => $port,
         'to_addr'  => $proxy,
       },
