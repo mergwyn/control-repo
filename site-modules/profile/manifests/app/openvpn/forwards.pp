@@ -6,17 +6,17 @@ class profile::app::openvpn::forwards {
   $proxy = '10.58.0.10'
 
 # TODO move this to app modules and sonsume exported resources
-  [ 'plex', 'transmission-client' ].each |String $service| {
-    firewalld_rich_rule {"Forward ${service} from external zone to ${plex}":
-      ensure  => present,
-      zone    => 'external',
-      dest    => $plex,
-      service => $service,
-      action  => 'accept',
-    }
-  }
+#  [ 'plex', 'transmission-client' ].each |String $service| {
+#    firewalld_rich_rule {"Forward ${service} from external zone to ${plex}":
+#      ensure  => present,
+#      zone    => 'external',
+#      dest    => $plex,
+#      service => $service,
+#      action  => 'accept',
+#    }
+#  }
 
-  [ 8989, 7878 , 8080 ].each |Integer $port| {
+  [ 8989, 7878 , 8080, 32400, 51413 ].each |Integer $port| {
     firewalld_rich_rule {"Forward ${port} from external zone to ${proxy}":
       ensure       => present,
       zone         => 'external',
