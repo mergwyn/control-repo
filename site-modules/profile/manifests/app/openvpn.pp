@@ -48,9 +48,6 @@ class profile::app::openvpn (
   ]
   package { $aptpackages: ensure   => present, }
 
-# TODO only for testung - remove
-  include profile::app::webmin
-
   $service = 'openvpn-client@.service'
 
   systemd::dropin_file { 'openvpn-client-nproc.conf':
@@ -76,18 +73,29 @@ class profile::app::openvpn (
   }
   exec { 'make update-systemd-resolved':
     path        => ['/bin', '/sbin', '/usr/bin', '/usr/sbin'],
+    command     => '/usr/bin/nmake install',
     cwd         => '/opt/update-systemd-resolved',
     subscribe   => Vcsrepo['/opt/update-systemd-resolved'],
-    require     => Package['make'],
+    require     => Package['make', 'openvpn'],
     refreshonly => true,
   }
 
-# TODO dnsleak
+# dnsleak
+  file { '/etc/openvpn/scripts/dnsleaktest':
+    ensure  => file,
+    require => Exec['make update-systemd-resolved'],
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0555',
+    source  => 'puppet:///modules/profile/dnsleaktest',
+  }
 
 ###### Firewall setup
   class {'firewalld':
-    purge_direct_rules  => true,
-    purge_direct_chains => true,
+    purge_direct_rules        => true,
+    purge_direct_chains       => true,
+    purge_direct_passthroughs => true,
+    purge_unknown_ipsets      => true,
   }
 
   firewalld_zone { 'home':
