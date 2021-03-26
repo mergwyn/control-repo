@@ -18,15 +18,15 @@ class profile::app::openvpn::forwards {
 
   [ 8989, 7878 , 8080 ].each |Integer $port| {
     firewalld_rich_rule {"Forward ${port} from external zone to ${proxy}":
-      ensure => present,
-      zone   => 'external',
-      forward_port   => {
+      ensure       => present,
+      zone         => 'external',
+      forward_port => {
         'port'     => $port,
         'protocol' => 'tcp',
         'to_port'  => $port,
         'to_addr'  => $proxy,
       },
-      action => 'accept',
+      action       => 'accept',
     }
   }
 
