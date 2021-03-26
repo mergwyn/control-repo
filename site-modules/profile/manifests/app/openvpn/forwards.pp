@@ -26,7 +26,6 @@ class profile::app::openvpn::forwards {
         'to_port'  => $port,
         'to_addr'  => $proxy,
       },
-      action       => 'accept',
     }
   }
 
