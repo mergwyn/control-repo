@@ -6,7 +6,7 @@ class profile::app::webmin {
     fail("${title} is only for Debian")
   }
 
-  $adminemail = lookup('unattended_upgrades::email')
+  $adminemail = lookup('defaults::adminemail')
 
   exec { 'apt_show_versions_clean':
     command   => 'apt-get purge -y apt-show-versions',
