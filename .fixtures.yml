@@ -101,6 +101,9 @@ fixtures:
     firewalld:
       repo: puppet-firewalld
       ref: 4.4.0
+    keepalived:
+      repo: puppet-keepalived
+      ref: 3.0.0
     unbound:
       repo: puppet-unbound
       ref: 3.0.0
