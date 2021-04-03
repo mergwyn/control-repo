@@ -30,7 +30,7 @@ fixtures:
       ref: master
     homebrew:
       repo: https://github.com/frozenfoxx/puppet-homebrew
-      ref: patch-1
+      branch: patch-1
     webmin:
       repo: https://github.com/rehanone/puppet-webmin
       ref: master
