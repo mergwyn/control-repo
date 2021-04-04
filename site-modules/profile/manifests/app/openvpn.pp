@@ -77,7 +77,7 @@ class profile::app::openvpn (
     command     => '/usr/bin/make install',
     cwd         => '/opt/update-systemd-resolved',
     require     => Package['make', 'openvpn'],
-    notifyonly  => true,
+    refreshonly => true,
   }
 
 # dnsleak
