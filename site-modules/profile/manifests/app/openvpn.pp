@@ -70,17 +70,18 @@ class profile::app::openvpn (
     require  => Package['git'],
     source   => 'https://github.com/jonathanio/update-systemd-resolved',
     revision => 'master',
+    notify   => Exec['make update-systemd-resolved'],
   }
   exec { 'make update-systemd-resolved':
     path        => ['/bin', '/sbin', '/usr/bin', '/usr/sbin'],
-    command     => '/usr/bin/nmake install',
+    command     => '/usr/bin/make install',
     cwd         => '/opt/update-systemd-resolved',
-    subscribe   => Vcsrepo['/opt/update-systemd-resolved'],
     require     => Package['make', 'openvpn'],
-    refreshonly => true,
+    notifyonly  => true,
   }
 
 # dnsleak
+# TODO ensure directory exists.
   file { '/etc/openvpn/scripts/dnsleaktest':
     ensure  => file,
     require => Exec['make update-systemd-resolved'],
