@@ -178,7 +178,7 @@ fixtures:
       ref: 7.0.2
     python:
       repo: puppet-python
-      ref: 6.0.0
+      ref: 5.0.0
     r10k:
       repo: puppet-r10k
       ref: 9.0.0
