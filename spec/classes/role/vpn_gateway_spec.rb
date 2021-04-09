@@ -15,6 +15,7 @@ describe 'role::vpn_gateway' do
 
       # Comment out to display all available resources easily
       # it { pp catalogue.resources }
+      it { pp os_facts }
 
       it { is_expected.to compile.with_all_deps }
     end
