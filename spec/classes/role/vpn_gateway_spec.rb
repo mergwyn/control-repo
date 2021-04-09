@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'role::router' do
+describe 'role::vpn_gateway' do
   on_supported_os.each do |os, os_facts|
     next unless os_facts[:osfamily] == 'Debian'
 
@@ -10,7 +10,7 @@ describe 'role::router' do
       # Puppet::Util::Log.newdestination(:console)
 
       let(:facts) { os_facts }
-      let(:trusted_facts) { { 'pp_role' => 'router' } }
+      let(:trusted_facts) { { 'pp_role' => 'vpn_gateway' } }
       let(:node) { 'unittest.theclarkhome.com' }
 
       # Comment out to display all available resources easily
