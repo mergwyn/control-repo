@@ -146,9 +146,6 @@ fixtures:
     reboot:
       repo: puppetlabs-reboot
       ref: 4.0.2
-    ruby:
-      repo: puppetlabs-ruby
-      ref: 1.0.1
     sshkeys_core:
       repo: puppetlabs-sshkeys_core
       ref: 2.2.0
