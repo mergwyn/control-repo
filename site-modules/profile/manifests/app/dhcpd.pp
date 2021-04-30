@@ -45,8 +45,8 @@ class profile::app::dhcpd (
 
 # Hosts with fixed ip
   dhcp::host { 'papa':    mac => '00:16:3e:fc:2a:87', ip => '10.58.0.10', }
-  dhcp::host { 'romeo':   mac => '00:16:3e:e7:e8:df', ip => "${lookup('defaults::vpn::servers[1]')}", }
-  dhcp::host { 'juliet':  mac => '00:16:3e:ea:ca:4d', ip => "${lookup('defaults::vpn::servers[2]')}", }
+  dhcp::host { 'romeo':   mac => '00:16:3e:e7:e8:df', ip => "${lookup('defaults::vpn::servers.0')}", }
+  dhcp::host { 'juliet':  mac => '00:16:3e:ea:ca:4d', ip => "${lookup('defaults::vpn::servers.1')}", }
 
 # Hosts that just need names,
   #dhcp::host { 'switch1':               mac => '00:8e:f2:59:c7:98' }

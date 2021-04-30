@@ -32,7 +32,7 @@ class profile::app::keepalived (
     ha_suspend          => true,
     lb_algo             => 'wrr',
     lb_kind             => 'DR',
-    persistence_timeout => 0,
+    # TODO remove? persistence_timeout => 0,
     protocol            => 'TCP'
   }
 
