@@ -8,7 +8,8 @@ class profile::app::keepalived (
   String[1]               $vpn = 'tun0',
   Integer                 $vrid = 50,
   Integer                 $prio = 101,
-  Stdlib::IP::Address::V4 $v_ip = "${lookup('defaults::vpn_gateway')}/${lookup('defaults::bits')}",
+  Stdlib::IP::Address::V4 $v_ip = "${lookup('defaults::vpn_gateway')}",
+  Stdlib::IP::Address::V4 $v_cidr = "${v_ip}/${lookup('defaults::bits')}",
   #Stdlib::IP::Address::V4 $v_ip = "${lookup('defaults::subnet')}.2/${lookup('defaults::bits')}",
 ) {
 
@@ -21,7 +22,7 @@ class profile::app::keepalived (
     priority          => $prio,
     auth_type         => 'PASS',
     auth_pass         => 'secret', # TODO sort out password
-    virtual_ipaddress => [ $v_ip ],
+    virtual_ipaddress => [ $v_cidr ],
     track_interface   => [ $wan, $vpn], # optional, monitor these interfaces.
   }
 
