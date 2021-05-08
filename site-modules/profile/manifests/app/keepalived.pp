@@ -46,8 +46,8 @@ class profile::app::keepalived (
       port           => 53,
       options        => {
         weight      => 1,
-        notify_down => "/sbin/ipvsadm -d -u ${v_ip}:53 -r ${real_ip}:53",
-        notify_up   => "/sbin/ipvsadm -a -u ${v_ip}:53 -r ${real_ip}:53 -g -w 1",
+        notify_down => "'/sbin/ipvsadm -d -u ${v_ip}:53 -r ${real_ip}:53'",
+        notify_up   => "'/sbin/ipvsadm -a -u ${v_ip}:53 -r ${real_ip}:53 -g -w 1'",
         'TCP_CHECK' => {
           connection_timeout => '3',
         }
