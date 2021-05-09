@@ -56,4 +56,16 @@ class profile::app::keepalived (
     }
   }
 
+###### unbound setup
+  class { 'unbound':
+    interface              => [ $v_ip ],
+    access                 => [ "${lookup('defaults::cidr')}", '127.0.0.0/8' ],
+    do_not_query_localhost => false,
+    val_permissive_mode    => true,
+    ip_transparent         => true,
+  }
+  unbound::forward { '.':
+    address => [ '127.0.0.53' ],
+  }
+
 }
