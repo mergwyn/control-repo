@@ -10,4 +10,4 @@ profile::platform::baseline::debian::netplan::ethernets:
     gateway4: "%{alias('defaults::vpn_gateway')}"
     nameservers:
       search: "%{alias('defaults::dns::search')}"
-      addresses: "%{alias('defaults::vpn::servers')}"
+      addresses: "%{alias('defaults::vpn_gateway')}"
