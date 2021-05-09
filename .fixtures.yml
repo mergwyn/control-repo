@@ -46,10 +46,10 @@ fixtures:
       ref: 2.5.0
     postfix:
       repo: camptocamp-postfix
-      ref: 1.11.0
+      ref: 1.12.0
     systemd:
       repo: camptocamp-systemd
-      ref: 2.12.0
+      ref: 3.0.0
     githubreleases:
       repo: dodevops-githubreleases
       ref: 4.0.0
@@ -91,7 +91,7 @@ fixtures:
       ref: 3.0.0
     archive:
       repo: puppet-archive
-      ref: 4.6.0
+      ref: 5.0.0
     autofs:
       repo: puppet-autofs
       ref: 6.0.0
@@ -106,7 +106,7 @@ fixtures:
       ref: 3.0.0
     unbound:
       repo: puppet-unbound
-      ref: 3.0.0
+      ref: 4.0.0
     apache:
       repo: puppetlabs-apache
       ref: 6.0.0
@@ -130,13 +130,13 @@ fixtures:
       ref: 1.0.6
     mysql:
       repo: puppetlabs-mysql
-      ref: 11.0.0
+      ref: 11.0.1
     ntp:
       repo: puppetlabs-ntp
       ref: 9.0.1
     postgresql:
       repo: puppetlabs-postgresql
-      ref: 7.0.2
+      ref: 7.1.0
     puppetdb:
       repo: puppetlabs-puppetdb
       ref: 7.8.0
@@ -151,7 +151,10 @@ fixtures:
       ref: 2.2.0
     stdlib:
       repo: puppetlabs-stdlib
-      ref: 7.0.0
+      ref: 7.0.1
+    translate:
+      repo: puppetlabs-translate
+      ref: 2.2.0
     vcsrepo:
       repo: puppetlabs-vcsrepo
       ref: 4.0.1
@@ -181,7 +184,7 @@ fixtures:
       ref: 9.0.0
     selinux:
       repo: puppet-selinux
-      ref: 3.2.0
+      ref: 3.3.0
     unattended_upgrades:
       repo: puppet-unattended_upgrades
       ref: 5.1.0
@@ -197,6 +200,9 @@ fixtures:
     debconf:
       repo: stm-debconf
       ref: 3.3.1
+    homebrew:
+      repo: thekevjames-homebrew
+      ref: 1.9.0
     libvirt:
       repo: thias-libvirt
       ref: 1.0.0
@@ -223,7 +229,7 @@ fixtures:
       ref: 1.0.0
     chocolatey:
       repo: puppetlabs-chocolatey
-      ref: 6.0.0
+      ref: 6.0.1
     dism:
       repo: puppetlabs-dism
       ref: 1.3.1
