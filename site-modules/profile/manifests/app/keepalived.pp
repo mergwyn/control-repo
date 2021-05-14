@@ -21,7 +21,7 @@ class profile::app::keepalived (
     virtual_router_id => $vrid,
     priority          => $prio,
     auth_type         => 'PASS',
-    auth_pass         => 'secret', # TODO sort out password
+    auth_pass         => lookup('secrets::keepalived'),
     virtual_ipaddress => [ $v_cidr ],
     track_interface   => [ $wan, $vpn], # optional, monitor these interfaces.
   }
