@@ -4,34 +4,40 @@
 defaults::workgroup:       'THECLARKHOME'
 defaults::realm:           'THECLARKHOME.COM'
 defaults::puppetmaster:    "echo.%{trusted.domain}"
+
 # user
 defaults::adminemail:      "root@%{trusted.domain}"
 defaults::adminuser:       'administrator'
 defaults::sharedpassword:  '$6$s/krC.bq$NiiWBAjU9pC3OkFTOVrgRpSiS6fpTi4jIgY50K6/J3sz21nmJbNphZI4hZlJqbr0to2tNXZjbjcia3idbonxV1'
+
 # network
 defaults::netmask:         '255.255.0.0'
 defaults::bits:            '16'
 defaults::subnet:          '10.58.0'
 defaults::network:         "%{lookup('defaults::subnet')}.0"
 defaults::gateway:         "%{lookup('defaults::subnet')}.1"
-defaults::vpn_gateway:     "%{lookup('defaults::subnet')}.3"
-defaults::vpn::servers:
-  - "%{lookup('defaults::subnet')}.3"
-  - "%{lookup('defaults::subnet')}.4"
 defaults::cidr:            "%{lookup('defaults::network')}/%{lookup('defaults::bits')}"
+# DNS
 defaults::dns::search:
   - "%{trusted.domain}"
   - local
 defaults::dns::nameservers:
   - "%{lookup('defaults::subnet')}.21"
   - "%{lookup('defaults::subnet')}.22"
+
+# VPN settings
+defaults::vpn_gateway:     "%{lookup('defaults::subnet')}.3"
+defaults::vpn::servers:
+  - "%{lookup('defaults::subnet')}.3"
+  - "%{lookup('defaults::subnet')}.4"
+profile::infrastructure::router::type: 'privatvpn'
+
 defaults::backup_server:   'foxtrot'
 defaults::system_user:     'root'
 defaults::system_home_dir: '/root'
 defaults::media_user:      'media'
 defaults::media_group:     '513'
 
-profile::infrastructure::router::type: 'privatvpn'
 
 lookup_options:
   "^classes(.*)$":
