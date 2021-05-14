@@ -1,0 +1,12 @@
+---
+
+classes:
+  - profile::platform::baseline::debian::netplan
+
+profile::platform::baseline::debian::netplan::ethernets:
+  eth0:
+    dhcp4: true
+    dhcp6: no
+  eth1:
+    dhcp4: true
+    dhcp6: no

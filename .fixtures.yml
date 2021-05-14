@@ -4,6 +4,9 @@ fixtures:
     role: "#{source_dir}/site-modules/role"
     profile: "#{source_dir}/site-modules/profile"
   repositories:
+    ufw:
+      repo: https://github.com/kogitoapp/attachmentgenie-ufw
+      ref: master
     transmission:
       repo: https://github.com/craigwatson/puppet-transmission
       ref: master
@@ -25,14 +28,14 @@ fixtures:
     zabbix:
       repo: https://github.com/voxpupuli/puppet-zabbix
       ref: master
+    homebrew:
+      repo: https://github.com/frozenfoxx/puppet-homebrew
+      branch: patch-1
     webmin:
       repo: https://github.com/rehanone/puppet-webmin
       ref: master
     backuppc:
       repo: https://github.com/mergwyn/mergwyn-backuppc
-      ref: master
-    ufw:
-      repo: https://github.com/kogitoapp/attachmentgenie-ufw
       ref: master
   forge_modules:
     augeas:
@@ -71,7 +74,7 @@ fixtures:
     augeasproviders_shellvar:
       repo: herculesteam-augeasproviders_shellvar
       ref: 4.0.0
-    ugeasproviders_sysctl:
+    augeasproviders_sysctl:
       repo: herculesteam-augeasproviders_sysctl
       ref: 2.6.0
     samba:
@@ -98,6 +101,9 @@ fixtures:
     firewalld:
       repo: puppet-firewalld
       ref: 4.4.0
+    keepalived:
+      repo: puppet-keepalived
+      ref: 3.0.0
     unbound:
       repo: puppet-unbound
       ref: 4.0.0

@@ -21,6 +21,7 @@ class profile::app::openvpn::privat {
   file {'/etc/openvpn/client/privat.auth':
     require => Package['openvpn'],
     notify  => Service[$service],
+    mode    => '0500',
     content => @("EOT"/),
                ${lookup('secrets::privatvpn::user')}
                ${lookup('secrets::privatvpn::password')}
