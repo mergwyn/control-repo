@@ -70,17 +70,18 @@ class profile::app::openvpn (
     require  => Package['git'],
     source   => 'https://github.com/jonathanio/update-systemd-resolved',
     revision => 'master',
+    notify   => Exec['make update-systemd-resolved'],
   }
   exec { 'make update-systemd-resolved':
     path        => ['/bin', '/sbin', '/usr/bin', '/usr/sbin'],
-    command     => '/usr/bin/nmake install',
+    command     => '/usr/bin/make install',
     cwd         => '/opt/update-systemd-resolved',
-    subscribe   => Vcsrepo['/opt/update-systemd-resolved'],
     require     => Package['make', 'openvpn'],
     refreshonly => true,
   }
 
 # dnsleak
+# TODO ensure directory exists.
   file { '/etc/openvpn/scripts/dnsleaktest':
     ensure  => file,
     require => Exec['make update-systemd-resolved'],
@@ -145,16 +146,5 @@ class profile::app::openvpn (
   }
 
   include profile::app::openvpn::forwards
-
-###### unbound setup
-  class { 'unbound':
-    interface              => [ $facts['networking']['interfaces'][$lan]['ip'] ],
-    access                 => [ "${lookup('defaults::cidr')}", '127.0.0.0/8' ],
-    do_not_query_localhost => false,
-    val_permissive_mode    => true,
-  }
-  unbound::forward { '.':
-    address => [ '127.0.0.53' ],
-  }
 
 }

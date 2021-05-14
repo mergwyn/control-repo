@@ -80,4 +80,6 @@ class profile::platform::baseline::debian::virtual::lxd {
     }
   }
 
+# Support use of keepalived in privileged containers
+  kmod::load { 'ip_vs': }
 }

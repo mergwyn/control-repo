@@ -11,3 +11,8 @@ ssh_version: '7.6'
 chocolateyversion: '0.10.15'
 
 has_compiler: true
+networking:
+  primary: eth0
+  interfaces:
+    eth0:
+     ip: 1.2.3.4
