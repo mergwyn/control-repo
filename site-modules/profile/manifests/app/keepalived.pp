@@ -63,6 +63,7 @@ class profile::app::keepalived (
     do_not_query_localhost => false,
     val_permissive_mode    => true,
     ip_transparent         => true,
+    username               => 'root',  # needed for ip_transparent
   }
   unbound::forward { '.':
     address => [ '127.0.0.53' ],
