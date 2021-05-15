@@ -58,7 +58,7 @@ class profile::app::keepalived (
 
 ###### unbound setup
   class { 'unbound':
-    interface              => [ $v_ip, $facts['networking'][$lan]['ip'] ],
+    interface              => [ $v_ip, $facts['networking']['interfaces'][$lan]['ip'] ],
     access                 => [ "${lookup('defaults::cidr')}", '127.0.0.0/8' ],
     do_not_query_localhost => false,
     val_permissive_mode    => true,
