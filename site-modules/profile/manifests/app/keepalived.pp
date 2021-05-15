@@ -2,7 +2,7 @@
 #
 
 class profile::app::keepalived (
-  Enum['MASTER', 'SLAVE'] $state = 'MASTER',
+  Enum['MASTER','BACKUP'] $state = 'MASTER',
   String[1]               $lan = 'eth0',
   String[1]               $wan = 'eth1',
   String[1]               $vpn = 'tun0',

@@ -3,7 +3,7 @@
 classes:
   - profile::platform::baseline::debian::netplan
 
-profile::app::keepalived::state: 'SLAVE'
+profile::app::keepalived::state: 'BACKUP'
 
 profile::platform::baseline::debian::netplan::ethernets:
   eth0:
