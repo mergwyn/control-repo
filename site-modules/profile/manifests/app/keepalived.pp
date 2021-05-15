@@ -65,9 +65,8 @@ class profile::app::keepalived (
                [Service]
                ExecStartPre='/bin/sh -c "until ip -o a s eth0 | grep -q 10.58.0.2/16; do sleep 1; done;"'
                | EOT
-    notify  => Service['unbound.service'],
   }
-  class { 'unbound':
+  -> class { 'unbound':
     interface              => [ $v_ip, $facts['networking']['interfaces'][$lan]['ip'] ],
     access                 => [ "${lookup('defaults::cidr')}", '127.0.0.0/8' ],
     do_not_query_localhost => false,
