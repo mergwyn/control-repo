@@ -57,6 +57,16 @@ class profile::app::keepalived (
   }
 
 ###### unbound setup
+  systemd::dropin_file { 'keepalived.conf':
+    unit    => "unbound.service",
+    content => @("EOT"/),
+               [Unit]
+               After=keepalived.service
+               [Service]
+               ExecStartPre='/bin/sh -c "until ip -o a s eth0 | grep -q 10.58.0.2/16; do sleep 1; done;"'
+               | EOT
+    notify  => Service[$service],
+  }
   class { 'unbound':
     interface              => [ $v_ip, $facts['networking']['interfaces'][$lan]['ip'] ],
     access                 => [ "${lookup('defaults::cidr')}", '127.0.0.0/8' ],
