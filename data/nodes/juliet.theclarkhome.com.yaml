@@ -3,8 +3,8 @@
 classes:
   - profile::platform::baseline::debian::netplan
 
-profile::app::keepalived::state:    'BACKUP'
-profile::app::keepalived::priority: 90
+profile::app::keepalived::state: 'BACKUP'
+profile::app::keepalived::prio:  90
 
 profile::platform::baseline::debian::netplan::ethernets:
   eth0:
