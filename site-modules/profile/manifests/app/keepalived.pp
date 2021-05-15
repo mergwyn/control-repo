@@ -62,8 +62,9 @@ class profile::app::keepalived (
     content => @("EOT"/),
                [Unit]
                After=keepalived.service
+               Requires=keepalived.service
                [Service]
-               ExecStartPre='/bin/sh -c "until ip -o a s eth0 | grep -q 10.58.0.2/16; do sleep 1; done;"'
+               ExecStartPre="/bin/sh -c \'until ip -o a s ${lan} | grep -q ${v_ip}; do sleep 1; done;'"
                | EOT
   }
   -> class { 'unbound':
