@@ -3,6 +3,8 @@
 classes:
   - profile::platform::baseline::debian::netplan
 
+profile::app::keepalived::state: 'SLAVE'
+
 profile::platform::baseline::debian::netplan::ethernets:
   eth0:
     dhcp4: true
