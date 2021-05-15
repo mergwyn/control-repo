@@ -26,7 +26,7 @@ defaults::dns::nameservers:
   - "%{lookup('defaults::subnet')}.22"
 
 # VPN settings
-defaults::vpn_gateway:     "%{lookup('defaults::subnet')}.3"
+defaults::vpn_gateway:     "%{lookup('defaults::subnet')}.2"
 defaults::vpn::servers:
   - "%{lookup('defaults::subnet')}.3"
   - "%{lookup('defaults::subnet')}.4"
