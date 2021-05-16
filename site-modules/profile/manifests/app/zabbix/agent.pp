@@ -14,7 +14,7 @@ class profile::app::zabbix::agent (
     'Ubuntu': {
 
       class { 'zabbix::agent':
-        zabbix_version       => '4.4',
+        zabbix_version       => '5.0',
         hostname             => $trusted['certname'],
         hostinterface        => $trusted['certname'],
         server               => $serverstring,
