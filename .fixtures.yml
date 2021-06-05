@@ -188,6 +188,9 @@ fixtures:
     unattended_upgrades:
       repo: puppet-unattended_upgrades
       ref: 5.1.0
+    zabbix:
+      repo: puppet-zabbix
+      ref: 9.0.0
     sudo:
       repo: saz-sudo
       ref: 6.0.0
