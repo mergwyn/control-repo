@@ -157,7 +157,7 @@ fixtures:
       ref: 2.2.0
     vcsrepo:
       repo: puppetlabs-vcsrepo
-      ref: 4.0.1
+      ref: 5.0.0
     xinetd:
       repo: puppetlabs-xinetd
       ref: 3.3.0
