@@ -127,6 +127,15 @@ class profile::app::openvpn (
     }
   }
 
+  [ 'vrrp' ].each |String $protocol| {
+    firewalld_rich_rule { "Accept ${protocol} in the home zone":
+      ensure   => present,
+      zone     => 'home',
+      protocol => $protocol,
+      action   => 'accept',
+    }
+  }
+
 # External zone services and ports
   [ 'openvpn', 'http', 'https' ].each |String $service| {
     firewalld_service {"Allow ${service} in the external Zone":
