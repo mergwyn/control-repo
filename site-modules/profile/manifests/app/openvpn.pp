@@ -119,7 +119,7 @@ class profile::app::openvpn (
   }
 
 # home zone services and ports
-  [ 'dns', 'http', 'https', 'ssh', 'zabbix-agent' ].each |String $service| {
+  [ 'dns', 'http', 'https', 'ssh', 'zabbix-agent', 'vrrp' ].each |String $service| {
     firewalld_service {"Allow ${service} in the home Zone":
       ensure  => present,
       zone    => 'home',
