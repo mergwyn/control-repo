@@ -11,10 +11,21 @@ class profile::app::keepalived (
   Stdlib::IP::Address::V4 $v_ip = "${lookup('defaults::vpn_gateway')}",
   Stdlib::IP::Address::V4 $v_cidr = "${v_ip}/${lookup('defaults::bits')}",
   #Stdlib::IP::Address::V4 $v_ip = "${lookup('defaults::subnet')}.2/${lookup('defaults::bits')}",
+  Stdlib::Email           $notification_email = lookup('defaults::adminemail'),
+  Stdlib::Email           $notification_email_from = "keepalived@${trusted['domain']}",
 ) {
 
   include keepalived
 
+# Global defs
+  class { 'keepalived::global_defs':
+    notification_email      => $notification_email,
+    notification_email_from => $notification_email_from,
+    smtp_server             => 'localhost',
+    smtp_connect_timeout    => '60',
+  }
+
+# VRRP
   keepalived::vrrp::instance { 'VI_50':
     interface         => $lan,
     state             => $state,
