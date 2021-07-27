@@ -70,21 +70,12 @@ class profile::app::sssd {
 
   # work around for cron starting before sssd
   $crondir = '/etc/systemd/system/cron.service.d'
-  case $::facts['os']['release']['full'] {
-    '16.04', '18.04', '20.04': {
-      include cron
-      ::systemd::dropin_file { 'sssd-wait.conf':
-        unit    => 'cron.service',
-        content => "[Unit]\nAfter=nss-user-lookup.target\n",
-        notify  => Service['cron'],
-      } #~> service {'cron': ensure    => 'running', }
-      file { "${crondir}/ssdwait.conf": ensure => absent }
-    }
-    default: {
-      file { "${crondir}/sssd-wait.conf": ensure => absent }
-      file { $crondir: ensure => absent, force => true }
-    }
-  }
+  include cron
+  ::systemd::dropin_file { 'sssd-wait.conf':
+    unit    => 'cron.service',
+    content => "[Unit]\nAfter=nss-user-lookup.target\n",
+    notify  => Service['cron'],
+  } #~> service {'cron': ensure    => 'running', }
 
   # work aorund for bug where ssd pid file is not handled
   ::systemd::dropin_file { 'sssd-pidfile.conf':
