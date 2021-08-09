@@ -3,7 +3,6 @@
 class profile::app::sssd {
 
   contain profile::app::samba
-  Class['profile::app::samba'] ~> Class['profile::app::sssd']
 
   exec { 'create_keytab':
     command => '/usr/bin/net ads keytab create -P',
