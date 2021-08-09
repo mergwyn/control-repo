@@ -2,7 +2,7 @@
 
 class profile::app::sssd {
 
-  include profile::app::samba
+  contain profile::app::samba
   Class['profile::app::samba'] ~> Class['profile::app::sssd']
 
   exec { 'create_keytab':
