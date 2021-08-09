@@ -28,7 +28,7 @@ class profile::app::sickbeard_automator {
     user        => $owner,
     minute      => 5,
     hour        => '0-18',
-    require     => User[$owner],
+    require     => Service['sssd'],
   }
 
   # Get the lastest version from github
@@ -38,7 +38,7 @@ class profile::app::sickbeard_automator {
     provider => git,
     require  => [
       Class['profile::app::git'],
-      User[$owner],
+      Service['sssd'],
   #    Package['ffmpeg'],
     ],
     source   => 'https://github.com/mdhiggins/sickbeard_mp4_automator',
@@ -51,14 +51,14 @@ class profile::app::sickbeard_automator {
     ensure  => directory,
     owner   => $owner,
     group   => $group,
-    require => User[$owner],
+    require => Service['sssd'],
   }
   file { "${configdir}/plex.ini":
     ensure  => file,
     source  => 'puppet:///modules/profile/plex.ini',
     owner   => $owner,
     group   => $group,
-    require => [ File[$configdir], User[$owner] ],
+    require => [ File[$configdir], Service['sssd'], ],
   }
   #
   #TODO change logging parameters?
@@ -68,13 +68,13 @@ class profile::app::sickbeard_automator {
     owner   => $owner,
     group   => $group,
     mode    => '0777',
-    require => User[$owner],
+    require => Service['sssd'],
   }
   file { "${logdir}/index.log":
     ensure  => file,
     mode    => '0664',
     owner   => $owner,
     group   => $group,
-    require => [ File[$logdir], User[$owner] ],
+    require => [ File[$logdir], Service['sssd'], ],
   }
 }
