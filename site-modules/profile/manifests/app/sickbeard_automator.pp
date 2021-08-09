@@ -28,6 +28,7 @@ class profile::app::sickbeard_automator {
     user        => $owner,
     minute      => 5,
     hour        => '0-18',
+    require     => User[$owner],
   }
 
   # Get the lastest version from github
@@ -37,6 +38,7 @@ class profile::app::sickbeard_automator {
     provider => git,
     require  => [
       Class['profile::app::git'],
+      User[$owner],
   #    Package['ffmpeg'],
     ],
     source   => 'https://github.com/mdhiggins/sickbeard_mp4_automator',
@@ -46,31 +48,33 @@ class profile::app::sickbeard_automator {
   #TODO install dependencies
   # Install the configuration file
   file { $configdir:
-    ensure => directory,
-    owner  => $owner,
-    group  => $group,
+    ensure  => directory,
+    owner   => $owner,
+    group   => $group,
+    require => User[$owner],
   }
   file { "${configdir}/plex.ini":
     ensure  => file,
     source  => 'puppet:///modules/profile/plex.ini',
     owner   => $owner,
     group   => $group,
-    require => File[$configdir],
+    require => [ File[$configdir], User[$owner] ],
   }
   #
   #TODO change logging parameters?
   # Make sure log file exists and is writable
   file { $logdir:
-    ensure => directory,
-    owner  => $owner,
-    group  => $group,
-    mode   => '0777',
+    ensure  => directory,
+    owner   => $owner,
+    group   => $group,
+    mode    => '0777',
+    require => User[$owner],
   }
   file { "${logdir}/index.log":
     ensure  => file,
     mode    => '0664',
     owner   => $owner,
     group   => $group,
-    require => File[$logdir],
+    require => [ File[$logdir], User[$owner] ],
   }
 }
