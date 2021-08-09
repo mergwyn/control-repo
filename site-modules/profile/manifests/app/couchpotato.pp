@@ -50,7 +50,7 @@ class profile::app::couchpotato (
     ensure  => 'directory',
     owner   => $user,
     group   => $group,
-    require => User[$user],
+    require => Service['sssd'],
   }
 
   # finally install package and start service
