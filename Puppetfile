@@ -6,7 +6,7 @@ mod 'attachmentgenie-ufw', :git => 'https://github.com/kogitoapp/attachmentgenie
 mod 'camptocamp-augeas', '1.9.0'
 mod 'camptocamp-kmod', '2.5.0'
 mod 'camptocamp-postfix', '1.12.0'
-mod 'camptocamp-systemd', '3.0.0'
+mod 'puppet-systemd', '3.2.0'
 mod 'CraigWatson1987-transmission', :git => 'https://github.com/craigwatson/puppet-transmission'
 mod 'dodevops-githubreleases', '4.0.0'
 mod 'example42-network', '3.6.0'

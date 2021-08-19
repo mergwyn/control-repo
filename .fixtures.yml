@@ -48,8 +48,8 @@ fixtures:
       repo: camptocamp-postfix
       ref: 1.12.0
     systemd:
-      repo: camptocamp-systemd
-      ref: 3.0.0
+      repo: puppet-systemd
+      ref: 3.2.0
     githubreleases:
       repo: dodevops-githubreleases
       ref: 4.0.0
