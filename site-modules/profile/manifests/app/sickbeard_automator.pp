@@ -41,8 +41,7 @@ class profile::app::sickbeard_automator {
     [Service]
     Type=oneshot
     User=${owner}
-    KillMode=process
-    ExecStart=${scriptdir}/bin/process_media_job | /usr/bin/mailx -v -E -s "process_media output" root@theclarkhome.com
+    ExecStart=/bin/bash -c '${scriptdir}/bin/process_media_job | /usr/bin/mailx -v -E -s "%N (%u@%l) output" %{adminemail}'
 
     [Install]
     WantedBy=multi-user.target
