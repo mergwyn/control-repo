@@ -26,7 +26,7 @@ class profile::app::sickbeard_automator {
     Description=Run process_media on boot and hourly
 
     [Timer]
-    OnBootSec=5min
+    OnBootSec=10min
     OnUnitActiveSec=1h
 
     [Install]
