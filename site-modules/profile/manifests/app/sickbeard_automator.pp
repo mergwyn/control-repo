@@ -20,14 +20,39 @@ class profile::app::sickbeard_automator {
   #  require => Apt::Ppa['ppa:awyr/ffmpeg-4'],
   #}
 
-  # cron job to run scripts
-  include cron
-  cron::job { 'media':
-    environment => [ 'PATH="/usr/sbin:/usr/bin:/sbin:/bin"' ],
-    command     => "test -x ${scriptdir}/bin/process_media_job && ${scriptdir}/bin/process_media_job",
-    user        => $owner,
-    minute      => 5,
-    hour        => '0-18',
+# systemd timer to run process_media_job
+  $_timer = @(EOT)
+    [Unit]
+    Description=Run process_media on boot and hourly
+
+    [Timer]
+    OnBootSec=5min
+    OnUnitActiveSec=1h
+
+    [Install]
+    WantedBy=timers.target
+    | EOT
+
+  $_service = @("EOT")
+    [Unit]
+    Description=runs process_media
+    Wants=process_media.timer
+
+    [Service]
+    Type=oneshot
+    User=${owner}
+    KillMode=process
+    ExecStart=${scriptdir}/bin/process_media_job | /usr/bin/mailx -v -E -s "process_media output" root@theclarkhome.com
+
+    [Install]
+    WantedBy=multi-user.target
+    | EOT
+
+  systemd::timer{'process_media.timer':
+    timer_content   => $_timer,
+    service_content => $_service,
+    enable          => true,
+    active          => true,
   }
 
   # Get the lastest version from github
