@@ -42,7 +42,7 @@ class profile::app::sickbeard_automator {
     [Service]
     Type=simple
     User=${owner}
-    ExecStart=/bin/bash -c '${scriptdir}/bin/process_media_job | /usr/bin/mailx -v -E -s "%N output %u@%H" ${adminemail}'
+    ExecStart=/bin/bash -c '${scriptdir}/bin/process_media_job 2> >(/usr/bin/mailx -v -E -s "%N output %u@%H" ${adminemail}')
 
     [Install]
     WantedBy=multi-user.target
