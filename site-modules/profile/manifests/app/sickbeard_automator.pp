@@ -21,6 +21,7 @@ class profile::app::sickbeard_automator {
   #}
 
 # systemd timer to run process_media_job
+  $adminemail = lookup('defaults::adminemail')
   $_timer = @(EOT)
     [Unit]
     Description=Run process_media on boot and hourly
@@ -41,7 +42,7 @@ class profile::app::sickbeard_automator {
     [Service]
     Type=simple
     User=${owner}
-    ExecStart=/bin/bash -c '${scriptdir}/bin/process_media_job | /usr/bin/mailx -v -E -s "%N (%u@%l) output" ${adminemail}'
+    ExecStart=/bin/bash -c '${scriptdir}/bin/process_media_job | /usr/bin/mailx -v -E -s "%N output %u@%H"" ${adminemail}'
 
     [Install]
     WantedBy=multi-user.target
