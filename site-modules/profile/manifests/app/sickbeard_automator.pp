@@ -39,7 +39,7 @@ class profile::app::sickbeard_automator {
     Wants=process_media.timer
 
     [Service]
-    Type=oneshot
+    Type=simple
     User=${owner}
     ExecStart=/bin/bash -c '${scriptdir}/bin/process_media_job | /usr/bin/mailx -v -E -s "%N (%u@%l) output" %{adminemail}'
 
