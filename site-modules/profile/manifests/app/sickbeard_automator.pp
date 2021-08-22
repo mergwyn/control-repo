@@ -12,12 +12,14 @@ class profile::app::sickbeard_automator {
   include profile::app::git
   include profile::app::scripts
 
-  #apt::ppa { 'ppa:awyr/ffmpeg-4':
+  #$ffmpegppa='ppa:awyr/ffmpeg-4'
+  #$ffmpegppa='ppa:savoury1/ffmpeg4
+  #apt::ppa { ${ffmpegppa}:
   #  package_manage => true
   #}
   #package { 'ffmpeg':
   #  ensure  => present,
-  #  require => Apt::Ppa['ppa:awyr/ffmpeg-4'],
+  #  require => Apt::Ppa[ ${ffmpegppa} ],
   #}
 
 # systemd timer to run process_media_job
@@ -42,7 +44,7 @@ class profile::app::sickbeard_automator {
     [Service]
     Type=simple
     User=${owner}
-    ExecStart=/bin/bash -c '${scriptdir}/bin/process_media_job 2> >(/usr/bin/mailx -v -E -s "%N output %u@%H" ${adminemail}')
+    ExecStart=/bin/bash -c '${scriptdir}/bin/process_media_job 2> >(/usr/bin/mailx -v -E -s "%N output %u@%H" ${adminemail})'
 
     [Install]
     WantedBy=multi-user.target
@@ -75,6 +77,7 @@ class profile::app::sickbeard_automator {
     owner  => $owner,
     group  => $group,
   }
+# TODO add just the settings we want to the repository autoProcess.ini file
   file { "${configdir}/plex.ini":
     ensure  => file,
     source  => 'puppet:///modules/profile/plex.ini',
