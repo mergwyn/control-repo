@@ -24,7 +24,6 @@ group :development do
   gem "puppet-module-posix-dev-r#{minor_version}", '~> 1.0',     require: false, platforms: [:ruby]
   gem "puppet-module-win-default-r#{minor_version}", '~> 1.0',   require: false, platforms: [:mswin, :mingw, :x64_mingw]
   gem "puppet-module-win-dev-r#{minor_version}", '~> 1.0',       require: false, platforms: [:mswin, :mingw, :x64_mingw]
-  gem "ra10ke",                                                  require: false
   gem "onceover",                                                require: false
   gem "CFPropertyList",                                          require: false
   gem "generate-puppetfile", '~> 1.0',                           require: false

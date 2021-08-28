@@ -22,7 +22,7 @@ Gemfile:
     ':development':
 #      - gem: rake
 #      - gem: r10k
-      - gem: ra10ke
+#      - gem: ra10ke
       - gem: onceover
       - gem: CFPropertyList
   optional:
@@ -36,7 +36,7 @@ spec/spec_helper.rb:
   hiera_config: "spec/hiera.yaml" 
 Rakefile:
   extras: 
-  - require 'ra10ke'
-  - Ra10ke::RakeTask.new
+#  - require 'ra10ke'
+#  - Ra10ke::RakeTask.new
   - require 'onceover/rake_tasks'
   - FastGettext.default_text_domain = 'default-text-domain'
