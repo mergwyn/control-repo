@@ -12,24 +12,55 @@ class profile::app::sickbeard_automator {
   include profile::app::git
   include profile::app::scripts
 
-  #apt::ppa { 'ppa:awyr/ffmpeg-4':
+  #$ffmpegppa='ppa:awyr/ffmpeg-4'
+  #$ffmpegppa='ppa:savoury1/ffmpeg4
+  #apt::ppa { ${ffmpegppa}:
   #  package_manage => true
   #}
   #package { 'ffmpeg':
   #  ensure  => present,
-  #  require => Apt::Ppa['ppa:awyr/ffmpeg-4'],
+  #  require => Apt::Ppa[ ${ffmpegppa} ],
   #}
 
+
+# systemd timer to run process_media_job
+  $adminemail = lookup('defaults::adminemail')
+  $_timer = @(EOT)
+    [Unit]
+    Description=Run process_media on boot and hourly
+
+    [Timer]
+    OnBootSec=10min
+    OnUnitActiveSec=1h
+
+    [Install]
+    WantedBy=timers.target
+    | EOT
+
+  $_service = @("EOT")
+    [Unit]
+    Description=runs process_media
+    Wants=process_media.timer
+
+    [Service]
+    Type=simple
+    User=${owner}
+    ExecStart=/bin/bash -c '${scriptdir}/bin/process_media_job 2>&1 | /usr/bin/mailx -v -E -s "%N output ${owner}@%H" ${adminemail}'
+
+    [Install]
+    WantedBy=multi-user.target
+    | EOT
+
+  systemd::timer{'process_media.timer':
+    timer_content   => $_timer,
+    service_content => $_service,
+    enable          => true,
+    active          => true,
+  }
+  
   # cron job to run scripts
   include cron
-  cron::job { 'media':
-    environment => [ 'PATH="/usr/sbin:/usr/bin:/sbin:/bin"' ],
-    command     => "test -x ${scriptdir}/bin/process_media_job && ${scriptdir}/bin/process_media_job",
-    user        => $owner,
-    minute      => 5,
-    hour        => '0-18',
-    require     => Service['sssd'],
-  }
+  cron::job { 'media': ensure => absent, }
 
   # Get the lastest version from github
   vcsrepo { $target:
@@ -53,6 +84,7 @@ class profile::app::sickbeard_automator {
     group   => $group,
     require => Service['sssd'],
   }
+# TODO add just the settings we want to the repository autoProcess.ini file
   file { "${configdir}/plex.ini":
     ensure  => file,
     source  => 'puppet:///modules/profile/plex.ini',
