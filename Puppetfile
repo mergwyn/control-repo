@@ -11,8 +11,6 @@ mod 'CraigWatson1987-transmission', :git => 'https://github.com/craigwatson/pupp
 mod 'dodevops-githubreleases', '4.0.0'
 mod 'example42-network', '3.6.0'
 mod 'gentoo-portage', '2.3.0'
-mod 'ghoneycutt-common', '1.10.0'
-#mod 'ghoneycutt-ssh', '3.62.0'
 mod 'saz-ssh', '7.0.0'
 mod 'herculesteam-augeasproviders_core', '2.7.0'
 mod 'herculesteam-augeasproviders_pam', '2.2.1'

@@ -59,9 +59,6 @@ fixtures:
     portage:
       repo: gentoo-portage
       ref: 2.3.0
-    common:
-      repo: ghoneycutt-common
-      ref: 1.10.0
     ssh:
       repo: saz-ssh
       ref: 7.0.0
