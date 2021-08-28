@@ -22,6 +22,7 @@ class profile::app::sickbeard_automator {
   #  require => Apt::Ppa[ ${ffmpegppa} ],
   #}
 
+
 # systemd timer to run process_media_job
   $adminemail = lookup('defaults::adminemail')
   $_timer = @(EOT)
@@ -56,6 +57,10 @@ class profile::app::sickbeard_automator {
     enable          => true,
     active          => true,
   }
+  
+  # cron job to run scripts
+  include cron
+  cron::job { 'media': ensure => absent, }
 
   # Get the lastest version from github
   vcsrepo { $target:
@@ -64,6 +69,7 @@ class profile::app::sickbeard_automator {
     provider => git,
     require  => [
       Class['profile::app::git'],
+      Service['sssd'],
   #    Package['ffmpeg'],
     ],
     source   => 'https://github.com/mdhiggins/sickbeard_mp4_automator',
@@ -73,9 +79,10 @@ class profile::app::sickbeard_automator {
   #TODO install dependencies
   # Install the configuration file
   file { $configdir:
-    ensure => directory,
-    owner  => $owner,
-    group  => $group,
+    ensure  => directory,
+    owner   => $owner,
+    group   => $group,
+    require => Service['sssd'],
   }
 # TODO add just the settings we want to the repository autoProcess.ini file
   file { "${configdir}/plex.ini":
@@ -83,22 +90,23 @@ class profile::app::sickbeard_automator {
     source  => 'puppet:///modules/profile/plex.ini',
     owner   => $owner,
     group   => $group,
-    require => File[$configdir],
+    require => [ File[$configdir], Service['sssd'], ],
   }
   #
   #TODO change logging parameters?
   # Make sure log file exists and is writable
   file { $logdir:
-    ensure => directory,
-    owner  => $owner,
-    group  => $group,
-    mode   => '0777',
+    ensure  => directory,
+    owner   => $owner,
+    group   => $group,
+    mode    => '0777',
+    require => Service['sssd'],
   }
   file { "${logdir}/index.log":
     ensure  => file,
     mode    => '0664',
     owner   => $owner,
     group   => $group,
-    require => File[$logdir],
+    require => [ File[$logdir], Service['sssd'], ],
   }
 }
