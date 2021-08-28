@@ -57,7 +57,7 @@ class profile::app::sickbeard_automator {
     enable          => true,
     active          => true,
   }
-  
+
   # cron job to run scripts
   include cron
   cron::job { 'media': ensure => absent, }
