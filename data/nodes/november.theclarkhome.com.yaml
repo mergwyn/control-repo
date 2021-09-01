@@ -1,0 +1,6 @@
+---
+
+classes:
+  - profile::app::transcoder
+  - profile::app::zabbix::agent
+
