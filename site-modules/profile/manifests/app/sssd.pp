@@ -4,10 +4,11 @@ class profile::app::sssd {
 
   contain profile::app::samba
 
-  exec { 'create_keytab':
-    command => '/usr/bin/net ads keytab create -P',
-    creates => '/etc/krb5.keytab',
-  }
+  $keytab = '/etc/krb5.keytab'
+#  exec { 'create_keytab':
+#    command => '/usr/bin/net ads keytab create -P',
+#    creates => $keytab,
+#  }
   class { '::sssd':
     config => {
       'sssd'                    => {
@@ -36,7 +37,7 @@ class profile::app::sssd {
         'ldap_use_tokengroups'           => false,
         'use_fully_qualified_names'      => false,
       },
-      require                   => Exec[ 'create_keytab' ],
+      require                   => File[ $keytab ],
     }
   }
 
