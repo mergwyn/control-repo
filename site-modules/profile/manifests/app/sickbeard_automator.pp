@@ -11,6 +11,7 @@ class profile::app::sickbeard_automator {
 
   include profile::app::git
   include profile::app::scripts
+  include profile::app::sssd
 
   #$ffmpegppa='ppa:awyr/ffmpeg-4'
   #$ffmpegppa='ppa:savoury1/ffmpeg4
