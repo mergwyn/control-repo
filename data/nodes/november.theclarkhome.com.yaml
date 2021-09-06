@@ -4,3 +4,4 @@ classes:
   - profile::app::transcoder
   - profile::app::zabbix::agent
 
+profile::app::sickbeard_automator::enabletimer: false
