@@ -1,31 +1,39 @@
 #
-class profile::app::sickbeard_automator {
+class profile::app::sickbeard_automator (
+  $enabletimer = true,
+) {
 
-  $codedir   = '/opt/'
-  $target    = "${codedir}/sickbeard_mp4_automator"
-  $scriptdir = "${codedir}/scripts"
-  $configdir = '/etc/sickbeard_mp4_automator'
-  $logdir    = '/var/log/sickbeard_mp4_automator'
-  $owner     =  lookup('defaults::media_user')
-  $group     =  lookup('defaults::media_group')
+  $codedir    = '/opt/'
+  $target     = "${codedir}/sickbeard_mp4_automator"
+  $scriptdir  = "${codedir}/scripts"
+  $configdir  = '/etc/sickbeard_mp4_automator'
+  $logdir     = '/var/log/sickbeard_mp4_automator'
+  $sample_ini = "${target}/setup/autoProcess.ini.sample"
+  $target_ini = "${configdir}/plex.ini"
 
-  include profile::app::git
-  include profile::app::scripts
-  include profile::app::sssd
+  $owner      = lookup('defaults::media_user')
+  $group      = lookup('defaults::media_group')
+  $adminemail = lookup('defaults::adminemail')
 
-  #$ffmpegppa='ppa:awyr/ffmpeg-4'
-  #$ffmpegppa='ppa:savoury1/ffmpeg4
-  #apt::ppa { ${ffmpegppa}:
-  #  package_manage => true
-  #}
-  #package { 'ffmpeg':
-  #  ensure  => present,
-  #  require => Apt::Ppa[ ${ffmpegppa} ],
-  #}
+  #$ffmpegppa  = 'ppa:awyr/ffmpeg-4'
+  $ffmpegppa  = 'ppa:savoury1/ffmpeg4'
 
+  contain profile::app::git
+  contain profile::app::scripts
+  contain profile::app::sssd
+
+  if $ffmpegppa {
+    apt::ppa { $ffmpegppa: package_manage => true }
+
+    package { 'ffmpeg':
+      ensure  => present,
+      require => Apt::Ppa[ $ffmpegppa ],
+    }
+  } else {
+    package { 'ffmpeg': ensure  => present, }
+  }
 
 # systemd timer to run process_media_job
-  $adminemail = lookup('defaults::adminemail')
   $_timer = @(EOT)
     [Unit]
     Description=Run process_media on boot and hourly
@@ -55,8 +63,7 @@ class profile::app::sickbeard_automator {
   systemd::timer{'process_media.timer':
     timer_content   => $_timer,
     service_content => $_service,
-    enable          => true,
-    active          => true,
+    enable          => $enabletimer,
   }
 
   # cron job to run scripts
@@ -68,16 +75,15 @@ class profile::app::sickbeard_automator {
     ensure   => latest,
     revision => 'master',
     provider => git,
-    require  => [
-      Class['profile::app::git'],
-      Service['sssd'],
-  #    Package['ffmpeg'],
-    ],
+    require  => Service['sssd'],
     source   => 'https://github.com/mdhiggins/sickbeard_mp4_automator',
     owner    => $owner,
     group    => $group,
   }
+
   #TODO install dependencies
+  # python::requirements
+
   # Install the configuration file
   file { $configdir:
     ensure  => directory,
@@ -85,14 +91,59 @@ class profile::app::sickbeard_automator {
     group   => $group,
     require => Service['sssd'],
   }
-# TODO add just the settings we want to the repository autoProcess.ini file
-  file { "${configdir}/plex.ini":
-    ensure  => file,
-    source  => 'puppet:///modules/profile/plex.ini',
-    owner   => $owner,
-    group   => $group,
-    require => [ File[$configdir], Service['sssd'], ],
+
+  exec { 'install_sample':
+    command => "cp ${sample_ini} ${target_ini}",
+    unless  => "test -f ${target_ini} -a ${target_ini} -nt ${sample_ini}",
+    creates => $target_ini,
+    path    => '/bin',
+    require => [
+      Vcsrepo[ $target ],
+      File[ $configdir ],
+    ],
   }
+
+# add the settings we want to copied autoProcess.ini file from the repo
+
+  $defaults = {
+    path  => $target_ini,
+  }
+  $settings = {
+    'Converter' => {
+      ffmpeg           => 'ffmpeg',
+      ffprobe          => 'ffprobe',
+      delete-original  => 'False',
+      #output-directory => '/srv/media/.working',
+      output-format    => 'mp4',
+      output-extension => 'mp4',
+      'temp-extension' => 'partial',
+      postopts         => '-ignore_unknown, -max_muxing_queue_size, 1024',
+      preopts          => '-nostats',
+      hwaccels         => 'qsv, vaapi',
+    },
+    'Metadata' => {
+      # Check this value
+      tag => 'False',
+    },
+    'Video' => {
+      # Check this value
+      max-level => '4.0',
+      # sample only has h264, x264
+      codec     => 'h264vaapi, h264, x264, x265, hevc',
+    },
+    'Audio' => {
+      # Check this value (ac3)
+      codec           => 'aac',
+      # Check this value (128)
+      channel-bitrate => '256',
+    },
+    #'Universal Audio' => {
+      # Check this value (blank)
+      #codec => 'aac',
+    #},
+  }
+  inifile::create_ini_settings($settings, $defaults)
+
   #
   #TODO change logging parameters?
   # Make sure log file exists and is writable
@@ -103,6 +154,7 @@ class profile::app::sickbeard_automator {
     mode    => '0777',
     require => Service['sssd'],
   }
+
   file { "${logdir}/index.log":
     ensure  => file,
     mode    => '0664',
