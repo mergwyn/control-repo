@@ -1,4 +1,8 @@
+# @summary Install and configure sickbeard_mp4_automator
 #
+# param enabletimer
+#   Enable the systemctl timer job for process_media_job
+
 class profile::app::sickbeard_automator (
   $enabletimer = true,
 ) {
@@ -15,7 +19,6 @@ class profile::app::sickbeard_automator (
   $group      = lookup('defaults::media_group')
   $adminemail = lookup('defaults::adminemail')
 
-  #$ffmpegppa  = 'ppa:awyr/ffmpeg-4'
   $ffmpegppa  = 'ppa:savoury1/ffmpeg4'
 
   contain profile::app::git
@@ -81,8 +84,17 @@ class profile::app::sickbeard_automator (
     group    => $group,
   }
 
-  #TODO install dependencies
-  # python::requirements
+  # install dependencies
+  python::requirements { "${target}/setup/requirements.txt" :
+    cwd         => $target,
+    forceupdate => true,
+  #  owner       => $owner,
+  #  group       => $group,
+    require     => [
+      Vcsrepo[ $target ],
+  #    Service[ 'sssd' ],
+    ],
+  }
 
   # Install the configuration file
   file { $configdir:
