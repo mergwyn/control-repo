@@ -87,12 +87,8 @@ class profile::app::sickbeard_automator (
   # install dependencies
   python::requirements { "${target}/setup/requirements.txt" :
     cwd         => $target,
-    forceupdate => true,
-  #  owner       => $owner,
-  #  group       => $group,
     require     => [
       Vcsrepo[ $target ],
-  #    Service[ 'sssd' ],
     ],
   }
 
