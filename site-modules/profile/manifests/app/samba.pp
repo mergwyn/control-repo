@@ -5,8 +5,8 @@ class profile::app::samba {
   $type = lookup( { 'name' => 'samba::dc::role', 'default_value' => 'member' } )
 
   case $type {
-    'member': { include profile::app::samba::member }
-    default:  { include profile::app::samba::dc }
+    'member': { contain profile::app::samba::member }
+    default:  { contain profile::app::samba::dc }
   }
 
 }
