@@ -1,19 +1,19 @@
 # @summary Install and configure sickbeard_mp4_automator
 #
-# param enabletimer
+#@ param enabletimer
 #   Enable the systemctl timer job for process_media_job
-
 class profile::app::sickbeard_automator (
   $enabletimer = true,
 ) {
 
-  $codedir    = '/opt/'
+  $codedir    = '/opt'
   $target     = "${codedir}/sickbeard_mp4_automator"
   $scriptdir  = "${codedir}/scripts"
   $configdir  = '/etc/sickbeard_mp4_automator'
   $logdir     = '/var/log/sickbeard_mp4_automator'
   $sample_ini = "${target}/setup/autoProcess.ini.sample"
   $target_ini = "${configdir}/plex.ini"
+  $venv       = "${target}/venv"
 
   $owner      = lookup('defaults::media_user')
   $group      = lookup('defaults::media_group')
@@ -85,10 +85,24 @@ class profile::app::sickbeard_automator (
   }
 
   # install dependencies
-  python::requirements { "${target}/setup/requirements.txt" :
-    cwd         => $target,
-    require     => [
+  python::pyvenv { $venv:
+    ensure     => present,
+    version    => 'system',
+    systempkgs => true,
+    owner      => $owner,
+    group      => $group,
+    require    => [
       Vcsrepo[ $target ],
+      Service['sssd'],
+    ],
+  }
+  -> python::requirements { "${target}/setup/requirements.txt" :
+    venv    => $venv,
+    owner   => $owner,
+    group   => $group,
+    require => [
+      Vcsrepo[ $target ],
+      Service['sssd'],
     ],
   }
 
