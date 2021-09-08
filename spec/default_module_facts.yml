@@ -9,6 +9,8 @@ radarr_version: '0.2.0.1480'
 samba_version: '4.7.6'
 ssh_version: '7.6'
 chocolateyversion: '0.10.15'
+python3_release: '3.8'
+python3_version: '3.8.10'
 
 has_compiler: true
 networking:

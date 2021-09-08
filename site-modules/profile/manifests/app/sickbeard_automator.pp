@@ -97,10 +97,10 @@ class profile::app::sickbeard_automator (
     ],
   }
   -> python::requirements { "${target}/setup/requirements.txt" :
-    venv    => $venv,
-    owner   => $owner,
-    group   => $group,
-    require => [
+    virtualenv => $venv,
+    owner      => $owner,
+    group      => $group,
+    require    => [
       Vcsrepo[ $target ],
       Service['sssd'],
     ],
