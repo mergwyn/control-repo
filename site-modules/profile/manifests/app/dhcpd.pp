@@ -160,7 +160,7 @@ class profile::app::dhcpd (
     owner   => 'root',
     group   => 'root',
     content => @(EOT)
-               /etc/dhcp/dhcp-dyndns.sh ix,
+               /etc/dhcp/dhcp-dyndns.sh rix,
                /bin/date rix,
                /bin/egrep rix,
                /bin/grep rix,
