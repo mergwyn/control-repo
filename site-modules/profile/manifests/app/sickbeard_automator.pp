@@ -131,7 +131,7 @@ class profile::app::sickbeard_automator (
     path  => $target_ini,
   }
   $settings = {
-    Converter => {
+    'Converter' => {
       ffmpeg           => 'ffmpeg',
       ffprobe          => 'ffprobe',
       delete-original  => 'False',
@@ -144,18 +144,18 @@ class profile::app::sickbeard_automator (
       preopts          => '-nostats',
       hwaccels         => 'vaapi',
     },
-    Metadata => {
+    'Metadata' => {
       # Check this value
       tag => 'False',
     },
-    Video => {
+    'Video' => {
       # Check this value
       #max-level => '4.0',
       max-level => '0.0',
       # sample only has h264, x264
       codec     => 'h264vaapi, h264, x264, x265, hevc',
     },
-    Audio => {
+    'Audio' => {
       # Check this value (ac3)
       #codec           => 'aac',
       codec           => 'ac3',
