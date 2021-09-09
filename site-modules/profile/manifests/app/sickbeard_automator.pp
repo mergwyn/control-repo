@@ -131,33 +131,37 @@ class profile::app::sickbeard_automator (
     path  => $target_ini,
   }
   $settings = {
-    'Converter' => {
+    Converter => {
       ffmpeg           => 'ffmpeg',
       ffprobe          => 'ffprobe',
       delete-original  => 'False',
       #output-directory => '/srv/media/.working',
       output-format    => 'mp4',
       output-extension => 'mp4',
-      'temp-extension' => 'partial',
-      postopts         => '-ignore_unknown, -max_muxing_queue_size, 1024',
+      temp-extension   => 'partial',
+      #postopts         => '-ignore_unknown, -max_muxing_queue_size, 1024',
+      postopts         => '-ignore_unknown',
       preopts          => '-nostats',
-      hwaccels         => 'qsv, vaapi',
+      hwaccels         => 'vaapi',
     },
-    'Metadata' => {
+    Metadata => {
       # Check this value
       tag => 'False',
     },
-    'Video' => {
+    Video => {
       # Check this value
-      max-level => '4.0',
+      #max-level => '4.0',
+      max-level => '0.0',
       # sample only has h264, x264
       codec     => 'h264vaapi, h264, x264, x265, hevc',
     },
-    'Audio' => {
+    Audio => {
       # Check this value (ac3)
-      codec           => 'aac',
+      #codec           => 'aac',
+      codec           => 'ac3',
       # Check this value (128)
-      channel-bitrate => '256',
+      #channel-bitrate => '256',
+      channel-bitrate => '128',
     },
     #'Universal Audio' => {
       # Check this value (blank)
