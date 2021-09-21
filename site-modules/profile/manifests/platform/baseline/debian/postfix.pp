@@ -15,7 +15,7 @@ class profile::platform::baseline::debian::postfix {
     mta                 => true,
   }
 
-  postfix::mailalias { media: recipient => 'xxx', ensure => present, }
+  #postfix::mailalias { 'media': recipient => lookup('defaults::adminemail'), ensure => present, }
 
   postfix::hash { $password_hash:
     ensure  => 'present',
