@@ -1,12 +1,11 @@
-#
-
+# @summary Installa nd confgure zabbix agent
 class profile::app::zabbix::agent (
   $server = 'zulu'
 ) {
 
   $serverstring = $server ? {
     $trusted['hostname'] => 'localhost',
-    default              => "$${server}.${trusted['domain']}",
+    default              => "${server}.${trusted['domain']}",
   }
   $hostmetadata = ":kernel=${facts['kernel']}:virtual=${facts['virtual']}"
 
