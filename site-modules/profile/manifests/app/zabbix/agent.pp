@@ -6,7 +6,7 @@ class profile::app::zabbix::agent (
 
   $serverstring = $server ? {
     $trusted['hostname'] => 'localhost',
-    default              => "${server},${server}.${trusted['domain']}",
+    default              => "$${server}.${trusted['domain']}",
   }
   $hostmetadata = ":kernel=${facts['kernel']}:virtual=${facts['virtual']}"
 

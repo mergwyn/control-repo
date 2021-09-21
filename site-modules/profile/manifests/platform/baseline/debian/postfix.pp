@@ -15,6 +15,8 @@ class profile::platform::baseline::debian::postfix {
     mta                 => true,
   }
 
+  postfix::mailalias { media: recipient => 'xxx', ensure => present, }
+
   postfix::hash { $password_hash:
     ensure  => 'present',
     content => "${relayhost}    ${password_credentials}\n"
