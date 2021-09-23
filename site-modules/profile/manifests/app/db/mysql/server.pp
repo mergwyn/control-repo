@@ -1,5 +1,5 @@
+# @summary Manage SQL Server
 #
-
 class profile::app::db::mysql::server {
 
   class { 'mysql::server':
