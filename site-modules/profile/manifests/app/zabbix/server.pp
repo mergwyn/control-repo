@@ -1,5 +1,5 @@
+# @summary Manage zabbix-server
 #
-
 class profile::app::zabbix::server {
 
   # additional packages needed for ubuntu 16.04 and zabbix 3
