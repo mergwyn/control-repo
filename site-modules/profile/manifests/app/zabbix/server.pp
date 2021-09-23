@@ -6,13 +6,13 @@ class profile::app::zabbix::server {
   #package { [ 'php-xml', 'php-mbstring', 'php-bcmath' ] : }
   #package { [ 'snmp', 'snmp-builder' ] : }
 
-  #class { 'apache': mpm_module => 'prefork', }
-  #include apache::mod::php
-
+  class { 'apache': mpm_module => 'prefork', }
+  include apache::mod::php
 
   class { 'zabbix':
-    zabbix_url    => $::facts['networking']['fqdn'],
-    database_type => 'mysql',
+    zabbix_url        => $::facts['networking']['fqdn'],
+    database_type     => 'mysql',
+    database_password => hiera('secrets::mysql'),
   }
 
   include profile::app::db::mysql::server
