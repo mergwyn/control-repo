@@ -6,6 +6,13 @@ class profile::app::db::mysql::server {
     manage_config_file => false,
   }
 
+  $logdir = '/var/lib/mysql/log'
+
+  file { $logdir:
+    ensure  => directory,
+    require => Service['mysqld'],
+  }
+
   $defaults = {
     'path'         => '/etc/mysql/mysql.conf.d/overrides.cnf',
     'indent_width' => '0',
@@ -20,7 +27,7 @@ class profile::app::db::mysql::server {
       'max_allowed_packet'             => '16M',
       'max_connect_errors'             => '1000000',
       # BINARY LOGGING #
-      'log_bin'                        => '/var/lib/mysql/log/mysql_bin.log',
+      'log_bin'                        => "${logdir}/mysql_bin.log",
       'expire_logs_days'               => '14',
       'sync_binlog'                    => '1',
       # CACHES AND LIMITS #
