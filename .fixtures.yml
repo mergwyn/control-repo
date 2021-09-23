@@ -36,11 +36,11 @@ fixtures:
       repo: camptocamp-augeas
       ref: 1.9.0
     kmod:
-      repo: camptocamp-kmod
-      ref: 2.5.0
+      repo: puppet-kmod
+      ref: 3.0.0
     postfix:
-      repo: camptocamp-postfix
-      ref: 1.12.0
+      repo: puppet-postfix
+      ref: 2.0.0
     systemd:
       repo: puppet-systemd
       ref: 3.3.0
@@ -72,8 +72,8 @@ fixtures:
       repo: kakwa-samba
       ref: 2.0.0
     snapd:
-      repo: kemra102-snapd
-      ref: 1.1.0
+      repo: ethanhs-snapd
+      ref: 1.4.0
     cups:
       repo: mosen-cups
       ref: 1.5.0
@@ -143,9 +143,6 @@ fixtures:
     stdlib:
       repo: puppetlabs-stdlib
       ref: 8.0.0
-    translate:
-      repo: puppetlabs-translate
-      ref: 2.2.0
     vcsrepo:
       repo: puppetlabs-vcsrepo
       ref: 5.0.0
