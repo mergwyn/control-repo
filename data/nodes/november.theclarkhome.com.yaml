@@ -1,7 +1,8 @@
 ---
 
 classes:
-  - profile::app::transcoder
+  - profile::app::sssd
+  - profile::app::zabbix::server
   - profile::app::zabbix::agent
 
-profile::app::sickbeard_automator::enabletimer: false
+
