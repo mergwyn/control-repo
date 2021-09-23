@@ -12,6 +12,9 @@ class profile::app::zabbix::server {
   include profile::app::db::mysql::server
   package { [ 'zabbix-server-mysql', 'zabbix-nginx-conf' ] : }
 
-  #class { 'zabbix': }
+  class { 'zabbix':
+    zabbix_url    => $::facts['networking']['fqdn'],
+    database_type => 'mysql',
+  }
 
 }
