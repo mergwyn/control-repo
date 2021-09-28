@@ -104,6 +104,7 @@ class profile::app::openvpn (
     purge_rich_rules => true,
     purge_services   => true,
     purge_ports      => true,
+    masquerade       => true,
   }
   firewalld_zone { 'public':
     interfaces       => [$wan],
@@ -116,6 +117,7 @@ class profile::app::openvpn (
     purge_rich_rules => true,
     purge_services   => true,
     purge_ports      => true,
+    masquerade       => true,
   }
 
 # home zone services and ports
