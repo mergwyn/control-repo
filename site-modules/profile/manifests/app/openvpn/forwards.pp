@@ -17,7 +17,7 @@ class profile::app::openvpn::forwards {
 #  }
 
   [ 32400, 51413 ].each |Integer $port| {
-    firewalld_rich_rule {"Forward tcp ${port} from external zone to ${proxy}":
+    firewalld_rich_rule {"Forward tcp ${port} from external zone to ${plex}":
       ensure       => present,
       zone         => 'external',
       forward_port => {
