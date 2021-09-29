@@ -1,8 +1,12 @@
 # @summary Manage SQL Server
 #
-class profile::app::db::mysql::server {
+# @param logdir
+#   Location of binary logs
+#
+class profile::app::db::mysql::server (
+  Stdlib::Absolutepath $logdir = '/var/lib/mysql/log',
+){
 
-  $logdir = '/var/lib/mysql/log'
 
   class { 'mysql::server':
     manage_config_file => false,
@@ -74,13 +78,16 @@ class profile::app::db::mysql::server {
     }
   }
 
-  zabbix::userparameters { 'template_db_mysql':
-    source  => 'puppet:///modules/profile/zabbix_agent/template_db_mysql.conf',
-    require => Class['profile::app::zabbix::agent'],
+  if defined(Class[profile::app::zabbix::agent]) {
+    zabbix::userparameters { 'template_db_mysql':
+      source  => 'puppet:///modules/profile/zabbix_agent/template_db_mysql.conf',
+      require => Class['profile::app::zabbix::agent'],
+    }
   }
-  file {'/var/lib/zabbix/.my.cnf':
-    content => sprintf("[client]\nuser=zbx_monitor\npassword=%s\n",hiera('secrets::mysql')),
-    mode    => '0555',
-    require => Class['profile::app::zabbix::agent'],
-  }
+
+#  file {'/var/lib/zabbix/.my.cnf':
+#    content => sprintf("[client]\nuser=zbx_monitor\npassword=%s\n",hiera('secrets::mysql')),
+#    mode    => '0555',
+#    require => Class['profile::app::zabbix::agent'],
+#  }
 }
