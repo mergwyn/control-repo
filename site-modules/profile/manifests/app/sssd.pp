@@ -80,7 +80,7 @@ class profile::app::sssd {
   # work aorund for bug where ssd pid file is not handled
   ::systemd::dropin_file { 'sssd-pidfile.conf':
     unit    => 'sssd.service',
-    content => "[Service]\nPIDFile=/var/run/sssd.pid\n",
+    content => "[Service]\nPIDFile=/run/sssd.pid\n",
     notify  => Service['sssd'],
   }
 }
