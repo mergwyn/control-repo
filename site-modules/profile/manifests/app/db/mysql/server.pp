@@ -2,21 +2,23 @@
 #
 class profile::app::db::mysql::server {
 
+  $logdir = '/var/lib/mysql/log'
+
   class { 'mysql::server':
     manage_config_file => false,
   }
 
-  $logdir = '/var/lib/mysql/log'
-
   file { $logdir:
-    ensure  => directory,
-    require => Service['mysqld'],
+    ensure => directory,
+    owner  => 'mysql',
+    group  => 'mysql',
   }
 
   $defaults = {
     'path'         => '/etc/mysql/mysql.conf.d/overrides.cnf',
     'indent_width' => '0',
-    'notify'       => Service['mysqld'],
+    notify         => Service['mysqld'],
+    require        => File[$logdir],
   }
   $overrides = {
     'mysqld' => {
@@ -56,18 +58,20 @@ class profile::app::db::mysql::server {
   $scripts  = hiera('profile::app::backuppc::client::scripts')
   $preuser  = hiera('profile::app::backuppc::client::preuser')
 
-  file { "${preuser}/S20mysql-backup":
-    ensure  => present,
-    source  => 'puppet:///modules/profile/backuppc/S20mysql-backup',
-    mode    => '0555',
-    require => Class['profile::app::backuppc::client'],
-  }
+  if defined(Class[profile::app::backuppc::client]) {
+    file { "${preuser}/S20mysql-backup":
+      ensure  => present,
+      source  => 'puppet:///modules/profile/backuppc/S20mysql-backup',
+      mode    => '0555',
+      require => Class['profile::app::backuppc::client'],
+    }
 
-  file { "${scripts}/S20mysql-backup-password":
-    ensure  => present,
-    content => sprintf("PASSWORD=%s\n",hiera('secrets::mysql')),
-    mode    => '0555',
-    require => Class['profile::app::backuppc::client'],
+    file { "${scripts}/S20mysql-backup-password":
+      ensure  => present,
+      content => sprintf("PASSWORD=%s\n",hiera('secrets::mysql')),
+      mode    => '0555',
+      require => Class['profile::app::backuppc::client'],
+    }
   }
 
   zabbix::userparameters { 'template_db_mysql':
