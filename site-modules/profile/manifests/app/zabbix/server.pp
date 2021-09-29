@@ -9,12 +9,12 @@ class profile::app::zabbix::server {
   class { 'apache': mpm_module => 'prefork', }
   include apache::mod::php
 
+  contain profile::app::db::mysql::server
+
   class { 'zabbix':
     zabbix_url        => $::facts['networking']['fqdn'],
     database_type     => 'mysql',
     database_password => hiera('secrets::mysql'),
   }
-
-  include profile::app::db::mysql::server
 
 }
