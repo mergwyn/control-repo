@@ -14,6 +14,8 @@ class profile::app::zabbix::server {
   class { 'zabbix':
     zabbix_url        => $::facts['networking']['fqdn'],
     database_type     => 'mysql',
+    database_name     => 'zabbix',
+    database_user     => 'zabbix',
     database_password => hiera('secrets::mysql'),
   }
 
