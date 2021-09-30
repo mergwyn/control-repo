@@ -11,10 +11,6 @@ class profile::app::zabbix::server {
 
   contain profile::app::db::mysql::server
 
-
-# TODO workaround as template_dir is not created
-  file { '/etc/zabbix/imported_templates': ensure => directory, }
-
   class { 'zabbix':
     zabbix_url        => $::facts['networking']['fqdn'],
     database_type     => 'mysql',
