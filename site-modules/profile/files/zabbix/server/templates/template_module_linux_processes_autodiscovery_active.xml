@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
     <version>5.0</version>
-    <date>2021-09-30T15:33:08Z</date>
+    <date>2021-09-30T15:50:23Z</date>
     <groups>
         <group>
             <name>Templates</name>
@@ -63,12 +63,6 @@
                                     <name>Process {#PROCNAME} is not running</name>
                                     <priority>HIGH</priority>
                                     <description>Triggers if app not seen for 5 mins, clears when available for last 5 mins</description>
-                                    <dependencies>
-                                        <dependency>
-                                            <name>Zabbix agent on {HOST.NAME} is unreachable for 5 minutes</name>
-                                            <expression>{Template Module Zabbix agent active:agent.ping.nodata(5m)}=1</expression>
-                                        </dependency>
-                                    </dependencies>
                                 </trigger_prototype>
                             </trigger_prototypes>
                         </item_prototype>
