@@ -80,7 +80,7 @@ class profile::app::db::mysql::server (
 
   if defined(Class[profile::app::zabbix::agent]) {
     zabbix::userparameters { 'template_db_mysql':
-      source  => 'puppet:///modules/profile/zabbix_agent/template_db_mysql.conf',
+      source  => 'puppet:///modules/profile/zabbix/agent/mysql.conf',
       require => Class['profile::app::zabbix::agent'],
     }
   }
