@@ -6,6 +6,9 @@ class profile::app::zabbix::server {
   #package { [ 'php-xml', 'php-mbstring', 'php-bcmath' ] : }
   #package { [ 'snmp', 'snmp-builder' ] : }
 
+# For zabbixapi
+  package { [ 'build-essential' ] : }
+
   class { 'apache': mpm_module => 'prefork', }
   include apache::mod::php
 
