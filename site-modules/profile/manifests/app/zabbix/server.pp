@@ -20,15 +20,15 @@ class profile::app::zabbix::server {
   }
 
   [
-    'template_app_backuppc_active.xml',
-    'template_app_easeus_todo_backup_active.xml',
-    'template_app_speedtest_active.xml',
-    'template_app_xteve_active.xml',
-    'template_app_zfs_active.xml',
-    'template_module_processes_autodiscovery_active.xml',
+    'template_app_backuppc_active',
+    'template_app_easeus_todo_backup_active',
+    'template_app_speedtest_active',
+    'template_app_xteve_active',
+    'template_app_zfs_active',
+    'template_module_processes_autodiscovery_active',
   ].each |String $template| {
     zabbix::template { $template:
-      templ_source => "puppet:///modules/profile/zabbix/server/templates/${template}",
+      templ_source => "puppet:///modules/profile/zabbix/server/templates/${template}.xml",
     }
   }
 
