@@ -1,0 +1,715 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zabbix_export>
+    <version>5.0</version>
+    <date>2021-09-30T08:43:13Z</date>
+    <groups>
+        <group>
+            <name>Templates</name>
+        </group>
+    </groups>
+    <templates>
+        <template>
+            <template>Template App BackupPC Active</template>
+            <name>Template App BackupPC Active</name>
+            <groups>
+                <group>
+                    <name>Templates</name>
+                </group>
+            </groups>
+            <applications>
+                <application>
+                    <name>BackupPC</name>
+                </application>
+            </applications>
+            <items>
+                <item>
+                    <name>BackupPC - Config Uptime</name>
+                    <type>TRAP</type>
+                    <snmp_oid>interfaces.ifTable.ifEntry.ifInOctets.1</snmp_oid>
+                    <key>backuppc.config_load_time</key>
+                    <delay>30s</delay>
+                    <history>10d</history>
+                    <units>uptime</units>
+                    <applications>
+                        <application>
+                            <name>BackupPC</name>
+                        </application>
+                    </applications>
+                    <request_method>POST</request_method>
+                </item>
+                <item>
+                    <name>BackupPC - Pool Directory Count (Compressed)</name>
+                    <type>TRAP</type>
+                    <snmp_oid>interfaces.ifTable.ifEntry.ifInOctets.1</snmp_oid>
+                    <key>backuppc.cpool_dir_count</key>
+                    <delay>30s</delay>
+                    <history>10d</history>
+                    <applications>
+                        <application>
+                            <name>BackupPC</name>
+                        </application>
+                    </applications>
+                    <request_method>POST</request_method>
+                </item>
+                <item>
+                    <name>BackupPC - Pool File Count (Compressed)</name>
+                    <type>TRAP</type>
+                    <snmp_oid>interfaces.ifTable.ifEntry.ifInOctets.1</snmp_oid>
+                    <key>backuppc.cpool_file_count</key>
+                    <delay>30s</delay>
+                    <history>10d</history>
+                    <applications>
+                        <application>
+                            <name>BackupPC</name>
+                        </application>
+                    </applications>
+                    <request_method>POST</request_method>
+                </item>
+                <item>
+                    <name>BackupPC - Pool File Max Links (Compressed)</name>
+                    <type>TRAP</type>
+                    <snmp_oid>interfaces.ifTable.ifEntry.ifInOctets.1</snmp_oid>
+                    <key>backuppc.cpool_file_link_max</key>
+                    <delay>30s</delay>
+                    <history>10d</history>
+                    <applications>
+                        <application>
+                            <name>BackupPC</name>
+                        </application>
+                    </applications>
+                    <request_method>POST</request_method>
+                </item>
+                <item>
+                    <name>BackupPC - Pool File Repeat (Compressed)</name>
+                    <type>TRAP</type>
+                    <snmp_oid>interfaces.ifTable.ifEntry.ifInOctets.1</snmp_oid>
+                    <key>backuppc.cpool_file_repeat</key>
+                    <delay>30s</delay>
+                    <history>10d</history>
+                    <applications>
+                        <application>
+                            <name>BackupPC</name>
+                        </application>
+                    </applications>
+                    <request_method>POST</request_method>
+                </item>
+                <item>
+                    <name>BackupPC - Pool File Repeat Max (Compressed)</name>
+                    <type>TRAP</type>
+                    <snmp_oid>interfaces.ifTable.ifEntry.ifInOctets.1</snmp_oid>
+                    <key>backuppc.cpool_file_repeat_max</key>
+                    <delay>30s</delay>
+                    <history>10d</history>
+                    <applications>
+                        <application>
+                            <name>BackupPC</name>
+                        </application>
+                    </applications>
+                    <request_method>POST</request_method>
+                </item>
+                <item>
+                    <name>BackupPC - Pool Size (Compressed)</name>
+                    <type>TRAP</type>
+                    <snmp_oid>interfaces.ifTable.ifEntry.ifInOctets.1</snmp_oid>
+                    <key>backuppc.cpool_size</key>
+                    <delay>30s</delay>
+                    <history>10d</history>
+                    <units>B</units>
+                    <applications>
+                        <application>
+                            <name>BackupPC</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>MULTIPLIER</type>
+                            <params>1024</params>
+                        </step>
+                    </preprocessing>
+                    <request_method>POST</request_method>
+                </item>
+                <item>
+                    <name>BackupPC - Hosts with full age more than 1 week</name>
+                    <type>TRAP</type>
+                    <snmp_oid>interfaces.ifTable.ifEntry.ifInOctets.1</snmp_oid>
+                    <key>backuppc.hosts_full_age_days</key>
+                    <delay>30s</delay>
+                    <trends>0</trends>
+                    <value_type>TEXT</value_type>
+                    <applications>
+                        <application>
+                            <name>BackupPC</name>
+                        </application>
+                    </applications>
+                    <request_method>POST</request_method>
+                    <triggers>
+                        <trigger>
+                            <expression>{str(NONE)}=0</expression>
+                            <name>BackupPC - {HOSTNAME} have hosts with full backup older than 1 week</name>
+                            <priority>HIGH</priority>
+                            <description>BackupPC has some hosts missing weekly full backup. Please take action to correct.</description>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <name>BackupPC - Full Backup Count</name>
+                    <type>TRAP</type>
+                    <snmp_oid>interfaces.ifTable.ifEntry.ifInOctets.1</snmp_oid>
+                    <key>backuppc.hosts_full_count</key>
+                    <delay>30s</delay>
+                    <history>10d</history>
+                    <applications>
+                        <application>
+                            <name>BackupPC</name>
+                        </application>
+                    </applications>
+                    <request_method>POST</request_method>
+                </item>
+                <item>
+                    <name>BackupPC - Full Backup Size</name>
+                    <type>TRAP</type>
+                    <snmp_oid>interfaces.ifTable.ifEntry.ifInOctets.1</snmp_oid>
+                    <key>backuppc.hosts_full_size</key>
+                    <delay>30s</delay>
+                    <history>10d</history>
+                    <units>B</units>
+                    <applications>
+                        <application>
+                            <name>BackupPC</name>
+                        </application>
+                    </applications>
+                    <request_method>POST</request_method>
+                </item>
+                <item>
+                    <name>BackupPC - Average Backup Speed (Full)</name>
+                    <type>TRAP</type>
+                    <snmp_oid>interfaces.ifTable.ifEntry.ifInOctets.1</snmp_oid>
+                    <key>backuppc.hosts_full_speed</key>
+                    <delay>30s</delay>
+                    <history>10d</history>
+                    <trends>0</trends>
+                    <value_type>FLOAT</value_type>
+                    <units>B/sec</units>
+                    <applications>
+                        <application>
+                            <name>BackupPC</name>
+                        </application>
+                    </applications>
+                    <request_method>POST</request_method>
+                </item>
+                <item>
+                    <name>BackupPC - Incremental Backup Count</name>
+                    <type>TRAP</type>
+                    <snmp_oid>interfaces.ifTable.ifEntry.ifInOctets.1</snmp_oid>
+                    <key>backuppc.hosts_incr_count</key>
+                    <delay>30s</delay>
+                    <history>10d</history>
+                    <applications>
+                        <application>
+                            <name>BackupPC</name>
+                        </application>
+                    </applications>
+                    <request_method>POST</request_method>
+                </item>
+                <item>
+                    <name>BackupPC - Incremental Backup Size</name>
+                    <type>TRAP</type>
+                    <snmp_oid>interfaces.ifTable.ifEntry.ifInOctets.1</snmp_oid>
+                    <key>backuppc.hosts_incr_size</key>
+                    <delay>30s</delay>
+                    <history>10d</history>
+                    <units>B</units>
+                    <applications>
+                        <application>
+                            <name>BackupPC</name>
+                        </application>
+                    </applications>
+                    <request_method>POST</request_method>
+                </item>
+                <item>
+                    <name>BackupPC - Average Backup Speed (Incremental)</name>
+                    <type>TRAP</type>
+                    <snmp_oid>interfaces.ifTable.ifEntry.ifInOctets.1</snmp_oid>
+                    <key>backuppc.hosts_incr_speed</key>
+                    <delay>30s</delay>
+                    <history>10d</history>
+                    <trends>0</trends>
+                    <value_type>FLOAT</value_type>
+                    <units>B/sec</units>
+                    <applications>
+                        <application>
+                            <name>BackupPC</name>
+                        </application>
+                    </applications>
+                    <request_method>POST</request_method>
+                </item>
+                <item>
+                    <name>BackupPC - Hosts with No backups (2 Days)</name>
+                    <type>TRAP</type>
+                    <snmp_oid>interfaces.ifTable.ifEntry.ifInOctets.1</snmp_oid>
+                    <key>backuppc.hosts_nobackup_2</key>
+                    <delay>30s</delay>
+                    <history>10d</history>
+                    <trends>0</trends>
+                    <value_type>TEXT</value_type>
+                    <units>uptime</units>
+                    <applications>
+                        <application>
+                            <name>BackupPC</name>
+                        </application>
+                    </applications>
+                    <request_method>POST</request_method>
+                </item>
+                <item>
+                    <name>BackupPC - Hosts with No backups (3 Days)</name>
+                    <type>TRAP</type>
+                    <snmp_oid>interfaces.ifTable.ifEntry.ifInOctets.1</snmp_oid>
+                    <key>backuppc.hosts_nobackup_3</key>
+                    <delay>30s</delay>
+                    <history>10d</history>
+                    <trends>0</trends>
+                    <value_type>TEXT</value_type>
+                    <units>uptime</units>
+                    <applications>
+                        <application>
+                            <name>BackupPC</name>
+                        </application>
+                    </applications>
+                    <request_method>POST</request_method>
+                </item>
+                <item>
+                    <name>BackupPC - Hosts with No backups (4 Days)</name>
+                    <type>TRAP</type>
+                    <snmp_oid>interfaces.ifTable.ifEntry.ifInOctets.1</snmp_oid>
+                    <key>backuppc.hosts_nobackup_4</key>
+                    <delay>30s</delay>
+                    <history>10d</history>
+                    <trends>0</trends>
+                    <value_type>TEXT</value_type>
+                    <units>uptime</units>
+                    <applications>
+                        <application>
+                            <name>BackupPC</name>
+                        </application>
+                    </applications>
+                    <request_method>POST</request_method>
+                </item>
+                <item>
+                    <name>BackupPC - Hosts with No backups (5 Days)</name>
+                    <type>TRAP</type>
+                    <snmp_oid>interfaces.ifTable.ifEntry.ifInOctets.1</snmp_oid>
+                    <key>backuppc.hosts_nobackup_5</key>
+                    <delay>30s</delay>
+                    <history>10d</history>
+                    <trends>0</trends>
+                    <value_type>TEXT</value_type>
+                    <units>uptime</units>
+                    <applications>
+                        <application>
+                            <name>BackupPC</name>
+                        </application>
+                    </applications>
+                    <request_method>POST</request_method>
+                    <triggers>
+                        <trigger>
+                            <expression>{str(NONE)}=0</expression>
+                            <name>BackupPC - Host without Backups (5 Days)</name>
+                            <priority>HIGH</priority>
+                            <description>There are some hosts that have not been backed up in 5 Days, this should be checked immediately.</description>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <name>BackupPC - Jobs (Full Backup)</name>
+                    <type>TRAP</type>
+                    <snmp_oid>interfaces.ifTable.ifEntry.ifInOctets.1</snmp_oid>
+                    <key>backuppc.jobs_full</key>
+                    <delay>30s</delay>
+                    <history>10d</history>
+                    <applications>
+                        <application>
+                            <name>BackupPC</name>
+                        </application>
+                    </applications>
+                    <request_method>POST</request_method>
+                </item>
+                <item>
+                    <name>BackupPC - Jobs (Incremental Backup)</name>
+                    <type>TRAP</type>
+                    <snmp_oid>interfaces.ifTable.ifEntry.ifInOctets.1</snmp_oid>
+                    <key>backuppc.jobs_incr</key>
+                    <delay>30s</delay>
+                    <history>10d</history>
+                    <applications>
+                        <application>
+                            <name>BackupPC</name>
+                        </application>
+                    </applications>
+                    <request_method>POST</request_method>
+                </item>
+                <item>
+                    <name>BackupPC - Jobs (Other Backup)</name>
+                    <type>TRAP</type>
+                    <snmp_oid>interfaces.ifTable.ifEntry.ifInOctets.1</snmp_oid>
+                    <key>backuppc.jobs_other</key>
+                    <delay>30s</delay>
+                    <history>10d</history>
+                    <applications>
+                        <application>
+                            <name>BackupPC</name>
+                        </application>
+                    </applications>
+                    <request_method>POST</request_method>
+                </item>
+                <item>
+                    <name>BackupPC - Pool Directory Count</name>
+                    <type>TRAP</type>
+                    <snmp_oid>interfaces.ifTable.ifEntry.ifInOctets.1</snmp_oid>
+                    <key>backuppc.pool_dir_count</key>
+                    <delay>30s</delay>
+                    <history>10d</history>
+                    <applications>
+                        <application>
+                            <name>BackupPC</name>
+                        </application>
+                    </applications>
+                    <request_method>POST</request_method>
+                </item>
+                <item>
+                    <name>BackupPC - Pool File Count</name>
+                    <type>TRAP</type>
+                    <snmp_oid>interfaces.ifTable.ifEntry.ifInOctets.1</snmp_oid>
+                    <key>backuppc.pool_file_count</key>
+                    <delay>30s</delay>
+                    <history>10d</history>
+                    <applications>
+                        <application>
+                            <name>BackupPC</name>
+                        </application>
+                    </applications>
+                    <request_method>POST</request_method>
+                </item>
+                <item>
+                    <name>BackupPC - Pool File Max Links</name>
+                    <type>TRAP</type>
+                    <snmp_oid>interfaces.ifTable.ifEntry.ifInOctets.1</snmp_oid>
+                    <key>backuppc.pool_file_link_max</key>
+                    <delay>30s</delay>
+                    <history>10d</history>
+                    <applications>
+                        <application>
+                            <name>BackupPC</name>
+                        </application>
+                    </applications>
+                    <request_method>POST</request_method>
+                </item>
+                <item>
+                    <name>BackupPC - Pool File Repeat</name>
+                    <type>TRAP</type>
+                    <snmp_oid>interfaces.ifTable.ifEntry.ifInOctets.1</snmp_oid>
+                    <key>backuppc.pool_file_repeat</key>
+                    <delay>30s</delay>
+                    <history>10d</history>
+                    <applications>
+                        <application>
+                            <name>BackupPC</name>
+                        </application>
+                    </applications>
+                    <request_method>POST</request_method>
+                </item>
+                <item>
+                    <name>BackupPC - Pool File Repeat Max</name>
+                    <type>TRAP</type>
+                    <snmp_oid>interfaces.ifTable.ifEntry.ifInOctets.1</snmp_oid>
+                    <key>backuppc.pool_file_repeat_max</key>
+                    <delay>30s</delay>
+                    <history>10d</history>
+                    <applications>
+                        <application>
+                            <name>BackupPC</name>
+                        </application>
+                    </applications>
+                    <request_method>POST</request_method>
+                </item>
+                <item>
+                    <name>BackupPC - Pool Size</name>
+                    <type>TRAP</type>
+                    <snmp_oid>interfaces.ifTable.ifEntry.ifInOctets.1</snmp_oid>
+                    <key>backuppc.pool_size</key>
+                    <delay>30s</delay>
+                    <history>10d</history>
+                    <units>kbytes</units>
+                    <applications>
+                        <application>
+                            <name>BackupPC</name>
+                        </application>
+                    </applications>
+                    <preprocessing>
+                        <step>
+                            <type>MULTIPLIER</type>
+                            <params>1024</params>
+                        </step>
+                    </preprocessing>
+                    <request_method>POST</request_method>
+                </item>
+                <item>
+                    <name>BackupPC - Queue (Background)</name>
+                    <type>TRAP</type>
+                    <snmp_oid>interfaces.ifTable.ifEntry.ifInOctets.1</snmp_oid>
+                    <key>backuppc.queue_background</key>
+                    <delay>30s</delay>
+                    <history>10d</history>
+                    <applications>
+                        <application>
+                            <name>BackupPC</name>
+                        </application>
+                    </applications>
+                    <request_method>POST</request_method>
+                </item>
+                <item>
+                    <name>BackupPC - Queue (Command)</name>
+                    <type>TRAP</type>
+                    <snmp_oid>interfaces.ifTable.ifEntry.ifInOctets.1</snmp_oid>
+                    <key>backuppc.queue_command</key>
+                    <delay>30s</delay>
+                    <history>10d</history>
+                    <applications>
+                        <application>
+                            <name>BackupPC</name>
+                        </application>
+                    </applications>
+                    <request_method>POST</request_method>
+                </item>
+                <item>
+                    <name>BackupPC - Queue (User)</name>
+                    <type>TRAP</type>
+                    <snmp_oid>interfaces.ifTable.ifEntry.ifInOctets.1</snmp_oid>
+                    <key>backuppc.queue_user</key>
+                    <delay>30s</delay>
+                    <history>10d</history>
+                    <applications>
+                        <application>
+                            <name>BackupPC</name>
+                        </application>
+                    </applications>
+                    <request_method>POST</request_method>
+                </item>
+                <item>
+                    <name>BackupPC - Uptime</name>
+                    <type>TRAP</type>
+                    <snmp_oid>interfaces.ifTable.ifEntry.ifInOctets.1</snmp_oid>
+                    <key>backuppc.uptime</key>
+                    <delay>30s</delay>
+                    <history>10d</history>
+                    <units>uptime</units>
+                    <applications>
+                        <application>
+                            <name>BackupPC</name>
+                        </application>
+                    </applications>
+                    <request_method>POST</request_method>
+                </item>
+                <item>
+                    <name>BackupPC - Version</name>
+                    <type>TRAP</type>
+                    <snmp_oid>interfaces.ifTable.ifEntry.ifInOctets.1</snmp_oid>
+                    <key>backuppc.version</key>
+                    <delay>30s</delay>
+                    <history>10d</history>
+                    <trends>0</trends>
+                    <value_type>TEXT</value_type>
+                    <units>uptime</units>
+                    <applications>
+                        <application>
+                            <name>BackupPC</name>
+                        </application>
+                    </applications>
+                    <request_method>POST</request_method>
+                </item>
+                <item>
+                    <name>BackupPC - Memory Usage</name>
+                    <type>ZABBIX_ACTIVE</type>
+                    <snmp_oid>interfaces.ifTable.ifEntry.ifInOctets.1</snmp_oid>
+                    <key>proc.mem[,backuppc]</key>
+                    <delay>2m</delay>
+                    <value_type>FLOAT</value_type>
+                    <units>B</units>
+                    <applications>
+                        <application>
+                            <name>BackupPC</name>
+                        </application>
+                    </applications>
+                    <request_method>POST</request_method>
+                </item>
+                <item>
+                    <name>BackupPC - Collect Data</name>
+                    <type>ZABBIX_ACTIVE</type>
+                    <key>system.run[&quot;sudo -u backuppc /etc/zabbix/scripts/backuppc_info.pl&quot;]</key>
+                    <delay>15m</delay>
+                    <applications>
+                        <application>
+                            <name>BackupPC</name>
+                        </application>
+                    </applications>
+                    <request_method>POST</request_method>
+                </item>
+            </items>
+            <discovery_rules>
+                <discovery_rule>
+                    <name>BackupPC discovery</name>
+                    <type>ZABBIX_ACTIVE</type>
+                    <key>backuppc.host.discovery</key>
+                    <delay>2h</delay>
+                    <filter>
+                        <conditions>
+                            <condition>
+                                <macro>{#BPCHOST}</macro>
+                                <value>@backuppc hosts for autodiscovery</value>
+                                <formulaid>A</formulaid>
+                            </condition>
+                        </conditions>
+                    </filter>
+                    <lifetime>21d</lifetime>
+                    <item_prototypes>
+                        <item_prototype>
+                            <name>BackupPC {#BPCHOST} age</name>
+                            <type>ZABBIX_ACTIVE</type>
+                            <key>backuppc.host.info[{#BPCHOST},age]</key>
+                            <delay>30m</delay>
+                            <value_type>FLOAT</value_type>
+                            <units>s</units>
+                            <applications>
+                                <application>
+                                    <name>BackupPC</name>
+                                </application>
+                            </applications>
+                            <preprocessing>
+                                <step>
+                                    <type>MULTIPLIER</type>
+                                    <params>86400</params>
+                                </step>
+                            </preprocessing>
+                            <request_method>POST</request_method>
+                            <trigger_prototypes>
+                                <trigger_prototype>
+                                    <expression>{last(0)}&gt;86400 and {last(0)}&lt;172800</expression>
+                                    <name>Last backup for {#BPCHOST} &gt; 1 day</name>
+                                    <priority>WARNING</priority>
+                                </trigger_prototype>
+                                <trigger_prototype>
+                                    <expression>{last(0)}&gt;172800 and {last(0)}&lt;432000</expression>
+                                    <name>Last backup for {#BPCHOST} &gt; 2 days</name>
+                                    <priority>HIGH</priority>
+                                    <dependencies>
+                                        <dependency>
+                                            <name>Last backup for {#BPCHOST} &gt; 5 days</name>
+                                            <expression>{Template App BackupPC Active:backuppc.host.info[{#BPCHOST},age].last(0)}&gt;432000</expression>
+                                        </dependency>
+                                    </dependencies>
+                                </trigger_prototype>
+                                <trigger_prototype>
+                                    <expression>{last(0)}&gt;432000</expression>
+                                    <name>Last backup for {#BPCHOST} &gt; 5 days</name>
+                                    <priority>DISASTER</priority>
+                                </trigger_prototype>
+                            </trigger_prototypes>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>BackupPC {#BPCHOST} duration</name>
+                            <type>ZABBIX_ACTIVE</type>
+                            <key>backuppc.host.info[{#BPCHOST},duration]</key>
+                            <delay>30m</delay>
+                            <units>s</units>
+                            <applications>
+                                <application>
+                                    <name>BackupPC</name>
+                                </application>
+                            </applications>
+                            <request_method>POST</request_method>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>BackupPC {#BPCHOST} errors</name>
+                            <type>ZABBIX_ACTIVE</type>
+                            <key>backuppc.host.info[{#BPCHOST},errors]</key>
+                            <delay>30m</delay>
+                            <applications>
+                                <application>
+                                    <name>BackupPC</name>
+                                </application>
+                            </applications>
+                            <request_method>POST</request_method>
+                            <trigger_prototypes>
+                                <trigger_prototype>
+                                    <expression>{last(0)}&gt;0</expression>
+                                    <name>Backup errors reported for {#BPCHOST}</name>
+                                    <priority>HIGH</priority>
+                                </trigger_prototype>
+                            </trigger_prototypes>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>BackupPC {#BPCHOST} max errors</name>
+                            <type>ZABBIX_ACTIVE</type>
+                            <key>backuppc.host.info[{#BPCHOST},max_errors]</key>
+                            <delay>30m</delay>
+                            <applications>
+                                <application>
+                                    <name>BackupPC</name>
+                                </application>
+                            </applications>
+                            <request_method>POST</request_method>
+                        </item_prototype>
+                        <item_prototype>
+                            <name>BackupPC {#BPCHOST} size</name>
+                            <type>ZABBIX_ACTIVE</type>
+                            <key>backuppc.host.info[{#BPCHOST},size]</key>
+                            <delay>30m</delay>
+                            <units>B</units>
+                            <applications>
+                                <application>
+                                    <name>BackupPC</name>
+                                </application>
+                            </applications>
+                            <request_method>POST</request_method>
+                        </item_prototype>
+                    </item_prototypes>
+                    <graph_prototypes>
+                        <graph_prototype>
+                            <name>Backuppc {#BPCHOST} size</name>
+                            <graph_items>
+                                <graph_item>
+                                    <drawtype>FILLED_REGION</drawtype>
+                                    <color>00AA00</color>
+                                    <item>
+                                        <host>Template App BackupPC Active</host>
+                                        <key>backuppc.host.info[{#BPCHOST},size]</key>
+                                    </item>
+                                </graph_item>
+                            </graph_items>
+                        </graph_prototype>
+                    </graph_prototypes>
+                    <request_method>POST</request_method>
+                </discovery_rule>
+            </discovery_rules>
+        </template>
+    </templates>
+    <triggers>
+        <trigger>
+            <expression>{Template App BackupPC Active:backuppc.hosts_nobackup_2.str(NONE)}=0 and {Template App BackupPC Active:backuppc.hosts_nobackup_3.str(NONE)}&lt;&gt;0 and {Template App BackupPC Active:backuppc.hosts_nobackup_4.str(NONE)}&lt;&gt;0 and {Template App BackupPC Active:backuppc.hosts_nobackup_5.str(NONE)}&lt;&gt;0</expression>
+            <name>BackupPC - Host without Backups (2 Days)</name>
+            <priority>INFO</priority>
+            <description>There are some hosts that have not been backed up in 2 Days, while this is not a problem it should be monitored.</description>
+        </trigger>
+        <trigger>
+            <expression>{Template App BackupPC Active:backuppc.hosts_nobackup_3.str(NONE)}=0 and {Template App BackupPC Active:backuppc.hosts_nobackup_4.str(NONE)}&lt;&gt;0 and {Template App BackupPC Active:backuppc.hosts_nobackup_5.str(NONE)}&lt;&gt;0</expression>
+            <name>BackupPC - Host without Backups (3 Days)</name>
+            <priority>WARNING</priority>
+            <description>There are some hosts that have not been backed up in 3 Days, this should be checked soon.</description>
+        </trigger>
+        <trigger>
+            <expression>{Template App BackupPC Active:backuppc.hosts_nobackup_4.str(NONE)}=0 and {Template App BackupPC Active:backuppc.hosts_nobackup_5.str(NONE)}&lt;&gt;0</expression>
+            <name>BackupPC - Host without Backups (4 Days)</name>
+            <priority>AVERAGE</priority>
+            <description>There are some hosts that have not been backed up in 4 Days, this should be checked immediately.</description>
+        </trigger>
+    </triggers>
+</zabbix_export>

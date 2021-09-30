@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zabbix_export>
+    <version>5.0</version>
+    <date>2021-09-30T08:46:06Z</date>
+    <groups>
+        <group>
+            <name>Templates</name>
+        </group>
+    </groups>
+    <templates>
+        <template>
+            <template>Template Module Linux processes autodiscovery Active</template>
+            <name>Template Module Linux processes autodiscovery Active</name>
+            <groups>
+                <group>
+                    <name>Templates</name>
+                </group>
+            </groups>
+            <applications>
+                <application>
+                    <name>Processes</name>
+                </application>
+            </applications>
+            <discovery_rules>
+                <discovery_rule>
+                    <name>Linux processes autodiscovery</name>
+                    <type>ZABBIX_ACTIVE</type>
+                    <key>custom.proc.discovery_perl</key>
+                    <delay>30m</delay>
+                    <filter>
+                        <evaltype>AND</evaltype>
+                        <conditions>
+                            <condition>
+                                <macro>{#PROCNAME}</macro>
+                                <value>{$PROCNAME.MATCHES}</value>
+                                <formulaid>A</formulaid>
+                            </condition>
+                            <condition>
+                                <macro>{#PROCNAME}</macro>
+                                <value>{$PROCNAME.NOT_MATCHES}</value>
+                                <operator>NOT_MATCHES_REGEX</operator>
+                                <formulaid>B</formulaid>
+                            </condition>
+                        </conditions>
+                    </filter>
+                    <item_prototypes>
+                        <item_prototype>
+                            <name>Process {#PROCNAME} number of processes</name>
+                            <type>ZABBIX_ACTIVE</type>
+                            <key>proc.num[{#PROCNAME}]</key>
+                            <delay>5m</delay>
+                            <history>15d</history>
+                            <trends>30d</trends>
+                            <applications>
+                                <application>
+                                    <name>Processes</name>
+                                </application>
+                            </applications>
+                            <request_method>POST</request_method>
+                            <trigger_prototypes>
+                                <trigger_prototype>
+                                    <expression>({TRIGGER.VALUE}=0 and {max(10m)}=0) or ({TRIGGER.VALUE}=1 and {min(5m)}=0)</expression>
+                                    <name>Process {#PROCNAME} is not running</name>
+                                    <priority>HIGH</priority>
+                                    <description>Triggers if app not seen for 5 mins, clears when available for last 5 mins</description>
+                                    <dependencies>
+                                        <dependency>
+                                            <name>Zabbix agent on {HOST.NAME} is unreachable for 5 minutes</name>
+                                            <expression>{Template App Zabbix Agent:agent.ping.nodata(5m)}=1</expression>
+                                        </dependency>
+                                    </dependencies>
+                                </trigger_prototype>
+                            </trigger_prototypes>
+                        </item_prototype>
+                    </item_prototypes>
+                    <request_method>POST</request_method>
+                </discovery_rule>
+            </discovery_rules>
+            <macros>
+                <macro>
+                    <macro>{$PROCNAME.MATCHES}</macro>
+                    <value>^(Radarr|Jackett|Plex Media Serv|transmission-da|lxd|master|dhcpd|named|nginx|syslogd|rsyslogd|syslog-ng|sssd|sshd|unbound|samba|smbd|winbindd|cron|sabnzbdplus|apache2|keepalived|avahi-daemon|miniserv.pl|puppet|humaxscan|ntpd|odriveagent|inotifywait)$</value>
+                    <description>Processes for auto discovery</description>
+                </macro>
+                <macro>
+                    <macro>{$PROCNAME.NOT_MATCHES}</macro>
+                    <description>Excluded processes for autodiscovery</description>
+                </macro>
+            </macros>
+        </template>
+    </templates>
+</zabbix_export>
