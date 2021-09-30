@@ -28,7 +28,7 @@ class profile::app::zabbix::server {
     'template_module_processes_autodiscovery_active.xml',
   ].each |String $template| {
     zabbix::template { $template:
-      templ_source => "puppet:///modules/profile/zabbix/aerver/templates/${template}",
+      templ_source => "puppet:///modules/profile/zabbix/server/templates/${template}",
     }
   }
 
