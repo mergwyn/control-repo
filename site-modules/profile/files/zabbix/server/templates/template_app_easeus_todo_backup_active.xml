@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
     <version>5.0</version>
-    <date>2021-09-30T15:39:35Z</date>
+    <date>2021-09-30T16:00:41Z</date>
     <groups>
         <group>
             <name>Templates</name>
@@ -42,23 +42,11 @@
                             <expression>{nodata(1w)}&lt;&gt;0 and {nodata(2w)}=0</expression>
                             <name>Last backup older than 1 week</name>
                             <priority>AVERAGE</priority>
-                            <dependencies>
-                                <dependency>
-                                    <name>Zabbix agent on {HOST.NAME} is unreachable for 60 minutes</name>
-                                    <expression>{whiskey.theclarkhome.com:agent.ping.nodata(60m)}=1</expression>
-                                </dependency>
-                            </dependencies>
                         </trigger>
                         <trigger>
                             <expression>{nodata(2w)}&lt;&gt;0</expression>
                             <name>Last backup older than 2 weeks</name>
                             <priority>DISASTER</priority>
-                            <dependencies>
-                                <dependency>
-                                    <name>Zabbix agent on {HOST.NAME} is unreachable for 60 minutes</name>
-                                    <expression>{whiskey.theclarkhome.com:agent.ping.nodata(60m)}=1</expression>
-                                </dependency>
-                            </dependencies>
                         </trigger>
                     </triggers>
                 </item>
