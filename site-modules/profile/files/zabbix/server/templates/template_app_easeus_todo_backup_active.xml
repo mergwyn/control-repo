@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
     <version>5.0</version>
-    <date>2021-09-30T08:44:07Z</date>
+    <date>2021-09-30T15:39:35Z</date>
     <groups>
         <group>
             <name>Templates</name>
@@ -76,21 +76,6 @@
                         </application>
                     </applications>
                     <logtimefmt>yyyy-MM-ddphh:mm:ss</logtimefmt>
-                    <request_method>POST</request_method>
-                </item>
-                <item>
-                    <name>Test1</name>
-                    <type>CALCULATED</type>
-                    <key>Test1key</key>
-                    <delay>30s</delay>
-                    <value_type>FLOAT</value_type>
-                    <units>s</units>
-                    <params>Date({Template EaseUS ToDo Backup:log[{$EASEUS_LOG},backup completed successfully,UTF-16].nodata(30h)})</params>
-                    <applications>
-                        <application>
-                            <name>EaseUS</name>
-                        </application>
-                    </applications>
                     <request_method>POST</request_method>
                 </item>
             </items>

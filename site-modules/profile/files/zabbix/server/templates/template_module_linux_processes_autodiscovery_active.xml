@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
     <version>5.0</version>
-    <date>2021-09-30T08:46:06Z</date>
+    <date>2021-09-30T15:33:08Z</date>
     <groups>
         <group>
             <name>Templates</name>
@@ -66,7 +66,7 @@
                                     <dependencies>
                                         <dependency>
                                             <name>Zabbix agent on {HOST.NAME} is unreachable for 5 minutes</name>
-                                            <expression>{Template App Zabbix Agent:agent.ping.nodata(5m)}=1</expression>
+                                            <expression>{Template Module Zabbix agent active:agent.ping.nodata(5m)}=1</expression>
                                         </dependency>
                                     </dependencies>
                                 </trigger_prototype>

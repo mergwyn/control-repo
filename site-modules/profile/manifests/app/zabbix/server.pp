@@ -29,7 +29,7 @@ class profile::app::zabbix::server {
     'template_app_speedtest_active',
     'template_app_xteve_active',
     'template_app_zfs_active',
-    'template_module_processes_autodiscovery_active',
+    'template_module_linux_processes_autodiscovery_active',
   ].each |String $template| {
     zabbix::template { $template:
       templ_source => "puppet:///modules/profile/zabbix/server/templates/${template}.xml",
