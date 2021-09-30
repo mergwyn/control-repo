@@ -21,6 +21,7 @@ class profile::app::zabbix::server {
     database_name     => 'zabbix',
     database_user     => 'zabbix',
     database_password => hiera('secrets::mysql'),
+    manage_resources  => true,
   }
 
   [
