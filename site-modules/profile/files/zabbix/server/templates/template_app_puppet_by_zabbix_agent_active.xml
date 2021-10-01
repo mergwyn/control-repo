@@ -119,27 +119,11 @@
               <expression>{min(2h)} &gt; 0</expression>
               <name>Puppet agent failed to apply some resources for 2h</name>
               <priority>WARNING</priority>
-              <dependencies>
-                <dependency>
-                  <name>Puppet agent failed to apply some resources for 12h</name>
-                  <expression>{Template App Puppet by Zabbix agent active:resources.failed.min(12h)} &gt; 0</expression>
-                </dependency>
-                <dependency>
-                  <name>Zabbix agent on {HOST.NAME} is unreachable for 5 minutes</name>
-                  <expression>{Template Module Zabbix agent:agent.ping.nodata(5m)}=1</expression>
-                </dependency>
-              </dependencies>
             </trigger>
             <trigger>
               <expression>{min(12h)} &gt; 0</expression>
               <name>Puppet agent failed to apply some resources for 12h</name>
               <priority>HIGH</priority>
-              <dependencies>
-                <dependency>
-                  <name>Zabbix agent on {HOST.NAME} is unreachable for 5 minutes</name>
-                  <expression>{Template Module Zabbix agent:agent.ping.nodata(5m)}=1</expression>
-                </dependency>
-              </dependencies>
             </trigger>
           </triggers>
         </item>
@@ -167,27 +151,11 @@
               <expression>{max(2h)} = 0</expression>
               <name>Puppet agent failed to apply all resources for 2h</name>
               <priority>WARNING</priority>
-              <dependencies>
-                <dependency>
-                  <name>Puppet agent failed to apply all resources for 12h</name>
-                  <expression>{Template App Puppet by Zabbix agent active:resources.total.max(12h)} = 0</expression>
-                </dependency>
-                <dependency>
-                  <name>Zabbix agent on {HOST.NAME} is unreachable for 5 minutes</name>
-                  <expression>{Template Module Zabbix agent:agent.ping.nodata(5m)}=1</expression>
-                </dependency>
-              </dependencies>
             </trigger>
             <trigger>
               <expression>{max(12h)} = 0</expression>
               <name>Puppet agent failed to apply all resources for 12h</name>
               <priority>HIGH</priority>
-              <dependencies>
-                <dependency>
-                  <name>Zabbix agent on {HOST.NAME} is unreachable for 5 minutes</name>
-                  <expression>{Template Module Zabbix agent:agent.ping.nodata(5m)}=1</expression>
-                </dependency>
-              </dependencies>
             </trigger>
           </triggers>
         </item>
@@ -217,29 +185,12 @@
 {last()} &gt; 7200</expression>
               <name>Puppet agent unreported for 2h</name>
               <priority>WARNING</priority>
-              <dependencies>
-                <dependency>
-                  <name>Puppet agent unreported for 12h</name>
-                  <expression>{Template App Puppet by Zabbix agent active:time.last_run.now()} - &#13;
-{Template App Puppet by Zabbix agent active:time.last_run.last()} &gt; 43200</expression>
-                </dependency>
-                <dependency>
-                  <name>Zabbix agent on {HOST.NAME} is unreachable for 5 minutes</name>
-                  <expression>{Template Module Zabbix agent:agent.ping.nodata(5m)}=1</expression>
-                </dependency>
-              </dependencies>
             </trigger>
             <trigger>
               <expression>{now()} - &#13;
 {last()} &gt; 43200</expression>
               <name>Puppet agent unreported for 12h</name>
               <priority>HIGH</priority>
-              <dependencies>
-                <dependency>
-                  <name>Zabbix agent on {HOST.NAME} is unreachable for 5 minutes</name>
-                  <expression>{Template Module Zabbix agent:agent.ping.nodata(5m)}=1</expression>
-                </dependency>
-              </dependencies>
             </trigger>
           </triggers>
         </item>
