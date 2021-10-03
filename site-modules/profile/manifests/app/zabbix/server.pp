@@ -14,6 +14,7 @@ class profile::app::zabbix::server {
 
   contain profile::app::db::mysql::server
 
+# TODO use zabbix::server and setup nginx manually
   class { 'zabbix':
     zabbix_url        => $::facts['networking']['fqdn'],
     database_type     => 'mysql',
@@ -29,7 +30,6 @@ class profile::app::zabbix::server {
     'template_app_puppet_by_zabbix_agent_active',
     'template_app_speedtest_by_zabbix_agent_active',
     'template_app_xteve_by_zabbix_agent_active',
-    'template_app_zfs_by_zabbix_agent_active',
     'template_module_linux_processes_by_zabbix_agent_active',
     'template_os_linux_lxc_by_zabbix_agent_active',
   ].each |String $template| {
