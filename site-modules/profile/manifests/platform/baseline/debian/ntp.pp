@@ -1,5 +1,5 @@
 # @summary ntp settings
-
+#
 class profile::platform::baseline::debian::ntp
 {
 

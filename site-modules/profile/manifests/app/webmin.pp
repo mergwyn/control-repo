@@ -1,5 +1,5 @@
 # @summary webmin settings
-
+#
 class profile::app::webmin {
 
   if $facts['os']['family'] != 'Debian' {

@@ -1,5 +1,5 @@
 # @summary Set up secure nginx reverse proxy
-
+#
 class profile::app::nginx::gateway (
   Stdlib::Absolutepath $nginx_conf = '/etc/nginx/options-ssl-nginx.conf',
   Stdlib::Absolutepath $certdir    = "/etc/letsencrypt/live/${trusted['certname']}",

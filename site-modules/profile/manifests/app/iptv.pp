@@ -1,5 +1,5 @@
 #
-
+#
 class profile::app::iptv {
   include cron
   include profile::app::scripts

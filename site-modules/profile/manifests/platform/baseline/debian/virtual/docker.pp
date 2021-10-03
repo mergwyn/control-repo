@@ -1,5 +1,5 @@
 #
-
+#
 class profile::platform::baseline::debian::virtual::docker {
 
   #include ::snapd

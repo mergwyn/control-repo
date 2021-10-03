@@ -1,5 +1,5 @@
 # @summary Add dnsentries
-
+#
 class profile::app::samba::hosts(
   $subnet =  lookup('defaults::subnet'),
 ) {

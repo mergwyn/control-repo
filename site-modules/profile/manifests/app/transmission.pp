@@ -1,6 +1,6 @@
 # @summary transmission daemon
 #
-
+#
 class profile::app::transmission (
   String $owner   = 'media',
   String $group   = '513',

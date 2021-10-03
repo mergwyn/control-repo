@@ -1,5 +1,5 @@
 #
-
+#
 class profile::app::nginx {
 
   # TODO: move to hiera

@@ -1,6 +1,6 @@
 #
 # TODO: delete?
-
+#
 class profile::platform::baseline::debian::virtual::libvirt {
 #  include '::libvirt' 
   class { '::libvirt':

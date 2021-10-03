@@ -1,5 +1,5 @@
 # @summary baseline profile applied to all hosts
-
+#
 class profile::platform::baseline (
   Boolean $puppet_agent  = true,
   Boolean $enable_monitoring = false,

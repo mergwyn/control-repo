@@ -1,5 +1,5 @@
 # @summary Configuration of samba shares
-
+#
 class profile::app::samba::shares {
 
   samba::share { 'media':

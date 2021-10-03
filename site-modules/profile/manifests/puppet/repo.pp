@@ -1,5 +1,5 @@
 #
-
+#
 class profile::puppet::repo {
 
   $arch =  $::facts['os']['architecture']

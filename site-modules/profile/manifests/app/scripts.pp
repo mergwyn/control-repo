@@ -1,5 +1,5 @@
 #
-
+#
 class profile::app::scripts {
 
   include profile::app::git

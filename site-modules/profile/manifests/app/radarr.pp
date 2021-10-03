@@ -1,6 +1,6 @@
 # @summary radarr movie downloader
 #
-
+#
 class profile::app::radarr  {
 
 # TODO: settings

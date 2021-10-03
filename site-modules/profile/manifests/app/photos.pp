@@ -1,7 +1,7 @@
 #
 # TODO: complete testing of settings setup
 # TODO: most of this is not used anymore - convert to odrive
-
+#
 class profile::app::photos {
   apt::ppa { 'ppa:nilarimogard/webupd8':
     #package_manage => true

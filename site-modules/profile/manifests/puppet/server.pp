@@ -1,5 +1,5 @@
 #
-
+#
 class profile::puppet::server {
 
   #include '::puppet'

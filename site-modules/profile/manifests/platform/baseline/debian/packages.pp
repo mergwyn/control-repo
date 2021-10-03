@@ -1,5 +1,5 @@
 # @summary Packages for Debian
-
+#
 class profile::platform::baseline::debian::packages {
 
   $install_packages = [

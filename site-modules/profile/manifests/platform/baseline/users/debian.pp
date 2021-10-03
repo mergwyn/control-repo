@@ -1,5 +1,5 @@
 # @summary users required for debian
-
+#
 class profile::platform::baseline::users::debian {
 
   User {

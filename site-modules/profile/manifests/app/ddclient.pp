@@ -1,5 +1,5 @@
 #
-
+#
 class profile::app::ddclient (
   Array[Stdlib::Fqdn] $servers = [ $trusted['hostname'] ],
 ) {

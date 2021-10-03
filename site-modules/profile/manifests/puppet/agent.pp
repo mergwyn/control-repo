@@ -1,5 +1,5 @@
 #
-
+#
 class profile::puppet::agent {
 
   include ::sudo

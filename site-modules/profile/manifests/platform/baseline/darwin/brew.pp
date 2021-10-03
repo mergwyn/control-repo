@@ -1,5 +1,5 @@
 #
-
+#
 class profile::platform::baseline::darwin::brew {
 
   exec {'brew xcode git install':

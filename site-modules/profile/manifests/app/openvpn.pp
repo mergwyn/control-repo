@@ -34,7 +34,7 @@
 # * trusted:
 #   Trust all of the machines in the network. The most open of the
 #   available options and should be used sparingly.
-
+#
 class profile::app::openvpn (
   String[1] $lan = 'eth0',
   String[1] $wan = 'eth1',

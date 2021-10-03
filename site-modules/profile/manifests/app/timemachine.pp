@@ -1,5 +1,5 @@
 #
-
+#
 class profile::app::timemachine {
 
   if $facts['os']['family'] != 'Debian' {

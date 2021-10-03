@@ -8,7 +8,7 @@
 #
 # netplan module compliant hash specifying the bridges
 #
-
+#
 class profile::platform::baseline::debian::netplan (
   Optional[Hash] $ethernets = { $facts['networking']['primary'] => { dhcp4 => true } },
   Optional[Hash] $bridges   = undef,

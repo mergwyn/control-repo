@@ -1,6 +1,6 @@
 # @summary sysctl settings
 #
-
+#
 class profile::platform::baseline::debian::sysctl (
   Integer $disable_ipv6 = 1
 ) {

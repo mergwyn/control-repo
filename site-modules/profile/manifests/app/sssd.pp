@@ -1,5 +1,5 @@
 #
-
+#
 class profile::app::sssd {
 
   contain profile::app::samba

@@ -1,6 +1,6 @@
 #
 # TODO: remove, not used?
-
+#
 class profile::platform::baseline::darwin::managedmac {
 
   package { 'jdbc-sqlite3':

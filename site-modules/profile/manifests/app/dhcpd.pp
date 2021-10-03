@@ -1,5 +1,5 @@
 #
-
+#
 class profile::app::dhcpd (
   Optional[Enum['primary','secondary']] $role         = undef,
   Optional[Stdlib::IP::Address]         $peer_address = undef,

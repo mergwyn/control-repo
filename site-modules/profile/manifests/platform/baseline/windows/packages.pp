@@ -1,5 +1,5 @@
 # @summary Packages for windows
-
+#
 class profile::platform::baseline::windows::packages {
 
   include chocolatey

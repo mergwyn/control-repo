@@ -1,5 +1,5 @@
 # @summary host file entries for Debian
-
+#
 class profile::platform::baseline::debian::hosts {
 
   $ip = $trusted['extensions']['pp_role'] ? {

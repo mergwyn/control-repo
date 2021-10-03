@@ -1,6 +1,6 @@
 # @summary unattended upgrade settings for debian
 #
-
+#
 class profile::platform::baseline::debian::unattended_upgrades {
   include apt
   class {'::unattended_upgrades':
