@@ -78,16 +78,38 @@ class profile::app::db::mysql::server (
     }
   }
 
+# If Zabbix is about, setup up monitoring
   if defined(Class[profile::app::zabbix::agent]) {
-    zabbix::userparameters { 'template_db_mysql':
-      source  => 'puppet:///modules/profile/zabbix/agent/mysql.conf',
+    $url      = 'https://git.zabbix.com/projects/ZBX/repos/zabbix/browse/templates/'
+    $version  = "?at=refs/heads/release/F${lookup('zabbix::server::zabbix_version')}"
+    $template = 'template_db_mysql'
+
+    # This gets created on the server
+    zabbix::template { $template:
+      templ_source => "${url}/db/mysql_agent/${template}_agent.xml${version}"
+    }
+
+    # Agent configuration
+    zabbix::userparameters { $template:
       require => Class['profile::app::zabbix::agent'],
+      source  => "${url}/db/mysql_agent/${template}.conf${version}"
+    }
+
+    $user     = 'zbx_monitor'
+    $password = lookup('secrets::mysql')
+
+    mysql::db { $user:
+      user     => $user,
+      password => $password,
+      host     => 'localhost',
+      grant    => [ 'REPLICATION CLIENT', 'PROCESS', 'SHOW DATABASES', 'SHOW VIEW' ],
+    }
+
+    file {'/var/lib/zabbix/': ensure => directory }
+# TODO change to heredoc
+    file {'/var/lib/zabbix/.my.cnf':
+      content => sprintf("[client]\nuser=%s\npassword=%s\n",$user, $password),
+      mode    => '0555',
     }
   }
-
-#  file {'/var/lib/zabbix/.my.cnf':
-#    content => sprintf("[client]\nuser=zbx_monitor\npassword=%s\n",hiera('secrets::mysql')),
-#    mode    => '0555',
-#    require => Class['profile::app::zabbix::agent'],
-#  }
 }
