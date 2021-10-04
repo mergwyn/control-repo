@@ -102,6 +102,7 @@ class profile::app::db::mysql::server (
     mysql::db { $user:
       user     => $user,
       password => $password,
+      dbname   => '*',
       host     => 'localhost',
       grant    => [ 'REPLICATION CLIENT', 'PROCESS', 'SHOW DATABASES', 'SHOW VIEW' ],
     }
