@@ -81,19 +81,17 @@ class profile::app::db::mysql::server (
 
 # If Zabbix is about, setup up monitoring
   if defined(Class[profile::app::zabbix::agent]) {
-    $url      = 'https://git.zabbix.com/projects/ZBX/repos/zabbix/raw/templates'
-    $version  = "?at=refs/heads/release/${zabbix_version}"
     $template = 'template_db_mysql'
 
     # This gets created on the server
     zabbix::template { 'Template DB MySQL by Zabbix agent':
-      templ_source => "${url}/db/mysql_agent/${template}_agent.xml${version}"
+      templ_source => "file:///modules/profile/zabbix/server/templates/${template}_agent.xml",
     }
 
     # Agent configuration
     zabbix::userparameters { $template:
       require => Class['profile::app::zabbix::agent'],
-      source  => "${url}/db/mysql_agent/${template}.conf${version}"
+      source  => "file:///modules/profile/zabbix/server/templates/${template}.conf"
     }
 
     $user     = 'zbx_monitor'
