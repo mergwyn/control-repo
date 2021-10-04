@@ -5,7 +5,7 @@
 #
 class profile::app::db::mysql::server (
   Stdlib::Absolutepath $logdir = '/var/lib/mysql/log',
-  Float $zabbix_version        = lookup('defaults::zabbix_version'),
+  String $zabbix_version       = lookup('defaults::zabbix_version'),
 ){
 
 
