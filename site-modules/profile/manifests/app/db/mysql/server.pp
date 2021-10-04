@@ -86,7 +86,7 @@ class profile::app::db::mysql::server (
     $template = 'template_db_mysql'
 
     # This gets created on the server
-    zabbix::template { $template:
+    zabbix::template { 'Template DB MySQL by Zabbix agent':
       templ_source => "${url}/db/mysql_agent/${template}_agent.xml${version}"
     }
 
