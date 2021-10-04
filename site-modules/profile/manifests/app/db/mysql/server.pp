@@ -5,6 +5,7 @@
 #
 class profile::app::db::mysql::server (
   Stdlib::Absolutepath $logdir = '/var/lib/mysql/log',
+  Float $zabbix_version        = lookup('defaults::zabbix_version'),
 ){
 
 
@@ -81,7 +82,7 @@ class profile::app::db::mysql::server (
 # If Zabbix is about, setup up monitoring
   if defined(Class[profile::app::zabbix::agent]) {
     $url      = 'https://git.zabbix.com/projects/ZBX/repos/zabbix/browse/templates/'
-    $version  = "?at=refs/heads/release/F${lookup('zabbix::server::zabbix_version')}"
+    $version  = "?at=refs/heads/release/F${zabbix_version}"
     $template = 'template_db_mysql'
 
     # This gets created on the server

@@ -1,6 +1,7 @@
 # @summary Installa nd confgure zabbix agent
 class profile::app::zabbix::agent (
-  $server = 'zulu'
+  $server         = 'zulu',
+  $zabbix_version = lookup('defaults::zabbix_version'),
 ) {
 
   $serverstring = $server ? {
@@ -13,7 +14,7 @@ class profile::app::zabbix::agent (
     'Ubuntu': {
 
       class { 'zabbix::agent':
-        zabbix_version       => '5.0',
+        zabbix_version       => $zabbix_version,
         hostname             => $trusted['certname'],
         hostinterface        => $trusted['certname'],
         server               => $serverstring,

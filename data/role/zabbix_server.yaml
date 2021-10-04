@@ -8,7 +8,7 @@ zabbix::database_name:          'zabbix'
 zabbix::database_password:      "%{lookup('secrets::mysql')}"
 zabbix::database_type:          'mysql'
 zabbix::database_user:          'zabbix'
-zabbix::server::zabbix_version: '5.0'
+zabbix::server::zabbix_version: "%{lookup('defaults::zabbix_version')}"
 zabbix::zabbix_server:          "%{trusted.hostname}"
 zabbix::zabbix_timezone:        'Europe/London'
 zabbix::zabbix_url:             "%{trusted.certname}"
