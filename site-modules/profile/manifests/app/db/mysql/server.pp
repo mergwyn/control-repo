@@ -81,8 +81,8 @@ class profile::app::db::mysql::server (
 
 # If Zabbix is about, setup up monitoring
   if defined(Class[profile::app::zabbix::agent]) {
-    $url      = 'https://git.zabbix.com/projects/ZBX/repos/zabbix/browse/templates/'
-    $version  = "?at=refs/heads/release/F${zabbix_version}"
+    $url      = 'https://git.zabbix.com/projects/ZBX/repos/zabbix/raw/templates'
+    $version  = "?at=refs/heads/release/${zabbix_version}"
     $template = 'template_db_mysql'
 
     # This gets created on the server
