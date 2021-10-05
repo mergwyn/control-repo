@@ -86,7 +86,7 @@ class profile::app::db::mysql::server (
 
     # This gets created on the server
     zabbix::template { $template:
-      templ_source => "puppet:///modules/profile/zabbix/server/templates/${template}_agent.xml",
+      templ_source => "puppet:///modules/profile/zabbix/server/templates/${template}.xml",
     }
 
     # Agent configuration
