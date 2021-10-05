@@ -81,17 +81,18 @@ class profile::app::db::mysql::server (
 
 # If Zabbix is about, setup up monitoring
   if defined(Class[profile::app::zabbix::agent]) {
-    $template = 'template_db_mysql'
+    $template = 'Template DB MySQL by Zabbix agent.xml'
+    $conf     = 'template_db_mysql.conf'
 
     # This gets created on the server
-    zabbix::template { 'Template DB MySQL by Zabbix agent':
+    zabbix::template { $template:
       templ_source => "puppet:///modules/profile/zabbix/server/templates/${template}_agent.xml",
     }
 
     # Agent configuration
-    zabbix::userparameters { $template:
+    zabbix::userparameters { $conf:
       require => Class['profile::app::zabbix::agent'],
-      source  => "puppet:///modules/profile/zabbix/server/templates/${template}.conf"
+      source  => "puppet:///modules/profile/zabbix/server/templates/${conf}"
     }
 
     $user     = 'zbx_monitor'

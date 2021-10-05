@@ -21,7 +21,8 @@ class profile::platform::baseline::debian::zfs::zabbix {
   }
 
   # This gets created on the server
-  $template = 'template_app_zfs_by_zabbix_agent_active'
+  $template = 'Template App ZFS by Zabbix agent active'
+
   zabbix::template { $template:
     templ_source => "puppet:///modules/profile/zabbix/server/templates/${template}.xml",
   }
