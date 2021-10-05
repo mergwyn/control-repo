@@ -81,7 +81,7 @@ class profile::app::db::mysql::server (
 
 # If Zabbix is about, setup up monitoring
   if defined(Class[profile::app::zabbix::agent]) {
-    $template = 'Template DB MySQL by Zabbix agent.xml'
+    $template = 'Template DB MySQL by Zabbix agent'
     $conf     = 'template_db_mysql.conf'
 
     # This gets created on the server
