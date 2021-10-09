@@ -14,26 +14,24 @@ class profile::app::zabbix::server {
 
   contain profile::app::db::mysql::server
 
-# TODO use zabbix::server and setup nginx manually
-  class { 'zabbix::server':
+  class { 'zabbix':
+    zabbix_url        => $::facts['networking']['fqdn'],
+    zabbix_version    => lookup('defaults::zabbix_version'),
+    zabbix_timezone   => 'Europe/London',
     database_type     => 'mysql',
     database_name     => 'zabbix',
     database_user     => 'zabbix',
     database_password => hiera('secrets::mysql'),
-    #manage_resources  => true,
+    manage_resources  => true,
+    manage_vhost      => false,
   }
 
-# TODO configure database correctly
-  class { 'zabbix::database':
-    database_type     => 'mysql',
-    database_name     => 'zabbix',
-    database_user     => 'zabbix',
-    database_password => hiera('secrets::mysql'),
-  }
-
-  package { [ 'zabbix-frontend-php', 'zabbix-nginx-conf' ]: }
   package { [ 'zabbix-apache-conf' ]: ensure => absent }
+  package { [ 'zabbix-nginx-conf' ]:
+    require => Class['zabbix'],
+  }
 
+# TODO move to location closer to the functionality that requires the template
   [
     'Template App BackupPC by Zabbix agent active',
     'Template App EaseUS ToDo Backup by Zabbix agent active',
