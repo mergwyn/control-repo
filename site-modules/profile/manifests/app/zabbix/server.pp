@@ -9,9 +9,6 @@ class profile::app::zabbix::server {
 # For zabbixapi
   package { [ 'build-essential' ] : }
 
-  class { 'apache': mpm_module => 'prefork', }
-  include apache::mod::php
-
   contain profile::app::db::mysql::server
 
   class { 'zabbix':
@@ -26,10 +23,25 @@ class profile::app::zabbix::server {
     manage_vhost      => false,
   }
 
-  package { [ 'zabbix-apache-conf' ]: ensure => absent }
+  contain profile::app::nginx
+
   package { [ 'zabbix-nginx-conf' ]:
-    require => Class['zabbix'],
+    require => Class[ 'zabbix', 'zabbix-nginx-conf' ],
   }
+
+  augeas { 'set_port_and_server':
+    context => '/files/etc/zabbix/nginx.conf',
+    lens    => 'Nginx.lns',
+    #onlyif  => "get $key != '$value'",
+    #changes => "set $key '$value'",
+    notify  => Service[ 'nginx' ],
+    require => Package[ 'zabbix-nginx-conf' ],
+    changes => [
+      'set server/listen 80',
+      "set server/server_name ${trusted['certname']}",
+    ],
+  }
+
 
 # TODO move to location closer to the functionality that requires the template
   [
@@ -43,6 +55,7 @@ class profile::app::zabbix::server {
   ].each |String $template| {
     zabbix::template { $template:
       templ_source => "puppet:///modules/profile/zabbix/server/templates/${template}.xml",
+      require      => Augeas['set_port_and_server'],
     }
   }
 
