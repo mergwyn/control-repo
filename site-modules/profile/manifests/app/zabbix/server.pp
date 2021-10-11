@@ -26,12 +26,12 @@ class profile::app::zabbix::server {
   contain profile::app::nginx
 
   package { [ 'zabbix-nginx-conf' ]:
-    require => Class[ 'zabbix', 'zabbix-nginx-conf' ],
+    require => Class[ 'zabbix' ],
   }
 
   augeas { 'set_port_and_server':
     context => '/files/etc/zabbix/nginx.conf',
-    lens    => 'Nginx.lns',
+    #lens    => 'Nginx.lns',
     #onlyif  => "get $key != '$value'",
     #changes => "set $key '$value'",
     notify  => Service[ 'nginx' ],
