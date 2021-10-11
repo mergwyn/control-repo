@@ -37,7 +37,7 @@ class profile::app::sssd {
         'ldap_use_tokengroups'           => false,
         'use_fully_qualified_names'      => false,
       },
-      require                   => File[ $keytab ],
+      require                   => Service[ 'winbind' ],
     }
   }
 
