@@ -31,7 +31,8 @@ class profile::app::zabbix::server {
 
   augeas { 'set_port_and_server':
     context => '/files/etc/zabbix/nginx.conf',
-    #lens    => 'Nginx.lns',
+    incl    => '/files/etc/zabbix/nginx.conf',
+    lens    => 'Nginx.lns',
     #onlyif  => "get $key != '$value'",
     #changes => "set $key '$value'",
     notify  => Service[ 'nginx' ],
