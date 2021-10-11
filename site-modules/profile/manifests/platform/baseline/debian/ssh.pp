@@ -5,7 +5,7 @@ class profile::platform::baseline::debian::ssh {
 # The values below have been set for an Ubuntu 20.04 distribution
 # Values may need to be changed for different versions
   class { 'ssh':
-    storeconfigs_enabled => false,
+    storeconfigs_enabled => true,
     client_options       => {
       'PasswordAuthentication'    => 'yes',
       'PubkeyAuthentication'      => 'yes',
