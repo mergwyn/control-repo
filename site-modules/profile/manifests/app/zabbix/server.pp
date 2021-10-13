@@ -51,6 +51,7 @@ class profile::app::zabbix::server {
     'Template App Puppet by Zabbix agent active',
     'Template App Speedtest by Zabbix agent active',
     'Template App xTeve by Zabbix agent active',
+    'Template App ZFS by Zabbix agent active',
     'Template Module Linux processes by Zabbix agent active',
     'Template OS Linux LXC by Zabbix agent active',
   ].each |String $template| {
