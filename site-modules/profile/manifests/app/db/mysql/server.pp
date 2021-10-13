@@ -85,9 +85,9 @@ class profile::app::db::mysql::server (
     $conf     = 'template_db_mysql.conf'
 
     # This gets created on the server
-    zabbix::template { $template:
-      templ_source => "puppet:///modules/profile/zabbix/server/templates/${template}.xml",
-    }
+    #zabbix::template { $template:
+    #  templ_source => "puppet:///modules/profile/zabbix/server/templates/${template}.xml",
+    #}
 
     # Agent configuration
     zabbix::userparameters { $conf:
