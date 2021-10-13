@@ -18,13 +18,13 @@ class profile::platform::baseline::debian::zfs::zabbix {
     zabbix::userparameters { 'zfs-health':
       content => "UserParameter=zpool.health[*],sudo zpool list -H -o health \${1}\n"
     }
-  }
 
-  # This gets created on the server
-  $template = 'Template App ZFS by Zabbix agent active'
+    # This gets created on the server
+    $template = 'Template App ZFS by Zabbix agent active'
 
-  zabbix::template { $template:
-    templ_source => "puppet:///modules/profile/zabbix/server/templates/${template}.xml",
+    zabbix::template { $template:
+      templ_source => "puppet:///modules/profile/zabbix/server/templates/${template}.xml",
+    }
   }
 
 }
