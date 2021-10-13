@@ -137,7 +137,7 @@ Hint: You can use 'zpool status' to get an overview of the ZFS pools status</des
                 </macro>
                 <macro>
                     <macro>{$ZFS.FILESET.NOT_MATCHES}</macro>
-                    <value>(lxd/images|lxd/deleted</value>
+                    <value>(lxd/images|lxd/deleted)</value>
                 </macro>
             </macros>
         </template>
