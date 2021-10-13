@@ -3,7 +3,7 @@
 class profile::platform::baseline::debian::zfs::zabbix {
 
 # If Zabbix is defined, setup up monitoring
-  if defined(Class[profile::app::zabbix::agent]) {
+  if defined(Class['profile::app::zabbix::agent']) {
     include sudo
     sudo::conf { 'zabbix-zpool':
       content => 'zabbix  ALL=(root)      NOPASSWD:       /sbin/zpool'

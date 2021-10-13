@@ -63,7 +63,7 @@ class profile::app::db::mysql::server (
   $scripts  = hiera('profile::app::backuppc::client::scripts')
   $preuser  = hiera('profile::app::backuppc::client::preuser')
 
-  if defined(Class[profile::app::backuppc::client]) {
+  if defined(Class['profile::app::backuppc::client']) {
     file { "${preuser}/S20mysql-backup":
       ensure  => present,
       source  => 'puppet:///modules/profile/backuppc/S20mysql-backup',
@@ -80,7 +80,7 @@ class profile::app::db::mysql::server (
   }
 
 # If Zabbix is about, setup up monitoring
-  if defined(Class[profile::app::zabbix::agent]) {
+  if defined(Class['profile::app::zabbix::agent']) {
     $template = 'Template DB MySQL by Zabbix agent'
     $conf     = 'template_db_mysql.conf'
 
