@@ -2,7 +2,7 @@
 # Dynamically create Puppet Package resources using the Puppet built-in
 # 'create_resources' function.
 #
-
+#
 class profile::platform::baseline::packages (
   Hash           $objects  = {},
   Optional[Hash] $defaults = {},

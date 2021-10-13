@@ -1,7 +1,7 @@
 # Dynamically create Puppet task resources using the Puppet built-in
 # 'create_resources' function.
 #
-
+#
 class profile::platform::baseline::windows::tasks (
   Hash           $objects  = {},
   Optional[Hash] $defaults = {},

@@ -1,5 +1,5 @@
 # @summary Wrapper for zfs support
-
+#
 class profile::platform::baseline::debian::zfs {
 
   include profile::platform::baseline::debian::zfs::autosnapshot

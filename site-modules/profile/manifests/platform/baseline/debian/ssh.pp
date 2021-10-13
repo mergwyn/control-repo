@@ -1,5 +1,5 @@
 # @summary ssh client and server config
-
+#
 class profile::platform::baseline::debian::ssh {
 
 # The values below have been set for an Ubuntu 20.04 distribution

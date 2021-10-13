@@ -38,6 +38,7 @@ defaults::system_home_dir: '/root'
 defaults::media_user:      'media'
 defaults::media_group:     '513'
 
+defaults::zabbix_version:   '5.0'
 
 lookup_options:
   "^classes(.*)$":

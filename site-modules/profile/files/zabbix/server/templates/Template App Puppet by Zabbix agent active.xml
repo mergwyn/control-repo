@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zabbix_export>
+  <version>5.0</version>
+  <date>2021-10-01T08:49:11Z</date>
+  <groups>
+    <group>
+      <name>Templates/Applications</name>
+    </group>
+  </groups>
+  <templates>
+    <template>
+      <template>Template App Puppet by Zabbix agent active</template>
+      <name>Template App Puppet by Zabbix agent active</name>
+      <groups>
+        <group>
+          <name>Templates/Applications</name>
+        </group>
+      </groups>
+      <applications>
+        <application>
+          <name>Puppet</name>
+        </application>
+      </applications>
+      <items>
+        <item>
+          <name>Failure events</name>
+          <type>DEPENDENT</type>
+          <key>events.failure</key>
+          <delay>0</delay>
+          <applications>
+            <application>
+              <name>Puppet</name>
+            </application>
+          </applications>
+          <preprocessing>
+            <step>
+              <type>JSONPATH</type>
+              <params>$.events.failure</params>
+            </step>
+          </preprocessing>
+          <master_item>
+            <key>puppet.health</key>
+          </master_item>
+        </item>
+        <item>
+          <name>Success events</name>
+          <type>DEPENDENT</type>
+          <key>events.success</key>
+          <delay>0</delay>
+          <applications>
+            <application>
+              <name>Puppet</name>
+            </application>
+          </applications>
+          <preprocessing>
+            <step>
+              <type>JSONPATH</type>
+              <params>$.events.success</params>
+            </step>
+          </preprocessing>
+          <master_item>
+            <key>puppet.health</key>
+          </master_item>
+        </item>
+        <item>
+          <name>Total events</name>
+          <type>DEPENDENT</type>
+          <key>events.total</key>
+          <delay>0</delay>
+          <applications>
+            <application>
+              <name>Puppet</name>
+            </application>
+          </applications>
+          <preprocessing>
+            <step>
+              <type>JSONPATH</type>
+              <params>$.events.total</params>
+            </step>
+          </preprocessing>
+          <master_item>
+            <key>puppet.health</key>
+          </master_item>
+        </item>
+        <item>
+          <name>Puppet health</name>
+          <type>ZABBIX_ACTIVE</type>
+          <key>puppet.health</key>
+          <delay>10m</delay>
+          <trends>0</trends>
+          <value_type>TEXT</value_type>
+          <applications>
+            <application>
+              <name>Puppet</name>
+            </application>
+          </applications>
+        </item>
+        <item>
+          <name>Failed resources</name>
+          <type>DEPENDENT</type>
+          <key>resources.failed</key>
+          <delay>0</delay>
+          <applications>
+            <application>
+              <name>Puppet</name>
+            </application>
+          </applications>
+          <preprocessing>
+            <step>
+              <type>JSONPATH</type>
+              <params>$.resources.failed</params>
+            </step>
+          </preprocessing>
+          <master_item>
+            <key>puppet.health</key>
+          </master_item>
+          <triggers>
+            <trigger>
+              <expression>{min(2h)} &gt; 0</expression>
+              <name>Puppet agent failed to apply some resources for 2h</name>
+              <priority>WARNING</priority>
+            </trigger>
+            <trigger>
+              <expression>{min(12h)} &gt; 0</expression>
+              <name>Puppet agent failed to apply some resources for 12h</name>
+              <priority>HIGH</priority>
+            </trigger>
+          </triggers>
+        </item>
+        <item>
+          <name>Total resources</name>
+          <type>DEPENDENT</type>
+          <key>resources.total</key>
+          <delay>0</delay>
+          <applications>
+            <application>
+              <name>Puppet</name>
+            </application>
+          </applications>
+          <preprocessing>
+            <step>
+              <type>JSONPATH</type>
+              <params>$.resources.total</params>
+            </step>
+          </preprocessing>
+          <master_item>
+            <key>puppet.health</key>
+          </master_item>
+          <triggers>
+            <trigger>
+              <expression>{max(2h)} = 0</expression>
+              <name>Puppet agent failed to apply all resources for 2h</name>
+              <priority>WARNING</priority>
+            </trigger>
+            <trigger>
+              <expression>{max(12h)} = 0</expression>
+              <name>Puppet agent failed to apply all resources for 12h</name>
+              <priority>HIGH</priority>
+            </trigger>
+          </triggers>
+        </item>
+        <item>
+          <name>Last Run</name>
+          <type>DEPENDENT</type>
+          <key>time.last_run</key>
+          <delay>0</delay>
+          <units>unixtime</units>
+          <applications>
+            <application>
+              <name>Puppet</name>
+            </application>
+          </applications>
+          <preprocessing>
+            <step>
+              <type>JSONPATH</type>
+              <params>$.time.last_run</params>
+            </step>
+          </preprocessing>
+          <master_item>
+            <key>puppet.health</key>
+          </master_item>
+          <triggers>
+            <trigger>
+              <expression>{now()} - &#13;
+{last()} &gt; 7200</expression>
+              <name>Puppet agent unreported for 2h</name>
+              <priority>WARNING</priority>
+            </trigger>
+            <trigger>
+              <expression>{now()} - &#13;
+{last()} &gt; 43200</expression>
+              <name>Puppet agent unreported for 12h</name>
+              <priority>HIGH</priority>
+            </trigger>
+          </triggers>
+        </item>
+        <item>
+          <name>Puppet config</name>
+          <type>DEPENDENT</type>
+          <key>version.config</key>
+          <delay>0</delay>
+          <trends>0</trends>
+          <value_type>TEXT</value_type>
+          <applications>
+            <application>
+              <name>Puppet</name>
+            </application>
+          </applications>
+          <preprocessing>
+            <step>
+              <type>JSONPATH</type>
+              <params>$.version.config</params>
+            </step>
+          </preprocessing>
+          <master_item>
+            <key>puppet.health</key>
+          </master_item>
+        </item>
+        <item>
+          <name>Puppet version</name>
+          <type>DEPENDENT</type>
+          <key>version.puppet</key>
+          <delay>0</delay>
+          <trends>0</trends>
+          <value_type>TEXT</value_type>
+          <applications>
+            <application>
+              <name>Puppet</name>
+            </application>
+          </applications>
+          <preprocessing>
+            <step>
+              <type>JSONPATH</type>
+              <params>$.version.puppet</params>
+            </step>
+          </preprocessing>
+          <master_item>
+            <key>puppet.health</key>
+          </master_item>
+        </item>
+      </items>
+    </template>
+  </templates>
+</zabbix_export>

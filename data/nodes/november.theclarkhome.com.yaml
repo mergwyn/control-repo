@@ -1,7 +1,9 @@
 ---
 
 classes:
-  - profile::app::transcoder
+  - profile::app::sssd
+  - profile::app::zabbix::server
   - profile::app::zabbix::agent
+  - profile::app::backuppc::client
 
-profile::app::sickbeard_automator::enabletimer: false
+profile::app::zabbix::agent::server: 'november'

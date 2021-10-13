@@ -1,5 +1,5 @@
 #
-
+#
 class profile::app::nginx::webdav{
   include profile::app::nginx
 

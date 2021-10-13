@@ -1,6 +1,6 @@
 #
 # Remove compression on logrotate files
-
+#
 class profile::platform::baseline::debian::logrotate {
 
   $confdir = '/etc/logrotate.d'

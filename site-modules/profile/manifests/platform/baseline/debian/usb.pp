@@ -1,6 +1,6 @@
 # @summary usb automount settings
 #
-
+#
 class profile::platform::baseline::debian::usb {
 
   if $facts['os']['family'] != 'Debian' {

@@ -1,6 +1,6 @@
 # @summary mono
 #
-
+#
 class profile::app::mono () {
 
   $distro= $::facts['os']['distro']['codename']

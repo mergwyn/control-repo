@@ -1,5 +1,5 @@
 # @summary gather speedtest data into abbix
-
+#
 class profile::app::speedtest {
 
   package { 'speedtest-cli': }

@@ -1,5 +1,5 @@
 # @summary postfix for mail
-
+#
 class profile::platform::baseline::debian::postfix {
 
   $password_credentials = "mergwyn@virginmedia.com:${lookup('secrets::virgin')}"

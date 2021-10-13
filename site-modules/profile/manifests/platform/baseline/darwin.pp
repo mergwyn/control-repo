@@ -1,5 +1,5 @@
 #
-
+#
 class profile::platform::baseline::darwin {
 
   include profile::platform::baseline::users::darwin

@@ -1,5 +1,5 @@
 #
-
+#
 class profile::app::nginx::munki {
   include profile::app::nginx
 

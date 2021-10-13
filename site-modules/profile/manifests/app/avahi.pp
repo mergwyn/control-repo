@@ -1,5 +1,5 @@
 #
-
+#
 class profile::app::avahi {
 
   package { 'avahi-daemon-install':

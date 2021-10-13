@@ -1,5 +1,5 @@
 #
-
+#
 class profile::app::cups {
   #include cups::install
   #include cups

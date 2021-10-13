@@ -1,5 +1,5 @@
 # @summary autosnapshot
-
+#
 class profile::platform::baseline::debian::zfs::autosnapshot {
 
   file {'/etc/cron.hourly/zfs-auto-snapshot':

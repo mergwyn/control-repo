@@ -1,5 +1,5 @@
 # @summary monthly reporting
-
+#
 class profile::platform::baseline::debian::zfs::reporting {
 
   # zfs monthly reporting

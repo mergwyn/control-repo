@@ -1,5 +1,5 @@
 # @summary certificates and reverse proxy
-
+#
 class profile::app::gateway {
 
   if $facts['os']['family'] != 'Debian' {

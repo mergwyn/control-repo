@@ -1,5 +1,5 @@
 #
-
+#
 class profile::app::sssd {
 
   contain profile::app::samba
@@ -37,7 +37,7 @@ class profile::app::sssd {
         'ldap_use_tokengroups'           => false,
         'use_fully_qualified_names'      => false,
       },
-      require                   => File[ $keytab ],
+      require                   => Service[ 'winbind' ],
     }
   }
 
@@ -80,7 +80,7 @@ class profile::app::sssd {
   # work aorund for bug where ssd pid file is not handled
   ::systemd::dropin_file { 'sssd-pidfile.conf':
     unit    => 'sssd.service',
-    content => "[Service]\nPIDFile=/var/run/sssd.pid\n",
+    content => "[Service]\nPIDFile=/run/sssd.pid\n",
     notify  => Service['sssd'],
   }
 }

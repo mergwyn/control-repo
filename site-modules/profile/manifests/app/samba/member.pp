@@ -1,5 +1,5 @@
 #
-
+#
 class profile::app::samba::member {
   class { '::samba::classic':
     # Mandatory parameters

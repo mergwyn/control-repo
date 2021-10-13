@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zabbix_export>
+  <version>5.0</version>
+  <date>2021-10-01T08:49:11Z</date>
+  <groups>
+    <group>
+      <name>Templates</name>
+    </group>
+  </groups>
+  <templates>
+    <template>
+      <template>Template App EaseUS ToDo Backup by Zabbix agent active</template>
+      <name>Template App EaseUS ToDo Backup by Zabbix agent active</name>
+      <groups>
+        <group>
+          <name>Templates</name>
+        </group>
+      </groups>
+      <applications>
+        <application>
+          <name>EaseUS</name>
+        </application>
+      </applications>
+      <items>
+        <item>
+          <name>Last successful backup</name>
+          <type>ZABBIX_ACTIVE</type>
+          <key>log[{$EASEUS_LOG},"backup completed successfully",UTF-16]</key>
+          <delay>5m</delay>
+          <history>1w</history>
+          <trends>0</trends>
+          <value_type>LOG</value_type>
+          <applications>
+            <application>
+              <name>EaseUS</name>
+            </application>
+          </applications>
+          <logtimefmt>yyyy-MM-ddphh:mm:ss</logtimefmt>
+          <request_method>POST</request_method>
+          <triggers>
+            <trigger>
+              <expression>{nodata(1w)}&lt;&gt;0 and {nodata(2w)}=0</expression>
+              <name>Last backup older than 1 week</name>
+              <priority>AVERAGE</priority>
+            </trigger>
+            <trigger>
+              <expression>{nodata(2w)}&lt;&gt;0</expression>
+              <name>Last backup older than 2 weeks</name>
+              <priority>DISASTER</priority>
+            </trigger>
+          </triggers>
+        </item>
+        <item>
+          <name>Last cancelled backup</name>
+          <type>ZABBIX_ACTIVE</type>
+          <key>log[{$EASEUS_LOG},"The operation was cancelled",UTF-16]</key>
+          <delay>5m</delay>
+          <history>1w</history>
+          <trends>0</trends>
+          <value_type>LOG</value_type>
+          <applications>
+            <application>
+              <name>EaseUS</name>
+            </application>
+          </applications>
+          <logtimefmt>yyyy-MM-ddphh:mm:ss</logtimefmt>
+          <request_method>POST</request_method>
+        </item>
+      </items>
+      <macros>
+        <macro>
+          <macro>{$EASEUS_LOG}</macro>
+          <value>C:\Program Files (x86)\EaseUS\Todo Backup\bin\easeus.log</value>
+        </macro>
+      </macros>
+    </template>
+  </templates>
+</zabbix_export>

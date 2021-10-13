@@ -1,5 +1,5 @@
 #
-
+#
 class profile::app::transcoder {
 
   $codedir = '/opt'

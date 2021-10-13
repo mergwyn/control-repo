@@ -1,7 +1,7 @@
 # @summary set up nzb downloader
 #
 # TODO: complete testing of settings setup
-
+#
 class profile::app::sabnzbdplus (
   String $user  = lookup('defaults::media_user'),
   String $group = lookup('defaults::media_group'),

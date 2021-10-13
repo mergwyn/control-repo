@@ -1,5 +1,5 @@
 # @summary Set values in /etc/default/zfs
-
+#
 class profile::platform::baseline::debian::zfs::default {
 
   shellvar { 'ZFS_SHARE':

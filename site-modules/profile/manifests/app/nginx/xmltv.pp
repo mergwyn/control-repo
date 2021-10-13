@@ -1,5 +1,5 @@
 #
-
+#
 class profile::app::nginx::xmltv {
   include profile::app::nginx
 

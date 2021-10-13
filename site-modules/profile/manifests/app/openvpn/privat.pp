@@ -1,5 +1,5 @@
 #
-
+#
 class profile::app::openvpn::privat {
 
   $service = 'openvpn-client@privat.service'

@@ -1,5 +1,5 @@
 #
-
+#
 class profile::platform::baseline::darwin::timemachine (
   Integer $quota = 262144, # 256GB
 ) {

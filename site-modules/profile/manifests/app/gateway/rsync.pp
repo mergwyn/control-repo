@@ -1,5 +1,5 @@
 # @summary manage letsencrypt certificates
-
+#
 class profile::app::gateway::rsync {
 
   if $facts['os']['family'] != 'Debian' {

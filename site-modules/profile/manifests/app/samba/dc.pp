@@ -2,7 +2,7 @@
 # @summary Sets up a samba AD
 #
 # TODO: complete dev and test
-
+#
 class profile::app::samba::dc {
 
   # TODO add unison replcaition script and cron entry

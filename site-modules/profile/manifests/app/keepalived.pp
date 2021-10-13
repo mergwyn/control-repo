@@ -1,6 +1,6 @@
 # @summary Keepalived
 #
-
+#
 class profile::app::keepalived (
   Enum['MASTER','BACKUP'] $state = 'MASTER',
   String[1]               $lan = 'eth0',

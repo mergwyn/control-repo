@@ -1,6 +1,6 @@
 # @summary cron style standard timers for systemd
 #
-
+#
 class profile::platform::baseline::debian::systemd_timers {
 
   if $facts['os']['family'] != 'Debian' {

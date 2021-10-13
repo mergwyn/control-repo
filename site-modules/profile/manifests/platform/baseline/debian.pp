@@ -1,5 +1,5 @@
 #
-
+#
 class profile::platform::baseline::debian {
 
   include profile::platform::baseline::users::debian

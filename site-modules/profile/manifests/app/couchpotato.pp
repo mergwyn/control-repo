@@ -1,7 +1,7 @@
 # @summary couchpotato settings
 #
 # TODO settings, systemd service file (external or ERB?)
-
+#
 class profile::app::couchpotato (
   $user = media,
   $group = '513',

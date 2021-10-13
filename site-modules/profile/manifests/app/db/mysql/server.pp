@@ -1,15 +1,29 @@
+# @summary Manage SQL Server
 #
+# @param logdir
+#   Location of binary logs
+#
+class profile::app::db::mysql::server (
+  Stdlib::Absolutepath $logdir = '/var/lib/mysql/log',
+  String $zabbix_version       = lookup('defaults::zabbix_version'),
+){
 
-class profile::app::db::mysql::server {
 
   class { 'mysql::server':
     manage_config_file => false,
   }
 
+  file { $logdir:
+    ensure => directory,
+    owner  => 'mysql',
+    group  => 'mysql',
+  }
+
   $defaults = {
     'path'         => '/etc/mysql/mysql.conf.d/overrides.cnf',
     'indent_width' => '0',
-    'notify'       => Service['mysqld'],
+    notify         => Service['mysqld'],
+    require        => File[$logdir],
   }
   $overrides = {
     'mysqld' => {
@@ -20,7 +34,7 @@ class profile::app::db::mysql::server {
       'max_allowed_packet'             => '16M',
       'max_connect_errors'             => '1000000',
       # BINARY LOGGING #
-      'log_bin'                        => '/var/lib/mysql/log/mysql_bin.log',
+      'log_bin'                        => "${logdir}/mysql_bin.log",
       'expire_logs_days'               => '14',
       'sync_binlog'                    => '1',
       # CACHES AND LIMITS #
@@ -49,27 +63,54 @@ class profile::app::db::mysql::server {
   $scripts  = hiera('profile::app::backuppc::client::scripts')
   $preuser  = hiera('profile::app::backuppc::client::preuser')
 
-  file { "${preuser}/S20mysql-backup":
-    ensure  => present,
-    source  => 'puppet:///modules/profile/backuppc/S20mysql-backup',
-    mode    => '0555',
-    require => Class['profile::app::backuppc::client'],
+  if defined(Class[profile::app::backuppc::client]) {
+    file { "${preuser}/S20mysql-backup":
+      ensure  => present,
+      source  => 'puppet:///modules/profile/backuppc/S20mysql-backup',
+      mode    => '0555',
+      require => Class['profile::app::backuppc::client'],
+    }
+
+    file { "${scripts}/S20mysql-backup-password":
+      ensure  => present,
+      content => sprintf("PASSWORD=%s\n",hiera('secrets::mysql')),
+      mode    => '0555',
+      require => Class['profile::app::backuppc::client'],
+    }
   }
 
-  file { "${scripts}/S20mysql-backup-password":
-    ensure  => present,
-    content => sprintf("PASSWORD=%s\n",hiera('secrets::mysql')),
-    mode    => '0555',
-    require => Class['profile::app::backuppc::client'],
-  }
+# If Zabbix is about, setup up monitoring
+  if defined(Class[profile::app::zabbix::agent]) {
+    $template = 'Template DB MySQL by Zabbix agent'
+    $conf     = 'template_db_mysql.conf'
 
-  zabbix::userparameters { 'template_db_mysql':
-    source  => 'puppet:///modules/profile/zabbix_agent/template_db_mysql.conf',
-    require => Class['profile::app::zabbix::agent'],
-  }
-  file {'/var/lib/zabbix/.my.cnf':
-    content => sprintf("[client]\nuser=zbx_monitor\npassword=%s\n",hiera('secrets::mysql')),
-    mode    => '0555',
-    require => Class['profile::app::zabbix::agent'],
+    # This gets created on the server
+    #zabbix::template { $template:
+    #  templ_source => "puppet:///modules/profile/zabbix/server/templates/${template}.xml",
+    #}
+
+    # Agent configuration
+    zabbix::userparameters { $conf:
+      require => Class['profile::app::zabbix::agent'],
+      source  => "puppet:///modules/profile/zabbix/server/templates/${conf}"
+    }
+
+    $user     = 'zbx_monitor'
+    $password = lookup('secrets::mysql')
+
+    mysql::db { $user:
+      user     => $user,
+      password => $password,
+      dbname   => '*',
+      host     => 'localhost',
+      grant    => [ 'REPLICATION CLIENT', 'PROCESS', 'SHOW DATABASES', 'SHOW VIEW' ],
+    }
+
+    file {'/var/lib/zabbix/': ensure => directory }
+# TODO change to heredoc
+    file {'/var/lib/zabbix/.my.cnf':
+      content => sprintf("[client]\nuser=%s\npassword=%s\n",$user, $password),
+      mode    => '0555',
+    }
   }
 }
