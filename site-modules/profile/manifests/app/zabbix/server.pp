@@ -18,7 +18,8 @@ class profile::app::zabbix::server {
     database_type     => 'mysql',
     database_name     => 'zabbix',
     database_user     => 'zabbix',
-    database_password => hiera('secrets::mysql'),
+    database_password => lookup('secrets::mysql'),
+    zabbix_api_pass   => lookup('secrets::mysql'),
     manage_resources  => true,
     manage_vhost      => false,
   }
@@ -60,71 +61,5 @@ class profile::app::zabbix::server {
       require      => Augeas['set_port_and_server'],
     }
   }
-
-
-#  include profile::app::nginx
-#
-#  nginx::resource::server { 'zabbix':
-#    server_name => [ $::facts['networking']['fqdn'] ],
-#    listen_port => 80,
-#    www_root    => '/usr/share/zabbix',
-#    locations   => {
-#      '/favicon.ico'                        => {
-#        server              => 'zabbix',
-#        location_cfg_append => { log_not_found => 'off' },
-#      },
-#
-#      '/'                                   => {
-#        server              => 'zabbix',
-#        location_cfg_append => { try_files => '$uri $uri/ =404' },
-#      },
-#
-#      '/assets'                             => {
-#        server     => 'zabbix',
-#        access_log => 'off',
-#        expires    => '10d',
-#      },
-#
-#      '~ /\.ht'                             => {
-#        server => 'zabbix',
-#        deny   => 'all',
-#      },
-#
-#      '~ /(api\/|conf[^\.]|include|locale)' => {
-#        server => 'zabbix',
-#        deny   => 'all',
-#        return => 'all',
-#      },
-#
-#      '~ [^/]\.php(/|$)'                    => {
-#        server              => 'zabbix',
-#        fastcgi_pass        => 'unix:/var/run/php/zabbix.sock',
-#        fastcgi_split_path  => '^(.+\.php)(/.+)$',
-#        fastcgi_index       => 'index.php',
-#        include             => 'fastcgi_params',
-#        fastcgi_params      => {
-#          'DOCUMENT_ROOT'   => '/usr/share/zabbix',
-#          'SCRIPT_FILENAME' => '/usr/share/zabbix$fastcgi_script_name',
-#          'PATH_TRANSLATED' => '/usr/share/zabbix$fastcgi_script_name',
-#          'QUERY_STRING'    => '$query_string',
-#          'REQUEST_METHOD'  => '$request_method',
-#          'CONTENT_TYPE'    => '$content_type',
-#          'CONTENT_LENGTH'  => '$content_length',
-#        },
-#        location_cfg_append => {
-#          'fastcgi_intercept_errors'     => 'on',
-#          'fastcgi_ignore_client_abort'  => 'off',
-#          'fastcgi_connect_timeout'      => '60',
-#          'fastcgi_send_timeout'         => '180',
-#          'fastcgi_read_timeout'         => '180',
-#          'fastcgi_buffer_size'          => '128k',
-#          'fastcgi_buffers'              => '4 256k',
-#          'fastcgi_busy_buffers_size'    => '256k',
-#          'fastcgi_temp_file_write_size' => '256k',
-#        },
-#      },
-#    },
-#  }
-
 
 }
