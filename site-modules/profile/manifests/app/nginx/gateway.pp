@@ -52,7 +52,12 @@ class profile::app::nginx::gateway (
     ssl_redirect  => true,
     ssl_cert      => false,
     ssl_key       => false,
-    include_files => [ '/etc/nginx/snippets/options-ssl-nginx.conf*' ]
+    include_files => [ '/etc/nginx/snippets/options-ssl-nginx.conf*' ],
+    location      => {
+      '/basic_status' => {
+        stub_status => true,
+      },
+    },
   }
 
   nginx::resource::server { 'zulu':

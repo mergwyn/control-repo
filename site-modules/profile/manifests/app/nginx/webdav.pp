@@ -8,7 +8,10 @@ class profile::app::nginx::webdav{
     listen_port          => 80,
     use_default_location => false,
     locations            => {
-      '/webdav' => {
+      '/basic_status' => {
+        stub_status => true,
+      },
+      '/webdav'       => {
         server              => 'webdav',
         autoindex           => 'on',
         index_files         => [ '/index.cgi' ],
