@@ -80,7 +80,7 @@ class profile::app::zabbix::server {
       '~ /(api\/|conf[^\.]|include|locale)' => {
         location_cfg_append => {
           deny   => 'all',
-          return => 'all',
+          return => '404',
         },
       },
       '~ [^/]\.php(/|$)'                    => {
