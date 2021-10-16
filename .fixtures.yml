@@ -95,6 +95,9 @@ fixtures:
     keepalived:
       repo: puppet-keepalived
       ref: 3.1.0
+    php:
+      repo: puppet-php
+      ref: 8.0.2
     unbound:
       repo: puppet-unbound
       ref: 4.0.1

@@ -24,26 +24,93 @@ class profile::app::zabbix::server {
     manage_vhost      => false,
   }
 
+# php setup
+  include '::php'
+  php::fpm::pool { 'zabbix':
+    user                   => 'www-data',
+    group                  => 'www-data',
+    listen                 => '/var/run/php/zabbix.sock',
+    listen_owner           => 'www-data',
+    listen_allowed_clients => '127.0.0.1',
+    pm                     => dynamic,
+    pm_max_children        => 50,
+    pm_start_servers       => 5,
+    pm_min_spare_servers   => 5,
+    pm_max_spare_servers   => 35,
+    php_value              => {
+      'session.save_handler' => 'files',
+      'session.save_path'    => '/var/lib/php/sessions/',
+      max_execution_time     => 300,
+      memory_limit           => '128M',
+      post_max_size          => '16M',
+      upload_max_filesize    => '2M',
+      max_input_time         => 300,
+      max_input_vars         => 10000,
+      'date.timezone'        => 'Europe/London',
+    }
+  }
+
+# nginx setup
   contain profile::app::nginx
 
-  package { [ 'zabbix-nginx-conf' ]:
-    require => Class[ 'zabbix' ],
-  }
+  package { [ 'zabbix-nginx-conf' ]: ensure => absent, }
 
-  augeas { 'set_port_and_server':
-    context => '/files/etc/zabbix/nginx.conf',
-    incl    => '/etc/zabbix/nginx.conf',
-    lens    => 'Nginx.lns',
-    #onlyif  => "get $key != '$value'",
-    #changes => "set $key '$value'",
-    notify  => Service[ 'nginx' ],
-    require => Package[ 'zabbix-nginx-conf' ],
-    changes => [
-      'set server/listen 80',
-      "set server/server_name ${trusted['certname']}",
-    ],
+  nginx::resource::server { 'zabbix':
+    server_name          => [ $::facts['networking']['fqdn'] ],
+    listen_port          => 80,
+    www_root             => '/usr/share/zabbix',
+    use_default_location => false,
+    locations            => {
+      '/'                                   => {
+        location_cfg_append => { try_files => '$uri $uri/ =404' },
+      },
+      '/favicon.ico'                        => {
+        location_cfg_append => { log_not_found => 'off' },
+      },
+      '/assets'                             => {
+        expires             => '10d',
+        location_cfg_append => { access_log => 'off', }
+      },
+      '/basic_status'                       => {
+        stub_status => true,
+      },
+      '~ /\.ht'                             => {
+        location_cfg_append => { deny => 'all', }
+      },
+      '~ /(api\/|conf[^\.]|include|locale)' => {
+        location_cfg_append => {
+          deny   => 'all',
+          return => 'all',
+        },
+      },
+      '~ [^/]\.php(/|$)'                    => {
+        fastcgi             => 'unix:/var/run/php/zabbix.sock',
+        fastcgi_split_path  => '^(.+\.php)(/.+)$',
+        fastcgi_index       => 'index.php',
+        include             => [ 'fastcgi_params' ],
+        fastcgi_param       => {
+          'DOCUMENT_ROOT'   => '/usr/share/zabbix',
+          'SCRIPT_FILENAME' => '/usr/share/zabbix$fastcgi_script_name',
+          'PATH_TRANSLATED' => '/usr/share/zabbix$fastcgi_script_name',
+          'QUERY_STRING'    => '$query_string',
+          'REQUEST_METHOD'  => '$request_method',
+          'CONTENT_TYPE'    => '$content_type',
+          'CONTENT_LENGTH'  => '$content_length',
+        },
+        location_cfg_append => {
+          'fastcgi_intercept_errors'     => 'on',
+          'fastcgi_ignore_client_abort'  => 'off',
+          'fastcgi_connect_timeout'      => '60',
+          'fastcgi_send_timeout'         => '180',
+          'fastcgi_read_timeout'         => '180',
+          'fastcgi_buffer_size'          => '128k',
+          'fastcgi_buffers'              => '4 256k',
+          'fastcgi_busy_buffers_size'    => '256k',
+          'fastcgi_temp_file_write_size' => '256k',
+        },
+      },
+    },
   }
-
 
 # TODO move to location closer to the functionality that requires the template
 # TODO add windows and MacOS
@@ -59,7 +126,6 @@ class profile::app::zabbix::server {
   ].each |String $template| {
     zabbix::template { $template:
       templ_source => "puppet:///modules/profile/zabbix/server/templates/${template}.xml",
-      require      => Augeas['set_port_and_server'],
     }
   }
 
