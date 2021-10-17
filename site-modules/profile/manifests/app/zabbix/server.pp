@@ -12,7 +12,8 @@ class profile::app::zabbix::server {
   contain profile::app::db::mysql::server
 
   class { 'zabbix':
-    zabbix_url        => $::facts['networking']['fqdn'],
+    #zabbix_url        => $::facts['networking']['fqdn'],
+    zabbix_url        => lookup('defaults::zabbix_url'),
     zabbix_version    => lookup('defaults::zabbix_version'),
     zabbix_timezone   => 'Europe/London',
     database_type     => 'mysql',
@@ -129,4 +130,6 @@ class profile::app::zabbix::server {
     }
   }
 
+  Class['zabbix::resources::web']
+  -> Zabbix_template_host <<| |>>
 }

@@ -22,6 +22,7 @@ class profile::app::zabbix::agent (
         enableremotecommands => '1',
         zabbix_package_state => 'latest',
         hostmetadata         => $hostmetadata,
+# templates => [ ],
       }
 
       package {'zabbix-sender': }

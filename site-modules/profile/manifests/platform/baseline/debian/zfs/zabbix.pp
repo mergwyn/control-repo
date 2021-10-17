@@ -18,6 +18,9 @@ class profile::platform::baseline::debian::zfs::zabbix {
     zabbix::userparameters { 'zfs-health':
       content => "UserParameter=zpool.health[*],sudo zpool list -H -o health \${1}\n"
     }
+
+    profile::app::zabbix::template_host { 'Template App ZFS by Zabbix agent active': }
+
   }
 
 }
