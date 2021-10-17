@@ -4,6 +4,12 @@ class profile::app::nginx {
 
   # TODO: move to hiera
   include nginx
+
+  if defined('profile::app::zabbix::agent') {
+# TODO set up the location needed for this template
+    profile::app::zabbix::template_host { 'Template App Nginx by Zabbix agent': }
+  }
+
   package { [ 'fcgiwrap' ]: }
 
   $service_name = 'nginx.service'
