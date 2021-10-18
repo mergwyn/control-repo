@@ -9,7 +9,7 @@ class profile::app::nginx {
 # TODO set up the location needed for this template
     nginx::resource::location { "basic_status_${facts['hostname']}":
       ensure         => present,
-      server         => trusted['certname'],
+      server         => $trusted['certname'],
       location       => '/basic_status',
       stub_status    => true,
       location_allow => lookup('defaults::cidr'),
