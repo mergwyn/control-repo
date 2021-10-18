@@ -12,8 +12,8 @@ class profile::app::nginx {
       server         => $trusted['certname'],
       location       => '/basic_status',
       stub_status    => true,
-      location_allow => lookup('defaults::cidr'),
-      location_deny  => 'all',
+      location_allow => [ lookup('defaults::cidr') ],
+      location_deny  => [ 'all', ],
     }
 
     profile::app::zabbix::template_host { 'Template App Nginx by Zabbix agent': }
