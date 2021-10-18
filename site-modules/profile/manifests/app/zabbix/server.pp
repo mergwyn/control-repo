@@ -72,9 +72,6 @@ class profile::app::zabbix::server {
         expires             => '10d',
         location_cfg_append => { access_log => 'off', }
       },
-      '/basic_status'                       => {
-        stub_status => true,
-      },
       '~ /\.ht'                             => {
         location_cfg_append => { deny => 'all', }
       },
