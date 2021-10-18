@@ -7,6 +7,15 @@ class profile::app::nginx {
 
   if defined('profile::app::zabbix::agent') {
 # TODO set up the location needed for this template
+    nginx::resource::location { "basic_status_${facts['hostname']}":
+      ensure         => present,
+      server         => trusted['certname'],
+      location       => '/basic_status',
+      stub_status    => true,
+      location_allow => lookup('defaults::cidr'),
+      location_deny  => 'all',
+    }
+
     profile::app::zabbix::template_host { 'Template App Nginx by Zabbix agent': }
   }
 

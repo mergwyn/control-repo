@@ -20,10 +20,6 @@ class profile::app::nginx::xmltv {
           log_not_found =>  'off',
         },
       },
-      '/basic_status' => {
-        stub_status => true,
-      },
-
     }
   }
 }

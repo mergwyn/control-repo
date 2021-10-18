@@ -53,11 +53,6 @@ class profile::app::nginx::gateway (
     ssl_cert      => false,
     ssl_key       => false,
     include_files => [ '/etc/nginx/snippets/options-ssl-nginx.conf*' ],
-    locations     => {
-      '/basic_status' => {
-        stub_status => true,
-      },
-    },
   }
 
   nginx::resource::server { 'zulu':
