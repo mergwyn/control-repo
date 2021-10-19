@@ -8,7 +8,6 @@ class profile::app::nginx::xmltv {
     use_default_location => false,
     locations            => {
       '/xmltv/'      => {
-        server         => 'xmltv',
         location_alias => '/srv/media/xmltv/',
         autoindex      => 'off',
       },
