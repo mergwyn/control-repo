@@ -12,6 +12,7 @@ profile::app::backuppc::client::postuser:               "%{lookup('profile::app:
 
 # set nginx package
 nginx::package_name:                              'nginx-extras'
+nginx::server_purge:                              true
 
 samba::params::sernetpkgs:                        false
 samba::classic::domain:                           "%{lookup('defaults::workgroup')}"

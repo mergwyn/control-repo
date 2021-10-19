@@ -3,13 +3,12 @@
 class profile::app::nginx::xmltv {
   include profile::app::nginx
 
-  nginx::resource::server { 'xmltv':,
-    server_name          => [ $::facts['networking']['fqdn'] ],
+  nginx::resource::server { $trusted['hostname']:,
+    server_name          => [ $trusted['certname'] ],
     listen_port          => 80,
     use_default_location => false,
     locations            => {
       '/xmltv/'      => {
-        server         => 'xmltv',
         location_alias => '/srv/media/xmltv/',
         autoindex      => 'off',
       },
