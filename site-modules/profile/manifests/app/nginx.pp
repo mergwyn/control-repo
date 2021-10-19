@@ -16,7 +16,7 @@ class profile::app::nginx {
       location_deny  => [ 'all', ],
     }
 
-    profile::app::zabbix::template_host { 'Template App Nginx by Zabbix agen': ensure => absent, }
+    profile::app::zabbix::template_host { 'Template App Nginx by Zabbix agent': ensure => absent, }
     profile::app::zabbix::template_host { 'Template App Nginx by HTTP': }
   }
 
