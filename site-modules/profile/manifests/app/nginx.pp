@@ -12,11 +12,12 @@ class profile::app::nginx {
       server         => $trusted['hostname'],
       location       => '/basic_status',
       stub_status    => true,
-      location_allow => [ '127.0.0.1' ],
+      location_allow => [ '127.0.0.1', lookup('defaults::cidr') ],
       location_deny  => [ 'all', ],
     }
 
-    profile::app::zabbix::template_host { 'Template App Nginx by Zabbix agent': }
+    profile::app::zabbix::template_host { 'Template App Nginx by Zabbix agen': ensure => absent, }
+    profile::app::zabbix::template_host { 'Template App Nginx by HTTP': }
   }
 
   package { [ 'fcgiwrap' ]: }
