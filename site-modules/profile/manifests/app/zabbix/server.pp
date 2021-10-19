@@ -56,7 +56,7 @@ class profile::app::zabbix::server {
 
   package { [ 'zabbix-nginx-conf' ]: ensure => absent, }
 
-  nginx::resource::server { 'zabbix':
+  nginx::resource::server { $trusted['hostname']:
     server_name          => [ $::facts['networking']['fqdn'] ],
     listen_port          => 80,
     www_root             => '/usr/share/zabbix',
