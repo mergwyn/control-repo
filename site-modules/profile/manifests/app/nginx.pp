@@ -12,7 +12,7 @@ class profile::app::nginx {
       server         => $trusted['hostname'],
       location       => '/basic_status',
       stub_status    => true,
-      location_allow => [ '1270.0.0.1' ],
+      location_allow => [ '127.0.0.1' ],
       location_deny  => [ 'all', ],
     }
 
