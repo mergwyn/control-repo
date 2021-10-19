@@ -3,7 +3,7 @@
 class profile::app::nginx::xmltv {
   include profile::app::nginx
 
-  nginx::resource::server { 'xmltv':,
+  nginx::resource::server { $trusted['hostname']:,
     server_name          => [ $::facts['networking']['fqdn'] ],
     listen_port          => 80,
     use_default_location => false,
