@@ -3,7 +3,7 @@
 class profile::app::nginx::webdav{
   include profile::app::nginx
 
-  if ! nginx::resource::server[$trusted['hostname']] {
+  if ! defined(nginx::resource::server[$trusted['hostname']]) {
     nginx::resource::server { $trusted['hostname']:
       listen_port          => 80,
       use_default_location => false,
