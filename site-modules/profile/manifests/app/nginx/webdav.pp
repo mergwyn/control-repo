@@ -9,6 +9,7 @@ class profile::app::nginx::webdav{
     use_default_location => false,
   }
   nginx::resource::location { "webdav_${trusted['hostname']}":
+    server              => $trusted['hostname'],
     location            => '/webdav',
     autoindex           => 'on',
     index_files         => [ '/index.cgi' ],
