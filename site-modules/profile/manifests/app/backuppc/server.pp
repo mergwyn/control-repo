@@ -24,7 +24,7 @@ class profile::app::backuppc::server (
   include profile::app::nginx
 
   nginx::resource::server { 'backuppc':
-    server_name          => [ $::facts['networking']['fqdn'] ],
+    server_name          => [ $trusted['certname'] ],
     listen_port          => 80,
     use_default_location => false,
     locations            => {
