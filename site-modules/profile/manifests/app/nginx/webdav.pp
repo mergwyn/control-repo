@@ -5,7 +5,7 @@ class profile::app::nginx::webdav{
 
   # TODO test whether server has been defined
   nginx::resource::server { $trusted['certname']:
-    server_name          => $trusted['certname'],
+    server_name          => [ $trusted['certname'] ],
     listen_port          => 80,
     use_default_location => false,
   }
