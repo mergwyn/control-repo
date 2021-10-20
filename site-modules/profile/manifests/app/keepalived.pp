@@ -2,7 +2,7 @@
 #
 #
 class profile::app::keepalived (
-  Enum['MASTER','BACKUP'] $state = 'MASTER',
+  Enum['MASTER','BACKUP'] $state = 'BACKUP',
   String[1]               $lan = 'eth0',
   String[1]               $wan = 'eth1',
   String[1]               $vpn = 'tun0',
@@ -23,6 +23,8 @@ class profile::app::keepalived (
     notification_email_from => $notification_email_from,
     smtp_server             => 'localhost',
     smtp_connect_timeout    => '60',
+    enable_script_security  => true,
+    script_user             => 'root',
   }
 
 # VRRP

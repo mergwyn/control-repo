@@ -3,7 +3,6 @@
 classes:
   - profile::platform::baseline::debian::netplan
 
-profile::app::keepalived::state: 'BACKUP'
 profile::app::keepalived::prio:  201
 
 profile::platform::baseline::debian::netplan::ethernets:
