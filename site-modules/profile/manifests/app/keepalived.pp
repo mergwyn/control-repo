@@ -77,12 +77,11 @@ class profile::app::keepalived (
                After=keepalived.service
                Requires=keepalived.service
                [Service]
-               #ExecStartPre=/bin/sh -c 'until ip -o a s ${lan} | grep -q ${v_cidr}; do sleep 1; done;'
+               ExecStartPre=/bin/sh -c 'until ip -o a s ${lan} | grep -q ${v_cidr}; do sleep 1; done;'
                | EOT
   }
   -> class { 'unbound':
-    #interface              => [ $v_ip, $facts['networking']['interfaces'][$lan]['ip'] ],
-    interface              => [ $facts['networking']['interfaces'][$lan]['ip'] ],
+    interface              => [ $v_ip, $facts['networking']['interfaces'][$lan]['ip'] ],
     access                 => [ "${lookup('defaults::cidr')}", '127.0.0.0/8' ],
     do_not_query_localhost => false,
     val_permissive_mode    => true,
