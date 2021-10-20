@@ -1,14 +1,15 @@
 #
 #
 class profile::app::nginx::webdav{
+
   include profile::app::nginx
 
-  # TODO test whether server has been defined
-  nginx::resource::server { $trusted['certname']:
+  ensure_resource ('nginx::resource::server', $trusted['hostname'], {
     server_name          => [ $trusted['certname'] ],
     listen_port          => 80,
     use_default_location => false,
-  }
+  } )
+
   nginx::resource::location { "webdav_${trusted['hostname']}":
     server              => $trusted['hostname'],
     location            => '/webdav',
