@@ -23,31 +23,31 @@ class profile::app::backuppc::server (
   }
   include profile::app::nginx
 
-  nginx::resource::server { 'backuppc':
+  ensure_resource ('nginx::resource::server', $trusted['hostname'], {
     server_name          => [ $trusted['certname'] ],
     listen_port          => 80,
     use_default_location => false,
-    locations            => {
-      '/backuppc' => {
-        server              => 'backuppc',
-        index_files         => [ '/index.cgi' ],
-        location_cfg_append => {
-          auth_pam              => '"BackupPC admin"',
-          auth_pam_service_name => '"nginx"',
-        },
-        location_alias      => '/usr/share/backuppc/cgi-bin/',
-      },
-      'cgi'       => {
-        server              => 'backuppc',
-        location            => '~\.cgi$',
-        fastcgi             => 'unix:/var/run/fcgiwrap.socket',
-        fastcgi_script      => '/usr/share/backuppc/cgi-bin$fastcgi_script_name',
-        fastcgi_params      => '/etc/nginx/fastcgi_params',
-        fastcgi_index       => 'BackupPC_Admin',
-        location_cfg_append => {
-          gzip => 'off',
-        },
-      },
+  } )
+
+  nginx::resource::location { "backuppc_${trusted['hostname']}":
+    location            => '/backuppc',
+    server              => $trusted['hostname'],
+    index_files         => [ '/index.cgi' ],
+    location_cfg_append => {
+      auth_pam              => '"BackupPC admin"',
+      auth_pam_service_name => '"nginx"',
+    },
+    location_alias      => '/usr/share/backuppc/cgi-bin/',
+  }
+  nginx::resource::location { "cgi_${trusted['hostname']}":
+    location            => '~\.cgi$',
+    server              => $trusted['hostname'],
+    fastcgi             => 'unix:/var/run/fcgiwrap.socket',
+    fastcgi_script      => '/usr/share/backuppc/cgi-bin$fastcgi_script_name',
+    fastcgi_params      => '/etc/nginx/fastcgi_params',
+    fastcgi_index       => 'BackupPC_Admin',
+    location_cfg_append => {
+      gzip => 'off',
     },
   }
 
