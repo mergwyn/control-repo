@@ -35,7 +35,7 @@ class profile::app::openvpn::privat {
                config  '/etc/openvpn/client/PrivateVPN-TUN/UDP/PrivateVPN-UK-London 1-TUN-1194.ovpn'
                comp-lzo no
                auth-user-pass '/etc/openvpn/client/privat.auth'
-               config '/etc/openvpn/scripts/update-systemd-resolved.conf'
+               config '/etc/openvpn/update-resolv-conf'
                dhcp-option DOMAIN-ROUTE .
                | EOT
   }
