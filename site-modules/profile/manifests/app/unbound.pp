@@ -30,7 +30,7 @@ class profile::app::unbound (
     enable => false,
   }
   -> class { 'unbound':
-    interface              => [ $gateway, $facts['networking']['interfaces'][$lan]['ip'] ],
+    interface              => [ '127.0.0.1', $gateway, $facts['networking']['interfaces'][$lan]['ip'] ],
     interface_automatic    => false,
     access                 => [ "${lookup('defaults::cidr')}", '127.0.0.0/8' ],
     do_not_query_localhost => false,
@@ -38,14 +38,12 @@ class profile::app::unbound (
     ip_transparent         => true,
     require                => Service['systemd-resolved'],
   }
-  -> unbound::forward { $trusted['domain']:
+  unbound::stub { $trusted['domain']:
     address => lookup('defaults::dns::nameservers'),
   }
+  class { 'unbound::remote': enable => true, }
 
 # Enable unbound-resolvconf service
-  service { 'unbound-resolvconf':
-    ensure => 'running',
-    enable => true,
-  }
+  service { 'unbound-resolvconf': enable => true, }
 
 }
