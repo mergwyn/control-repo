@@ -37,6 +37,7 @@ class profile::app::unbound (
     access                 => [ "${lookup('defaults::cidr')}", '127.0.0.0/8' ],
     do_not_query_localhost => false,
     val_permissive_mode    => true,
+    purge_unbound_conf_d   => false,
     ip_transparent         => true,
     require                => Service['systemd-resolved'],
   }
