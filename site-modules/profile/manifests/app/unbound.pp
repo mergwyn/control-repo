@@ -17,12 +17,11 @@ class profile::app::unbound (
     ensure => absent,
     unit   => 'unbound.service',
   }
-  class { 'systemd':
-    resolved_ensure => 'stopped',
+  service { 'systemd-resolved':
+    ensure => 'stopped',
+    enable => false,
   }
-
-
-  class { 'unbound':
+  -> class { 'unbound':
     #interface              => [ $gateway, $facts['networking']['interfaces'][$lan]['ip'] ],
     interface              => [ '0.0.0.0' ],
     interface_automatic    => true,
@@ -30,15 +29,16 @@ class profile::app::unbound (
     do_not_query_localhost => false,
     val_permissive_mode    => true,
     ip_transparent         => true,
-    username               => 'root',  # needed for ip_transparent
+    require                => Service['systemd-resolved'],
   }
-  unbound::forward { $trusted['domain']:
+  -> unbound::forward { $trusted['domain']:
     address => lookup('defaults::dns::nameservers'),
   }
 
 # Enable unbound-resolvconf service
   service { 'unbound-resolvconf':
     ensure => 'running',
+    enable => true,
   }
 
 }
