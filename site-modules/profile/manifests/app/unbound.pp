@@ -22,7 +22,9 @@ class profile::app::unbound (
   file { '/etc/apparmor.d/local/usr.sbin.unbound':
     ensure  => file,
     notify  => Service['unbound', 'apparmor'],
-    content => 'capability net_raw,',
+    content => @("EOT"),
+               capability net_raw,
+               | EOT
   }
 
   service { 'systemd-resolved':
