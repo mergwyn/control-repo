@@ -30,6 +30,7 @@ defaults::vpn_gateway:     "%{lookup('defaults::subnet')}.2"
 defaults::vpn::servers:
   - "%{lookup('defaults::subnet')}.3"
   - "%{lookup('defaults::subnet')}.4"
+defaults::vpn::use_systemd_resolved: false
 profile::infrastructure::router::type: 'privatvpn'
 
 defaults::backup_server:   'foxtrot'

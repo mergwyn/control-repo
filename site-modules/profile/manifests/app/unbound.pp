@@ -9,10 +9,10 @@
 class profile::app::unbound (
   String[1]               $lan     = 'eth0',
   Stdlib::IP::Address::V4 $gateway = lookup('defaults::vpn_gateway'),
+  Boolean                 $use_systemd_resolved = lookup('defaults::vpn::use_systemd_resolved'),
 ) {
 
-# TODO investigate why ip_transparent caused permission error
-
+# TODO this can be removed when all hosts updated
   systemd::dropin_file { 'keepalived.conf':
     ensure => absent,
     unit   => 'unbound.service',
@@ -28,13 +28,44 @@ class profile::app::unbound (
                | EOT
   }
 
-# unbound replaces systemd-resolved so disable
-  service { 'systemd-resolved':
-    ensure => 'stopped',
-    enable => false,
+# These interfaces are common
+  $interfaces = [ $gateway, $facts['networking']['interfaces'][$lan]['ip'] ]
+
+  case  $use_systemd_resolved {
+    false: {
+      # unbound replaces systemd-resolved so disable
+      service { 'systemd-resolved':
+        ensure => 'stopped',
+        enable => false,
+      }
+      # No systemd-resolved listening on lo
+      $interface_list = [ '127.0.0.1',] + $interfaces
+
+      # Use local DNS servers for local domain
+      unbound::stub { $trusted['domain']:
+        address => lookup('defaults::dns::nameservers'),
+      }
+      # Enable unbound-resolvconf service
+      # TODO check whether this is needed
+      #  service { 'unbound-resolvconf': enable => true, }
+
+    }
+    default: {
+      # unbound acts as stub resolver forwarding to  systemd-resolved
+      service { 'systemd-resolved':
+        ensure => 'running',
+        enable => true,
+      }
+      $interface_list = $interfaces
+
+      # Just ship to systemd-resolved
+      unbound::forward { '.':
+        address => [ '127.0.0.53' ],
+      }
+    }
   }
   -> class { 'unbound':
-    interface              => [ '127.0.0.1', $gateway, $facts['networking']['interfaces'][$lan]['ip'] ],
+    interface              => $interface_list,
     interface_automatic    => false,
     access                 => [ "${lookup('defaults::cidr')}", '127.0.0.0/8' ],
     do_not_query_localhost => false,
@@ -43,15 +74,6 @@ class profile::app::unbound (
     ip_transparent         => true,
     require                => Service['systemd-resolved'],
   }
-
-# Use different DNS servers for local domain
-  unbound::stub { $trusted['domain']:
-    address => lookup('defaults::dns::nameservers'),
-  }
   class { 'unbound::remote': enable => true, }
-
-# Enable unbound-resolvconf service
-# TODO check whether this is needed
-  service { 'unbound-resolvconf': enable => true, }
 
 }

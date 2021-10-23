@@ -1,6 +1,8 @@
+# @summary Set up openvpn client for privat VPN service
 #
-#
-class profile::app::openvpn::privat {
+class profile::app::openvpn::privat(
+  Boolean $use_systemd_resolved = lookup('defaults::vpn::use_systemd_resolved'),
+){
 
   $service = 'openvpn-client@privat.service'
 
@@ -27,8 +29,20 @@ class profile::app::openvpn::privat {
                ${lookup('secrets::privatvpn::password')}
                | EOT
   }
+
+  if $use_systemd_resolved {
+    package { 'openvpn-systemd-resolved': ensure => present }
+    $require = Package[ 'openvpn-systemd-resolved', 'openvpn' ]
+    $script = '/etc/openvpn/update-systemd-resolved'
+
+  } else {
+    package { 'openresolv': ensure => present, }
+    $script = '/etc/openvpn/update-resolv-conf'
+    $require = Package[ 'openvpn', 'openresolv' ]
+  }
+
   file {'/etc/openvpn/client/privat.conf':
-    require => Package['openvpn'],
+    require => $require,
     notify  => Service[$service],
     content => @("EOT"/),
                remote uk-lon.pvdata.host 1195 udp
@@ -37,9 +51,9 @@ class profile::app::openvpn::privat {
                auth-user-pass '/etc/openvpn/client/privat.auth'
                script-security 2
                setenv PATH /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-               up /etc/openvpn/update-resolv-conf
+               up ${script}
                up-restart
-               down /etc/openvpn/update-resolv-conf
+               down ${script}
                down-pre
                dhcp-option DOMAIN-ROUTE .
                | EOT

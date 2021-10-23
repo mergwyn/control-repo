@@ -39,6 +39,7 @@ class profile::app::openvpn (
   String[1] $lan = 'eth0',
   String[1] $wan = 'eth1',
   String[1] $vpn = 'tun0',
+  Boolean   $use_systemd_resolved = lookup('defaults::vpn::use_systemd_resolved'),
 ) {
 
   $scripts = '/etc/openvpn/scripts'
@@ -47,9 +48,8 @@ class profile::app::openvpn (
     'openvpn',
     'unzip',
     'ca-certificates',
-    'openresolv',
   ]
-  package { $aptpackages: ensure   => present, }
+  package { $aptpackages: ensure => present, }
 
   $service = 'openvpn-client@.service'
 
