@@ -39,14 +39,17 @@ class profile::app::openvpn (
   String[1] $lan = 'eth0',
   String[1] $wan = 'eth1',
   String[1] $vpn = 'tun0',
+  Boolean   $use_systemd_resolved = lookup('defaults::vpn::use_systemd_resolved'),
 ) {
+
+  $scripts = '/etc/openvpn/scripts'
 
   $aptpackages = [
     'openvpn',
     'unzip',
     'ca-certificates',
   ]
-  package { $aptpackages: ensure   => present, }
+  package { $aptpackages: ensure => present, }
 
   $service = 'openvpn-client@.service'
 
@@ -61,30 +64,26 @@ class profile::app::openvpn (
 ##### privat vpn setup
   include profile::app::openvpn::privat
 
-# Install https://github.com/jonathanio/update-systemd-resolved
-  include profile::app::git
-  package {'make': }
-  vcsrepo { '/opt/update-systemd-resolved':
-    ensure   => latest,
-    provider => git,
-    require  => Package['git'],
-    source   => 'https://github.com/jonathanio/update-systemd-resolved',
-    revision => 'master',
-    notify   => Exec['make update-systemd-resolved'],
-  }
-  exec { 'make update-systemd-resolved':
-    path        => ['/bin', '/sbin', '/usr/bin', '/usr/sbin'],
-    command     => '/usr/bin/make install',
-    cwd         => '/opt/update-systemd-resolved',
-    require     => Package['make', 'openvpn'],
-    refreshonly => true,
+  include profile::app::unbound
+
+# Remove https://github.com/jonathanio/update-systemd-resolved
+  $tidylist= [
+    '/opt/update-systemd-resolved',
+    "${scripts}/update-systemd-resolved",
+    "${scripts}/update-systemd-resolved.conf",
+  ]
+  file { $tidylist:
+    ensure  => absent,
+    recurse => true,
+    force   => true,
   }
 
 # dnsleak
-# TODO ensure directory exists.
-  file { '/etc/openvpn/scripts/dnsleaktest':
+  file { $scripts: ensure => directory, }
+
+  file { "${scripts}/dnsleaktest":
     ensure  => file,
-    require => Exec['make update-systemd-resolved'],
+    require => File[ $scripts ],
     owner   => 'root',
     group   => 'root',
     mode    => '0555',

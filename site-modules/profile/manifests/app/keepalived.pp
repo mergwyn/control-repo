@@ -69,27 +69,7 @@ class profile::app::keepalived (
     }
   }
 
-###### unbound setup
-  systemd::dropin_file { 'keepalived.conf':
-    unit    => 'unbound.service',
-    content => @("EOT"/),
-               [Unit]
-               After=keepalived.service
-               Requires=keepalived.service
-               [Service]
-               ExecStartPre=/bin/sh -c 'until ip -o a s ${lan} | grep -q ${v_cidr}; do sleep 1; done;'
-               | EOT
-  }
-  -> class { 'unbound':
-    interface              => [ $v_ip, $facts['networking']['interfaces'][$lan]['ip'] ],
-    access                 => [ "${lookup('defaults::cidr')}", '127.0.0.0/8' ],
-    do_not_query_localhost => false,
-    val_permissive_mode    => true,
-    ip_transparent         => true,
-    username               => 'root',  # needed for ip_transparent
-  }
-  unbound::forward { '.':
-    address => [ '127.0.0.53' ],
-  }
+# unbound setup
+  include profile::app::unbound
 
 }
