@@ -44,6 +44,7 @@ class profile::app::unbound (
       # Use local DNS servers for local domain
       unbound::stub { $trusted['domain']:
         address => lookup('defaults::dns::nameservers'),
+        require => Class['unbound'],
       }
       # Enable unbound-resolvconf service
       # TODO check whether this is needed
@@ -58,13 +59,15 @@ class profile::app::unbound (
       }
       $interface_list = $interfaces
 
+      service { 'unbound-resolvconf': enable => false, status => stopped, }
       # Just ship to systemd-resolved
       unbound::forward { '.':
         address => [ '127.0.0.53' ],
+        require => Class['unbound'],
       }
     }
   }
-  -> class { 'unbound':
+  class { 'unbound':
     interface              => $interface_list,
     interface_automatic    => false,
     access                 => [ "${lookup('defaults::cidr')}", '127.0.0.0/8' ],
