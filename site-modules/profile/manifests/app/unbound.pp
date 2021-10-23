@@ -18,16 +18,7 @@ class profile::app::unbound (
     unit   => 'unbound.service',
   }
 
-# Add net_raw to allow ip_transparent to work
   include profile::platform::baseline::debian::apparmor
-  file { '/etc/apparmor.d/local/usr.sbin.unbound':
-    ensure  => file,
-    notify  => Service['unbound', 'apparmor'],
-    require => Class['unbound'],
-    content => @("EOT"),
-               capability net_raw,
-               | EOT
-  }
 
 # These interfaces are common
   $interfaces = [ $gateway, $facts['networking']['interfaces'][$lan]['ip'] ]
@@ -77,6 +68,14 @@ class profile::app::unbound (
     purge_unbound_conf_d   => false,
     ip_transparent         => true,
     require                => Service['systemd-resolved'],
+  }
+# Add net_raw to allow ip_transparent to work
+  -> file { '/etc/apparmor.d/local/usr.sbin.unbound':
+    ensure  => file,
+    notify  => Service['unbound', 'apparmor'],
+    content => @("EOT"),
+               capability net_raw,
+               | EOT
   }
   class { 'unbound::remote': enable => true, }
 
