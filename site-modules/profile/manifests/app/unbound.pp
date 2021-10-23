@@ -23,6 +23,7 @@ class profile::app::unbound (
   file { '/etc/apparmor.d/local/usr.sbin.unbound':
     ensure  => file,
     notify  => Service['unbound', 'apparmor'],
+    require => Class['unbound'],
     content => @("EOT"),
                capability net_raw,
                | EOT
