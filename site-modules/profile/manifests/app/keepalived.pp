@@ -69,7 +69,4 @@ class profile::app::keepalived (
     }
   }
 
-# unbound setup
-  contain profile::app::unbound
-
 }

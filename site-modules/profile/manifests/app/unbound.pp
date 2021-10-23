@@ -23,7 +23,7 @@ class profile::app::unbound (
   file { '/etc/apparmor.d/local/usr.sbin.unbound':
     ensure  => file,
     notify  => Service['apparmor'],
-    require  => Class['unbound'],
+    before  => Service['unbound'],
     content => @("EOT"),
                capability net_raw,
                | EOT
@@ -76,9 +76,8 @@ class profile::app::unbound (
     val_permissive_mode    => true,
     purge_unbound_conf_d   => false,
     ip_transparent         => true,
-    require                => Service['systemd-resolved'],
-    before                 => File[ '/etc/apparmor.d/local/usr.sbin.unbound' ],
+    require                => [ Service['systemd-resolved'], File[ '/etc/apparmor.d/local/usr.sbin.unbound' ], ],
   }
-  class { 'unbound::remote': enable => true, }
+  -> class { 'unbound::remote': enable => true, }
 
 }
