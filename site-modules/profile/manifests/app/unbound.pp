@@ -64,6 +64,10 @@ class profile::app::unbound (
       $purge_unbound_conf_d = true
     }
   }
+
+# TODO for some reason not all of the config is applied on the first run
+# TODO in particular ip_transparent is not set causing unbound service start to fail
+# TODO work out why this is the case!
   class { 'unbound':
     interface              => $interface_list,
     interface_automatic    => false,
