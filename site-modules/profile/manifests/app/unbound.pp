@@ -12,17 +12,12 @@ class profile::app::unbound (
   Boolean                 $use_systemd_resolved = lookup('defaults::vpn::use_systemd_resolved'),
 ) {
 
-# TODO this can be removed when all hosts updated
-  systemd::dropin_file { 'keepalived.conf':
-    ensure => absent,
-    unit   => 'unbound.service',
-  }
-
 # Add net_raw to allow ip_transparent to work
   include profile::platform::baseline::debian::apparmor
   file { '/etc/apparmor.d/local/usr.sbin.unbound':
     ensure  => file,
-    notify  => Service['unbound', 'apparmor'],
+    notify  => Service['apparmor'],
+    before  => Package['unbound'],
     content => @("EOT"),
                capability net_raw,
                | EOT
@@ -44,10 +39,12 @@ class profile::app::unbound (
       # Use local DNS servers for local domain
       unbound::stub { $trusted['domain']:
         address => lookup('defaults::dns::nameservers'),
+        require => Class['unbound'],
       }
       # Enable unbound-resolvconf service
       # TODO check whether this is needed
       #  service { 'unbound-resolvconf': enable => true, }
+      $purge_unbound_conf_d  = false
 
     }
     default: {
@@ -58,22 +55,32 @@ class profile::app::unbound (
       }
       $interface_list = $interfaces
 
+      service { 'unbound-resolvconf': enable => false, status => stopped, }
       # Just ship to systemd-resolved
       unbound::forward { '.':
         address => [ '127.0.0.53' ],
+        require => Class['unbound'],
       }
+      $purge_unbound_conf_d = true
     }
   }
-  -> class { 'unbound':
+
+# TODO for some reason not all of the config is applied on the first run
+# TODO in particular ip_transparent is not set causing unbound service start to fail
+# TODO work out why this is the case!
+  class { 'unbound':
     interface              => $interface_list,
     interface_automatic    => false,
     access                 => [ "${lookup('defaults::cidr')}", '127.0.0.0/8' ],
     do_not_query_localhost => false,
     val_permissive_mode    => true,
-    purge_unbound_conf_d   => false,
+    purge_unbound_conf_d   => $purge_unbound_conf_d,
     ip_transparent         => true,
     require                => Service['systemd-resolved'],
   }
-  class { 'unbound::remote': enable => true, }
+  class { 'unbound::remote':
+    enable  => true,
+    require => Class['unbound'],
+  }
 
 }
