@@ -55,7 +55,7 @@ class profile::app::unbound (
       }
       $interface_list = $interfaces
 
-      #service { 'unbound-resolvconf': enable => false, status => stopped, }
+      service { 'unbound-resolvconf': enable => false, status => stopped, }
       # Just ship to systemd-resolved
       unbound::forward { '.':
         address => [ '127.0.0.53' ],
