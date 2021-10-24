@@ -12,18 +12,12 @@ class profile::app::unbound (
   Boolean                 $use_systemd_resolved = lookup('defaults::vpn::use_systemd_resolved'),
 ) {
 
-# TODO this can be removed when all hosts updated
-  systemd::dropin_file { 'keepalived.conf':
-    ensure => absent,
-    unit   => 'unbound.service',
-  }
-
 # Add net_raw to allow ip_transparent to work
   include profile::platform::baseline::debian::apparmor
   file { '/etc/apparmor.d/local/usr.sbin.unbound':
     ensure  => file,
     notify  => Service['apparmor'],
-    before  => Service['unbound'],
+    before  => Package['unbound'],
     content => @("EOT"),
                capability net_raw,
                | EOT
@@ -50,6 +44,7 @@ class profile::app::unbound (
       # Enable unbound-resolvconf service
       # TODO check whether this is needed
       #  service { 'unbound-resolvconf': enable => true, }
+      $purge_unbound_conf_d  = false
 
     }
     default: {
@@ -60,12 +55,13 @@ class profile::app::unbound (
       }
       $interface_list = $interfaces
 
-      service { 'unbound-resolvconf': enable => false, status => stopped, }
+      #service { 'unbound-resolvconf': enable => false, status => stopped, }
       # Just ship to systemd-resolved
       unbound::forward { '.':
         address => [ '127.0.0.53' ],
         require => Class['unbound'],
       }
+      $purge_unbound_conf_d = true
     }
   }
   class { 'unbound':
@@ -74,10 +70,13 @@ class profile::app::unbound (
     access                 => [ "${lookup('defaults::cidr')}", '127.0.0.0/8' ],
     do_not_query_localhost => false,
     val_permissive_mode    => true,
-    purge_unbound_conf_d   => false,
+    purge_unbound_conf_d   => $purge_unbound_conf_d,
     ip_transparent         => true,
-    require                => [ Service['systemd-resolved'], File[ '/etc/apparmor.d/local/usr.sbin.unbound' ], ],
+    require                => Service['systemd-resolved'],
   }
-  -> class { 'unbound::remote': enable => true, }
+  class { 'unbound::remote':
+    enable  => true,
+    require => Class['unbound'],
+  }
 
 }
