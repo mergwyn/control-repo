@@ -51,13 +51,13 @@ Rakefile:
   - FastGettext.default_text_domain = 'default-text-domain'
 
 .github/workflows/nightly.yml:
-  unmanaged: false
+  unmanaged: true
 .github/workflows/pr_test.yml:
-  unmanaged: false
+  unmanaged: true
 .github/workflows/auto_release.yml:
   unmanaged: true
 .github/workflows/spec.yml:
-  unmanaged: false
+  unmanaged: true
   checks: 'validate lint check rubocop'
 .github/workflows/release.yml:
   unmanaged: true
