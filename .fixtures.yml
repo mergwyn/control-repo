@@ -4,6 +4,9 @@ fixtures:
     role: "#{source_dir}/site-modules/role"
     profile: "#{source_dir}/site-modules/profile"
   repositories:
+    unbound:
+      repo: https://github.com/voxpupuli/puppet-unbound
+      ref: master
     ufw:
       repo: https://github.com/kogitoapp/attachmentgenie-ufw
       ref: master
@@ -98,9 +101,6 @@ fixtures:
     php:
       repo: puppet-php
       ref: 8.0.2
-    unbound:
-      repo: puppet-unbound
-      ref: 4.0.1
     apache:
       repo: puppetlabs-apache
       ref: 6.5.1
