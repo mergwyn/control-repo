@@ -1,4 +1,10 @@
 ---
+common:
+  disable_legacy_facts: true
+  owner: mergwyn
+  honeycomb:
+    enabled: false
+
 appveyor.yml:
   delete: true
 .gitlab-ci.yml:
@@ -7,16 +13,17 @@ appveyor.yml:
   required: &ignorepaths
     - '.onceover/'
     - 'spec/fixtures'
-.travis.yml:
-  cache:
-    bundler: true
-  branches:
-  - production
-  - /^dev/
-  notifications:
-    email:
-      on_success: change # default: change
-      on_failure: always # default: always
+#.travis.yml:
+#  cache:
+#    bundler: true
+#  branches:
+#  - production
+#  - /^dev/
+#  notifications:
+#    email:
+#      on_success: change # default: change
+#      on_failure: always # default: always
+
 Gemfile:
   required:
     ':development':
@@ -29,14 +36,28 @@ Gemfile:
     ':development':
       - gem: 'generate-puppetfile'
         version: '~> 1.0'
+
 spec/spec_helper.rb:
   coverage_report: false
   minimum_code_coverage_percentage: 0
   strict_level: ":warning"
   hiera_config: "spec/hiera.yaml" 
+
 Rakefile:
   extras: 
 #  - require 'ra10ke'
 #  - Ra10ke::RakeTask.new
   - require 'onceover/rake_tasks'
   - FastGettext.default_text_domain = 'default-text-domain'
+
+.github/workflows/nightly.yml:
+  unmanaged: false
+.github/workflows/pr_test.yml:
+  unmanaged: false
+.github/workflows/auto_release.yml:
+  unmanaged: true
+.github/workflows/spec.yml:
+  unmanaged: false
+  checks: 'validate lint check rubocop'
+.github/workflows/release.yml:
+  unmanaged: true
