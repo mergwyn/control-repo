@@ -38,7 +38,7 @@ class profile::app::gateway::certs {
 
 # TODO is this necessary - check systemd timer
   class { 'letsencrypt':
-    email             => "ca@${facts['domain']}",
+    email             => "ca@${trusted['domain']}",
     renew_cron_ensure => 'absent',
     #renew_cron_ensure   => 'present',
     #renew_cron_minute   => 0,

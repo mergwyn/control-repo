@@ -5,7 +5,7 @@ class profile::puppet::repo {
   $arch =  $::facts['os']['architecture']
   case $arch {
     'i386':  { $release = 'xenial' }
-    'amd64': { $release = $facts['lsbdistcodename'] }
+    'amd64': { $release = $facts['os']['distro']['codename']}
     default: { notify { "Unexpected arch ${arch} for puppet repo": withpath => true } }
   }
   apt::source { 'puppet6':

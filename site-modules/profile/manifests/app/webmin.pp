@@ -41,7 +41,7 @@ class profile::app::webmin {
   ini_setting { 'webmin_from':
     setting           => 'webmin_from',
     key_val_separator => '=',
-    value             => "webmin@${::fqdn}",
+    value             => "webmin@${trusted['certnamae']}",
     path              => '/etc/webmin/mailboxes/config',
     require           => Package['webmin'],
     notify            => Service['webmin'],

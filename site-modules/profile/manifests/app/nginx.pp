@@ -7,7 +7,7 @@ class profile::app::nginx {
 
   if defined('profile::app::zabbix::agent') {
 # TODO set up the location needed for this template
-    nginx::resource::location { "basic_status_${facts['hostname']}":
+    nginx::resource::location { "basic_status_${trusted['hostname']}":
       ensure         => present,
       server         => $trusted['hostname'],
       location       => '/basic_status',

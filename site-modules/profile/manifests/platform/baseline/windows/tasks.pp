@@ -12,7 +12,7 @@ class profile::platform::baseline::windows::tasks (
       scheduled_task { 'GPO Backup':
         ensure      => present,
         enabled     => true,
-        command     => "${::system32}\\WindowsPowerShell\\v1.0\\powershell.exe",
+        command     => "${facts['os']['windows']['system32']}\\WindowsPowerShell\\v1.0\\powershell.exe",
         arguments   => "-ExecutionPolicy RemoteSigned \\\\${lookup('defaults::backup_server')}\\backup\\GPO\\GPOBackup.ps1",
         working_dir => "\\\\${lookup('defaults::backup_server')}\\backup\\${trusted['hostname']}\\GPO\\",
         user        => "${lookup('defaults::workgroup')}\\backup",

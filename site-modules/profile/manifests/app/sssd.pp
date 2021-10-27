@@ -14,7 +14,7 @@ class profile::app::sssd {
       'sssd'                    => {
 #        'services'            => ['nss', 'pam'],
         'config_file_version' => 2,
-        'domains'             => $::domain,
+        'domains'             => $trusted['domain'],
       },
       'nss'                     => {
         'filter_groups' => 'root',
@@ -22,7 +22,7 @@ class profile::app::sssd {
       },
       'domain/theclarkhome.com' => {
         'accessprovider'                 => 'ad',
-        'ad_domain'                      => $::domain,
+        'ad_domain'                      => $trusted['domain'],
         'auth_provider'                  => 'ad',
         'cache_credentials'              => true,
         'debug_level'                    => '1',
