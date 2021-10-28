@@ -8,9 +8,6 @@ on:
   push:
 
 jobs:
-  concurrency:
-    group: ${{ github.head_ref }}
-    cancel-in-progress: true
   setup_matrix:
     name: "Setup Test Matrix"
     runs-on: ubuntu-20.04
