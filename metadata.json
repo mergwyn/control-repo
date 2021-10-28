@@ -12,8 +12,7 @@
     {
       "operatingsystem": "Ubuntu",
       "operatingsystemrelease": [
-        "20.04",
-        "21.04"
+        "20.04"
       ]
     },
     {
@@ -34,7 +33,7 @@
   "requirements": [
     {
       "name": "puppet",
-      "version_requirement": ">= 5.0.0 < 7.0.0"
+      "version_requirement": ">= 5.0.0 < 8.0.0"
     }
   ],
   "pdk-version": "2.2.0",
