@@ -18,15 +18,15 @@
     {
       "operatingsystem": "windows",
       "operatingsystemrelease": [
-        "10"
+        "10",
+        "11"
       ]
     },
     {
       "operatingsystem": "Darwin",
       "operatingsystemrelease": [
-        "17",
-        "18",
-        "19"
+        "19",
+        "20"
       ]
     }
   ],
