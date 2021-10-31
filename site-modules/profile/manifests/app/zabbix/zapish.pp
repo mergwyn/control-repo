@@ -39,10 +39,12 @@ class profile::app::zabbix::zapish (
     ensure => directory,
   }
 
+  $zabbix_server = lookup('defaults::zabbix_url')
+
   shellvar { 'zapish_url':
     ensure => present,
     target => $config_file,
-    value  => "http://zulu.theclarkhome.com/api_jsonrpc.php"
+    value  => "http://${zabbix_server}/api_jsonrpc.php"
   }
 
   shellvar { 'zapish_auth':
