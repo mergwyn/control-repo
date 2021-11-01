@@ -21,7 +21,7 @@ fixtures:
       ref: master
     radarr:
       repo: https://github.com/mergwyn/mergwyn-radarr
-      ref: master
+      ref: main
     ddclient:
       repo: https://github.com/mergwyn/puppet-ddclient
       ref: master
