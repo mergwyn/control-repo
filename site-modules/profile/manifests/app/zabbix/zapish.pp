@@ -9,7 +9,7 @@ class profile::app::zabbix::zapish (
   ensure_packages( [ 'build-essential', 'make' ] )
 
 # Install zapish from github
-  $url = 'https://github.com/kloczek/zapish'
+  $url = 'https://github.com/mergwyn/zapish'
   $dir = '/opt/zapish'
 
   include profile::app::git
