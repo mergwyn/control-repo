@@ -25,7 +25,7 @@ mod 'managedmac', :git => 'https://github.com/mergwyn/mergwyn-managedmac', :bran
 #mod 'managedmac', :git => 'https://github.com/pfhonore/puppet-managedmac'
 #mod 'meltwater-cpan', '2.0.0'
 mod 'mergwyn-jackett', :git => 'https://github.com/mergwyn/mergwyn-jackett'
-mod 'mergwyn-radarr', :git => 'https://github.com/mergwyn/mergwyn-radarr'
+mod 'mergwyn-radarr', :git => 'https://github.com/mergwyn/mergwyn-radarr', :branch => 'main'
 mod 'mosen-cups', '1.5.0'
 mod 'mergwyn-ddclient', :git =>  'https://github.com/mergwyn/puppet-ddclient'
 mod 'puppet-alternatives', '3.0.0'
