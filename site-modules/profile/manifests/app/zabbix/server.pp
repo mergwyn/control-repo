@@ -6,8 +6,6 @@ class profile::app::zabbix::server {
   #package { [ 'php-xml', 'php-mbstring', 'php-bcmath' ] : }
   #package { [ 'snmp', 'snmp-builder' ] : }
 
-# For zabbixapi
-  package { [ 'build-essential' ] : }
 
   contain profile::app::db::mysql::server
 
@@ -129,4 +127,8 @@ class profile::app::zabbix::server {
 
   Class['zabbix::resources::web']
   -> Zabbix_template_host <<| |>>
+
+# Finally, add backup
+  include profile::app::zabbix::backup
+
 }

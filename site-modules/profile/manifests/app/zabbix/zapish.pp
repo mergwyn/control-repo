@@ -6,14 +6,13 @@ class profile::app::zabbix::zapish (
 ){
 
 # For zabbixapi
-  package { [ 'build-essential' ] : }
+  ensure_packages( [ 'build-essential', 'make' ] )
 
 # Install zapish from github
   $url = 'https://github.com/kloczek/zapish'
   $dir = '/opt/zapish'
 
   include profile::app::git
-  ensure_package {'make': }
 
   vcsrepo { $dir:
     ensure   => latest,

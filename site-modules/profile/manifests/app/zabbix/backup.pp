@@ -1,9 +1,6 @@
-# @summary install script to backup templates by backuppc 
+# @summary install script to backup zabbix
 #
-class profile::app::zabbix::template_backup {
-
-# For zabbixapi
-  package { [ 'build-essential' ] : }
+class profile::app::zabbix::backup {
 
   if defined('profile::app::zabbix::agent') {
     include profile::app::zabbix::zapish
