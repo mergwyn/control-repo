@@ -21,6 +21,8 @@ class profile::app::zabbix::server {
     zabbix_api_pass   => lookup('secrets::mysql'),
     manage_resources  => true,
     manage_vhost      => false,
+# TODO workaround for not recognising aliases for utf8
+    database_charset  => 'utf8mb3',
   }
 
 # php setup
