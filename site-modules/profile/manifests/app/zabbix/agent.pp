@@ -36,6 +36,7 @@ class profile::app::zabbix::agent (
         enableremotecommands => '1',
         zabbix_package_state => 'latest',
         hostmetadata         => $hostmetadata,
+        manage_resources     => true,
 # TODO consider picking templates and macros from hiera
         zbx_templates        => [ 'Template OS Linux by Zabbix agent active' ],
         zbx_macros           => $macros,
