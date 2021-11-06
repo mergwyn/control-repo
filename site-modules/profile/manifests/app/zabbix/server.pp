@@ -25,6 +25,8 @@ class profile::app::zabbix::server {
     database_charset  => 'utf8mb3',
   }
 
+  profile::app::zabbix::template_host { 'Template App Zabbix Server by Zabbix agent active': }
+
 # php setup
   include '::php'
   php::fpm::pool { 'zabbix':
