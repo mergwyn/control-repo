@@ -101,7 +101,7 @@ class profile::app::db::mysql::server (
       host     => 'localhost',
       grant    => [ 'REPLICATION CLIENT', 'PROCESS', 'SHOW DATABASES', 'SHOW VIEW' ],
 # TODO workaround for utf8
-      charset => 'utf8mb3',
+      charset  => 'utf8mb3',
     }
 
     file {'/var/lib/zabbix/': ensure => directory }
