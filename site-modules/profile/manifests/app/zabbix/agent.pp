@@ -38,7 +38,7 @@ class profile::app::zabbix::agent (
         hostmetadata         => $hostmetadata,
         manage_resources     => true,
 # TODO consider these values from hiera
-        use_ip               => false,
+        agent_use_ip         => false,
         zbx_templates        => [ 'Template OS Linux by Zabbix agent active' ],
         zbx_macros           => $macros,
       }
