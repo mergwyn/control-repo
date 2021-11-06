@@ -39,6 +39,7 @@ class profile::app::zabbix::agent (
         manage_resources     => true,
 # TODO consider these values from hiera
         agent_use_ip         => false,
+        zbx_templates        => [],
         zbx_macros           => $macros,
       }
 
