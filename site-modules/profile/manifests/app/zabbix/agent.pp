@@ -10,6 +10,20 @@ class profile::app::zabbix::agent (
   }
   $hostmetadata = ":kernel=${facts['kernel']}:virtual=${facts['virtual']}"
 
+# TODO consider moving this to hiera
+  case $facts['virtual'] {
+    'lxc': {
+      $macros =  [
+        { macro => '{$VFS.DEV.DEVNAME.MATCHES}', value => '^\s$', }, # Only /
+        { macro => '{$VFS.FS.FSNAME.MATCHES}',   value => '^/$', },  # Disable all
+      ]
+
+    }
+    default: {
+      $macros = []
+    }
+  }
+
   case $facts['os']['name'] {
     'Ubuntu': {
 
@@ -22,7 +36,9 @@ class profile::app::zabbix::agent (
         enableremotecommands => '1',
         zabbix_package_state => 'latest',
         hostmetadata         => $hostmetadata,
-# templates => [ ],
+# TODO consider picking templates and macros from hiera
+        zbx_templates        => [ 'Template OS Linux by Zabbix agent active' ],
+        zbx_macros           => $macros,
       }
 
       package {'zabbix-sender': }
