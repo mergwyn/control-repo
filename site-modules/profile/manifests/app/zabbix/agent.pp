@@ -14,8 +14,8 @@ class profile::app::zabbix::agent (
   case $facts['virtual'] {
     'lxc': {
       $macros =  [
-        { macro => '{$VFS.DEV.DEVNAME.MATCHES}', value => '^\s$', }, # Only /
-        { macro => '{$VFS.FS.FSNAME.MATCHES}',   value => '^/$', },  # Disable all
+        { '{$VFS.DEV.DEVNAME.MATCHES}' => '^\s$', }, # Only /
+        { '{$VFS.FS.FSNAME.MATCHES}'   => '^/$', },  # Disable all
       ]
 
     }
