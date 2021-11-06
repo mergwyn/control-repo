@@ -1,7 +1,4 @@
-#
-#
-# TODO settings, systemd unit file
-# TODO install from snap store
+# @summary Install sonarr
 #
 class profile::app::sonarr (
   $user  = 'media',
@@ -9,8 +6,8 @@ class profile::app::sonarr (
   ) {
   # repo
   apt::source { 'sonarr':
-    location => 'http://apt.sonarr.tv/',
-    release  => 'master',
+    location => 'https://apt.sonarr.tv/ubuntu',
+    release  => $facts['os']['distro']['codename'],
     repos    => 'main',
     key      => {
       #'id'     => 'FDA5DFFC',
@@ -21,37 +18,26 @@ class profile::app::sonarr (
       'deb' => true,
     },
   }
-  # automatically start daemon
-  systemd::unit_file { 'sonarr.service':
-    enable  => true,
-    active  => true,
-    content => @("EOT"),
-               [Unit]
-               Description=Sonarr Daemon
-               RequiresMountsFor=/srv/media /home/media
-               After=nss-user-lookup.target
- 
-               [Service]
-               User=${user}
-               Group=${group}
-               Restart=on-failure
-               RestartSec=5
-               Type=simple
-               ExecStart=/usr/bin/mono /opt/NzbDrone/NzbDrone.exe -nobrowser
-               KillMode=process
-               TimeoutStopSec=20
- 
-               [Install]
-               WantedBy=multi-user.target
+
+# setup preseed to supply user and group
+  $preseed = '/var/cache/debconf/sonarr.preseed'
+  file { $preseed:
+    ensure  => present,
+    content => @("EOT"/),
+               sonarr	sonarr/owning_user	string	${user}
+               sonarr	sonarr/owning_group	string	${group}
                | EOT
   }
 
-  # finally install package and start service
-  package { 'nzbdrone': }
+# install and make sure service is running
+  package { 'sonarr':
+    ensure       => latest,
+    responsefile => $preseed,
+    require      => File[$preseed],
+  }
   service { 'sonarr':
     ensure  => 'running',
     enable  => true,
-    require => Package['nzbdrone'],
+    require => Package['sonarr'],
   }
 }
-# vim: sw=2:ai:nu expandtab
