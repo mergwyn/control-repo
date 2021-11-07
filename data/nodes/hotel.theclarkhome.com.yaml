@@ -1,5 +1,0 @@
----
-
-profile::platform:baseline::packages::objects:
-  todobackup: {}  # todo backup fails to install
-

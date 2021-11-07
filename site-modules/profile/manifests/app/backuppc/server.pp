@@ -96,26 +96,30 @@ class profile::app::backuppc::server (
 #  }
 
 
-  # zabbix config
-  include sudo
-  sudo::conf { 'zabbix-backuppc':
-    content => 'zabbix  ALL=(ALL)       NOPASSWD:       /etc/zabbix/scripts/*',
-  }
+  if defined('profile::app::zabbix::agent') {
+    profile::app::zabbix::template_host { 'Template App BackupPC by Zabbix agent active': }
 
-  # Hook into zabbix
-  zabbix::userparameters { 'backuppc':
-    source => 'puppet:///modules/profile/backuppc/backuppc.conf',
-  }
-  zabbix::userparameters { 'discovery_backuppc_sudo.pl':
-    script     => 'puppet:///modules/profile/backuppc/discovery_backuppc_sudo.pl',
-    script_dir => '/etc/zabbix/scripts',
-  }
-  zabbix::userparameters { 'check_backuppc_sudo.pl':
-    script     => 'puppet:///modules/profile/backuppc/check_backuppc_sudo.pl',
-    script_dir => '/etc/zabbix/scripts',
-  }
-  zabbix::userparameters { 'backuppc_info.pl':
-    script     => 'puppet:///modules/profile/backuppc/backuppc_info.pl',
-    script_dir => '/etc/zabbix/scripts',
+    # zabbix config
+    include sudo
+    sudo::conf { 'zabbix-backuppc':
+      content => 'zabbix  ALL=(ALL)       NOPASSWD:       /etc/zabbix/scripts/*',
+    }
+
+    # Hook into zabbix
+    zabbix::userparameters { 'backuppc':
+      source => 'puppet:///modules/profile/backuppc/backuppc.conf',
+    }
+    zabbix::userparameters { 'discovery_backuppc_sudo.pl':
+      script     => 'puppet:///modules/profile/backuppc/discovery_backuppc_sudo.pl',
+      script_dir => '/etc/zabbix/scripts',
+    }
+    zabbix::userparameters { 'check_backuppc_sudo.pl':
+      script     => 'puppet:///modules/profile/backuppc/check_backuppc_sudo.pl',
+      script_dir => '/etc/zabbix/scripts',
+    }
+    zabbix::userparameters { 'backuppc_info.pl':
+      script     => 'puppet:///modules/profile/backuppc/backuppc_info.pl',
+      script_dir => '/etc/zabbix/scripts',
+    }
   }
 }
