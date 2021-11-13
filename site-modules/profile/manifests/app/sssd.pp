@@ -10,7 +10,7 @@ class profile::app::sssd {
 #    creates => $keytab,
 #  }
   class { '::sssd':
-    config => {
+    config  => {
       'sssd'                    => {
 #        'services'            => ['nss', 'pam'],
         'config_file_version' => 2,
@@ -39,8 +39,8 @@ class profile::app::sssd {
 # TODO workaorund https://bugs.launchpad.net/ubuntu/+source/sssd/+bug/1934997
         'ad_gpo_access_control'          => 'permissive',
       },
-      require                   => Service[ 'winbind' ],
-    }
+    },
+    require => Service[ 'winbind' ],
   }
 
   # remove sudo sss setting
