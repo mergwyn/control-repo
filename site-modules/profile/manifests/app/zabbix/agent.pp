@@ -24,6 +24,26 @@ class profile::app::zabbix::agent (
     }
   }
 
+
+# Query puppetdb query for exported template resources
+  $template_query = ['from', 'resources',
+    [ 'and',
+      [ '=', 'type', 'Zabbix_template_host' ],
+      [ '=', ['parameter', 'ensure'], 'present' ],
+      [ '~', 'title', ".*@${trusted['certname']}" ],
+    ]
+  ]
+#  templates = query=resources[title] { type = "Zabbix_template_host" and parameters.ensure = "present" and title ~ ".*@.*.theclarkhome.com" }' |
+
+
+# Run 
+  $templates = puppetdb_query($template_query).each |$value| {
+    regsubst($value['title'], '^.*@(.*)$', '\1')
+  }
+  notify {'Zabbix templates ':
+    message => "Your Zabix templates are ${join($templates, ', ')}",
+  }
+
   case $facts['os']['name'] {
     'Ubuntu': {
 
@@ -37,9 +57,9 @@ class profile::app::zabbix::agent (
         zabbix_package_state => 'latest',
         hostmetadata         => $hostmetadata,
         manage_resources     => true,
+        zbx_templates        => $templates,
 # TODO consider these values from hiera
         agent_use_ip         => false,
-        zbx_templates        => [],
         zbx_macros           => $macros,
       }
 
@@ -53,13 +73,9 @@ class profile::app::zabbix::agent (
         content => 'zabbix  ALL=NOPASSWD: /bin/netstat',
       }
 
-      zabbix::userparameters { 'discovery_disks.perl':
-        script     => 'puppet:///modules/profile/zabbix_agent/discovery_disks.perl',
-        script_dir => $dir,
-      }
-      zabbix::userparameters { 'disk_autodiscovery':
-        source => 'puppet:///modules/profile/zabbix_agent/disk_autodiscovery.conf',
-      }
+      # NO longer needed
+      zabbix::userparameters { 'discovery_disks.perl': ensure => absent, }
+      zabbix::userparameters { 'disk_autodiscovery': ensure => absent, }
 
       zabbix::userparameters { 'discovery_processes.sh':
         script     => 'puppet:///modules/profile/zabbix_agent/discovery_processes.sh',
@@ -69,6 +85,7 @@ class profile::app::zabbix::agent (
         content => "UserParameter=custom.proc.discovery_perl,${dir}/discovery_processes.sh\n"
       }
 
+# TODO check it below needed
       zabbix::userparameters { 'discovery_tcp_services.perl':
         script     => 'puppet:///modules/profile/zabbix_agent/discovery_tcp_services.perl',
         script_dir => $dir,
@@ -90,6 +107,7 @@ class profile::app::zabbix::agent (
       }
     }
     'windows': {
+      # TODO convert to zabbix class
       service {'Zabbix Agent':
         ensure  => 'running',
         enable  => true,

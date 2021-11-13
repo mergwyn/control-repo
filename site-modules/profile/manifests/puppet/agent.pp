@@ -21,6 +21,8 @@ class profile::puppet::agent {
   apt::pin { 'puppet-6.16': ensure => absent }
   package { 'puppetlabs-release-pc1': ensure => absent }
 
+  include profile::puppet::termini
+
   file { '/etc/profile.d/puppet.sh':
     ensure  => present,
     content => "# Expand the PATH to include extra puppet binaries\nPATH=\$PATH:/opt/puppetlabs/puppet/bin\n"
