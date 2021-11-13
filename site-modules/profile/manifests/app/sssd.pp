@@ -21,7 +21,7 @@ class profile::app::sssd {
         'filter_users'  => 'root'
       },
       'domain/theclarkhome.com' => {
-        'accessprovider'                 => 'ad',
+        'access_provider'                => 'ad',
         'ad_domain'                      => $trusted['domain'],
         'auth_provider'                  => 'ad',
         'cache_credentials'              => true,
@@ -36,6 +36,8 @@ class profile::app::sssd {
         'ldap_uri'                       => ['ldap://bravo.theclarkhome.com,ldap://alpha.theclarkhome.com'],
         'ldap_use_tokengroups'           => false,
         'use_fully_qualified_names'      => false,
+# TODO workaorund https://bugs.launchpad.net/ubuntu/+source/sssd/+bug/1934997
+        'ad_gpo_access_control'          => 'permissive',
       },
       require                   => Service[ 'winbind' ],
     }
