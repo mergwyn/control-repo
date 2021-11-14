@@ -8,12 +8,12 @@ class profile::platform::baseline::users::debian {
 
   User { 'root_password':
     name     => 'root',
-    password => lookup('defaults::sharedpassword'),
+    password => lookup('secrets::root'),
   }
 
   User { 'ubuntu': ensure => absent }
   User { 'sadmin':
-    password   => lookup('defaults::sharedpassword'),
+    password   => lookup('secrets::sadmin'),
     groups     => 'sudo',
     uid        => 1000,
     managehome => true,
