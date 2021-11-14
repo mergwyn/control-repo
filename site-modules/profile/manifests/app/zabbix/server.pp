@@ -127,8 +127,8 @@ class profile::app::zabbix::server {
 #    }
 #  }
 
-  Class['zabbix::resources::web']
-  -> Zabbix_template_host <<| |>>
+#  Class['zabbix::resources::web']
+  #-> Zabbix_template_host <<| |>>
 
 # Finally, add backup
   include profile::app::zabbix::backup
