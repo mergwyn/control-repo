@@ -112,20 +112,20 @@ class profile::app::zabbix::server {
 
 # TODO move to location closer to the functionality that requires the template
 # TODO add windows and MacOS
-  [
-    #'Template App BackupPC by Zabbix agent active',
-    #'Template App EaseUS ToDo Backup by Zabbix agent active',
-  #  'Template App Puppet by Zabbix agent active',
-    #'Template App Speedtest by Zabbix agent active',
-    #'Template App xTeve by Zabbix agent active',
-    #'Template App ZFS by Zabbix agent active',
-    #'Template Module Linux processes by Zabbix agent active',
-    #'Template OS Linux LXC by Zabbix agent active',
-  ].each |String $template| {
-    zabbix::template { $template:
-      templ_source => "puppet:///modules/profile/zabbix/server/templates/${template}.xml",
-    }
-  }
+#  [
+#    #'Template App BackupPC by Zabbix agent active',
+#    #'Template App EaseUS ToDo Backup by Zabbix agent active',
+#  #  'Template App Puppet by Zabbix agent active',
+#    #'Template App Speedtest by Zabbix agent active',
+#    #'Template App xTeve by Zabbix agent active',
+#    #'Template App ZFS by Zabbix agent active',
+#    #'Template Module Linux processes by Zabbix agent active',
+#    #'Template OS Linux LXC by Zabbix agent active',
+#  ].each |String $template| {
+#    zabbix::template { $template:
+#      templ_source => "puppet:///modules/profile/zabbix/server/templates/${template}.xml",
+#    }
+#  }
 
   Class['zabbix::resources::web']
   -> Zabbix_template_host <<| |>>
