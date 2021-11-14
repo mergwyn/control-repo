@@ -40,7 +40,7 @@ class profile::app::sssd {
         'ad_gpo_access_control'          => 'permissive',
       },
     },
-    require => Service[ 'SambaWinBind' ],
+    #require => Service[ 'SambaWinBind' ],
   }
 
   # remove sudo sss setting
