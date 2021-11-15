@@ -48,12 +48,14 @@ class profile::app::unison {
     }
     'Debian': {
       package { 'unison': ensure => absent, }
+      $version = '2.51.4'
+      $ocaml = '4.12.0'
 
       case $facts['os']['architecture'] {
-        'amd64': { $archive_name = 'unison-v2.51.3+ocaml-4.10.0+x86_64.linux.static.tar.gz' }
+        'amd64': { $archive_name = "unison-v${version}+ocaml-${ocaml}+x86_64.linux.static.tar.gz" }
         default: { }
       }
-      $url = "https://github.com/bcpierce00/unison/releases/download/v2.51.3/${archive_name}"
+      $url = "https://github.com/bcpierce00/unison/releases/download/v${version}/${archive_name}"
       $archive_path = "${facts['puppet_vardir']}/${archive_name}"
       $install_path = '/usr'
       $creates      = "${install_path}/bin/unison"
