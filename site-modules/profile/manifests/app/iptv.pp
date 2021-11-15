@@ -14,24 +14,45 @@ class profile::app::iptv {
 #    admin_password => lookup('secrets::tvheadend'),
 #  }
 
-# TODO replace with timer - cron job doesn't run correctly (curl error)
-#  cron::job::multiple { 'xmltv':
-#    jobs        => [
-##      {
-##        command => "test -x ${codedir}/iptv/get-epg && ${codedir}/iptv/get-epg",
-##        minute  => 30,
-##        hour    => '*',
-##      },
-#      {
-#        command => "test -x ${codedir}/iptv/get-channels && ${codedir}/iptv/get-channels",
-#        minute  => 20,
-#        hour    => '*/6',
-#      },
-#    ],
 #    environment => [
 #     'PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/puppetlabs/bin:/opt/puppetlabs/puppet/bin"'
-#    ],
 #  }
+
+  cron::job { 'xmltv': ensure => absent }
+
+# systemd timer to download channels
+  $adminemail = lookup('defaults::adminemail')
+  $_timer = @(EOT)
+    [Unit]
+    Description=Run get channels on boot and 6 hourly
+
+    [Timer]
+    OnBootSec=10min
+    OnUnitActiveSec=6h
+
+    [Install]
+    WantedBy=timers.target
+    | EOT
+
+  $_service = @("EOT")
+    [Unit]
+    Description=runs channel download
+    Wants=getchannels.timer
+
+    [Service]
+    Type=oneshot
+    ExecStart=/bin/bash -c '${codedir}/iptv/get-channels 2>&1 | /usr/bin/mailx -v -E -s "%N output root@%H" ${adminemail}'
+
+    [Install]
+    WantedBy=multi-user.target
+    | EOT
+
+  systemd::timer{'getchannels.timer':
+    timer_content   => $_timer,
+    service_content => $_service,
+    enable          => true,
+  }
+
 
   #TODO xteve?
   include profile::app::nginx::xmltv
