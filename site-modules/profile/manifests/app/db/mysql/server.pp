@@ -51,11 +51,11 @@ class profile::app::db::mysql::server (
       #'innodb_flush_method' => 'O_DIRECT',
       'innodb_log_files_in_group'      => '3',
       'innodb_log_file_size'           => '256M',
-      'join_buffer_size'               => '2M',
+      'join_buffer_size'               => '5M',
       'innodb_flush_log_at_trx_commit' => '1',
       'innodb_file_per_table'          => '1',
       'innodb_buffer_pool_size'        => '2500M',
-      'innodb_buffer_pool_instances'   => '3',
+      'innodb_buffer_pool_instances'   => '2',
       'server_id'                      => '1',
     },
   }
