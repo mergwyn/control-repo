@@ -49,10 +49,10 @@ class profile::app::unison {
     'Debian': {
       package { 'unison': ensure => absent, }
       $version = '2.51.4'
-      $ocaml = '4.10.0'
+      $ocaml = '4.12.0'
 
       case $facts['os']['architecture'] {
-        'amd64': { $archive_name = "unison-v${version}+ocaml-${ocaml}+x86_64.linux.static.tar.gz" }
+        'amd64': { $archive_name = "unison-v${version}+ocaml-${ocaml}+x86_64.linux.tar.gz" }
         default: { }
       }
       $url = "https://github.com/bcpierce00/unison/releases/download/v${version}/${archive_name}"
