@@ -1,9 +1,0 @@
----
-
-classes:
-  - profile::app::sssd
-  - profile::app::zabbix::server
-  - profile::app::zabbix::agent
-  - profile::app::backuppc::client
-
-profile::app::zabbix::agent::server: 'november'
