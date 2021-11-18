@@ -54,7 +54,7 @@ class profile::app::db::mysql::server (
       'join_buffer_size'               => '4M',
       'innodb_flush_log_at_trx_commit' => '1',
       'innodb_file_per_table'          => '1',
-      'innodb_buffer_pool_size'        => '2500M',
+      'innodb_buffer_pool_size'        => '2300M',
       'innodb_buffer_pool_instances'   => '2',
       'server_id'                      => '1',
     },
