@@ -33,16 +33,10 @@ class profile::app::zabbix::agent (
       [ '~', 'title', ".*@${trusted['certname']}" ],
     ]
   ]
-#  templates = query=resources[title] { type = "Zabbix_template_host" and parameters.ensure = "present" and title ~ ".*@.*.theclarkhome.com" }' |
-
-
-# Run 
-  $templates = puppetdb_query($template_query).each |$value| {
-    regsubst($value['title'], '^.*@(.*)$', '\1')
+  $templates = puppetdb_query($template_query).map |  $value | {
+    regsubst($value['title'], '^(.*)@.*$', '\1')
   }
-  notify {'Zabbix templates ':
-    message => "Your Zabix templates are ${join($templates, ', ')}",
-  }
+  notify { "Zabbix templates are ${templates}": }
 
   case $facts['os']['name'] {
     'Ubuntu': {
@@ -53,6 +47,7 @@ class profile::app::zabbix::agent (
         hostinterface        => $trusted['certname'],
         server               => $serverstring,
         serveractive         => $serverstring,
+        listenip             => undef,
         enableremotecommands => '1',
         zabbix_package_state => 'latest',
         hostmetadata         => $hostmetadata,
