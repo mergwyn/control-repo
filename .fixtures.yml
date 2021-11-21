@@ -36,7 +36,7 @@ fixtures:
       ref: master
     zabbix:
       repo: https://github.com/mergwyn/puppet-zabbix
-      branch: Ipaddress
+      ref: master
   forge_modules:
     augeas:
       repo: camptocamp-augeas
