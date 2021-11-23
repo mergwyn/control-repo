@@ -34,6 +34,7 @@ Gemfile:
 #      - gem: ra10ke
       - gem: onceover
       - gem: CFPropertyList
+      - gem 'rspec-puppet-utils'
   optional:
     ':development':
       - gem: 'generate-puppetfile'
