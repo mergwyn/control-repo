@@ -41,11 +41,21 @@ class profile::app::webmin {
   ini_setting { 'webmin_from':
     setting           => 'webmin_from',
     key_val_separator => '=',
-    value             => "webmin@${trusted['certnamae']}",
+    value             => "webmin@${trusted['certname']}",
     path              => '/etc/webmin/mailboxes/config',
     require           => Package['webmin'],
     notify            => Service['webmin'],
   }
+
+  ini_setting { 'shell_path':
+    setting           => 'path',
+    key_val_separator => '=',
+    value             => '/bin:/usr/bin:/sbin:/usr/sbin:/usr/local/bin:/snap/bin:/opt/puppetlabs/bin',
+    path              => '/etc/webmin/config',
+    require           => Package['webmin'],
+    notify            => Service['webmin'],
+  }
+
   file { '/etc/webmin/package-updates':
     ensure  => directory,
     require => Package['webmin'],
