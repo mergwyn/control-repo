@@ -46,11 +46,21 @@ class profile::app::webmin(
     ini_setting { 'webmin_from':
       setting           => 'webmin_from',
       key_val_separator => '=',
-      value             => "webmin@${trusted['certnamae']}",
+      value             => "webmin@${trusted['certname']}",
       path              => '/etc/webmin/mailboxes/config',
       require           => Package['webmin'],
       notify            => Service['webmin'],
     }
+
+    ini_setting { 'shell_path':
+      setting           => 'path',
+      key_val_separator => '=',
+      value             => '/bin:/usr/bin:/sbin:/usr/sbin:/usr/local/bin:/snap/bin:/opt/puppetlabs/bin',
+      path              => '/etc/webmin/config',
+      require           => Package['webmin'],
+      notify            => Service['webmin'],
+    }
+
     file { '/etc/webmin/package-updates':
       ensure  => directory,
       require => Package['webmin'],
@@ -61,16 +71,9 @@ class profile::app::webmin(
       source  => 'puppet:///modules/profile/webmin/config',
       require => File['/etc/webmin/package-updates'],
     }
-    file { '/etc/webmin/package-updates/update.pl':
-      ensure  => present,
-      mode    => '0755',
-      source  => 'puppet:///modules/profile/webmin/update.pl',
-      require => File['/etc/webmin/package-updates'],
-    }
   }
   else {
     $purgelist = [ 'webmin', 'libauthen-oath-perl' ]
     package { $purgelist: ensure => purged }
   }
-
 }
