@@ -20,7 +20,7 @@ class profile::platform::baseline::debian {
   # TODO: include profile::platform::baseline::debian::netplan
 
   include profile::app::avahi
-  include profile::service::webmin
+  include profile::app::webmin
   #include profile::app::backuppc::client
 
 }
