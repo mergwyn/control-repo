@@ -1,11 +1,16 @@
 # @summary ssh client and server config
 #
-class profile::platform::baseline::debian::ssh {
+# @param collect_keys
+#   Set storeconfigs_enabled to collect and distribute keys
+#
+class profile::platform::baseline::debian::ssh (
+  Boolean $collect_keys = true,
+) {
 
 # The values below have been set for an Ubuntu 20.04 distribution
 # Values may need to be changed for different versions
   class { 'ssh':
-    storeconfigs_enabled => true,
+    storeconfigs_enabled => $collect_keys,
     client_options       => {
       'PasswordAuthentication'    => 'yes',
       'PubkeyAuthentication'      => 'yes',
