@@ -27,7 +27,7 @@ class profile::platform::baseline::debian::ssh {
     },
     server_options       => {
       'LoginGraceTime'                  => '120',
-      'PermitRootLogin'                 => 'yes',
+      'PermitRootLogin'                 => 'without-password',
       'HostbasedAuthentication'         => 'yes',
       'IgnoreUserKnownHosts'            => 'no',
       'IgnoreRhosts'                    => 'yes',
