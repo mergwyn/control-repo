@@ -9,6 +9,9 @@ defaults::puppetmaster:    "echo.%{trusted.domain}"
 defaults::adminemail:      "root@%{trusted.domain}"
 defaults::adminuser:       'administrator'
 
+# always get latest
+vcsrepo::ensure:           'latest'
+
 # network
 defaults::netmask:         '255.255.0.0'
 defaults::bits:            '16'
