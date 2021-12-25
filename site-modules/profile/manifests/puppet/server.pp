@@ -32,13 +32,18 @@ class profile::puppet::server {
 
   # Configure Apache on this server
   class { 'apache': }
-  class { 'apache::mod::wsgi': }
+  class { 'apache::mod::wsgi':
+    package_name           => 'libapache2-mod-wsgi-py3',
+    mod_path               => '/usr/lib/apache2/modules/mod_wsgi.so',
+    wsgi_application_group => 'puppet',
+  }
 
   # Configure Puppetboard
   class { 'puppetboard':
     manage_git          => true,
     manage_virtualenv   => true,
     default_environment => 'production',
+    virtualenv_version  => '3',
   }
   # Access Puppetboard through pboard.example.com
   class { 'puppetboard::apache::vhost':
