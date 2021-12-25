@@ -43,7 +43,7 @@ class profile::puppet::server {
     manage_git          => true,
     manage_virtualenv   => true,
     default_environment => 'production',
-    virtualenv_version  => '3',
+    python_version      => '3',
   }
   # Access Puppetboard through pboard.example.com
   class { 'puppetboard::apache::vhost':
