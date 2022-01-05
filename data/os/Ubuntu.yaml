@@ -22,6 +22,10 @@ profile::platform::baseline::packages::objects:
 # TODO workaround - Focal has removed python-pip so don't trty to manage
 python::manage_pip_package: false
 
+# TODO workaround for https://github.com/puppetlabs/puppetlabs-postgresql/pull/1309
+postgresql::server::contrib::package_name: 'postgresql-contrib'
+
+
 # Note storage_pools must be defined in node
 lxd::preseed:
   config:

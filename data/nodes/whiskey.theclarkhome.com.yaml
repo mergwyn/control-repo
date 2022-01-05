@@ -1,6 +1,0 @@
----
-
-profile::platform::baseline::packages::objects:
-  mp3gain-gui: {}
-  mp3tag: {}
-

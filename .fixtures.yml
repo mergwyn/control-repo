@@ -46,19 +46,16 @@ fixtures:
       ref: 2.0.0
     systemd:
       repo: puppet-systemd
-      ref: 3.3.0
+      ref: 3.5.1
     githubreleases:
       repo: dodevops-githubreleases
       ref: 4.0.0
-    network:
-      repo: example42-network
-      ref: 3.6.0
     portage:
       repo: gentoo-portage
       ref: 2.3.0
     ssh:
       repo: saz-ssh
-      ref: 7.0.2
+      ref: 8.0.0
     augeasproviders_core:
       repo: herculesteam-augeasproviders_core
       ref: 3.1.0
@@ -70,7 +67,7 @@ fixtures:
       ref: 4.1.0
     augeasproviders_sysctl:
       repo: herculesteam-augeasproviders_sysctl
-      ref: 2.6.0
+      ref: 2.6.2
     samba:
       repo: kakwa-samba
       ref: 2.0.0
@@ -82,37 +79,37 @@ fixtures:
       ref: 1.5.0
     alternatives:
       repo: puppet-alternatives
-      ref: 3.0.0
+      ref: 4.0.0
     archive:
       repo: puppet-archive
-      ref: 6.0.1
+      ref: 6.0.2
     autofs:
       repo: puppet-autofs
       ref: 6.0.0
     cron:
       repo: puppet-cron
-      ref: 2.0.0
+      ref: 3.0.0
     firewalld:
       repo: puppet-firewalld
       ref: 4.4.0
     keepalived:
       repo: puppet-keepalived
-      ref: 3.1.0
+      ref: 3.2.0
     php:
       repo: puppet-php
       ref: 8.0.2
     apache:
       repo: puppetlabs-apache
-      ref: 6.5.1
+      ref: 7.0.0
     apt:
       repo: puppetlabs-apt
-      ref: 8.2.0
+      ref: 8.3.0
     augeas_core:
       repo: puppetlabs-augeas_core
-      ref: 1.1.2
+      ref: 1.2.0
     firewall:
       repo: puppetlabs-firewall
-      ref: 3.1.0
+      ref: 3.3.0
     git:
       repo: puppetlabs-git
       ref: 0.5.0
@@ -121,7 +118,7 @@ fixtures:
       ref: 5.2.0
     mailalias_core:
       repo: puppetlabs-mailalias_core
-      ref: 1.0.6
+      ref: 1.1.0
     mysql:
       repo: puppetlabs-mysql
       ref: 12.0.1
@@ -130,10 +127,10 @@ fixtures:
       ref: 9.1.0
     postgresql:
       repo: puppetlabs-postgresql
-      ref: 7.4.1
+      ref: 7.5.0
     puppetdb:
       repo: puppetlabs-puppetdb
-      ref: 7.9.0
+      ref: 7.10.0
     puppetserver_gem:
       repo: puppetlabs-puppetserver_gem
       ref: 1.1.1
@@ -142,10 +139,10 @@ fixtures:
       ref: 4.1.0
     sshkeys_core:
       repo: puppetlabs-sshkeys_core
-      ref: 2.2.0
+      ref: 2.3.0
     stdlib:
       repo: puppetlabs-stdlib
-      ref: 8.0.0
+      ref: 8.1.0
     vcsrepo:
       repo: puppetlabs-vcsrepo
       ref: 5.0.0
@@ -154,22 +151,22 @@ fixtures:
       ref: 3.3.0
     yumrepo_core:
       repo: puppetlabs-yumrepo_core
-      ref: 1.0.7
+      ref: 1.1.0
     epel:
       repo: puppet-epel
-      ref: 3.1.0
+      ref: 4.0.0
     letsencrypt:
       repo: puppet-letsencrypt
-      ref: 6.0.0
+      ref: 7.0.0
     nginx:
       repo: puppet-nginx
-      ref: 3.2.0
+      ref: 3.3.0
     puppetboard:
       repo: puppet-puppetboard
       ref: 8.0.0
     python:
       repo: puppet-python
-      ref: 6.2.0
+      ref: 6.2.1
     r10k:
       repo: puppet-r10k
       ref: 10.1.1
@@ -178,7 +175,7 @@ fixtures:
       ref: 3.4.1
     unattended_upgrades:
       repo: puppet-unattended_upgrades
-      ref: 5.1.0
+      ref: 6.0.0
     zabbix:
       repo: puppet-zabbix
       ref: 9.1.0
@@ -193,10 +190,10 @@ fixtures:
       ref: 3.1.0
     debconf:
       repo: stm-debconf
-      ref: 3.3.1
+      ref: 4.1.0
     homebrew:
       repo: thekevjames-homebrew
-      ref: 1.9.0
+      ref: 1.9.1
     libvirt:
       repo: thias-libvirt
       ref: 1.0.1
@@ -208,13 +205,13 @@ fixtures:
       ref: 1.0.0
     host_core:
       repo: puppetlabs-host_core
-      ref: 1.0.3
+      ref: 1.1.0
     mount_core:
       repo: puppetlabs-mount_core
-      ref: 1.0.4
+      ref: 1.1.0
     cron_core:
       repo: puppetlabs-cron_core
-      ref: 1.0.5
+      ref: 1.1.0
     bootstrap:
       repo: puppetlabs-bootstrap
       ref: 2.1.0

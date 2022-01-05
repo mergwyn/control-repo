@@ -8,7 +8,9 @@ defaults::puppetmaster:    "echo.%{trusted.domain}"
 # user
 defaults::adminemail:      "root@%{trusted.domain}"
 defaults::adminuser:       'administrator'
-defaults::sharedpassword:  '$6$s/krC.bq$NiiWBAjU9pC3OkFTOVrgRpSiS6fpTi4jIgY50K6/J3sz21nmJbNphZI4hZlJqbr0to2tNXZjbjcia3idbonxV1'
+
+# always get latest
+vcsrepo::ensure:           'latest'
 
 # network
 defaults::netmask:         '255.255.0.0'

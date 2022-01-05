@@ -38,9 +38,9 @@ class profile::app::nginx::gateway (
     www_root                   => '/var/www/html/letsencrypt/',
     server                     => [
       $trusted['hostname'],
-      foxtrot,
+#      foxtrot,
       tango,
-      zulu,
+#      zulu,
     ],
     location_custom_cfg_append => { 'default_type' => 'text/plain;' },
   }
@@ -55,14 +55,14 @@ class profile::app::nginx::gateway (
     include_files => [ '/etc/nginx/snippets/options-ssl-nginx.conf*' ],
   }
 
-  nginx::resource::server { 'zulu':
-    server_name => [ "zulu.${trusted['domain']}" ],
-    proxy       => "http://zulu.${trusted['domain']}:80",
-  }
-  nginx::resource::server { 'foxtrot':
-    server_name => [ "foxtrot.${trusted['domain']}" ],
-    proxy       => "http://foxtrot.${trusted['domain']}:80",
-  }
+#  nginx::resource::server { 'zulu':
+#    server_name => [ "zulu.${trusted['domain']}" ],
+#    proxy       => "http://zulu.${trusted['domain']}:80",
+#  }
+#  nginx::resource::server { 'foxtrot':
+#    server_name => [ "foxtrot.${trusted['domain']}" ],
+#    proxy       => "http://foxtrot.${trusted['domain']}:80",
+#  }
 #  nginx::resource::server { 'echo':
 #    server_name => [ "echo.${trusted['domain']}" ],
 #    proxy       => "http://echo.${trusted['domain']}:80",

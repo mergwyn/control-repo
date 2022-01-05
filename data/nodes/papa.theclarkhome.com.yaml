@@ -2,7 +2,11 @@
 
 profile::app::ddclient::servers:
   - "%{trusted.hostname}"
-  - webmin
-  - zulu
-  - foxtrot
-  - echo
+#  - webmin
+#  - zulu
+#  - foxtrot
+#  - echo
+
+
+# Don't exchange keys on the gateway
+profile::platform::baseline::debian::ssh::collect_keys: false

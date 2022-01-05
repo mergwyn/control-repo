@@ -5,4 +5,6 @@ class role::internet_gateway {
   include profile::app::zabbix::agent
   include profile::app::backuppc::client
   include profile::app::gateway
+  include profile::app::remoteit
+  include profile::app::sssd
 }

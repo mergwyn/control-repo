@@ -48,13 +48,15 @@ class profile::app::samba::dc {
     #},
 # TODO check that these are all needed
     #globaloptions       => {
-      #'client use spnego' => 'no',
       #'kerberos method'   => 'secrets and keytab',
       #'lm announce'       => 'no',
       #'ntlm auth'         => 'no',
-      #'client ntlmv2 auth' => 'yes',
       #'server services'   => 's3fs, rpc, nbt, wrepl, ldap, cldap, kdc, drepl, winbindd, ntp_signd, kcc, dnsupdate, dns'
     #},
+    #globalbsentoptions       => [
+      #'client use spnego',
+      #'client ntlmv2 auth',
+    #],
 # TODO check if options are needed here
     #netlogonoptions       => {},
     #sysvoloptions         => {},

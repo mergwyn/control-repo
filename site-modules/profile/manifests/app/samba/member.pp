@@ -78,6 +78,8 @@ class profile::app::samba::member {
     },
     globalabsentoptions => [
       'map untrusted to domain',              # * Remove default settings put
+      'winbind trusted domains only',         # deprecated
+      'winbind separator',                    # causes auth error
     ]
   }
   ::samba::idmap { 'Domain *':
