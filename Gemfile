@@ -26,7 +26,7 @@ group :development do
   gem "puppet-module-win-dev-r#{minor_version}", '~> 1.0',       require: false, platforms: [:mswin, :mingw, :x64_mingw]
   gem "onceover",                                                require: false
   gem "CFPropertyList",                                          require: false
-  gem "gem",                                                     require: false
+  gem "rspec-puppet-utils",                                      require: false
   gem "generate-puppetfile", '~> 1.0',                           require: false
   gem "puppet-lint-legacy_facts-check",                          require: false
 end
