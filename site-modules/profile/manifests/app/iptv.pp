@@ -56,4 +56,10 @@ class profile::app::iptv {
 
   #TODO xteve?
   include profile::app::nginx::xmltv
+
+  #TODO xteve?
+  if defined('profile::app::zabbix::agent') {
+    profile::app::zabbix::template_host { 'Template App xTeve by Zabbix agent active': }
+  }
+
 }

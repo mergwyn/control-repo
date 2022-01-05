@@ -10,6 +10,34 @@ class profile::app::zabbix::agent (
   }
   $hostmetadata = ":kernel=${facts['kernel']}:virtual=${facts['virtual']}"
 
+# TODO consider moving this to hiera
+  case $facts['virtual'] {
+    'lxc': {
+      $macros =  [
+        { '{$VFS.DEV.DEVNAME.MATCHES}' => '^\s$', }, # Only /
+        { '{$VFS.FS.FSNAME.MATCHES}'   => '^/$', },  # Disable all
+      ]
+
+    }
+    default: {
+      $macros = []
+    }
+  }
+
+
+# Query puppetdb query for exported template resources
+  $template_query = ['from', 'resources',
+    [ 'and',
+      [ '=', 'type', 'Zabbix_template_host' ],
+      [ '=', ['parameter', 'ensure'], 'present' ],
+      [ '~', 'title', ".*@${trusted['certname']}" ],
+    ]
+  ]
+  $templates = puppetdb_query($template_query).map |  $value | {
+    regsubst($value['title'], '^(.*)@.*$', '\1')
+  }
+  notify { "Zabbix templates are ${templates}": }
+
   case $facts['os']['name'] {
     'Ubuntu': {
 
@@ -19,10 +47,15 @@ class profile::app::zabbix::agent (
         hostinterface        => $trusted['certname'],
         server               => $serverstring,
         serveractive         => $serverstring,
+        listenip             => undef,
         enableremotecommands => '1',
         zabbix_package_state => 'latest',
         hostmetadata         => $hostmetadata,
-# templates => [ ],
+        manage_resources     => true,
+        zbx_templates        => $templates,
+# TODO consider these values from hiera
+        agent_use_ip         => false,
+        zbx_macros           => $macros,
       }
 
       package {'zabbix-sender': }
@@ -35,13 +68,9 @@ class profile::app::zabbix::agent (
         content => 'zabbix  ALL=NOPASSWD: /bin/netstat',
       }
 
-      zabbix::userparameters { 'discovery_disks.perl':
-        script     => 'puppet:///modules/profile/zabbix_agent/discovery_disks.perl',
-        script_dir => $dir,
-      }
-      zabbix::userparameters { 'disk_autodiscovery':
-        source => 'puppet:///modules/profile/zabbix_agent/disk_autodiscovery.conf',
-      }
+      # NO longer needed
+      zabbix::userparameters { 'discovery_disks.perl': ensure => absent, }
+      zabbix::userparameters { 'disk_autodiscovery': ensure => absent, }
 
       zabbix::userparameters { 'discovery_processes.sh':
         script     => 'puppet:///modules/profile/zabbix_agent/discovery_processes.sh',
@@ -51,6 +80,7 @@ class profile::app::zabbix::agent (
         content => "UserParameter=custom.proc.discovery_perl,${dir}/discovery_processes.sh\n"
       }
 
+# TODO check it below needed
       zabbix::userparameters { 'discovery_tcp_services.perl':
         script     => 'puppet:///modules/profile/zabbix_agent/discovery_tcp_services.perl',
         script_dir => $dir,
@@ -72,6 +102,7 @@ class profile::app::zabbix::agent (
       }
     }
     'windows': {
+      # TODO convert to zabbix class
       service {'Zabbix Agent':
         ensure  => 'running',
         enable  => true,

@@ -1,4 +1,4 @@
-# @summary gather speedtest data into abbix
+# @summary Nighlty run of speedtest
 #
 class profile::app::speedtest {
 
@@ -14,12 +14,16 @@ class profile::app::speedtest {
     hour        => '*/12',
   }
 
-  include sudo
-  sudo::conf { 'speedtest':
-    content => 'zabbix  ALL=(root)      NOPASSWD:       /bin/cat'
-  }
+  if defined('profile::app::zabbix::agent') {
+    profile::app::zabbix::template_host { 'Template App Speedtest by Zabbix agent active': }
 
-  zabbix::userparameters { 'speedtest':
-    content => "UserParameter=speedtest.data,sudo cat ${datafile}\n"
+    include sudo
+    sudo::conf { 'speedtest':
+      content => 'zabbix  ALL=(root)      NOPASSWD:       /bin/cat'
+    }
+
+    zabbix::userparameters { 'speedtest':
+      content => "UserParameter=speedtest.data,sudo cat ${datafile}\n"
+    }
   }
 }
