@@ -34,9 +34,6 @@ fixtures:
     backuppc:
       repo: https://github.com/mergwyn/mergwyn-backuppc
       ref: master
-    zabbix:
-      repo: https://github.com/mergwyn/puppet-zabbix
-      ref: master
   forge_modules:
     augeas:
       repo: camptocamp-augeas
@@ -182,9 +179,9 @@ fixtures:
     unattended_upgrades:
       repo: puppet-unattended_upgrades
       ref: 5.1.0
-#    zabbix:
-#      repo: puppet-zabbix
-#      ref: 9.1.0
+    zabbix:
+      repo: puppet-zabbix
+      ref: 9.1.0
     sudo:
       repo: saz-sudo
       ref: 7.0.2
