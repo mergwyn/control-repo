@@ -18,22 +18,24 @@ class profile::puppet::termini (
 
   include profile::puppet::repo
 
-  package { 'puppetdb-termini': ensure => installed, }
+# Avoid dulication with puppetserver and puppetdb
+  if  $trusted['extensions']['pp_role'] != 'puppet_master' {
+    package { 'puppetdb-termini': ensure => installed, }
 
-  Ini_setting {
-    ensure  => present,
-    section => 'main',
-    path    => "${puppet_confdir}/puppetdb.conf",
+    Ini_setting {
+      ensure  => present,
+      section => 'main',
+      path    => "${puppet_confdir}/puppetdb.conf",
+    }
+
+    ini_setting { 'puppetdbserver_urls':
+      setting => 'server_urls',
+      value   => "https://${server}:${port}/",
+    }
+
+    ini_setting { 'soft_write_failure':
+      setting => 'soft_write_failure',
+      value   => $soft_write_failure,
+    }
   }
-
-  ini_setting { 'puppetdbserver_urls':
-    setting => 'server_urls',
-    value   => "https://${server}:${port}/",
-  }
-
-  ini_setting { 'soft_write_failure':
-    setting => 'soft_write_failure',
-    value   => $soft_write_failure,
-  }
-
 }
