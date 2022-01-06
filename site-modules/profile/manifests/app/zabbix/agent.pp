@@ -38,7 +38,7 @@ class profile::app::zabbix::agent (
   }
   notify { 'templates':
     name     => "Current templates are ${templates}",
-    loglevel => 'debug'
+    loglevel => debug,
   }
 
   case $facts['os']['name'] {
