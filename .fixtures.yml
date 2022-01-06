@@ -35,7 +35,7 @@ fixtures:
       repo: https://github.com/mergwyn/mergwyn-backuppc
       ref: master
     zabbix:
-      repo: 'https://github.com/mergwyn/puppet-zabbix'
+      repo: https://github.com/voxpupuli/puppet-zabbix
       ref: master
   forge_modules:
     augeas:
