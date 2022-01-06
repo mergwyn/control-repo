@@ -36,7 +36,10 @@ class profile::app::zabbix::agent (
   $templates = puppetdb_query($template_query).map |  $value | {
     regsubst($value['title'], '^(.*)@.*$', '\1')
   }
-  notify { "Zabbix templates are ${templates}": loglevel => "debug" }
+  notify { 'templates':
+    name     => "Current templates are ${templates}",
+    loglevel => 'debug'
+  }
 
   case $facts['os']['name'] {
     'Ubuntu': {
