@@ -110,6 +110,9 @@ fixtures:
     augeas_core:
       repo: puppetlabs-augeas_core
       ref: 1.2.0
+    boostrap:
+      repo: puppetlabs-bootstrap
+      ref: 2.1.0
     firewall:
       repo: puppetlabs-firewall
       ref: 3.3.0
