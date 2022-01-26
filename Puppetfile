@@ -2,7 +2,6 @@
 #forge 'http://forge.puppetlabs.com'
 
 #mod 'andschwa-unattended_upgrades', '0.2.3'
-mod 'attachmentgenie-ufw', :git => 'https://github.com/kogitoapp/attachmentgenie-ufw'
 mod 'backuppc', :git => 'https://github.com/mergwyn/mergwyn-backuppc'
 mod 'camptocamp-augeas', '1.9.0'
 mod 'CraigWatson1987-transmission', :git => 'https://github.com/craigwatson/puppet-transmission'

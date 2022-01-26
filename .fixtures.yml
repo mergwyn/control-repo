@@ -7,9 +7,6 @@ fixtures:
     unbound:
       repo: https://github.com/voxpupuli/puppet-unbound
       ref: master
-    ufw:
-      repo: https://github.com/kogitoapp/attachmentgenie-ufw
-      ref: master
     transmission:
       repo: https://github.com/craigwatson/puppet-transmission
       ref: master
