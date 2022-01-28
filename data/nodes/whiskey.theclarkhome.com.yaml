@@ -1,0 +1,12 @@
+---
+
+profile::platform::baseline::packages::defaults:
+  ensure: present
+  provider: chocolaty
+  install_options: [ '--no-progress' ]
+profile::platform::baseline::packages::objects:
+  wsl-ubuntu-2004: {}
+  firefox: {}
+  keeweb: {}
+  mp3gain-gui: {}
+  mp3tag: {}
