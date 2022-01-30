@@ -46,7 +46,7 @@ fixtures:
       ref: 2.0.0
     systemd:
       repo: puppet-systemd
-      ref: 3.5.1
+      ref: 3.5.2
     githubreleases:
       repo: dodevops-githubreleases
       ref: 4.0.0
@@ -157,13 +157,13 @@ fixtures:
       ref: 4.0.0
     letsencrypt:
       repo: puppet-letsencrypt
-      ref: 7.0.0
+      ref: 8.0.1
     nginx:
       repo: puppet-nginx
       ref: 3.3.0
     puppetboard:
       repo: puppet-puppetboard
-      ref: 8.0.0
+      ref: 8.1.0
     python:
       repo: puppet-python
       ref: 6.2.1
