@@ -21,29 +21,29 @@ plan bootstrap::windows (
   Stdlib::Fqdn                                              $puppet_master,
   Stdlib::Fqdn                                              $domain_name,
   Enum['Chocolatey', 'Legacy']                              $method = 'Legacy',
-  Enum['6','7']                                             $collection = '7',
+  Enum['6','7']                                             $collection = '6',
   Pattern[/^(\d{1,2}\.)?(\d{1,2}\.)?(\d{1,2})$/,/^latest$/] $version = 'latest',
   Stdlib::Port                                              $port = 8140,
   String                                                    $environment = 'production',
-  Hash                                                      $certificate_extensions,
+  Hash                                                      $certificate_extensions = {},
   Enum['Automatic', 'Manual', 'Disabled']                   $startup_mode = 'Automatic',
   Integer                                                   $wait_for_certificate = 30
 ) {
-  out::message("Hello from bootstrap::windows")
+  out::message('Hello from bootstrap::windows')
   return run_script(
     'bootstrap/scripts/puppet-windows.ps1',
     $targets,
     pwsh_params => {
-      PuppetMaster          => $puppet_master,
-      DomainName            => $domain_name,
-      InstallationMethod    => $method,
-      Collection            => $collection,
-      PuppetAgentVersion    => $version,
-      MasterPort            => $port,
-      PuppetEnvironment     => $environment,
-      CertificateExtensions => $certificate_extensions,
-      StartupMode           => $start_mode,
-      WaitForCertificate    => $wait_for_certificate,
+      'PuppetMaster'          => $puppet_master,
+      'DomainName'            => $domain_name,
+      'InstallationMethod'    => $method,
+      'Collection'            => $collection,
+      'PuppetAgentVersion'    => $version,
+      'MasterPort'            => $port,
+      'PuppetEnvironment'     => $environment,
+      'CertificateExtensions' => $certificate_extensions,
+      'StartupMode'           => $startup_mode,
+      'WaitForCertificate'    => $wait_for_certificate,
     }
   )
 }

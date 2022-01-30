@@ -7,6 +7,7 @@
     Script allows you to set extra CSR attributes for silky smooth hiera lookups. 
 .NOTES
     Experimental at this point.
+    Almost entirely based on https://github.com/shoddyguard/Puppet-Provisioning
 #>
 [CmdletBinding()]
 param (
@@ -264,13 +265,12 @@ if ($InstallationMethod -eq 'Legacy')
     }
     if ($PuppetAgentVersion -ne 'latest')
     {
-        $Collection = "puppet" + [version]::Parse($PuppetAgentVersion).Major
-        $DownloadURL = "https://downloads.puppetlabs.com/windows/$Collection/puppet-agent-$PuppetAgentVersion-$arch.msi"
+        $Collection = [version]::Parse($PuppetAgentVersion).Major
+        $DownloadURL = "https://downloads.puppetlabs.com/windows/puppet$Collection/puppet-agent-$PuppetAgentVersion-$arch.msi"
     }
     else
     {
-        $Collection = "puppet" + $Collection
-        $DownloadURL = "https://downloads.puppetlabs.com/windows/$Collection/puppet-agent-$arch-latest.msi"
+        $DownloadURL = "https://downloads.puppetlabs.com/windows/puppet$Collection/puppet-agent-$arch-latest.msi"
     }
     Write-Verbose "Download URL: $DownloadURL"
     # Spin up a tempdir we can use for storing the download in
