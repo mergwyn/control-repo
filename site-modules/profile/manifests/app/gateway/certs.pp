@@ -7,8 +7,6 @@ class profile::app::gateway::certs {
     fail("${title} is only for Debian")
   }
 
-  package { 'python3-certbot-nginx': }
-
 # This options file allows for a working nginx config even if the certs do not exist
 # The hook below on certificate creation works together with the include_files in the host
   $nginx_conf = '/etc/nginx/options-ssl-nginx.conf'
