@@ -76,6 +76,7 @@ class profile::app::unbound (
     val_permissive_mode    => true,
     purge_unbound_conf_d   => $purge_unbound_conf_d,
     ip_transparent         => true,
+    harden_dnssec_stripped => false,
     require                => Service['systemd-resolved'],
   }
   class { 'unbound::remote':
