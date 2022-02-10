@@ -18,6 +18,7 @@ class profile::app::keepalived (
   $ping_script = '/usr/local/bin/keepalived_check.sh'
   file { $ping_script:
     ensure  => file,
+    mode    => '0755',
     content => @("EOT"),
                #!/bin/bash
                /usr/bin/ping -c 1 -W 1 8.8.8.8 > /dev/null 2>&1
