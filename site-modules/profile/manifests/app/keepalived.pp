@@ -44,7 +44,7 @@ class profile::app::keepalived (
 
   keepalived::vrrp::script { 'ping_google':
     script   => $ping_script,
-    interval => 20,
+    interval => 10,
     weight   => -10,
     timeout  => 5,
     rise     => 3,
