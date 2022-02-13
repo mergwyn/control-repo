@@ -8,7 +8,7 @@ class profile::app::ddclient (
     hosts_config    => 'concat',
     daemon_interval => 300,
     getip_from      => 'web',
-    getip_options   => ['web=myip.dnsomatic.com'],
+    getip_options   => ['web=dynamicdns.park-your-domain.com/getip'],
     pid_file        => '/var/run/ddclient.pid',
     enable_ssl      => 'yes',
   }

@@ -14,6 +14,21 @@ class profile::app::keepalived (
   Stdlib::Email           $notification_email = lookup('defaults::adminemail'),
   Stdlib::Email           $notification_email_from = "keepalived@${trusted['domain']}",
 ) {
+  # ping script
+  $ping_script = '/usr/local/bin/keepalived_check.sh'
+  file { $ping_script:
+    ensure  => file,
+    mode    => '0755',
+    content => @(EOT),
+               #!/bin/bash
+               target=8.8.8.8
+               logger="logger --id=$$ --tag $(basename $0)"
+               /usr/bin/ping -c 1 -W 1 ${target} > /dev/null 2>&1
+               result=$?
+               [[ $result == 0 ]] || ${logger} keepalive check returned $?
+               exit $result
+               | EOT
+  }
 
   include keepalived
 
@@ -27,6 +42,16 @@ class profile::app::keepalived (
     script_user             => 'root',
   }
 
+  keepalived::vrrp::script { 'ping_google':
+    script   => $ping_script,
+    interval => 10,
+    weight   => -10,
+    timeout  => 5,
+    rise     => 3,
+    fall     => 3,
+    require  => File[$ping_script],
+  }
+
 # VRRP
   keepalived::vrrp::instance { 'VI_50':
     interface         => $lan,
@@ -37,6 +62,7 @@ class profile::app::keepalived (
     auth_pass         => lookup('secrets::keepalived'),
     virtual_ipaddress => [ $v_cidr ],
     track_interface   => [ $wan, $vpn], # optional, monitor these interfaces.
+    track_script      => 'ping_google',
   }
 
 # Add virtual server for DNS
