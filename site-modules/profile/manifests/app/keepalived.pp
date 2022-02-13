@@ -19,9 +19,14 @@ class profile::app::keepalived (
   file { $ping_script:
     ensure  => file,
     mode    => '0755',
-    content => @("EOT"),
+    content => @(EOT),
                #!/bin/bash
-               /usr/bin/ping -c 1 -W 1 8.8.8.8 > /dev/null 2>&1
+               target=8.8.8.8
+               logger="logger --id=$$ --tag $(basename $0)"
+               /usr/bin/ping -c 1 -W 1 ${target} > /dev/null 2>&1
+               result=$?
+               [[ $result == 0 ]] || ${logger} keepalive check returned $?
+               exit $result
                | EOT
   }
 
@@ -40,6 +45,7 @@ class profile::app::keepalived (
   keepalived::vrrp::script { 'ping_google':
     script   => $ping_script,
     interval => 20,
+    weight   => -10,
     timeout  => 5,
     rise     => 3,
     fall     => 3,
