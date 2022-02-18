@@ -3,9 +3,6 @@
 classes:
   - profile::platform::baseline::debian::netplan
 
-profile::app::keepalived::prio:  102
-profile::app::keepalived::state: 'MASTER'
-
 profile::platform::baseline::debian::netplan::ethernets:
   eth0:
     dhcp4: true
