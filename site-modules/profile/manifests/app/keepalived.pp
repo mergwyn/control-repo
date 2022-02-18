@@ -23,7 +23,7 @@ class profile::app::keepalived (
                #!/bin/bash
                target=8.8.8.8
                logger="logger --id=$$ --tag $(basename $0)"
-               /usr/bin/ping -c 1 -W 1 ${target} > /dev/null 2>&1
+               /usr/bin/ping -c 1 -W 1 -I ${interface:-tun0} ${target} > /dev/null 2>&1
                result=$?
                [[ $result == 0 ]] || ${logger} keepalive check returned $?
                exit $result
