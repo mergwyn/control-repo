@@ -19,6 +19,7 @@ class profile::app::scripts {
     ensure  => present,
     mode    => '0600',
     content => @("EOT"/$),
+               PLEX_TOKEN="${lookup('secrets::iptv::plex::token')}"
                MAGIC_M3U="${lookup('secrets::iptv::m3u::magic')}"
                MAGIC_EPG="${lookup('secrets::iptv::epg::magic')}"
                QUALITY_M3U="${lookup('secrets::iptv::m3u::quality')}"
@@ -33,4 +34,3 @@ class profile::app::scripts {
                | EOT
   }
 }
-# vim: sw=2:ai:nu expandtab
