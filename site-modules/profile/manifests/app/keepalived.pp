@@ -61,7 +61,7 @@ class profile::app::keepalived (
     auth_type         => 'PASS',
     auth_pass         => lookup('secrets::keepalived'),
     virtual_ipaddress => [ $v_cidr ],
-    track_interface   => [ $wan, $vpn], # optional, monitor these interfaces.
+    track_interface   => [ $wan, "${vpn} weight 5"], # optional, monitor these interfaces.
     track_script      => 'ping_google',
   }
 
