@@ -24,11 +24,11 @@ class profile::app::iptv {
   $adminemail = lookup('defaults::adminemail')
   $_timer = @(EOT)
     [Unit]
-    Description=Run get channels on boot and 6 hourly
+    Description=Run get channels on boot and periodically
 
     [Timer]
-    OnBootSec=10min
-    OnUnitActiveSec=6h
+    OnBootSec=20min
+    OnUnitActiveSec=2h
 
     [Install]
     WantedBy=timers.target
