@@ -6,10 +6,11 @@ class profile::app::sabnzbdplus (
   String $user  = lookup('defaults::media_user'),
   String $group = lookup('defaults::media_group'),
   Optional[Hash] $settings = {},
-  Boolean $ppa = 'ppa:jcfp/nobetas',
+  Boolean $use_ppa = true,
+  String $ppa = 'ppa:jcfp/nobetas',
   ) {
 
-  if $ppa {
+  if $use_ppa {
     apt::ppa { $ppa: ensure => present }
   } else {
     apt::ppa { $ppa: ensure => absent }
