@@ -4,8 +4,6 @@ profile::platform::baseline::packages::defaults:
   ensure: present
   provider: homebrew
 profile::platform::baseline::packages::objects:
-  clover-configurator:
-    ensure: absent
   opencore-configurator: {}
   geekbench: {}
   garmin-express: {}
