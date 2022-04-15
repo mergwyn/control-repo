@@ -31,12 +31,12 @@ class profile::puppet::server {
   }
 
   # Configure Apache on this server
-  class { 'apache': }
-  class { 'apache::mod::wsgi':
-    package_name           => 'libapache2-mod-wsgi-py3',
-    mod_path               => '/usr/lib/apache2/modules/mod_wsgi.so',
-    wsgi_application_group => 'puppet',
-  }
+#  class { 'apache': }
+#  class { 'apache::mod::wsgi':
+#    package_name           => 'libapache2-mod-wsgi-py3',
+#    mod_path               => '/usr/lib/apache2/modules/mod_wsgi.so',
+#    wsgi_application_group => 'puppet',
+#  }
 
   # Configure Puppetboard
   class { 'puppetboard':
