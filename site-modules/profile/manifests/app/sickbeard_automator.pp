@@ -81,6 +81,7 @@ class profile::app::sickbeard_automator (
     require  => Service['sssd'],
     source   => 'https://github.com/mdhiggins/sickbeard_mp4_automator',
     owner    => $owner,
+    user     => $owner, #TODO workaround for https://github.com/puppetlabs/puppetlabs-vcsrepo/issues/535
     group    => $group,
   }
 
