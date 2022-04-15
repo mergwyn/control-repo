@@ -162,8 +162,10 @@ fixtures:
       repo: puppet-nginx
       ref: 3.3.0
     puppetboard:
-      repo: puppet-puppetboard
-      ref: 8.1.0
+      repo: https://github.com/mergwyn/puppet-puppetboard
+      ref: master
+#      repo: puppet-puppetboard
+#      ref: 8.1.0
     python:
       repo: puppet-python
       ref: 6.2.1
