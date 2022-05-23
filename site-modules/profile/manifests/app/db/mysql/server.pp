@@ -28,21 +28,20 @@ class profile::app::db::mysql::server (
   $overrides = {
     'mysqld' => {
       # MyISAM #
-      'key_buffer_size'                => '32M',
+      #'key_buffer_size'                => '32M',
+      'key_buffer_size'                => '8M',
       'myisam_recover_options'         => 'FORCE,BACKUP',
       # SAFETY #
       'max_allowed_packet'             => '16M',
       'max_connect_errors'             => '1000000',
       # BINARY LOGGING #
       'log_bin'                        => "${logdir}/mysql_bin.log",
-      'expire_logs_days'               => '14',
+      'binlog_expire_logs_seconds'     => '1209600', # 14 days
       'sync_binlog'                    => '1',
       # CACHES AND LIMITS #
       'tmp_table_size'                 => '32M',
       'max_heap_table_size'            => '32M',
-#      'query_cache_type'               => '0',
-#      'query_cache_size'               => '0',
-      'max_connections'                => '50',
+      'max_connections'                => '25',
       'thread_cache_size'              => '50',
       'open_files_limit'               => '1000',
       'table_definition_cache'         => '1024',
@@ -50,13 +49,15 @@ class profile::app::db::mysql::server (
       # INNODB #
       #'innodb_flush_method' => 'O_DIRECT',
       'innodb_log_files_in_group'      => '3',
-      'innodb_log_file_size'           => '256M',
+      'innodb_log_file_size'           => '150M',
       'join_buffer_size'               => '4M',
       'innodb_flush_log_at_trx_commit' => '1',
       'innodb_file_per_table'          => '1',
-      'innodb_buffer_pool_size'        => '2300M',
+      'innodb_buffer_pool_size'        => '1800M',
       'innodb_buffer_pool_instances'   => '2',
       'server_id'                      => '1',
+      # Tuning
+      'performance_schema'             => 'off',
     },
   }
   create_ini_settings($overrides, $defaults)
