@@ -43,13 +43,13 @@ fixtures:
       ref: 1.9.0
     kmod:
       repo: puppet-kmod
-      ref: 3.0.0
+      ref: 3.2.0
     postfix:
       repo: puppet-postfix
-      ref: 2.0.0
+      ref: 3.0.0
     systemd:
       repo: puppet-systemd
-      ref: 3.5.2
+      ref: 3.9.0
     githubreleases:
       repo: dodevops-githubreleases
       ref: 4.0.0
@@ -58,7 +58,7 @@ fixtures:
       ref: 2.3.0
     ssh:
       repo: saz-ssh
-      ref: 8.0.0
+      ref: 9.0.0
     augeasproviders_core:
       repo: herculesteam-augeasproviders_core
       ref: 3.1.0
@@ -82,7 +82,7 @@ fixtures:
       ref: 1.5.0
     alternatives:
       repo: puppet-alternatives
-      ref: 4.0.0
+      ref: 4.1.0
     archive:
       repo: puppet-archive
       ref: 6.0.2
@@ -97,10 +97,10 @@ fixtures:
       ref: 4.4.0
     keepalived:
       repo: puppet-keepalived
-      ref: 3.2.0
+      ref: 3.3.0
     php:
       repo: puppet-php
-      ref: 8.0.2
+      ref: 8.0.3
     apache:
       repo: puppetlabs-apache
       ref: 7.0.0
@@ -112,25 +112,25 @@ fixtures:
       ref: 1.2.0
     firewall:
       repo: puppetlabs-firewall
-      ref: 3.3.0
+      ref: 3.5.0
     git:
       repo: puppetlabs-git
       ref: 0.5.0
     inifile:
       repo: puppetlabs-inifile
-      ref: 5.2.0
+      ref: 5.3.0
     mailalias_core:
       repo: puppetlabs-mailalias_core
       ref: 1.1.0
     mysql:
       repo: puppetlabs-mysql
-      ref: 12.0.1
+      ref: 12.0.3
     ntp:
       repo: puppetlabs-ntp
       ref: 9.1.0
     postgresql:
       repo: puppetlabs-postgresql
-      ref: 7.5.0
+      ref: 8.0.0
     puppetdb:
       repo: puppetlabs-puppetdb
       ref: 7.10.0
@@ -145,7 +145,7 @@ fixtures:
       ref: 2.3.0
     stdlib:
       repo: puppetlabs-stdlib
-      ref: 8.1.0
+      ref: 8.2.0
     vcsrepo:
       repo: puppetlabs-vcsrepo
       ref: 5.0.0
@@ -157,10 +157,10 @@ fixtures:
       ref: 1.1.0
     epel:
       repo: puppet-epel
-      ref: 4.0.0
+      ref: 4.1.0
     letsencrypt:
       repo: puppet-letsencrypt
-      ref: 8.0.1
+      ref: 8.0.2
     nginx:
       repo: puppet-nginx
       ref: 3.3.0
@@ -220,10 +220,10 @@ fixtures:
       ref: 2.1.0
     exec:
       repo: puppetlabs-exec
-      ref: 2.0.0
+      ref: 2.1.0
     chocolatey:
       repo: puppetlabs-chocolatey
-      ref: 6.0.1
+      ref: 6.2.0
     dism:
       repo: puppetlabs-dism
       ref: 1.3.1
@@ -232,10 +232,10 @@ fixtures:
       ref: 4.0.1
     concat:
       repo: puppetlabs-concat
-      ref: 7.1.1
+      ref: 7.2.0
     scheduled_task:
       repo: puppetlabs-scheduled_task
-      ref: 3.0.1
+      ref: 3.1.0
     powershell:
       repo: puppetlabs-powershell
       ref: 5.0.0
