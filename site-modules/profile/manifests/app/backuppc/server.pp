@@ -66,6 +66,7 @@ class profile::app::backuppc::server (
   -> Class['backuppc::server']
 
   class { 'backuppc::server':
+    service_enable             => false, # TODO remove workaound for disk error
     backuppc_password          => lookup('secrets::backuppc'),
     gzip_path                  => '/usr/bin/pigz',
     full_age_max               => 370,
