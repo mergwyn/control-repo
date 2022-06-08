@@ -20,14 +20,6 @@ class profile::app::scripts {
     mode    => '0600',
     content => @("EOT"/$),
                PLEX_TOKEN="${lookup('secrets::iptv::plex::token')}"
-               #MAGIC_M3U="${lookup('secrets::iptv::m3u::magic')}"
-               #MAGIC_EPG="${lookup('secrets::iptv::epg::magic')}"
-               #QUALITY_M3U="${lookup('secrets::iptv::m3u::quality')}"
-               #QUALITY_EPG="${lookup('secrets::iptv::epg::quality')}"
-               #OCDTV_M3U="${lookup('secrets::iptv::m3u::ocdtv')}"
-               #OCDTV_EPG="${lookup('secrets::iptv::epg::ocdtv')}"
-               #NORD_M3U="${lookup('secrets::iptv::m3u::nord')}"
-               #NORD_EPG="${lookup('secrets::iptv::epg::nord')}"
                ICE_M3U="${lookup('secrets::iptv::m3u::iceflashott')}"
                ICE_EPG="${lookup('secrets::iptv::epg::iceflashott')}"
                ROUTES=(
