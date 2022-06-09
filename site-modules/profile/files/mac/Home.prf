@@ -48,4 +48,4 @@ ignore = Path .Trash
 ignore = Path .unison/ar* 
 ignore = Path .unison/fp* 
 ignore = Path .unison/lk* 
-ignore = Name *.icloud
+ignore = Name .*.icloud
