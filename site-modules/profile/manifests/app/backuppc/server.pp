@@ -73,6 +73,7 @@ class profile::app::backuppc::server (
     full_keep_cnt              => [ 4, 0, 12],
     incr_age_max               => 21,
     incr_keep_cnt              => 12,
+    max_user_backups           => 0,
     backup_zero_files_is_fatal => true,
     cgi_date_format_mmdd       => 1,
     apache_configuration       => false,
