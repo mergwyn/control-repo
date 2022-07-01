@@ -34,10 +34,10 @@ fixtures:
     backuppc:
       repo: https://github.com/mergwyn/mergwyn-backuppc
       ref: master
-    zabbix:
-      repo: https://github.com/voxpupuli/puppet-zabbix
-      ref: master
   forge_modules:
+    zabbix:
+      repo: puppet-zabbix
+      ref: 9.2.0
     augeas:
       repo: camptocamp-augeas
       ref: 1.9.0
