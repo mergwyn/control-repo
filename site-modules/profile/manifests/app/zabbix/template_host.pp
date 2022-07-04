@@ -3,7 +3,7 @@
 define profile::app::zabbix::template_host (
   $ensure = present,
 ) {
-  @@zabbix_template_host { "${name}@${trusted['certname']}":
-    ensure => $ensure,
-  }
+#  @@zabbix_template_host { "${name}@${trusted['certname']}":
+#    ensure => $ensure,
+#  }
 }
