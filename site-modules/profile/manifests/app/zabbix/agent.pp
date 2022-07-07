@@ -54,8 +54,8 @@ class profile::app::zabbix::agent (
         enableremotecommands => '1',
         zabbix_package_state => 'latest',
         hostmetadata         => $hostmetadata,
-#        manage_resources     => true,
-#        zbx_templates        => $templates,
+        manage_resources     => true,
+        zbx_templates        => $templates,
 # TODO consider these values from hiera
         agent_use_ip         => false,
         zbx_macros           => $macros,
