@@ -41,7 +41,7 @@ class profile::app::db::mysql::server (
       # CACHES AND LIMITS #
       'tmp_table_size'                 => '32M',
       'max_heap_table_size'            => '32M',
-      'max_connections'                => '25',
+      'max_connections'                => '50',
       'thread_cache_size'              => '50',
       'open_files_limit'               => '1000',
       'table_definition_cache'         => '1024',
