@@ -48,8 +48,6 @@ class profile::app::db::mysql::server (
       'table_open_cache'               => '2048',
       # INNODB #
       #'innodb_flush_method' => 'O_DIRECT',
-      'innodb_log_files_in_group'      => '3',
-      'innodb_log_file_size'           => '150M',
       'join_buffer_size'               => '4M',
       'innodb_flush_log_at_trx_commit' => '1',
       'innodb_file_per_table'          => '1',
