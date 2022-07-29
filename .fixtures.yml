@@ -22,9 +22,6 @@ fixtures:
     ddclient:
       repo: https://github.com/mergwyn/puppet-ddclient
       ref: master
-    dhcp:
-      repo: https://github.com/voxpupuli/puppet-dhcp
-      ref: master
     webmin:
       repo: https://github.com/rehanone/puppet-webmin
       ref: master
@@ -155,6 +152,9 @@ fixtures:
     epel:
       repo: puppet-epel
       ref: 4.1.0
+    dhcp:
+      repo: puppet-dhcp
+      ref: 5.0.0
     letsencrypt:
       repo: puppet-letsencrypt
       ref: 8.0.2
