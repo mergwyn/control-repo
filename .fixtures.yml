@@ -32,6 +32,9 @@ fixtures:
       repo: https://github.com/mergwyn/mergwyn-backuppc
       ref: master
   forge_modules:
+    zabbix:
+      repo: puppet-zabbix
+      ref: 9.2.0
     augeas:
       repo: camptocamp-augeas
       ref: 1.9.0
@@ -94,7 +97,7 @@ fixtures:
       ref: 3.3.0
     php:
       repo: puppet-php
-      ref: 8.0.3
+      ref: 8.1.0
     apache:
       repo: puppetlabs-apache
       ref: 7.0.0
