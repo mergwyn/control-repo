@@ -28,7 +28,7 @@ class profile::app::iptv {
 
     [Timer]
     OnBootSec=20min
-    OnUnitActiveSec=2h
+    OnUnitActiveSec=6h
 
     [Install]
     WantedBy=timers.target

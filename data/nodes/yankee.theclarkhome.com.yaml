@@ -2,8 +2,7 @@
 
 classes:
   - profile::app::sssd
-  - profile::app::zabbix::server
-  - profile::app::zabbix::agent
   - profile::app::backuppc::client
+  - profile::app::backuppc::server
 
-profile::app::zabbix::agent::server: 'yankee'
+profile::app::backuppc::client: localhost
