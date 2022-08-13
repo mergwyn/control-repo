@@ -137,6 +137,7 @@ class profile::app::sickbeard_automator (
       ffprobe          => 'ffprobe',
       delete-original  => 'False',
 #      output-directory => '/srv/media/.working',
+      output-directory => { ensure => absent },
       output-format    => 'mp4',
       output-extension => 'mp4',
       temp-extension   => 'partial',
