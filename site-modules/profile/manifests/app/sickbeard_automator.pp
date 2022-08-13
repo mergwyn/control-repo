@@ -195,7 +195,7 @@ class profile::app::sickbeard_automator (
       #level => 'INFO', # default
       #args  => "('%(logfilename)s', 'a', 100000, 3)", # default
       level => 'DEBUG',
-      args  => "('${logfile}}', 'a', 100000, 3)",
+      args  => "('${logfile}', 'a', 100000, 3)",
     }
   }
   #
