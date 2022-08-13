@@ -6,20 +6,24 @@ class profile::app::sickbeard_automator (
   $enabletimer = true,
 ) {
 
-  $codedir    = '/opt'
-  $target     = "${codedir}/sickbeard_mp4_automator"
-  $scriptdir  = "${codedir}/scripts"
-  $configdir  = '/etc/sickbeard_mp4_automator'
-  $logdir     = '/var/log/sickbeard_mp4_automator'
-  $sample_ini = "${target}/setup/autoProcess.ini.sample"
-  $target_ini = "${configdir}/plex.ini"
-  $venv       = "${target}/venv"
+  $codedir        = '/opt'
+  $target         = "${codedir}/sickbeard_mp4_automator"
+  $scriptdir      = "${codedir}/scripts"
+  $configdir      = '/etc/sickbeard_mp4_automator'
+  $sample_ini     = "${target}/setup/autoProcess.ini.sample"
+  $target_ini     = "${configdir}/plex.ini"
 
-  $owner      = lookup('defaults::media_user')
-  $group      = lookup('defaults::media_group')
-  $adminemail = lookup('defaults::adminemail')
+  $logdir         = '/var/log/sma'
+  $logfile        = "${logdir}/sma.log"
+  $sample_log_ini = "${target}/setup/autoProcess.ini.sample"
+  $target_log_ini = "${configdir}/logging.ini"
+  $venv           = "${target}/venv"
 
-  $ffmpegppa  = 'ppa:savoury1/ffmpeg4'
+  $owner          = lookup('defaults::media_user')
+  $group          = lookup('defaults::media_group')
+  $adminemail     = lookup('defaults::adminemail')
+
+  $ffmpegppa      = 'ppa:savoury1/ffmpeg4'
 
   contain profile::app::git
   contain profile::app::scripts
@@ -172,6 +176,31 @@ class profile::app::sickbeard_automator (
   }
   inifile::create_ini_settings($settings, $defaults)
 
+# Install logging sample and adjust settings
+  exec { 'install_log_sample':
+    command => "cp ${sample_log_ini} ${target_log_ini}",
+    unless  => "test -f ${target_log_ini} -a ${target_log_ini} -nt ${sample_log_ini}",
+    creates => $target_log_ini,
+    path    => [ '/bin', '/usr/bin' ] ,
+    require => [
+      Vcsrepo[ $target ],
+      File[ $configdir ],
+    ],
+  }
+  $logdefaults = {
+    path  => $target_log_ini,
+  }
+  $logsettings = {
+    'handler_fileHandler' => {
+      #level => 'INFO', # default
+      #args  => "('%(logfilename)s', 'a', 100000, 3)", # default
+      level => 'DEBUG',
+      args  => "('${logfile}}', 'a', 100000, 3)",
+    }
+  }
+  #
+  inifile::create_ini_settings($logsettings, $logdefaults)
+
   #
   #TODO change logging parameters?
   # Make sure log file exists and is writable
@@ -183,7 +212,7 @@ class profile::app::sickbeard_automator (
     require => Service['sssd'],
   }
 
-  file { "${logdir}/index.log":
+  file { $logfile:
     ensure  => file,
     mode    => '0664',
     owner   => $owner,
