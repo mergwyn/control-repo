@@ -79,7 +79,7 @@ class profile::app::sickbeard_automator (
   # Get the lastest version from github
   vcsrepo { $target:
     ensure   => latest,
-    revision => 'master',
+    revision => 'e6535dd61d66b0c6de7f2275f58952a1df7f9df8', # 'master',
     provider => git,
     require  => Service['sssd'],
     source   => 'https://github.com/mdhiggins/sickbeard_mp4_automator',
