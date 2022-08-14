@@ -15,8 +15,7 @@ class profile::app::sickbeard_automator (
 
   $logdir         = '/var/log/sma'
   $logfile        = "${logdir}/sma.log"
-  $sample_log_ini = "${target}/setup/autoProcess.ini.sample"
-  $target_log_ini = "${configdir}/logging.ini"
+  $log_ini        = "${target}/config/logging.ini"
   $venv           = "${target}/venv"
 
   $owner          = lookup('defaults::media_user')
@@ -176,19 +175,9 @@ class profile::app::sickbeard_automator (
   }
   inifile::create_ini_settings($settings, $defaults)
 
-# Install logging sample and adjust settings
-  exec { 'install_log_sample':
-    command => "cp ${sample_log_ini} ${target_log_ini}",
-    unless  => "test -f ${target_log_ini} -a ${target_log_ini} -nt ${sample_log_ini}",
-    creates => $target_log_ini,
-    path    => [ '/bin', '/usr/bin' ] ,
-    require => [
-      Vcsrepo[ $target ],
-      File[ $configdir ],
-    ],
-  }
+# logging settings
   $logdefaults = {
-    path  => $target_log_ini,
+    path  => $log_ini,
   }
   $logsettings = {
     'handler_fileHandler' => {
@@ -198,17 +187,15 @@ class profile::app::sickbeard_automator (
       args  => "('${logfile}', 'a', 100000, 3)",
     }
   }
-  #
   inifile::create_ini_settings($logsettings, $logdefaults)
 
   #
-  #TODO change logging parameters?
   # Make sure log file exists and is writable
   file { $logdir:
     ensure  => directory,
     owner   => $owner,
     group   => $group,
-    mode    => '0777',
+    mode    => '0755',
     require => Service['sssd'],
   }
 
