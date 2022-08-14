@@ -181,9 +181,9 @@ class profile::app::sickbeard_automator (
   }
   $logsettings = {
     'handler_fileHandler' => {
-      #level => 'INFO', # default
+      level => 'INFO', # default
+      #level => 'DEBUG',
       #args  => "('%(logfilename)s', 'a', 100000, 3)", # default
-      level => 'DEBUG',
       args  => "('${logfile}', 'a', 100000, 3)",
     }
   }
