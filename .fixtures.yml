@@ -4,6 +4,9 @@ fixtures:
     role: "#{source_dir}/site-modules/role"
     profile: "#{source_dir}/site-modules/profile"
   repositories:
+    nginx:
+      repo: https://github.com/voxpupuli/puppet-nginx
+      ref: master
     unbound:
       repo: https://github.com/voxpupuli/puppet-unbound
       ref: master
@@ -158,9 +161,6 @@ fixtures:
     letsencrypt:
       repo: puppet-letsencrypt
       ref: 8.0.2
-    nginx:
-      repo: puppet-nginx
-      ref: 3.3.0
     puppetboard: 
       repo: puppet-puppetboard
       ref: 9.0.0
