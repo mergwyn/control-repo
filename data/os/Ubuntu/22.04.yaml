@@ -1,0 +1,4 @@
+---
+
+# TODO until formal support for 22.04 in puppet-php
+php::globals::php_version: 8.1
