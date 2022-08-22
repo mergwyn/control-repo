@@ -48,7 +48,7 @@ mod 'puppetlabs-yumrepo_core', '1.1.0'
 mod 'puppet-letsencrypt', '8.0.2'
 # TODO workaround until next release of NGINX moduke
 #mod 'puppet-nginx', '3.3.0'
-mod 'puppet-nginx', :git => 'https://github.com/voxpupuli/puppet-ninx'
+mod 'puppet-nginx', :git => 'https://github.com/voxpupuli/puppet-nginx'
 mod 'puppet-php', '8.1.0'
 mod 'puppet-postfix', '3.0.0'
 mod 'puppet-puppetboard', '9.0.0'
