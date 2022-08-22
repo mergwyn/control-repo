@@ -20,6 +20,13 @@ class profile::app::nginx {
     profile::app::zabbix::template_host { 'Template App Nginx by HTTP': }
   }
 
+  $service_name = 'nginx.service'
+  # removes workaround for https://github.com/voxpupuli/puppet-nginx/issues/1372#issuecomment-611736052
+  systemd::dropin_file { 'nginx-runtime.conf':
+    unit    => $service_name,
+    ensure => absent,
+  }
+
   package { [ 'fcgiwrap' ]: }
 
 }
