@@ -133,7 +133,8 @@ class profile::app::sickbeard_automator (
 # add the settings we want to copied autoProcess.ini file from the repo
 
   $defaults = {
-    path  => $target_ini,
+    path    => $target_ini,
+    require =>  Vcsrepo[ $target ],
   }
   $settings = {
     'Converter' => {
@@ -178,7 +179,8 @@ class profile::app::sickbeard_automator (
 
 # logging settings
   $logdefaults = {
-    path  => $log_ini,
+    path    => $log_ini,
+    require =>  Vcsrepo[ $target ],
   }
   $logsettings = {
     'handler_fileHandler' => {
