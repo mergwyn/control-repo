@@ -8,11 +8,12 @@ class profile::puppet::repo {
     'amd64': { $release = $facts['os']['distro']['codename']}
     default: { notify { "Unexpected arch ${arch} for puppet repo": withpath => true } }
   }
-  apt::source { 'puppet6':
-    comment  => "Puppet 6 ${release} Repository",
+  $collection = lookup('defaults::puppetcollection')
+  apt::source { $collection :
+    comment  => "${collection} ${release} Repository",
     location => 'http://apt.puppetlabs.com',
     release  => $release,
-    repos    => 'puppet6',
+    repos    => $collection,
     key      => {
       'id'     => 'D6811ED3ADEEB8441AF5AA8F4528B6CD9E61EF26',
       'server' => 'pgp.mit.edu',
@@ -20,8 +21,8 @@ class profile::puppet::repo {
   }
   $aptdir = '/etc/apt/sources.list.d'
   $purgelist = [
-    "${aptdir}/puppet5.list",
-    "${aptdir}/puppet5.list.distUpgrade",
+    "${aptdir}/puppet6.list",
+    "${aptdir}/puppet6.list.distUpgrade",
     "${aptdir}/pc_repo.list",
     "${aptdir}/pc_repo.list.save",
     "${aptdir}/pc_repo.list.distUpgrade",

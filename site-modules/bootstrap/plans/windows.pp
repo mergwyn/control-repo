@@ -21,7 +21,7 @@ plan bootstrap::windows (
   Stdlib::Fqdn                                              $puppet_master,
   Stdlib::Fqdn                                              $domain_name,
   Enum['Chocolatey', 'Legacy']                              $method = 'Legacy',
-  Enum['6','7']                                             $collection = '6',
+  Enum['6','7']                                             $collection = '7',
   Pattern[/^(\d{1,2}\.)?(\d{1,2}\.)?(\d{1,2})$/,/^latest$/] $version = 'latest',
   Stdlib::Port                                              $port = 8140,
   String                                                    $environment = 'production',
