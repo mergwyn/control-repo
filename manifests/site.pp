@@ -8,7 +8,7 @@ if $trusted['extensions']['pp_role'] {
 }
 
 node default {
-  class { puppet_agent:
+  class { 'puppet_agent':
     collection => lookup('defaults::puppetcollection'),
   }
 

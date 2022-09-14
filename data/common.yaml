@@ -4,7 +4,7 @@
 defaults::workgroup:       'THECLARKHOME'
 defaults::realm:           'THECLARKHOME.COM'
 defaults::puppetmaster:    "echo.%{trusted.domain}"
-defaults::puppetcolllection: 'puppet7'
+defaults::puppetcollection: 'puppet7'
 
 # user
 defaults::adminemail:      "root@%{trusted.domain}"
