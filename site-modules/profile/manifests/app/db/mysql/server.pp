@@ -52,7 +52,7 @@ class profile::app::db::mysql::server (
       'innodb_flush_log_at_trx_commit' => '1',
       'innodb_file_per_table'          => '1',
       'innodb_buffer_pool_size'        => '1800M',
-      'innodb_buffer_pool_instances'   => '2',
+      'innodb_buffer_pool_instances'   => '1',
       'server_id'                      => '1',
       # Tuning
       'performance_schema'             => 'off',
