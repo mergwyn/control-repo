@@ -3,3 +3,5 @@
 # TODO until formal support for 22.04 in puppet-php
 php::globals::php_version: '8.1'
 
+# TODO workaround until puppet erver/db ackages released for jammy
+profile::puppet::repo: 'focal'
