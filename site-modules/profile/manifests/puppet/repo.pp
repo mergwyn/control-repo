@@ -1,6 +1,8 @@
 #
 #
-class profile::puppet::repo {
+class profile::puppet::repo (
+  String $release = $facts['os']['distro']['codename'],
+) {
 
   $arch =  $::facts['os']['architecture']
   case $arch {
