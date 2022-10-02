@@ -14,13 +14,14 @@ class profile::puppet::termini (
   Stdlib::Port $port                   = 8081,
   Boolean $soft_write_failure          = false,
   Stdlib::Absolutepath $puppet_confdir = '/etc/puppetlabs/puppet',
+  String $package                      = 'puppetdb-termini',
 ) {
 
   include profile::puppet::repo
 
 # Avoid dulication with puppetserver and puppetdb
   if  $trusted['extensions']['pp_role'] != 'puppet_master' {
-    package { 'puppetdb-termini': ensure => installed, }
+    package { $package: ensure => installed, }
 
     Ini_setting {
       ensure  => present,

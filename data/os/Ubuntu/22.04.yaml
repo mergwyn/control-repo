@@ -2,3 +2,6 @@
 
 # TODO until formal support for 22.04 in puppet-php
 php::globals::php_version: '8.1'
+
+# TODO workaorund until jammy packages available for puppet
+profile::puppet::termini::package: 'puppet-terminus-puppetdb'
