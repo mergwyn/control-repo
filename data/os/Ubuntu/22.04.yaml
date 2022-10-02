@@ -4,4 +4,4 @@
 php::globals::php_version: '8.1'
 
 # TODO workaround until puppet erver/db ackages released for jammy
-profile::puppet::repo::release: 'focal'
+profile::puppet::repo: 'focal'
