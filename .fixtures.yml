@@ -57,14 +57,14 @@ fixtures:
       repo: saz-ssh
       ref: 9.0.0
     augeasproviders_core:
-      repo: herculesteam-augeasproviders_core
-      ref: 3.1.0
+      repo: puppet-augeasproviders_core
+      ref: 3.2.0
     augeasproviders_pam:
-      repo: herculesteam-augeasproviders_pam
-      ref: 2.3.0
+      repo: puppet-augeasproviders_pam
+      ref: 3.0.1
     augeasproviders_shellvar:
-      repo: herculesteam-augeasproviders_shellvar
-      ref: 4.1.0
+      repo: puppet-augeasproviders_shellvar
+      ref: 5.0.0
     augeasproviders_sysctl:
       repo: herculesteam-augeasproviders_sysctl
       ref: 2.6.2
