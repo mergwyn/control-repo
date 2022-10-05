@@ -2,7 +2,7 @@
 #
 class profile::app::sssd {
 
-  contain profile::app::samba
+  require profile::app::samba
 
   $keytab = '/etc/krb5.keytab'
 #  exec { 'create_keytab':

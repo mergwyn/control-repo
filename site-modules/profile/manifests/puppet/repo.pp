@@ -1,11 +1,13 @@
 #
 #
-class profile::puppet::repo {
+class profile::puppet::repo (
+  String $release = $facts['os']['distro']['codename'],
+) {
 
   $arch =  $::facts['os']['architecture']
   case $arch {
     'i386':  { $release = 'xenial' }
-    'amd64': { $release = $facts['os']['distro']['codename']}
+    'amd64': { $release }
     default: { notify { "Unexpected arch ${arch} for puppet repo": withpath => true } }
   }
   apt::source { 'puppet6':

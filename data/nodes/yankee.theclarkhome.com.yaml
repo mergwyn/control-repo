@@ -1,8 +1,0 @@
----
-
-classes:
-  - profile::app::sssd
-  - profile::app::backuppc::client
-  - profile::app::backuppc::server
-
-profile::app::backuppc::client: localhost
