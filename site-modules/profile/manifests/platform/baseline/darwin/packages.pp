@@ -2,26 +2,32 @@
 #
 class profile::platform::baseline::darwin::packages {
 
-
   Package {
     provider => brewcask,
     ensure   => latest,
   }
 
-
 # packages to be installed
   #package { 'amazon-music': }
-  package { 'git': provider => 'brew' }
-  package { 'unison': provider => 'brew' }
+  $taps = [
+    'git',
+    'unison',
+    'python',
+    'python-tk',
+  ]
+  package { $taps: provider => 'brew' }
 
-  package { 'firefox': }
-  package { 'aerial': }
-  package { 'skype': }
-  package { 'zoom': }
-  package { 'vlc': }
-  package { 'keeweb': }
-  package { 'puppetlabs/puppet/puppet-agent-6': }
-  package { 'homebrew/cask-drivers/sonos':      }
-  package { 'plex': }
+  $casks = [
+    'firefox',
+    'aerial',
+    'skype',
+    'zoom',
+    'vlc',
+    'keeweb',
+    'puppetlabs/puppet/puppet-agent-6',
+    'homebrew/cask-drivers/sonos',
+    'plex',
+  ]
 
+  package { $casks: }
 }
