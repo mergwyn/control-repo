@@ -4,9 +4,6 @@ fixtures:
     role: "#{source_dir}/site-modules/role"
     profile: "#{source_dir}/site-modules/profile"
   repositories:
-    nginx:
-      repo: https://github.com/voxpupuli/puppet-nginx
-      ref: master
     unbound:
       repo: https://github.com/voxpupuli/puppet-unbound
       ref: master
@@ -32,6 +29,9 @@ fixtures:
       repo: https://github.com/mergwyn/mergwyn-backuppc
       ref: master
   forge_modules:
+    nginx:
+      repo: puppet-nginx
+      ref: 4.0.0
     zabbix:
       repo: puppet-zabbix
       ref: 9.2.0
