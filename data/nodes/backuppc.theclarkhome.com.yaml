@@ -1,0 +1,7 @@
+---
+
+classes:
+  - profile::app::backuppc::server
+
+profile::app::backuppc::client::backuppc_hostname: "%{trusted.hostname}"
+
