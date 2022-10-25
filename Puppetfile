@@ -2,7 +2,7 @@
 #forge 'http://forge.puppetlabs.com'
 
 #mod 'andschwa-unattended_upgrades', '0.2.3'
-mod 'backuppc', :git => 'https://github.com/mergwyn/mergwyn-backuppc'
+mod 'backuppc', :git => 'https://github.com/mergwyn/mergwyn-backuppc', :branch => 'jammy'
 mod 'camptocamp-augeas', '1.9.0'
 mod 'CraigWatson1987-transmission', :git => 'https://github.com/craigwatson/puppet-transmission'
 mod 'dodevops-githubreleases', '4.0.0'
