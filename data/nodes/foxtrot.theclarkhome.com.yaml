@@ -85,6 +85,8 @@ lxd::preseed:
     name: rpool
     driver: zfs
 
+
+profile::app::backuppc::server::pool_v3_enabled: true
 profile::app::backuppc::client::rsync_share_name:
   - '/'
   - '/boot'

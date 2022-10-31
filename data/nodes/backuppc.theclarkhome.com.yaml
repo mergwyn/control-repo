@@ -3,5 +3,6 @@
 classes:
   - profile::app::backuppc::server
 
+profile::app::backuppc::server::pool_v3_enabled: true
 profile::app::backuppc::client::backuppc_hostname: "%{facts.networking.fqdn}"
 
