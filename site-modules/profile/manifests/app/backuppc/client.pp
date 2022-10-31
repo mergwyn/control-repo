@@ -39,7 +39,6 @@ class profile::app::backuppc::client (
     dump_pre_user_cmd          => "${dump_cmd}/DumpPreUser --arg=\$type",
     dump_post_user_cmd         => "${dump_cmd}/DumpPostUser --arg=\$type --arg=\$xferOK",
     user_cmd_check_status      => true,
-    rsync_args_extra           => [ '--recursive', '--one-file-system', '-F' ],
   }
 
   if lookup('backuppc::client::system_account') {
