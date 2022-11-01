@@ -107,7 +107,7 @@ fixtures:
     augeas_core:
       repo: puppetlabs-augeas_core
       ref: 1.2.0
-    docker
+    docker:
       repo: puppetlabs-docker
       ref: 5.1.0
     firewall:
