@@ -1,0 +1,5 @@
+---
+
+classes:
+  - profile::platform::baseline::debian::virtual::docker
+
