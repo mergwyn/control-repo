@@ -15,6 +15,7 @@ class role::main_server {
   include profile::app::backuppc::client
   include profile::app::gpo::clean
   include profile::app::nginx::webdav
+  include profile::app::nginx::phonebook
   include profile::app::odrive
   include profile::app::photos
   include profile::app::samba::shares
