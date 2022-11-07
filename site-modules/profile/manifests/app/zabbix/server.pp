@@ -18,11 +18,10 @@ class profile::app::zabbix::server {
     database_name     => 'zabbix',
     database_user     => 'zabbix',
     database_password => lookup('secrets::mysql'),
-    zabbix_api_pass   => lookup('secrets::mysql'),
+    zabbix_api_pass   => lookup('secrets::zabbix'),
     manage_resources  => true,
     manage_vhost      => false,
-# TODO workaround for not recognising aliases for utf8
-    database_charset  => 'utf8mb3',
+    database_charset  => 'utf8',
   }
 
   profile::app::zabbix::template_host { 'Template App Zabbix Server by Zabbix agent active': }
