@@ -2,6 +2,7 @@
 class profile::app::backuppc::server (
   $uid = 997,
   $gid = 199,
+  Integer[0,1] $pool_v3_enabled = 0, # Allow for migration of v3 pools
 ) {
 
   if $facts['os']['family'] != 'Debian' {
@@ -69,6 +70,7 @@ class profile::app::backuppc::server (
     backuppc_password          => lookup('secrets::backuppc'),
     gzip_path                  => '/usr/bin/pigz',
     full_age_max               => 370,
+    pool_v3_enabled            => $pool_v3_enabled,
     rsync_args_extra           => [ '-F' ],
     full_keep_cnt              => [ 4, 0, 12],
     incr_age_max               => 21,
