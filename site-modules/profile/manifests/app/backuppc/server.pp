@@ -69,13 +69,14 @@ class profile::app::backuppc::server (
     backuppc_password          => lookup('secrets::backuppc'),
     gzip_path                  => '/usr/bin/pigz',
     full_age_max               => 370,
-    rsync_args_extra           => [ '--recursive', '--one-file-system', '-F' ],
+    rsync_args_extra           => [ '-F' ],
     full_keep_cnt              => [ 4, 0, 12],
     incr_age_max               => 21,
     incr_keep_cnt              => 12,
     max_user_backups           => 0,
     backup_zero_files_is_fatal => true,
-    cgi_date_format_mmdd       => 1,
+    cgi_date_format_mmdd       => 2,
+    cgi_admin_users            => 'backuppc gary', # TODO make this a parameter?
     apache_configuration       => false,
     blackout_periods           => [
       {
