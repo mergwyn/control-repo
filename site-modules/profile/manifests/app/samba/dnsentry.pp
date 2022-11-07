@@ -11,14 +11,28 @@ define profile::app::samba::dnsentry (
   Stdlib::IP::Address::V4 $ipaddress = undef,
 ) {
   $octet = split($ipaddress, '\.')
-# TODO can use join for this?
-  $revzone = "${octet[2]}.${octet[1]}.${octet[0]}.in-addr.arpa"
-#
-  notify {"ipaddress is ${ipaddress}, split is ${octet}":
+  $bits = lookup('defaults::bits')
+  case $bits {
+    '8':     { # Type A
+      $revzone = "${octet[0]}.in-addr.arpa"
+      $ptr_ip = "${octet[3]}.${octet[2]}.${octet[1]}"
+    }
+    '16':    { # Type A
+      $revzone = "${octet[1]}.${octet[0]}.in-addr.arpa"
+      $ptr_ip = "${octet[3]}.${octet[2]}"
+    }
+    '24':    { # Type C
+      $revzone = "${octet[2]}.${octet[1]}.${octet[0]}.in-addr.arpa"
+      $ptr_ip = $octet[3]
+    }
+    default: { fail("Can't create reverse domain with ${bits} bits") }
+  }
+
+  notify {"A: ${ipaddress}, PTR: ${ptr_ip}, Zone: ${revzone}, split: ${octet}":
     loglevel => debug,
     withpath => true,
   }
-#
+
   samba::dc::dnsentry { $host:
     zone   => $trusted['domain'],
     host   => $host,
@@ -27,7 +41,7 @@ define profile::app::samba::dnsentry (
   }
   samba::dc::dnsentry { "${host} rev":
     zone   => $revzone,
-    host   => $octet[3],
+    host   => $ptr_ip,
     type   => 'PTR',
     record => "${host}.${trusted['domain']}"
   }
