@@ -30,7 +30,7 @@ fixtures:
       ref: master
     backuppc:
       repo: https://github.com/mergwyn/mergwyn-backuppc
-      ref: jammy
+      ref: master
   forge_modules:
     zabbix:
       repo: puppet-zabbix
