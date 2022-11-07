@@ -35,9 +35,9 @@ class profile::app::db::mysql::server (
       'max_allowed_packet'             => '16M',
       'max_connect_errors'             => '1000000',
       # BINARY LOGGING #
-      'log_bin'                        => "${logdir}/mysql_bin.log",
-      'binlog_expire_logs_seconds'     => '1209600', # 14 days
-      'sync_binlog'                    => '1',
+      #'log_bin'                        => "${logdir}/mysql_bin.log",
+      #'binlog_expire_logs_seconds'     => '1209600', # 14 days
+      #'sync_binlog'                    => '1',
       # CACHES AND LIMITS #
       'tmp_table_size'                 => '32M',
       'max_heap_table_size'            => '32M',
