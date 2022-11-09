@@ -115,6 +115,7 @@ profile::app::backuppc::client::rsync_share_name:
   - '/var/mail'
   - '/var/snap'
   - '/var/www'
+  - '/usr/lib/docker/volumes'
 
 profile::app::backuppc::client::backup_files_exclude:
   '*':
