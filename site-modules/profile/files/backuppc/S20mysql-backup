@@ -1,7 +1,7 @@
 #!/bin/bash
 
 LEVEL=$1
-DUMPDIR=/var/lib/mysql/log/
+DUMPDIR=/var/backups
 USER=root
 MYSQLADMIN=$(which mysqladmin)
 PASSFILE="../${0}-password"
@@ -11,12 +11,7 @@ echo $0: $*
 [ -d "$DUMPDIR" ] || exit 0
 [ "$MYSQLADMIN" = "" ] && exit 0
 
-#if [ "$LEVEL" = "full" ]
-#then
-#    echo $0: full
-    mysqldump -u $USER --password=$PASSWORD --single-transaction --flush-logs --master-data=2 --all-databases --delete-master-logs | gzip > $DUMPDIR/dump.$$.sql.gz
-    mv $DUMPDIR/dump.$$.sql.gz $DUMPDIR/dump.sql.gz
-#else
-#    echo $0: not full
-#    mysqladmin -u $USER --password=$PASSWORD flush-logs
-#fi
+mysqldump -u $USER --password=$PASSWORD --single-transaction --flush-logs --master-data=2 --all-databases --delete-master-logs \
+  | gzip > $DUMPDIR/dump.$$.sql.gz
+
+mv $DUMPDIR/dump.$$.sql.gz $DUMPDIR/dump.sql.gz
