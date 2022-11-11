@@ -9,17 +9,6 @@ class profile::app::iptv {
   $packages = [ 'socat' ]
   package { $packages: ensure => present }
 
-#  class{'::tvheadend':
-#    release        => 'stable',
-#    admin_password => lookup('secrets::tvheadend'),
-#  }
-
-#    environment => [
-#     'PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/puppetlabs/bin:/opt/puppetlabs/puppet/bin"'
-#  }
-
-  cron::job { 'xmltv': ensure => absent }
-
 # systemd timer to download channels
   $adminemail = lookup('defaults::adminemail')
   $_timer = @(EOT)
@@ -53,11 +42,8 @@ class profile::app::iptv {
     enable          => true,
   }
 
-
   #TODO xteve?
-  include profile::app::nginx::xmltv
 
-  #TODO xteve?
   if defined('profile::app::zabbix::agent') {
     profile::app::zabbix::template_host { 'Template App xTeve by Zabbix agent active': }
   }
