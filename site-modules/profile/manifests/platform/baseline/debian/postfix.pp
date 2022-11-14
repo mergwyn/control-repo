@@ -10,6 +10,7 @@ class profile::platform::baseline::debian::postfix {
     myorigin            => $trusted['domain'],
     relayhost           => $relayhost,
     mydestination       => "\$myhostname, ${trusted['certname']}, localhost.${trusted['domain']}, localhost",
+    mynetworks          => '192.168.0.0/16 172.16.0.0/12 10.0.0.0/8 127.0.0.0/8 [fd00::/8] [::ffff:127.0.0.0]/104 [::1]/128',
     root_mail_recipient => lookup('defaults::adminemail'),
     manage_root_alias   => true,
     mta                 => true,
