@@ -1,0 +1,17 @@
+---
+
+classes:
+  - profile::platform::baseline::debian::netplan
+  - profile::platform::baseline::debian::virtual::docker
+
+profile::platform::baseline::debian::netplan::ethernets:
+  eth0:
+    dhcp4: no
+    dhcp6: no
+    addresses:
+      - "%{lookup('defaults::subnet')}.0.5/%{lookup('defaults::bits')}"
+    gateway4:    "%{lookup('defaults::gateway')}"
+    nameservers:
+      search:    "%{alias('defaults::dns::search')}"
+      addresses: "%{alias('defaults::dns::nameservers')}"
+
