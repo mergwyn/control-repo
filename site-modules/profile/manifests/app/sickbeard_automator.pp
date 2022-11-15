@@ -87,9 +87,8 @@ class profile::app::sickbeard_automator (
     owner    => $owner,
     group    => $group,
   }
-
-  # install dependencies
-  python::pyvenv { $venv:
+  ->
+  python::pyvenv { $venv: # install dependencies
     ensure     => present,
     version    => 'system',
     systempkgs => true,
