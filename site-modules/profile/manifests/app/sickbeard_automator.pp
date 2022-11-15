@@ -17,12 +17,14 @@ class profile::app::sickbeard_automator (
   $logfile        = "${logdir}/sma.log"
   $log_ini        = "${target}/config/logging.ini"
   $venv           = "${target}/venv"
+  $requirements   = "${target}/setup/requirements.txt"
 
   $owner          = lookup('defaults::media_user')
   $group          = lookup('defaults::media_group')
   $adminemail     = lookup('defaults::adminemail')
 
-  $ffmpegppa      = 'ppa:savoury1/ffmpeg4'
+  #$ffmpegppa      = 'ppa:savoury1/ffmpeg4'
+  $ffmpegppa      = undef
 
   contain profile::app::git
   contain profile::app::scripts
@@ -84,11 +86,11 @@ class profile::app::sickbeard_automator (
     provider => git,
     require  => Service['sssd'],
     source   => 'https://github.com/mdhiggins/sickbeard_mp4_automator',
+    notify   => Python::Requirements[$requirements],
     owner    => $owner,
     group    => $group,
   }
-  ->
-  python::pyvenv { $venv: # install dependencies
+  -> python::pyvenv { $venv: # install dependencies
     ensure     => present,
     version    => 'system',
     systempkgs => true,
@@ -99,7 +101,7 @@ class profile::app::sickbeard_automator (
       Service['sssd'],
     ],
   }
-  -> python::requirements { "${target}/setup/requirements.txt" :
+  python::requirements { $requirements :
     virtualenv => $venv,
     owner      => $owner,
     group      => $group,
