@@ -9,7 +9,7 @@ profile::platform::baseline::debian::netplan::ethernets:
     dhcp4: no
     dhcp6: no
     addresses:
-      - "%{lookup('defaults::subnet')}.0.5/%{lookup('defaults::bits')}"
+      - "%{lookup('defaults::subnet')}.5/%{lookup('defaults::bits')}"
     gateway4:    "%{lookup('defaults::gateway')}"
     nameservers:
       search:    "%{alias('defaults::dns::search')}"
