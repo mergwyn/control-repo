@@ -4,13 +4,13 @@ classes:
   - profile::platform::baseline::debian::netplan
   - profile::platform::baseline::debian::virtual::docker
 
-docker::storage_driver: "btrfs"
+docker::storage_driver: overlay2"
 profile::platform::baseline::debian::netplan::ethernets:
   eth0:
     dhcp4: no
     dhcp6: no
     addresses:
-      - "%{lookup('defaults::subnet')}.5/%{lookup('defaults::bits')}"
+      - "%{lookup('defaults::subnet')}.14/%{lookup('defaults::bits')}"
     gateway4:    "%{lookup('defaults::gateway')}"
     nameservers:
       search:    "%{alias('defaults::dns::search')}"
