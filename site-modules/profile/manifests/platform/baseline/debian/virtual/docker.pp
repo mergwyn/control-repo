@@ -4,7 +4,8 @@ class profile::platform::baseline::debian::virtual::docker {
 
   if $facts['virtual'] == 'lxc' {
     package  { [ 'fuse-overlayfs' ]: }
-    $storage_driver = 'fuse-overlayfs'
+    #$storage_driver = 'fuse-overlayfs'
+    $storage_driver = 'vfs'
   } else {
     $storage_driver = 'zfs'
   }
