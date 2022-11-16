@@ -3,17 +3,19 @@
 class profile::platform::baseline::debian::virtual::docker {
 
   if $facts['virtual'] == 'lxc' {
-    $required_packages = [ 'fuse-overlayfs' ]
+    package  { [ 'fuse-overlayfs' ]: }
     $storage_driver = 'fuse-overlayfs'
+  } else {
+    $storage_driver = 'zfs'
   }
 
   $docker_users = [ 'gary' ]
   $additional_packages = [ 'docker-compose-plugin' ]
 
-  package { $required_packages: }
-  -> class { 'docker':
-    ensure       => present,
-    docker_users => $docker_users,
+  class { 'docker':
+    ensure         => present,
+    docker_users   => $docker_users,
+    storage_driver => $storage_driver,
   }
   -> package { $additional_packages: }
 
