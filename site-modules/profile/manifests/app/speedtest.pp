@@ -9,7 +9,7 @@ class profile::app::speedtest {
 
   cron::job {'speedtest':
     environment => [ 'PATH="/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin"'],
-    command     => "test -x ${speedtest} && ${speedtest} --json > ${datafile}",
+    command     => "test -x ${speedtest} && ${speedtest} --secure --json > ${datafile}",
     minute      => '53',
     hour        => '*/12',
   }
