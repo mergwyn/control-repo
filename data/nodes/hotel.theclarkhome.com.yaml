@@ -14,3 +14,10 @@ profile::platform::baseline::debian::netplan::ethernets:
       search:    "%{alias('defaults::dns::search')}"
       addresses: "%{alias('defaults::dns::nameservers')}"
 
+profile::app::backuppc::client::rsync_share_name:
+  - '/usr/lib/docker/volumes'
+profile::app::backuppc::client::backup_files_exclude:
+  '*':
+    - 'usr/lib/docker/*'
+  '/usr/lib/docker':
+    - '*'
