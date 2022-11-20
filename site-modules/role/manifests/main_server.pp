@@ -11,8 +11,8 @@ class role::main_server {
   include profile::platform::baseline::debian::virtual::lxd
   include profile::platform::baseline::debian::autofs
 
-  include profile::app::backuppc::server
   include profile::app::backuppc::client
+  include profile::app::backuppc::server
   include profile::app::gpo::clean
   include profile::app::nginx::webdav
   include profile::app::nginx::phonebook
@@ -20,6 +20,7 @@ class role::main_server {
   include profile::app::photos
   include profile::app::samba::shares
   include profile::app::timemachine
+  include profile::app::transcoder
   include profile::app::unison
 
 }
