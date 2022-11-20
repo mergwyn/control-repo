@@ -121,4 +121,6 @@ profile::app::backuppc::client::backup_files_exclude:
   '*':
     - '*.cloudf'
     - '*.cloud'
-
+    - 'usr/lib/docker/*'
+  '/usr/lib/docker':
+    - '*'
