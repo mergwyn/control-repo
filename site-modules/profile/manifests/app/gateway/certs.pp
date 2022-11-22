@@ -50,6 +50,9 @@ class profile::app::gateway::certs {
 #                              $trusted['domain'],
                               $trusted['certname'],
                               "foxtrot.${$trusted['domain']}",
+                              "golf.${$trusted['domain']}"
+                              "hotel.${$trusted['domain']}"
+                              "india.${$trusted['domain']}"
 #                              "tango.${$trusted['domain']}",
                               "zulu.${$trusted['domain']}",
 #  "echo.%{trusted.domain}"
