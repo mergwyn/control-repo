@@ -2,6 +2,10 @@
 
 profile::app::ddclient::servers:
   - "%{trusted.hostname}"
+  - foxtrot
+  - golf
+  - hotel
+  - india
 #  - webmin
 #  - zulu
 #  - foxtrot
