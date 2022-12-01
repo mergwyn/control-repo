@@ -20,5 +20,3 @@ profile::app::backuppc::client::rsync_share_name:
 profile::app::backuppc::client::backup_files_exclude:
   '*':
     - 'var/lib/docker/*'
-  '/var/lib/docker':
-    - '*'
