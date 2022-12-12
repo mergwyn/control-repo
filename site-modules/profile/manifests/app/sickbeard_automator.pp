@@ -23,8 +23,7 @@ class profile::app::sickbeard_automator (
   $group          = lookup('defaults::media_group')
   $adminemail     = lookup('defaults::adminemail')
 
-  #$ffmpegppa      = 'ppa:savoury1/ffmpeg4'
-  $ffmpegppa      = undef
+  $ffmpegppa      = 'ppa:savoury1/ffmpeg4'
 
   contain profile::app::git
   contain profile::app::scripts
