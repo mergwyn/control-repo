@@ -5,10 +5,11 @@
 class profile::app::photos {
   apt::ppa { 'ppa:nilarimogard/webupd8':
     #package_manage => true
+    ensure => absent,
   }
 
   package { 'grive':
-    ensure  => present,
+    ensure  => absent,
     require => Apt::Ppa['ppa:nilarimogard/webupd8'],
   }
 
