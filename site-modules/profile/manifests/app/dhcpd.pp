@@ -165,6 +165,7 @@ class profile::app::dhcpd (
                /bin/egrep rix,
                /bin/grep rix,
                /bin/hostname rix,
+               /usr/bin/hostname rix,
                /bin/sed rix,
                /bin/sleep rix,
                /bin/uname rix,
