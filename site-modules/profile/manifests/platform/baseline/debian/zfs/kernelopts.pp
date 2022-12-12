@@ -7,12 +7,14 @@ class profile::platform::baseline::debian::zfs::kernelopts {
   $min = 0.1
 
   kmod::option { 'zfs_arc_max':
-    module =>  'zfs',
+    module => 'zfs',
+    option => 'zfs_arc_max',
     value  => $::facts['memory']['system']['total_bytes']*$max,
     notify => Exec['update_initramfs_all'],
   }
   kmod::option { 'zfs_arc_min':,
     module => 'zfs',
+    option => 'zfs_arc_min',
     value  => $::facts['memory']['system']['total_bytes']*$min,
     notify => Exec['update_initramfs_all'],
   }
@@ -25,6 +27,7 @@ class profile::platform::baseline::debian::zfs::kernelopts {
 #  }
 #  kmod::option { 'zfs_prefetch_disable':,
 #    module => 'zfs',
+#    option => 'zfs_prefetch_disable',
 #    value => 0,
 #    notify => Exec['update_initramfs_all'],
 #  },
@@ -33,6 +36,7 @@ class profile::platform::baseline::debian::zfs::kernelopts {
 #   default  => 8 * 1024 * 1024,
   kmod::option { 'l2arc_write_max':,
     module => 'zfs',
+    option => 'l2arc_write_max',
     value  => 500*1024*1024,
     notify => Exec['update_initramfs_all'],
   }
