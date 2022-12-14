@@ -4,6 +4,8 @@ classes:
   - profile::platform::baseline::debian::netplan
   - profile::platform::baseline::debian::virtual::docker
 
+profile::platform::baseline::debian::zfs::kernelopts::arc_max_percent: 40
+
 profile::platform::baseline::debian::netplan::ethernets:
   enp3s0:
     dhcp4: no
