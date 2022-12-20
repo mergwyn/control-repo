@@ -77,7 +77,7 @@ class profile::app::samba::shares {
 
 # TODO: these shares used to be for humax access - are they still needed
   samba::share { 'Films':
-    path    => '/srv/media/Movies',
+    path    => '/srv/media/content/films',
     options => {
       'writeable'      => '1',
       'create mask'    => '0775',
@@ -86,7 +86,7 @@ class profile::app::samba::shares {
   }
 
   samba::share { 'TV':
-    path    => '/srv/media/TV Shows',
+    path    => '/srv/media/content/tv',
     options => {
       'writeable'      => '1',
       'create mask'    => '0775',

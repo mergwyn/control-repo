@@ -17,6 +17,7 @@ class profile::app::sickbeard_automator (
   $logfile        = "${logdir}/sma.log"
   $log_ini        = "${target}/config/logging.ini"
   $venv           = "${target}/venv"
+  $requirements   = "${target}/setup/requirements.txt"
 
   $owner          = lookup('defaults::media_user')
   $group          = lookup('defaults::media_group')
@@ -84,13 +85,11 @@ class profile::app::sickbeard_automator (
     provider => git,
     require  => Service['sssd'],
     source   => 'https://github.com/mdhiggins/sickbeard_mp4_automator',
+    notify   => Python::Requirements[$requirements],
     owner    => $owner,
-    user     => $owner, #TODO workaround for https://github.com/puppetlabs/puppetlabs-vcsrepo/issues/535
     group    => $group,
   }
-
-  # install dependencies
-  python::pyvenv { $venv:
+  -> python::pyvenv { $venv: # install dependencies
     ensure     => present,
     version    => 'system',
     systempkgs => true,
@@ -101,7 +100,7 @@ class profile::app::sickbeard_automator (
       Service['sssd'],
     ],
   }
-  -> python::requirements { "${target}/setup/requirements.txt" :
+  python::requirements { $requirements :
     virtualenv => $venv,
     owner      => $owner,
     group      => $group,

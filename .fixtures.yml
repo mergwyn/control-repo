@@ -28,6 +28,10 @@ fixtures:
     webmin:
       repo: https://github.com/rehanone/puppet-webmin
       ref: master
+# TODO woraround for https://github.com/puppetlabs/puppetlabs-docker/issues/870
+    docker:
+      repo: https://github.com/mergwyn/puppetlabs-docker
+      branch: fuse-overlayfs
     backuppc:
       repo: https://github.com/mergwyn/mergwyn-backuppc
       ref: master
@@ -107,6 +111,10 @@ fixtures:
     augeas_core:
       repo: puppetlabs-augeas_core
       ref: 1.2.0
+# TODO woraround for https://github.com/puppetlabs/puppetlabs-docker/issues/870
+#    docker:
+#      repo: puppetlabs-docker
+#      ref: 5.1.0
     firewall:
       repo: puppetlabs-firewall
       ref: 3.5.0
@@ -145,7 +153,7 @@ fixtures:
       ref: 8.2.0
     vcsrepo:
       repo: puppetlabs-vcsrepo
-      ref: 5.0.0
+      ref: 5.3.0
     xinetd:
       repo: puppetlabs-xinetd
       ref: 3.3.0

@@ -2,6 +2,7 @@
 
 classes:
   - profile::platform::baseline::debian::netplan
+  - profile::platform::baseline::debian::virtual::docker
 
 profile::platform::baseline::debian::netplan::ethernets:
   enp2s0:
@@ -54,3 +55,10 @@ profile::app::backuppc::client::rsync_share_name:
   - '/var/lib/apt'
   - '/var/lib/NetworkManager'
   - '/var/lib/dpkg'
+  - '/var/lib/docker/volumes'
+
+profile::app::backuppc::client::backup_files_exclude:
+  '*':
+    - 'usr/lib/docker/*'
+  '/var/lib/docker':
+    - '*'
