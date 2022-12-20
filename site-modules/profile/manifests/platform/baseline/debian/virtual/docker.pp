@@ -8,12 +8,14 @@ class profile::platform::baseline::debian::virtual::docker {
   }
 
   $docker_users = [ 'gary' ]
-  $additional_packages = [ 'docker-compose-plugin' ]
+  $additional_packages = [ 'containerd.io', 'docker-compose-plugin' ]
+
+  $ensure = absent
 
   class { 'docker':
-    ensure         => present,
-    docker_users   => $docker_users,
+    ensure       => $ensure,
+    docker_users => $docker_users,
   }
-  -> package { $additional_packages: }
+  -> package { $additional_packages: ensure => $ensure }
 
 }
