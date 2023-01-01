@@ -10,7 +10,7 @@ class profile::platform::baseline::debian::virtual::docker {
   $docker_users = [ 'gary' ]
   $additional_packages = [ 'docker-compose-plugin' ]
 
-  $ensure = present
+  $ensure = absent
 
   class { 'docker':
     ensure       => $ensure,
