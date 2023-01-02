@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-LOG=${HOME}/Log/logout.log
+LOG=${HOME}/Library/Log/logout.log
 
 onLogout() {
     # Insert whatever script you need to run at logout
