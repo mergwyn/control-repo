@@ -1,11 +1,15 @@
-#!/bin/sh
-OnLogout() {
+#!/usr/bin/env bash
+
+LOG=$(HOME}/Logs/logout.log
+
+onLogout() {
     # Insert whatever script you need to run at logout
-    /usr/local/bin/UnisonHomeSync.sh
+
+    /Users/gary/bin/vm_auto stop 2>&1 | tee ${LOG}
     exit
 }
 
-echo "INFO - Watching ${HOME}" >> /var/log/org.my.log
+echo "INFO - Watching ${HOME}" >> ${LOG}
 
 trap 'onLogout' SIGINT SIGHUP SIGTERM
 
