@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
 
 LOG=${HOME}/Library/Log/logout.log
+exec 2>&1 >> ${LOG}
 
 onLogout() {
     # Insert whatever script you need to run at logout
-
-    /Users/gary/bin/vm_auto stop 2>&1 | tee ${LOG}
+    date
+    /Users/gary/bin/vm_auto stop 2>&1 
     exit
 }
 
