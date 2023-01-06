@@ -16,7 +16,6 @@ ignore = BelowPath .gem
 ignore = BelowPath .git-credential-cache
 ignore = BelowPath .local
 ignore = BelowPath .kube/cache
-ignore = BelowPath
 ignore = BelowPath .macromedia
 ignore = BelowPath .Mozilla
 ignore = BelowPath odrive
