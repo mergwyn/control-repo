@@ -54,7 +54,8 @@ class profile::app::dhcpd (
   #dhcp::host { 'DELLA3F95F':            mac => '08:00:37:a3:f9:5f' }
   #dhcp::host { 's685ip':                mac => '00:01:e3:9a:f9:c1' }
   dhcp::host { 'robovac':               mac => '80:7d:3a:3b:67:3c' }
-  dhcp::host { 'humax':                 mac => '80:1f:02:21:a1:74' }
+  dhcp::host { 'humax-wifi':            mac => '80:1f:02:21:a1:74' }
+  dhcp::host { 'humax-lan':             mac => 'dc:d3:21:57:55:46' }
   dhcp::host { 'lounge-sonos-playbar':  mac => '00:0e:58:bc:b4:dc' }
   dhcp::host { 'lounge-sonos-play1-ls': mac => '00:0e:58:c9:f0:9a' }
   dhcp::host { 'lounge-sonos-play1-rs': mac => '94:9F:3E:12:FA:8A' }
