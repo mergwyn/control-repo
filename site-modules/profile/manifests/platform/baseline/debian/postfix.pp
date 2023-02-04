@@ -2,8 +2,8 @@
 #
 class profile::platform::baseline::debian::postfix {
 
-  $password_credentials = "mergwyn@virginmedia.com:${lookup('secrets::virgin')}"
-  $relayhost            = '[smtp.virginmedia.com]:465'
+  $password_credentials = "mergwyn@plus.net:${lookup('secrets::plusnet')}"
+  $relayhost            = '[relay.plus.net]:587'
   $password_hash        = '/etc/postfix/sasl-passwords'
 
   class { 'postfix':
