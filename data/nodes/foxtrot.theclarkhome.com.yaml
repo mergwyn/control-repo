@@ -98,6 +98,7 @@ profile::app::backuppc::client::rsync_share_name:
   - '/home/ann'
   - '/home/gary'
   - '/home/gary/odrive'
+  - '/home/gary/working'
   - '/home/gwyn'
   - '/home/merry'
   - '/home/sadmin'
