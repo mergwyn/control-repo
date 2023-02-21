@@ -3,7 +3,7 @@
 class profile::platform::baseline::debian::postfix {
 
   $password_credentials = "mergwyn@plus.net:${lookup('secrets::plusnet')}"
-  $relayhost            = '[relay.plus.net]:587'
+  $relayhost            = '[relay.plus.net]:465'
   $password_hash        = '/etc/postfix/sasl-passwords'
 
   class { 'postfix':
@@ -26,10 +26,11 @@ class profile::platform::baseline::debian::postfix {
   package { 'libsasl2-modules': ensure => present, }
 
   postfix::config {
-    'smtp_sasl_password_maps':          value => "hash:${password_hash}";
-    'smtp_sasl_auth_enable':            value => 'yes';
-    'smtp_sasl_security_options':       value =>'noanonymous';
-    'smtp_tls_security_level':          value => 'encrypt';
-    'smtp_tls_wrappermode':             value => 'yes';
+    'smtp_sasl_password_maps':    value => "hash:${password_hash}";
+    'smtp_sasl_auth_enable':      value => 'yes';
+    'smtp_sasl_security_options': value => 'noanonymous';
+    'smtp_tls_security_level':    value => 'encrypt';
+    'smtp_tls_wrappermode':       value => 'yes';
+    'compatibility_level':        value => "3.6";
   }
 }
