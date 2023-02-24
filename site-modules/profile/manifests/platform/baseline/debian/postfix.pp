@@ -27,10 +27,10 @@ class profile::platform::baseline::debian::postfix {
 
   postfix::config {
     'smtp_sasl_password_maps':    value => "hash:${password_hash}";
-    'smtp_sasl_auth_enable':      value => 'yes';
+    'smtp_sasl_auth_enable':      value => 'no';
     'smtp_sasl_security_options': value => 'noanonymous';
     'smtp_tls_security_level':    value => 'encrypt';
     'smtp_tls_wrappermode':       value => 'yes';
-    'compatibility_level':        value => "3.6";
+    'compatibility_level':        value => '3.6';
   }
 }
