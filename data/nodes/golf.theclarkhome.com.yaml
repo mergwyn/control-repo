@@ -7,12 +7,12 @@ classes:
 profile::platform::baseline::debian::netplan::ethernets:
   enp2s0:
     dhcp4: no
-    mtu: 1500
+    mtu: 9000
 profile::platform::baseline::debian::netplan::bridges:
   br0:
     interfaces:
       - enp2s0
-    mtu: 1500
+    mtu: 9000
     dhcp4: no
     dhcp6: no
     addresses:

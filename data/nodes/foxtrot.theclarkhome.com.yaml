@@ -9,16 +9,16 @@ profile::platform::baseline::debian::zfs::kernelopts::arc_max_percent: 40
 profile::platform::baseline::debian::netplan::ethernets:
   enp3s0:
     dhcp4: no
-    mtu: 1500
+    mtu: 9000
   enp4s0:
     dhcp4: no
-    mtu: 1500
+    mtu: 9000
 profile::platform::baseline::debian::netplan::bonds:
   bond0:
     interfaces:
       - enp3s0
       - enp4s0
-    mtu: 1500
+    mtu: 9000
     parameters:
       #mode: active-backup
       mode: balance-alb
@@ -27,7 +27,7 @@ profile::platform::baseline::debian::netplan::bridges:
   br0:
     interfaces:
       - bond0
-    mtu: 1500
+    mtu: 9000
     dhcp4: no
     dhcp6: no
     addresses: 
