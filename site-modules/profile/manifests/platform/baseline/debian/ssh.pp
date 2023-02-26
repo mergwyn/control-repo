@@ -29,6 +29,11 @@ class profile::platform::baseline::debian::ssh (
         'LC_IDENTIFICATION LC_ALL',
       ],
       'EnableSSHKeysign'          => 'yes',
+      'Host cisco1'               => {
+        'HostkeyAlgorithms' => 'ssh-dss,ssh-rsa',
+        'KexAlgorithms'     => '+diffie-hellman-group1-sha1,diffie-hellman-group14-sha1',
+      }
+
     },
     server_options       => {
       'LoginGraceTime'                  => '120',
