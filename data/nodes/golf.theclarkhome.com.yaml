@@ -55,7 +55,7 @@ profile::app::backuppc::client::rsync_share_name:
   - '/var/lib/apt'
   - '/var/lib/NetworkManager'
   - '/var/lib/dpkg'
-  - '/var/lib/docker/volumes'
+#  - '/var/lib/docker/volumes'
 
 profile::app::backuppc::client::backup_files_exclude:
   '*':
