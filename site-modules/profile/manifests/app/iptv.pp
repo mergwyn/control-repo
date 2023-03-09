@@ -30,7 +30,7 @@ class profile::app::iptv {
 
     [Service]
     Type=oneshot
-    ExecStart=/bin/bash -c '${codedir}/iptv/get-channels 2>&1 | /usr/bin/mailx -v -E -s "%N output root@%H" ${adminemail}'
+    ExecStart=/bin/bash -c '${codedir}/iptv/get-channels 2>&1 | /usr/bin/mailx -E -s "%N output root@%H" ${adminemail}'
 
     [Install]
     WantedBy=multi-user.target
