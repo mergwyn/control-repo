@@ -28,6 +28,7 @@ class profile::app::samba::member {
       'fruit:veto_appledouble'                    => 'no',
       'fruit:wipe_intentionally_left_blank_rfork' => 'yes',
       'fruit:delete_empty_adfiles'                => 'yes',
+      'fruit:nfs_aces'           '                => 'no',
       # disable printing
       'load printers'                             => 'no',
       'printing'                                  => 'bsd',

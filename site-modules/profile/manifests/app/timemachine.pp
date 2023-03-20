@@ -21,6 +21,7 @@ class profile::app::timemachine {
         mode    => '0755',
         options => {
           'comment'            => 'Time Machine',
+          'vfs objects'        => 'fruit streams_xattr',
           'fruit:time machine' => 'yes',
           'browseable'         => 'yes',
           'writeable'          => 'yes',
