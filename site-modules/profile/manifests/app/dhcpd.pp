@@ -52,6 +52,7 @@ class profile::app::dhcpd (
   #dhcp::host { 'switch1':               mac => '00:8e:f2:59:c7:98' }
   dhcp::host { 'switch2':               mac => 'a0:40:a0:71:7e:ce' }
   #dhcp::host { 'cisco1':                mac => '5c:50:15:52:47:40' }
+  dhcp::host { 'hp1810':                mac => 'd4:c9:ef:37:ca:e0' }
   dhcp::host { 'cisco1':                mac => '5C:50:15:52:47:00' }
   #dhcp::host { 'DELLA3F95F':            mac => '08:00:37:a3:f9:5f' }
   #dhcp::host { 's685ip':                mac => '00:01:e3:9a:f9:c1' }
