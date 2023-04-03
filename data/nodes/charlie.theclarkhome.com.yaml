@@ -9,6 +9,6 @@ profile::platform::baseline::packages::objects:
   garmin-express: {}
   vmware-fusion: {}
   whatsapp: {}
-  handbrake: ()
-  monitorcontrol: ()
-  slack: ()
+  handbrake: {}
+  monitorcontrol: {}
+  slack: {}
