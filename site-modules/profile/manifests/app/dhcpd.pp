@@ -163,7 +163,7 @@ class profile::app::dhcpd (
     notify  => Service['apparmor'],
     owner   => 'root',
     group   => 'root',
-    content => @(EOT)
+    content => @("EOT")
                /bin/date rix,
                /bin/egrep rix,
                /bin/grep rix,
@@ -196,8 +196,8 @@ class profile::app::dhcpd (
                /usr/bin/sleep rix,
                /usr/bin/uname rix,
                /usr/bin/wbinfo rix,
-               /usr/local/lib/python3.8/dist-packages r,
-               /usr/local/lib/python3.8/dist-packages/ r,
+               /usr/local/lib/${facts['python3_release']}/dist-packages r,
+               /usr/local/lib/${facts['python3_release']}/dist-packages/ r,
                /usr/sbin/samba rix,
                /var/lib/samba/private/krb5.conf r,
                /var/lib/sss/pubconf/kdcinfo.* r,
