@@ -29,10 +29,13 @@ profile::platform::baseline::debian::netplan::bridges:
       - bond0
     mtu: 9000
     dhcp4: no
-    dhcp6: no
+    dhcp6: nol
+    ink-local: [ ipv4 ]
     addresses: 
       - "%{lookup('defaults::subnet')}.12/%{lookup('defaults::bits')}"
-    gateway4: "%{lookup('defaults::gateway')}"
+    routes:
+      - to: default
+        via: "%{lookup('defaults::gateway')}"
     nameservers:
       search: "%{alias('defaults::dns::search')}"
       addresses: 
