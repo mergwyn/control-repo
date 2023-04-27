@@ -27,6 +27,7 @@ group :development do
   gem "onceover",                                                require: false
   gem "CFPropertyList",                                          require: false
   gem "rspec-puppet-utils",                                      require: false
+  gem "github_changelog_generator",                              require: false
   gem "generate-puppetfile", '~> 1.0',                           require: false
   gem "puppet-lint-legacy_facts-check",                          require: false
 end

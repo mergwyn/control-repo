@@ -35,6 +35,7 @@ Gemfile:
       - gem: onceover
       - gem: CFPropertyList
       - gem: rspec-puppet-utils
+      - gem: github_changelog_generator
   optional:
     ':development':
       - gem: 'generate-puppetfile'
