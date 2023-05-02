@@ -125,6 +125,10 @@ profile::app::backuppc::client::rsync_share_name:
 
 profile::app::backuppc::client::backup_files_exclude:
   '*':
+    - 'var/snap/microk8s/common/var/lib/*'
+  '/var/snap/microk8s/common/var/lib':
+    - '*'
+  '*':
     - '*.cloudf'
     - '*.cloud'
   '/var/lib/docker':
