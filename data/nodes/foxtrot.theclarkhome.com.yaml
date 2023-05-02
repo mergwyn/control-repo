@@ -34,7 +34,7 @@ profile::platform::baseline::debian::netplan::bridges:
     addresses: 
       - "%{lookup('defaults::subnet')}.12/%{lookup('defaults::bits')}"
     routes:
-      - to: default
+      - to: "%{lookup('defaults::gateway')}/%{lookup('defaults::bits')}"
         via: "%{lookup('defaults::gateway')}"
     nameservers:
       search: "%{alias('defaults::dns::search')}"
