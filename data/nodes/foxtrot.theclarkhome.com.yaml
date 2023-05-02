@@ -30,7 +30,7 @@ profile::platform::baseline::debian::netplan::bridges:
     mtu: 9000
     dhcp4: no
     dhcp6: no
-    link-local: [ ipv4 ]
+    #link-local: [ ipv4 ]
     addresses: 
       - "%{lookup('defaults::subnet')}.12/%{lookup('defaults::bits')}"
     routes:

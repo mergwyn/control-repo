@@ -17,7 +17,7 @@ profile::platform::baseline::debian::netplan::bridges:
     dhcp6: no
     addresses:
       - "%{lookup('defaults::subnet')}.11/%{lookup('defaults::bits')}"
-    link-local: [ ipv4 ]
+    #link-local: [ ipv4 ]
     routes:
       - to: "%{lookup('defaults::gateway')}/%{lookup('defaults::bits')}"
         via: "%{lookup('defaults::gateway')}"
