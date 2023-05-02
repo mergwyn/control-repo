@@ -19,7 +19,7 @@ profile::platform::baseline::debian::netplan::bridges:
       - "%{lookup('defaults::subnet')}.11/%{lookup('defaults::bits')}"
     #link-local: [ ipv4 ]
     routes:
-      - to: "%{lookup('defaults::gateway')}/%{lookup('defaults::bits')}"
+      - to: "0.0.0.0/0"
         via: "%{lookup('defaults::gateway')}"
     nameservers:
       search: "%{alias('defaults::dns::search')}"
