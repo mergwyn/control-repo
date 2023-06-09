@@ -23,6 +23,7 @@ class profile::app::backuppc::client (
   #package { 'rsync': ensure => installed }
   class { 'backuppc::client':
     config_name                => $facts['networking']['hostname'],
+    client_name_alias          => "${facts['networking']['hostname']}.${facts['networking']['domain']}",
     backuppc_hostname          => $backuppc_hostname,
     rsync_share_name           => $rsync_share_name,
     backup_files_exclude       => $backup_files_exclude,
