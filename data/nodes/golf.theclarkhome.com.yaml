@@ -58,14 +58,9 @@ profile::app::backuppc::client::rsync_share_name:
   - '/var/lib/apt'
   - '/var/lib/NetworkManager'
   - '/var/lib/dpkg'
-#  - '/var/lib/docker/volumes'
 
 profile::app::backuppc::client::backup_files_exclude:
   '*':
     - 'var/snap/microk8s/common/var/lib/*'
   '/var/snap/microk8s/common/var/lib':
-    - '*'
-  '*':
-    - 'usr/lib/docker/*'
-  '/var/lib/docker':
     - '*'
