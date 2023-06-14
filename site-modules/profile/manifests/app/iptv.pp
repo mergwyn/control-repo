@@ -39,7 +39,7 @@ class profile::app::iptv {
   systemd::timer{'getchannels.timer':
     timer_content   => $_timer,
     service_content => $_service,
-    enable          => true,
+    enable          => disable,
   }
 
   #TODO xteve?
