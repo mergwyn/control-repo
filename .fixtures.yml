@@ -4,6 +4,9 @@ fixtures:
     profile: "#{source_dir}/site-modules/profile"
     role: "#{source_dir}/site-modules/role"
   repositories:
+    samba:
+      repo: https://github.com/mergwyn/puppet-samba
+      ref: master
     nginx:
       repo: https://github.com/voxpupuli/puppet-nginx
       ref: master
@@ -192,9 +195,6 @@ fixtures:
     registry:
       repo: "puppetlabs-registry"
       ref: "5.0.0"
-    samba:
-      repo: "kakwa-samba"
-      ref: "2.0.0"
     scheduled_task:
       repo: "puppetlabs-scheduled_task"
       ref: "4.0.0"
