@@ -50,7 +50,6 @@ profile::app::backuppc::client::rsync_share_name:
   - '/var/lib'
   - '/var/spool'
   - '/var/games'
-  - '/var/snap'
   - '/var/www'
   - '/var/log'
   - '/var/mail'

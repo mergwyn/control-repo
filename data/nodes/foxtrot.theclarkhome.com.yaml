@@ -119,7 +119,6 @@ profile::app::backuppc::client::rsync_share_name:
   - '/var/lib/NetworkManager'
   - '/var/log'
   - '/var/mail'
-  - '/var/snap'
   - '/var/www'
 
 profile::app::backuppc::client::backup_files_exclude:
