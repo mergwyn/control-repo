@@ -3,6 +3,7 @@
 node: 'default.theclarkhome.com'
 release: 'amd64'
 serverversion: '6.4.0'
+service_provider: 'systemd'
 
 jackett_version: '0.16.656'
 radarr_version: '0.2.0.1480'

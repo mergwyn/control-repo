@@ -6,7 +6,7 @@ times=true
 confirmbigdeletes=false
 copythreshold=0
 sshargs=-o ControlMaster=auto -o ControlPath=~/.ssh/ctl/%h_%p_%r -o ControlPersist=1
-logfile=/Library/Logs/unison.log
+logfile=unison.log
 ignore = BelowPath .zfs
 ignore = BelowPath .recycle
 ignore = BelowPath .Trash
@@ -15,3 +15,4 @@ ignore = BelowPath Network Trash Folder
 ignore = Path .AppleDouble
 ignore = Name .DS_Store
 ignore = Name ._.DS_Store
+ignore = Name .*.swp

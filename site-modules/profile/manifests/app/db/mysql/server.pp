@@ -94,14 +94,15 @@ class profile::app::db::mysql::server (
     $user     = 'zbx_monitor'
     $password = lookup('secrets::mysql')
 
-    mysql::db { $user:
-      user     => $user,
-      password => $password,
-      dbname   => '*',
-      host     => 'localhost',
-      grant    => [ 'REPLICATION CLIENT', 'PROCESS', 'SHOW DATABASES', 'SHOW VIEW' ],
-      charset  => 'utf8',
-    }
+# TODO creates a duplicate resource
+#    mysql::db { $user:
+#      user     => $user,
+#      password => $password,
+#      dbname   => 'zabbix',
+#      host     => 'localhost',
+#      grant    => [ 'REPLICATION CLIENT', 'PROCESS', 'SHOW DATABASES', 'SHOW VIEW' ],
+#      charset  => 'utf8',
+#    }
 
     file {'/var/lib/zabbix/': ensure => directory }
 # TODO change to heredoc

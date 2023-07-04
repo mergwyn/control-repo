@@ -9,11 +9,11 @@ class profile::platform::baseline::debian::unattended_upgrades {
       remove => true,
     },
     origins => [
-      '${distro_id}:${distro_codename}',           #lint:ignore:single_quote_string_with_variables
-      '${distro_id}:${distro_codename}-security',  #lint:ignore:single_quote_string_with_variables
-      'Jamie Cameron:stable',
-      'Zabbix:${distro_codename}',                 #lint:ignore:single_quote_string_with_variables
-      'puppet:${distro_codename}',                 #lint:ignore:single_quote_string_with_variables
+      'origin=${distro_id},suite=${distro_codename}',           #lint:ignore:single_quote_string_with_variables
+      'origin=${distro_id},suite=${distro_codename}-security',  #lint:ignore:single_quote_string_with_variables
+      'origin="Jamie Cameron",suite=stable',
+      'origin=Zabbix,suite=${distro_codename}',                 #lint:ignore:single_quote_string_with_variables
+      'origin=puppet,suite=${distro_codename}',                 #lint:ignore:single_quote_string_with_variables
     ],
     mail    => {
       'to'            => lookup('defaults::adminemail'),
