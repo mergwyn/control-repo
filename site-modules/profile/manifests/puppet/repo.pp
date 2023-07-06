@@ -5,7 +5,7 @@ class profile::puppet::repo (
 ) {
 
   $ver = split($::serverversion, '\.')
-  $version = ${ver[0]}
+  $version = $ver[0]
 
   $arch =  $::facts['os']['architecture']
   case $arch {
@@ -14,7 +14,7 @@ class profile::puppet::repo (
     default: { notify { "Unexpected arch ${arch} for puppet repo": withpath => true } }
   }
   apt::source { 'puppet':
-    comment  => "Puppet ${version{} ${release} Repository",
+    comment  => "Puppet ${version} ${release} Repository",
     location => 'http://apt.puppetlabs.com',
     release  => $release,
     repos    => "puppet${version}",
