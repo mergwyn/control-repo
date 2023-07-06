@@ -5,3 +5,6 @@ php::globals::php_version: '8.1'
 
 # TODO workaround until puppet erver/db ackages released for jammy
 #profile::puppet::repo::release: 'focal'
+
+# TODO workaround until puppetboard support released for jammy
+puppetboard::python_version: '3.8'
