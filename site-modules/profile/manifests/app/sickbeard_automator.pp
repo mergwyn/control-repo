@@ -23,7 +23,7 @@ class profile::app::sickbeard_automator (
   $group          = lookup('defaults::media_group')
   $adminemail     = lookup('defaults::adminemail')
 
-  #$ffmpegppa      = 'ppa:savoury1/ffmpeg4'
+  $ffmpegppa      = 'ppa:savoury1/ffmpeg4'
 
   contain profile::app::git
   contain profile::app::scripts
@@ -32,7 +32,7 @@ class profile::app::sickbeard_automator (
   if $ffmpegppa {
     apt::ppa { $ffmpegppa:
       package_manage => true,
-      release        => $profile::ubuntu::release,
+      release        => hiera('profile::ubuntu::release'),
     }
 
     package { 'ffmpeg':
