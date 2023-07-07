@@ -30,7 +30,10 @@ class profile::app::sickbeard_automator (
   contain profile::app::sssd
 
   if $ffmpegppa {
-    apt::ppa { $ffmpegppa: package_manage => true }
+    apt::ppa { $ffmpegppa:
+      package_manage => true,
+      release        => $profile::ubuntu::release,
+    }
 
     package { 'ffmpeg':
       ensure  => present,

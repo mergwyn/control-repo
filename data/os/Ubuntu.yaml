@@ -26,6 +26,9 @@ python::manage_pip_package: false
 postgresql::server::contrib::package_name: 'postgresql-contrib'
 
 
+# TODO workaround for packagesw ithout jammy support
+profile::ubuntu::release: 'focal'
+
 # Note storage_pools must be defined in node
 lxd::preseed:
   config:
