@@ -227,7 +227,7 @@ fixtures:
       ref: "6.3.0"
     unattended_upgrades:
       repo: "puppet-unattended_upgrades"
-      ref: "7.1.0"
+      ref: "8.0.0"
     vcsrepo:
       repo: "puppetlabs-vcsrepo"
       ref: "6.1.0"
