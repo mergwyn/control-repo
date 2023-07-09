@@ -60,7 +60,7 @@ mod 'puppet-python', '6.4.0'
 mod 'puppet-r10k', '11.0.1'
 mod 'puppet-selinux', '3.4.1'
 mod 'puppet-systemd', '5.1.0'
-mod 'puppet-unattended_upgrades', '7.1.0'
+mod 'puppet-unattended_upgrades', '8.0.0'
 #mod 'puppet-unbound', '4.0.1' # Waiting for PR #287
 mod 'puppet-unbound', :git => 'https://github.com/voxpupuli/puppet-unbound'
 mod 'puppet-zabbix', '9.2.0'
