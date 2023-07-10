@@ -11,7 +11,7 @@ class profile::platform::baseline::debian::unattended_upgrades {
     origins => [
       'origin=${distro_id},suite=${distro_codename}',           #lint:ignore:single_quote_string_with_variables
       'origin=${distro_id},suite=${distro_codename}-security',  #lint:ignore:single_quote_string_with_variables
-      'origin="Jamie Cameron",suite=stable',
+      "origin='Jamie Cameron',suite=stable",
       'origin=Zabbix,suite=${distro_codename}',                 #lint:ignore:single_quote_string_with_variables
       'origin=puppet,suite=${distro_codename}',                 #lint:ignore:single_quote_string_with_variables
     ],
