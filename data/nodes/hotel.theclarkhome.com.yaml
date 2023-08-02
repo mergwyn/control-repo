@@ -3,18 +3,65 @@
 classes:
   - profile::platform::baseline::debian::netplan
 
+packages:
+  - bridge-utils
+
 profile::platform::baseline::debian::netplan::ethernets:
-  eth0:
+  eno1:
+    dhcp4: no
+    mtu: 9000
+profile::platform::baseline::debian::netplan::bridges:
+  br0:
+    interfaces:
+      - eno1
+    mtu: 9000
     dhcp4: no
     dhcp6: no
     addresses:
-      - "%{lookup('defaults::subnet')}.13/%{lookup('defaults::bits')}"
-    gateway4:    "%{lookup('defaults::gateway')}"
+      - "%{lookup('defaults::subnet')}.11/%{lookup('defaults::bits')}"
+    #link-local: [ ipv4 ]
+    routes:
+      - to: "0.0.0.0/0"
+        via: "%{lookup('defaults::gateway')}"
     nameservers:
-      search:    "%{alias('defaults::dns::search')}"
+      #search: "%{alias('defaults::dns::search')}"
       addresses: "%{alias('defaults::dns::nameservers')}"
+    parameters:
+      stp: false
+      forward_delay: 0
+
+# Config for lxd server
+lxd::preseed:
+  storage_pools:
+  - config:
+      source: rpool/lxd
+      volatile.initial_source: rpool/lxd
+      zfs.pool_name: rpool/lxd
+    description: ""
+    name: default
+    driver: zfs
+
+profile::app::backuppc::client::rsync_share_name:
+  - '/'
+  - '/boot'
+  - '/root'
+  - '/home/sadmin'
+  - '/srv'
+  - '/usr/local'
+  - '/boot/efi'
+  - '/var/lib'
+  - '/var/spool'
+  - '/var/games'
+  - '/var/www'
+  - '/var/log'
+  - '/var/mail'
+  - '/var/lib/AccountsService'
+  - '/var/lib/apt'
+  - '/var/lib/NetworkManager'
+  - '/var/lib/dpkg'
 
 profile::app::backuppc::client::backup_files_exclude:
   '*':
-    - 'var/lib/docker/fuse-overlayfs'
-    - 'var/lib/docker/containers'
+    - 'var/snap/microk8s/common/var/lib/*'
+  '/var/snap/microk8s/common/var/lib':
+    - '*'
