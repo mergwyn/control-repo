@@ -45,7 +45,7 @@ profile::app::backuppc::client::rsync_share_name:
   - '/'
   - '/boot'
   - '/root'
-  - '/home
+  - '/home'
   - '/srv'
   - '/usr/local'
   - '/boot/efi'
