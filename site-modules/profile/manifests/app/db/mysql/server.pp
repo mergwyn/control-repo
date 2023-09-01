@@ -83,13 +83,13 @@ class profile::app::db::mysql::server (
   if defined('profile::app::zabbix::agent') {
     $conf     = 'template_db_mysql.conf'
 
-    profile::app::zabbix::template_host { 'Template DB MySQL by Zabbix agent': }
-
-    # Agent configuration
-    zabbix::userparameters { $conf:
-      require => Class['profile::app::zabbix::agent'],
-      source  => "puppet:///modules/profile/zabbix/server/templates/${conf}"
-    }
+#    profile::app::zabbix::template_host { 'Template DB MySQL by Zabbix agent': }
+#
+#    # Agent configuration
+#    zabbix::userparameters { $conf:
+#      require => Class['profile::app::zabbix::agent'],
+#      source  => "puppet:///modules/profile/zabbix/server/templates/${conf}"
+#    }
 
     $user     = 'zbx_monitor'
     $password = lookup('secrets::mysql')
