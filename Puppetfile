@@ -20,7 +20,7 @@ mod 'puppet-archive', '7.0.0'
 mod 'puppet-augeasproviders_core', '3.2.1'
 mod 'puppet-augeasproviders_pam', '3.0.1'
 mod 'puppet-augeasproviders_shellvar', '5.0.0'
-mod 'herculesteam-augeasproviders_sysctl', '2.6.2'
+mod 'puppet-augeasproviders_sysctl', '3.1.0
 mod 'puppet-autofs', '7.1.0'
 mod 'puppet-cron', '3.0.0'
 mod 'puppet-dhcp', '5.0.1'
