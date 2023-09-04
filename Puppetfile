@@ -83,7 +83,6 @@ mod 'puppetlabs-mount_core', '1.2.0'
 mod 'puppetlabs-cron_core', '1.2.0'
 
 # tasks
-mod 'puppetlabs-bootstrap', '2.1.0'
 mod 'puppetlabs-exec', '3.0.0'
 
 # windows
