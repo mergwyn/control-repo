@@ -9,12 +9,12 @@ class profile::app::microk8s () {
   sysctl{ 'net.core.rmem_max':
     ensure => present,
     value  => '2500000',
-    target => "/etc/sysctl.d/66 quic.conf",
+    target => '/etc/sysctl.d/66 quic.conf',
   }
   sysctl{ 'net.core.wmem_max':
     ensure => present,
     value  => '2500000',
-    target => "/etc/sysctl.d/66 quic.conf",
+    target => '/etc/sysctl.d/66 quic.conf',
   }
 
 }
