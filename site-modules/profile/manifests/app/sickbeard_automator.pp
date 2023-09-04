@@ -4,6 +4,7 @@
 #   Enable the systemctl timer job for process_media_job
 class profile::app::sickbeard_automator (
   $enabletimer = true,
+  $ffmpegppa   = false,
 ) {
 
   $codedir        = '/opt'
