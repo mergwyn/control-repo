@@ -72,9 +72,6 @@ fixtures:
     autofs:
       repo: "puppet-autofs"
       ref: "7.1.0"
-    bootstrap:
-      repo: "puppetlabs-bootstrap"
-      ref: "2.1.0"
     chocolatey:
       repo: "puppetlabs-chocolatey"
       ref: "8.0.0"
