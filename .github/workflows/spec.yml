@@ -16,13 +16,13 @@ on:
 jobs:
   setup_matrix:
     name: "Setup Test Matrix"
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     outputs:
       spec_matrix: ${{ steps.get-matrix.outputs.spec_matrix }}
 
     steps:
       - name: Checkout Source
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         if: ${{ github.repository_owner == 'mergwyn' }}
 
       - name: Activate Ruby 2.7
@@ -57,7 +57,7 @@ jobs:
       - setup_matrix
     if: ${{ needs.setup_matrix.outputs.spec_matrix != '{}' }}
 
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix: ${{fromJson(needs.setup_matrix.outputs.spec_matrix)}}
@@ -74,7 +74,7 @@ jobs:
       - run: |
           echo 'puppet_version=${{ env.SANITIZED_PUPPET_VERSION }}' >> $BUILDEVENT_FILE
       - name: Checkout Source
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: "Activate Ruby ${{ matrix.ruby_version }}"
         uses: ruby/setup-ruby@v1
