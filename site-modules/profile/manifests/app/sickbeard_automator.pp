@@ -4,7 +4,7 @@
 #   Enable the systemctl timer job for process_media_job
 class profile::app::sickbeard_automator (
   $enabletimer = true,
-  $ffmpegppa   = "",
+  $ffmpegppa   = '',
 ) {
 
   $codedir        = '/opt'
@@ -30,7 +30,7 @@ class profile::app::sickbeard_automator (
   contain profile::app::scripts
   contain profile::app::sssd
 
-  if $ffmpegppa {
+  if $ffmpegppa =~ String[1] {
     apt::ppa { $ffmpegppa:
       package_manage => true,
       release        => hiera('profile::ubuntu::release'),
