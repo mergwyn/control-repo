@@ -23,8 +23,8 @@ class profile::platform::baseline::darwin::packages {
     'skype',
     'zoom',
     'vlc',
-    'puppetlabs/puppet/puppet-agent-6',
-    'homebrew/cask-drivers/sonos',
+    'puppetlabs/puppet/puppet-agent-7',
+    'sonos',
     'plex',
   ]
 
