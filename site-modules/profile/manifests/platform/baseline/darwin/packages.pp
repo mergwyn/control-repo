@@ -17,7 +17,7 @@ class profile::platform::baseline::darwin::packages {
   ]
   package { $taps: provider => 'brew' }
 
-  $puppetver = $facts['os']['major'] ? {
+  $puppetver = $facts['os']['macosx']['version']['major'] ? {
     /10.13/ => '6',
     default => '7',
   }
