@@ -17,15 +17,20 @@ class profile::platform::baseline::darwin::packages {
   ]
   package { $taps: provider => 'brew' }
 
+  $puppetver = $facts['os']['major'] ? {
+    /10.13/ => '6',
+    default => '7',
+  }
+
   $casks = [
     'firefox',
     'aerial',
     'skype',
     'zoom',
     'vlc',
-    'puppetlabs/puppet/puppet-agent-7',
     'sonos',
     'plex',
+    "puppetlabs/puppet/puppet-agent-${puppetver}",
   ]
 
   package { $casks: }
