@@ -6,7 +6,7 @@ ensureDir()
 	[[ -d ${1} ]] || mkdir -p ${1}
 }
 ensureDir ${HOME}/.unison 
-for file in Home.prf Preferences.prf common.prf default.prf
+for file in Home.prf Preferences.prf common.prf 
 do
 	[[ -f ${HOME}/.unison/${file} ]] && rm ${HOME}/.unison/${file}
 	ln -s /usr/local/share/${file} ${HOME}/.unison/${file}

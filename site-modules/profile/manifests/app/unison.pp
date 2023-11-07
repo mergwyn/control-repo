@@ -17,9 +17,6 @@ class profile::app::unison {
         '/usr/local/share/Home.prf':
           source => 'puppet:///modules/profile/mac/Home.prf',
         ;
-        '/usr/local/share/default.prf':
-          source => 'puppet:///modules/profile/mac/default.prf',
-        ;
         '/usr/local/share/Preferences.prf':
           source => 'puppet:///modules/profile/mac/Preferences.prf',
         ;
