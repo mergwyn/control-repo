@@ -198,6 +198,8 @@ class profile::app::dhcpd (
                /usr/bin/wbinfo rix,
                /usr/local/lib/${facts['python3_release']}/dist-packages r,
                /usr/local/lib/${facts['python3_release']}/dist-packages/ r,
+               /usr/local/lib/python${facts['python3_release']}/dist-packages r,
+               /usr/local/lib/python${facts['python3_release']}/dist-packages/ r,
                /usr/sbin/samba rix,
                /var/lib/samba/private/krb5.conf r,
                /var/lib/sss/pubconf/kdcinfo.* r,
