@@ -164,6 +164,7 @@ class profile::app::dhcpd (
     owner   => 'root',
     group   => 'root',
     content => @("EOT")
+               / r,
                /bin/date rix,
                /bin/egrep rix,
                /bin/grep rix,
