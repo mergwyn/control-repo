@@ -13,12 +13,13 @@ defaults::adminuser:       'administrator'
 vcsrepo::ensure:           'latest'
 
 # network
-defaults::netmask:         '255.255.0.0'
-defaults::bits:            '16'
+defaults::netmask:         '255.255.255.0'
+defaults::bits:            '24'
 defaults::subnet:          '10.58.0'
 defaults::network:         "%{lookup('defaults::subnet')}.0"
 defaults::gateway:         "%{lookup('defaults::subnet')}.1"
 defaults::cidr:            "%{lookup('defaults::network')}/%{lookup('defaults::bits')}"
+defaults::dns_vip:         "%{lookup('defaults::subnet')}.20"
 # DNS
 defaults::dns::search:
   - "%{trusted.domain}"
