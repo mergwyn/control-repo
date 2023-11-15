@@ -190,6 +190,7 @@ class profile::app::dhcpd (
                /usr/bin/klist rix,
                /usr/bin/logger rix,
                /usr/bin/mawk rix,
+               /usr/bin/tr rix,
                /usr/bin/ r,
                /usr/bin/samba-tool rix,
                /usr/bin/sed rix,
