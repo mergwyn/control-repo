@@ -7,6 +7,7 @@ set -o pipefail
 # This script is for secure DDNS updates on Samba,
 # it can also add the 'macAddress' to the Computers object.
 #
+# based on 
 # Version: 0.9.1
 #
 # Copyright (C) Rowland Penny 2020
@@ -118,6 +119,17 @@ get_rev_zone_data () {
 BINDIR=$(samba -b | grep 'BINDIR' | grep -v 'SBINDIR' | awk '{print $NF}')
 WBINFO="$BINDIR/wbinfo"
 
+SAMBATOOL=$(command -v samba-tool)
+[[ -z $SAMBATOOL ]] && log_error "Cannot find the 'samba-tool' binary, is it installed ?\\nOr is your path set correctly ?\\n"
+
+MINVER=$($SAMBATOOL -V | grep -o '[0-9]*' | tr '\n' ' ' | awk '{print $2}')
+if [ "$MINVER" -gt '14' ]
+then
+        KTYPE="--use-kerberos=required"
+else
+        KTYPE="-k yes"
+fi
+
 # DHCP Server hostname
 Server=$(hostname -s)
 
@@ -226,12 +238,12 @@ case "${action}" in
             if [[ ${A_REC} == *.* ]]; then
                 for curip in ${A_REC} ; do
                     log_info "Found A record, deleting ${name} A ${curip}"
-                    samba-tool dns delete "${Server}" "${domain}" "${name}" A "${curip}" -k yes -d 0
+                    samba-tool dns delete "${Server}" "${domain}" "${name}" A "${curip}" ${KTYPE} -d 0
                 done
                 (( result1 += "$?" ))
             fi
             log_notice "adding ${name} A ${ip}"
-            samba-tool dns add "${Server}" "${domain}" "${name}" A "${ip}" -k yes -d 1
+            samba-tool dns add "${Server}" "${domain}" "${name}" A "${ip}" ${KTYPE} -d 1
             (( result2 += "$?" ))
         fi
 
@@ -254,20 +266,20 @@ case "${action}" in
 		    IP2add=${oldzone[0]}
 		    revzone=${oldzone[1]}
 		    log_info "Found PTR record, deleting ${IP2add} PTR ${name}.${domain} from ${revzone}"
-		    samba-tool dns delete "${Server}" "${revzone}" "${IP2add}" PTR "${name}.${domain}" -k yes -d 1
+		    samba-tool dns delete "${Server}" "${revzone}" "${IP2add}" PTR "${name}.${domain}" ${KTYPE} -d 1
 		    (( result3 += "$?" ))
                 done
 		IP2add=${newzone[0]}
 		revzone=${newzone[1]}
 		log_info "Adding ${IP2add} PTR ${name}.${domain} to ${revzone}"
-		samba-tool dns add "${Server}" "${revzone}" "${IP2add}" PTR "${name}.${domain}" -k yes -d 1
+		samba-tool dns add "${Server}" "${revzone}" "${IP2add}" PTR "${name}.${domain}" ${KTYPE} -d 1
 		(( result4 += "$?" ))
             fi
         fi
         ;;
  delete)
         log_info "Deleting ${name} A ${ip}"
-        samba-tool dns delete "${Server}" "${domain}" "${name}" A "${ip}" -k yes -d 1
+        samba-tool dns delete "${Server}" "${domain}" "${name}" A "${ip}" ${KTYPE} -d 1
         (( result1 += "$?" ))
         # get existing reverse zones (if any)
         if [ -z "$_ReverseZones" ]; then
@@ -276,7 +288,7 @@ case "${action}" in
 	    IP2add=${newzone[0]}
 	    revzone=${newzone[1]}
 	    log_info "Deleting ${IP2add} PTR ${name}.${domain} from ${revzone}"
-	    samba-tool dns delete "${Server}" "${revzone}" "${IP2add}" PTR "${name}.${domain}" -k yes -d 1
+	    samba-tool dns delete "${Server}" "${revzone}" "${IP2add}" PTR "${name}.${domain}" ${KTYPE} -d 1
 	    (( result2 += "$?" ))
         fi
         ;;
@@ -297,10 +309,10 @@ fi
  
 if [ "$Add_macAddress" != 'no' ]; then
     if [ -n "$DHCID" ]; then
-        Computer_Object=$(ldbsearch -k yes -H ldap://"$Server" "(&(objectclass=computer)(objectclass=ieee802Device)(cn=$name))" | grep -v '#' | grep -v 'ref:')
+        Computer_Object=$(ldbsearch ${KTYPE} -H ldap://"$Server" "(&(objectclass=computer)(objectclass=ieee802Device)(cn=$name))" | grep -v '#' | grep -v 'ref:')
         if [ -z "$Computer_Object" ]; then
             # Computer object not found with the 'ieee802Device' objectclass, does the computer actually exist, it should.
-            Computer_Object=$(ldbsearch -k yes -H ldap://"$Server" "(&(objectclass=computer)(cn=$name))" | grep -v '#' | grep -v 'ref:')
+            Computer_Object=$(ldbsearch ${KTYPE} -H ldap://"$Server" "(&(objectclass=computer)(cn=$name))" | grep -v '#' | grep -v 'ref:')
             if [ -z "$Computer_Object" ]; then
                 log_error "Computer '$name' not found. Exiting."
                 exit 68
@@ -317,14 +329,14 @@ add: macAddress
 macAddress: $DHCID"
 
                 # add the ldif
-                echo "$objldif" | ldbmodify -k yes -H ldap://"$Server"
+                echo "$objldif" | ldbmodify ${KTYPE} -H ldap://"$Server"
                 ret="$?"
                 if [ "$ret" -ne 0 ]; then
                     log_error "Error modifying Computer objectclass $name in AD."
                     exit "${ret}"
                 fi
                 sleep 2
-                echo "$attrldif" | ldbmodify -k yes -H ldap://"$Server"
+                echo "$attrldif" | ldbmodify ${KTYPE} -H ldap://"$Server"
                 ret="$?"
                 if [ "$ret" -ne 0 ]; then
                     log_error "Error modifying Computer attribute $name in AD."
@@ -341,7 +353,7 @@ changetype: modify
 replace: macAddress
 macAddress: $DHCID"
 
-            echo "$attrldif" | ldbmodify -k yes -H ldap://"$Server"
+            echo "$attrldif" | ldbmodify ${KTYPE} -H ldap://"$Server"
             ret="$?"
             if [ "$ret" -ne 0 ]; then
                 log_error "Error modifying Computer attribute $name in AD."
