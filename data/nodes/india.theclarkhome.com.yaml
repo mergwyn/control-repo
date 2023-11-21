@@ -2,7 +2,6 @@
 
 classes:
   - profile::platform::baseline::debian::netplan
-  - profile::platform::baseline::debian::virtual::docker
 
 profile::platform::baseline::debian::netplan::ethernets:
   eth0:
@@ -16,7 +15,5 @@ profile::platform::baseline::debian::netplan::ethernets:
       addresses: "%{alias('defaults::dns::nameservers')}"
 
 profile::app::backuppc::client::backup_files_exclude:
-  '*':
-    - 'var/lib/docker/fuse-overlayfs'
-    - 'var/lib/docker/containers'
-    - 'var/lib/docker/image'
+  '/':
+    - 'var/lib/rancher/k3s/agent/containerd'

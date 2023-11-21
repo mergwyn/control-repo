@@ -39,27 +39,7 @@ lxd::preseed:
     name: default
     driver: zfs
 
-profile::app::backuppc::client::rsync_share_name:
-  - '/'
-  - '/boot'
-  - '/root'
-  - '/home/sadmin'
-  - '/srv'
-  - '/usr/local'
-  - '/boot/efi'
-  - '/var/lib'
-  - '/var/spool'
-  - '/var/games'
-  - '/var/www'
-  - '/var/log'
-  - '/var/mail'
-  - '/var/lib/AccountsService'
-  - '/var/lib/apt'
-  - '/var/lib/NetworkManager'
-  - '/var/lib/dpkg'
-
 profile::app::backuppc::client::backup_files_exclude:
-  '*':
-    - 'var/snap/microk8s/common/var/lib/*'
-  '/var/snap/microk8s/common/var/lib':
-    - '*'
+  '/':
+    - 'var/lib/rancher/k3s/agent/containerd'
+    - 'srv/media'
