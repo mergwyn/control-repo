@@ -52,7 +52,9 @@ profile::app::backuppc::client::backup_files_exclude:
     - 'TV Shows'
     - 'media/.config/Radarr/logs*'
   '/':
+    - 'opt/puppetlabs/puppet/cache'
     - 'opt/puppetlabs/server/data/puppetserver/reports'
+    - 'tmp'
     - 'var/lib/apt/lists'
     - 'var/lib/dkms/open-vm-tools'
     - 'var/lib/dkms/spl'
@@ -63,5 +65,4 @@ profile::app::backuppc::client::backup_files_exclude:
     - 'var/lib/php/sessions/*'
     - 'var/tmp'
     - 'var/webmin/output'
-    - 'opt/puppetlabs/puppet/cache'
 

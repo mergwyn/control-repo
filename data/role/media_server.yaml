@@ -13,13 +13,3 @@ radarr::group:             "%{lookup('defaults::media_group')}"
 radarr::keep:              2
 
 
-# backuppc excludes
-profile::app::backuppc::client::backup_files_exclude:
-  '*':
-    - 'Plex Versions'
-  '/':
-    - 'var/lib/plexmediaserver/Library/Application Support/Plex Media Server/Cache'
-    - 'var/lib/plexmediaserver/Library/Application Support/Plex Media Server/Logs'
-    - 'var/lib/plexmediaserver/Library/Application Support/Plex Media Server/Media/localhost'
-    - 'var/lib/plexmediaserver/Library/Application Support/Plex Media Server/Metadata'
-    - 'var/lib/plexmediaserver/Library/Application Support/Plex Media Server/Plug-in Support/Caches'
