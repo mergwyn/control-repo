@@ -57,6 +57,7 @@ profile::app::backuppc::client::backup_files_exclude:
     - dev
     - 'opt/puppetlabs/puppet/cache'
     - 'opt/puppetlabs/server/data/puppetserver/reports'
+    - 'run/k3s/containerd'
     - 'tmp'
     - 'var/lib/apt/lists'
     - 'var/lib/dkms/open-vm-tools'
