@@ -52,6 +52,9 @@ profile::app::backuppc::client::backup_files_exclude:
     - 'TV Shows'
     - 'media/.config/Radarr/logs*'
   '/':
+    - proc
+    - sys
+    - dev
     - 'opt/puppetlabs/puppet/cache'
     - 'opt/puppetlabs/server/data/puppetserver/reports'
     - 'tmp'
