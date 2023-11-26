@@ -55,18 +55,20 @@ profile::app::backuppc::client::backup_files_exclude:
     - proc
     - sys
     - dev
+    - 'tmp'
     - 'opt/puppetlabs/puppet/cache'
     - 'opt/puppetlabs/server/data/puppetserver/reports'
     - 'run/k3s/containerd'
-    - 'tmp'
     - 'var/lib/apt/lists'
     - 'var/lib/dkms/open-vm-tools'
     - 'var/lib/dkms/spl'
     - 'var/lib/dkms/zfs'
+    - 'var/lib/kubelet/pods'
     - 'var/lib/minidlna/art_cache'
     - 'var/lib/mlocate/mlocate.db*'
     - 'var/lib/mysql/zabbix*'
     - 'var/lib/php/sessions/*'
+    - 'var/snap'
     - 'var/tmp'
     - 'var/webmin/output'
 
