@@ -69,7 +69,7 @@ class profile::app::backuppc::server (
   class { 'backuppc::server':
     backuppc_password          => lookup('secrets::backuppc'),
     gzip_path                  => '/usr/bin/pigz',
-    full_age_max               => 370,
+    full_age_max               => 180,
     pool_v3_enabled            => $pool_v3_enabled,
     rsync_args_extra           => [ '-F' ],
     full_keep_cnt              => [ 4, 0, 12],
