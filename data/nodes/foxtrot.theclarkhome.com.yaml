@@ -103,6 +103,8 @@ profile::app::backuppc::client::backup_files_exclude:
     - 'srv/virtual/vmware'
     - 'srv/virtual/Images'
     - 'srv/virtual/VirtualBox'
+    - 'var/lib/backuppc'
+    - 'srv2'
   '*':
     - '*.cloudf'
     - '*.cloud'
