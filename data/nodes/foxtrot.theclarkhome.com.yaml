@@ -45,6 +45,12 @@ profile::platform::baseline::debian::netplan::bridges:
       stp: false
       forward_delay: 0
 
+
+profile::platform::baseline::files::objects:
+  /srv2/backuppc:
+    ensure: directory
+    require: Mount[srv2]
+
 profile::platform::baseline::debian::mounts::defaults:
   ensure: 'mounted'
 profile::platform::baseline::debian::mounts::objects:
@@ -58,7 +64,7 @@ profile::platform::baseline::debian::mounts::objects:
     device:   '/srv2/backuppc'
     fstype:   'none'
     options:  'bind,rw'
-    require:  Mount[srv2]
+    require:  File[/srv2/backuppc]
 
 lxd::preseed:
   networks:
