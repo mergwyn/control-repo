@@ -50,7 +50,7 @@ profile::platform::baseline::debian::mounts::defaults:
 profile::platform::baseline::debian::mounts::objects:
   srv2:
     name:     '/srv2'
-    device:   'UUID=b82c0266-47b9-45f6-9fb1-396ad5c95a7b'
+    device:   'UUID=6abf26ff-6a49-4048-8153-942d48fc3e5a'
     fstype:   'ext4'
     options:  'defaults,user_xattr,acl'
   backuppc:
