@@ -64,7 +64,7 @@ profile::platform::baseline::debian::mounts::objects:
     device:   '/srv2/backuppc'
     fstype:   'none'
     options:  'bind,rw'
-    require:  File[/srv2/backuppc]
+    require:  File['/srv2/backuppc']
 
 lxd::preseed:
   networks:
