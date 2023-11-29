@@ -72,7 +72,7 @@ class profile::app::backuppc::server (
     full_age_max               => 180,
     pool_v3_enabled            => $pool_v3_enabled,
     rsync_args_extra           => [ '-F' ],
-    full_keep_cnt              => [ 1, 0, 1],
+    full_keep_cnt              => [ 4, 0, 6],
     incr_age_max               => 21,
     incr_keep_cnt              => 12,
     max_backups                => 2,
