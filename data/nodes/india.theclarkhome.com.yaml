@@ -16,4 +16,4 @@ profile::platform::baseline::debian::netplan::ethernets:
 
 profile::app::backuppc::client::backup_files_exclude:
   '/':
-    - 'var/lib/rancher/k3s/agent/containerd'
+    - '/var/lib/rancher/k3s/agent/containerd'
