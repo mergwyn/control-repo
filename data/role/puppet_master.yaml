@@ -12,4 +12,4 @@ puppetdb::master::config:puppetdb_server:        "%{facts.networking.fqdn}"
 
 profile::app::backuppc::client::backup_files_exclude:
   '/':
-    - 'var/lib/postgresql'
+    - '/var/lib/postgresql'

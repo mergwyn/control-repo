@@ -101,10 +101,9 @@ lxd::preseed:
 profile::app::backuppc::server::pool_v3_enabled: true
 
 profile::app::backuppc::client::backup_files_exclude:
-  '*':
+  '/':
     - '*.cloudf'
     - '*.cloud'
-  '/':
     - '/var/lib/rancher/k3s/agent/containerd'
     - '/srv/backup/whiskey'
     - '/srv/backup/hotel'
