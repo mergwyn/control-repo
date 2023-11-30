@@ -39,6 +39,7 @@ ignore = Path googledrive
 ignore = Path Google Drive
 ignore = Path Hometest
 ignore = Path Library
+ignore = Path AppData
 ignore = Path Movies
 ignore = Path Music/iTunes/Album Artwork
 ignore = Path NAVMac800QSFile
