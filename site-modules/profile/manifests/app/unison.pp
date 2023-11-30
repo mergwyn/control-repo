@@ -47,12 +47,10 @@ class profile::app::unison {
       package { 'unison': ensure => absent, }
 
       $version = '2.53.3'
-      $ocaml   = '4.14.0'
+      $os = downcase($facts['os']['name'])
+      $hardware = $facts['os']['hardware']
 
-      case $facts['os']['architecture'] {
-        'amd64': { $archive_name = "unison-v${version}+ocaml-${ocaml}+x86_64.linux.tar.gz" }
-        default: { }
-      }
+      $archive_name = "unison-${version}-${os}-${hardware}.tar.gz"
 
       $url = "https://github.com/bcpierce00/unison/releases/download/v${version}/${archive_name}"
       $archive_path = "${facts['puppet_vardir']}/${archive_name}"
