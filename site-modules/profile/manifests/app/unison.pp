@@ -46,8 +46,8 @@ class profile::app::unison {
     'Debian': {
       package { 'unison': ensure => absent, }
 
-      $version = '2.51.4'
-      $ocaml   = '4.12.0'
+      $version = '2.53.3'
+      $ocaml   = '4.14.0'
 
       case $facts['os']['architecture'] {
         'amd64': { $archive_name = "unison-v${version}+ocaml-${ocaml}+x86_64.linux.tar.gz" }
