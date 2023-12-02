@@ -112,5 +112,6 @@ profile::app::backuppc::client::backup_files_exclude:
     - '/srv/virtual/Images'
     - '/srv/virtual/VirtualBox'
     - '/var/lib/backuppc'
+    - '/run/k3s/containerd'
     - '/srv2'
     - '/nfs'
