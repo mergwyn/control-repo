@@ -108,7 +108,7 @@ profile::app::backuppc::client::backup_files_exclude:
     - '/srv/backup/whiskey'
     - '/srv/backup/hotel'
     - '/srv/media/content/films'
-    - '/srv/media/Humax'
+    - '/srv/media/humax'
     - '/srv/media/content/tv'
     - '/srv/timemachine'
     - '/srv/virtual/vmware'
