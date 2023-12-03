@@ -1,8 +1,8 @@
 # @summary zfs snappshotter install and configuration
 #
 class profile::platform::baseline::debian::zfs::snapshotter (
-  String $type = 'pyznap',
-  $settings = null,
+  String $type   = 'pyznap',
+  Hash $settings = {},
 ){
 
   case $type {
