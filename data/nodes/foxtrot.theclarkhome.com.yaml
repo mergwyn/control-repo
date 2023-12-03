@@ -107,7 +107,7 @@ profile::app::backuppc::client::backup_files_exclude:
     - '/var/lib/rancher/k3s/agent/containerd'
     - '/srv/backup/whiskey'
     - '/srv/backup/hotel'
-    - '/srv/backup/timemachine'
+    - '/srv/timemachine'
     - '/srv/virtual/vmware'
     - '/srv/virtual/Images'
     - '/srv/virtual/VirtualBox'
