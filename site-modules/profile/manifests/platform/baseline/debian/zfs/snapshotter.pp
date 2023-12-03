@@ -43,9 +43,10 @@ class profile::platform::baseline::debian::zfs::snapshotter (
           }
 
       file { $configdir:
-        ensure => directory,
-        owner  => $owner,
-        group  => $group,
+        ensure  => directory,
+        owner   => $owner,
+        group   => $group,
+        require => Service[ 'sssd' ],
       }
       $defaults = {
         path    => $target_ini,
