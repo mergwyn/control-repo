@@ -18,15 +18,29 @@ class profile::platform::baseline::debian::zfs::snapshotter (
       $group          = lookup('defaults::media_group')
       $adminemail     = lookup('defaults::adminemail')
 
-      python::pip { $type:
-        ensure       => 'present',
-        pkgname      => $type,
-        pip_provider => 'pip3',
-        virtualenv   => $venv,
-        owner        => $owner,
-        group        => $group,
-        timeout      => 1800
+      file { $target:
+        ensure  => directory,
+        owner   => $owner,
+        group   => $group,
+        require => Service[ 'sssd' ],
       }
+      -> python::pyvenv { $venv: # install dependencies
+          ensure     => present,
+          version    => 'system',
+          systempkgs => true,
+          owner      => $owner,
+          group      => $group,
+          require    => File[ $target ],
+        }
+        -> python::pip { $type:
+            ensure       => 'present',
+            pkgname      => $type,
+            pip_provider => 'pip',
+            virtualenv   => $venv,
+            owner        => $owner,
+            group        => $group,
+            timeout      => 1800,
+          }
 
       file { $configdir:
         ensure => directory,
@@ -36,6 +50,8 @@ class profile::platform::baseline::debian::zfs::snapshotter (
       $defaults = {
         path    => $target_ini,
         require => File[ $configdir ],
+      }
+      $default_settings = {
         'rpool' => {
           'frequent' => '4',
           'hourly'   => '24',
@@ -53,7 +69,14 @@ class profile::platform::baseline::debian::zfs::snapshotter (
           'snap' => 'yes',
         }
       }
-      inifile::create_ini_settings($settings, $defaults)
+      inifile::create_ini_settings($default_settings + $settings, $defaults)
+
+      cron::job { 'pyznap':
+        user        => root,
+        minute      => '*/15',
+        environment => [ 'PATH="/usr/bin:/bin:/usr/sbin:/sbin:/usr/sbin:/usr/local/bin"' ],
+        command     => '/opt/pyznap/venv/bin/pyznap snap >> /var/log/pyznap.log 2>&1',
+      }
 
       package { 'zfs-auto-snapshot': ensure => absent }
     }
