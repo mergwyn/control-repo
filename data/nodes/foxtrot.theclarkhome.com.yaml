@@ -99,8 +99,6 @@ lxd::preseed:
 
 
 profile::platform::baseline::debian::zfs::snapshotter::settings:
-  rpool/USERDATA:
-    snap: yes
   rpool/zfspv:
     snap: yes
   srv:

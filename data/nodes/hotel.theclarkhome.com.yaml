@@ -42,8 +42,6 @@ lxd::preseed:
     driver: zfs
 
 profile::platform::baseline::debian::zfs::snapshotter::settings:
-  rpool/USERDATA:
-    snap: yes
   rpool/zfspv:
     snap: yes
   rpool/srv:
