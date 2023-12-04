@@ -41,6 +41,14 @@ lxd::preseed:
     name: default
     driver: zfs
 
+profile::platform::baseline::debian::zfs::snapshotter::settings:
+  rpool/USERDATA:
+    snap: yes
+  rpool/zfspv:
+    snap: yes
+  rpool/srv:
+    snap: yes
+
 profile::app::backuppc::client::backup_files_exclude:
   '/':
     - '/var/lib/rancher/k3s/agent/containerd'
