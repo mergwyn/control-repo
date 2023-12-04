@@ -126,6 +126,7 @@ profile::app::backuppc::client::backup_files_exclude:
   '/':
     - '*.cloud'
     - '*.cloudf'
+    - '.lima/[a-z]*'
     - '/media/offsite'
     - '/nfs'
     - '/srv2'
