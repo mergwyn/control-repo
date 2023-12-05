@@ -1,0 +1,89 @@
+#!/bin/sh
+
+## $Id: 223.backup-zfs.sh 58697be4119d 2017-10-03 03:09 +0200 lachman $
+## Created by: Miroslav Lachman <000.fbsd@quip.cz>
+
+## Backup of zpool info, zfs list and zfs properties for each filesystem.
+## Data are stored on local filesystem, in /var/backup.
+## It is recommended to copy those files to off-site storage.
+
+daily_backup_zfs_enable=YES
+daily_backup_zfs_props_enable="YES"	# Backup zpool/zfs filesystem properties
+daily_backup_zfs_get_flags="all"	# flags passed to `zfs get`
+daily_backup_zfs_list_flags=""		# flags passed to `zfs list`
+daily_backup_zpool_get_flags="all"	# flags passed to `zpool get`
+daily_backup_zpool_list_flags="-v"	# flags passed to `zpool list`
+daily_backup_zfs_verbose="YES"		# Report diff between the old and new backups.
+
+## If there is a global system configuration file, suck it in.
+#i#
+if [ -r /etc/default/periodic.conf ]
+then
+	. /etc/default/periodic.conf
+	source_periodic_confs
+fi
+
+bak_dir=/var/backups
+
+rotate() {
+	base_name=$1
+	show_diff=$2
+	file="$bak_dir/$base_name"
+
+	if [ -f "${file}.bak" ] ; then
+		rc=0
+		if cmp -s "${file}.bak" "${file}.tmp"; then
+			rm "${file}.tmp"
+		else
+			rc=1
+			[ -n "$show_diff" ] && diff "${file}.bak" "${file}.tmp"
+			mv "${file}.bak" "${file}.bak2" || rc=3
+			mv "${file}.tmp" "${file}.bak" || rc=3
+		fi
+	else
+		rc=1
+		mv "${file}.tmp" "${file}.bak" || rc=3
+		[ -n "$show_diff" ] && cat "${file}.bak"
+	fi
+}
+
+case "$daily_backup_zfs_verbose" in
+	[Yy][Ee][Ss]) show="YES"
+esac
+
+case "$daily_backup_zfs_enable" in
+	[Yy][Ee][Ss])
+
+	zpools=$(zpool list -vp | sed -E 's/^([ ]*[\./[:alnum:]]+ +[\.[:alnum:]-]+) .*/\1/')
+
+	if [ -z "$zpools"  ]; then
+		echo '$daily_backup_zfs_enable is set but no zpools found.'
+		rc=2
+	else
+		echo ""
+		echo "Backup of ZFS informations for all imported pools";
+
+		echo "$zpools" > "$bak_dir/zpool_info.tmp"
+		rotate "zpool_info" $show
+
+		zfs list -p -H -o name,mountpoint > "$bak_dir/zfs_list.tmp"
+		rotate "zfs_list" $show
+
+		: ${daily_backup_zfs_props_enable="YES"}
+		case "$daily_backup_zfs_props_enable" in
+			[Yy][Ee][Ss])
+			zfs get -H -p -t filesystem,volume all |
+			grep -E -v "available|compressratio|logicalreferenced|logicalused|refcompressratio|referenced|used|usedbychildren|usedbydataset|written" > "$bak_dir/zfs_props.tmp"
+			rotate "zfs_props"
+
+			zpool get -H -p all |
+			grep -E -v "capacity|dedupratio|free|allocated|fragmentation" > "$bak_dir/zpool_props.tmp"
+			rotate "zpool_props"
+			;;
+		esac
+	fi
+	;;
+	*)  rc=0;;
+esac
+
+exit $rc
