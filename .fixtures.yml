@@ -146,7 +146,7 @@ fixtures:
       ref: "1.2.0"
     mysql:
       repo: "puppetlabs-mysql"
-      ref: "14.0.0"
+      ref: "15.0.0"
     netplan:
       repo: "zehweh-netplan"
       ref: "1.0.1"
