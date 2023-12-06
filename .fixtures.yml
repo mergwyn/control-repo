@@ -131,7 +131,7 @@ fixtures:
       ref: "3.6.0"
     kmod:
       repo: "puppet-kmod"
-      ref: "3.2.0"
+      ref: "4.0.1"
     letsencrypt:
       repo: "puppet-letsencrypt"
       ref: "9.2.0"
