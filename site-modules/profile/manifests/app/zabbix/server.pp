@@ -9,20 +9,21 @@ class profile::app::zabbix::server {
 
   contain profile::app::db::mysql::server
 
-  class { 'zabbix':
-    #zabbix_url        => $::facts['networking']['fqdn'],
-    zabbix_url        => lookup('defaults::zabbix_url'),
-    zabbix_version    => lookup('defaults::zabbix_version'),
-    zabbix_timezone   => 'Europe/London',
-    database_type     => 'mysql',
-    database_name     => 'zabbix',
-    database_user     => 'zabbix',
-    database_password => lookup('secrets::mysql'),
-    zabbix_api_pass   => lookup('secrets::zabbix'),
-    manage_resources  => true,
-    manage_vhost      => false,
-    database_charset  => 'utf8',
-  }
+#TODO comment out while debugginh RROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: NO)
+#  class { 'zabbix':
+#    #zabbix_url        => $::facts['networking']['fqdn'],
+#    zabbix_url        => lookup('defaults::zabbix_url'),
+#    zabbix_version    => lookup('defaults::zabbix_version'),
+#    zabbix_timezone   => 'Europe/London',
+#    database_type     => 'mysql',
+#    database_name     => 'zabbix',
+#    database_user     => 'zabbix',
+#    database_password => lookup('secrets::mysql'),
+#    zabbix_api_pass   => lookup('secrets::zabbix'),
+#    manage_resources  => true,
+#    manage_vhost      => false,
+#    database_charset  => 'utf8',
+#  }
 
   profile::app::zabbix::template_host { 'Template App Zabbix Server by Zabbix agent active': }
 
