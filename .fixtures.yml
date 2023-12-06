@@ -170,7 +170,7 @@ fixtures:
       ref: "6.0.0"
     puppetboard:
       repo: "puppet-puppetboard"
-      ref: "9.0.0"
+      ref: "10.0.0"
     puppetdb:
       repo: "puppetlabs-puppetdb"
       ref: "7.13.0"
