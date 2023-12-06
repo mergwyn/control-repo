@@ -132,9 +132,9 @@ fixtures:
     kmod:
       repo: "puppet-kmod"
       ref: "4.0.1"
-    letsencrypt:
-      repo: "puppet-letsencrypt"
-      ref: "9.2.0"
+    #letsencrypt:
+      #repo: "puppet-letsencrypt"
+      #ref: "9.2.0"
     libvirt:
       repo: "thias-libvirt"
       ref: "1.0.2"

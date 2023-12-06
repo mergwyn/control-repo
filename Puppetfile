@@ -49,7 +49,7 @@ mod 'puppetlabs-stdlib', '9.1.0'
 mod 'puppetlabs-vcsrepo', '6.1.0'
 mod 'puppetlabs-xinetd', '3.3.0'
 mod 'puppetlabs-yumrepo_core', '2.0.0'
-mod 'puppet-letsencrypt', '9.2.0'
+#mod 'puppet-letsencrypt', '9.2.0'
 # TODO workaround until next release of NGINX moduke
 #mod 'puppet-nginx', '3.3.0'
 mod 'puppet-nginx', :git => 'https://github.com/voxpupuli/puppet-nginx'
