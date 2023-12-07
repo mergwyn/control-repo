@@ -10,7 +10,7 @@ class profile::app::transcoder {
   include profile::app::scripts
   include profile::app::sickbeard_automator
 
-  package { $packages: ensure => present }
+  stdlib::ensure_packages { $packages: ensure => present }
 
 
 
