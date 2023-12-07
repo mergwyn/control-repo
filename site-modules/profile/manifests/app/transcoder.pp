@@ -4,13 +4,12 @@ class profile::app::transcoder {
 
   $codedir = '/opt'
   $scriptdir = "${codedir}/scripts"
-  $packages = [ 'nfs-common' ]
 
   include profile::app::git
   include profile::app::scripts
   include profile::app::sickbeard_automator
 
-  stdlib::ensure_packages { $packages: ensure => present }
+  stdlib::ensure_packages ( [ 'nfs-common' ], { ensure => present } )
 
 
 

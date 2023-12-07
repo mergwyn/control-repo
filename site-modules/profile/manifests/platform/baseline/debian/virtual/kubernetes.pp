@@ -11,7 +11,7 @@ class profile::platform::baseline::debian::virtual::kubernetes (
   case ($provider) {
     'k3s': {
       $required_packages = [ 'open-iscsi', 'nfs-common' ]
-      stdlib::ensure_packages { $required_packages: }
+      stdlib::ensure_packages ( [ 'open-iscsi', 'nfs-common' ], { ensure => present } )
       # TODO ??
       # TODO sudo systemctl stop zfs-import-scan.service
       # TODO sudo systemctl disable zfs-import-scan.service
