@@ -7,7 +7,7 @@
   "source": "https://github.com/mergwyn/control-repo",
   "dependencies": [
     {
-      "name": "puppetlabs-stdlib",
+      "name": "puppetlabs/stdlib",
       "version_requirement": ">= 9.0.0"
     }
   ],
