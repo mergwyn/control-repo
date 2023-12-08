@@ -31,16 +31,16 @@ class profile::platform::baseline::debian::zfs::snapshotter (
           owner      => $owner,
           group      => $group,
           require    => File[ $target ],
-        }
-        -> python::pip { $type:
-            ensure       => 'present',
-            pkgname      => $type,
-            pip_provider => 'pip',
-            virtualenv   => $venv,
-            owner        => $owner,
-            group        => $group,
-            timeout      => 1800,
-          }
+      }
+      -> python::pip { $type:
+          ensure       => 'present',
+          pkgname      => $type,
+          pip_provider => 'pip',
+          virtualenv   => $venv,
+          owner        => $owner,
+          group        => $group,
+          timeout      => 1800,
+      }
 
       file { $configdir:
         ensure  => directory,
