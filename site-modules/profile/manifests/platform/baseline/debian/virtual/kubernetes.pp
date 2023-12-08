@@ -10,11 +10,21 @@ class profile::platform::baseline::debian::virtual::kubernetes (
 
   case ($provider) {
     'k3s': {
-      $required_packages = [ 'open-iscsi', 'nfs-common' ]
-      stdlib::ensure_packages ( [ 'open-iscsi', 'nfs-common' ], { ensure => present } )
-      # TODO ??
-      # TODO sudo systemctl stop zfs-import-scan.service
-      # TODO sudo systemctl disable zfs-import-scan.service
+# nfs client needed for some services/pods
+      stdlib::ensure_packages ( [ 'nfs-common' ], { ensure => present } )
+
+# iscsid is needed for openebs
+      package { 'open-iscsi': ensure => present, }
+      -> service { 'iscsid':
+        ensure => running,
+        enable = > true,
+      }
+
+# Stop import scan service as recommended for openebs
+      service { 'zfs-import-scan.service':
+        ensure =  stopped,
+        enable => false,
+      }
     }
 
     'microk8s': {
