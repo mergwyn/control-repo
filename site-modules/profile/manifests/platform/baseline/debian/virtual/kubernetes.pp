@@ -17,12 +17,12 @@ class profile::platform::baseline::debian::virtual::kubernetes (
       package { 'open-iscsi': ensure => present, }
       -> service { 'iscsid':
         ensure => running,
-        enable = > true,
+        enable => true,
       }
 
 # Stop import scan service as recommended for openebs
       service { 'zfs-import-scan.service':
-        ensure =  stopped,
+        ensure =>  stopped,
         enable => false,
       }
     }
