@@ -127,6 +127,10 @@ profile::app::backuppc::client::backup_files_exclude:
     - '.lima/[a-z]*'
     - '/media/offsite'
     - '/nfs'
+    - '/opt/appdata/plex/Plex Media Server/Cache'
+    - '/opt/appdata/plex/Plex Media Server/Logs'
+    - '/opt/appdata/plex/Plex Media Server/Metadata'
+    - '/opt/appdata/plex/Plex Media Server/Media
     - '/srv2'
     - '/srv/backup/hotel'
     - '/srv/backup/whiskey'
