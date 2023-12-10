@@ -125,7 +125,7 @@ fixtures:
       ref: 10.0.2
     puppetdb:
       repo: puppetlabs-puppetdb
-      ref: 7.13.0
+      ref: 7.14.0
     puppetserver_gem:
       repo: puppetlabs-puppetserver_gem
       ref: 1.1.1
