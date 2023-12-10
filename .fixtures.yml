@@ -7,7 +7,7 @@ fixtures:
   repositories:
     puppetdb:
       repo: https://github.com/puppetlabs/puppetlabs-puppetdb
-      tag: 7.15.0
+      tag: 7.14.0
     backuppc:
       repo: https://github.com/mergwyn/mergwyn-backuppc
       ref: master
