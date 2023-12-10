@@ -6,7 +6,7 @@ fixtures:
     role: "#{source_dir}/site-modules/role"
   repositories:
     homebrew:
-      repo: https://github.com/TheKevJames/puppet-homebrew
+      repo: https://github.com/mergwyn/puppet-homebrew
       ref: master
     backuppc:
       repo: https://github.com/mergwyn/mergwyn-backuppc
