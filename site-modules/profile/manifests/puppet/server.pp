@@ -8,8 +8,9 @@ class profile::puppet::server {
   include profile::puppet::repo
 
   class { 'r10k':
-    cachedir => '/var/cache/r10k',
-    sources  => {
+    cachedir        => '/var/cache/r10k',
+    deploy_settings => { 'exclude_spec' => true, },
+    sources         => {
       'mergwyn' => {
         'remote'  => 'https://github.com/mergwyn/control-repo',
         'basedir' => "${::settings::codedir}/environments",
