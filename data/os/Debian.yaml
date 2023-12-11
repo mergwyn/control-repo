@@ -85,6 +85,7 @@ profile::app::backuppc::client::backup_files_exclude:
     - '/var/lib/kubelet/pods'
     - '/var/lib/minidlna/art_cache'
     - '/var/lib/mlocate/mlocate.db*'
+    - '/var/lib/mysql/ib*'
     - '/var/lib/mysql/zabbix*'
     - '/var/lib/php/sessions/*'
     - '/var/snap'
