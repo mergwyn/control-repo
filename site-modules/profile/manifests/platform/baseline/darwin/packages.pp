@@ -12,8 +12,8 @@ class profile::platform::baseline::darwin::packages {
   $taps = [
     'git',
     'unison',
-    'python',
-    'python-tk',
+    'python@3.12',   # TODO convert to a fact
+    'python-tk@3.12',
   ]
   package { $taps: provider => 'brew' }
 
