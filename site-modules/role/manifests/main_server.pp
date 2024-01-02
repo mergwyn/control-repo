@@ -8,9 +8,9 @@ class role::main_server {
 
   include profile::app::sssd
   include profile::app::zabbix::agent
-  include profile::platform::baseline::debian::virtual::lxd
   include profile::platform::baseline::debian::autofs
-  include profile::app::microk8s
+  include profile::platform::baseline::debian::virtual::lxd
+  include profile::platform::baseline::debian::virtual::kubernetes
 
   include profile::app::backuppc::client
   include profile::app::backuppc::server

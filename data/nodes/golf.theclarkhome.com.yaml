@@ -48,3 +48,6 @@ profile::app::backuppc::client::backup_files_exclude:
     - '/var/lib/rancher/k3s/agent/containerd'
     - '/run/k3s/containerd'
     - '/srv/media'
+    - '/opt/appdata/*/logs'
+    - '/opt/appdata/*/cache'
+    - '/opt/appdata/*/MediaCover'
