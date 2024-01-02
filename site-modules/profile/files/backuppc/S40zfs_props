@@ -20,7 +20,6 @@ daily_backup_zfs_verbose="YES"		# Report diff between the old and new backups.
 if [ -r /etc/default/periodic.conf ]
 then
 	. /etc/default/periodic.conf
-	source_periodic_confs
 fi
 
 bak_dir=/var/backups
