@@ -70,6 +70,7 @@ profile::app::backuppc::client::backup_files_exclude:
     - '/run/udev'
     - '.Spotlight-V100/'
     - '/sys'
+    - '/srv/seaweedfs'
     - '*.tar'
     - '.TemporaryItems/'
     - 'tmp/'
