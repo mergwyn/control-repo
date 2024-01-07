@@ -125,6 +125,7 @@ profile::app::backuppc::client::backup_files_exclude:
     - '*.cloud'
     - '*.cloudf'
     - '.lima/[a-z]*'
+    - '/home/gary/odrive/Amazon Cloud Drive/Pictures'
     - '/media/offsite'
     - '/nfs'
     - '/opt/appdata/plex/Plex Media Server/Cache'
