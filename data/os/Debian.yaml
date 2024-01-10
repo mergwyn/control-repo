@@ -71,7 +71,7 @@ profile::app::backuppc::client::backup_files_exclude:
     - '.Spotlight-V100/'
     - '/sys'
     - '/srv/seaweedfs'
-    - '*.pdb'
+    - '*.pbd'
     - '*.tar'
     - '.TemporaryItems/'
     - 'tmp/'
