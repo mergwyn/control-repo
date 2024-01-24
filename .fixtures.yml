@@ -83,7 +83,7 @@ fixtures:
       ref: 4.1.0
     dhcp:
       repo: puppet/dhcp
-      ref: 5.0.1
+      ref: 6.1.0
     epel:
       repo: puppet/epel
       ref: 5.0.0
@@ -92,13 +92,13 @@ fixtures:
       ref: 5.0.0
     keepalived:
       repo: puppet/keepalived
-      ref: 3.6.0
+      ref: 4.0.0
     kmod:
       repo: puppet/kmod
       ref: 4.0.1
     apache:
       repo: puppetlabs/apache
-      ref: 11.1.0
+      ref: 12.0.2
     apt:
       repo: puppetlabs/apt
       ref: 9.2.0
@@ -125,7 +125,7 @@ fixtures:
       ref: 10.1.0
     postgresql:
       repo: puppetlabs-postgresql
-      ref: 9.2.0
+      ref: 10.0.3
     puppetdb:
       repo: puppetlabs/puppetdb
       ref: 7.13.0
@@ -161,7 +161,7 @@ fixtures:
       ref: 10.0.0
     python:
       repo: puppet/python
-      ref: 7.1.0
+      ref: 7.2.0
     r10k:
       repo: puppet/r10k
       ref: 12.2.0
@@ -224,7 +224,7 @@ fixtures:
       ref: 5.0.1
     concat:
       repo: puppetlabs/concat
-      ref: 9.0.1
+      ref: 9.0.2
     scheduled_task:
       repo: puppetlabs/scheduled_task
       ref: 4.0.0
@@ -233,4 +233,4 @@ fixtures:
       ref: 6.0.0
     pwshlib:
       repo: puppetlabs/pwshlib
-      ref: 1.0.0
+      ref: 1.0.1
