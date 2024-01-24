@@ -79,6 +79,12 @@ class profile::platform::baseline::debian::zfs::snapshotter (
         command     => '/opt/pyznap/venv/bin/pyznap snap >> /var/log/pyznap.log 2>&1',
       }
 
+      logrotate::rule { 'pyznap':
+        path         => '/var/log/pyznap',
+        rotate       => 7,
+        rotate_every => 'day',
+      }
+
       package { 'zfs-auto-snapshot': ensure => absent }
     }
 

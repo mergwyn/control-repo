@@ -150,6 +150,9 @@ fixtures:
     yumrepo_core:
       repo: puppetlabs/yumrepo_core
       ref: 2.0.0
+    logrotate:
+      repo: puppet/logrotate
+      ref: 7.0.1
     php:
       repo: puppet/php
       ref: 10.1.0
