@@ -36,7 +36,7 @@ rotate() {
 		else
 			rc=1
 			[ -n "$show_diff" ] && diff "${file}.bak" "${file}.tmp"
-			mv "${file}.bak" "${file}.bak2" || rc=3
+			# TODO parameterise? mv "${file}.bak" "${file}.bak2" || rc=3
 			mv "${file}.tmp" "${file}.bak" || rc=3
 		fi
 	else
