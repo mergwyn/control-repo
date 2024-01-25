@@ -7,7 +7,7 @@ class profile::app::kopia (
   Stdlib::Absolutepath $snapafter                       = "${topdir}/snap_after",
   Stdlib::Absolutepath $folderbefore                    = "${topdir}/folder_before",
   Stdlib::Absolutepath $folderafter                     = "${topdir}/folder_after",
-  Optional[Backuppc::BackupFiles] $backup_files_exclude = undef,
+  Optional[Backuppc::BackupFiles] $backup_files_exclude = $profile::app::backuppc::client::backup_files_exclude,
 ) {
 
 # Install kopia
@@ -32,7 +32,7 @@ class profile::app::kopia (
 # TODO switch to kopia values
   file { '/tmp/kopiaignore.test':
     ensure  => present,
-    content => inline_template('<% @backuppc::excludes.each do |exclude| %><%= exclude %><%= "\n" %><% end %>')
+    content => inline_template('<% @backup_files_exclude.keys.sort.each do |key| -%><% @backup_files_exclude[key].each do |exclude| %><%= exclude %><%= "\n" %><% end %><% end %>')
   }
 
 }
