@@ -80,7 +80,7 @@ class profile::platform::baseline::debian::zfs::snapshotter (
       }
 
       logrotate::rule { 'pyznap':
-        path         => '/var/log/pyznap',
+        path         => '/var/log/pyznap.log',
         rotate       => 7,
         rotate_every => 'day',
       }
