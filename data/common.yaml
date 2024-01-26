@@ -25,8 +25,8 @@ defaults::dns::search:
   - "%{trusted.domain}"
   - local
 defaults::dns::nameservers:
-  - "%{lookup('defaults::subnet')}.21"
   - "%{lookup('defaults::subnet')}.22"
+  - "%{lookup('defaults::subnet')}.21"
 
 # VPN settings
 defaults::vpn_gateway:     "%{lookup('defaults::subnet')}.2"
