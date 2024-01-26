@@ -1,7 +1,7 @@
-# @summary Keepalived
+# @summary Keepalived vpn settings
 #
 #
-class profile::app::keepalived (
+class profile::app::keepalived::vpn (
   Enum['MASTER','BACKUP'] $state = 'BACKUP',
   String[1]               $lan = 'eth0',
   String[1]               $wan = 'eth1',
@@ -14,6 +14,8 @@ class profile::app::keepalived (
   Stdlib::Email           $notification_email = lookup('defaults::adminemail'),
   Stdlib::Email           $notification_email_from = "keepalived@${trusted['domain']}",
 ) {
+  include profile::app::keepalived::notify
+
   # ping script
   $ping_script = '/usr/local/bin/keepalived_check.sh'
   file { $ping_script:
@@ -28,18 +30,6 @@ class profile::app::keepalived (
                #[[ $result == 0 ]] || ${logger} keepalive check returned $?
                exit $result
                | EOT
-  }
-
-  include keepalived
-
-# Global defs
-  class { 'keepalived::global_defs':
-    notification_email      => $notification_email,
-    notification_email_from => $notification_email_from,
-    smtp_server             => 'localhost',
-    smtp_connect_timeout    => '60',
-    enable_script_security  => true,
-    script_user             => 'root',
   }
 
   keepalived::vrrp::script { 'ping_google':
