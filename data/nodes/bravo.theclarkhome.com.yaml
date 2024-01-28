@@ -16,4 +16,4 @@ profile::platform::baseline::debian::netplan::ethernets:
       search: "%{alias('defaults::dns::search')}"
       addresses:
         - "%{lookup('defaults::subnet')}.21"
-        - '127.0.0.1'
+        - "%{lookup('defaults::subnet')}.22"
