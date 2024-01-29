@@ -16,7 +16,7 @@ class profile::app::kopia (
     release  => 'stable',
     repos    => 'main',
     key      => {
-      name   => 'kopia-keyring.gpg',
+      name   => 'kopia-keyring.asc',
       source => 'https://kopia.io/signing-key',
     },
   }
