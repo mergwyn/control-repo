@@ -4,7 +4,8 @@ class profile::puppet::repo (
   String $release = $facts['os']['distro']['codename'],
 ) {
 
-  $ver = split($server_facts['serverversio'], '\.')
+  
+  $ver = split($::serverversion, '\.')
   $version = $ver[0]
 
   $arch =  $facts['os']['architecture']
