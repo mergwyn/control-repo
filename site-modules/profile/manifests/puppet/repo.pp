@@ -4,10 +4,10 @@ class profile::puppet::repo (
   String $release = $facts['os']['distro']['codename'],
 ) {
 
-  $ver = split($::serverversion, '\.')
+  $ver = split($server_facts['serverversio'], '\.')
   $version = $ver[0]
 
-  $arch =  $::facts['os']['architecture']
+  $arch =  $facts['os']['architecture']
   case $arch {
     'i386':  { $release = 'xenial' }
     'amd64': { $release }
