@@ -44,10 +44,10 @@ class profile::app::dhcpd (
   }
 
 # Hosts with fixed ip
-  dhcp::host { 'swerver': mac => '04:ee:e8:1a:64:d2' , ip => '10.58.0.240' }
+  dhcp::host { 'wserver': mac => '04:ee:e8:1a:64:d2' , ip => '10.58.0.240' }
   dhcp::host { 'wclient': mac => '04:ee:e8:1f:68:73' , ip => '10.58.0.241' }
 
-# Hosts that just need names,
+# Hosts that just need names 
   #dhcp::host { 'switch1':               mac => '00:8e:f2:59:c7:98' }
   dhcp::host { 'switch2':               mac => 'a0:40:a0:71:7e:ce' }
   #dhcp::host { 'cisco1':                mac => '5c:50:15:52:47:40' }
