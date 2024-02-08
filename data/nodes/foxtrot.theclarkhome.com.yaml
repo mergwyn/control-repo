@@ -133,6 +133,8 @@ profile::app::backuppc::client::backup_files_exclude:
     - '/opt/appdata/plex/Plex Media Server/Media'
     - '/opt/appdata/plex/Plex Media Server/Metadata'
     - '/srv2'
+    - '/srv/backup/home-assistant'
+    - '/srv/media/content/christian'
     - '/srv/media/content/christian'
     - '/srv/media/content/christmas'
     - '/srv/media/content/films'
