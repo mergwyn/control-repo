@@ -48,8 +48,10 @@ class profile::platform::baseline::debian::virtual::kubernetes (
       value  => '1024',
       target => '/etc/sysctl.d/21-mayastor.conf',
     }
+    kmod::load { 'nvme_tcp': }
   } else {
     file { '/etc/sysctl.d/21-mayastor.conf' : ensure => absent }
+    kmod::load { 'nvme_tcp': ensure => absent }
   }
 
   if $enable_cstor {
