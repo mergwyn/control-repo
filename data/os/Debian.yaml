@@ -78,6 +78,7 @@ profile::app::backuppc::client::backup_files_exclude:
     - '*.sock'
     - '.Spotlight-V100/'
     - '/srv/seaweedfs'
+    - '/srv/mayastor'
     - '**/.ssh/ctl'
     - '/sys'
     - '*.tar'
