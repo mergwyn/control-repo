@@ -45,7 +45,7 @@ class profile::platform::baseline::debian::virtual::kubernetes (
   if $enable_mayastor {
     sysctl{ 'vm.nr_hugepages':
       ensure => present,
-      value  => '1024',
+      value  => '1536',
       target => '/etc/sysctl.d/21-mayastor.conf',
     }
     kmod::load { 'nvme_tcp': }
