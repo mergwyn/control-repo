@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+
+source /opt/scripts/functions/log.sh
+
+to_old="36 hours ago"
+
+source /etc/default/kopia
+
+for repo in ${REPOS} ; do
+  log_info "Starting backup for repo: ${repo}"
+  export KOPIA_CONFIG_PATH=/etc/kopia/config.d/${repo}.conf
+  kopia snapshot create --all ${ARGS}
+
+  day_of_week=$(date +%u)
+  log_debug "day_of_week is ${day_of_week}"
+  if [[ ${day_of_week} = 1 ]] ; then
+    # TODO remove when confident
+    kopia snapshot list --storage-stats
+    kopia content stats
+    kopia blob stats
+  fi
+
+  while read snapdate host snap ; do
+    date=$(date --utc --date "${snapdate}" +'%s')
+    comp=$(date --date "${to_old}" +'%s')
+    log_debug "last snapshot date for ${host}:${snap} is ${date}, check date is ${comp}"
+
+    if [[ $date -lt $comp ]] ; then
+      log_error "Backup for ${host}:${snap} on ${snapdate} is more than ${to_old}" 
+    fi
+  done< <( kopia snapshot list --max-results=1 --all --json | jq -r '.[] | "\(.endTime) \(.source.host) \(.source.path)"' )
+
+  log_debug "Maintenance for repo ${repo} is ${MAINTENANCE}"
+  if [[ ${MAINTENANCE} = true ]] ; then
+    owner=$(kopia maintenance info --json | jq -er '.owner')
+    log_debug "Maintenance owner for repo ${repo} is ${repo}"
+    if [[ ${owner##*@} = $(hostname) ]] ; then
+      log_info "Running maintenance for ${repo}"
+      #kopia maintenance set --owner=me # Shouldn't be necessary if previous check has worked
+      kopia maintenance run ${ARGS}
+    fi
+  fi
+  unset KOPIA_CONFIG_PATH
+  log_info "Backup complete for repo: ${repo}"
+
+done

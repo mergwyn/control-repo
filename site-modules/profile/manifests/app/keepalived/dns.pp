@@ -2,11 +2,30 @@
 #
 #
 class profile::app::keepalived::dns (
+  String                         $lan         = 'eth0',
   Stdlib::IP::Address::V4        $v_ip        = lookup('defaults::dns::vip'),
   Array[Stdlib::IP::Address::V4] $nameservers = lookup('defaults::dns::nameservers')
 ) {
 
   include profile::app::keepalived::notify
+
+  keepalived::vrrp::script { 'check_dns':
+    script => '/usr/bin/killall -0 nginx',
+  }
+
+# VRRP
+#  keepalived::vrrp::instance { 'VI_DNS':
+#    interface         => $lan,
+#    lvs_interface     => 'veth-dns',
+#    state             => 'BACKUP',
+#    virtual_router_id => 51,
+#    priority          => 150,
+#    auth_type         => 'PASS',
+#    auth_pass         => lookup('secrets::keepalived'),
+#    virtual_ipaddress => [ $v_ip ],
+##   track_interface   => [ $wan, "${vpn} weight 5"], # optional, monitor these interfaces.
+#    #track_script      => 'check_dns',
+#  }
 
 # Add virtual server for DNS
   keepalived::lvs::virtual_server { 'VPN_DNS':

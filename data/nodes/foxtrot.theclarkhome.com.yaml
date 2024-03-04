@@ -120,6 +120,9 @@ profile::platform::baseline::debian::zfs::snapshotter::settings:
   rpool/home:
     snap: yes
 
+profile::app::kopia::repos:       'filesystem idrive-kopia'
+profile::app::kopia::maintenance: true
+
 profile::app::backuppc::client::backup_files_exclude:
   '/':
     - '*.cloud'

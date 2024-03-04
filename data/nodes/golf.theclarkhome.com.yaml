@@ -43,6 +43,9 @@ profile::platform::baseline::debian::zfs::snapshotter::settings:
   rpool/zfspv:
     snap: yes
 
+profile::app::kopia::repos:       'server-foxtrot idrive-kopia'
+profile::app::kopia::maintenance: false
+
 profile::app::backuppc::client::backup_files_exclude:
   '/':
     - '/var/lib/rancher/k3s/agent/containerd'
