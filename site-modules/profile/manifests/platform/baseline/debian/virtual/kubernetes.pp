@@ -2,7 +2,7 @@
 #
 class profile::platform::baseline::debian::virtual::kubernetes (
   Enum['microk8s','k3s'] $provider = 'k3s',
-  Boolean $enable_cstor            = false,
+  Boolean $enable_cstor            = true,
   Boolean $enable_mayastor         = true,
 ) {
 
