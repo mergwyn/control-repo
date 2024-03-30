@@ -64,6 +64,8 @@ class profile::app::dhcpd (
   dhcp::host { 'kitchen-sonos-playone': mac => '78:28:CA:CB:8B:94' }
   dhcp::host { 'bedroom-HS100':         mac => '0C:80:63:0C:40:16' }
   dhcp::host { 'lounge-HS100':          mac => 'D8:0D:17:56:A3:DC' }
+  dhcp::host { 'blikvm':                mac => '7C:88:99:C9:55:DF' }
+  dhcp::host { 'blikvm-lan':            mac => '12:00:7A:11:41:AB' }
 
 # Hosts with different gateway (VPN)
 # TODO move vpn hosts to new VLAN
