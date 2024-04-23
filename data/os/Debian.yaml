@@ -112,6 +112,7 @@ profile::app::backuppc::client::backup_files_exclude:
     - '/var/lib/rancher/k3s/storage'
     - 'var/lib/samba/winbindd_privileged/pipe'
     - 'var/lib/sss/pipes'
+    - 'var/openebs/'
     - 'var/log/'
     - '/var/snap'
     - 'var/spool/postfix'
