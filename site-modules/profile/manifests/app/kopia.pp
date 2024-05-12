@@ -8,7 +8,7 @@ class profile::app::kopia (
   Stdlib::Absolutepath $folderbefore                    = "${topdir}/folder_before",
   Stdlib::Absolutepath $folderafter                     = "${topdir}/folder_after",
   Boolean $maintenance                                  = false,
-  String $args                                          = '${ARGS-"--log-level=error --no-progress"}',
+  String $args                                          = '$\{ARGS-"--log-level=error --no-progress"\}',
   String $repos                                         = '',
   Optional[Backuppc::BackupFiles] $backup_files_exclude = $profile::app::backuppc::client::backup_files_exclude,
 ) {
