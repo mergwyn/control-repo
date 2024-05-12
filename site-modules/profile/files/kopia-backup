@@ -2,14 +2,18 @@
 
 source /opt/scripts/functions/log.sh
 
-to_old="36 hours ago"
+too_old="36 hours ago"
 
 source /etc/default/kopia
 
 for repo in ${REPOS} ; do
   log_info "Starting backup for repo: ${repo}"
   export KOPIA_CONFIG_PATH=/etc/kopia/config.d/${repo}.conf
-  kopia snapshot create --all ${ARGS}
+  #kopia snapshot create --all ${ARGS}
+  while read host snap ; do
+    log_info "Creating snapshot ${snap} in ${repo} for ${host}"
+    kopia snapshot create ${ARGS} "${snap}"
+  done< <( kopia snapshot list --json --max-results=1 | jq -r '.[] | "\(.source.host) \(.source.path)"' | grep $(hostname) )
 
   day_of_week=$(date +%u)
   log_debug "day_of_week is ${day_of_week}"
@@ -22,13 +26,13 @@ for repo in ${REPOS} ; do
 
   while read snapdate host snap ; do
     date=$(date --utc --date "${snapdate}" +'%s')
-    comp=$(date --date "${to_old}" +'%s')
-    log_debug "last snapshot date for ${host}:${snap} is ${date}, check date is ${comp}"
+    comp=$(date --date "${too_old}" +'%s')
+    log_debug "last snapshot date for ${host}:${snap} is ${date}, check date is ${comp} (${repo})"
 
     if [[ $date -lt $comp ]] ; then
-      log_error "Backup for ${host}:${snap} on ${snapdate} is more than ${to_old}" 
+      log_error "Backup for ${host}:${snap} on ${snapdate} is more than ${too_old} (${repo})" 
     fi
-  done< <( kopia snapshot list --max-results=1 --all --json | jq -r '.[] | "\(.endTime) \(.source.host) \(.source.path)"' )
+  done< <( kopia snapshot list --max-results=1 --json | jq -r '.[] | "\(.endTime) \(.source.host) \(.source.path)"' | grep $(hostname) )
 
   log_debug "Maintenance for repo ${repo} is ${MAINTENANCE}"
   if [[ ${MAINTENANCE} = true ]] ; then
