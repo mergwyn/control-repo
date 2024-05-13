@@ -13,7 +13,7 @@ for repo in ${REPOS} ; do
   while read host snap ; do
     log_info "Creating snapshot ${snap} in ${repo} for ${host}"
     kopia snapshot create ${ARGS} "${snap}"
-  done< <( kopia snapshot list --json --max-results=1 | jq -r '.[] | "\(.source.host) \(.source.path)"' | grep $(hostname) )
+  done< <( kopia snapshot list --json --max-results=1 | jq -r '.[] | "\(.source.host) \(.source.path)"' | grep $(hostname) | sed  -e '/content$/d')
 
   day_of_week=$(date +%u)
   log_debug "day_of_week is ${day_of_week}"
