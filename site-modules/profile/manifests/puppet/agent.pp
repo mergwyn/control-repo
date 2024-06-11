@@ -6,7 +6,7 @@ class profile::puppet::agent {
   include profile::puppet::repo
 
   # make sure we match server major version
-  $ver = split($::serverversion, '\.')
+  $ver = split($server_facts['serverversion'], '\.')
   apt::pin { 'puppet':
     priority => 501,
     packages => 'puppet-agent',
@@ -35,7 +35,7 @@ class profile::puppet::agent {
 
   $ruby = '/opt/puppetlabs/puppet/bin/ruby'
   #$lastrunfile = "${settings::lastrunfile}" # TODO This gives the wrong value for some reason
-  $lastrunfile = '/opt/puppetlabs/puppet/cache/state/last_run_summary.yaml'
+  $lastrunfile = '/opt/puppetlabs/puppet/public/last_run_summary.yaml'
   $cmd  = "${ruby} -rjson -ryaml -e \"puts JSON.pretty_generate(YAML.load_file('${lastrunfile}'))\""
   zabbix::userparameters { 'puppet-health':
     content => "UserParameter=puppet.health[*],sudo ${cmd}\n"
