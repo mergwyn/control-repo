@@ -21,6 +21,7 @@ end
 # $LOAD_PATH.push(File.join(fixture_path, 'modules', 'puppetdbquery','lib'))
 
 RSpec.configure do |config|
+  config.trusted_server_facts = true
   config.before(:each) do
     # @before_each = Puppet::Parser::Functions.newfunction(:puppetdb_query, :type => :rvalue) { |args| [ [{ 'title': 'fqdn' }] ] }
     @before_each = puppetdb_query('query string')
