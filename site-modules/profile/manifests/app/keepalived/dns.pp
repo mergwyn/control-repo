@@ -16,7 +16,7 @@ class profile::app::keepalived::dns (
 # VRRP
   keepalived::vrrp::instance { 'VI_DNS':
     interface         => $lan,
-    lvs_interface     => 'veth-dns',
+    #lvs_interface     => 'veth-dns',
     state             => 'BACKUP',
     virtual_router_id => 51,
     priority          => 150,
