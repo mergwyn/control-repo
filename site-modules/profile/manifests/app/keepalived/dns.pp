@@ -9,9 +9,9 @@ class profile::app::keepalived::dns (
 
   include profile::app::keepalived::notify
 
-  keepalived::vrrp::script { 'check_dns':
-    script => '/usr/bin/killall -0 nginx',
-  }
+#  keepalived::vrrp::script { 'check_dns':
+#    script => '/usr/bin/killall -0 nginx',
+#  }
 
 # VRRP
 #  keepalived::vrrp::instance { 'VI_DNS':
