@@ -40,7 +40,7 @@ class profile::app::keepalived::dns (
 
   $nameservers.each |Integer $index, String $real_ip| {
     keepalived::lvs::real_server { "VIP_DNS_${index}":
-      virtual_server => 'VIP_DNS',
+      #virtual_server => 'VIP_DNS',
       ip_address     => $real_ip,
       port           => 53,
       options        => {
