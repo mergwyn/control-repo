@@ -14,7 +14,7 @@ class profile::app::keepalived::dns (
 #  }
 
 # VRRP
-  keepalived::vrrp::instance { 'VI_DNS':
+  keepalived::vrrp::instance { 'VIP_DNS':
     interface         => $lan,
     #lvs_interface     => 'veth-dns',
     state             => 'BACKUP',
@@ -28,7 +28,7 @@ class profile::app::keepalived::dns (
   }
 
 # Add virtual server for DNS
-  keepalived::lvs::virtual_server { 'VPN_DNS':
+  keepalived::lvs::virtual_server { 'VIP_DNS':
     ip_address => $v_ip,
     port       => 53,
     delay_loop => 6,
@@ -39,8 +39,8 @@ class profile::app::keepalived::dns (
   }
 
   $nameservers.each |Integer $index, String $real_ip| {
-    keepalived::lvs::real_server { "VPN_DNS_${index}":
-      virtual_server => 'VPN_DNS',
+    keepalived::lvs::real_server { "VIP_DNS_${index}":
+      virtual_server => 'VIP_DNS',
       ip_address     => $real_ip,
       port           => 53,
       options        => {

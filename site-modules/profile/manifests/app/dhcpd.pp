@@ -3,7 +3,7 @@
 class profile::app::dhcpd (
   Optional[Enum['primary','secondary']] $role         = undef,
   Optional[Stdlib::IP::Address]         $peer_address = undef,
-  Boolean                               $use_dns_vip = true,
+  Boolean                               $use_dns_vip = false,
   ) {
   $owner = 'dhcpd'
   $group = 'dhcpd'
