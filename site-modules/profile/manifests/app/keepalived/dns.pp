@@ -14,7 +14,7 @@ class profile::app::keepalived::dns (
 #  }
 
 # VRRP
-  keepalived::vrrp::instance { 'VIP_DNS':
+  keepalived::vrrp::instance { 'VI_50':
     interface         => $lan,
     #lvs_interface     => 'veth-dns',
     state             => 'BACKUP',
@@ -33,18 +33,18 @@ class profile::app::keepalived::dns (
     port       => 53,
     delay_loop => 6,
     ha_suspend => true,
-    lb_algo    => 'wlc',
+    lb_algo    => 'wrr',
     lb_kind    => 'DR',
     protocol   => 'TCP'
   }
 
   $nameservers.each |Integer $index, String $real_ip| {
     keepalived::lvs::real_server { "VIP_DNS_${index}":
-      #virtual_server => 'VIP_DNS',
+      virtual_server => 'VIP_DNS',
       ip_address     => $real_ip,
       port           => 53,
       options        => {
-        weight      => 1,
+        weight      => $index,
         notify_down => "'/sbin/ipvsadm -d -u ${v_ip}:53 -r ${real_ip}:53'",
         notify_up   => "'/sbin/ipvsadm -a -u ${v_ip}:53 -r ${real_ip}:53 -g -w 1'",
         'TCP_CHECK' => {
