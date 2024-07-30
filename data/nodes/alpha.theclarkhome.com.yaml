@@ -11,7 +11,9 @@ profile::platform::baseline::debian::netplan::ethernets:
     dhcp4: no
     addresses:
       - "%{lookup('defaults::subnet')}.21/%{lookup('defaults::bits')}"
-    gateway4: "%{lookup('defaults::gateway')}"
+    routes:
+      - to: 'default'
+        via: "%{lookup('defaults::gateway')}"
     nameservers:
       search: "%{alias('defaults::dns::search')}"
       addresses:
