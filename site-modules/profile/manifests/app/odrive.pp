@@ -9,7 +9,7 @@ class profile::app::odrive (
 
   # automatically start daemon
   systemd::unit_file { 'odrive-agent@.service':
-    enable  => $enable,,
+    enable  => $enable,
     active  => false,
     content => @("EOT"),
                [Unit]
@@ -30,7 +30,7 @@ class profile::app::odrive (
   }
 
   systemd::unit_file { 'odrive-monitor@.service':
-    enable  => $enable,,
+    enable  => $enable,
     active  => false,
     content => @("EOT"),
                [Unit]
@@ -74,13 +74,13 @@ class profile::app::odrive (
   $users.each |String $user| {
     service { "odrive-agent@${user}":
       ensure  => 'running',
-      enable  => $enable,,
+      enable  => $enable,
       require => Vcsrepo[$codedir],
 # TODO notify and require?
     }
     service { "odrive-monitor@${user}":
       ensure  => 'running',
-      enable  => $enable,,
+      enable  => $enable,
       require => Vcsrepo[$codedir],
 # TODO notify and require?
     }
