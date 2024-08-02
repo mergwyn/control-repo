@@ -4,7 +4,7 @@
 class profile::app::odrive (
   $users  = ['gary'],
   $enable = false,
-  $ensure = 'absent',
+  $ensure = 'stopped',
 ) {
   $codedir='/opt/odrive'
 
