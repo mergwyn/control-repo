@@ -4,6 +4,7 @@
 class profile::app::odrive (
   $users  = ['gary'],
   $enable = false,
+  $ensure = 'absent',
 ) {
   $codedir='/opt/odrive'
 
@@ -73,13 +74,13 @@ class profile::app::odrive (
 
   $users.each |String $user| {
     service { "odrive-agent@${user}":
-      ensure  => 'running',
+      ensure  => $ensure,.
       enable  => $enable,
       require => Vcsrepo[$codedir],
 # TODO notify and require?
     }
     service { "odrive-monitor@${user}":
-      ensure  => 'running',
+      ensure  => $ensure,
       enable  => $enable,
       require => Vcsrepo[$codedir],
 # TODO notify and require?
