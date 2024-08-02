@@ -74,7 +74,7 @@ class profile::app::odrive (
 
   $users.each |String $user| {
     service { "odrive-agent@${user}":
-      ensure  => $ensure,.
+      ensure  => $ensure,
       enable  => $enable,
       require => Vcsrepo[$codedir],
 # TODO notify and require?
