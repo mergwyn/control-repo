@@ -126,6 +126,8 @@ class profile::app::sickbeard_automator (
     command => "cp ${sample_ini} ${target_ini}",
     unless  => "test -f ${target_ini} -a ${target_ini} -nt ${sample_ini}",
     creates => $target_ini,
+    user    => $owner,
+    group   => $group,
     path    => [ '/bin', '/usr/bin' ] ,
     require => [
       Vcsrepo[ $target ],
