@@ -18,10 +18,10 @@ class profile::app::samba::member {
       'kerberos method'                           => 'secrets and keytab',
       'ntlm auth'                                 => 'yes',
       'ea support'                                => 'yes',
-      'vfs objects'                               => 'fruit streams_xattr acl_xattr',
+      'vfs objects'                               => 'acl_xattr fruit streams_xattr aio_pthread',
       'acl_xattr:ignore system acls'              => 'yes',
       # Fruit settings
-      'fruit:resource'                            => 'xattr',
+      'fruit:aapl'                                => 'yes',
       'fruit:model'                               => 'MacSamba',
       'fruit:metadata'                            => 'stream',
       'fruit:posix_rename'                        => 'yes',
@@ -39,6 +39,9 @@ class profile::app::samba::member {
       'use sendfile'                              => true,
       'aio read size'                             => '16384',
       'aio write size'                            => '16384',
+      'recycle:keeptree'                          => 'no',
+      'oplocks'                                   => 'yes',
+      'locking'                                   => 'yes',
       'max xmit'                                  => '65536',
       # Other settings
       'map acl inherit'                           => 'Yes',

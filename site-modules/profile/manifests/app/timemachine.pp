@@ -21,10 +21,12 @@ class profile::app::timemachine {
         mode    => '0755',
         options => {
           'comment'            => 'Time Machine',
-          'vfs objects'        => 'fruit streams_xattr',
           'fruit:time machine' => 'yes',
           'browseable'         => 'yes',
           'writeable'          => 'yes',
+          'ea support'         => 'yes',
+          'read only'          => 'no',
+          'inherit acls'       => 'yes',
           'create mask'        => '0600',
           'directory mask'     => '0700',
         }
@@ -77,18 +79,19 @@ class profile::app::timemachine {
 # TODO: use parameter for TM quota ?
 
   file { "${path}/.com.apple.TimeMachine.quota.plist":
-    owner   => $owner,
-    mode    => '0600',
-    require => File[$path],
-    content => @("EOT"/)
-               <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-               <plist version="1.0">
-               <dict>
-               <key>GlobalQuota</key>
-               <integer>250000000000</integer>
-               </dict>
-               </plist>
-               | EOT
+    ensure  => absent,
+#    owner   => $owner,
+#    mode    => '0600',
+#    require => File[$path],
+#    content => @("EOT"/)
+#               <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+#               <plist version="1.0">
+#               <dict>
+#               <key>GlobalQuota</key>
+#               <integer>300000000000</integer>
+#               </dict>
+#               </plist>
+#               | EOT
   }
 
   file { "${path}/.com.apple.timemachine.supported":
