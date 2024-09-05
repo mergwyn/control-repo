@@ -1,7 +1,7 @@
 #
 #
 class profile::platform::baseline::darwin::timemachine (
-  Integer $quota = 300*1024, 
+  Integer $quota = 300*1024,
 ) {
 
 # TODO: tmutil setdestination afp://user[:pass]@host/share
