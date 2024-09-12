@@ -2,7 +2,7 @@
 
 profile::platform::baseline::packages::defaults:
   ensure: present
-  provider: chocolaty
+  provider: chocolatey
   install_options: [ '--no-progress' ]
 profile::platform::baseline::packages::objects:
   firefox: {}
