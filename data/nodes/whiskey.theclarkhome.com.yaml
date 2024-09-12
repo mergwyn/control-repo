@@ -6,6 +6,6 @@ profile::platform::baseline::packages::defaults:
   install_options: [ '--no-progress' ]
 profile::platform::baseline::packages::objects:
   firefox: {}
-  keeweb: {}
+  bitwarden: {}
   mp3gain-gui: {}
   mp3tag: {}
