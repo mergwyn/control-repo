@@ -11,6 +11,7 @@ class profile::platform::baseline::debian::zfs::snapshotter (
       $target         = "${codedir}/pyznap"
       $configdir      = '/etc/pyznap'
       $target_ini     = "${configdir}/pyznap.conf"
+      $link           = '/usr/locl/bin/pyzsnap'
 
       $venv           = "${target}/venv"
 
@@ -40,6 +41,12 @@ class profile::platform::baseline::debian::zfs::snapshotter (
           owner        => $owner,
           group        => $group,
           timeout      => 1800,
+      }
+
+      file { $link:
+        ensure    => 'link',
+        target    => $target,
+        subscribe => File[$target],
       }
 
       file { $configdir:
