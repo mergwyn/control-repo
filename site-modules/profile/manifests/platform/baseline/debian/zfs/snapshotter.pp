@@ -45,8 +45,8 @@ class profile::platform::baseline::debian::zfs::snapshotter (
 
       file { $link:
         ensure    => 'link',
-        target    => $target,
-        subscribe => File[$target],
+        target    => "${venv}/bin/pyznap",
+        subscribe => File["${venv}/bin/pyznap"],
       }
 
       file { $configdir:
