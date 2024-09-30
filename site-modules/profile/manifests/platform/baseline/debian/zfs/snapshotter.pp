@@ -11,7 +11,7 @@ class profile::platform::baseline::debian::zfs::snapshotter (
       $target         = "${codedir}/pyznap"
       $configdir      = '/etc/pyznap'
       $target_ini     = "${configdir}/pyznap.conf"
-      $link           = '/usr/local/bin/pyzsnap'
+      $link           = '/usr/local/bin/pyznap'
 
       $venv           = "${target}/venv"
 
