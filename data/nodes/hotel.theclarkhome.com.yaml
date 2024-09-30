@@ -46,9 +46,9 @@ profile::app::kopia::maintenance: false
 
 profile::platform::baseline::debian::zfs::snapshotter::settings:
   rpool/zfspv:
-    snap: yes
+    snap: "yes"
   rpool/srv:
-    snap: yes
+    snap: "yes"
 
 profile::app::backuppc::client::backup_files_exclude:
   '/':
