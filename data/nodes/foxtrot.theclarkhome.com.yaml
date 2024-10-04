@@ -116,7 +116,9 @@ profile::platform::baseline::debian::zfs::snapshotter::settings:
     monthly: 0
     snap: "yes"
   srv/media/humax:
-    snap: "no"
+    snap: "yes"
+    monthly: 0
+    weekly: 0
   rpool/home:
     snap: "yes"
 
