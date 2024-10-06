@@ -26,6 +26,8 @@ class profile::platform::baseline::debian::ntp
       servers           => [ $local_clock ] + $network_servers,
       restrict          => $restrict_default + $restrict,
       fudge             => [ "${local_clock} stratum 10" ],
+# TODO remove workaround for https://github.com/puppetlabs/puppetlabs-ntp/pull/700
+      driftfile         => '/var/lib/ntpsec/drift', # ubuntu 24.04
     }
   }
 }
