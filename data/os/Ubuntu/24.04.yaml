@@ -1,0 +1,18 @@
+---
+
+# TODO until formal support for 22.04 in puppet-php
+#php::globals::php_version: '8.1'
+
+# TODO workaround until puppet erver/db ackages released for jammy
+#profile::puppet::repo::release: 'focal'
+
+# TODO workaround until puppetboard support released for jammy
+#puppetboard::python_version: '3.10'
+
+
+# TODO Workaound for https://github.com/puppetlabs/puppetlabs-ntp/pull/700
+# default ntp is a transitional package install ntpsec
+ntp::package_name: [ntpsec]
+ntp::driftfile: /var/lib/ntpsec/ntp.drift
+ntp::config: /etc/ntpsec/ntp.conf
+ntp::daemon_config: /etc/default/ntpsec
