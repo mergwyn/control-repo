@@ -4,7 +4,7 @@ class profile::platform::baseline::debian::virtual::lxd {
   package { [ 'bridge-utils' ]: }
   package { [ 'criu' ]: ensure => absent, }
 
-  include ::snapd
+  include ::snap
   package { 'lxd':
     ensure   => latest,
     provider => snap,

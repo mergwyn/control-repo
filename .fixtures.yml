@@ -48,9 +48,9 @@ fixtures:
     githubreleases:
       repo: dodevops/githubreleases
       ref: 4.1.0
-    snapd:
-      repo: ethanhs/snapd
-      ref: 1.4.0
+    snap:
+      repo: rootexpert-snap
+      ref: 2.0.0
     portage:
       repo: gentoo/portage
       ref: 2.3.0
