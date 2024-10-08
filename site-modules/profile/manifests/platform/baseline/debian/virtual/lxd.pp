@@ -6,7 +6,7 @@ class profile::platform::baseline::debian::virtual::lxd {
 
   include ::snap
   package { 'lxd':
-    #ensure   => latest,
+    ensure   => 'stable',
     provider => snap,
   }
   exec { 'enable-criu':
