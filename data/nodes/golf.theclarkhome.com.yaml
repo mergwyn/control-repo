@@ -41,7 +41,7 @@ lxd::preseed:
 
 profile::platform::baseline::debian::zfs::snapshotter::settings:
   rpool/zfspv:
-    "yes"
+    snap: "yes"
 
 profile::app::kopia::repos:       'server-foxtrot idrive-kopia'
 profile::app::kopia::maintenance: false
