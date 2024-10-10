@@ -8,4 +8,7 @@ class role::k8s_server {
   include profile::app::zabbix::agent
   include profile::app::backuppc::client
   include profile::app::unison
+
+  include profile::app::velero
+  #include profile::app::mayastor
 }
