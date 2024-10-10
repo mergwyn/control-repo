@@ -5,7 +5,7 @@ class profile::app::velero (
   $scripts = '/etc/openvpn/scripts'
 
   $aptpackages = [
-    'rclone',
+    # 'rclone',
   ]
   package { $aptpackages: ensure => present, }
 
@@ -22,6 +22,7 @@ class profile::app::velero (
   $install_path = '/usr/local/bin'
   $creates      = "${install_path}/velero"
 
+# TODO copy unison pattern
   githubreleases_download { $archive_path:
     author            => 'vmware-tanzu',
     repository        => 'velero',
