@@ -23,7 +23,7 @@ class profile::app::velero (
   $creates      = "${install_path}/velero"
 
   githubreleases_download { $archive_path:
-    author            => 'vmxware-tanzu',
+    author            => 'vmware-tanzu',
     repository        => 'velero',
     asset             => true,
     asset_filepattern => $edition,
