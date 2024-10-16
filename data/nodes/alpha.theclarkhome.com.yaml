@@ -17,6 +17,6 @@ profile::platform::baseline::debian::netplan::ethernets:
     nameservers:
       search: "%{alias('defaults::dns::search')}"
       addresses:
+        - "%{lookup('defaults::subnet')}.21"
         - "%{lookup('defaults::subnet')}.22"
-        #- "%{lookup('defaults::subnet')}.21"
 
