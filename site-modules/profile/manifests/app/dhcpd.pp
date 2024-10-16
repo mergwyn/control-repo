@@ -39,7 +39,7 @@ class profile::app::dhcpd (
       peer_address => $peer_address,
       port         => 647,
       #mclt         => 3600,
-      load_split   => 128,
+      load_split   => 256,
     }
   }
 
@@ -187,8 +187,7 @@ class profile::app::dhcpd (
                /usr/bin/heimtools rix,
                /usr/bin/hostname rix,
                /usr/bin/host rix,
-               /usr/bin/kinit rix,
-               /usr/bin/kinit w,
+               /usr/bin/kinit rixw,
                /usr/bin/klist rix,
                /usr/bin/logger rix,
                /usr/bin/mawk rix,
