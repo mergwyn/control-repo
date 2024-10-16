@@ -51,7 +51,7 @@ usage() {
 
 log_info "DHCP-DNS Update started: $*"
 
-$(grep -E '^[ ]*secondary;' /etc/dhcp/dhcpd.conf > /dev/null) && sleep 15
+#$(grep -E '^[ ]*secondary;' /etc/dhcp/dhcpd.conf > /dev/null) && sleep 15
 
 dhcpduser=dhcp
 
