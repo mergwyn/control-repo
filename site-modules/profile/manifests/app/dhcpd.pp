@@ -44,17 +44,14 @@ class profile::app::dhcpd (
   }
 
 # Hosts with fixed ip
-  dhcp::host { 'wserver': mac => '04:ee:e8:1a:64:d2' , ip => '10.58.0.240' }
-  dhcp::host { 'wclient': mac => '04:ee:e8:1f:68:73' , ip => '10.58.0.241' }
+  dhcp::host { 'zigbee1': mac => '18:69:d8:46:fc:d2', ip => '10.58.0.4' }  # Silvercrest gateway
+  dhcp::host { 'hp1810':  mac => 'd4:c9:ef:37:ca:e0', ip => '10.58.0.2' }
+  dhcp::host { 'wserver': mac => '04:ee:e8:1a:64:d2', ip => '10.58.0.240' }
+  dhcp::host { 'wclient': mac => '04:ee:e8:1f:68:73', ip => '10.58.0.241' }
+  dhcp::host { 'logger1': mac => 'b8:d6:1a:57:5e:57', ip => '10.58.0.242' }  # Solis D_7A1231135150313A
 
 # Hosts that just need names 
-  #dhcp::host { 'switch1':               mac => '00:8e:f2:59:c7:98' }
   dhcp::host { 'switch2':               mac => 'a0:40:a0:71:7e:ce' }
-  #dhcp::host { 'cisco1':                mac => '5c:50:15:52:47:40' }
-  dhcp::host { 'hp1810':                mac => 'd4:c9:ef:37:ca:e0' }
-  #dhcp::host { 'cisco1':                mac => '5C:50:15:52:47:00' }
-  #dhcp::host { 'DELLA3F95F':            mac => '08:00:37:a3:f9:5f' }
-  #dhcp::host { 's685ip':                mac => '00:01:e3:9a:f9:c1' }
   dhcp::host { 'robovac':               mac => '80:7d:3a:3b:67:3c' }
   dhcp::host { 'humax-wifi':            mac => '80:1f:02:21:a1:74' }
   dhcp::host { 'humax-lan':             mac => 'dc:d3:21:57:55:46' }
