@@ -37,7 +37,7 @@ profile::platform::baseline::debian::netplan::bridges:
       - to: "0.0.0.0/0"
         via: "%{lookup('defaults::gateway')}"
     nameservers:
-      #search: "%{alias('defaults::dns::search')}"
+      search: "%{alias('defaults::dns::search')}"
       addresses: 
         - "%{lookup('defaults::dns::nameservers.1')}"
         - "%{lookup('defaults::dns::nameservers.0')}"
