@@ -8,7 +8,7 @@ source /etc/default/kopia
 
 for repo in ${REPOS} ; do
   log_info "Starting backup for repo: ${repo}"
-  export KOPIA_CONFIG_PATH=/etc/kopia/config.d/${repo}.conf
+  export KOPIA_CONFIG_PATH=~/.config/kopia/${repo}.config
   #kopia snapshot create --all ${ARGS}
   while read host snap ; do
     log_info "Creating snapshot ${snap} in ${repo} for ${host}"
