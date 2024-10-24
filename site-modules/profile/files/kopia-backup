@@ -12,7 +12,7 @@ for repo in ${REPOS} ; do
   #kopia snapshot create --all ${ARGS}
   while read host snap ; do
     log_info "Creating snapshot ${snap} in ${repo} for ${host}"
-    kopia snapshot create ${ARGS} "${snap}" | grep -v 'unknown or unsupported entry type'
+    kopia snapshot create ${ARGS} "${snap}" 2>&1 | grep -v 'unknown or unsupported entry type'
   done< <( kopia snapshot list --json --max-results=1 | jq -r '.[] | "\(.source.host) \(.source.path)"' | grep $(hostname))
 
   day_of_week=$(date +%u)
