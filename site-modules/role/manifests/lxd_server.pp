@@ -8,4 +8,5 @@ class role::lxd_server {
   include profile::app::zabbix::agent
   include profile::app::backuppc::client
   include profile::app::unison
+  include profile::app::kopia
 }
