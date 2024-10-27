@@ -46,7 +46,7 @@ profile::app::kopia::maintenance: false
 
 profile::platform::baseline::debian::zfs::snapshotter::settings:
   rpool/zfspv:
-    snap: "yes"
+    snap: "no"
   rpool/srv:
     snap: "yes"
 

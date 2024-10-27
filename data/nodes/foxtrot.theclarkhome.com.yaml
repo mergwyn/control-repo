@@ -100,7 +100,7 @@ lxd::preseed:
 
 profile::platform::baseline::debian::zfs::snapshotter::settings:
   rpool/zfspv:
-    snap: yes
+    snap: "no"
   srv:
     frequent: 4
     hourly: 24
