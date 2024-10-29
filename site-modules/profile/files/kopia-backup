@@ -32,7 +32,7 @@ for repo in ${REPOS} ; do
     if [[ $date -lt $comp ]] ; then
       log_error "Backup for ${host}:${snap} on ${snapdate} is more than ${too_old} (${repo})" 
     fi
-  done< <( kopia snapshot list --max-results=1 --json | jq -r '.[] | "\(.endTime) \(.source.host) \(.source.path)"' | grep $(hostname) )
+  done< <( kopia snapshot list --max-results=1 --json | jq -r '.[] | "\(.endTime) \(.source.host) \(.source.path)"' | grep "^$(hostname) " )
 
   log_debug "Maintenance for repo ${repo} is ${MAINTENANCE}"
   if [[ ${MAINTENANCE} = true ]] ; then
