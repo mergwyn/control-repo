@@ -29,12 +29,6 @@ fixtures:
     radarr:
       repo: https://github.com/mergwyn/mergwyn-radarr
       ref: main
-    docker:
-      repo: https://github.com/mergwyn/puppetlabs-docker
-      branch: fuse-overlayfs
-    nginx:
-      repo: https://github.com/voxpupuli/puppet-nginx
-      ref: master
     unbound:
       repo: https://github.com/voxpupuli/puppet-unbound
       ref: master
@@ -105,6 +99,9 @@ fixtures:
     augeas_core:
       repo: puppetlabs/augeas_core
       ref: 1.5.0
+    docker:
+      repo: puppetlabs/docker
+      ref: 10.0.1
     firewall:
       repo: puppetlabs/firewall
       ref: 7.0.2
@@ -153,6 +150,9 @@ fixtures:
     logrotate:
       repo: puppet/logrotate
       ref: 7.0.2
+    nginx:
+      repo: puppet/nginx
+      ref: 6.0.1
     php:
       repo: puppet/php
       ref: 10.1.0
