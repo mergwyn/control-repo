@@ -30,12 +30,12 @@ class profile::platform::baseline::darwin::managedmac {
     ],
   }
 
-  class { 'managedmac::loginwindow':
-    loginwindow_text              => "This is ${trusted['hostname']}",
-    show_name_and_password_fields => true,
-    enable_fast_user_switching    => true,
-    hide_admin_users              => false,
-  }
+#  class { 'managedmac::loginwindow':
+#    loginwindow_text              => "This is ${trusted['hostname']}",
+#    show_name_and_password_fields => true,
+#    enable_fast_user_switching    => true,
+#    hide_admin_users              => false,
+#  }
 
   class { 'managedmac::activedirectory':
     enable                         => true,
