@@ -65,10 +65,10 @@ class profile::platform::baseline::darwin::managedmac {
   #class { 'managedmac::loginhook':  enable => true, }
   #class { 'managedmac::logouthook': enable => true, }
 
-  class { 'managedmac::security':
-    ask_for_password       => true,
-    ask_for_password_delay => 0,
-  }
+#  class { 'managedmac::security':
+#    ask_for_password       => true,
+#    ask_for_password_delay => 0,
+#  }
 
   class { 'managedmac::screensharing': enable => true, }
 
