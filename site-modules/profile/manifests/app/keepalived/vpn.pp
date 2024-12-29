@@ -52,7 +52,7 @@ class profile::app::keepalived::vpn (
     auth_pass         => lookup('secrets::keepalived'),
     virtual_ipaddress => [ $v_cidr ],
     track_interface   => [ $wan, "${vpn} weight 5"], # optional, monitor these interfaces.
-    track_script      => 'ping_google',
+    track_script      => [ 'ping_google' ],
   }
 
 # Add virtual server for DNS

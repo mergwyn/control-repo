@@ -29,9 +29,6 @@ fixtures:
     radarr:
       repo: https://github.com/mergwyn/mergwyn-radarr
       ref: main
-    unbound:
-      repo: https://github.com/voxpupuli/puppet-unbound
-      ref: master
     webmin:
       repo: https://github.com/rehanone/puppet-webmin
       ref: master
@@ -53,7 +50,7 @@ fixtures:
       ref: 1.5.0
     alternatives:
       repo: puppet/alternatives
-      ref: 5.1.0
+      ref: 6.0.0
     archive:
       repo: puppet/archive
       ref: 7.1.0
@@ -68,13 +65,13 @@ fixtures:
       ref: 6.0.1
     augeasproviders_sysctl:
       repo: puppet/augeasproviders_sysctl
-      ref: 3.2.0
+      ref: 3.3.0
     autofs:
       repo: puppet/autofs
       ref: 9.0.0
     cron:
       repo: puppet/cron
-      ref: 4.1.0
+      ref: 5.0.0
     dhcp:
       repo: puppet/dhcp
       ref: 6.1.0
@@ -86,43 +83,46 @@ fixtures:
       ref: 5.0.0
     keepalived:
       repo: puppet/keepalived
-      ref: 4.0.0
+      ref: 5.1.0
     kmod:
       repo: puppet/kmod
-      ref: 4.0.1
+      ref: 4.1.0
+    unbound:
+      repo: puppet/unbound
+      ref: 7.0.0
     apache:
       repo: puppetlabs/apache
-      ref: 12.1.0
+      ref: 12.2.0
     apt:
       repo: puppetlabs/apt
-      ref: 9.4.0
+      ref: 10.0.0
     augeas_core:
       repo: puppetlabs/augeas_core
       ref: 1.5.0
     docker:
       repo: puppetlabs/docker
-      ref: 10.0.1
+      ref: 10.1.0
     firewall:
       repo: puppetlabs/firewall
-      ref: 7.0.2
+      ref: 8.1.3
     git:
       repo: puppetlabs/git
       ref: 0.5.0
     inifile:
       repo: puppetlabs/inifile
-      ref: 6.1.1
+      ref: 6.2.0
     mailalias_core:
       repo: puppetlabs/mailalias_core
-      ref: 1.1.0
+      ref: 1.2.0
     mysql:
       repo: puppetlabs/mysql
-      ref: 15.0.0
+      ref: 16.2.0
     ntp:
       repo: puppetlabs/ntp
-      ref: 10.1.0
+      ref: 11.0.0
     postgresql:
       repo: puppetlabs-postgresql
-      ref: 10.3.0
+      ref: 10.4.0
     puppetdb:
       repo: puppetlabs/puppetdb
       ref: 8.1.0
@@ -137,7 +137,7 @@ fixtures:
       ref: 2.5.0
     stdlib:
       repo: puppetlabs/stdlib
-      ref: 9.6.0
+      ref: 9.7.0
     vcsrepo:
       repo: puppetlabs/vcsrepo
       ref: 6.1.0
@@ -149,43 +149,43 @@ fixtures:
       ref: 2.1.0
     logrotate:
       repo: puppet/logrotate
-      ref: 7.0.2
+      ref: 7.1.0
     nginx:
       repo: puppet/nginx
       ref: 6.0.1
     php:
       repo: puppet/php
-      ref: 10.1.0
+      ref: 10.2.0
     postfix:
       repo: puppet/postfix
-      ref: 4.4.0
+      ref: 5.0.0
     puppetboard:
       repo: puppet/puppetboard
-      ref: 10.0.0
+      ref: 11.0.0
     python:
       repo: puppet/python
-      ref: 7.3.0
+      ref: 7.4.0
     r10k:
       repo: puppet/r10k
-      ref: 12.2.0
+      ref: 14.0.0
     selinux:
       repo: puppet/selinux
-      ref: 4.1.0
+      ref: 5.0.0
     systemd:
       repo: puppet/systemd
-      ref: 7.1.0
+      ref: 8.0.0
     unattended_upgrades:
       repo: puppet/unattended_upgrades
-      ref: 8.1.0
+      ref: 8.2.0
     zabbix:
       repo: puppet/zabbix
       ref: 10.0.0
     ssh:
       repo: saz/ssh
-      ref: 12.1.0
+      ref: 13.0.0
     sudo:
       repo: saz/sudo
-      ref: 8.0.0
+      ref: 9.0.0
     timezone:
       repo: saz/timezone
       ref: 7.0.0
@@ -194,7 +194,7 @@ fixtures:
       ref: 3.1.0
     debconf:
       repo: stm/debconf
-      ref: 6.0.0
+      ref: 6.1.0
     libvirt:
       repo: thias/libvirt
       ref: 1.0.2
@@ -215,25 +215,25 @@ fixtures:
       ref: 1.3.0
     exec:
       repo: puppetlabs/exec
-      ref: 3.0.0
+      ref: 3.1.0
     chocolatey:
       repo: puppetlabs/chocolatey
-      ref: 8.0.0
+      ref: 8.0.1
     dism:
       repo: puppetlabs/dism
       ref: 1.3.1
     registry:
       repo: puppetlabs/registry
-      ref: 5.0.1
+      ref: 5.0.2
     concat:
       repo: puppetlabs/concat
-      ref: 9.0.2
+      ref: 9.1.0
     scheduled_task:
       repo: puppetlabs/scheduled_task
-      ref: 4.0.0
+      ref: 4.0.1
     powershell:
       repo: puppetlabs/powershell
-      ref: 6.0.0
+      ref: 6.0.1
     pwshlib:
       repo: puppetlabs/pwshlib
-      ref: 1.1.1
+      ref: 1.2.2
