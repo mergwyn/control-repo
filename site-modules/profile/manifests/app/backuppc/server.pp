@@ -4,7 +4,6 @@ class profile::app::backuppc::server (
   $gid = 199,
   Boolean $pool_v3_enabled = false, # Allow for migration of v3 pools
 ) {
-
   if $facts['os']['family'] != 'Debian' {
     fail("${title} is only for Debian")
   }
@@ -25,15 +24,15 @@ class profile::app::backuppc::server (
   include profile::app::nginx
 
   ensure_resource ('nginx::resource::server', $trusted['hostname'], {
-    server_name          => [ $trusted['certname'] ],
-    listen_port          => 80,
-    use_default_location => false,
-  } )
+      server_name          => [$trusted['certname']],
+      listen_port          => 80,
+      use_default_location => false,
+  })
 
   nginx::resource::location { "backuppc_${trusted['hostname']}":
     location            => '/backuppc',
     server              => $trusted['hostname'],
-    index_files         => [ '/index.cgi' ],
+    index_files         => ['/index.cgi'],
     location_cfg_append => {
       auth_pam              => '"BackupPC admin"',
       auth_pam_service_name => '"nginx"',
@@ -71,8 +70,8 @@ class profile::app::backuppc::server (
     gzip_path                  => '/usr/bin/pigz',
     full_age_max               => 180,
     pool_v3_enabled            => $pool_v3_enabled,
-    rsync_args_extra           => [ '-F' ],
-    full_keep_cnt              => [ 4, 0, 6],
+    rsync_args_extra           => ['-F'],
+    full_keep_cnt              => [4, 0, 6],
     incr_age_max               => 21,
     incr_keep_cnt              => 12,
     max_backups                => 2,
@@ -86,12 +85,12 @@ class profile::app::backuppc::server (
       {
         hourBegin => 7.0,
         hourEnd   => 22.5,
-        weekDays  => [ 1, 2, 3, 4, 5],
+        weekDays  => [1, 2, 3, 4, 5],
       },
       {
         hourBegin => 3,
         hourEnd   => 22.5,
-        weekDays  => [ 0, 6],
+        weekDays  => [0, 6],
       },
     ],
   }
@@ -100,7 +99,6 @@ class profile::app::backuppc::server (
 #  Sshkey <<| tag == "backuppc_sshkeys_${facts['networking']['fqdn']}" |>> {
 #      target => "${topdir}/.ssh/known_hosts"
 #  }
-
 
   if defined('profile::app::zabbix::agent') {
     profile::app::zabbix::template_host { 'Template App BackupPC by Zabbix agent active': }

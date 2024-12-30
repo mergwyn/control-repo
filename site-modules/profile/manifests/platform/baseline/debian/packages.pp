@@ -1,7 +1,6 @@
 # @summary Packages for Debian
 #
 class profile::platform::baseline::debian::packages {
-
   $install_packages = [
     'vim',
     'anacron',
@@ -16,5 +15,4 @@ class profile::platform::baseline::debian::packages {
     'mlocate',
   ]
   package { $remove_packages : ensure => absent }
-
 }

@@ -8,8 +8,7 @@ class profile::app::sabnzbdplus (
   Optional[Hash] $settings = {},
   Boolean $use_ppa = true,
   String $ppa = 'ppa:jcfp/nobetas',
-  ) {
-
+) {
   if $use_ppa {
     apt::ppa { $ppa: ensure => present }
   } else {
@@ -26,7 +25,7 @@ class profile::app::sabnzbdplus (
     enable  => false,
     active  => false,
     content => @("EOT"),
-      [Unit]
+                                                                  [Unit]
       Description=SABnzbd binary newsreader
       Documentation=https://sabnzbd.org/wiki/
       Wants=network-online.target
@@ -45,7 +44,7 @@ class profile::app::sabnzbdplus (
       | EOT
   }
 # remove sysvinit files ready to replace with systemd
-  file { [ '/etc/init.d/sabnzbdplus', '/etc/default/sabnzbdplus' ]:
+  file { ['/etc/init.d/sabnzbdplus', '/etc/default/sabnzbdplus']:
     ensure => absent,
   }
 
@@ -53,12 +52,12 @@ class profile::app::sabnzbdplus (
   $service_user = "sabnzbd@${user}.service"
 
   systemd::dropin_file { 'sabnazbd-sssd-wait.conf':
-      unit    => $service,
-      content => @("EOT"/),
-                 [Unit]
+    unit    => $service,
+    content => @("EOT"/),
+                                                                             [Unit]
                  After=nss-user-lookup.target
                  | EOT
-      notify  => Service[$service_user],
+    notify  => Service[$service_user],
   }
   file { "/etc/systemd/system/${service}.d/wait-ssd.conf":
     ensure => absent,
@@ -73,5 +72,4 @@ class profile::app::sabnzbdplus (
 # Process settings
   $defaults = { 'path' => '/home/media/.sabnzbd/sabnzbd.ini' }
   create_ini_settings($settings, $defaults)
-
 }

@@ -12,5 +12,4 @@ class profile::app::todobackup () {
   if defined('profile::app::zabbix::agent') {
     profile::app::zabbix::template_host { 'Template App EaseUS ToDo Backup by Zabbix agent active': }
   }
-
 }

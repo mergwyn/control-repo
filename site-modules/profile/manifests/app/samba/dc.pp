@@ -4,7 +4,6 @@
 # TODO: complete dev and test
 #
 class profile::app::samba::dc {
-
   # TODO add unison replcaition script and cron entry
   include profile::app::unison
 
@@ -17,49 +16,49 @@ class profile::app::samba::dc {
     '/var/lib/samba/sysvol/theclarkhome.com/scripts/samba4_backup',
     '/etc/cron.daily/samba4-backup',
     '/etc/backuppc/scripts/DumpPreUser/S30samba_backup',
-    '/etc/backuppc/scripts/DumpPostUser//P30samba_clean'
+    '/etc/backuppc/scripts/DumpPostUser//P30samba_clean',
   ]
-  file {$oldfiles: ensure => absent, }
+  file { $oldfiles: ensure => absent, }
 
   file { "${preuser}/S30samba_backup":
-    ensure => present,
+    ensure => file,
     source => 'puppet:///modules/profile/backuppc/S30samba_backup',
     mode   => '0555',
   }
   file { "${postuser}/P30samba_clean":
-    ensure => present,
+    ensure => file,
     source => 'puppet:///modules/profile/backuppc/P30samba_clean',
     mode   => '0555',
   }
   #class { '::samba::dc':
-    #domain             => $trusted['domain'],
-    #realm              => lookup("default::realm"),
-    #adminpassword      => lookup("secrets::adminpassword"),
-    #dnsbackend         => 'internal',
-    #dnsforwarder       => '8.8.8.8',
-    #domainlevel        => '2008 R2',
-    #domainprovargs     => '--use-xattrs=yes --use-ntvfs',
-    #sambaloglevel      => 1,
-    #logtosyslog        => true,
-    #sambaclassloglevel => {
-    #  'dns'   => 2,
-    #  'idmap' => 2,
-    #  'auth'  => 3,
-    #},
+  #domain             => $trusted['domain'],
+  #realm              => lookup("default::realm"),
+  #adminpassword      => lookup("secrets::adminpassword"),
+  #dnsbackend         => 'internal',
+  #dnsforwarder       => '8.8.8.8',
+  #domainlevel        => '2008 R2',
+  #domainprovargs     => '--use-xattrs=yes --use-ntvfs',
+  #sambaloglevel      => 1,
+  #logtosyslog        => true,
+  #sambaclassloglevel => {
+  #  'dns'   => 2,
+  #  'idmap' => 2,
+  #  'auth'  => 3,
+  #},
 # TODO check that these are all needed
-    #globaloptions       => {
-      #'kerberos method'   => 'secrets and keytab',
-      #'lm announce'       => 'no',
-      #'ntlm auth'         => 'no',
-      #'server services'   => 's3fs, rpc, nbt, wrepl, ldap, cldap, kdc, drepl, winbindd, ntp_signd, kcc, dnsupdate, dns'
-    #},
-    #globalbsentoptions       => [
-      #'client use spnego',
-      #'client ntlmv2 auth',
-    #],
+  #globaloptions       => {
+  #'kerberos method'   => 'secrets and keytab',
+  #'lm announce'       => 'no',
+  #'ntlm auth'         => 'no',
+  #'server services'   => 's3fs, rpc, nbt, wrepl, ldap, cldap, kdc, drepl, winbindd, ntp_signd, kcc, dnsupdate, dns'
+  #},
+  #globalbsentoptions       => [
+  #'client use spnego',
+  #'client ntlmv2 auth',
+  #],
 # TODO check if options are needed here
-    #netlogonoptions       => {},
-    #sysvoloptions         => {},
+  #netlogonoptions       => {},
+  #sysvoloptions         => {},
 
   #}
 

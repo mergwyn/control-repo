@@ -1,7 +1,6 @@
 # @summary postfix for mail
 #
 class profile::platform::baseline::debian::postfix {
-
   $password_credentials = "mergwyn@plus.net:${lookup('secrets::plusnet')}"
   $relayhost            = '[relay.plus.net]:465'
   $password_hash        = '/etc/postfix/sasl-passwords'
@@ -20,7 +19,7 @@ class profile::platform::baseline::debian::postfix {
 
   postfix::hash { $password_hash:
     ensure  => 'present',
-    content => "${relayhost}    ${password_credentials}\n"
+    content => "${relayhost}    ${password_credentials}\n",
   }
 
   package { 'libsasl2-modules': ensure => present, }

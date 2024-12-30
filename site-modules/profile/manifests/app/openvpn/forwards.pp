@@ -1,7 +1,6 @@
 #
 #
 class profile::app::openvpn::forwards {
-
   $plex  = '10.58.0.30'
   $proxy = '10.58.0.10'
 
@@ -16,8 +15,8 @@ class profile::app::openvpn::forwards {
 #    }
 #  }
 
-  [ 32400, 51413 ].each |Integer $port| {
-    firewalld_rich_rule {"Forward tcp ${port} from external zone to ${plex}":
+  [32400, 51413].each |Integer $port| {
+    firewalld_rich_rule { "Forward tcp ${port} from external zone to ${plex}":
       ensure       => present,
       zone         => 'external',
       forward_port => {
@@ -28,8 +27,8 @@ class profile::app::openvpn::forwards {
       },
     }
   }
-  [ 8989, 7878 , 8080, 9091, 9092 ].each |Integer $port| {
-    firewalld_rich_rule {"Forward tcp ${port} from external zone to ${proxy}":
+  [8989, 7878 , 8080, 9091, 9092].each |Integer $port| {
+    firewalld_rich_rule { "Forward tcp ${port} from external zone to ${proxy}":
       ensure       => present,
       zone         => 'external',
       forward_port => {
@@ -46,5 +45,4 @@ class profile::app::openvpn::forwards {
   #add_port_forward sab_8080 vpnfirewall 8080 $proxy 8080
   #add_port_forward http vpnfirewall 80 $proxy 443
   #add_port_forward https vpnfirewall 443 $proxy 443
-
 }

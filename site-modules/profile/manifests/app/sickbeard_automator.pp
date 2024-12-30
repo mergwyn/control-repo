@@ -6,7 +6,6 @@ class profile::app::sickbeard_automator (
   $enabletimer = true,
   $ffmpegppa   = '',
 ) {
-
   $codedir        = '/opt'
   $target         = "${codedir}/sickbeard_mp4_automator"
   $scriptdir      = "${codedir}/scripts"
@@ -38,7 +37,7 @@ class profile::app::sickbeard_automator (
 
     package { 'ffmpeg':
       ensure  => present,
-      require => Apt::Ppa[ $ffmpegppa ],
+      require => Apt::Ppa[$ffmpegppa],
     }
   } else {
     package { 'ffmpeg': ensure  => present, }
@@ -71,7 +70,7 @@ class profile::app::sickbeard_automator (
     WantedBy=multi-user.target
     | EOT
 
-  systemd::timer{'process_media.timer':
+  systemd::timer { 'process_media.timer':
     timer_content   => $_timer,
     service_content => $_service,
     enable          => $enabletimer,
@@ -100,7 +99,7 @@ class profile::app::sickbeard_automator (
     owner      => $owner,
     group      => $group,
     require    => [
-      Vcsrepo[ $target ],
+      Vcsrepo[$target],
       Service['sssd'],
     ],
   }
@@ -109,7 +108,7 @@ class profile::app::sickbeard_automator (
     owner      => $owner,
     group      => $group,
     require    => [
-      Vcsrepo[ $target ],
+      Vcsrepo[$target],
       Service['sssd'],
     ],
   }
@@ -128,10 +127,10 @@ class profile::app::sickbeard_automator (
     creates => $target_ini,
     user    => $owner,
     group   => $group,
-    path    => [ '/bin', '/usr/bin' ] ,
+    path    => ['/bin', '/usr/bin'],
     require => [
-      Vcsrepo[ $target ],
-      File[ $configdir ],
+      Vcsrepo[$target],
+      File[$configdir],
     ],
   }
 
@@ -139,7 +138,7 @@ class profile::app::sickbeard_automator (
 
   $defaults = {
     path    => $target_ini,
-    require =>  Vcsrepo[ $target ],
+    require => Vcsrepo[$target],
   }
   $settings = {
     'Converter' => {
@@ -176,8 +175,8 @@ class profile::app::sickbeard_automator (
       channel-bitrate => '128',
     },
     #'Universal Audio' => {
-      # Check this value (blank)
-      #codec => 'aac',
+    # Check this value (blank)
+    #codec => 'aac',
     #},
   }
   inifile::create_ini_settings($settings, $defaults)
@@ -185,7 +184,7 @@ class profile::app::sickbeard_automator (
 # logging settings
   $logdefaults = {
     path    => $log_ini,
-    require =>  Vcsrepo[ $target ],
+    require => Vcsrepo[$target],
   }
   $logsettings = {
     'handler_fileHandler' => {
@@ -193,7 +192,7 @@ class profile::app::sickbeard_automator (
       #level => 'DEBUG',
       #args  => "('%(logfilename)s', 'a', 100000, 3)", # default
       args  => "('${logfile}', 'a', 100000, 3)",
-    }
+    },
   }
   inifile::create_ini_settings($logsettings, $logdefaults)
 
@@ -212,6 +211,6 @@ class profile::app::sickbeard_automator (
     mode    => '0664',
     owner   => $owner,
     group   => $group,
-    require => [ File[$logdir], Service['sssd'], ],
+    require => [File[$logdir], Service['sssd'],],
   }
 }

@@ -8,7 +8,7 @@ class profile::app::iptv (
 
   $codedir='/opt/scripts'
 
-  $packages = [ 'socat' ]
+  $packages = ['socat']
   package { $packages: ensure => present }
 
   if $enable {
@@ -39,7 +39,7 @@ class profile::app::iptv (
       WantedBy=multi-user.target
       | EOT
 
-    systemd::timer {'getchannels.timer':
+    systemd::timer { 'getchannels.timer':
       timer_content   => $_timer,
       service_content => $_service,
       enable          => true,
@@ -53,5 +53,4 @@ class profile::app::iptv (
   if defined('profile::app::zabbix::agent') {
     profile::app::zabbix::template_host { 'Template App xTeve by Zabbix agent active': }
   }
-
 }

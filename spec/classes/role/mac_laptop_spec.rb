@@ -12,6 +12,9 @@ describe 'role::mac_laptop' do
       let(:facts) { os_facts }
       let(:trusted_facts) { { 'pp_role' => 'mac_laptop' } }
       let(:node) { 'unittest.theclarkhome.com' }
+      let(:pre_condition) do
+        'function puppetdb_query($string) { return [{ title => "fqdn", value => "certname.example.com" }] }'
+      end
 
       # Comment out to display all available resources easily
       # it { pp catalogue.resources }

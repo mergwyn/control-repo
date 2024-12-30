@@ -6,8 +6,7 @@ class profile::platform::baseline::windows::tasks (
   Hash           $objects  = {},
   Optional[Hash] $defaults = {},
 ) {
-
-  case $::kernel {
+  case $facts['kernel'] {
     'windows': {
       scheduled_task { 'GPO Backup':
         ensure      => present,
@@ -21,7 +20,7 @@ class profile::platform::baseline::windows::tasks (
           {
             schedule   => 'daily',
             start_time => '02:30'
-          }
+          },
         ],
       }
 
@@ -32,5 +31,4 @@ class profile::platform::baseline::windows::tasks (
     default: {
     }
   }
-
 }

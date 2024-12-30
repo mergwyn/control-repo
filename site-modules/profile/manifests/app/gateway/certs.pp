@@ -11,9 +11,9 @@ class profile::app::gateway::certs {
 # The hook below on certificate creation works together with the include_files in the host
   $nginx_conf = '/etc/nginx/options-ssl-nginx.conf'
   file { $nginx_conf:
-    require => Package[nginx],
+    require => Package['nginx'],
     content => @("EOT"/),
-               ssl_certificate           /etc/letsencrypt/live/${trusted['certname']}/fullchain.pem;
+                                                                           ssl_certificate           /etc/letsencrypt/live/${trusted['certname']}/fullchain.pem;
                ssl_certificate_key       /etc/letsencrypt/live/${trusted['certname']}/privkey.pem;
                | EOT
   }
@@ -24,7 +24,7 @@ class profile::app::gateway::certs {
     require => File[$nginx_conf],
     mode    => '0555',
     content => @("EOT"/),
-               #!/usr/bin/env bash
+                                                                           #!/usr/bin/env bash
                echo "Deploy hook for \$CERTBOT_ALL_DOMAINS"
                if [[ -f ${nginx_conf} ]] 
                then
@@ -48,18 +48,17 @@ class profile::app::gateway::certs {
     plugin               => 'nginx',
     domains              => [
 #                              $trusted['domain'],
-                              $trusted['certname'],
-                              "foxtrot.${$trusted['domain']}",
-                              "golf.${$trusted['domain']}",
-                              "hotel.${$trusted['domain']}",
-                              "india.${$trusted['domain']}",
+      $trusted['certname'],
+      "foxtrot.${$trusted['domain']}",
+      "golf.${$trusted['domain']}",
+      "hotel.${$trusted['domain']}",
+      "india.${$trusted['domain']}",
 #                              "tango.${$trusted['domain']}",
-                              "zulu.${$trusted['domain']}",
+      "zulu.${$trusted['domain']}",
 #  "echo.%{trusted.domain}"
-                            ],
+    ],
     manage_cron          => false,
     cron_success_command => 'systemctl reload nginx',
     suppress_cron_output => true,
   }
-
 }

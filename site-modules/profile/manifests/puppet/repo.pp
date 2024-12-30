@@ -1,10 +1,11 @@
-#
-#
+# @summary Puppet repo spec
+# 
+# @param release
+#   release
 class profile::puppet::repo (
   String $release = $facts['os']['distro']['codename'],
 ) {
-
-  $ver = split($::serverversion, '\.')
+  $ver = split($facts['serverversion'], '\.')
   $version = $ver[0]
 
   $arch =  $facts['os']['architecture']

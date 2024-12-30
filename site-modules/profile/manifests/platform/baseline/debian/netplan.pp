@@ -15,7 +15,6 @@ class profile::platform::baseline::debian::netplan (
   Optional[Hash] $bonds   = undef,
   Optional[Hash] $vlans   = undef,
 ) {
-
   if $facts['os']['name'] != 'Ubuntu' {
     fail("${name} can only be called on Ubuntu")
   }
@@ -37,5 +36,4 @@ class profile::platform::baseline::debian::netplan (
   }
 
   package { 'ifupdown': ensure => absent }
-
 }

@@ -7,16 +7,16 @@ class profile::app::couchpotato (
   $group = '513',
   $data  = '/var/cache/couchpotato',
   $run   = '/var/run/couchpotato/',
-  ) {
+) {
   include profile::app::git
   $topdir='/opt'
   $targetdir="${topdir}/CouchPotatoServer"
 
-  exec{ 'cloneCouchpotato':
+  exec { 'cloneCouchpotato':
     path    => '/bin:/sbin:/usr/bin:/usr/sbin',
     unless  => "test -d '${targetdir}'",
     command => "git -C ${topdir} clone https://github.com/CouchPotato/CouchPotatoServer.git",
-    require => Class[ 'profile::app::git' ],
+    require => Class['profile::app::git'],
   }
   # TODO settings
 
@@ -26,7 +26,7 @@ class profile::app::couchpotato (
     active  => false,
     # lint:ignore:140chars
     content => @("EOT"),
-      # Systemd service file
+                                                                  # Systemd service file
       [Unit]
       Description=couchpotato daemon
       RequiresMountsFor=/srv/media /home/media

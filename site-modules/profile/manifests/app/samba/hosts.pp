@@ -1,6 +1,6 @@
 # @summary Add dnsentries
 #
-class profile::app::samba::hosts(
+class profile::app::samba::hosts (
   $subnet =  lookup('defaults::subnet'),
 ) {
 # TODO read from hiera or exported resource?

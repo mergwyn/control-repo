@@ -1,7 +1,6 @@
 #
 #
 class profile::app::avahi {
-
   package { 'avahi-daemon-install':
     name            => 'avahi-daemon',
     install_options => ['-o', 'DPkg::Options=NoTriggers'],

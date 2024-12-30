@@ -4,7 +4,7 @@ class profile::app::nginx::xmltv {
   include profile::app::nginx
 
   nginx::resource::server { $trusted['hostname']:,
-    server_name          => [ $trusted['certname'] ],
+    server_name          => [$trusted['certname']],
     listen_port          => 80,
     use_default_location => false,
     locations            => {
@@ -14,11 +14,11 @@ class profile::app::nginx::xmltv {
       },
       '/favicon.ico' => {
         location_cfg_append => {
-          access_log    =>     'off',
+          access_log    => 'off',
           return        => '204',
-          log_not_found =>  'off',
+          log_not_found => 'off',
         },
       },
-    }
+    },
   }
 }

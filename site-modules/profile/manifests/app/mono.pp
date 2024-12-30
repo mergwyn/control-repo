@@ -2,7 +2,6 @@
 #
 #
 class profile::app::mono () {
-
   $distro= $::facts['os']['distro']['codename']
   apt::source { 'mono-official-stable':
     location => 'https://download.mono-project.com/repo/ubuntu',
@@ -13,6 +12,5 @@ class profile::app::mono () {
       'server' => 'keyserver.ubuntu.com',
     },
   }
-  package { [ 'mono-complete' ] : }
-
+  package { ['mono-complete']: }
 }

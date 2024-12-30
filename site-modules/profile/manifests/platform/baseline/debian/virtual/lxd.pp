@@ -1,10 +1,10 @@
 #
 #
 class profile::platform::baseline::debian::virtual::lxd {
-  package { [ 'bridge-utils' ]: }
-  package { [ 'criu' ]: ensure => absent, }
+  package {['bridge-utils']: }
+  package {['criu']: ensure => absent, }
 
-  include ::snap
+  include snap
   package { 'lxd':
     #ensure   => 'latest/stable',
     provider => snap,
@@ -30,17 +30,17 @@ class profile::platform::baseline::debian::virtual::lxd {
   $codedir='/opt/lxdbackup'
 
   vcsrepo { $codedir:
-      ensure   => latest,
-      provider => git,
-      require  => Package['git'],
-      source   => 'https://github.com/mergwyn/lxdbackup.git',
-      revision => 'master',
+    ensure   => latest,
+    provider => git,
+    require  => Package['git'],
+    source   => 'https://github.com/mergwyn/lxdbackup.git',
+    revision => 'master',
   }
 
   include profile::app::scripts
   include cron
   cron::job { 'lxdbackup':
-    environment => [ 'PATH="usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin"', ],
+    environment => ['PATH="usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin"',],
     command     => '/opt/lxdbackup/lxdbackup',
     user        => 'gary',
     minute      => fqdn_rand(59, 'lxdbackup'),
@@ -53,12 +53,12 @@ class profile::platform::baseline::debian::virtual::lxd {
   $postuser="${scripts}DumpPostUser/"
 
   file { "${preuser}/S31openwrt_backup":
-    ensure => present,
+    ensure => file,
     source => 'puppet:///modules/profile/backuppc/S31openwrt_backup',
     mode   => '0555',
   }
   file { "${postuser}/P31openwrt_clean":
-    ensure => present,
+    ensure => file,
     source => 'puppet:///modules/profile/backuppc/P31openwrt_clean',
     mode   => '0555',
   }
@@ -69,12 +69,12 @@ class profile::platform::baseline::debian::virtual::lxd {
     'allremotes',
     'listcontainers',
     'listremotes',
-    'upgrade_lxd'
+    'upgrade_lxd',
   ]
 
   $lxdscripts.each |String $lxdscript| {
-    file {"${bindir}/${lxdscript}":
-      ensure => present,
+    file { "${bindir}/${lxdscript}":
+      ensure => file,
       mode   => '0555',
       source => "puppet:///modules/profile/lxd/${lxdscript}",
     }

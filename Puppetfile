@@ -69,7 +69,7 @@ mod 'thekevjames/homebrew', '1.9.1'
 mod 'thias/libvirt', '1.0.2'
 
 #mod 'webmin', :git => 'https://github.com/mergwyn/puppet-webmin' #, :branch => 'patch-1'
-mod 'webmin', :git => 'https://github.com/rehanone/puppet-webmin'
+mod 'webmin', :git => 'https://github.com/rehanone/puppet-webmin', :branch => 'master'
 #mod 'wyrie/backuppc', '2.0.0'
 mod 'zack/exports', '1.0.1'
 mod 'zehweh/netplan', '2.0.0'

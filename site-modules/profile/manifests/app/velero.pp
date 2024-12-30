@@ -36,6 +36,4 @@ class profile::app::velero (
     cleanup      => false,
     require      => Githubreleases_download[$archive_path],
   }
-
-
 }
