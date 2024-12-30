@@ -12,7 +12,7 @@ profile::platform::baseline::debian::netplan::ethernets:
     addresses:
       - "%{lookup('defaults::subnet')}.22/%{lookup('defaults::bits')}"
     routes:
-      - to: default
+      - to: 'default'
         via: "%{lookup('defaults::gateway')}"
     nameservers:
       search: "%{alias('defaults::dns::search')}"

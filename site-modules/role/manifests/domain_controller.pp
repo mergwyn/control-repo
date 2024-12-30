@@ -6,5 +6,5 @@ class role::domain_controller {
   include profile::app::samba::dc
   include profile::app::zabbix::agent
   include profile::app::backuppc::client
-  #include profile::app::keepalived::dns
+  include profile::app::keepalived::dns
 }
