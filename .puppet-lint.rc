@@ -9,7 +9,6 @@
 --no-strict_indent-check
 --no-parameter_documentation-check
 --no-parameter_order-check
---no-disable_parameter_types-check
 --no-optional_default-check
 --no-lookup_in_parameter-check
 --no-params_empty_string_assignment-check
