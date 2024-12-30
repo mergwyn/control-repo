@@ -34,8 +34,7 @@ class profile::app::keepalived::dns (
     ha_suspend => true,
     lb_algo    => 'wrr',
     lb_kind    => 'DR',
-    protocol   => 'TCP'
-
+    protocol   => 'TCP',
   }
 
   $nameservers.each |Integer $index, String $real_ip| {
@@ -55,7 +54,7 @@ class profile::app::keepalived::dns (
           type => 'A',
           name => 'google.com',
         },
-      }
+      },
     }
   }
 }
