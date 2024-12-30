@@ -3,7 +3,8 @@
 class profile::app::dhcpd (
   Optional[Enum['primary','secondary']] $role         = undef,
   Optional[Stdlib::IP::Address]         $peer_address = undef,
-) {
+  Boolean                               $use_dns_vip = false,
+  ) {
   $owner = 'dhcpd'
   $group = 'dhcpd'
   $perms = "${owner}.${group}"
@@ -12,10 +13,15 @@ class profile::app::dhcpd (
   # Core dhcpd configuration
   $domain = $trusted['domain']
 
+  $nameservers = $use_dns_vip ? {
+    true    => lookup('defaults::dns::vip'),
+    default => lookup('defaults::dns::nameservers'),
+  }
+
   class { 'dhcp':
-    interfaces         => [$facts['networking']['primary']],
-    nameservers        => lookup('defaults::dns::nameservers'),
-    ntpservers         => ["foxtrot.${domain}", "golf.${domain}"],
+    interfaces         => [ $facts['networking']['primary'] ],
+    nameservers        => $nameservers,
+    ntpservers         => [ "foxtrot.${domain}", "golf.${domain}" ],
     dnssearchdomains   => lookup('defaults::dns::search'),
     default_lease_time => 28800,
     max_lease_time     => 86400,
