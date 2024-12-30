@@ -36,7 +36,6 @@ group :development do
   gem "rb-readline", '= 0.5.5',                  require: false, platforms: [:mswin, :mingw, :x64_mingw]
   gem "rexml", '>= 3.0.0', '< 3.2.7',            require: false
   gem "onceover",                                require: false
-  gem "CFPropertyList", '< 3.0.7', require: false, platforms: [:mswin, :mingw, :x64_mingw]
   gem "rspec-puppet-utils",                      require: false
   gem "github_changelog_generator",              require: false
   gem "generate-puppetfile", '~> 1.0',           require: false

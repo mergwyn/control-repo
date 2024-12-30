@@ -5,11 +5,12 @@ class profile::platform::baseline::debian::systemd_timers {
   if $facts['os']['family'] != 'Debian' {
     fail("${name} can only be called on Debian")
   }
+  # lint:ignore:strict_indent
   systemd::timer { 'hourly.timer':
     active        => true,
     enable        => true,
     timer_content => @("EOT"/),
-                                             [Timer]
+                     [Timer]
                      OnCalendar=hourly
                      RandomizedDelaySec=30m
                      | EOT
@@ -19,7 +20,7 @@ class profile::platform::baseline::debian::systemd_timers {
     active        => true,
     enable        => true,
     timer_content => @("EOT"/),
-                                             [Timer]
+                     [Timer]
                      OnCalendar=daily
                      RandomizedDelaySec=30m
                      | EOT
@@ -29,7 +30,7 @@ class profile::platform::baseline::debian::systemd_timers {
     active        => true,
     enable        => true,
     timer_content => @("EOT"/),
-                                             [Timer]
+                     [Timer]
                      OnCalendar=weekly
                      RandomizedDelaySec=30m
                      | EOT
@@ -39,9 +40,10 @@ class profile::platform::baseline::debian::systemd_timers {
     active        => true,
     enable        => true,
     timer_content => @("EOT"/),
-                                             [Timer]
+                     [Timer]
                      OnCalendar=monthly
                      RandomizedDelaySec=30m
                      | EOT
   }
+  # lint:endignore
 }

@@ -75,7 +75,6 @@ Style/SymbolArray:
 RSpec/MessageSpies:
   EnforcedStyle: receive
 Style/Documentation:
-  Enabled: false
   Exclude:
   - lib/puppet/parser/functions/**/*
   - spec/**/*
