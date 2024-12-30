@@ -49,7 +49,6 @@ class profile::app::keepalived::dns (
         'TCP_CHECK' => {
           connect_timeout => '3',
         },
-
         'DNS_CHECK' => {
           type => 'A',
           name => 'google.com',
