@@ -3,7 +3,7 @@
 #
 class profile::platform::baseline::debian::virtual::libvirt {
 #  include '::libvirt' 
-  class { '::libvirt':
+  class { 'libvirt':
     listen_tls => false,
     listen_tcp => true,
   }

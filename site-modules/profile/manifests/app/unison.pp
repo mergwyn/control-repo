@@ -1,46 +1,45 @@
 # summary Unison 
 #
 class profile::app::unison {
-
   case $facts['os']['family'] {
     'Darwin': {
       file {
         default:
           ensure => file,
-        ;
+          ;
         '/usr/local/share/com.theclarkhome.prefsync.plist':
           source => 'puppet:///modules/profile/mac/com.theclarkhome.prefsync.plist',
-        ;
+          ;
         '/usr/local/share/com.theclarkhome.logoutwatcher.plist':
           source => 'puppet:///modules/profile/mac/com.theclarkhome.logoutwatcher.plist',
-        ;
+          ;
         '/usr/local/share/Home.prf':
           source => 'puppet:///modules/profile/mac/Home.prf',
-        ;
+          ;
         '/usr/local/share/Preferences.prf':
           source => 'puppet:///modules/profile/mac/Preferences.prf',
-        ;
+          ;
         '/usr/local/share/common.prf':
           source => 'puppet:///modules/profile/mac/common.prf',
-        ;
+          ;
         '/usr/local/bin/UnisonHomeSync.sh':
           source => 'puppet:///modules/profile/mac/UnisonHomeSync.sh',
           mode   => '0775',
-        ;
+          ;
         '/usr/local/bin/SetupHomeSync.sh':
           source => 'puppet:///modules/profile/mac/SetupHomeSync.sh',
           mode   => '0775',
-        ;
+          ;
         '/usr/local/bin/logoutwatcher.sh':
           source => 'puppet:///modules/profile/mac/logoutwatcher.sh',
           mode   => '0775',
-        ;
+          ;
         '/etc/newsyslog.d/unison.conf':
           source => 'puppet:///modules/profile/mac/unison.conf',
-        ;
+          ;
         '/Library/Logs/unison.log':
           mode => '0666',
-        ;
+          ;
       }
     }
     'Debian': {
@@ -74,7 +73,7 @@ class profile::app::unison {
         target    => $creates,
         subscribe => Archive[$archive_path],
       }
-      exec {'unison-tidy':
+      exec { 'unison-tidy':
         cwd         => $install_path,
         path        => '/usr/sbin:/usr/bin:/sbin:/bin:',
         command     => "ls -dtr ${link}-* | head -n -${keep} | xargs rm -rf",
@@ -86,7 +85,7 @@ class profile::app::unison {
       # TODO add configuration
     }
     default: {
-      fail("OS Family: ${facts['os']['family']} not supported by ${::class}")
+      fail("OS Family: ${facts['os']['family']} not supported by ${facts['class']}")
     }
   }
 }

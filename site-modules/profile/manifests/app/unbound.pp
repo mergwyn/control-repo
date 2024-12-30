@@ -11,7 +11,6 @@ class profile::app::unbound (
   Stdlib::IP::Address::V4 $gateway = lookup('defaults::vpn_gateway'),
   Boolean                 $use_systemd_resolved = lookup('defaults::vpn::use_systemd_resolved'),
 ) {
-
 # Add net_raw to allow ip_transparent to work
   include profile::platform::baseline::debian::apparmor
   file { '/etc/apparmor.d/local/usr.sbin.unbound':
@@ -19,12 +18,12 @@ class profile::app::unbound (
     notify  => Service['apparmor'],
     before  => Package['unbound'],
     content => @("EOT"),
-               capability net_raw,
+                                                                           capability net_raw,
                | EOT
   }
 
 # These interfaces are common
-  $interfaces = [ $gateway, $facts['networking']['interfaces'][$lan]['ip'] ]
+  $interfaces = [$gateway, $facts['networking']['interfaces'][$lan]['ip']]
 
   case  $use_systemd_resolved {
     false: {
@@ -34,7 +33,7 @@ class profile::app::unbound (
         enable => false,
       }
       # No systemd-resolved listening on lo
-      $interface_list = [ '127.0.0.1',] + $interfaces
+      $interface_list = ['127.0.0.1',] + $interfaces
 
       # Use local DNS servers for local domain
       unbound::stub { $trusted['domain']:
@@ -45,7 +44,6 @@ class profile::app::unbound (
       # TODO check whether this is needed
       #  service { 'unbound-resolvconf': enable => true, }
       $purge_unbound_conf_d  = false
-
     }
     default: {
       # unbound acts as stub resolver forwarding to  systemd-resolved
@@ -58,7 +56,7 @@ class profile::app::unbound (
       service { 'unbound-resolvconf': enable => false, status => stopped, }
       # Just ship to systemd-resolved
       unbound::forward { '.':
-        address => [ '127.0.0.53' ],
+        address => ['127.0.0.53'],
         require => Class['unbound'],
       }
       $purge_unbound_conf_d = true
@@ -71,7 +69,7 @@ class profile::app::unbound (
   class { 'unbound':
     interface              => $interface_list,
     interface_automatic    => false,
-    access                 => [ "${lookup('defaults::cidr')}", '127.0.0.0/8' ],
+    access                 => ["${lookup('defaults::cidr')}", '127.0.0.0/8'],
     do_not_query_localhost => false,
     val_permissive_mode    => true,
     purge_unbound_conf_d   => $purge_unbound_conf_d,
@@ -83,5 +81,4 @@ class profile::app::unbound (
     enable  => true,
     require => Class['unbound'],
   }
-
 }

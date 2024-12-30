@@ -1,7 +1,7 @@
 #
 #
 class profile::app::samba::member {
-  class { '::samba::classic':
+  class { 'samba::classic':
     # Mandatory parameters
     domain              => lookup('defaults::workgroup'),
     realm               => lookup('defaults::realm'),
@@ -51,7 +51,7 @@ class profile::app::samba::member {
       'kernel oplocks'                            => 'no',
       'unix extensions'                           => 'no',
       'veto oplock files'                         => @(EOT/L),
-                                                     /*.mdb/\
+                                                                                                                                     /*.mdb/\
                                                      *.MDB/\
                                                      *.idx/\
                                                      *.dbf/\
@@ -63,7 +63,7 @@ class profile::app::samba::member {
                                                      *.FPT/
                                                      |- EOT
       'veto files'                                => @(EOT/L),
-                                                     /.zfs/\
+                                                                                                                                     /.zfs/\
                                                      $RECYCLE.BIN/\
                                                      Network Trash Folder/\
                                                      Temporary Items/\
@@ -78,13 +78,12 @@ class profile::app::samba::member {
                                                      .DS_Store/\
                                                      ._*/
                                                      |- EOT
-
     },
     globalabsentoptions => [
       'map untrusted to domain',              # * Remove default settings put
       'winbind trusted domains only',         # deprecated
       'winbind separator',                    # causes auth error
-    ]
+    ],
   }
   ::samba::idmap { 'Domain *':
     domain     => '*',           # * name of the Domain or '*'

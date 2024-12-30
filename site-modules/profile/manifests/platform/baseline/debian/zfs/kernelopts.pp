@@ -4,8 +4,6 @@ class profile::platform::baseline::debian::zfs::kernelopts (
   Integer[0,100] $arc_max_percent = 0,
   Integer[0,100] $arc_min_percent = 0,
 ) {
-
-
   kmod::option { 'zfs_arc_max':
     module => 'zfs',
     option => 'zfs_arc_max',

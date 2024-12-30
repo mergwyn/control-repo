@@ -1,7 +1,5 @@
 #
 #
 class profile::app::git {
-
-  package { [ 'git' ] : }
-
+  package { ['git']: }
 }

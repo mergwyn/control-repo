@@ -1,8 +1,7 @@
 #
 #
 class profile::platform::baseline::darwin::brew {
-
-  exec {'brew xcode git install':
+  exec { 'brew xcode git install':
     path    => $facts['path'],
     command => 'xcode-select --install',
     creates => '/usr/bin/git',
@@ -25,7 +24,7 @@ class profile::platform::baseline::darwin::brew {
 
   $home = '/Users/brew'
 
-  user {'brew':
+  user { 'brew':
     gid        => 'admin',
     password   => lookup('secrets::brew'),
     iterations => 86956,
@@ -37,7 +36,7 @@ class profile::platform::baseline::darwin::brew {
     ensure  => directory,
     owner   => 'brew',
     group   => 'admin',
-    require => User[brew],
+    require => User['brew'],
   }
 
   class { 'homebrew':
@@ -55,5 +54,4 @@ class profile::platform::baseline::darwin::brew {
   sudo::conf { 'brew':
     content => 'gary ALL=(brew) NOPASSWD: /usr/local/bin/brew,/bin/bash',
   }
-
 }

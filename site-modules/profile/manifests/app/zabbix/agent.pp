@@ -1,9 +1,8 @@
 # @summary Installa nd confgure zabbix agent
 class profile::app::zabbix::agent (
   $server         = 'zulu',
-  $zabbix_version = lookup('defaults::zabbix_version'),
+  $zabbix_version = lookup('defaults::zabbix_version'), # lint:ignore:lookup_in_parameter
 ) {
-
   $serverstring = $server ? {
     $trusted['hostname'] => 'localhost',
     default              => "${server}.${trusted['domain']}",
@@ -13,24 +12,22 @@ class profile::app::zabbix::agent (
 # TODO consider moving this to hiera
   case $facts['virtual'] {
     'lxc': {
-      $macros =  [
+      $macros = [
         { '{$VFS.DEV.DEVNAME.MATCHES}' => '^\s$', }, # Only /
         { '{$VFS.FS.FSNAME.MATCHES}'   => '^/$', },  # Disable all
       ]
-
     }
     default: {
       $macros = []
     }
   }
 
-
 # Query puppetdb query for exported template resources
   $template_query = ['from', 'resources',
-    [ 'and',
-      [ '=', 'type', 'Zabbix_template_host' ],
-      [ '=', ['parameter', 'ensure'], 'present' ],
-      [ '~', 'title', ".*@${trusted['certname']}" ],
+    ['and',
+      ['=', 'type', 'Zabbix_template_host'],
+      ['=', ['parameter', 'ensure'], 'present'],
+      ['~', 'title', ".*@${trusted['certname']}"],
     ]
   ]
   $templates = puppetdb_query($template_query).map |  $value | {
@@ -43,7 +40,6 @@ class profile::app::zabbix::agent (
 
   case $facts['os']['name'] {
     'Ubuntu': {
-
       class { 'zabbix::agent':
         zabbix_version       => $zabbix_version,
         hostname             => $trusted['certname'],
@@ -61,11 +57,11 @@ class profile::app::zabbix::agent (
         zbx_macros           => $macros,
       }
 
-      package {'zabbix-sender': }
+      package { 'zabbix-sender': }
 
       $etc='/etc/zabbix'
       $dir="${etc}/scripts"
-      file { [ $etc, $dir ]: ensure => directory, }
+      file { [$etc, $dir]: ensure => directory, }
 
       sudo::conf { 'zabbix':
         content => 'zabbix  ALL=NOPASSWD: /bin/netstat',
@@ -80,7 +76,7 @@ class profile::app::zabbix::agent (
         script_dir => $dir,
       }
       zabbix::userparameters { 'process_autodiscovery':
-        content => "UserParameter=custom.proc.discovery_perl,${dir}/discovery_processes.sh\n"
+        content => "UserParameter=custom.proc.discovery_perl,${dir}/discovery_processes.sh\n",
       }
 
 # TODO check it below needed
@@ -101,12 +97,12 @@ class profile::app::zabbix::agent (
       }
 
       zabbix::userparameters { 'os_version':
-        content => "UserParameter=custom.os.version,lsb_release -ds 2>/dev/null || cat /etc/*release 2>/dev/null | head -n1 || uname -om\n"
+        content => "UserParameter=custom.os.version,lsb_release -ds 2>/dev/null || cat /etc/*release 2>/dev/null | head -n1 || uname -om\n",
       }
     }
     'windows': {
       # TODO convert to zabbix class
-      service {'Zabbix Agent':
+      service { 'Zabbix Agent':
         ensure  => 'running',
         enable  => true,
         require => Package['zabbix-agent'],
@@ -124,10 +120,9 @@ class profile::app::zabbix::agent (
           'Server'       => $serverstring,
           'ServerActive' => $serverstring,
           'HostMetadata' => $hostmetadata,
-        }
+        },
       }
       create_ini_settings($overrides, $defaults)
-
     }
     default: {}
   }

@@ -3,7 +3,7 @@
 #
 class profile::platform::baseline::debian::unattended_upgrades {
   include apt
-  class {'::unattended_upgrades':
+  class { 'unattended_upgrades':
     update  => 1,
     auto    => {
       remove => true,
@@ -18,7 +18,7 @@ class profile::platform::baseline::debian::unattended_upgrades {
     mail    => {
       'to'            => lookup('defaults::adminemail'),
       'only_on_error' => false,
-    }
+    },
   }
 
   file { '/etc/apt/apt.conf.d/50unattended-upgrades.ucf-dist': ensure  => absent, }

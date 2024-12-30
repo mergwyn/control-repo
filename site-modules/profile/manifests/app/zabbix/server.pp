@@ -1,11 +1,9 @@
 # @summary Manage zabbix-server
 #
 class profile::app::zabbix::server {
-
   # additional packages needed for ubuntu 16.04 and zabbix 3
   #package { [ 'php-xml', 'php-mbstring', 'php-bcmath' ] : }
   #package { [ 'snmp', 'snmp-builder' ] : }
-
 
   contain profile::app::db::mysql::server
 
@@ -28,7 +26,7 @@ class profile::app::zabbix::server {
   profile::app::zabbix::template_host { 'Template App Zabbix Server by Zabbix agent active': }
 
 # php setup
-  include '::php'
+  include 'php'
   php::fpm::pool { 'zabbix':
     user                   => 'www-data',
     group                  => 'www-data',
@@ -50,16 +48,16 @@ class profile::app::zabbix::server {
       max_input_time         => 300,
       max_input_vars         => 10000,
       'date.timezone'        => 'Europe/London',
-    }
+    },
   }
 
 # nginx setup
   contain profile::app::nginx
 
-  package { [ 'zabbix-nginx-conf' ]: ensure => absent, }
+  package { ['zabbix-nginx-conf']: ensure => absent, }
 
   nginx::resource::server { $trusted['hostname']:
-    server_name          => [ $trusted['certname'] ],
+    server_name          => [$trusted['certname']],
     listen_port          => 80,
     www_root             => '/usr/share/zabbix',
     use_default_location => false,
@@ -72,10 +70,10 @@ class profile::app::zabbix::server {
       },
       '/assets'                             => {
         expires             => '10d',
-        location_cfg_append => { access_log => 'off', }
+        location_cfg_append => { access_log => 'off', },
       },
       '~ /\.ht'                             => {
-        location_cfg_append => { deny => 'all', }
+        location_cfg_append => { deny => 'all', },
       },
       '~ /(api\/|conf[^\.]|include|locale)' => {
         location_cfg_append => {
@@ -87,7 +85,7 @@ class profile::app::zabbix::server {
         fastcgi             => 'unix:/var/run/php/zabbix.sock',
         fastcgi_split_path  => '^(.+\.php)(/.+)$',
         fastcgi_index       => 'index.php',
-        include             => [ 'fastcgi_params' ],
+        include             => ['fastcgi_params'],
         fastcgi_param       => {
           'DOCUMENT_ROOT'   => '/usr/share/zabbix',
           'SCRIPT_FILENAME' => '/usr/share/zabbix$fastcgi_script_name',
@@ -114,5 +112,4 @@ class profile::app::zabbix::server {
 
 # Finally, add backup
   include profile::app::zabbix::backup
-
 }

@@ -8,5 +8,4 @@ if $trusted['extensions']['pp_role'] {
 }
 
 node default {
-
 }

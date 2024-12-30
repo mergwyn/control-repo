@@ -13,7 +13,7 @@ class profile::app::odrive (
     enable  => $enable,
     active  => false,
     content => @("EOT"),
-               [Unit]
+                                                                           [Unit]
                Description=odrive Sync Agent daemon for %I
                After=network.target
  
@@ -34,7 +34,7 @@ class profile::app::odrive (
     enable  => $enable,
     active  => false,
     content => @("EOT"),
-               [Unit]
+                                                                           [Unit]
                Description=odrive monitoring daemon for %i
                After=network.target odrive-agent@%i.service
                Wants=odrive-agent@%i.service
@@ -56,15 +56,15 @@ class profile::app::odrive (
 #TODO Install package and utilities
   include profile::app::git
 
-  package{'inotify-tools': ensure => present }
+  package { 'inotify-tools': ensure => present }
 
   # common scripts
   vcsrepo { $codedir:
-      ensure   => latest,
-      provider => git,
-      require  => Package['git'],
-      source   => 'https://github.com/mergwyn/odrive.git',
-      revision => 'main',
+    ensure   => latest,
+    provider => git,
+    require  => Package['git'],
+    source   => 'https://github.com/mergwyn/odrive.git',
+    revision => 'main',
   }
 
   $install_path = "${codedir}/bin"

@@ -1,15 +1,15 @@
 # require 'rspec/mocks'
 require 'rspec-puppet-utils'
-#def puppetdb_query(_return_vaue)
+# def puppetdb_query(_return_vaue)
 #  #  Puppet::Parser::Functions.newfunction(:puppetdb_query, type: :rvalue) do |_args|
 #  #    return[{ 'key' => 'fqdn', 'value' => 'certname.example.com' }]
 #  #  end
 #  MockFunction.new('puppetdb_query') do |f|
 #    f.stub(:call).with([['from', 'resources',
 #                          ['and', ['=', 'type', 'Zabbix_template_host'], ['=', ['parameter', 'ensure'], 'present'], ['~', 'title', '.*@unittest.theclarkhome.com']]]]).returns([{ 'title' => 'fqdn',
-#'value' => 'certname.example.com' }])
+# 'value' => 'certname.example.com' }])
 #  end
-#end
+# end
 #        let!(:puppetdb_query) do
 #          MockFunction.new('puppetdb_query') do |f|
 #            # Everything that runs puppetdb_query should be able to deal
@@ -21,11 +21,11 @@ require 'rspec-puppet-utils'
 # $LOAD_PATH.push(File.join(fixture_path, 'modules', 'puppetdbquery','lib'))
 
 RSpec.configure do |config|
-  #config.trusted_server_facts = true # removed for puppet6!
+  # config.trusted_server_facts = true # removed for puppet6!
   config.default_trusted_facts = true
   config.before(:each) do
     # @before_each = Puppet::Parser::Functions.newfunction(:puppetdb_query, :type => :rvalue) { |args| [ [{ 'title': 'fqdn' }] ] }
-    #@before_each = puppetdb_query('query string')
+    # @before_each = puppetdb_query('query string')
     # @before_each = "function puppetdb_query($string) { return [{ 'title': 'fqdn' }] }"
   end
 end

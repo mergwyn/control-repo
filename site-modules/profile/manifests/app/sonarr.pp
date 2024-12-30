@@ -3,7 +3,7 @@
 class profile::app::sonarr (
   $user  = 'media',
   $group = '513',
-  ) {
+) {
   # repo
   apt::source { 'sonarr':
     location => 'https://apt.sonarr.tv/ubuntu',
@@ -22,9 +22,9 @@ class profile::app::sonarr (
 # setup preseed to supply user and group
   $preseed = '/var/cache/debconf/sonarr.preseed'
   file { $preseed:
-    ensure  => present,
+    ensure  => file,
     content => @("EOT"/),
-               sonarr	sonarr/owning_user	string	${user}
+                                                                           sonarr	sonarr/owning_user	string	${user}
                sonarr	sonarr/owning_group	string	${group}
                | EOT
   }

@@ -7,8 +7,7 @@ class profile::platform::baseline::packages (
   Hash           $objects  = {},
   Optional[Hash] $defaults = {},
 ) {
-
-  case $::kernel {
+  case $facts['kernel'] {
     'Darwin': {
       include profile::platform::baseline::darwin::brew
     }
@@ -18,5 +17,4 @@ class profile::platform::baseline::packages (
   unless empty ($objects) {
     create_resources(package, $objects, $defaults)
   }
-
 }

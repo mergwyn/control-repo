@@ -6,7 +6,6 @@
 class profile::platform::baseline::debian::ssh (
   Boolean $collect_keys = true,
 ) {
-
 # The values below have been set for an Ubuntu 20.04 distribution
 # Values may need to be changed for different versions
   class { 'ssh':
@@ -15,7 +14,7 @@ class profile::platform::baseline::debian::ssh (
       'PasswordAuthentication'    => 'yes',
       'PubkeyAuthentication'      => 'yes',
       'HostbasedAuthentication'   => 'yes',
-      'IdentityFile'              => [ '~/.ssh/id_rsa', '~/.ssh/id_dsa' ],
+      'IdentityFile'              => ['~/.ssh/id_rsa', '~/.ssh/id_dsa'],
       'Protocol'                  => '2',
       'HashKnownHosts'            => 'yes',
       'GlobalKnownHostsFile'      => '/etc/ssh/ssh_known_hosts',
@@ -32,8 +31,7 @@ class profile::platform::baseline::debian::ssh (
       'Host cisco1'               => {
         'HostkeyAlgorithms' => 'ssh-dss,ssh-rsa',
         'KexAlgorithms'     => '+diffie-hellman-group1-sha1,diffie-hellman-group14-sha1',
-      }
-
+      },
     },
     server_options       => {
       'LoginGraceTime'                  => '120',
@@ -66,5 +64,4 @@ class profile::platform::baseline::debian::ssh (
       'Subsystem'                       => 'sftp /usr/lib/openssh/sftp-server',
     },
   }
-
 }

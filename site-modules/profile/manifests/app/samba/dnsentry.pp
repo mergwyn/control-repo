@@ -28,7 +28,7 @@ define profile::app::samba::dnsentry (
     default: { fail("Can't create reverse domain with ${bits} bits") }
   }
 
-  notify {"A: ${ipaddress}, PTR: ${ptr_ip}, Zone: ${revzone}, split: ${octet}":
+  notify { "A: ${ipaddress}, PTR: ${ptr_ip}, Zone: ${revzone}, split: ${octet}":
     loglevel => debug,
     withpath => true,
   }
@@ -43,6 +43,6 @@ define profile::app::samba::dnsentry (
     zone   => $revzone,
     host   => $ptr_ip,
     type   => 'PTR',
-    record => "${host}.${trusted['domain']}"
+    record => "${host}.${trusted['domain']}",
   }
 }

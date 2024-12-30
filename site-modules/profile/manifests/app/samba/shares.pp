@@ -1,7 +1,6 @@
 # @summary Configuration of samba shares
 #
 class profile::app::samba::shares {
-
   samba::share { 'media':
     path    => '/srv/media',
     options => {
@@ -93,5 +92,4 @@ class profile::app::samba::shares {
       'directory mask' => '0775',
     },
   }
-
 }

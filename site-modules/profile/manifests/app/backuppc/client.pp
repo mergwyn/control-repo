@@ -6,14 +6,13 @@ class profile::app::backuppc::client (
   Backuppc::ShareName $rsync_share_name                 = '/',
   Optional[Backuppc::BackupFiles] $backup_files_exclude = undef,
   Stdlib::Fqdn $backuppc_hostname,
-  ) {
-
+) {
   file {[$scripts, $preuser, $postuser]:
     ensure  => directory,
   }
 
   file { "${preuser}/S10dirsonly":
-    ensure => present,
+    ensure => file,
     source => 'puppet:///modules/profile/backuppc/S10dirsonly',
     mode   => '0555',
   }

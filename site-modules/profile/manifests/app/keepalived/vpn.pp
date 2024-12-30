@@ -22,7 +22,7 @@ class profile::app::keepalived::vpn (
     ensure  => file,
     mode    => '0755',
     content => @(EOT),
-               #!/bin/bash
+                                                                           #!/bin/bash
                target=8.8.8.8
                logger="logger --id=$$ --tag $(basename $0)"
                /usr/bin/ping -c 1 -W 1 -I ${interface:-tun0} ${target} > /dev/null 2>&1
@@ -50,9 +50,9 @@ class profile::app::keepalived::vpn (
     priority          => $prio,
     auth_type         => 'PASS',
     auth_pass         => lookup('secrets::keepalived'),
-    virtual_ipaddress => [ $v_cidr ],
-    track_interface   => [ $wan, "${vpn} weight 5"], # optional, monitor these interfaces.
-    track_script      => [ 'ping_google' ],
+    virtual_ipaddress => [$v_cidr],
+    track_interface   => [$wan, "${vpn} weight 5"], # optional, monitor these interfaces.
+    track_script      => ['ping_google'],
   }
 
 # Add virtual server for DNS
@@ -64,7 +64,7 @@ class profile::app::keepalived::vpn (
     lb_algo    => 'wrr',
     lb_kind    => 'DR',
     # TODO remove? persistence_timeout => 0,
-    protocol   => 'TCP'
+    protocol   => 'TCP',
   }
 
   $virtual_servers = lookup('defaults::vpn::servers')
@@ -80,9 +80,8 @@ class profile::app::keepalived::vpn (
         notify_up   => "'/sbin/ipvsadm -a -u ${v_ip}:53 -r ${real_ip}:53 -g -w 1'",
         'TCP_CHECK' => {
           connect_timeout => '3',
-        }
-      }
+        },
+      },
     }
   }
-
 }

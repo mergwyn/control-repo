@@ -2,10 +2,9 @@
 #
 # $param install install or deinstall webmin
 #
-class profile::app::webmin(
+class profile::app::webmin (
   Boolean $install = false,
 ) {
-
   if $facts['os']['family'] != 'Debian' {
     fail("${title} is only for Debian")
   }
@@ -39,7 +38,7 @@ class profile::app::webmin(
         'update_multiple' => '1',
         'sched_action'    => '0',
         'cache_time'      => '6',
-      }
+      },
     }
     create_ini_settings($package_updates_settings, $package_updates_defaults)
 
@@ -66,14 +65,14 @@ class profile::app::webmin(
       require => Package['webmin'],
     }
     file { '/etc/webmin/package-updates/config':
-      ensure  => present,
+      ensure  => file,
       mode    => '0600',
       source  => 'puppet:///modules/profile/webmin/config',
       require => File['/etc/webmin/package-updates'],
     }
   }
   else {
-    $purgelist = [ 'webmin', 'libauthen-oath-perl' ]
+    $purgelist = ['webmin', 'libauthen-oath-perl']
     package { $purgelist: ensure => purged }
   }
 }
