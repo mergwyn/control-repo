@@ -35,7 +35,6 @@ class profile::app::keepalived::dns (
     lb_algo    => 'wrr',
     lb_kind    => 'DR',
     protocol   => 'TCP'
-
   }
 
   $nameservers.each |Integer $index, String $real_ip| {
@@ -50,7 +49,6 @@ class profile::app::keepalived::dns (
         'TCP_CHECK' => {
           connect_timeout => '3',
         },
-
         'DNS_CHECK' => {
           type => 'A',
           name => 'google.com',
