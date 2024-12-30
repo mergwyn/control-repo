@@ -34,7 +34,6 @@ group :development do
   gem "rubocop-performance", '= 1.16.0',         require: false
   gem "rubocop-rspec", '= 2.19.0',               require: false
   gem "rb-readline", '= 0.5.5',                  require: false, platforms: [:mswin, :mingw, :x64_mingw]
-  gem "rexml", '>= 3.0.0', '< 3.2.7',            require: false
   gem "onceover",                                require: false
   gem "rspec-puppet-utils",                      require: false
   gem "github_changelog_generator",              require: false
