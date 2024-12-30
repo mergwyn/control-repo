@@ -1,7 +1,6 @@
 #
 #
 class profile::app::timemachine {
-
   if $facts['os']['family'] != 'Debian' {
     fail("${title} is only for Debian")
   }
@@ -16,22 +15,21 @@ class profile::app::timemachine {
     include profile::app::samba
 
     ::samba::share { 'timemachine':
-        path    => $path,
-        owner   => $owner,
-        mode    => '0755',
-        options => {
-          'comment'            => 'Time Machine',
-          'fruit:time machine' => 'yes',
-          'browseable'         => 'yes',
-          'writeable'          => 'yes',
-          'ea support'         => 'yes',
-          'read only'          => 'no',
-          'inherit acls'       => 'yes',
-          'create mask'        => '0600',
-          'directory mask'     => '0700',
-        }
+      path    => $path,
+      owner   => $owner,
+      mode    => '0755',
+      options => {
+        'comment'            => 'Time Machine',
+        'fruit:time machine' => 'yes',
+        'browseable'         => 'yes',
+        'writeable'          => 'yes',
+        'ea support'         => 'yes',
+        'read only'          => 'no',
+        'inherit acls'       => 'yes',
+        'create mask'        => '0600',
+        'directory mask'     => '0700',
+      },
     }
-
   } else {
 # Use AFP for TimeMachine
     file { $path:
@@ -39,8 +37,8 @@ class profile::app::timemachine {
       owner  => $owner,
     }
 
-    package { [ 'netatalk' ] : }
-    service { [ 'netatalk' ] : }
+    package { ['netatalk']: }
+    service { ['netatalk']: }
 
     file_line { 'default':
       ensure => present,
@@ -74,7 +72,6 @@ class profile::app::timemachine {
     #}
   }
 
-
 # Set quota
 # TODO: use parameter for TM quota ?
 
@@ -99,5 +96,4 @@ class profile::app::timemachine {
     mode    => '0600',
     require => File[$path],
   }
-
 }

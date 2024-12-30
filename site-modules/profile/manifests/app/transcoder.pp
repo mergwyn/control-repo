@@ -1,7 +1,6 @@
 #
 #
 class profile::app::transcoder {
-
   $codedir = '/opt'
   $scriptdir = "${codedir}/scripts"
 
@@ -9,16 +8,14 @@ class profile::app::transcoder {
   include profile::app::scripts
   include profile::app::sickbeard_automator
 
-  stdlib::ensure_packages ( [ 'nfs-common' ], { ensure => present } )
-
-
+  stdlib::ensure_packages (['nfs-common'], { ensure => present })
 
   #setup systemd entry
   systemd::unit_file { 'humaxscan.service':
     enable  => true,
     active  => true,
     content => @("EOT"),
-                [Unit]
+                                                                            [Unit]
                 Description=Scan for presence of Humax PVR and notify plex
                 After=multi-user.target
 
@@ -34,6 +31,6 @@ class profile::app::transcoder {
                 [Install]
                 WantedBy=multi-user.target
                 | EOT
-    }
+  }
 }
 # vim: sw=2:ai:nu expandtab

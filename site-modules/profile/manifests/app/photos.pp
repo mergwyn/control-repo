@@ -13,13 +13,13 @@ class profile::app::photos {
     require => Apt::Ppa['ppa:nilarimogard/webupd8'],
   }
 
-  package { [ 'exiftran', 'exiv2' ]: }
+  package { ['exiftran', 'exiv2']: }
 
   include profile::app::scripts
   $codedir='/opt/scripts'
 
-  cron::job {'photo-upload':
-    environment => [ 'PATH="/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin"'],
+  cron::job { 'photo-upload':
+    environment => ['PATH="/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin"'],
     command     => "${codedir}/bin/google_upload",
     user        => 'gary',
     minute      => '35',

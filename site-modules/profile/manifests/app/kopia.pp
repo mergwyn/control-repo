@@ -1,4 +1,15 @@
+# @summary Install kopia
 #
+# @param topdir
+# @param config
+# @param snapbefore
+# @param snapafter
+# @param folderbefore
+# @param folderafter
+# @param maintenance
+# @param args
+# @param backup_files_exclude
+# @param repos
 #
 class profile::app::kopia (
   Stdlib::Absolutepath $topdir                          = '/etc/kopia',
@@ -12,7 +23,6 @@ class profile::app::kopia (
   String $repos                                         = '',
   Optional[Backuppc::BackupFiles] $backup_files_exclude = $profile::app::backuppc::client::backup_files_exclude,
 ) {
-
 # Install kopia
   apt::source { 'kopia':
     location => 'http://packages.kopia.io/apt',
@@ -23,7 +33,7 @@ class profile::app::kopia (
       source => 'https://kopia.io/signing-key',
     },
   }
-  package { [ 'kopia' ] : }
+  package { ['kopia']: }
 
 # setup directory structure
   file {[$topdir, $config, $snapbefore, $snapafter, $folderbefore, $folderafter]:
@@ -36,13 +46,13 @@ class profile::app::kopia (
     default:
       ensure => present,
       target => '/etc/default/kopia',
-    ;
-    'MAINTENANCE': value  =>  $maintenance, ;
-    'ARGS':        value  =>  $args, ;
-    'REPOS':       value  =>  $repos, ;
+      ;
+    'MAINTENANCE': value  => $maintenance, ;
+    'ARGS':        value  => $args, ;
+    'REPOS':       value  => $repos, ;
   }
   file { '/etc/cron.daily/kopia-backup':
-    ensure => present,
+    ensure => file,
     mode   => '0755',
     source => 'puppet:///modules/profile/kopia-backup',
   }
@@ -50,8 +60,7 @@ class profile::app::kopia (
 # Create backup excludes from the backuppc values
 # TODO switch to kopia values
   file { '/.kopiaignore':
-    ensure  => present,
-    content => inline_template('<% @backup_files_exclude.keys.sort.each do |key| -%><% @backup_files_exclude[key].each do |exclude| %><%= exclude %><%= "\n" %><% end %><% end %>')
+    ensure  => file,
+    content => inline_template('<% @backup_files_exclude.keys.sort.each do |key| -%><% @backup_files_exclude[key].each do |exclude| %><%= exclude %><%= "\n" %><% end %><% end %>'),
   }
-
 }

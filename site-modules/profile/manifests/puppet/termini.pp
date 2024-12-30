@@ -8,15 +8,16 @@
 #   Enable to handle failing silently when your PuppetDB is not available
 # @param puppet_confdir
 #   Directory for puppet config files
+# @param package
+#   package name to install
 #
 class profile::puppet::termini (
-  Stdlib::Fqdn $server                 = lookup('puppet::puppet_server'),
+  Stdlib::Fqdn $server                 = lookup('puppet::puppet_server'), # lint:ignore:lookup_in_parameter
   Stdlib::Port $port                   = 8081,
   Boolean $soft_write_failure          = false,
   Stdlib::Absolutepath $puppet_confdir = '/etc/puppetlabs/puppet',
   String $package                      = 'puppetdb-termini',
 ) {
-
   include profile::puppet::repo
 
 # Avoid dulication with puppetserver and puppetdb

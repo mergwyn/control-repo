@@ -1,7 +1,6 @@
 # @summary users required for debian
 #
 class profile::platform::baseline::users::debian {
-
   User {
     ensure => present,
   }
@@ -42,5 +41,4 @@ class profile::platform::baseline::users::debian {
   file { '/etc/vim/vimrc.local':
     source => 'puppet:///modules/profile/vimrc.local',
   }
-
 }

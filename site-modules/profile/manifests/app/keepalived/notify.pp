@@ -5,7 +5,6 @@ class profile::app::keepalived::notify (
   Stdlib::Email           $notification_email = lookup('defaults::adminemail'),
   Stdlib::Email           $notification_email_from = "keepalived@${trusted['domain']}",
 ) {
-
   include keepalived
 
 # Global defs
@@ -17,5 +16,4 @@ class profile::app::keepalived::notify (
     enable_script_security  => true,
     script_user             => 'root',
   }
-
 }

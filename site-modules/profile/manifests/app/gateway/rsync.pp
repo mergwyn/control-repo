@@ -1,7 +1,6 @@
 # @summary manage letsencrypt certificates
 #
 class profile::app::gateway::rsync {
-
   if $facts['os']['family'] != 'Debian' {
     fail("${title} is only for Debian")
   }
@@ -21,5 +20,4 @@ class profile::app::gateway::rsync {
 #    use_chroot     => 'no',
 #    require        => File[$base],
 #  }
-
 }

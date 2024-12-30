@@ -5,7 +5,6 @@ class profile::platform::baseline::debian::virtual::kubernetes (
   Boolean $enable_cstor            = false,
   Boolean $enable_mayastor         = false,
 ) {
-
   if $facts['os']['family'] != 'Debian' {
     fail("${name} can only be called on Debian")
   }
@@ -13,7 +12,7 @@ class profile::platform::baseline::debian::virtual::kubernetes (
   case ($provider) {
     'k3s': {
 # nfs client needed for some services/pods
-      stdlib::ensure_packages ( [ 'nfs-common' ], { ensure => present } )
+      stdlib::ensure_packages (['nfs-common'], { ensure => present })
 
 # Stop import scan service as recommended for openebs
 #      service { 'zfs-import-scan.service':
@@ -24,17 +23,16 @@ class profile::platform::baseline::debian::virtual::kubernetes (
 
     'microk8s': {
       # TODO check what these were for?
-      sysctl{ 'net.core.rmem_max':
+      sysctl { 'net.core.rmem_max':
         ensure => present,
         value  => '2500000',
         target => '/etc/sysctl.d/66-quic.conf',
       }
-      sysctl{ 'net.core.wmem_max':
+      sysctl { 'net.core.wmem_max':
         ensure => present,
         value  => '2500000',
         target => '/etc/sysctl.d/66-quic.conf',
       }
-
     }
 
     default: {}
@@ -43,7 +41,7 @@ class profile::platform::baseline::debian::virtual::kubernetes (
   file { '/etc/sysctl.d/20-microk8s-hugepages.conf' : ensure => absent }
 
   if $enable_mayastor {
-    sysctl{ 'vm.nr_hugepages':
+    sysctl { 'vm.nr_hugepages':
       ensure => present,
       value  => '1536',
       target => '/etc/sysctl.d/21-mayastor.conf',
@@ -63,5 +61,4 @@ class profile::platform::baseline::debian::virtual::kubernetes (
   } else {
     package { 'open-iscsi': ensure => absent, }
   }
-
 }

@@ -6,7 +6,6 @@ class profile::app::keepalived::dns (
   Stdlib::IP::Address::V4        $v_ip        = lookup('defaults::dns::vip'),
   Array[Stdlib::IP::Address::V4] $nameservers = lookup('defaults::dns::nameservers')
 ) {
-
   include profile::app::keepalived::notify
 
   keepalived::vrrp::script { 'check_dns':
@@ -36,7 +35,7 @@ class profile::app::keepalived::dns (
     lb_algo    => 'wrr',
     lb_kind    => 'DR',
     # TODO remove? persistence_timeout => 0,
-    protocol   => 'TCP'
+    protocol   => 'TCP',
   }
 
   $nameservers.each |Integer $index, String $real_ip| {
@@ -50,9 +49,8 @@ class profile::app::keepalived::dns (
         notify_up   => "'/sbin/ipvsadm -a -u ${v_ip}:53 -r ${real_ip}:53 -g -w 1'",
         'TCP_CHECK' => {
           connect_timeout => '3',
-        }
-      }
+        },
+      },
     }
   }
-
 }

@@ -1,7 +1,6 @@
 #
 #
 class profile::app::sssd {
-
   require profile::app::samba
 
   $keytab = '/etc/krb5.keytab'
@@ -9,7 +8,7 @@ class profile::app::sssd {
 #    command => '/usr/bin/net ads keytab create -P',
 #    creates => $keytab,
 #  }
-  class { '::sssd':
+  class { 'sssd':
     config  => {
       'sssd'                    => {
 #        'services'            => ['nss', 'pam'],
@@ -18,7 +17,7 @@ class profile::app::sssd {
       },
       'nss'                     => {
         'filter_groups' => 'root',
-        'filter_users'  => 'root'
+        'filter_users'  => 'root',
       },
       'domain/theclarkhome.com' => {
         'access_provider'                => 'ad',
@@ -59,7 +58,7 @@ class profile::app::sssd {
     owner   => 'root',
     group   => 'root',
     content => @("EOT"),
-               /etc/group r,
+                                                                           /etc/group r,
                /etc/hosts r,
                /etc/krb5.conf r,
                /etc/sssd/conf.d/ r,

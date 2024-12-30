@@ -1,7 +1,6 @@
 #
 #
 class profile::platform::baseline::debian {
-
   include profile::platform::baseline::users::debian
   include profile::platform::baseline::debian::apparmor
   include profile::platform::baseline::debian::packages
@@ -26,5 +25,4 @@ class profile::platform::baseline::debian {
   if defined('profile::app::zabbix::agent') {
     profile::app::zabbix::template_host { 'Template OS Linux by Zabbix agent active': }
   }
-
 }

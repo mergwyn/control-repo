@@ -1,7 +1,6 @@
 # @summary host file entries for Debian
 #
 class profile::platform::baseline::debian::hosts {
-
   $ip = $trusted['extensions']['pp_role'] ? {
     'domain_controller' => $facts['networking']['ip'],
     default             => '127.0.1.1',
@@ -43,5 +42,4 @@ class profile::platform::baseline::debian::hosts {
   host { 'ip6-allhosts':
     ip => 'ff02::3',
   }
-
 }

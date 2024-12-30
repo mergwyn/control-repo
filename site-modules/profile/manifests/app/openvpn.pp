@@ -41,7 +41,6 @@ class profile::app::openvpn (
   String[1] $vpn = 'tun0',
   Boolean   $use_systemd_resolved = lookup('defaults::vpn::use_systemd_resolved'),
 ) {
-
   $scripts = '/etc/openvpn/scripts'
 
   $aptpackages = [
@@ -56,7 +55,7 @@ class profile::app::openvpn (
   systemd::dropin_file { 'openvpn-client-nproc.conf':
     unit    => $service,
     content => @("EOT"/),
-               [Service]
+                                                                           [Service]
                LimitNPROC=infinity
                | EOT
   }
@@ -83,7 +82,7 @@ class profile::app::openvpn (
 
   file { "${scripts}/dnsleaktest":
     ensure  => file,
-    require => File[ $scripts ],
+    require => File[$scripts],
     owner   => 'root',
     group   => 'root',
     mode    => '0555',
@@ -91,7 +90,7 @@ class profile::app::openvpn (
   }
 
 ###### Firewall setup
-  class {'firewalld':
+  class { 'firewalld':
     purge_direct_rules        => true,
     purge_direct_chains       => true,
     purge_direct_passthroughs => true,
@@ -120,15 +119,15 @@ class profile::app::openvpn (
   }
 
 # home zone services and ports
-  [ 'dns', 'http', 'https', 'ssh', 'zabbix-agent' ].each |String $service| {
-    firewalld_service {"Allow ${service} in the home Zone":
+  ['dns', 'http', 'https', 'ssh', 'zabbix-agent'].each |String $service| {
+    firewalld_service { "Allow ${service} in the home Zone":
       ensure  => present,
       zone    => 'home',
       service => $service,
     }
   }
 
-  [ 'vrrp' ].each |String $protocol| {
+  ['vrrp'].each |String $protocol| {
     firewalld_rich_rule { "Accept ${protocol} in the home zone":
       ensure   => present,
       zone     => 'home',
@@ -138,8 +137,8 @@ class profile::app::openvpn (
   }
 
 # External zone services and ports
-  [ 'openvpn', 'http', 'https' ].each |String $service| {
-    firewalld_service {"Allow ${service} in the external Zone":
+  ['openvpn', 'http', 'https'].each |String $service| {
+    firewalld_service { "Allow ${service} in the external Zone":
       ensure  => present,
       zone    => 'external',
       service => $service,
@@ -147,8 +146,8 @@ class profile::app::openvpn (
   }
 
 # public zone services and ports
-  [ 'openvpn' ].each |String $service| {
-    firewalld_service {"Allow ${service} in the public Zone":
+  ['openvpn'].each |String $service| {
+    firewalld_service { "Allow ${service} in the public Zone":
       ensure  => present,
       zone    => 'public',
       service => $service,
@@ -156,5 +155,4 @@ class profile::app::openvpn (
   }
 
   include profile::app::openvpn::forwards
-
 }

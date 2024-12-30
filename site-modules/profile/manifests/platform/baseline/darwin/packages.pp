@@ -1,7 +1,6 @@
 # @summary Packages for Darwin
 #
 class profile::platform::baseline::darwin::packages {
-
   Package {
     provider => brewcask,
     ensure   => latest,

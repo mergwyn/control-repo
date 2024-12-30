@@ -26,5 +26,4 @@ class role::main_server {
   include profile::app::transcoder
   include profile::app::unison
   include profile::app::kopia
-
 }

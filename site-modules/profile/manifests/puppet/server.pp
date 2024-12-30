@@ -1,7 +1,6 @@
 #
 #
 class profile::puppet::server {
-
   #include '::puppet'
   #include '::puppet::master'
 
@@ -13,7 +12,7 @@ class profile::puppet::server {
     sources         => {
       'mergwyn' => {
         'remote'  => 'https://github.com/mergwyn/control-repo',
-        'basedir' => "${::settings::codedir}/environments",
+        'basedir' => "${settings::codedir}/environments",
       },
     },
   }
@@ -57,17 +56,16 @@ class profile::puppet::server {
   $postuser = hiera('profile::app::backuppc::client::postuser')
 
   file { "${preuser}/S21postgresql-backup":
-    ensure  => present,
+    ensure  => file,
     source  => 'puppet:///modules/profile/backuppc/S21postgresql-backup',
     mode    => '0555',
     require => Class['profile::app::backuppc::client'],
   }
 
   file { "${postuser}/P21postgresql-backup-clean":
-    ensure  => present,
+    ensure  => file,
     source  => 'puppet:///modules/profile/backuppc/P21postgresql-backup-clean',
     mode    => '0555',
     require => Class['profile::app::backuppc::client'],
   }
-
 }

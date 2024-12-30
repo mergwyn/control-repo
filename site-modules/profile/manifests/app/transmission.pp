@@ -5,8 +5,7 @@ class profile::app::transmission (
   String $owner   = 'media',
   String $group   = '513',
   String $service = 'transmission-daemon',
-  ) {
-
+) {
   class { 'transmission':
     home_dir                   => '/home/media/.config/transmission-daemon',
     umask                      => 2,
@@ -33,7 +32,7 @@ class profile::app::transmission (
   systemd::dropin_file { 'transmission-sssd-wait.conf':
     unit    => "${service}.service",
     content => @("EOT"/),
-               [Unit]
+                                                                           [Unit]
                After=nss-user-lookup.target
                | EOT
     notify  => Service[$service],
@@ -41,11 +40,10 @@ class profile::app::transmission (
   systemd::dropin_file { 'transmission-user.conf':
     unit    => "${service}.service",
     content => @("EOT"/),
-               [Service]
+                                                                           [Service]
                User=${owner}
                Group=${group}
                | EOT
     notify  => Service[$service],
   }
-
 }

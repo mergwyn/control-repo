@@ -3,10 +3,9 @@
 class profile::app::zabbix::zapish (
   String[1]            $user     = 'root',
   Stdlib::Absolutepath $home_dir = '/root',
-){
-
+) {
 # For zabbixapi
-  ensure_packages( [ 'build-essential', 'make' ] )
+  ensure_packages(['build-essential', 'make'])
 
 # Install zapish from github
   $url = 'https://github.com/mergwyn/zapish'
@@ -43,7 +42,7 @@ class profile::app::zabbix::zapish (
   shellvar { 'zapish_url':
     ensure => present,
     target => $config_file,
-    value  => "http://${zabbix_server}/api_jsonrpc.php"
+    value  => "http://${zabbix_server}/api_jsonrpc.php",
   }
 
   shellvar { 'zapish_auth':
@@ -51,5 +50,4 @@ class profile::app::zabbix::zapish (
     target => $config_file,
     value  => lookup('secrets::zapish_token'),
   }
-
 }

@@ -1,12 +1,10 @@
 # @summary Set up cron job for trim
 #
 class profile::platform::baseline::debian::zfs::trim {
-
-
   $script = '/usr/lib/zfs-linux/trim'
 
   file { $script:
-    ensure => present,
+    ensure => file,
     mode   => '0555',
     source => 'puppet:///modules/profile/zfs/trim',
   }
@@ -17,7 +15,7 @@ class profile::platform::baseline::debian::zfs::trim {
     minute      => '24',
     hour        => '0',
     date        => '22-28',
-    environment => [ 'PATH="/usr/bin:/bin:/usr/sbin:/sbin:/usr/sbin:/usr/local/bin"' ],
+    environment => ['PATH="/usr/bin:/bin:/usr/sbin:/sbin:/usr/sbin:/usr/local/bin"'],
     command     => "if [ $(date +\\%w) -eq 0 ] && [ -x ${script} ]; then ${script}; fi",
   }
 }

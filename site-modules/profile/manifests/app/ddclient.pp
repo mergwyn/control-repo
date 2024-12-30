@@ -1,9 +1,8 @@
 #
 #
 class profile::app::ddclient (
-  Array[Stdlib::Fqdn] $servers = [ $trusted['hostname'] ],
+  Array[Stdlib::Fqdn] $servers = [$trusted['hostname']],
 ) {
-
   class { 'ddclient':
     hosts_config    => 'concat',
     daemon_interval => 300,
@@ -18,7 +17,7 @@ class profile::app::ddclient (
     server   => 'dynamicdns.park-your-domain.com',
     protocol => 'namecheap',
     password => lookup('secrets::namecheap'),
-    hostname => join($servers, ',')
+    hostname => join($servers, ','),
   }
 #  ddclient::host { 'opendns':
 #    login    => 'mergwyn',
@@ -27,5 +26,4 @@ class profile::app::ddclient (
 #    server   => 'updates.opendns.com',
 #    hostname => 'Home',
 #  }
-
 }

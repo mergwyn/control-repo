@@ -3,8 +3,7 @@
 class profile::platform::baseline::debian::zfs::snapshotter (
   String $type   = 'pyznap',
   Hash $settings = {},
-){
-
+) {
   case $type {
     'pyznap': {
       $codedir        = '/opt'
@@ -23,24 +22,24 @@ class profile::platform::baseline::debian::zfs::snapshotter (
         ensure  => directory,
         owner   => $owner,
         group   => $group,
-        require => Service[ 'sssd' ],
+        require => Service['sssd'],
       }
       -> python::pyvenv { $venv: # install dependencies
-          ensure     => present,
-          version    => 'system',
-          systempkgs => true,
-          owner      => $owner,
-          group      => $group,
-          require    => File[ $target ],
+        ensure     => present,
+        version    => 'system',
+        systempkgs => true,
+        owner      => $owner,
+        group      => $group,
+        require    => File[$target],
       }
       -> python::pip { $type:
-          ensure       => 'present',
-          pkgname      => $type,
-          pip_provider => 'pip',
-          virtualenv   => $venv,
-          owner        => $owner,
-          group        => $group,
-          timeout      => 1800,
+        ensure       => 'present',
+        pkgname      => $type,
+        pip_provider => 'pip',
+        virtualenv   => $venv,
+        owner        => $owner,
+        group        => $group,
+        timeout      => 1800,
       }
 
       file { $link:
@@ -53,11 +52,11 @@ class profile::platform::baseline::debian::zfs::snapshotter (
         ensure  => directory,
         owner   => $owner,
         group   => $group,
-        require => Service[ 'sssd' ],
+        require => Service['sssd'],
       }
       $defaults = {
         path    => $target_ini,
-        require => File[ $configdir ],
+        require => File[$configdir],
       }
       $default_settings = {
         'rpool' => {
@@ -75,14 +74,14 @@ class profile::platform::baseline::debian::zfs::snapshotter (
         },
         'rpool/home' => {
           'snap' => 'yes',
-        }
+        },
       }
       inifile::create_ini_settings($default_settings + $settings, $defaults)
 
       cron::job { 'pyznap':
         user        => root,
         minute      => '*/15',
-        environment => [ 'PATH="/usr/bin:/bin:/usr/sbin:/sbin:/usr/sbin:/usr/local/bin"' ],
+        environment => ['PATH="/usr/bin:/bin:/usr/sbin:/sbin:/usr/sbin:/usr/local/bin"'],
         command     => '/opt/pyznap/venv/bin/pyznap snap >> /var/log/pyznap.log 2>&1',
       }
 
@@ -94,7 +93,6 @@ class profile::platform::baseline::debian::zfs::snapshotter (
 
       package { 'zfs-auto-snapshot': ensure => absent }
     }
-
 
     'zfs-auto-snapshot': {
       package { 'zfs-auto-snapshot': }

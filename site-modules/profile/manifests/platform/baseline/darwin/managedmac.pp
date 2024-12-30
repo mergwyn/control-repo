@@ -2,7 +2,6 @@
 # TODO: remove, not used?
 #
 class profile::platform::baseline::darwin::managedmac {
-
   package { 'jdbc-sqlite3':
     ensure   => 'installed',
     provider => 'gem',
@@ -12,7 +11,6 @@ class profile::platform::baseline::darwin::managedmac {
     ensure   => 'installed',
     provider => 'gem',
   }
-
 
 # TODO: refactor mamagedmac to remove hiera mandate
 #  class { 'managedmac':
@@ -76,5 +74,4 @@ class profile::platform::baseline::darwin::managedmac {
     enable      => true,
 #   sshd_config => 'puppet:///modules/your_module/sshd_config',
   }
-
 }

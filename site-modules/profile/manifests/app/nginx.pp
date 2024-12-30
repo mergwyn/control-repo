@@ -1,7 +1,6 @@
 #
 #
 class profile::app::nginx {
-
   # TODO: move to hiera
   include nginx
 
@@ -12,8 +11,8 @@ class profile::app::nginx {
       server         => $trusted['hostname'],
       location       => '/basic_status',
       stub_status    => true,
-      location_allow => [ '127.0.0.1', lookup('defaults::cidr') ],
-      location_deny  => [ 'all', ],
+      location_allow => ['127.0.0.1', lookup('defaults::cidr')],
+      location_deny  => ['all',],
     }
 
     profile::app::zabbix::template_host { 'Template App Nginx by Zabbix agent': ensure => absent, }
@@ -27,6 +26,5 @@ class profile::app::nginx {
     unit   => $service_name,
   }
 
-  package { [ 'fcgiwrap' ]: }
-
+  package { ['fcgiwrap']: }
 }

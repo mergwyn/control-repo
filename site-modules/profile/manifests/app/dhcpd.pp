@@ -3,20 +3,19 @@
 class profile::app::dhcpd (
   Optional[Enum['primary','secondary']] $role         = undef,
   Optional[Stdlib::IP::Address]         $peer_address = undef,
-  ) {
+) {
   $owner = 'dhcpd'
   $group = 'dhcpd'
   $perms = "${owner}.${group}"
   $keytab = '/etc/dhcp.keytab'
 
-
   # Core dhcpd configuration
   $domain = $trusted['domain']
 
   class { 'dhcp':
-    interfaces         => [ $facts['networking']['primary'] ],
+    interfaces         => [$facts['networking']['primary']],
     nameservers        => lookup('defaults::dns::nameservers'),
-    ntpservers         => [ "foxtrot.${domain}", "golf.${domain}" ],
+    ntpservers         => ["foxtrot.${domain}", "golf.${domain}"],
     dnssearchdomains   => lookup('defaults::dns::search'),
     default_lease_time => 28800,
     max_lease_time     => 86400,
@@ -29,7 +28,7 @@ class profile::app::dhcpd (
   dhcp::pool { lookup('defaults::network'):
     network  => lookup('defaults::network'),
     mask     => lookup('defaults::netmask'),
-    range    => [ "${lookup('defaults::subnet')}.100 ${lookup('defaults::subnet')}.199" ],
+    range    => ["${lookup('defaults::subnet')}.100 ${lookup('defaults::subnet')}.199"],
     gateway  => lookup('defaults::gateway'),
     failover => 'dhcp-failover',
   }
@@ -112,8 +111,8 @@ class profile::app::dhcpd (
     notify  => Service['isc-dhcp-server'],
     owner   => $owner,
     group   => $group,
-    content => @("EOT")
-               on commit {
+    content => @("EOT"),
+                                                                           on commit {
                  ${noname};
                  ${clientip};
                  ${clientdhcid};
@@ -161,8 +160,8 @@ class profile::app::dhcpd (
     notify  => Service['apparmor'],
     owner   => 'root',
     group   => 'root',
-    content => @("EOT")
-               / r,
+    content => @("EOT"),
+                                                                           / r,
                /bin/date rix,
                /bin/egrep rix,
                /bin/grep rix,
@@ -206,5 +205,4 @@ class profile::app::dhcpd (
 
                | EOT
   }
-
 }

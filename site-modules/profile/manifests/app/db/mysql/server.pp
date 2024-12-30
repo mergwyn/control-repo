@@ -6,9 +6,7 @@
 class profile::app::db::mysql::server (
   Stdlib::Absolutepath $logdir = '/var/lib/mysql/log',
   String $zabbix_version       = lookup('defaults::zabbix_version'),
-){
-
-
+) {
   class { 'mysql::server':
     manage_config_file => false,
   }
@@ -65,14 +63,14 @@ class profile::app::db::mysql::server (
 
   if defined('profile::app::backuppc::client') {
     file { "${preuser}/S20mysql-backup":
-      ensure  => present,
+      ensure  => file,
       source  => 'puppet:///modules/profile/backuppc/S20mysql-backup',
       mode    => '0555',
       require => Class['profile::app::backuppc::client'],
     }
 
     file { "${scripts}/S20mysql-backup-password":
-      ensure  => present,
+      ensure  => file,
       content => sprintf("PASSWORD=%s\n",hiera('secrets::mysql')),
       mode    => '0555',
       require => Class['profile::app::backuppc::client'],
@@ -104,9 +102,9 @@ class profile::app::db::mysql::server (
 #      charset  => 'utf8',
 #    }
 
-    file {'/var/lib/zabbix/': ensure => directory }
+    file { '/var/lib/zabbix/': ensure => directory }
 # TODO change to heredoc
-    file {'/var/lib/zabbix/.my.cnf':
+    file { '/var/lib/zabbix/.my.cnf':
       content => sprintf("[client]\nuser=%s\npassword=%s\n",$user, $password),
       mode    => '0555',
     }

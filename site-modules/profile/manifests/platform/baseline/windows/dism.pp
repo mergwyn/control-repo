@@ -7,7 +7,6 @@ class profile::platform::baseline::windows::dism (
   Hash           $objects  = {},
   Optional[Hash] $defaults = {},
 ) {
-
 #  dism {'Microsoft-Windows-Subsystem-Linux':
 #    ensure    => present,
 #    norestart => true,
@@ -21,4 +20,3 @@ class profile::platform::baseline::windows::dism (
     }
   }
 }
-
