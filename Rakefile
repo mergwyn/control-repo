@@ -19,6 +19,7 @@ PuppetLint.configuration.send('disable_parameter_order')
 PuppetLint.configuration.send('disable_parameter_types')
 PuppetLint.configuration.send('disable_optional_default')
 PuppetLint.configuration.send('disable_lookup_in_parameter')
+PuppetLint.configuration.send('disable_params_empty_string_assignment')
 PuppetLint.configuration.fail_on_warnings = false
 PuppetLint.configuration.ignore_paths = [".vendor/**/*.pp", ".bundle/**/*.pp", "pkg/**/*.pp", "spec/**/*.pp", "tests/**/*.pp", "types/**/*.pp", "vendor/**/*.pp"]
 

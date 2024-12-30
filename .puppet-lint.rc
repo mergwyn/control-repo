@@ -9,4 +9,5 @@
 --no-strict_indent-check
 --no-parameter_documentation-check
 --no-parameter_order-check
+--no-params_empty_string_assignment-check
 --ignore-paths=.vendor/**/*.pp,.bundle/**/*.pp,pkg/**/*.pp,spec/**/*.pp,tests/**/*.pp,types/**/*.pp,vendor/**/*.pp

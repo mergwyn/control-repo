@@ -32,6 +32,7 @@ Rakefile:
     - strict_indent
     - parameter_documentation
     - parameter_order
+    - params_empty_string_assignment
 
 Gemfile:
   required:
