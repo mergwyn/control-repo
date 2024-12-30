@@ -20,7 +20,7 @@ class profile::app::kopia (
   Stdlib::Absolutepath $folderafter                     = "${topdir}/folder_after",
   Boolean $maintenance                                  = false,
   String $args                                          = '--log-level=error --no-progress',
-  String $repos                                         = Undef,
+  String $repos                                         = '',
   Optional[Backuppc::BackupFiles] $backup_files_exclude = $profile::app::backuppc::client::backup_files_exclude,
 ) {
 # Install kopia

@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe 'role::domain_controller' do
+
   on_supported_os.each do |os, os_facts|
     next unless os_facts[:osfamily] == 'Debian'
 
@@ -12,6 +13,9 @@ describe 'role::domain_controller' do
       let(:facts) { os_facts }
       let(:trusted_facts) { { 'pp_role' => 'domain_controller' } }
       let(:node) { 'unittest.theclarkhome.com' }
+      let(:pre_condition) do
+        'function puppetdb_query($string) { return [{ title => "fqdn", value => "certname.example.com" }] }'
+      end
 
       # Comment out to display all available resources easily
       # it { pp catalogue.resources }

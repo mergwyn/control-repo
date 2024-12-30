@@ -12,9 +12,12 @@ describe 'role::development' do
       let(:facts) { os_facts }
       let(:trusted_facts) { { 'pp_role' => 'development' } }
       let(:node) { 'unittest.theclarkhome.com' }
+      let(:pre_condition) do
+        'function puppetdb_query($string) { return [{ title => "fqdn", value => "certname.example.com" }] }'
+      end
 
       # Comment out to display all available resources easily
-      # it { pp catalogue.resources }
+      #it { pp catalogue.resources }
 
       it { is_expected.to compile.with_all_deps }
     end
