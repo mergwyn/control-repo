@@ -21,8 +21,8 @@ class profile::app::keepalived::dns (
     priority          => 150,
     auth_type         => 'PASS',
     auth_pass         => lookup('secrets::keepalived'),
-    virtual_ipaddress => [ "${$v_ip}/${lookup('defaults::bits')}" ],
-#   track_interface   => [ $wan, "${vpn} weight 5"], # optional, monitor these interfaces.
+    virtual_ipaddress => ["${$v_ip}/${lookup('defaults::bits')}"],
+#   track_interface   => [$wan, "${vpn} weight 5"], # optional, monitor these interfaces.
     #track_script      => 'check_dns',
   }
 

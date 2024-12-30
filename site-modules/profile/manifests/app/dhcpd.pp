@@ -19,9 +19,9 @@ class profile::app::dhcpd (
   }
 
   class { 'dhcp':
-    interfaces         => [ $facts['networking']['primary'] ],
+    interfaces         => [$facts['networking']['primary']],
     nameservers        => $nameservers,
-    ntpservers         => [ "foxtrot.${domain}", "golf.${domain}" ],
+    ntpservers         => ["foxtrot.${domain}", "golf.${domain}"],
     dnssearchdomains   => lookup('defaults::dns::search'),
     default_lease_time => 28800,
     max_lease_time     => 86400,
