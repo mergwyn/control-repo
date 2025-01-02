@@ -1,0 +1,14 @@
+---
+
+profile::platform::baseline::packages::defaults:
+  ensure: present
+  provider: homebrew
+profile::platform::baseline::packages::objects:
+  db-browser-for-sqlite: {}
+  discord: {}
+  garmin-express: {}
+  handbrake: {}
+  kopiaui: {}
+  monitorcontrol: {}
+  vmware-fusion: {}
+  whatsapp: {}
