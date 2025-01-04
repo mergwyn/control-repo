@@ -7,4 +7,6 @@ class role::ubuntu_desktop {
   include profile::app::kopia
   include profile::app::unison
   include profile::app::git
+  include profile::app::scripts
+
 }
