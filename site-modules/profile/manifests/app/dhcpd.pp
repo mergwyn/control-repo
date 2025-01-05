@@ -43,12 +43,12 @@ class profile::app::dhcpd (
   }
 
 # Hosts with fixed ip
-  dhcp::host { 'hp1810':             mac => 'd4:c9:ef:37:ca:e0', ip => '10.58.0.2' }
-  dhcp::host { 'zigbee1':            mac => '18:69:d8:46:fc:d2', ip => '10.58.0.201' }  # Silvercrest gateway
-  dhcp::host { 'esphome-web-f9edf4': mac => '90:15:06:f9:ed:f4', ip => '10.58.0.202' }  # ASHP M5 atom lite
-  dhcp::host { 'wserver':            mac => '04:ee:e8:1a:64:d2', ip => '10.58.0.240' }
-  dhcp::host { 'wclient':            mac => '04:ee:e8:1f:68:73', ip => '10.58.0.241' }
-  dhcp::host { 'logger1':            mac => 'b8:d6:1a:57:5e:57', ip => '10.58.0.242' }  # Solis D_7A1231135150313A
+  dhcp::host { 'hp1810':       mac => 'd4:c9:ef:37:ca:e0', ip => '10.58.0.2' }
+  dhcp::host { 'zigbee1':      mac => '18:69:d8:46:fc:d2', ip => '10.58.0.201' }  # Silvercrest gateway
+  dhcp::host { 'samsung_ashp': mac => '90:15:06:f9:ed:f4', ip => '10.58.0.202' }  # ASHP M5 atom lite
+  dhcp::host { 'wserver':      mac => '04:ee:e8:1a:64:d2', ip => '10.58.0.240' }
+  dhcp::host { 'wclient':      mac => '04:ee:e8:1f:68:73', ip => '10.58.0.241' }
+  dhcp::host { 'logger1':      mac => 'b8:d6:1a:57:5e:57', ip => '10.58.0.242' }  # Solis D_7A1231135150313A
 
 # Hosts that just need names 
   dhcp::host { 'switch2':               mac => 'a0:40:a0:71:7e:ce' }
