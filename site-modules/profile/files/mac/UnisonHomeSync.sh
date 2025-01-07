@@ -4,6 +4,5 @@ REMOTE="ssh://${LOGNAME}@foxtrot//home/${LOGNAME}"
 ARGS="-silent -ui text -repeat watch -terse"
 
 if [[ $(pmset -g ps | head -1) =~ "AC Power" ]]; then
-	/usr/local/bin/unison Home ${LOCAL} ${REMOTE} ${ARGS}
-	#/usr/local/bin/unison Preferences ${LOCAL}/Library ${REMOTE}/Library ${ARGS}
+  /opt/homebrew/bin/unison Home ${LOCAL} ${REMOTE} ${ARGS}
 fi
