@@ -23,6 +23,9 @@ class profile::app::kopia (
   String $repos                                         = '',
   Optional[Backuppc::BackupFiles] $backup_files_exclude = $profile::app::backuppc::client::backup_files_exclude,
 ) {
+
+  include profile::app::scripts
+
 # Install kopia
   apt::source { 'kopia':
     location => 'http://packages.kopia.io/apt',
