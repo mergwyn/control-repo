@@ -16,7 +16,7 @@ class profile::app::scripts {
 
   file { '/etc/profile.d/scripts.sh':
     ensure  => file,
-    content => @("EOT"/)
+    content => @("EOT"/),
                # Expand the PATH to include my scripts
                PATH=\$PATH:${codedir}/bin
                | EOT
