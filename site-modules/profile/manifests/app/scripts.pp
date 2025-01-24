@@ -14,11 +14,19 @@ class profile::app::scripts {
     revision => 'master',
   }
 
+  file { '/etc/profile.d/scripts.sh':
+    ensure  => file,
+    content => @("EOT"/)
+               # Expand the PATH to include my scripts
+               PATH=\$PATH:${codedir}/bin
+               | EOT
+  }
+
   file { "${codedir}/iptv/iptv_urls":
     ensure  => file,
     mode    => '0600',
     content => @("EOT"/$),
-                                                                           PLEX_TOKEN="${lookup('secrets::iptv::plex::token')}"
+               PLEX_TOKEN="${lookup('secrets::iptv::plex::token')}"
                ICE_M3U="${lookup('secrets::iptv::m3u::iceflashott')}"
                ICE_EPG="${lookup('secrets::iptv::epg::iceflashott')}"
                ROUTES=(
