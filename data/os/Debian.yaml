@@ -80,6 +80,7 @@ profile::app::backuppc::client::backup_files_exclude:
     - '/srv/seaweedfs'
     - '/srv/mayastor'
     - '**/.ssh/ctl'
+    - '**/Virtual Machines.localized'
     - '/sys'
     - '*.tar'
     - '.TemporaryItems/'
