@@ -71,7 +71,7 @@ class profile::platform::baseline::darwin::managedmac {
   class { 'managedmac::screensharing': enable => true, }
 
   class { 'managedmac::sshd':
-    enable      => true,
+    enable => true,
 #   sshd_config => 'puppet:///modules/your_module/sshd_config',
   }
 }

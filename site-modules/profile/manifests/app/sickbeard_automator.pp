@@ -40,7 +40,7 @@ class profile::app::sickbeard_automator (
       require => Apt::Ppa[$ffmpegppa],
     }
   } else {
-    package { 'ffmpeg': ensure  => present, }
+    package { 'ffmpeg': ensure => present, }
   }
 
 # systemd timer to run process_media_job

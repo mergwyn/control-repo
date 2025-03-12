@@ -8,7 +8,7 @@ class profile::app::backuppc::client (
   Stdlib::Fqdn $backuppc_hostname,
 ) {
   file {[$scripts, $preuser, $postuser]:
-    ensure  => directory,
+    ensure => directory,
   }
 
   file { "${preuser}/S10dirsonly":

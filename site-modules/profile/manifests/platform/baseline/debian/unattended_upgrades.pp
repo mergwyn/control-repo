@@ -21,5 +21,5 @@ class profile::platform::baseline::debian::unattended_upgrades {
     },
   }
 
-  file { '/etc/apt/apt.conf.d/50unattended-upgrades.ucf-dist': ensure  => absent, }
+  file { '/etc/apt/apt.conf.d/50unattended-upgrades.ucf-dist': ensure => absent, }
 }

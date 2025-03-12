@@ -39,7 +39,7 @@ class profile::app::kopia (
 
 # setup directory structure
   file {[$topdir, $config, $snapbefore, $snapafter, $folderbefore, $folderafter]:
-    ensure  => directory,
+    ensure => directory,
   }
 # TODO replicate code to add pre and postdump backuppc scripts
 
@@ -49,9 +49,9 @@ class profile::app::kopia (
       ensure => present,
       target => '/etc/default/kopia',
       ;
-    'MAINTENANCE': value  => $maintenance, ;
-    'ARGS':        value  => $args, ;
-    'REPOS':       value  => $repos, ;
+    'MAINTENANCE': value => $maintenance, ;
+    'ARGS':        value => $args, ;
+    'REPOS':       value => $repos, ;
   }
   file { '/etc/cron.daily/kopia-backup':
     ensure => file,

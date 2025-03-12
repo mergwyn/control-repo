@@ -52,7 +52,7 @@ class profile::app::backuppc::server (
   }
 
   group { 'backuppc':
-    gid        => $gid,
+    gid => $gid,
   }
   user { 'backuppc':
     groups     => 'backuppc',

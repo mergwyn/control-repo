@@ -76,7 +76,7 @@ class profile::app::timemachine {
 # TODO: use parameter for TM quota ?
 
   file { "${path}/.com.apple.TimeMachine.quota.plist":
-    ensure  => absent,
+    ensure => absent,
 #    owner   => $owner,
 #    mode    => '0600',
 #    require => File[$path],

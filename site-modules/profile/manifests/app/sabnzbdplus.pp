@@ -15,9 +15,7 @@ class profile::app::sabnzbdplus (
     apt::ppa { $ppa: ensure => absent }
   }
 
-  package { 'sabnzbdplus':
-    ensure  => present,
-  }
+  package { 'sabnzbdplus': ensure => present, }
 
 # TODO this will be replaced in time by installed version from package
   $service = 'sabnzbd@.service'
