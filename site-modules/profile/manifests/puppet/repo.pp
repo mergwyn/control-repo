@@ -14,10 +14,10 @@ class profile::puppet::repo (
     'amd64': { $release }
     default: { notify { "Unexpected arch ${arch} for puppet repo": withpath => true } }
   }
+
   apt::source { 'puppet':
     comment  => "Puppet ${version} ${release} Repository",
     location => 'http://apt.puppetlabs.com',
-    dir      => '/etc/apt/trusted.gpg.d',
     release  => $release,
     repos    => "puppet${version}",
     key      => {
