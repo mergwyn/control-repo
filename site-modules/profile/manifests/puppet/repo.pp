@@ -17,6 +17,7 @@ class profile::puppet::repo (
   apt::source { 'puppet':
     comment  => "Puppet ${version} ${release} Repository",
     location => 'http://apt.puppetlabs.com',
+    dir      => '/etc/apt/trusted.gpg.d',
     release  => $release,
     repos    => "puppet${version}",
     key      => {
