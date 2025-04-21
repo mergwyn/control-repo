@@ -20,10 +20,11 @@ class profile::puppet::repo (
     release  => $release,
     repos    => "puppet${version}",
     key      => {
-      'id'     => 'D6811ED3ADEEB8441AF5AA8F4528B6CD9E61EF26',
-      'server' => 'pgp.mit.edu',
+      name   => 'puppetlabs-keyring.gpg',
+      source => 'https://apt.puppetlabs.com/keyring.gpg',
     },
   }
+
   $aptdir = '/etc/apt/sources.list.d'
   $purgelist = [
     "${aptdir}/puppet5.list",
