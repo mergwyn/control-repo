@@ -28,6 +28,7 @@ class profile::puppet::repo (
 
   $aptdir = '/etc/apt/sources.list.d'
   $purgelist = [
+    "${aptdir}/puppet-release.list",
     "${aptdir}/puppet5.list",
     "${aptdir}/puppet6.list",
     "${aptdir}/puppet5.list.distUpgrade",
