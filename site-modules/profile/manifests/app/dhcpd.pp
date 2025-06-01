@@ -56,6 +56,7 @@ class profile::app::dhcpd (
   dhcp::host { 'humax-wifi':            mac => '80:1f:02:21:a1:74' }
   dhcp::host { 'humax-lan':             mac => 'dc:d3:21:57:55:46' }
   dhcp::host { 'mike-wifi':             mac => '66:82:63:31:2d:49' }
+  dhcp::host { 'LGwebOSTV-wifi':        mac => '20:28:BC:9F:FD:B2' }
   dhcp::host { 'lounge-sonos-playbar':  mac => '00:0e:58:bc:b4:dc' }
   dhcp::host { 'lounge-sonos-play1-ls': mac => '00:0e:58:c9:f0:9a' }
   dhcp::host { 'lounge-sonos-play1-rs': mac => '94:9F:3E:12:FA:8A' }
