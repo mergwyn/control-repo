@@ -66,7 +66,7 @@ mod 'saz/timezone', '7.0.0'
 mod 'sgnl05/sssd', '3.1.0'
 mod 'stm/debconf', '6.1.0'
 #mod 'thekevjames/homebrew', '1.9.1'
-mod 'thekevjames/puppet-homebrew', :git => 'https://github.com/TheKevJames/puppet-homebrew', :ref => 'master'
+mod 'puppet-homebrew', :git => 'https://github.com/TheKevJames/puppet-homebrew', :ref => 'master'
 mod 'thias/libvirt', '1.0.3'
 
 #mod 'webmin', :git => 'https://github.com/mergwyn/puppet-webmin' #, :branch => 'patch-1'
