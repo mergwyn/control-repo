@@ -7,7 +7,7 @@ profile::platform::baseline::packages::objects:
   db-browser-for-sqlite: {}
   discord: {}
   garmin-express: {}
-  handbrake: {}
+  handbrake-app: {}
   kopiaui: {}
   monitorcontrol: {}
   vmware-fusion: {}
