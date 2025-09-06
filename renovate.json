@@ -9,6 +9,9 @@
         "internalChecksFilter": "strict"
       }
     ],
+  "ignorePaths": [
+    'Gemfile'
+  ],
   "major": {
     "minimumReleaseAge": "21 days"
   },
