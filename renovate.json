@@ -5,7 +5,8 @@
     ":automergePatch"
   ],
   "ignorePaths": [
-    "Gemfile"
+    "Gemfile",
+    ".devcontainer/*"
   ],
   "major": {
     "minimumReleaseAge": "21 days"
