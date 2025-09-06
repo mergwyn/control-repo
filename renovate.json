@@ -10,7 +10,7 @@
       }
     ],
   "ignorePaths": [
-    'Gemfile'
+    "Gemfile"
   ],
   "major": {
     "minimumReleaseAge": "21 days"
