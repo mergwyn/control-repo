@@ -4,6 +4,9 @@
     "config:best-practices",
     ":automergePatch"
   ],
-  "minimumReleaseAge": "7 days",
-  "internalChecksFilter": "strict"
+  "packageRules": [
+    {
+      "minimumReleaseAge": "3 days",
+      "internalChecksFilter": "strict"
+    }
 }
