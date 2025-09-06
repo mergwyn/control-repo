@@ -1,7 +1,7 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:best-practice",
+    "config:best-practices",
     ":automergePatch"
   ],
   "minimumReleaseAge": "7 days",
