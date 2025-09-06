@@ -16,7 +16,7 @@ mod 'mergwyn/jackett', :git => 'https://github.com/mergwyn/mergwyn-jackett', :re
 mod 'mergwyn/radarr', :git => 'https://github.com/mergwyn/mergwyn-radarr', :ref => 'main'
 mod 'mosen/cups', '1.5.0'
 mod 'puppet/alternatives', '6.0.0'
-mod 'puppet/archive', '7.1.0'
+mod 'puppet/archive', '8.1.0'
 mod 'puppet/augeasproviders_core', '4.2.0'
 mod 'puppet/augeasproviders_pam', '4.0.0'
 mod 'puppet/augeasproviders_shellvar', '6.0.1'
