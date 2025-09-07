@@ -9,6 +9,7 @@
     "Gemfile",
     ".devcontainer/*"
   ],
+  "internalChecksFilter": "strict",
   "major": {
     "minimumReleaseAge": "21 days"
   },
