@@ -5,6 +5,7 @@
     "schedule:monthly",
     ":automergePatch"
   ],
+  "timezone": "Europe/London",
   "branchTopic": "{{{depNameSanitized}}}_{{{newMajor}}}{{#if separateMinorPatch}}{{#if isPatch}}.{{{newMinor}}}{{/if}}{{/if}}{{#if separateMultipleMinor}}{{#if isMinor}}.{{{newMinor}}}{{/if}}{{/if}}.x{{#if isLockfileUpdate}}_lockfile{{/if}}",
   "ignorePaths": [
     "Gemfile",
