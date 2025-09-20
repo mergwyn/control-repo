@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+
+prog=$(mktemp --suffix .awk)
+function finish { rm -rf "$prog" ; }
+trap finish EXIT
+
+cat > ${prog} <<!
+BEGIN 	{ FS="," }
+{
+  if ( ! match(\$1, "^mod")) { next }
+
+  gsub("'", "")
+
+  split(\$1,module, " ")
+  split(module[2], name, "/")
+
+  modname=name[2]
+
+  if ( NF == 2 ) {
+    version=\$2
+    forge_repos[modname]= name[1] "/" name[2]
+    forge_versions[modname]=version
+  } else {
+    split(\$2, REPO, " ")
+    split(\$3, BRANCH, " ")
+    git_repos[modname] = REPO[3]
+    git_refs[modname] = BRANCH[3]
+  }
+}
+END   	{
+  print "---"
+  print "fixtures:"
+  print "  symlinks:"
+  print "    bootstrap: \"#{source_dir}/site-modules/bootstrap\""
+  print "    profile: \"#{source_dir}/site-modules/profile\""
+  print "    role: \"#{source_dir}/site-modules/role\""
+  print "  repositories:"
+  for(mod in git_repos){
+    printf("    %s:\n",mod)
+    printf("      repo: %s\n", git_repos[mod])
+    if (match(git_refs[mod],"^v[0-9].*")) {
+      printf("      branch: %s\n", git_refs[mod])
+    } else {
+      printf("      ref: %s\n", git_refs[mod])
+    }
+  }
+  print "  forge_modules:"
+  for(mod in forge_repos) {
+    printf("    %s:\n",mod)
+    printf("      repo: %s\n", forge_repos[mod])
+    printf("      ref: %s\n", forge_versions[mod])
+  }
+}
+!
+awk -f ${prog}  < Puppetfile > .fixtures.yaml
