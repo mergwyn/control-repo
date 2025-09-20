@@ -5,8 +5,11 @@
 class profile::puppet::repo (
   String $release = $facts['os']['distro']['codename'],
 ) {
-  $ver = split($serverversion, '\.')
-  $version = $ver[0]
+  $ver = split($server_facts['serverversion'], '\.')
+  # $version = $ver[0]
+  $version = '8'
+  notify{"serverversion  is: ${ver}": }
+  notify{"serverversion major is: ${version}": }
 
   $arch =  $facts['os']['architecture']
   case $arch {
