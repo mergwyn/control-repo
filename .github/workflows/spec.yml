@@ -25,11 +25,11 @@ jobs:
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
         if: ${{ github.repository_owner == 'mergwyn' }}
 
-      - name: Activate Ruby 2.7
+      - name: Activate Ruby 3.2
         uses: ruby/setup-ruby@v1
         if: ${{ github.repository_owner == 'mergwyn' }}
         with:
-          ruby-version: "2.7"
+          ruby-version: "3.2"
           bundler-cache: true
 
       - name: Print bundle environment

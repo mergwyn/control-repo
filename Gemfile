@@ -26,7 +26,7 @@ group :development do
   gem "metadata-json-lint", '~> 4.0',            require: false
   gem "rspec-puppet-facts", '~> 4.0',            require: false
   gem "dependency_checker", '~> 1.0.0',          require: false
-  gem "parallel_tests", '= 3.13.0',              require: false
+  gem "parallel_tests", '= 3.12.1',              require: false
   gem "pry", '~> 0.10',                          require: false
   gem "simplecov-console", '~> 0.9',             require: false
   gem "puppet-debugger", '~> 1.0',               require: false
@@ -34,6 +34,7 @@ group :development do
   gem "rubocop-performance", '= 1.16.0',         require: false
   gem "rubocop-rspec", '= 2.19.0',               require: false
   gem "rb-readline", '= 0.5.5',                  require: false, platforms: [:mswin, :mingw, :x64_mingw]
+  gem "rexml", '>= 3.0.0', '< 3.2.7',            require: false
   gem "onceover",                                require: false
   gem "rspec-puppet-utils",                      require: false
   gem "github_changelog_generator",              require: false
@@ -46,7 +47,7 @@ group :development, :release_prep do
 end
 group :system_tests do
   gem "puppet_litmus", '~> 1.0',   require: false, platforms: [:ruby, :x64_mingw]
-  gem "CFPropertyList", '< 3.0.8', require: false, platforms: [:mswin, :mingw, :x64_mingw]
+  gem "CFPropertyList", '< 3.0.7', require: false, platforms: [:mswin, :mingw, :x64_mingw]
   gem "serverspec", '~> 2.41',     require: false
 end
 
