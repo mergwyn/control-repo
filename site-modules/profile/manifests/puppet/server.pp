@@ -47,6 +47,7 @@ class profile::puppet::server {
     manage_git          => true,
     manage_virtualenv   => true,
     default_environment => 'production',
+    python_version      => '',
     secret_key          => fqdn_rand_string(32),
   }
   # Access Puppetboard through pboard.example.com
