@@ -7,7 +7,7 @@ class role::main_server {
   include profile::puppet::dev
 
   include profile::app::sssd
-  include profile::app::zabbix::agent
+  #include profile::app::zabbix::agent
   include profile::platform::baseline::debian::autofs
   include profile::platform::baseline::debian::virtual::lxd
   include profile::platform::baseline::debian::virtual::kubernetes

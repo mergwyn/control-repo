@@ -5,7 +5,7 @@ class role::lxd_server {
   include profile::app::sssd
   include profile::platform::baseline::debian::virtual::lxd
   include profile::platform::baseline::debian::virtual::kubernetes
-  include profile::app::zabbix::agent
+  #include profile::app::zabbix::agent
   include profile::app::backuppc::client
   include profile::app::unison
   include profile::app::kopia
