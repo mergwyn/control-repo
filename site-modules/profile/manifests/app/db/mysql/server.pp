@@ -78,7 +78,7 @@ class profile::app::db::mysql::server (
   }
 
 # If Zabbix is about, setup up monitoring
-  if defined('profile::app::zabbix::agent') {
+  if lookup('profile::app::zabbix::agent::enabled') {
     $conf     = 'template_db_mysql.conf'
 
 #    profile::app::zabbix::template_host { 'Template DB MySQL by Zabbix agent': }

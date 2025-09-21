@@ -2,6 +2,7 @@
 class profile::app::zabbix::agent (
   $server         = 'zulu',
   $zabbix_version = lookup('defaults::zabbix_version'), # lint:ignore:lookup_in_parameter
+  $enabled        = true,
 ) {
   $serverstring = $server ? {
     $trusted['hostname'] => 'localhost',

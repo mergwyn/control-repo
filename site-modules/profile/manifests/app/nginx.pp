@@ -4,7 +4,7 @@ class profile::app::nginx {
   # TODO: move to hiera
   include nginx
 
-  if defined('profile::app::zabbix::agent') {
+  if lookup('profile::app::zabbix::agent::enabled') {
 # TODO set up the location needed for this template
     nginx::resource::location { "basic_status_${trusted['hostname']}":
       ensure         => present,

@@ -9,7 +9,7 @@ class profile::app::todobackup () {
   # TODO workout why this install fails
   #package {'todobackup': }
 
-  if defined('profile::app::zabbix::agent') {
+  if lookup('profile::app::zabbix::agent::enabled') {
     profile::app::zabbix::template_host { 'Template App EaseUS ToDo Backup by Zabbix agent active': }
   }
 }

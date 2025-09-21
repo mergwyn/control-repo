@@ -22,7 +22,7 @@ class profile::platform::baseline::debian {
   include profile::app::webmin
   #include profile::app::backuppc::client
 
-  if defined('profile::app::zabbix::agent') {
+  if lookup('profile::app::zabbix::agent::enabled') {
     profile::app::zabbix::template_host { 'Template OS Linux by Zabbix agent active': }
   }
 }

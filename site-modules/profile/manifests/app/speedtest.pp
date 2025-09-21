@@ -13,7 +13,7 @@ class profile::app::speedtest {
     hour        => '*/12',
   }
 
-  if defined('profile::app::zabbix::agent') {
+  if lookup('profile::app::zabbix::agent::enabled') {
     profile::app::zabbix::template_host { 'Template App Speedtest by Zabbix agent active': }
 
     include sudo

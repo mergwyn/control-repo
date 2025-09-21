@@ -100,7 +100,7 @@ class profile::app::backuppc::server (
 #      target => "${topdir}/.ssh/known_hosts"
 #  }
 
-  if defined('profile::app::zabbix::agent') {
+  if lookup('profile::app::zabbix::agent::enabled') {
     profile::app::zabbix::template_host { 'Template App BackupPC by Zabbix agent active': }
 
     # zabbix config

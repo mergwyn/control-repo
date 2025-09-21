@@ -47,6 +47,8 @@ defaults::zabbix_user:      'zabbix'
 defaults::zabbix_pass:      "%{lookup('secrets::zabbix')}"
 defaults::zabbix_url:       "zulu.%{trusted.domain}"
 
+profile::app::zabbix::agent::enabled: false
+
 lookup_options:
   "^classes(.*)$":
     merge: deep

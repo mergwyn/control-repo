@@ -50,7 +50,7 @@ class profile::app::iptv (
 
   #TODO xteve?
 
-  if defined('profile::app::zabbix::agent') {
+  if lookup('profile::app::zabbix::agent::enabled') {
     profile::app::zabbix::template_host { 'Template App xTeve by Zabbix agent active': }
   }
 }
