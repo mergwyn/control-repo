@@ -8,8 +8,8 @@ class profile::puppet::repo (
   $ver = split($server_facts['serverversion'], '\.')
   # $version = $ver[0]
   $version = '8'
-  notify{"serverversion  is: ${ver}": }
-  notify{"serverversion major is: ${version}": }
+  notify{ "serverversion  is: ${ver}": }
+  notify{ "serverversion major is: ${version}": }
 
   $arch =  $facts['os']['architecture']
   case $arch {
