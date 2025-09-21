@@ -7,8 +7,8 @@ class profile::puppet::agent {
   # make sure we match server major version
   $ver = split($server_facts['serverversion'], '\.')
   $version = '8'
-  notify{ "puppet::agent serverversion  is: ${ver}": }
-  notify{ "puppet::agent serverversion major is: ${version}": }
+  notify { "puppet::agent serverversion  is: ${ver}": }
+  notify { "puppet::agent serverversion major is: ${version}": }
 
   apt::pin { 'puppet':
     priority => 501,
