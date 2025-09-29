@@ -9,7 +9,7 @@ class profile::app::sssd {
 #    creates => $keytab,
 #  }
   class { 'sssd':
-    config  => {
+    main_config  => {
       'sssd'                    => {
 #        'services'            => ['nss', 'pam'],
         'config_file_version' => 2,
