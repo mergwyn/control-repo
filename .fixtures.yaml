@@ -112,8 +112,8 @@ fixtures:
       repo: mosen/cups
       ref:  1.5.0
     sssd:
-      repo: sgnl05/sssd
-      ref:  3.1.0
+      repo: puppet/sssd
+      ref:  1.0.0
     sshkeys_core:
       repo: puppetlabs/sshkeys_core
       ref:  2.5.1
@@ -146,7 +146,7 @@ fixtures:
       ref:  8.0.0
     debconf:
       repo: stm/debconf
-      ref:  6.2.0
+      ref:  7.0.1
     unattended_upgrades:
       repo: puppet/unattended_upgrades
       ref:  8.2.0
@@ -164,7 +164,7 @@ fixtures:
       ref:  5.0.0
     keepalived:
       repo: puppet/keepalived
-      ref:  5.2.1
+      ref:  6.0.0
     concat:
       repo: puppetlabs/concat
       ref:  9.1.0
@@ -182,7 +182,7 @@ fixtures:
       ref:  8.1.0
     python:
       repo: puppet/python
-      ref:  7.4.0
+      ref:  8.0.0
     githubreleases:
       repo: dodevops/githubreleases
       ref:  4.1.0

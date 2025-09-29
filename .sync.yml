@@ -53,7 +53,9 @@ Rakefile:
     - strict_indent
     - parameter_documentation
     - parameter_order
+    - parameter_types
     - params_empty_string_assignment
+    - lookup_in_parameter
   extras: 
 #  - require 'ra10ke'
 #  - Ra10ke::RakeTask.new

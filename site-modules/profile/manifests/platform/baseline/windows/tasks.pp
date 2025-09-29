@@ -3,8 +3,8 @@
 #
 #
 class profile::platform::baseline::windows::tasks (
-  Hash           $objects  = {},
-  Optional[Hash] $defaults = {},
+  Hash $objects  = {},
+  Hash $defaults = {},
 ) {
   case $facts['kernel'] {
     'windows': {

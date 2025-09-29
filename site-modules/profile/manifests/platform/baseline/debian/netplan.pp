@@ -10,7 +10,7 @@
 #
 #
 class profile::platform::baseline::debian::netplan (
-  Optional[Hash] $ethernets = { $facts['networking']['primary'] => { dhcp4 => true } },
+  Hash $ethernets = { $facts['networking']['primary'] => { dhcp4 => true } },
   Optional[Hash] $bridges   = undef,
   Optional[Hash] $bonds   = undef,
   Optional[Hash] $vlans   = undef,

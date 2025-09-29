@@ -49,6 +49,9 @@ defaults::zabbix_url:       "zulu.%{trusted.domain}"
 
 profile::app::zabbix::agent::enabled: false
 
+sssd::domains: [ "domain/%{rusted.domain}" ]
+sssd::services: [ 'nss' ]
+
 lookup_options:
   "^classes(.*)$":
     merge: deep

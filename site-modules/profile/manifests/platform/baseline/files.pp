@@ -4,8 +4,8 @@
 #
 #
 class profile::platform::baseline::files (
-  Hash           $objects  = {},
-  Optional[Hash] $defaults = {},
+  Hash $objects  = {},
+  Hash $defaults = {},
 ) {
   unless empty ($objects) {
     create_resources(file, $objects, $defaults)

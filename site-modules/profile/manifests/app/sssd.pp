@@ -9,7 +9,7 @@ class profile::app::sssd {
 #    creates => $keytab,
 #  }
   class { 'sssd':
-    config  => {
+    main_config  => {
       'sssd'                    => {
 #        'services'            => ['nss', 'pam'],
         'config_file_version' => 2,
@@ -54,7 +54,7 @@ class profile::app::sssd {
   include profile::platform::baseline::debian::apparmor
   file { '/etc/apparmor.d/local/usr.sbin.sssd':
     ensure  => file,
-    notify  => Service['sssd', 'apparmor'],
+    notify  => [Class['sssd'], Service['apparmor']],
     owner   => 'root',
     group   => 'root',
     content => @("EOT"),
@@ -82,6 +82,6 @@ class profile::app::sssd {
   ::systemd::dropin_file { 'sssd-pidfile.conf':
     unit    => 'sssd.service',
     content => "[Service]\nPIDFile=/run/sssd.pid\n",
-    notify  => Service['sssd'],
+    notify  => Class['sssd'],
   }
 }
