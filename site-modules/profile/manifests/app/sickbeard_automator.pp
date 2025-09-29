@@ -86,7 +86,7 @@ class profile::app::sickbeard_automator (
     #revision => 'e6535dd61d66b0c6de7f2275f58952a1df7f9df8',
     revision => 'master',
     provider => git,
-    require  => Service['sssd'],
+    require  => Class['sssd'],
     source   => 'https://github.com/mdhiggins/sickbeard_mp4_automator',
     notify   => Python::Requirements[$requirements],
     owner    => $owner,
@@ -100,7 +100,7 @@ class profile::app::sickbeard_automator (
     group      => $group,
     require    => [
       Vcsrepo[$target],
-      Service['sssd'],
+      Class['sssd'],
     ],
   }
   python::requirements { $requirements :
@@ -109,7 +109,7 @@ class profile::app::sickbeard_automator (
     group      => $group,
     require    => [
       Vcsrepo[$target],
-      Service['sssd'],
+      Class['sssd'],
     ],
   }
 
@@ -118,7 +118,7 @@ class profile::app::sickbeard_automator (
     ensure  => directory,
     owner   => $owner,
     group   => $group,
-    require => Service['sssd'],
+    require => Class['sssd'],
   }
 
   exec { 'install_sample':
@@ -203,7 +203,7 @@ class profile::app::sickbeard_automator (
     owner   => $owner,
     group   => $group,
     mode    => '0755',
-    require => Service['sssd'],
+    require => Class['sssd'],
   }
 
   file { $logfile:
@@ -211,6 +211,6 @@ class profile::app::sickbeard_automator (
     mode    => '0664',
     owner   => $owner,
     group   => $group,
-    require => [File[$logdir], Service['sssd'],],
+    require => [File[$logdir], Class['sssd'],],
   }
 }

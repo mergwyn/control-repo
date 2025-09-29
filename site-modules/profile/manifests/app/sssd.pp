@@ -82,6 +82,6 @@ class profile::app::sssd {
   ::systemd::dropin_file { 'sssd-pidfile.conf':
     unit    => 'sssd.service',
     content => "[Service]\nPIDFile=/run/sssd.pid\n",
-    notify  => Service['sssd'],
+    notify  => Class['sssd'],
   }
 }

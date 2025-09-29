@@ -22,7 +22,7 @@ class profile::platform::baseline::debian::zfs::snapshotter (
         ensure  => directory,
         owner   => $owner,
         group   => $group,
-        require => Service['sssd'],
+        require => Class['sssd'],
       }
       -> python::pyvenv { $venv: # install dependencies
         ensure     => present,
@@ -52,7 +52,7 @@ class profile::platform::baseline::debian::zfs::snapshotter (
         ensure  => directory,
         owner   => $owner,
         group   => $group,
-        require => Service['sssd'],
+        require => Class['sssd'],
       }
       $defaults = {
         path    => $target_ini,
