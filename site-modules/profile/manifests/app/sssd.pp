@@ -54,7 +54,7 @@ class profile::app::sssd {
   include profile::platform::baseline::debian::apparmor
   file { '/etc/apparmor.d/local/usr.sbin.sssd':
     ensure  => file,
-    notify  => [ Class['sssd'], Service['apparmor'] ],
+    notify  => [Class['sssd'], Service['apparmor']],
     owner   => 'root',
     group   => 'root',
     content => @("EOT"),

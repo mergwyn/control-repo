@@ -4,8 +4,8 @@
 #
 #
 class profile::platform::baseline::debian::mounts (
-  Hash           $objects  = {},
-  Optional[Hash] $defaults = {},
+  Hash $objects  = {},
+  Hash $defaults = {},
 ) {
   unless empty ($objects) {
     create_resources(mount, $objects, $defaults)

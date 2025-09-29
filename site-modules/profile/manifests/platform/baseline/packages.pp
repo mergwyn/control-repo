@@ -4,8 +4,8 @@
 #
 #
 class profile::platform::baseline::packages (
-  Hash           $objects  = {},
-  Optional[Hash] $defaults = {},
+  Hash $objects  = {},
+  Hash $defaults = {},
 ) {
   case $facts['kernel'] {
     'Darwin': {
