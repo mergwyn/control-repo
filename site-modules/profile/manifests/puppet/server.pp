@@ -14,9 +14,9 @@ class profile::puppet::server {
         'remote'                 => 'https://github.com/mergwyn/control-repo',
         'basedir'                => "${settings::codedir}/environments",
         'invalid_branches'       => 'correct',
-        'ignore_branch_prefixes' => [
-          renovate,
-        ],
+        # 'ignore_branch_prefixes' => [
+        #   renovate,
+        # ],
       },
     },
   }
