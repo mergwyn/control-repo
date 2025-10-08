@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Copyright (C) Matthieu Patou <mat@matws.net> 2010
+# Copyright (C) Matthieu Patou <mat@matws.net> 2010-2011
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -15,88 +15,88 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
+# Revised 2017-08-10, Tim Kent, as follows:
+#    - Back up TDB files in the same manner as LDB files.
+#    - Stop tar returning error code 1 on changed files in the private dir
+#      so the if statement no longer needs to ignore it.
+# Revised 2013-09-25, Brian Martin, as follows:
+#    - Allow retention period ("DAYS") to be specified as a parameter.
+#    - Allow individual positional parameters to be left at the default
+#      by specifying "-"
+#    - Use IS0 8601 standard dates (yyyy-mm-dd instead of mmddyyyy).
+#    - Display tar exit codes when reporting errors.
+#    - Don't send error messages to /dev/null, so we know what failed.
+#    - Suppress useless tar "socket ignored" message.
+#    - Fix retention period bug when deleting old backups ($DAYS variable
+#      could be set, but was ignored).
 
-FROMWHERE=/var/lib/samba
-_hostname=$(hostname -s)
-case $_hostname in
-foxtrot)
-  WHERE=/srv/backup/${_hostname}
-  ;;
-*)
-  WHERE=/var/backups
-  ;;
-esac
-if [ -n "$1" ] ; then
-  if [ "$1" = "-h" ] || [ "$1" = "--usage" ]; then
-    echo "samba_backup [provisiondir] [destinationdir]"
-    echo "Will backup your provision located in provisiondir to archive stored in destinationdir"
-    echo "Default provisiondir: $FROMWHERE"
-    echo "Default destinationdir: $WHERE"
-    exit 0
-  fi
+
+
+FROMWHERE=/usr/local/samba
+WHERE=/usr/local/backups
+DAYS=3
+if [ -n "$1" ] && [ "$1" = "-h" -o "$1" = "--usage" ]; then
+	echo "samba_backup [provisiondir] [destinationdir] [retpd]"
+	echo "Will backup your provision located in provisiondir to archive stored"
+	echo "in destinationdir for retpd days. Use - to leave an option unchanged."
+	echo "Default provisiondir: $FROMWHERE"
+	echo "Default destinationdir: $WHERE"
+	echo "Default destinationdir: $DAYS"
+	exit 0
 fi
 
-if [ -n "$1" ] && [ -d "$1" ]; then FROMWHERE=$1; fi
-if [ -n "$2" ] && [ -d "$2" ]; then WHERE=$2; fi
+[ -n "$1" -a "$1" != "-" ]&&FROMWHERE=$1	# Use parm or default if "-".  Validate later.
+[ -n "$2" -a "$2" != "-" ]&&WHERE=$2		# Use parm or default if "-".  Validate later.
+[ -n "$3" -a "$3" -eq "$3" 2> /dev/null ]&&DAYS=$3	# Use parm or default if non-numeric (incl "-").
 
-echo "$0: $FROMWHERE $WHERE"
-
-DIRS="private sysvol"
+DIRS="private etc sysvol"
 #Number of days to keep the backup
-DAYS="-daystart -mtime +2"
-WHEN=$(date +%d%m%y)
+WHEN=`date +%Y-%m-%d`	# ISO 8601 standard date.
 
-cd "$FROMWHERE" || exit 1
+if [ ! -d $WHERE ]; then
+	echo "Missing backup directory $WHERE"
+	exit 1
+fi
+
+if [ ! -d $FROMWHERE ]; then
+	echo "Missing or wrong provision directory $FROMWHERE"
+	exit 1
+fi
+
+cd $FROMWHERE
 for d in $DIRS;do
-  relativedirname=$(find . -type d -name "$d" -prune)
-  relativedirname=${relativedirname:-./$d/*}
-  n=$(echo "$d" | sed 's/\//_/g')
-  case "$d" in
-  "private")
-    for db in tdb ldb
-    do
-      find "$relativedirname" -name "*.$db.bak" -exec rm {} \;
-      find "$relativedirname" -name "*.$db" ! -name '*netlogon_creds_cli.tdb' |
-      while read -r ldb ; do
-        if tdbbackup "$ldb"; then
-          echo "Error while backuping $ldb"
-          exit 1
-        fi
-      done
-    done
-    tar \
-      --exclude='*.ldb' --exclude='*.tdb' --exclude='*.tmp' --exclude=./private/smbd.tmp --exclude=ldapi --exclude='*.sock'\
-      -cjf "${WHERE}/samba4_${n}.${WHEN}.tar.bz2"  "$relativedirname" \
-      >/dev/null 2>&1
-    res=$?
-    case $res in
-    0)  ;;
-    1)  #echo "Error $res while archiving ${WHERE}/samba4_${n}.${WHEN}.tar.bz2"
-      ;;
-    *)  echo "Error $res while archiving ${WHERE}/samba4_${n}.${WHEN}.tar.bz2"
-                        exit 1
-      ;;
-    esac
-    find "$relativedirname" -name "*.ldb.bak" -exec rm {} \;
-    find "$relativedirname" -name "*.tdb.bak" -exec rm {} \;
-    find "$WHERE" -name "samba4_*bz2" "$DAYS" -exec rm  {} \; >/dev/null 2>&1
-    ;;
-  *)
-    TARGET="${WHERE}/${n}.${WHEN}"
-    tar --exclude=.osync_monitor --exclude=.osync_workdir -cjf "${TARGET}.tar.bz2"  "$relativedirname" #>/dev/null 2>&1
-    res=$?
-    case $res in
-    0)  ;;
-    1)  echo "Error $res while archiving ${TARGET}.tar.bz2"
-      ;;
-    *)  echo "Error $res while archiving ${TARGET}.tar.bz2"
-      exit 1
-      ;;
-    esac
-    find "$WHERE" -name "${n}*bz2" "$DAYS" -exec rm  {} \; >/dev/null 2>&1 || true
-    ;;
-  esac
+	relativedirname=`find . -type d -name "$d" -prune`
+	n=`echo $d | sed 's/\//_/g'`
+	if [ "$d" = "private" ]; then
+		find $relativedirname -name "*.[l|t]db.bak" -exec rm {} \;
+		for ldb in `find $relativedirname -name "*.[l|t]db"`; do
+			tdbbackup $ldb
+			Status=$?	# Preserve $? for message, since [ alters it.
+			if [ $Status -ne 0 ]; then
+				echo "Error while backing up $ldb - status $Status"
+				exit 1
+			fi
+		done
+		# Run the backup.
+		#    --warning=no-file-changed set as private dir is always changing.
+		#    --warning=no-file-ignored set to suppress "socket ignored" messages.
+		tar cjf ${WHERE}/samba4_${n}.${WHEN}.tar.bz2  $relativedirname --exclude=\*.\[l\|t\]db --warning=no-file-changed --warning=no-file-ignored --transform 's/.ldb.bak$/.ldb/' --transform 's/.tdb.bak$/.tdb/'
+		Status=$?	# Preserve $? for message, since [ alters it.
+		if [ $Status -ne 0 ]; then
+			echo "Error while archiving ${WHERE}/samba4_${n}.${WHEN}.tar.bz2 - status = $Status"
+			exit 1
+		fi
+		find $relativedirname -name "*.[l|t]db.bak" -exec rm {} \;
+	else
+		# Run the backup.
+		#    --warning=no-file-ignored set to suppress "socket ignored" messages.
+		tar cjf ${WHERE}/${n}.${WHEN}.tar.bz2  $relativedirname --warning=no-file-ignored
+		Status=$?	# Preserve $? for message, since [ alters it.
+		if [ $Status -ne 0 ]; then
+			echo "Error while archiving ${WHERE}/${n}.${WHEN}.tar.bz2 - status = $Status"
+			exit 1
+		fi
+	fi
 done
 
-
-
+find $WHERE -name "samba4_*bz2" -mtime +$DAYS -exec rm  {} \;
