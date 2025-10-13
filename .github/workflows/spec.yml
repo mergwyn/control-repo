@@ -8,6 +8,7 @@ on:
   push:
     branches:
       production
+      renovate/*
 
 #concurrency:
 #  group: ${{ github.head_ref }}
