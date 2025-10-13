@@ -11,9 +11,9 @@ class profile::puppet::server {
     deploy_settings => { 'exclude_spec' => true, },
     sources         => {
       'mergwyn' => {
-        'remote'                 => 'https://github.com/mergwyn/control-repo',
-        'basedir'                => "${settings::codedir}/environments",
-        'invalid_branches'       => 'correct',
+        'remote'           => 'https://github.com/mergwyn/control-repo',
+        'basedir'          => "${settings::codedir}/environments",
+        'invalid_branches' => 'correct',
         # 'ignore_branch_prefixes' => [
         #   renovate,
         # ],
