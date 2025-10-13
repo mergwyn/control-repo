@@ -5,10 +5,14 @@ on:
     - cron: '0 0 1 * *'
   workflow_dispatch:
   pull_request:
+    types:
+      - opened
+      - updated
+    branches:
+      'renovate/**'
   push:
     branches:
       production
-      renovate/*
 
 #concurrency:
 #  group: ${{ github.head_ref }}
