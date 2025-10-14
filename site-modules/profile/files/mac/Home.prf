@@ -8,7 +8,6 @@ include common
 ignore = BelowPath .AppleDB
 ignore = BelowPath .bash_sessions
 ignore = BelowPath .bundle
-ignore = BelowPath .config
 ignore = BelowPath .cups
 ignore = BelowPath .dropbox
 ignore = BelowPath .gdfuse/me/cache
