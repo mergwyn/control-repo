@@ -49,7 +49,7 @@ fi
 [ -n "$2" -a "$2" != "-" ]&&WHERE=$2		# Use parm or default if "-".  Validate later.
 [ -n "$3" -a "$3" -eq "$3" 2> /dev/null ]&&DAYS=$3	# Use parm or default if non-numeric (incl "-").
 
-DIRS="private etc sysvol"
+DIRS="private sysvol"
 #Number of days to keep the backup
 WHEN=`date +%Y-%m-%d`	# ISO 8601 standard date.
 
@@ -80,7 +80,7 @@ for d in $DIRS;do
 		# Run the backup.
 		#    --warning=no-file-changed set as private dir is always changing.
 		#    --warning=no-file-ignored set to suppress "socket ignored" messages.
-		tar cjf ${WHERE}/samba4_${n}.${WHEN}.tar.bz2  $relativedirname --exclude=\*.\[l\|t\]db --warning=no-file-changed --warning=no-file-ignored --transform 's/.ldb.bak$/.ldb/' --transform 's/.tdb.bak$/.tdb/'
+		tar --exclude=\*.\[l\|t\]db -cjf ${WHERE}/samba4_${n}.${WHEN}.tar.bz2  $relativedirname --warning=no-file-changed --warning=no-file-ignored --transform 's/.ldb.bak$/.ldb/' --transform 's/.tdb.bak$/.tdb/'
 		Status=$?	# Preserve $? for message, since [ alters it.
 		if [ $Status -ne 0 ]; then
 			echo "Error while archiving ${WHERE}/samba4_${n}.${WHEN}.tar.bz2 - status = $Status"
