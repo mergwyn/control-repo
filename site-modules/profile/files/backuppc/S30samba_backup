@@ -41,13 +41,12 @@ if [ -n "$1" ] && [ "$1" = "-h" -o "$1" = "--usage" ]; then
 	echo "in destinationdir for retpd days. Use - to leave an option unchanged."
 	echo "Default provisiondir: $FROMWHERE"
 	echo "Default destinationdir: $WHERE"
-	echo "Default destinationdir: $DAYS"
 	exit 0
 fi
 
-[ -n "$1" -a "$1" != "-" ]&&FROMWHERE=$1	# Use parm or default if "-".  Validate later.
-[ -n "$2" -a "$2" != "-" ]&&WHERE=$2		# Use parm or default if "-".  Validate later.
-[ -n "$3" -a "$3" -eq "$3" 2> /dev/null ]&&DAYS=$3	# Use parm or default if non-numeric (incl "-").
+if [ -n "$1" ] && [ -d "$1" ]; then FROMWHERE=$1; fi
+if [ -n "$2" ] && [ -d "$2" ]; then WHERE=$2; fi
+
 
 DIRS="private sysvol"
 #Number of days to keep the backup
@@ -62,6 +61,8 @@ if [ ! -d $FROMWHERE ]; then
 	echo "Missing or wrong provision directory $FROMWHERE"
 	exit 1
 fi
+
+echo "$0: $FROMWHERE $WHERE"
 
 cd $FROMWHERE
 for d in $DIRS;do
