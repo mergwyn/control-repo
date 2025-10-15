@@ -69,7 +69,7 @@ for d in $DIRS;do
 	n=`echo $d | sed 's/\//_/g'`
 	if [ "$d" = "private" ]; then
 		find $relativedirname -name "*.[l|t]db.bak" -exec rm {} \;
-		for ldb in `find $relativedirname -name "*.[l|t]db"`; do
+		for ldb in `find $relativedirname -name "*.[l|t]db" | grep -v netlogon_creds_cli.tdb`; do
 			tdbbackup $ldb
 			Status=$?	# Preserve $? for message, since [ alters it.
 			if [ $Status -ne 0 ]; then
