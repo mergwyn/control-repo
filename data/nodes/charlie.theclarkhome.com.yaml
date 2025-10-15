@@ -41,7 +41,7 @@ lxd::preseed:
     name: default
     driver: zfs
 
-profile::app::kopia::repos:       'server-foxtrot kopia-idrivee2'
+profile::app::kopia::repos:       'kopia-foxtrot kopia-idrivee2'
 profile::app::kopia::maintenance: false
 
 profile::platform::baseline::debian::zfs::snapshotter::settings:

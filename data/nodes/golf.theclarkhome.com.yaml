@@ -43,7 +43,7 @@ profile::platform::baseline::debian::zfs::snapshotter::settings:
   rpool/zfspv:
     snap: "no"
 
-profile::app::kopia::repos:       'server-foxtrot kopia-idrivee2'
+profile::app::kopia::repos:       'kopia-foxtrot kopia-idrivee2'
 profile::app::kopia::maintenance: false
 
 profile::app::backuppc::client::backup_files_exclude:
