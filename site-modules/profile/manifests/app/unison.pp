@@ -45,7 +45,7 @@ class profile::app::unison {
     'Debian': {
       package { 'unison': ensure => absent, }
 
-      $version = '2.53.3'
+      $version = '2.53.7'
       $os = downcase($facts['os']['name'])
       $hardware = $facts['os']['hardware']
 
