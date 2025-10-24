@@ -68,6 +68,11 @@ class profile::app::unison {
         cleanup      => true,
         creates      => $creates,
       }
+      file { "${link}-fsmonitor":
+        ensure    => 'link',
+        target    => "${creates}-fsmonitor",
+        subscribe => Archive[$archive_path],
+      }
       file { $link:
         ensure    => 'link',
         target    => $creates,
