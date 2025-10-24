@@ -20,6 +20,7 @@ do
 	ln -s /usr/local/share/${file} ${HOME}/Library/LaunchAgents/${file}
 	plutil -lint ${HOME}/Library/LaunchAgents/${file} && {
 		launchctl unload ${HOME}/Library/LaunchAgents/${file}
+                launchctl enable gui/$(id -u)/$(basename file .plist)
 		launchctl load ${HOME}/Library/LaunchAgents/${file}
 	}
 done
