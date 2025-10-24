@@ -12,3 +12,4 @@ profile::platform::baseline::packages::objects:
   monitorcontrol: {}
   vmware-fusion: {}
   whatsapp: {}
+  autozimu/homebrew-formulas/unison-fsmonitor: {}
