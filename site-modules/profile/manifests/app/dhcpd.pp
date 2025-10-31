@@ -47,6 +47,7 @@ class profile::app::dhcpd (
   dhcp::host { 'zigbee1':      mac => '18:69:d8:46:fc:d2', ip => '10.58.0.201' }  # Silvercrest zigbee gateway
   dhcp::host { 'samsung-ashp': mac => '90:15:06:f9:ed:f4', ip => '10.58.0.202' }  # ASHP M5 atom lite
   dhcp::host { 'slzb-06-1':    mac => '4c:c3:82:cc:e9:ff', ip => '10.58.0.203' }  # SLZB6 zigbee gateway
+  dhcp::host { 'esphome-dev':  mac => '00:4b:12:a1:93:dc', ip => '10.58.0.204' }  # Dev M5 atom lite
   dhcp::host { 'wserver':      mac => '04:ee:e8:1a:64:d2', ip => '10.58.0.240' }
   dhcp::host { 'wclient':      mac => '04:ee:e8:1f:68:73', ip => '10.58.0.241' }
   dhcp::host { 'logger1':      mac => 'b8:d6:1a:57:5e:57', ip => '10.58.0.242' }  # Solis D_7A1231135150313A
