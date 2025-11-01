@@ -47,14 +47,15 @@ jobs:
         if: ${{ github.repository_owner == 'mergwyn' }}
         run: |
           bundle exec rake validate lint check rubocop
+          
       - name: Generate fixtures
-        run: scripts/generate-fixtures
-      - name: Print generated fixtures
         if: ${{ github.repository_owner == 'mergwyn' }}
         run: |
-          echo Post generate .fixtures
-          ls -l .fixtures
-          cat .fixtures
+          scripts/generate-fixtures
+          echo Post generate .fixtures.yaml
+          ls -l .fixtures.yaml
+          cat .fixtures.yaml
+          
       - name: Setup Spec Test Matrix
         id: get-matrix
         run: |
