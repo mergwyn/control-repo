@@ -47,15 +47,7 @@ jobs:
         if: ${{ github.repository_owner == 'mergwyn' }}
         run: |
           bundle exec rake validate lint check rubocop
-          
-      - name: Generate fixtures
-        if: ${{ github.repository_owner == 'mergwyn' }}
-        run: |
-          scripts/generate-fixtures
-          echo Post generate .fixtures.yaml
-          ls -l .fixtures.yaml
-          cat .fixtures.yaml
-          
+                  
       - name: Setup Spec Test Matrix
         id: get-matrix
         run: |
@@ -95,9 +87,11 @@ jobs:
           ruby-version: ${{matrix.ruby_version}}
           bundler-cache: true
 
-      - name: Print fixtures
+      - name: Generate fixtures from Puppetfile
         if: ${{ github.repository_owner == 'mergwyn' }}
         run: |
+          echo Generate .fixtures.yaml from Puppetfile
+          scripts/generate-fixtures
           echo Post generate .fixtures.yaml
           ls -l .fixtures.yaml
           cat .fixtures.yaml
