@@ -4,12 +4,13 @@ profile::platform::baseline::packages::defaults:
   ensure: present
   provider: homebrew
 profile::platform::baseline::packages::objects:
+  autozimu/homebrew-formulas/unison-fsmonitor: {}
   db-browser-for-sqlite: {}
   discord: {}
   garmin-express: {}
   handbrake-app: {}
   kopiaui: {}
   monitorcontrol: {}
+  slack: {}
   vmware-fusion: {}
   whatsapp: {}
-  autozimu/homebrew-formulas/unison-fsmonitor: {}
