@@ -95,6 +95,13 @@ jobs:
           ruby-version: ${{matrix.ruby_version}}
           bundler-cache: true
 
+      - name: Print fixtures
+        if: ${{ github.repository_owner == 'mergwyn' }}
+        run: |
+          echo Post generate .fixtures.yaml
+          ls -l .fixtures.yaml
+          cat .fixtures.yaml
+
       - name: Print bundle environment
         run: |
           echo ::group::bundler environment
