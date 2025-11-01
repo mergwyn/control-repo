@@ -49,6 +49,12 @@ jobs:
           bundle exec rake validate lint check rubocop
       - name: Generate fixtures
         run: scripts/generate-fixtures
+      - name: Print generated fixtures
+        if: ${{ github.repository_owner == 'mergwyn' }}
+        run: |
+          echo Post generate .fixtures
+          ls -l .fixtures
+          cat .fixtures
       - name: Setup Spec Test Matrix
         id: get-matrix
         run: |
