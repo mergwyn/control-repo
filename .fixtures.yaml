@@ -125,7 +125,7 @@ fixtures:
       ref:  4.2.0
     zabbix:
       repo: puppet/zabbix
-      ref:  11.0.0
+      ref:  10.0.0
     apache:
       repo: puppetlabs/apache
       ref:  12.3.1
