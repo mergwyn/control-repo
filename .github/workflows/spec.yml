@@ -27,7 +27,7 @@ jobs:
 
     steps:
       - name: Checkout Source
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
+        uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5
         if: ${{ github.repository_owner == 'mergwyn' }}
 
       - name: Activate Ruby 3.2
@@ -79,7 +79,7 @@ jobs:
       - run: |
           echo 'puppet_version=${{ env.SANITIZED_PUPPET_VERSION }}' >> $BUILDEVENT_FILE
       - name: Checkout Source
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
+        uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5
 
       - name: "Activate Ruby ${{ matrix.ruby_version }}"
         uses: ruby/setup-ruby@v1
