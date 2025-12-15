@@ -6,6 +6,9 @@ too_old="36 hours ago"
 
 source /etc/default/kopia
 
+# Refresh certificates
+kopiacmd system certs
+
 for repo in ${REPOS} ; do
   log_info "Starting backup for repo: ${repo}"
   export KOPIA_CONFIG_PATH=~/.config/kopia/${repo}.config
