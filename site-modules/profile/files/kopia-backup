@@ -7,7 +7,7 @@ too_old="36 hours ago"
 source /etc/default/kopia
 
 # Refresh certificates
-kopiacmd system certs
+/opt/scripts/bin/kopiacmd system certs
 
 for repo in ${REPOS} ; do
   log_info "Starting backup for repo: ${repo}"
