@@ -7,9 +7,14 @@ too_old="36 hours ago"
 source /etc/default/kopia
 
 # Refresh certificates
-/opt/scripts/bin/kopiacmd system certs
+kopiacmd=/opt/scripts/bin/kopiacmd system certs
+LOGLEVEL=warn ${kopiacmd} system certs
 
 for repo in ${REPOS} ; do
+  log_debug Connecting to repo ${repo}
+  LOGLEVEL=warn ${kopiacmd} repo connect ${repo}
+
+  [[ ${repo} != filesystem ]] 
   log_info "Starting backup for repo: ${repo}"
   export KOPIA_CONFIG_PATH=~/.config/kopia/${repo}.config
   #kopia snapshot create --all ${ARGS}
