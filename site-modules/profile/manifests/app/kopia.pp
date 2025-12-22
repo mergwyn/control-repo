@@ -58,6 +58,11 @@ class profile::app::kopia (
     mode   => '0755',
     source => 'puppet:///modules/profile/kopia-backup',
   }
+  file { '/etc/cron.weekly/kopia-maintenance':
+    ensure => file,
+    mode   => '0755',
+    source => 'puppet:///modules/profile/kopia-maintenance',
+  }
 
 # Create backup excludes from the backuppc values
 # TODO switch to kopia values
