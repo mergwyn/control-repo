@@ -8,7 +8,7 @@ source /etc/default/kopia
 
 # Refresh certificates
 kopiacmd=/opt/scripts/bin/kopiacmd
-LOGLEVEL=WARN ${kopiacmd} system certs
+LOGLEVEL=WARN ${kopiacmd} system certs > /dev/null
 
 for repo in ${REPOS} ; do
   log_debug Connecting to repo ${repo}
