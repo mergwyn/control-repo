@@ -2,9 +2,11 @@
 
 source /opt/scripts/functions/log.sh
 
-#source /etc/default/kopia
 kopiacmd="/opt/scripts/bin/kopiacmd"
-REPOS=$(ls /etc/kopia/config.d/*.conf)
+
+source /etc/default/kopia
+
+[[ ${MAINTENANCE} == false ]] && exit 0
 
 for repo in $(${kopiacmd} repo valid kopia) ; do
   log_notice "Starting maintenance for repo: ${repo}"
