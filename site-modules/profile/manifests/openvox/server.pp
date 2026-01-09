@@ -54,22 +54,22 @@ class profile::openvox::server {
     vhost_name => 'echo.theclarkhome.com',
     port       => 80,
   }
-
-  $scripts  = hiera('profile::app::backuppc::client::scripts')
-  $preuser  = hiera('profile::app::backuppc::client::preuser')
-  $postuser = hiera('profile::app::backuppc::client::postuser')
-
-  file { "${preuser}/S21postgresql-backup":
-    ensure  => file,
-    source  => 'puppet:///modules/profile/backuppc/S21postgresql-backup',
-    mode    => '0555',
-    require => Class['profile::app::backuppc::client'],
-  }
-
-  file { "${postuser}/P21postgresql-backup-clean":
-    ensure  => file,
-    source  => 'puppet:///modules/profile/backuppc/P21postgresql-backup-clean',
-    mode    => '0555',
-    require => Class['profile::app::backuppc::client'],
-  }
+# TODO sort out backup without backuppc
+#  $scripts  = hiera('profile::app::backuppc::client::scripts')
+#  $preuser  = hiera('profile::app::backuppc::client::preuser')
+#  $postuser = hiera('profile::app::backuppc::client::postuser')
+#
+#  file { "${preuser}/S21postgresql-backup":
+#    ensure  => file,
+#    source  => 'puppet:///modules/profile/backuppc/S21postgresql-backup',
+#    mode    => '0555',
+#    require => Class['profile::app::backuppc::client'],
+#  }
+#
+#  file { "${postuser}/P21postgresql-backup-clean":
+#    ensure  => file,
+#    source  => 'puppet:///modules/profile/backuppc/P21postgresql-backup-clean',
+#    mode    => '0555',
+#    require => Class['profile::app::backuppc::client'],
+#  }
 }
