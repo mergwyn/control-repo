@@ -6,7 +6,7 @@ class role::k8s_server {
   include profile::platform::baseline::debian::virtual::kubernetes
   include profile::platform::baseline::debian::virtual::lxd
   #include profile::app::zabbix::agent
-  include profile::app::backuppc::client
+  #include profile::app::backuppc::client
   include profile::app::unison
   include profile::app::kopia
   include profile::app::velero

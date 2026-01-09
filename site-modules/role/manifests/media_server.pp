@@ -5,5 +5,5 @@ class role::media_server {
   include profile::app::sssd
   include profile::app::downloader
   #include profile::app::zabbix::agent
-  include profile::app::backuppc::client
+  #include profile::app::backuppc::client
 }

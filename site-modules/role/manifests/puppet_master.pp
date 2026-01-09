@@ -5,5 +5,5 @@ class role::puppet_master {
   include profile::puppet::agent
   include profile::puppet::dev
   #include profile::app::zabbix::agent
-  include profile::app::backuppc::client
+  #include profile::app::backuppc::client
 }
