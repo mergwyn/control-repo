@@ -22,8 +22,8 @@ class profile::openvox::server {
   }
 
   # Configure puppetdb and its underlying database
-  include openvoxdb
-  include openvoxdb::master::config
+  include puppetdb
+  include puppetdb::master::config
 
   # Clean old reports
   include cron
