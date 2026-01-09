@@ -51,7 +51,7 @@ class profile::app::samba::member {
       'kernel oplocks'                            => 'no',
       'unix extensions'                           => 'no',
       'veto oplock files'                         => @(EOT/L),
-                                                                                                                                     /*.mdb/\
+                                                     /*.mdb/\
                                                      *.MDB/\
                                                      *.idx/\
                                                      *.dbf/\
@@ -63,7 +63,7 @@ class profile::app::samba::member {
                                                      *.FPT/
                                                      |- EOT
       'veto files'                                => @(EOT/L),
-                                                                                                                                     /.zfs/\
+                                                     /.zfs/\
                                                      $RECYCLE.BIN/\
                                                      Network Trash Folder/\
                                                      Temporary Items/\
