@@ -7,7 +7,7 @@ class profile::platform::baseline (
   # OS Specific
   case $facts['os']['family'] {
     'Debian':   {
-      include profile::puppet::agent
+      include profile::openvox::agent
       include profile::platform::baseline::debian
     }
     'Darwin':   {
