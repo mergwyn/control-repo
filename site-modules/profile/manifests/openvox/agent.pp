@@ -29,16 +29,19 @@ class profile::openvox::agent {
     content => "# Expand the PATH to include extra puppet binaries\nPATH=\$PATH:/opt/puppetlabs/puppet/bin\n",
   }
 
-  include sudo
-  sudo::conf { 'openvox':
-    content => 'zabbix  ALL=(root)      NOPASSWD:       /opt/puppetlabs/puppet/bin/ruby',
+  if lookup('profile::app::zabbix::agent::enabled') {
+    include sudo
+    sudo::conf { 'openvox':
+      content => 'zabbix  ALL=(root)      NOPASSWD:       /opt/puppetlabs/puppet/bin/ruby',
+    }
+
+    $ruby = '/opt/puppetlabs/puppet/bin/ruby'
+    #$lastrunfile = "${settings::lastrunfile}" # TODO This gives the wrong value for some reason
+    $lastrunfile = '/opt/puppetlabs/puppet/public/last_run_summary.yaml'
+    $cmd  = "${ruby} -rjson -ryaml -e \"puts JSON.pretty_generate(YAML.load_file('${lastrunfile}'))\""
+    zabbix::userparameters { 'puppet-health':
+      content => "UserParameter=puppet.health[*],sudo ${cmd}\n",
+    }
   }
 
-  $ruby = '/opt/puppetlabs/puppet/bin/ruby'
-  #$lastrunfile = "${settings::lastrunfile}" # TODO This gives the wrong value for some reason
-  $lastrunfile = '/opt/puppetlabs/puppet/public/last_run_summary.yaml'
-  $cmd  = "${ruby} -rjson -ryaml -e \"puts JSON.pretty_generate(YAML.load_file('${lastrunfile}'))\""
-  zabbix::userparameters { 'puppet-health':
-    content => "UserParameter=puppet.health[*],sudo ${cmd}\n",
-  }
 }
