@@ -15,3 +15,7 @@ lookup_options:
   profile::app::backuppc::client::backup_files_exclude:
     merge: deep
     knockout_prefix: '--'
+
+  profile::app::kopia::backup_files_exclude:
+    merge: deep
+    knockout_prefix: '--'

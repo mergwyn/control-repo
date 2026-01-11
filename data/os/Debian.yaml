@@ -21,6 +21,9 @@ samba::classic::realm:                            "%{lookup('defaults::realm')}"
 # backuppc client
 profile::app::backuppc::client::backuppc_hostname:     "foxtrot.%{trusted.domain}"
 profile::app::backuppc::client::backup_files_exclude:
+
+# kopia client
+profile::app::kopia::backup_files_exclude:
   '/':
     - '$RECYCLE.BIN'
     - '.AppleDouble'

@@ -26,7 +26,7 @@ class profile::app::kopia (
       Variant[String,Array[String]],
       Hash[String, Variant[String,Array[String]]]
     ]
-  ] $backup_files_exclude = $profile::app::backuppc::client::backup_files_exclude,
+  ] $backup_files_exclude,
 
 ) {
   include profile::app::scripts

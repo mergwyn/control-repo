@@ -45,8 +45,7 @@ profile::platform::baseline::debian::zfs::snapshotter::settings:
 
 profile::app::kopia::repos:       'kopia-rustfs kopia-idrivee2'
 profile::app::kopia::maintenance: false
-
-profile::app::backuppc::client::backup_files_exclude:
+profile::app::kopia::backup_files_exclude:
   '/':
     - '/var/lib/rancher/k3s/agent/containerd'
     - '/run/k3s/containerd'

@@ -122,10 +122,13 @@ profile::platform::baseline::debian::zfs::snapshotter::settings:
   rpool/home:
     snap: "yes"
 
+
+#profile::app::backuppc::client::backup_files_exclude:
+
+# kopia client
 profile::app::kopia::repos:       'kopia-rustfs kopia-idrivee2'
 profile::app::kopia::maintenance: true
-
-profile::app::backuppc::client::backup_files_exclude:
+profile::app::kopia::backup_files_exclude:
   '/':
     - '*.cloud'
     - '*.cloudf'

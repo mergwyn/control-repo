@@ -14,6 +14,7 @@ profile::platform::baseline::debian::netplan::ethernets:
       search:    "%{alias('defaults::dns::search')}"
       addresses: "%{alias('defaults::dns::nameservers')}"
 
-profile::app::backuppc::client::backup_files_exclude:
+# kopia client
+profile::app::kopia::backup_files_exclude:
   '/':
     - '/var/lib/rancher/k3s/agent/containerd'
