@@ -7,5 +7,5 @@ class role::iptv_server {
   include profile::app::iptv
   include profile::app::speedtest
   #include profile::app::zabbix::agent
-  include profile::app::backuppc::client
+  #include profile::app::backuppc::client
 }
