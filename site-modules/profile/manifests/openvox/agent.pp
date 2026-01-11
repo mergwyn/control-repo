@@ -43,5 +43,4 @@ class profile::openvox::agent {
       content => "UserParameter=puppet.health[*],sudo ${cmd}\n",
     }
   }
-
 }
