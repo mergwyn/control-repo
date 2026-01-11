@@ -32,16 +32,18 @@ class profile::app::kopia (
   include profile::app::scripts
 
 # Install kopia
+  apt::keyring { 'kopia-keyring.gpg':
+    source => 'puppet:///modules/profile/kopia-keyring.gpg',
+  }
   apt::source { 'kopia':
-    location => 'http://packages.kopia.io/apt',
-    release  => 'stable',
-    repos    => 'main',
-    key      => {
-      name   => 'kopia-keyring.asc',
-      source => 'https://kopia.io/signing-key',
-    },
+    source_format => 'sources',
+    location      => 'http://packages.kopia.io/apt',
+    release       => 'stable',
+    repos         => 'main',
+    keyring       => '/etc/apt/keyrings/kopia-keyring.gpg',
   }
   package { ['kopia']: }
+  file {['/etc/apt/sources.list.d', '/etc/apt/keyrings/kopia-keyring.asc']: ensure => absent }
 
 # setup directory structure
   file {[$topdir, $config, $snapbefore, $snapafter, $folderbefore, $folderafter]:
