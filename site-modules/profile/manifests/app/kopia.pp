@@ -43,7 +43,7 @@ class profile::app::kopia (
     keyring       => '/etc/apt/keyrings/kopia-keyring.gpg',
   }
   package { ['kopia']: }
-  file {['/etc/apt/sources.list.d', '/etc/apt/keyrings/kopia-keyring.asc']: ensure => absent }
+  file {['/etc/apt/sources.list.d/kopia.list', '/etc/apt/keyrings/kopia-keyring.asc']: ensure => absent }
 
 # setup directory structure
   file {[$topdir, $config, $snapbefore, $snapafter, $folderbefore, $folderafter]:
