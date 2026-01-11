@@ -49,6 +49,12 @@ defaults::zabbix_url:       "zulu.%{trusted.domain}"
 
 profile::app::zabbix::agent::enabled: false
 
+# openvox support 
+puppet::client_package: openvox-agent
+puppet::server_package: openvox-server
+puppetdb::puppetdb_package: openvoxdb
+puppetdb::master::config::terminus_package: openvoxdb-termini
+
 sssd::domains: [ "domain/%{rusted.domain}" ]
 sssd::services: [ 'nss' ]
 

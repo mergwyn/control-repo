@@ -11,14 +11,14 @@
 # @param package
 #   package name to install
 #
-class profile::puppet::termini (
+class profile::openvox::termini (
   Stdlib::Fqdn $server                 = lookup('puppet::puppet_server'), # lint:ignore:lookup_in_parameter
   Stdlib::Port $port                   = 8081,
   Boolean $soft_write_failure          = false,
   Stdlib::Absolutepath $puppet_confdir = '/etc/puppetlabs/puppet',
-  String $package                      = 'puppetdb-termini',
+  String $package                      = 'openvoxdb-termini',
 ) {
-  include profile::puppet::repo
+  include profile::openvox::repo
 
 # Avoid dulication with puppetserver and puppetdb
   if  $trusted['extensions']['pp_role'] != 'puppet_master' {

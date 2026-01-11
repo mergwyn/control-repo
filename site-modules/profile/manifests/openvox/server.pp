@@ -1,10 +1,10 @@
 #
 #
-class profile::puppet::server {
+class profile::openvox::server {
   #include '::puppet'
   #include '::puppet::master'
 
-  include profile::puppet::repo
+  include profile::openvox::repo
 
   class { 'r10k':
     cachedir        => '/var/cache/r10k',
@@ -27,7 +27,7 @@ class profile::puppet::server {
 
   # Clean old reports
   include cron
-  cron::job { 'puppet_reports':
+  cron::job { 'openvox_reports':
     command => '/usr/bin/find /opt/puppetlabs/server/data/puppetserver/reports -type f -name "*.yaml" -mtime +30 -exec /bin/rm {} ";"',
     user    => 'root',
     minute  => 4,
@@ -54,22 +54,22 @@ class profile::puppet::server {
     vhost_name => 'echo.theclarkhome.com',
     port       => 80,
   }
-
-  $scripts  = hiera('profile::app::backuppc::client::scripts')
-  $preuser  = hiera('profile::app::backuppc::client::preuser')
-  $postuser = hiera('profile::app::backuppc::client::postuser')
-
-  file { "${preuser}/S21postgresql-backup":
-    ensure  => file,
-    source  => 'puppet:///modules/profile/backuppc/S21postgresql-backup',
-    mode    => '0555',
-    require => Class['profile::app::backuppc::client'],
-  }
-
-  file { "${postuser}/P21postgresql-backup-clean":
-    ensure  => file,
-    source  => 'puppet:///modules/profile/backuppc/P21postgresql-backup-clean',
-    mode    => '0555',
-    require => Class['profile::app::backuppc::client'],
-  }
+# TODO sort out backup without backuppc
+#  $scripts  = hiera('profile::app::backuppc::client::scripts')
+#  $preuser  = hiera('profile::app::backuppc::client::preuser')
+#  $postuser = hiera('profile::app::backuppc::client::postuser')
+#
+#  file { "${preuser}/S21postgresql-backup":
+#    ensure  => file,
+#    source  => 'puppet:///modules/profile/backuppc/S21postgresql-backup',
+#    mode    => '0555',
+#    require => Class['profile::app::backuppc::client'],
+#  }
+#
+#  file { "${postuser}/P21postgresql-backup-clean":
+#    ensure  => file,
+#    source  => 'puppet:///modules/profile/backuppc/P21postgresql-backup-clean',
+#    mode    => '0555',
+#    require => Class['profile::app::backuppc::client'],
+#  }
 }
