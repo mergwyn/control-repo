@@ -15,7 +15,6 @@
     {
       "operatingsystem": "Ubuntu",
       "operatingsystemrelease": [
-        "22.04",
         "24.04"
       ]
     },
@@ -35,7 +34,7 @@
   ],
   "requirements": [
     {
-      "name": "puppet",
+      "name": "openvox",
       "version_requirement": ">= 8.0.0 < 9.0.0"
     }
   ],
