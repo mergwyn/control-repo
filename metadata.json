@@ -15,6 +15,7 @@
     {
       "operatingsystem": "Ubuntu",
       "operatingsystemrelease": [
+        "22.04",
         "24.04"
       ]
     },
@@ -34,15 +35,11 @@
   ],
   "requirements": [
     {
-      "name": "puppet",
-      "version_requirement": ">= 8.0.0 < 9.0.0"
-    },
-    {
       "name": "openvox",
       "version_requirement": ">= 8.0.0 < 9.0.0"
     }
   ],
-  "pdk-version": "3.4.0",
-  "template-url": "https://github.com/puppetlabs/pdk-templates#3.4.0",
-  "template-ref": "tags/3.4.0-0-gd3cc13f"
+  "pdk-version": "3.6.1",
+  "template-url": "https://github.com/puppetlabs/pdk-templates#3.6.1",
+  "template-ref": "tags/3.6.1-0-gb9426e5"
 }
