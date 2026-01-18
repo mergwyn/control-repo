@@ -1,7 +1,7 @@
 ---
 
-#classes:
-#  - profile::platform::baseline::debian::netplan
+classes:
+  - profile::platform::baseline::debian::netplan
 #
 #profile::platform::baseline::debian::netplan::ethernets:
 #  eth0:
