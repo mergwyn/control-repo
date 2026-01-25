@@ -3,6 +3,7 @@
 .metadata
 .yardoc
 .yardwarns
+pdk.yaml
 *.iml
 /.bundle/
 /.idea/
