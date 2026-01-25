@@ -9,8 +9,11 @@ class role::main_server {
   include profile::app::sssd
   #include profile::app::zabbix::agent
   include profile::platform::baseline::debian::autofs
-  include profile::platform::baseline::debian::virtual::lxd
   include profile::platform::baseline::debian::virtual::kubernetes
+  include profile::platform::baseline::debian::virtual::lxd
+  include profile::app::lxd::backup
+  # this role owns the creation of all lxd remotes for all lxd hosts
+  profile::app::lxd::remotes::owner { 'lxd-remotes': }
 
   #include profile::app::backuppc::client
   #include profile::app::backuppc::server
