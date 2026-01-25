@@ -13,7 +13,7 @@ class role::main_server {
   include profile::platform::baseline::debian::virtual::lxd
   include profile::app::lxd::backup
   # this role owns the creation of all lxd remotes for all lxd hosts
-  profile::app::lxd::remotes::owner { 'lxd-remotes': }
+  include profile::app::lxd::remotes::owner
 
   #include profile::app::backuppc::client
   #include profile::app::backuppc::server

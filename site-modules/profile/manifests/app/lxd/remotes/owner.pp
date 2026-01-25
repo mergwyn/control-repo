@@ -1,6 +1,6 @@
 #
 #
-define profile::app::lxd::remotes::owner (
+class profile::app::lxd::remotes::owner (
   Integer $port = 8443,
 ) {
   $lxd_hosts = puppetdb_query([
