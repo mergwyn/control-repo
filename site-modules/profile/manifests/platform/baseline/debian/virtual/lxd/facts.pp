@@ -1,6 +1,7 @@
 #
 #
 class profile::platform::baseline::debian::virtual::lxd::facts {
+<<<<<<< HEAD
   file { '/etc/puppetlabs/facter':
     ensure => directory,
     owner  => 'root',
