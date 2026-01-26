@@ -5,7 +5,7 @@ class profile::app::lxd::remotes::owner (
 ) {
 
   $nodes = pick(
-    puppetdb_query('nodes { facts["lxd.enabled"] = true }'),
+    puppetdb_query('nodes { facts.lxd.enabled = true }'),
     []
   )
 
