@@ -3,9 +3,18 @@
 class profile::app::lxd::remotes::owner (
   Integer $port = 8443,
 ) {
-
   $nodes = pick(
-    puppetdb_query('nodes { facts.lxd.enabled = true }'),
+    puppetdb_query([
+      'from', 'nodes',
+      ['in', 'certname',
+        ['from', 'facts',
+          ['and',
+            ['=', 'name', 'lxd.enabled'],
+            ['=', 'value', true],
+          ]
+        ]
+      ]
+    ]),
     []
   )
 
@@ -13,8 +22,7 @@ class profile::app::lxd::remotes::owner (
     .filter |$n| { $n['certname'] }
     .map |$n| {
       $fqdn  = $n['certname'];
-      $short = $fqdn.split('.')[0];
-      {
+      $short = $fqdn.split('.')[0]; {
         'name' => $short,
         'fqdn' => $fqdn,
       }
