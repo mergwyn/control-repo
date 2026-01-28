@@ -56,4 +56,5 @@ class profile::platform::baseline::debian::virtual::lxd {
     mode    => '0600',
     content => lookup('secrets::lxd::client_key'),
   }
+
 }
