@@ -39,4 +39,12 @@ class profile::platform::baseline::debian::virtual::lxd {
     require   => Package['lxd'],
     logoutput => false,
   }
+
+  $trust_password = lookup('secrets::lxd::trust_password')
+  exec { 'lxd-set-trust-password':
+    command => "/usr/sbin/lxc config set core.trust_password '${trust_password}'",
+    unless  => "/usr/sbin/lxc config get core.trust_password | grep -qx '${trust_password}'",
+    path    => ['/usr/bin', '/usr/sbin'],
+    require => Package['lxd'],
+  }
 }
