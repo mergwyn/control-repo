@@ -6,12 +6,10 @@ class profile::app::lxd::remotes (
   if $remote_hosts.empty {
     notice('No LXD remotes to configure')
   } else {
-    $trust_password = lookup('secrets::lxd::trust_password')
     $remote_hosts.each |Hash $host| {
       exec { "lxd-add-remote-${host['name']}":
         path    => '/usr/bin:/usr/sbin:/bin:/sbin',
         command => @(CMD/L),
-          printf '%s\n' '${trust_password}' |
           /usr/sbin/lxc remote add
             ${host['name']}
              https://${host['fqdn']}:${port}

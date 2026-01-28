@@ -40,11 +40,20 @@ class profile::platform::baseline::debian::virtual::lxd {
     logoutput => false,
   }
 
-  $trust_password = lookup('secrets::lxd::trust_password')
-  exec { 'lxd-set-trust-password':
-    command => "/usr/sbin/lxc config set core.trust_password '${trust_password}'",
-    unless  => "/usr/sbin/lxc config get core.trust_password | grep -qx '${trust_password}'",
-    path    => ['/usr/bin', '/usr/sbin'],
-    require => Package['lxd'],
+  file { '/root/.config/lxc':
+    ensure => directory,
+    mode   => '0700',
+  }
+
+  file { '/root/.config/lxc/client.crt':
+    ensure  => file,
+    mode    => '0644',
+    content => lookup('secrets::lxd::client_crt'),
+  }
+
+  file { '/root/.config/lxc/client.key':
+    ensure  => file,
+    mode    => '0600',
+    content => lookup('secrets::lxd::client_key'),
   }
 }
