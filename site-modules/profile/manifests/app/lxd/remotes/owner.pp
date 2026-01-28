@@ -18,7 +18,7 @@ $remote_hosts = $nodes
   .filter |$n| { $n['certname'] =~ String }
   .map |$n| {
     $fqdn  = $n['certname'];
-    $short = $fqdn.split('\.')[0]; {
+    $short = $fqdn.split(/\./)[0]; {
       'name' => $short,
       'fqdn' => $fqdn,
     }
