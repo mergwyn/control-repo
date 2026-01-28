@@ -9,6 +9,7 @@ class profile::app::lxd::remotes::owner {
         'and',
         ['=', ['fact', 'lxd.enabled'], true],
         ['=', 'node_state', 'active'],
+        ['=', 'facts_environment', $environment],
       ]
     ]),
     []
