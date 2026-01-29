@@ -71,4 +71,6 @@ class profile::platform::baseline::debian::virtual::lxd {
     fqdn => $facts['networking']['fqdn'],
   }
 
+  include profile::app::lxd::remotes
+
 }
