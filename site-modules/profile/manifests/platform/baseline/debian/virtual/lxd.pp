@@ -40,21 +40,28 @@ class profile::platform::baseline::debian::virtual::lxd {
     logoutput => false,
   }
 
-  file { '/root/.config/lxc':
+  $certdir = '/root/.config/lxc'
+  file { $certdir:
     ensure => directory,
     mode   => '0700',
   }
 
-  file { '/root/.config/lxc/client.crt':
-    ensure  => file,
-    mode    => '0644',
-    content => lookup('secrets::lxd::client_crt'),
+  file { "${certdir}/client.crt": ensure => absent, }
+  file { "${certdir}/client.key": ensure => absent, }
+
+  $certpath = "${certdir}/${facts['networking']['hostname']}"
+  exec { 'lxd-generate-client-cert':
+    path    => ['/usr/bin', '/bin'],
+    command => "openssl req -newkey rsa:4096 -nodes -keyout ${certpath}.key -x509 -days 3650 -out ${certpath}.crt -subj '/CN=lxd-puppet-client'",
+    creates => "${certpath}.crt",
+    require => File[$certdir],
   }
 
-  file { '/root/.config/lxc/client.key':
-    ensure  => file,
-    mode    => '0600',
-    content => lookup('secrets::lxd::client_key'),
-  }
+  file { "${certpath}.key": mode => '0600', }
+  file { "${certpath}.crt": mode => '0644', }
 
+  @@profile::app::lxd::remote { $facts['networking']['hostname']:
+    fqdn => $facts['networking']['fqdn'],
+    port => 8443,
+  }
 }
