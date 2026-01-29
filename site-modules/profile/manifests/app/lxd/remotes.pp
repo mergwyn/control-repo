@@ -6,5 +6,4 @@ class profile::app::lxd::remotes {
     Profile::App::Lxd::Remote <<| |>>
     Profile::App::Lxd::Exported_client_cert <<| |>>
   }
-
 }
