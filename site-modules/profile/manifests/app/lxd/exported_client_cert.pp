@@ -1,13 +1,13 @@
 #
 #
 define profile::app::lxd::exported_client_cert (
+  String $fqdn,
   Optional[
     Variant[
       Sensitive[String],
       Sensitive[Deferred]
     ]
-  ] $cert,
-  String $fqdn,
+  ] $cert = undef,
 ) {
   if $cert == undef {
     notice("Skipping exported LXD cert for ${title} (no cert yet)")
