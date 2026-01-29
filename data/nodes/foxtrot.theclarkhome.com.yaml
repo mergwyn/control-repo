@@ -126,7 +126,6 @@ profile::platform::baseline::debian::zfs::snapshotter::settings:
 #profile::app::backuppc::client::backup_files_exclude:
 
 # kopia client
-profile::app::kopia::repos:       'kopia-rustfs kopia-idrivee2'
 profile::app::kopia::maintenance: true
 profile::app::kopia::backup_files_exclude:
   '/':

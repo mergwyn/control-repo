@@ -41,7 +41,6 @@ lxd::preseed:
     name: default
     driver: zfs
 
-profile::app::kopia::repos:       'kopia-rustfs kopia-idrivee2'
 profile::app::kopia::maintenance: false
 
 profile::platform::baseline::debian::zfs::snapshotter::settings:
