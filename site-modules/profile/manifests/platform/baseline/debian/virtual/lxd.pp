@@ -68,9 +68,11 @@ class profile::platform::baseline::debian::virtual::lxd {
 
   #$file_cert_content = file("${certpath}.crt")
 
-  @@profile::app::lxd::exported_client_cert { $facts['networking']['hostname']:
-    cert => Sensitive(Deferred('read_file', ["${certpath}.crt"])),
-    fqdn => $facts['networking']['fqdn'],
+  if $facts['lxd_client_cert'] {
+    @@profile::app::lxd::exported_client_cert { $facts['networking']['hostname']:
+      cert => Sensitive($facts['lxd_client_cert']),
+      fqdn => $facts['networking']['fqdn'],
+    }
   }
 
   include profile::app::lxd::remotes
