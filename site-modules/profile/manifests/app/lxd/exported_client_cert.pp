@@ -2,12 +2,7 @@
 #
 define profile::app::lxd::exported_client_cert (
   String $fqdn,
-  Optional[
-    Variant[
-      Sensitive[String],
-      Sensitive[Deferred]
-    ]
-  ] $cert = undef,
+  Optional[ Sensitive[String] ] $cert = undef,
 ) {
   if $cert == undef {
     notify{"LXD trust not bootstrapped yet on ${facts['networking']['hostname']}":}
