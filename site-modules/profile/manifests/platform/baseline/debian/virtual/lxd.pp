@@ -40,19 +40,20 @@ class profile::platform::baseline::debian::virtual::lxd {
     logoutput => false,
   }
 
-  $certdir = '/root/.config/lxc'
+  $certdir = '/root/snap/lxd/common/config'
   file { $certdir:
     ensure => directory,
     mode   => '0700',
   }
 
-  file { "${certdir}/client.crt": ensure => absent, }
-  file { "${certdir}/client.key": ensure => absent, }
-
-  $certpath = "${certdir}/${facts['networking']['hostname']}"
+  $certpath = "${certdir}/client"
   exec { 'lxd-generate-client-cert':
     path    => ['/usr/bin', '/bin'],
-    command => "openssl req -newkey rsa:4096 -nodes -keyout ${certpath}.key -x509 -days 3650 -out ${certpath}.crt -subj '/CN=lxd-puppet-client'",
+    command => "openssl req -newkey rsa:4096 -nodes \
+               -keyout ${certpath}.key \
+               -x509 -days 3650 \
+               -out ${certpath}.crt \
+               -subj '/CN=lxd-puppet-client'",
     creates => "${certpath}.crt",
     require => File[$certdir],
   }
@@ -64,4 +65,10 @@ class profile::platform::baseline::debian::virtual::lxd {
     fqdn => $facts['networking']['fqdn'],
     port => 8443,
   }
+
+  @@lxd::exported_client_cert { $facts['networking']['hostname']:
+    cert => Sensitive(file("${certpath}.crt")),
+    fqdn => $facts['networking']['fqdn'],
+  }
+
 }
