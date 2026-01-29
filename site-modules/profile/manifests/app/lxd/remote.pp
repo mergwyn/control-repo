@@ -10,6 +10,7 @@ define profile::app::lxd::remote (
       path    => ['/usr/bin', '/usr/sbin'],
       command => "lxc remote add ${title} https://${fqdn}:${port}",
       unless  => "lxc remote list --format csv | cut -d, -f1 | grep -qx ${title}",
+      returns => [0,1],
       timeout => 60,
     }
   }

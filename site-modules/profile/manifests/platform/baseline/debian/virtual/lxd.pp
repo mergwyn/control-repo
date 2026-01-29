@@ -67,4 +67,5 @@ class profile::platform::baseline::debian::virtual::lxd {
   }
 
   include profile::app::lxd::exporter
+  include profile::app::lxd::remotes
 }
