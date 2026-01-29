@@ -8,6 +8,11 @@ define profile::app::lxd::exported_client_cert (
   String $fqdn,
 ) {
 
+  if $cert == undef {
+    notice("Skipping exported LXD cert for ${title} (no cert yet)")
+    return()
+  }
+
   $tmp_cert = "/tmp/lxd-peer-${title}.crt"
 
   file { $tmp_cert:
