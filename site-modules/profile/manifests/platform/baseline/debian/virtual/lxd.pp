@@ -39,4 +39,33 @@ class profile::platform::baseline::debian::virtual::lxd {
     require   => Package['lxd'],
     logoutput => false,
   }
+
+  $certdir = '/root/snap/lxd/common/config'
+  file { $certdir:
+    ensure => directory,
+    mode   => '0700',
+  }
+
+  $certpath = "${certdir}/client"
+  exec { 'lxd-generate-client-cert':
+    path    => ['/usr/bin', '/bin'],
+    command => "openssl req -newkey rsa:4096 -nodes \
+               -keyout ${certpath}.key \
+               -x509 -days 3650 \
+               -out ${certpath}.crt \
+               -subj '/CN=lxd-puppet-client'",
+    creates => "${certpath}.crt",
+    require => File[$certdir],
+  }
+
+  file { "${certpath}.key": mode => '0600', }
+  file { "${certpath}.crt": mode => '0644', }
+
+  @@profile::app::lxd::remote { $facts['networking']['hostname']:
+    fqdn => $facts['networking']['fqdn'],
+    port => 8443,
+  }
+
+  include profile::app::lxd::exporter
+  include profile::app::lxd::remotes
 }

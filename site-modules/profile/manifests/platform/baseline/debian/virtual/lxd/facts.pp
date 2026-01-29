@@ -23,7 +23,7 @@ class profile::platform::baseline::debian::virtual::lxd::facts {
     mode    => '0644',
     content => @("EOF"),
       lxd:
-        enabled: true
+        manage_remotes: true
       | EOF
     require => File['/etc/puppetlabs/facter/facts.d'],
   }
