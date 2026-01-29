@@ -10,7 +10,7 @@ define profile::app::lxd::exported_client_cert (
   ] $cert = undef,
 ) {
   if $cert == undef {
-    notify{"Skipping exported LXD cert for ${title} (no cert yet)": }
+    notify{"LXD trust not bootstrapped yet on ${facts['networking']['hostname']}":}
     return()
   }
 
