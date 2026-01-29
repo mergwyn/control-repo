@@ -12,6 +12,7 @@ class role::main_server {
   include profile::platform::baseline::debian::virtual::kubernetes
   include profile::platform::baseline::debian::virtual::lxd
   include profile::app::lxd::backup
+  include profile::app::lxd::remotes
 
   #include profile::app::backuppc::client
   #include profile::app::backuppc::server
