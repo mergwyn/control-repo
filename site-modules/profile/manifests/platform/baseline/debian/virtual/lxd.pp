@@ -67,7 +67,7 @@ class profile::platform::baseline::debian::virtual::lxd {
   }
 
   @@lxd::exported_client_cert { $facts['networking']['hostname']:
-    cert => Sensitive(Deferred(file("${certpath}.crt"))),
+    cert => Sensitive(Deferred('file', ["${certpath}.crt"])),
     fqdn => $facts['networking']['fqdn'],
   }
 
