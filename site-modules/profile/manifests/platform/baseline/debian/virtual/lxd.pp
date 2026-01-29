@@ -66,12 +66,5 @@ class profile::platform::baseline::debian::virtual::lxd {
     port => 8443,
   }
 
-  if $facts['lxd_client_cert'] {
-    @@profile::app::lxd::exported_client_cert { $facts['networking']['hostname']:
-      cert => Sensitive($facts['lxd_client_cert']),
-      fqdn => $facts['networking']['fqdn'],
-    }
-  }
-
   include profile::app::lxd::exporter
 }
