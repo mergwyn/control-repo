@@ -1,7 +1,10 @@
 #
 #
 define profile::app::lxd::exported_client_cert (
-  Sensitive[String] $cert,
+  Variant[
+    Sensitive[String],
+    Sensitive[Deferred]
+  ] $cert,
   String $fqdn,
 ) {
 
