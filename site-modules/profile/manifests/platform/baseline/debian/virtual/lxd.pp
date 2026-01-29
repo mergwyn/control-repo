@@ -66,8 +66,6 @@ class profile::platform::baseline::debian::virtual::lxd {
     port => 8443,
   }
 
-  #$file_cert_content = file("${certpath}.crt")
-
   if $facts['lxd_client_cert'] {
     @@profile::app::lxd::exported_client_cert { $facts['networking']['hostname']:
       cert => Sensitive($facts['lxd_client_cert']),
