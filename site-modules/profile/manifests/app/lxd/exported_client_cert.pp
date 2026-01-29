@@ -10,7 +10,7 @@ define profile::app::lxd::exported_client_cert (
   ] $cert = undef,
 ) {
   if $cert == undef {
-    notice("Skipping exported LXD cert for ${title} (no cert yet)")
+    notify{"Skipping exported LXD cert for ${title} (no cert yet)": }
     return()
   }
 
