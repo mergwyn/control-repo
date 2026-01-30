@@ -11,13 +11,19 @@ define profile::app::lxd::exported_client_cert (
 ) {
   $tmp_cert = "/tmp/lxd-peer-${title}.crt"
 
-  if $cert.unwrap !~ /BEGIN CERTIFICATE/ {
-    fail("LXD client cert for ${title} is empty or invalid")
+  if $cert == undef {
+    fail("LXD client cert for ${title} is missing (undef)")
+  }
+
+  $cert_string = $cert.unwrap
+
+  if $cert_string !~ /BEGIN CERTIFICATE/ {
+    fail("LXD client cert for ${title} is invalid")
   }
 
   file { $tmp_cert:
     ensure  => file,
-    content => $cert.unwrap,
+    content => $cert_string,
     mode    => '0644',
   }
 
