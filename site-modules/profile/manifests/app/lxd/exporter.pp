@@ -5,7 +5,7 @@ class profile::app::lxd::exporter {
     @@profile::app::lxd::exported_client_cert {
       $facts['networking']['hostname']:
         fqdn => $facts['networking']['fqdn'],
-        cert => Sensitive(base64::decode($facts['lxd_client_cert_b64'])),
+        cert => Sensitive(base64('decode',$facts['lxd_client_cert_b64'])),
     }
   }
 }
