@@ -9,9 +9,8 @@ define profile::app::lxd::exported_client_cert (
     ]
   ] $cert = undef,
 ) {
-  if $cert == undef {
+  if ! $trusted {
     notify { "LXD trust not bootstrapped yet on ${facts['networking']['hostname']}": }
-    return()
   }
 
   $tmp_cert = "/tmp/lxd-peer-${title}.crt"
