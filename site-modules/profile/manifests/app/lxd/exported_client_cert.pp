@@ -25,7 +25,7 @@ define profile::app::lxd::exported_client_cert (
   exec { "lxd-trust-${title}":
     path    => ['/usr/bin', '/usr/sbin'],
     command => "lxc config trust add ${tmp_cert} --name ${title}",
-    unless  => "lxc config trust list --format csv | cut -d, -f1 | grep -qx ${title}",
+    unless  => "lxc config trust list --format=json | jq -e '.[] | select(.name==\"${title}\")'",
     require => File[$tmp_cert],
     returns => [0,1],
   }
