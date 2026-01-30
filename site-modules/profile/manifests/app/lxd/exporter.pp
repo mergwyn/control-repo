@@ -1,11 +1,11 @@
 #
 class profile::app::lxd::exporter {
-  if $facts['lxd_client_cert']
-    and String($facts['lxd_client_cert']) != '' {
+  if $facts['lxd_client_cert_b64']
+    and String($facts['lxd_client_cert_b64']) != '' {
     @@profile::app::lxd::exported_client_cert {
       $facts['networking']['hostname']:
         fqdn => $facts['networking']['fqdn'],
-        cert => Sensitive($facts['lxd_client_cert']),
+        cert => Sensitive(base64decode($facts['lxd_client_cert_b64'])),
     }
   }
 }
