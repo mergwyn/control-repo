@@ -9,10 +9,6 @@ define profile::app::lxd::exported_client_cert (
     ]
   ] $cert = undef,
 ) {
-  if ! $trusted {
-    notify { "LXD trust not bootstrapped yet on ${facts['networking']['hostname']}": }
-  }
-
   $tmp_cert = "/tmp/lxd-peer-${title}.crt"
 
   file { $tmp_cert:
@@ -24,8 +20,7 @@ define profile::app::lxd::exported_client_cert (
   exec { "lxd-trust-${title}":
     path    => ['/usr/bin', '/usr/sbin'],
     command => "lxc config trust add ${tmp_cert} --name ${title}",
-    unless  => "lxc config trust list --format=json | jq -e '.[] | select(.name==\"${title}\")'",
+    unless  => "lxc config trust list --format=json | jq -e '.[] | select(.name==\"${title}\")' >/dev/null",
     require => File[$tmp_cert],
-    returns => [0,1],
   }
 }
