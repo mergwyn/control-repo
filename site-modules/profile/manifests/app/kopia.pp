@@ -60,7 +60,7 @@ class profile::app::kopia (
     'MAINTENANCE': value => $maintenance, ;
     'ARGS':        value => $args, ;
     'REPOS':       value => $repos, ;
-    'SNAPS':       value => join($snaps, ' ');
+    'SNAPS':       value => join($snaps, ',');
   }
   file { '/etc/cron.daily/kopia-backup':
     ensure => file,

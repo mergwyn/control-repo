@@ -128,7 +128,7 @@ profile::platform::baseline::debian::zfs::snapshotter::settings:
 # kopia client
 profile::app::kopia::snaps:
   - /
-  - '/home/gary/odrive/Amazon Cloud Drive/Pictures'
+  - /home/gary/odrive/Amazon Cloud Drive/Pictures
   - /srv/media/content/christmas
   - /srv/media/content/golf
   - /srv/media/content/home-videos
