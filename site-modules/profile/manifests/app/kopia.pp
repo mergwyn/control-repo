@@ -21,13 +21,13 @@ class profile::app::kopia (
   Boolean $maintenance                                  = false,
   String $args                                          = '--log-level=error --no-progress',
   String $repos                                         = '',
+  Array[String] $snaps                                  = '[/]',
   Optional[
     Variant[
       Variant[String,Array[String]],
       Hash[String, Variant[String,Array[String]]]
     ]
   ] $backup_files_exclude,
-
 ) {
   include profile::app::scripts
 
@@ -60,6 +60,7 @@ class profile::app::kopia (
     'MAINTENANCE': value => $maintenance, ;
     'ARGS':        value => $args, ;
     'REPOS':       value => $repos, ;
+    'SNAPS':       value => join($snaps, ' ');
   }
   file { '/etc/cron.daily/kopia-backup':
     ensure => file,

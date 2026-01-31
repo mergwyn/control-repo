@@ -23,6 +23,7 @@ profile::app::backuppc::client::backuppc_hostname:     "foxtrot.%{trusted.domain
 profile::app::backuppc::client::backup_files_exclude:
 
 profile::app::kopia::repos:       'kopia-minio kopia-idrivee2'
+profile::app::kopia::snaps:       [ '/' ]
 # kopia client
 profile::app::kopia::backup_files_exclude:
   '/':
@@ -48,6 +49,8 @@ profile::app::kopia::backup_files_exclude:
     - '**/Library*/Mail/V3/'
     - '**/.linuxkit/cache/'
     - '**/.local/cache'
+    - '**/.working'
+    - '**/.cache'
     - '**/.local/lib/'
     - '*/lost+found*'
     - '**/media/.config/Radarr/logs*'

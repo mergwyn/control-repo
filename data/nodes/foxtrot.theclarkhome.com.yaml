@@ -126,10 +126,20 @@ profile::platform::baseline::debian::zfs::snapshotter::settings:
 #profile::app::backuppc::client::backup_files_exclude:
 
 # kopia client
+profile::app::kopia::snaps:
+  - /
+  - '/home/gary/odrive/Amazon Cloud Drive/Pictures'
+  - /srv/media/content/christmas
+  - /srv/media/content/golf
+  - /srv/media/content/home-videos
+  - /srv/media/content/music
+  - /srv/media/content/radio-shows
+  - /srv/media/content/tv/Frasier
+
 profile::app::kopia::maintenance: true
 profile::app::kopia::backup_files_exclude:
   '/':
-    - '*.cloud'
+/bin/bash: line 1: }sort: command not found
     - '*.cloudf'
     - '/home/gary/odrive/Amazon Cloud Drive/Pictures'
     - '.lima/[a-z]*'
@@ -142,22 +152,19 @@ profile::app::kopia::backup_files_exclude:
     - '/srv2'
     - '/srv/backup/home-assistant'
     - '/srv/media/content/christian'
-    - '/srv/media/content/christian'
     - '/srv/media/content/christmas'
     - '/srv/media/content/films'
     - '/srv/media/content/golf'
     - '/srv/media/content/home-videos'
     - '/srv/media/content/music'
     - '/srv/media/content/radio-shows'
+    - '/srv/media/content/torrents'
     - '/srv/media/content/tv'
+    - '/srv/media/content/usenet'
     - '/srv/media/humax'
-    - '/srv/media/torrents/downloads'
-    - '/srv/media/torrents/incomplete'
-    - '/srv/media/usenet/complete'
     - '/srv/minio'
     - '/srv/timemachine'
     - '/srv/virtual/VirtualBox'
     - '/srv/virtual/vmware'
     - '/var/lib/backuppc'
     - '/var/lib/rancher/k3s/agent/containerd'
-
