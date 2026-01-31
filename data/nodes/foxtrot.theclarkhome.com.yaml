@@ -139,7 +139,6 @@ profile::app::kopia::snaps:
 profile::app::kopia::maintenance: true
 profile::app::kopia::backup_files_exclude:
   '/':
-/bin/bash: line 1: }sort: command not found
     - '*.cloudf'
     - '/home/gary/odrive/Amazon Cloud Drive/Pictures'
     - '.lima/[a-z]*'
