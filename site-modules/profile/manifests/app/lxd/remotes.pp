@@ -1,4 +1,6 @@
 #
+#
+#
 class profile::app::lxd::remotes {
   require profile::platform::baseline::debian::virtual::lxd
 
@@ -6,6 +8,5 @@ class profile::app::lxd::remotes {
     Profile::App::Lxd::Exported_client_cert <<|
       certname != $trusted['certname']
     |>>
-    Profile::App::Lxd::Remote <<| |>>
   }
 }
