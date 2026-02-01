@@ -19,10 +19,14 @@ define profile::app::lxd::remote (
     require => Exec["lxd-fetch-cert-${title}"],
   }
 
-  exec { "lxd-add-remote-${title}":
-    command => "lxc remote add ${title} https://${fqdn}:${port}",
-    unless  => "lxc remote list --format csv | cut -d, -f1 | grep -qx ${title}",
-    path    => ['/usr/bin:/usr/sbin'],
-    require => Exec["lxd-trust-${title}"],
+  if $facts['networking']['fqdn'] == $title {
+    notify { "Skipping LXD remote ${title} on self": }
+  } else {
+    exec { "lxd-add-remote-${title}":
+      command => "lxc remote add ${title} https://${fqdn}:${port}",
+      unless  => "lxc remote list --format csv | cut -d, -f1 | grep -qx ${title}",
+      path    => ['/usr/bin:/usr/sbin'],
+      require => Exec["lxd-trust-${title}"],
+    }
   }
 }
