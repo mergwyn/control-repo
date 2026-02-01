@@ -28,39 +28,4 @@ class profile::platform::baseline::debian::virtual::lxd {
   include profile::platform::baseline::debian::virtual::lxd::facts
 
   kmod::load { 'ip_vs': }
-
-  exec { 'wait-for-lxd-cert':
-    path    => ':/bin',
-    command => 'true',
-    unless  => 'test -f /var/snap/lxd/common/lxd/server.crt',
-    require => Package['lxd'],
-  }
-
-  $certdir  = '/root/snap/lxd/common/config'
-  $certpath = "${certdir}/client"
-
-  file { $certdir:
-    ensure => directory,
-    mode   => '0700',
-  }
-
-  exec { 'lxd-generate-client-cert':
-    path    => ':/bin',
-    command => "openssl req -newkey rsa:4096 -nodes \
-               -keyout ${certpath}.key \
-               -x509 -days 3650 \
-               -out ${certpath}.crt \
-               -subj '/CN=lxd-puppet-client'",
-    creates => "${certpath}.crt",
-    require => File[$certdir],
-  }
-
-  file { "${certpath}.key": mode => '0600' }
-  file { "${certpath}.crt": mode => '0644' }
-
-  # Export our existence as a remote
-  @@profile::app::lxd::remote { $facts['networking']['hostname']:
-    fqdn => $facts['networking']['fqdn'],
-    port => 8443,
-  }
 }
