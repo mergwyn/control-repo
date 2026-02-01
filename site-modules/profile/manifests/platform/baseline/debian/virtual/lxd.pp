@@ -2,9 +2,7 @@
 #
 class profile::platform::baseline::debian::virtual::lxd {
   package { ['bridge-utils']: }
-  package { ['criu']:
-    ensure => absent,
-  }
+  package { ['criu']: ensure => absent }
 
   include snap
 
@@ -29,26 +27,25 @@ class profile::platform::baseline::debian::virtual::lxd {
 
   include profile::platform::baseline::debian::virtual::lxd::facts
 
-  # Support keepalived / IPVS in privileged containers
   kmod::load { 'ip_vs': }
 
   exec { 'wait-for-lxd-cert':
-    path      => ['/bin', '/usr/bin'],
-    command   => 'true',
-    unless    => 'test -f /var/snap/lxd/common/lxd/server.crt',
-    require   => Package['lxd'],
-    logoutput => false,
+    path    => ':/bin',
+    command => 'true',
+    unless  => 'test -f /var/snap/lxd/common/lxd/server.crt',
+    require => Package['lxd'],
   }
 
-  $certdir = '/root/snap/lxd/common/config'
+  $certdir  = '/root/snap/lxd/common/config'
+  $certpath = "${certdir}/client"
+
   file { $certdir:
     ensure => directory,
     mode   => '0700',
   }
 
-  $certpath = "${certdir}/client"
   exec { 'lxd-generate-client-cert':
-    path    => ['/usr/bin', '/bin'],
+    path    => ':/bin',
     command => "openssl req -newkey rsa:4096 -nodes \
                -keyout ${certpath}.key \
                -x509 -days 3650 \
@@ -58,14 +55,12 @@ class profile::platform::baseline::debian::virtual::lxd {
     require => File[$certdir],
   }
 
-  file { "${certpath}.key": mode => '0600', }
-  file { "${certpath}.crt": mode => '0644', }
+  file { "${certpath}.key": mode => '0600' }
+  file { "${certpath}.crt": mode => '0644' }
 
+  # Export our existence as a remote
   @@profile::app::lxd::remote { $facts['networking']['hostname']:
     fqdn => $facts['networking']['fqdn'],
     port => 8443,
   }
-
-  include profile::app::lxd::exporter
-  include profile::app::lxd::remotes
 }
