@@ -13,22 +13,7 @@ describe 'role::k8s_server' do
       let(:trusted_facts) { { 'pp_role' => 'k8s_server' } }
       let(:node) { 'unittest.theclarkhome.com' }
       let(:pre_condition) do
-        <<~PUPPET
-          function puppetdb_query($query) {
-            [
-              {
-                'certname' => 'foxtrot.theclarkhome.com',
-                'deactivated' => undef,
-                'expired' => undef,
-              },
-              {
-                'certname' => 'golf.theclarkhome.com',
-                'deactivated' => undef,
-                'expired' => undef,
-              },
-            ]
-          }
-        PUPPET
+        'function puppetdb_query($string) { return [{ title => "fqdn", value => "certname.example.com" }] }'
       end
 
       # Comment out to display all available resources easily
