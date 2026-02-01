@@ -15,14 +15,14 @@ define profile::app::lxd::remote (
   exec { "lxd-trust-${title}":
     command => "lxc config trust add ${cert} --name ${title}",
     unless  => "lxc config trust list --format=json | jq -e '.[] | select(.name==\"${title}\")'",
-    path    => ['/usr/bin'],
+    path    => ['/usr/bin:/usr/sbin'],
     require => Exec["lxd-fetch-cert-${title}"],
   }
 
   exec { "lxd-add-remote-${title}":
     command => "lxc remote add ${title} https://${fqdn}:${port}",
     unless  => "lxc remote list --format csv | cut -d, -f1 | grep -qx ${title}",
-    path    => ['/usr/bin'],
+    path    => ['/usr/bin:/usr/sbin'],
     require => Exec["lxd-trust-${title}"],
   }
 }
