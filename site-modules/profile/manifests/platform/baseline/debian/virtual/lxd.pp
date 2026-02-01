@@ -25,7 +25,5 @@ class profile::platform::baseline::debian::virtual::lxd {
     refreshonly => true,
   }
 
-  include profile::platform::baseline::debian::virtual::lxd::facts
-
   kmod::load { 'ip_vs': }
 }
