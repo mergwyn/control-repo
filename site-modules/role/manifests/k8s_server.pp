@@ -11,6 +11,7 @@ class role::k8s_server {
   #include profile::app::backuppc::client
   include profile::app::unison
   include profile::app::kopia
+  include profile::app::k8s_tools
   include profile::app::velero
   #include profile::app::mayastor
 }

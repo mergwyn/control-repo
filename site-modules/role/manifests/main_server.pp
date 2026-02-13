@@ -26,5 +26,6 @@ class role::main_server {
   include profile::app::timemachine
   include profile::app::transcoder
   include profile::app::unison
+  include profile::app::k8s_tools
   include profile::app::kopia
 }
