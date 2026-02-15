@@ -26,7 +26,7 @@ default_fact_files.each do |f|
 
   begin
     require 'deep_merge'
-    default_facts.deep_merge!(YAML.safe_load_file(f, permitted_classes: [], permitted_symbols: [], aliases: true))
+    default_facts.deep_merge!(YAML.safe_load(File.read(f), permitted_classes: [], permitted_symbols: [], aliases: true))
   rescue StandardError => e
     RSpec.configuration.reporter.message "WARNING: Unable to load #{f}: #{e}"
   end
@@ -74,3 +74,4 @@ def ensure_module_defined(module_name)
 end
 
 # 'spec_overrides' from sync.yml will appear below this line
+{"facts"=>{"facter_version"=>"4.5.2"}}

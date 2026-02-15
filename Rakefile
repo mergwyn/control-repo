@@ -5,6 +5,8 @@ require 'puppet_litmus/rake_tasks' if Gem.loaded_specs.key? 'puppet_litmus'
 require 'puppetlabs_spec_helper/rake_tasks'
 require 'puppet-syntax/tasks/puppet-syntax'
 require 'puppet-strings/tasks' if Gem.loaded_specs.key? 'puppet-strings'
+require 'r10k/puppetfile'
+require 'yaml'
 
 PuppetLint.configuration.send('disable_relative')
 PuppetLint.configuration.send('disable_80chars')
@@ -24,3 +26,5 @@ PuppetLint.configuration.ignore_paths = [".vendor/**/*.pp", ".bundle/**/*.pp", "
 
 require 'onceover/rake_tasks'
 FastGettext.default_text_domain = 'default-text-domain'
+Rake.add_rakelib 'rakelib'
+

@@ -13,6 +13,7 @@ appveyor.yml:
   required: &ignorepaths
     - '.onceover/'
     - 'spec/fixtures'
+    - '.fixtures.yml'
 .travis.yml:
   delete: true
 #.travis.yml:
@@ -40,6 +41,9 @@ Gemfile:
     ':development':
       - gem: 'generate-puppetfile'
         version: '~> 1.0'
+#  overrides:
+#    - gem: facterdb
+#      version: '~> 3.4'
 
 spec/spec_helper.rb:
   coverage_report: true
@@ -48,7 +52,14 @@ spec/spec_helper.rb:
   hiera_config: "spec/hiera.yaml" 
   mock_with: ':rspec'
 
+spec_overrides:
+  facts:
+    facter_version: "4.5.2"
+
 Rakefile:
+  requires:
+    - 'r10k/puppetfile'
+    - 'yaml'
   linter_fail_on_warnings: false
   extra_disabled_lint_checks:
     - strict_indent
@@ -62,6 +73,7 @@ Rakefile:
 #  - Ra10ke::RakeTask.new
   - require 'onceover/rake_tasks'
   - FastGettext.default_text_domain = 'default-text-domain'
+  - Rake.add_rakelib 'rakelib'
 
 .github/workflows/nightly.yml:
   unmanaged: true
