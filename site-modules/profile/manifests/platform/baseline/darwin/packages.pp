@@ -2,7 +2,7 @@
 #
 class profile::platform::baseline::darwin::packages {
   Package {
-    provider => homebrew,
+    provider => brew,
     ensure   => latest,
   }
 
