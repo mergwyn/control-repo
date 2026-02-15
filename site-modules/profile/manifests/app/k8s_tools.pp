@@ -14,7 +14,7 @@ class profile::app::k8s_tools (
     $k_url  = "${k_dom}${k_path}"
 
     file { '/usr/share/keyrings/kubernetes.gpg':
-      ensure => present,
+      ensure => file,
       source => "${k_url}Release.key",
     }
 
@@ -53,13 +53,13 @@ class profile::app::k8s_tools (
     $ns_p  = '/ahmetb/kubectx/master/kubens'
 
     file { "${bin_dir}/sops":
-      ensure => present,
+      ensure => file,
       source => "${gh_dom}${s_p}",
       mode   => '0755',
     }
 
     file { "${bin_dir}/argocd":
-      ensure => present,
+      ensure => file,
       source => "${gh_dom}${a_p}",
       mode   => '0755',
     }
@@ -73,13 +73,13 @@ class profile::app::k8s_tools (
     }
 
     file { "${bin_dir}/kubectx":
-      ensure => present,
+      ensure => file,
       source => "${raw_dom}${ctx_p}",
       mode   => '0755',
     }
 
     file { "${bin_dir}/kubens":
-      ensure => present,
+      ensure => file,
       source => "${raw_dom}${ns_p}",
       mode   => '0755',
     }
