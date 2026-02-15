@@ -3,7 +3,6 @@
 .metadata
 .yardoc
 .yardwarns
-pdk.yaml
 *.iml
 /.bundle/
 /.idea/
@@ -36,3 +35,5 @@ pdk.yaml
 bolt-debug.log
 .onceover/
 spec/fixtures
+.fixtures.yml
+pdk.yaml
