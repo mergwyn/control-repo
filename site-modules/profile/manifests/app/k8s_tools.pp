@@ -103,7 +103,6 @@ class profile::app::k8s_tools (
 
     # --- 5. Final APT Packages ---
     package { $packages: ensure => latest }
-
   } elsif $facts['os']['family'] == 'Darwin' {
     # --- macOS / Darwin (Homebrew) ---
     Package {
