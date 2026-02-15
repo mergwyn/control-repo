@@ -59,20 +59,7 @@ sssd::domains: [ "domain/%{rusted.domain}" ]
 sssd::services: [ 'nss' ]
 
 profile::app::k8s_tools::packages:
-  - 'kubectx'
-  - 'kubens'
-  - 'kustomize'
-  - 'helm'
-  - 'sops'
   - 'age'
-  - 'argocd'
-  - 'cilium-cli'
-  - 'velero'
-  - 'helmfile'
-  - 'kube-ps1'
-
-profile::app::k8s_tools::wakemeops_url: 'https://wakemeops.com'
-
 
 lookup_options:
   "^classes(.*)$":

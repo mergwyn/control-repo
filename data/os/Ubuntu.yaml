@@ -15,6 +15,7 @@ profile::platform::baseline::files::objects:
 profile::platform::baseline::packages::defaults:
   ensure:                                         present
 profile::platform::baseline::packages::objects:
+  curl:                                           {}
   ubuntu-standard:                                {}
   update-notifier-common:                         {}
   landscape-common:                               {}
