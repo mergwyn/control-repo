@@ -36,5 +36,4 @@ puppetfile.modules.each do |mod|
 end
 
 File.open('.fixtures.yml', 'w') { |f| f.write(fixtures.to_yaml) }
-puts "Successfully generated .fixtures.yml from Puppetfile"
-
+puts 'Successfully generated .fixtures.yml from Puppetfile'
