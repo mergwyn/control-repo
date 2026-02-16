@@ -18,7 +18,7 @@ class profile::platform::baseline::darwin::packages {
 
   $puppetver = $facts['os']['macosx']['version']['major'] ? {
     /10.13/ => '6',
-    default => '7',
+    default => '8',
   }
 
   $casks = [
