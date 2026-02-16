@@ -26,10 +26,7 @@ class profile::app::k8s_tools::debian {
     repos    => ' ',
     release  => '/',
     key      => '/usr/share/keyrings/kubernetes.gpg',
-    include  => {
-      deb => true,
-      src => false,
-    },
+    include  => { deb => true, src => false },
   }
 
   # --- Helm key & repo ---
@@ -45,10 +42,7 @@ class profile::app::k8s_tools::debian {
     repos    => 'all',
     release  => '/',
     key      => '/usr/share/keyrings/helm.gpg',
-    include  => {
-      deb => true,
-      src => false,
-    },
+    include  => { deb => true, src => false },
   }
 
   # --- ArgoCD key & repo ---
@@ -64,10 +58,7 @@ class profile::app::k8s_tools::debian {
     repos    => 'stable',
     release  => '/',
     key      => '/usr/share/keyrings/argocd.gpg',
-    include  => {
-      deb => true,
-      src => false,
-    },
+    include  => { deb => true, src => false },
   }
 
   # --- Base packages (curl removed) ---
@@ -85,7 +76,7 @@ class profile::app::k8s_tools::debian {
     subscribe => Exec['apt_update'],
   }
 
-  # --- kubectl (k3s-aware) ---
+  # --- k3s-aware kubectl ---
   exec { 'symlink-kubectl-to-k3s':
     command => "/bin/ln -sf ${bin_dir}/k3s ${bin_dir}/kubectl",
     creates => "${bin_dir}/kubectl",
