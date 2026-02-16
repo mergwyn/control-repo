@@ -50,7 +50,7 @@ class profile::app::k8s_tools::debian {
   # --- ArgoCD repo ---
   file { '/usr/share/keyrings/argocd-archive-keyring.gpg':
     ensure  => file,
-    source  => 'https://apt.argoproj.io/key.gpg',
+    source  => 'https://downloads.argoproj.io/apt/argoproj.gpg',
     mode    => '0644',
     require => File['/usr/share/keyrings'],
   }
@@ -60,7 +60,7 @@ class profile::app::k8s_tools::debian {
     location      => 'https://apt.argoproj.io/',
     repos         => 'stable',
     release       => '/',
-    keyring       => 'https://downloads.argoproj.io/apt/argoproj.gpg',
+    keyring       => '/usr/share/keyrings/argocd-archive-keyring.gpg',
     include       => { deb => true, src => false },
   }
 
