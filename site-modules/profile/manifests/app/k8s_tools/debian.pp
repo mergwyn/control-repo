@@ -1,6 +1,7 @@
 #
 #
 class profile::app::k8s_tools::debian {
+
   $bin_dir = '/usr/local/bin'
 
   include apt
@@ -42,7 +43,7 @@ class profile::app::k8s_tools::debian {
     require  => Apt::Key['argocd'],
   }
 
-  # --- Base packages ---
+  # --- Base packages (curl removed) ---
   package { [
     'helm',
     'kubectx', # includes kubens
@@ -53,11 +54,11 @@ class profile::app::k8s_tools::debian {
     'velero',
   ]:
     ensure    => latest,
-    require   => Apt::Source['kubernetes'], # ensure repo exists
-    subscribe => Exec['apt_update'],        # wait for apt-get update
+    require   => Apt::Source['kubernetes'],
+    subscribe => Exec['apt_update'],
   }
 
-  # --- k3s-aware kubectl ---
+  # --- kubectl (k3s-aware) ---
   # Symlink kubectl to k3s if k3s exists
   exec { 'symlink-kubectl-to-k3s':
     command => "/bin/ln -sf ${bin_dir}/k3s ${bin_dir}/kubectl",
@@ -66,10 +67,9 @@ class profile::app::k8s_tools::debian {
     path    => ['/bin', '/usr/bin'],
   }
 
-  # Install kubectl package only if k3s is NOT present
+  # Always install kubectl package; symlink overrides if k3s exists
   package { 'kubectl':
     ensure  => latest,
     require => Exec['apt_update'],
-    unless  => "/usr/bin/test -f ${bin_dir}/k3s",
   }
 }
