@@ -1,39 +1,18 @@
 # @summary velero backup (k8s)
 #
 class profile::app::velero (
+  String $version,
 ) {
-  $scripts = '/etc/openvpn/scripts'
+  $bin_dir = '/usr/local/bin'
+  $bin     = "${bin_dir}/velero"
 
-  $aptpackages = [
-    # 'rclone',
-  ]
-  package { $aptpackages: ensure => present, }
-
-#TODO rclone config
-#TODO install velero
-
-  case $facts['os']['architecture'] {
-    'amd64': { $edition = 'linux-amd64' }
-    default: { fail("Architecture ${facts['os']['architecture']} is not supported") }
-  }
-
-  $archive_name = "/velero.latest.${edition}.tar.gz"
-  $archive_path = "${facts['puppet_vardir']}/${archive_name}"
-  $install_path = '/usr/local/bin'
-  $creates      = "${install_path}/velero"
-
-# TODO copy unison pattern
-  githubreleases_download { $archive_path:
-    author            => 'vmware-tanzu',
-    repository        => 'velero',
-    asset             => true,
-    asset_filepattern => $edition,
-  }
-  -> archive { $archive_name:
-    source       => "file://${archive_path}",
-    extract      => true,
-    extract_path => $install_path,
-    cleanup      => false,
-    require      => Githubreleases_download[$archive_path],
+  exec { 'install-velero':
+    command => @(END),
+      curl -fsSL https://github.com/vmware-tanzu/velero/releases/download/v${version}/velero-v${version}-linux-amd64.tar.gz \
+        | tar -xz --strip-components=1 -C ${bin_dir} velero-v${version}-linux-amd64/velero
+    END
+    creates => $bin,
+    path    => ['/usr/bin', '/bin'],
+    require => Package['curl'],
   }
 }
