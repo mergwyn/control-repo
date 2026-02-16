@@ -31,19 +31,19 @@ class profile::app::k8s_tools::debian {
   }
 
   # --- Helm repo ---
-  file { '/usr/share/keyrings/helm-archive-keyring.gpg':
+  file { '/usr/share/keyrings/helm.gpg':
     ensure  => file,
-    source  => 'https://baltocdn.com/helm/signing.asc',
+    source  => 'https://packages.buildkite.com/helm-linux/helm-debian/gpgkey',
     mode    => '0644',
     require => File['/usr/share/keyrings'],
   }
 
   apt::source { 'helm':
     source_format => 'sources',
-    location      => 'https://baltocdn.com/helm/stable/debian/',
-    repos         => 'all',
-    release       => '/',
-    keyring       => '/usr/share/keyrings/helm-archive-keyring.gpg',
+    location      => 'https://packages.buildkite.com/helm-linux/helm-debian/any/',
+    repos         => 'main',
+    release       => 'any',
+    keyring       => '/usr/share/keyrings/helm.gpg',
     include       => { deb => true, src => false },
   }
 
@@ -60,7 +60,7 @@ class profile::app::k8s_tools::debian {
     location      => 'https://apt.argoproj.io/',
     repos         => 'stable',
     release       => '/',
-    keyring       => '/usr/share/keyrings/argocd-archive-keyring.gpg',
+    keyring       => 'https://downloads.argoproj.io/apt/argoproj.gpg',
     include       => { deb => true, src => false },
   }
 
