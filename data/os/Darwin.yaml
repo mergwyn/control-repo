@@ -9,3 +9,18 @@ profile::platform::baseline::files::objects:
   /usr/local/lib/vim/vimrc.local:
     source:                         'puppet:///modules/profile/vimrc.local'
 
+profile::platform::baseline::packages::defaults:
+  ensure: present
+  provider: brewcask
+profile::platform::baseline::packages::objects:
+  whatsapp: {}
+  firefox: {}
+  vlc: {}
+  # sonos: {}
+  plex: {}
+  monitorcontrol: {}
+  git: {}
+  unison: {}
+  python@3.12: {}   # TODO convert to a fact
+  python-tk@3.12: {}
+
