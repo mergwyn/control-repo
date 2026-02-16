@@ -13,8 +13,8 @@ class profile::app::k8s_tools::debian {
     mode   => '0755',
   }
 
-  # --- Kubernetes key & repo ---
-  file { '/usr/share/keyrings/kubernetes.gpg':
+  # --- Kubernetes repo ---
+  file { '/usr/share/keyrings/kubernetes-archive-keyring.gpg':
     ensure  => file,
     source  => 'https://pkgs.k8s.io/core:/stable:/v1.31/deb/Release.key',
     mode    => '0644',
@@ -25,12 +25,12 @@ class profile::app::k8s_tools::debian {
     location => 'https://pkgs.k8s.io/core:/stable:/v1.31/deb/',
     repos    => ' ',
     release  => '/',
-    key      => '/usr/share/keyrings/kubernetes.gpg',
+    key      => '/usr/share/keyrings/kubernetes-archive-keyring.gpg',
     include  => { deb => true, src => false },
   }
 
-  # --- Helm key & repo ---
-  file { '/usr/share/keyrings/helm.gpg':
+  # --- Helm repo ---
+  file { '/usr/share/keyrings/helm-archive-keyring.gpg':
     ensure  => file,
     source  => 'https://baltocdn.com/helm/signing.asc',
     mode    => '0644',
@@ -41,12 +41,12 @@ class profile::app::k8s_tools::debian {
     location => 'https://baltocdn.com/helm/stable/debian/',
     repos    => 'all',
     release  => '/',
-    key      => '/usr/share/keyrings/helm.gpg',
+    key      => '/usr/share/keyrings/helm-archive-keyring.gpg',
     include  => { deb => true, src => false },
   }
 
-  # --- ArgoCD key & repo ---
-  file { '/usr/share/keyrings/argocd.gpg':
+  # --- ArgoCD repo ---
+  file { '/usr/share/keyrings/argocd-archive-keyring.gpg':
     ensure  => file,
     source  => 'https://apt.argoproj.io/key.gpg',
     mode    => '0644',
@@ -57,7 +57,7 @@ class profile::app::k8s_tools::debian {
     location => 'https://apt.argoproj.io/',
     repos    => 'stable',
     release  => '/',
-    key      => '/usr/share/keyrings/argocd.gpg',
+    key      => '/usr/share/keyrings/argocd-archive-keyring.gpg',
     include  => { deb => true, src => false },
   }
 
@@ -88,4 +88,27 @@ class profile::app::k8s_tools::debian {
     ensure  => latest,
     require => Exec['apt_update'],
   }
+
+  # --- Optional binaries like helmfile and cilium-cli ---
+  # Make sure these subscribe to apt_update for idempotence
+  exec { 'install-helmfile':
+    path      => ['/usr/bin', '/bin'],
+    creates   => "${bin_dir}/helmfile",
+    subscribe => Exec['apt_update'],
+    command   => @(HEREDOC)
+      curl -fsSL https://github.com/helmfile/helmfile/releases/download/v0.162.0/helmfile_0.162.0_linux_amd64.tar.gz \
+      | tar -xz -C ${bin_dir} helmfile
+      | HEREDOC
+  }
+
+  exec { 'install-cilium-cli':
+    path      => ['/usr/bin', '/bin'],
+    creates   => "${bin_dir}/cilium",
+    subscribe => Exec['apt_update'],
+    command   => @(HEREDOC)
+      curl -L --remote-name-all https://github.com/cilium/cilium-cli/releases/latest/download/cilium-linux-amd64.tar.gz \
+      | tar -xz -C ${bin_dir} cilium
+      | HEREDOC
+  }
+
 }
