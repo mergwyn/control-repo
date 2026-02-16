@@ -51,10 +51,6 @@ class profile::app::k8s_tools::debian {
   package { [
     'helm',
     'kubectx', # includes kubens
-    'sops',
-    'age',
-    'kustomize',
-    'velero',
   ]:
     ensure    => latest,
     require   => Apt::Source['kubernetes'],
