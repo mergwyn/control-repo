@@ -7,7 +7,7 @@ class profile::app::helmfile (
   $bin     = "${bin_dir}/helmfile"
 
   exec { 'install-helmfile':
-    creates     => "${bin_dir}/helmfile",
+    creates     => $bin,
     path        => ['/usr/bin', '/bin'],
     subscribe   => Exec['apt_update'],
     refreshonly => false,

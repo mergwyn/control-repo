@@ -7,7 +7,7 @@ class profile::app::cilium_cli (
   $bin     = "${bin_dir}/cilium"
 
   exec { 'install-cilium-cli':
-    creates     => "${bin_dir}/cilium",
+    creates     => $bin,
     path        => ['/usr/bin', '/bin'],
     subscribe   => Exec['apt_update'],
     refreshonly => false,

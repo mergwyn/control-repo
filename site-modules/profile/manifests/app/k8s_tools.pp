@@ -2,6 +2,7 @@
 class profile::app::k8s_tools (
   String $helmfile_version = '0.162.0',
   String $cilium_version   = '1.16.1',
+  String $argocd_version   = '2.9.13',
 ) {
   case $facts['os']['family'] {
     'Debian': {
@@ -12,6 +13,10 @@ class profile::app::k8s_tools (
 
       class { 'profile::app::cilium_cli':
         version => $cilium_version,
+      }
+
+      class { 'profile::app::argocd':
+        version => $argocd_version,
       }
     }
     'Darwin': {
