@@ -2,7 +2,6 @@
 #
 class profile::app::k8s_tools::debian {
   $bin_dir = '/usr/local/bin'
-  $has_k3s = file_exists('/usr/local/bin/k3s')
 
   include apt
 
@@ -52,26 +51,26 @@ class profile::app::k8s_tools::debian {
     'argocd',
     'kustomize',
     'velero',
+    'curl',
   ]:
-    ensure  => latest,
-    require => Exec['apt_update'],
+    ensure    => latest,
+    require   => Apt::Source['kubernetes'],  # ensures repo exists
+    subscribe => Exec['apt_update'],       # updates after apt update
   }
 
   # --- kubectl (k3s-aware) ---
-  if $has_k3s {
-    package { 'kubectl': ensure => absent }
+  file { "${bin_dir}/kubectl":
+    ensure => link,
+    target => "${bin_dir}/k3s",
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0755',
+    onlyif => '/usr/bin/test -f /usr/local/bin/k3s',
+  }
 
-    file { "${bin_dir}/kubectl":
-      ensure => link,
-      target => "${bin_dir}/k3s",
-      owner  => 'root',
-      group  => 'root',
-      mode   => '0755',
-    }
-  } else {
-    package { 'kubectl':
-      ensure  => latest,
-      require => Exec['apt_update'],
-    }
+  package { 'kubectl':
+    ensure  => latest,
+    require => Exec['apt_update'],
+    unless  => '/usr/bin/test -f /usr/local/bin/k3s',
   }
 }
