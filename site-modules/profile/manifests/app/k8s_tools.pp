@@ -1,8 +1,8 @@
 #
 class profile::app::k8s_tools (
-  String $helmfile_version = '0.162.0',
-  String $cilium_version   = '1.16.1',
-  String $argocd_version   = '2.9.13',
+  String $helmfile_version = '1.2.3',
+  String $cilium_version   = '1.19.0',
+  String $argocd_version   = '3.3.0',
 ) {
   case $facts['os']['family'] {
     'Debian': {
