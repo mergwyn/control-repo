@@ -2,7 +2,7 @@
 #
 class profile::app::k8s_tools::debian {
   $bin_dir = '/usr/local/bin'
-  $has_k3s = file("${bin_dir}/k3s")
+  $has_k3s = file_exists('/usr/local/bin/k3s')
 
   include apt
 
