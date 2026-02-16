@@ -2,7 +2,7 @@
 
 profile::platform::baseline::packages::defaults:
   ensure: present
-  provider: brew
+  provider: brewcask
 profile::platform::baseline::packages::objects:
   autozimu/homebrew-formulas/unison-fsmonitor: {}
   db-browser-for-sqlite: {}

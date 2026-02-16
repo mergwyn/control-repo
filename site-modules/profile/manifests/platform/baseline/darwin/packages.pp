@@ -3,7 +3,7 @@
 class profile::platform::baseline::darwin::packages {
   Package {
     provider => brewcask,
-    ensure   => latest,
+    ensure   => present,
   }
 
 # packages to be installed
