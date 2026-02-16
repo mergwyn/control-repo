@@ -53,23 +53,23 @@ class profile::app::k8s_tools::debian {
     'velero',
   ]:
     ensure    => latest,
-    require   => Apt::Source['kubernetes'],  # ensures repo exists
-    subscribe => Exec['apt_update'],       # updates after apt update
+    require   => Apt::Source['kubernetes'], # ensure repo exists
+    subscribe => Exec['apt_update'],        # wait for apt-get update
   }
 
-  # --- kubectl (k3s-aware) ---
-  file { "${bin_dir}/kubectl":
-    ensure => link,
-    target => "${bin_dir}/k3s",
-    owner  => 'root',
-    group  => 'root',
-    mode   => '0755',
-    onlyif => '/usr/bin/test -f /usr/local/bin/k3s',
+  # --- k3s-aware kubectl ---
+  # Symlink kubectl to k3s if k3s exists
+  exec { 'symlink-kubectl-to-k3s':
+    command => "/bin/ln -sf ${bin_dir}/k3s ${bin_dir}/kubectl",
+    creates => "${bin_dir}/kubectl",   # idempotent
+    onlyif  => "/usr/bin/test -f ${bin_dir}/k3s",
+    path    => ['/bin', '/usr/bin'],
   }
 
+  # Install kubectl package only if k3s is NOT present
   package { 'kubectl':
     ensure  => latest,
     require => Exec['apt_update'],
-    unless  => '/usr/bin/test -f /usr/local/bin/k3s',
+    unless  => "/usr/bin/test -f ${bin_dir}/k3s",
   }
 }
