@@ -22,11 +22,12 @@ class profile::app::k8s_tools::debian {
   }
 
   apt::source { 'kubernetes':
-    location => 'https://pkgs.k8s.io/core:/stable:/v1.31/deb/',
-    repos    => ' ',
-    release  => '/',
-    key      => '/usr/share/keyrings/kubernetes-archive-keyring.gpg',
-    include  => { deb => true, src => false },
+    source_format => 'sources',
+    location      => 'https://pkgs.k8s.io/core:/stable:/v1.31/deb/',
+    repos         => ' ',
+    release       => '/',
+    keyring       => '/usr/share/keyrings/kubernetes-archive-keyring.gpg',
+    include       => { deb => true, src => false },
   }
 
   # --- Helm repo ---
@@ -38,11 +39,12 @@ class profile::app::k8s_tools::debian {
   }
 
   apt::source { 'helm':
-    location => 'https://baltocdn.com/helm/stable/debian/',
-    repos    => 'all',
-    release  => '/',
-    key      => '/usr/share/keyrings/helm-archive-keyring.gpg',
-    include  => { deb => true, src => false },
+    source_format => 'sources',
+    location      => 'https://baltocdn.com/helm/stable/debian/',
+    repos         => 'all',
+    release       => '/',
+    keyring       => '/usr/share/keyrings/helm-archive-keyring.gpg',
+    include       => { deb => true, src => false },
   }
 
   # --- ArgoCD repo ---
@@ -54,11 +56,12 @@ class profile::app::k8s_tools::debian {
   }
 
   apt::source { 'argocd':
-    location => 'https://apt.argoproj.io/',
-    repos    => 'stable',
-    release  => '/',
-    key      => '/usr/share/keyrings/argocd-archive-keyring.gpg',
-    include  => { deb => true, src => false },
+    source_format => 'sources',
+    location      => 'https://apt.argoproj.io/',
+    repos         => 'stable',
+    release       => '/',
+    keyring       => '/usr/share/keyrings/argocd-archive-keyring.gpg',
+    include       => { deb => true, src => false },
   }
 
   # --- Base packages (curl removed) ---
@@ -88,5 +91,4 @@ class profile::app::k8s_tools::debian {
     ensure  => latest,
     require => Exec['apt_update'],
   }
-
 }
