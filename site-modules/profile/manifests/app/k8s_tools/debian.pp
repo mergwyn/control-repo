@@ -89,26 +89,4 @@ class profile::app::k8s_tools::debian {
     require => Exec['apt_update'],
   }
 
-  # --- Optional binaries like helmfile and cilium-cli ---
-  # Make sure these subscribe to apt_update for idempotence
-  exec { 'install-helmfile':
-    path      => ['/usr/bin', '/bin'],
-    creates   => "${bin_dir}/helmfile",
-    subscribe => Exec['apt_update'],
-    command   => @(HEREDOC)
-      curl -fsSL https://github.com/helmfile/helmfile/releases/download/v0.162.0/helmfile_0.162.0_linux_amd64.tar.gz \
-      | tar -xz -C ${bin_dir} helmfile
-      | HEREDOC
-  }
-
-  exec { 'install-cilium-cli':
-    path      => ['/usr/bin', '/bin'],
-    creates   => "${bin_dir}/cilium",
-    subscribe => Exec['apt_update'],
-    command   => @(HEREDOC)
-      curl -L --remote-name-all https://github.com/cilium/cilium-cli/releases/latest/download/cilium-linux-amd64.tar.gz \
-      | tar -xz -C ${bin_dir} cilium
-      | HEREDOC
-  }
-
 }
