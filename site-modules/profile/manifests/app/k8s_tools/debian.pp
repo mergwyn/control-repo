@@ -51,7 +51,6 @@ class profile::app::k8s_tools::debian {
     'argocd',
     'kustomize',
     'velero',
-    'curl',
   ]:
     ensure    => latest,
     require   => Apt::Source['kubernetes'],  # ensures repo exists
