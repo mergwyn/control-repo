@@ -10,7 +10,7 @@ class profile::platform::baseline::darwin::packages {
     'python-tk@3.12',
   ]
   package { $taps:
+    ensure   => 'present',
     provider => 'brew',
-    ensure   => 'present'
   }
 }
