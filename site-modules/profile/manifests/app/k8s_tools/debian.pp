@@ -47,30 +47,12 @@ class profile::app::k8s_tools::debian {
     include       => { deb => true, src => false },
   }
 
-  # --- ArgoCD repo ---
-  file { '/usr/share/keyrings/argocd-archive-keyring.gpg':
-    ensure  => file,
-    source  => 'https://downloads.argoproj.io/apt/argoproj.gpg',
-    mode    => '0644',
-    require => File['/usr/share/keyrings'],
-  }
-
-  apt::source { 'argocd':
-    source_format => 'sources',
-    location      => 'https://apt.argoproj.io/',
-    repos         => 'stable',
-    release       => '/',
-    keyring       => '/usr/share/keyrings/argocd-archive-keyring.gpg',
-    include       => { deb => true, src => false },
-  }
-
   # --- Base packages (curl removed) ---
   package { [
     'helm',
     'kubectx', # includes kubens
     'sops',
     'age',
-    'argocd',
     'kustomize',
     'velero',
   ]:
