@@ -13,24 +13,25 @@ define profile::app::binary_install (
 
   if $tarball {
     $cmd = @("END")
-            set -e
-            curl -fsSL ${url} -o /tmp/${title}.tar.gz
-            tar -xzf /tmp/${title}.tar.gz -C ${bin_dir} ${tar_extract} --overwrite
-            chmod +x ${bin}
-            rm -f /tmp/${title}.tar.gz
-            | - END
+      set -e
+      curl -fsSL ${url} -o /tmp/${title}.tar.gz
+      tar -xzf /tmp/${title}.tar.gz -C ${bin_dir} ${tar_extract}
+      chmod +x ${bin}
+      rm -f /tmp/${title}.tar.gz
+    END
   } else {
     $cmd = @("END")
-            set -e
-            curl -fsSL ${url} -o ${bin}
-            chmod +x ${bin}
-            | - END
+      set -e
+      curl -fsSL ${url} -o ${bin}
+      chmod +x ${bin}
+    END
   }
 
   exec { "install-${title}":
     command => "sh -c '${cmd}'",
     path    => ['/usr/bin', '/bin', $bin_dir],
     require => Package['curl'],
-    unless  => "test -x ${bin} && ${version_cmd} 2>/dev/null | grep -q ${version}",
+    # Skip execution if binary exists and version matches
+    unless  => "sh -c 'if test -x ${bin}; then ${version_cmd} 2>/dev/null | grep -q ${version}; else exit 1; fi'",
   }
 }
