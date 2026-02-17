@@ -10,7 +10,7 @@ class profile::app::kubectl (
   # Only create symlink if k3s exists
   exec { 'kubectl-symlink-to-k3s':
     command => "/bin/ln -sf ${k3s} ${kubectl}",
-    onlyif  => "/usr/bin/test -x ${k3s}",
+    onlyif  => "/usr/bin/test ! -L ${kubectl} -o \$(readlink ${kubectl}) != ${k3s}",
     path    => ['/bin', '/usr/bin'],
   }
 
@@ -19,7 +19,7 @@ class profile::app::kubectl (
     command => "curl -fsSL https://dl.k8s.io/release/v${version}/bin/linux/amd64/kubectl -o ${kubectl} && chmod +x ${kubectl}",
     path    => ['/bin', '/usr/bin', $bin_dir],
     unless  => @("END"),
-                test -L ${kubectl} -a $(readlink ${kubectl}) = ${bin_dir}/k3s &&
+                test -L ${kubectl} -a $(readlink ${kubectl}) = ${k3s} &&
                 ${kubectl} version --client --short | grep -q ${version}",
                 | - END
     require => Exec['kubectl-symlink-to-k3s'],
