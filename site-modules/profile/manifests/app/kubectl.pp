@@ -1,7 +1,7 @@
 #
 #
 class profile::app::kubectl (
-  String $version = '0.35.1',
+  String $version = '1.35.1',
 ) {
   $bin_dir = '/usr/local/bin'
   $kubectl = "${bin_dir}/kubectl"
