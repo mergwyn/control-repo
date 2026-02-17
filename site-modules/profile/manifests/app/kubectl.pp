@@ -18,7 +18,10 @@ class profile::app::kubectl (
   exec { 'install-kubectl':
     command => "curl -fsSL https://dl.k8s.io/release/v${version}/bin/linux/amd64/kubectl -o ${kubectl} && chmod +x ${kubectl}",
     path    => ['/bin', '/usr/bin', $bin_dir],
-    unless  => "${kubectl} version --client --short | grep -q ${version}",
+    unless  => @("END"),
+                test -L ${kubectl} -a $(readlink ${kubectl}) = ${bin_dir}/k3s &&
+                ${kubectl} version --client --short | grep -q ${version}",
+                | - END
     require => Exec['kubectl-symlink-to-k3s'],
   }
 }
