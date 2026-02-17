@@ -31,6 +31,6 @@ define profile::app::binary_install (
     command => "sh -c '${cmd}'",
     path    => ['/usr/bin', '/bin', $bin_dir],
     require => Package['curl'],
-    unless  => "test -x ${binary} && ${version_cmd} 2>/dev/null | grep -q ${version}",
+    unless  => "test -x ${bin} && ${version_cmd} 2>/dev/null | grep -q ${version}",
   }
 }
