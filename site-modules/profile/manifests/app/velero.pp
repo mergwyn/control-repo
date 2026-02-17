@@ -9,7 +9,8 @@ class profile::app::velero (
   exec { 'install-velero':
     command => @(END),
       curl -fsSL https://github.com/vmware-tanzu/velero/releases/download/v${version}/velero-v${version}-linux-amd64.tar.gz \
-        | tar -xz --strip-components=1 -C ${bin_dir} velero-v${version}-linux-amd64/velero
+        | tar -xz -C ${bin_dir} velero-v${version}-linux-amd64/velero
+      mv ${bin_dir}/velero-v${version}-linux-amd64/velero ${bin}
     END
     creates => $bin,
     path    => ['/usr/bin', '/bin'],
