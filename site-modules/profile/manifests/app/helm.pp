@@ -1,19 +1,14 @@
 #
 #
 class profile::app::helm (
-  String $version,
+  String $version = '3.20.0',
 ) {
-  $bin_dir = '/usr/local/bin'
-  $bin     = "${bin_dir}/helm"
-
-  # --- download and extract helm ---
-  exec { 'install-helm':
-    command => @(END),
-      curl -fsSL https://get.helm.sh/helm-v${version}-linux-amd64.tar.gz \
-        | tar -xz --strip-components=1 -C ${bin_dir} linux-amd64/helm
-    END
-    creates => $bin,
-    path    => ['/usr/bin', '/bin'],
-    require => Package['curl'],
+  profile::app::binary_install { 'helm':
+    version     => $version,
+    binary      => 'helm',
+    url         => "https://get.helm.sh/helm-v${version}-linux-amd64.tar.gz",
+    tarball     => true,
+    tar_extract => 'linux-amd64/helm',
+    version_cmd => 'helm version --short',
   }
 }

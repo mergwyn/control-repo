@@ -1,19 +1,14 @@
 # @summary velero backup (k8s)
 #
 class profile::app::velero (
-  String $version,
+  String $version  = '1.17.2',
 ) {
-  $bin_dir = '/usr/local/bin'
-  $bin     = "${bin_dir}/velero"
-
-  exec { 'install-velero':
-    command => @(END),
-      curl -fsSL https://github.com/vmware-tanzu/velero/releases/download/v${version}/velero-v${version}-linux-amd64.tar.gz \
-        | tar -xz -C ${bin_dir} velero-v${version}-linux-amd64/velero
-      mv ${bin_dir}/velero-v${version}-linux-amd64/velero ${bin}
-    END
-    creates => $bin,
-    path    => ['/usr/bin', '/bin'],
-    require => Package['curl'],
+  profile::app::binary_install { 'velero':
+    version     => $version,
+    binary      => 'velero',
+    url         => "https://github.com/vmware-tanzu/velero/releases/download/v${version}/velero-v${version}-linux-amd64.tar.gz",
+    tarball     => true,
+    tar_extract => "velero-v${version}-linux-amd64/velero",
+    version_cmd => 'velero version --client-only',
   }
 }

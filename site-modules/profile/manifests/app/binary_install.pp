@@ -1,0 +1,36 @@
+#
+#
+define profile::app::binary_install (
+  String  $version,
+  String  $url,
+  String  $binary,
+  String  $version_cmd,
+  String  $bin_dir      = '/usr/local/bin',
+  Boolean $tarball      = false,
+  Optional[String] $tar_extract = undef
+) {
+  $bin = "${bin_dir}/${binary}"
+
+  if $tarball {
+    $cmd = @("END":sh)
+            set -e
+            curl -fsSL ${url} -o /tmp/${title}.tar.gz
+            tar -xzf /tmp/${title}.tar.gz -C ${bin_dir} ${tar_extract}
+            chmod +x ${bin}
+            rm -f /tmp/${title}.tar.gz
+            | - END
+  } else {
+    $cmd = @("END":sh)
+            set -e
+            curl -fsSL ${url} -o ${bin}
+            chmod +x ${bin}
+            | - END
+  }
+
+  exec { "install-${title}":
+    command => $cmd,
+    path    => ['/usr/bin', '/bin', $bin_dir],
+    require => Package['curl'],
+    unless  => "${version_cmd} 2>/dev/null | grep -q ${version}",
+  }
+}

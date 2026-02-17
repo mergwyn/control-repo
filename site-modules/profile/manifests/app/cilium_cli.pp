@@ -1,23 +1,14 @@
 #
 #
 class profile::app::cilium_cli (
-  String $version,
+  String $version = '0.19.0',
 ) {
-  $bin_dir = '/usr/local/bin'
-  $bin     = "${bin_dir}/cilium"
-
-  exec { 'install-cilium-cli':
-    creates     => $bin,
-    path        => ['/usr/bin', '/bin'],
-    subscribe   => Exec['apt_update'],
-    refreshonly => false,
-    command     => @("EOF"),
-      /usr/bin/curl -L --fail https://github.com/cilium/cilium-cli/releases/download/v${version}/cilium-linux-amd64.tar.gz \
-      | /usr/bin/tar -xz -C ${bin_dir} cilium
-      | EOF
-  }
-
-  file { $bin:
-    mode => '0755',
+  profile::app::binary_install { 'cilium':
+    version     => $version,
+    binary      => 'cilium',
+    url         => "https://github.com/cilium/cilium-cli/releases/download/v${version}/cilium-linux-amd64.tar.gz",
+    tarball     => true,
+    tar_extract => 'cilium',
+    version_cmd => 'cilium version --client',
   }
 }

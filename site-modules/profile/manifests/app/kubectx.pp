@@ -1,18 +1,14 @@
 #
 #
 class profile::app::kubectx (
-  String $version,
+  String $version = '0.9.5',
 ) {
-  $bin_dir = '/usr/local/bin'
-  $bin     = "${bin_dir}/kubectx"
-
-  exec { 'install-kubectx':
-    command => @(END),
-      curl -fsSL https://github.com/ahmetb/kubectx/releases/download/v${version}/kubectx_v${version}_linux_x86_64.tar.gz \
-        | tar -xz -C ${bin_dir}
-    END
-    creates => $bin,
-    path    => ['/usr/bin', '/bin'],
-    require => Package['curl'],
+  profile::app::binary_install { 'kubectx':
+    version     => $version,
+    binary      => 'kubectx',
+    url         => "https://github.com/ahmetb/kubectx/releases/download/v${version}/kubectx_v${version}_linux_x86_64.tar.gz",
+    tarball     => true,
+    tar_extract => 'kubectx',
+    version_cmd => 'kubectx --version',
   }
 }
