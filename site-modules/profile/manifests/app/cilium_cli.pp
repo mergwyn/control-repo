@@ -1,7 +1,7 @@
 #
 #
 class profile::app::cilium_cli (
-  String $version = '0.19.0',
+  String $version = '0.19.0', # renovate: datasource=github-releases depName=cilium/cilium-cli
 ) {
   profile::app::binary_install { 'cilium':
     version     => $version,

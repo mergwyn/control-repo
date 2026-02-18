@@ -1,7 +1,7 @@
 #
 #
 class profile::app::kustomize (
-  String $version = '5.8.1',
+  String $version = '5.8.1', # renovate: datasource=github-releases depName=kubernetes-sigs/kustomize
 ) {
   profile::app::binary_install { 'kustomize':
     version     => $version,

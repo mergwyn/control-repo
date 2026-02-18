@@ -1,32 +1,33 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-
+  "baseBranches": [
+    "production",
+    "renovate_github_releases"
+  ],
   "extends": [
     "config:best-practices",
     "schedule:weekly",
     ":automergePatch"
   ],
-
   "timezone": "Europe/London",
-
-  "branchTopic": "{{{depNameSanitized}}}_{{{newMajor}}}{{#if separateMinorPatch}}{{#if isPatch}}.{{{newMinor}}}{{/if}}{{/if}}{{#if separateMultipleMinor}}{{#if isMinor}}.{{{newMinor}}}{{/if}}{{/if}}.x{{#if isLockfileUpdate}}_lockfile{{/if}}",
-
   "ignorePaths": [
     "Gemfile",
-    ".devcontainer/*"
+    ".devcontainer/**"
   ],
-
   "enabledManagers": [
     "puppet",
     "regex"
   ],
-
   "internalChecksFilter": "strict",
-
-  "major": { "minimumReleaseAge": "21 days" },
-  "minor": { "minimumReleaseAge": "8 days" },
-  "patch": { "minimumReleaseAge": "3 days" },
-
+  "major": {
+    "minimumReleaseAge": "21 days"
+  },
+  "minor": {
+    "minimumReleaseAge": "8 days"
+  },
+  "patch": {
+    "minimumReleaseAge": "3 days"
+  },
   "packageRules": [
     {
       "matchManagers": ["ruby-version"],
@@ -35,23 +36,8 @@
     {
       "matchPackageNames": ["ruby"],
       "enabled": false
-    },
-    {
-      "matchPackageNames": [
-        "kubectl",
-        "helm",
-        "kubectx",
-        "kubens",
-        "sops",
-        "age",
-        "argocd",
-        "kustomize",
-        "velero"
-      ],
-      "enabled": false
     }
   ],
-
   "regexManagers": [
     {
       "fileMatch": [
@@ -60,9 +46,7 @@
       "matchStrings": [
         "String\\s+\\$version\\s*=\\s*'(?<currentValue>[^']+)'"
       ],
-      "depNameTemplate": "helmfile",
       "datasourceTemplate": "github-releases",
-      "packageNameTemplate": "helmfile/helmfile",
       "versioningTemplate": "semver"
     }
   ]

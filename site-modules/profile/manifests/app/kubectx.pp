@@ -1,7 +1,7 @@
 #
 #
 class profile::app::kubectx (
-  String $version = '0.9.5',
+  String $version = '0.9.5', # renovate: datasource=github-releases depName=ahmetb/kubectx
 ) {
   profile::app::binary_install { 'kubectx':
     version     => $version,
