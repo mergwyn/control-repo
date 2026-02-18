@@ -15,7 +15,7 @@
 # @param version_cmd
 #   Command used to output the installed version. The output is matched
 #   against `version` using grep.
-#   defaults to installing if binary dies not exist.
+#   Defaults to installing if binary does not exist.
 #
 # @param install_dir
 #   Absolute directory where the binary will be installed.
@@ -25,6 +25,9 @@
 #
 # @param tar_extract
 #   Path inside the tarball to extract (required when tarball is true).
+#
+# @param env_vars
+#   Optional hash of environment variables to pass to the `exec` command.
 #
 # @example Install kubectl
 #   profile::app::binary_install { 'kubectl':
@@ -40,7 +43,6 @@
 #     binary      => 'kubectx',
 #     url         => 'https://github.com/ahmetb/kubectx/releases/download/v0.9.4/kubectx',
 #   }
-#
 define profile::app::binary_install (
   String[1]            $version,
   Stdlib::HTTPUrl      $url,
@@ -49,8 +51,13 @@ define profile::app::binary_install (
   Boolean              $tarball      = false,
   Stdlib::Absolutepath $install_dir  = '/usr/local/bin',
   Optional[String[1]]  $tar_extract  = undef,
+  Optional[Array]      $env_vars     = undef,
 ) {
   $bin = "${install_dir}/${binary}"
+
+  if $tarball and $tar_extract == undef {
+    fail('tar_extract must be defined when tarball is true')
+  }
 
   if $tarball {
     $cmd = @("END")
@@ -59,27 +66,28 @@ define profile::app::binary_install (
       tar -xzf /tmp/${title}.tar.gz --strip-components=1 -C ${install_dir} ${tar_extract}
       chmod +x ${bin}
       rm -f /tmp/${title}.tar.gz
-    END
+      END
   } else {
     $cmd = @("END")
       set -e
       curl -fsSL ${url} -o ${bin}
       chmod +x ${bin}
-    END
+      END
   }
 
   exec { "install-${title}":
-    command => "sh -c '${cmd}'",
-    path    => ['/usr/bin', '/bin', $install_dir],
-    require => Package['curl'],
+    command     => "sh -c '${cmd}'",
+    path        => ['/usr/bin', '/bin', $install_dir],
+    require     => Package['curl'],
+    environment => $env_vars,
     # Skip execution if binary exists and version matches
-    unless  => @("END"),
-                sh -c '
-                  if test -x ${bin};
-                  then ${version_cmd} 2>/dev/null | grep -q ${version};
-                  else exit 1;
-                  fi
-                '
-                | - END
+    unless      => @("END"),
+      sh -c '
+        if test -x ${bin};
+        then ${version_cmd} 2>/dev/null | grep -q ${version};
+        else exit 1;
+        fi
+      '
+      | - END
   }
 }

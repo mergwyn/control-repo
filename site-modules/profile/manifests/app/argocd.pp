@@ -1,4 +1,4 @@
-#
+# @summary Install argocd at a specified version
 #
 class profile::app::argocd (
   String $version = '3.3.0',
@@ -6,8 +6,8 @@ class profile::app::argocd (
   profile::app::binary_install { 'argocd':
     version     => $version,
     binary      => 'argocd',
-    url         => "https://github.com/argoproj/argo-cd/releases/download/v${version}/argocd-linux-amd64",
-    # argocd will fail if the $HOME is not set
-    version_cmd => 'HOME=/ argocd version --client --short',
+    url         => 'https://github.com/argoproj/argo-cd/releases/download/v3.3.0/argocd-linux-amd64',
+    version_cmd => 'argocd version --client --short',
+    env_vars    => ['HOME=/'],
   }
 }
