@@ -1,7 +1,7 @@
 # @summary velero backup (k8s)
 #
 class profile::app::velero (
-  String $version  = '1.17.2',
+  String $version  = '1.17.2', # renovate: datasource=github-releases depName=vmware-tanzu/velero
 ) {
   profile::app::binary_install { 'velero':
     version     => $version,
