@@ -18,8 +18,7 @@
 
   "enabledManagers": [
     "puppet",
-    "regex",
-    "github-releases"
+    "regex"
   ],
 
   "internalChecksFilter": "strict",
