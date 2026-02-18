@@ -35,19 +35,25 @@
     {
       "matchPackageNames": ["ruby"],
       "enabled": false
+    },
+    {
+      "matchPackageNames": ["helmfile/helmfile"],
+      "allowedVersions": "< 1.0.0"
     }
   ],
 
   "customManagers": [
     {
       "customType": "regex",
-      "fileMatch": ["site-modules/profile/manifests/.*\\.pp$"],
-      "matchStrings": [
-        "String\\s+\\$\\w+\\s*=\\s*'(?<currentValue>[^']+)',\\s*#\\s*renovate:\\s*datasource=(?<datasource>[^\\s]+)\\s+depName=(?<depName>[^\\s]+)",
-        "#\\s*renovate:\\s*datasource=(?<datasource>[^\\s]+)\\s+depName=(?<depName>[^\\s]+)\\s+\\$\\w+\\s*=\\s*'(?<currentValue>[^']+)'"
+      "fileMatch": [
+        "site-modules/profile/manifests/.*\\.pp$",
+        "hieradata/.*\\.yaml$",
+        "data/.*\\.yaml$"
       ],
-      "datasourceTemplate": "github-releases",
-      "versioningTemplate": "semver"
+      "matchStrings": [
+        "(?:#|//)\\s*renovate:\\s*datasource=(?<datasource>[^\\s]+)\\s+depName=(?<depName>[^\\s]+)(?:\\s+versioning=(?<versioning>[^\\s]+))?\\s+.*?['\"]?(?<currentValue>[\\w+\\.-]+)['\"]?"
+      ],
+      "datasourceTemplate": "github-releases"
     }
   ]
 }
