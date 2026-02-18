@@ -7,6 +7,7 @@ class profile::app::argocd (
     version     => $version,
     binary      => 'argocd',
     url         => "https://github.com/argoproj/argo-cd/releases/download/v${version}/argocd-linux-amd64",
-    version_cmd => 'argocd version --client --short',
+    # argocd will fail if the $HOME is not set
+    version_cmd => 'HOME=/ argocd version --client --short',
   }
 }
