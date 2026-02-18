@@ -29,20 +29,6 @@
 # @param env_vars
 #   Optional hash of environment variables to pass to the `exec` command.
 #
-# @example Install kubectl
-#   profile::app::binary_install { 'kubectl':
-#     version     => '1.35.1',
-#     binary      => 'kubectl',
-#     url         => 'https://dl.k8s.io/release/v1.35.1/bin/linux/amd64/kubectl',
-#     version_cmd => 'kubectl version --client --short',
-#   }
-#
-# @example Install kubectx (no version command)
-#   profile::app::binary_install { 'kubectx':
-#     version     => '0.9.4',
-#     binary      => 'kubectx',
-#     url         => 'https://github.com/ahmetb/kubectx/releases/download/v0.9.4/kubectx',
-#   }
 define profile::app::binary_install (
   String[1]            $version,
   Stdlib::HTTPUrl      $url,
@@ -59,11 +45,14 @@ define profile::app::binary_install (
     fail('tar_extract must be defined when tarball is true')
   }
 
+  # Determine if --strip-components=1 is needed
+  $strip_opt = $tar_extract =~ /\// ? '--strip-components=1' : ''
+
   if $tarball {
     $cmd = @("END")
       set -e
       curl -fsSL ${url} -o /tmp/${title}.tar.gz
-      tar -xzf /tmp/${title}.tar.gz --strip-components=1 -C ${install_dir} ${tar_extract}
+      tar -xzf /tmp/${title}.tar.gz ${strip_opt} -C ${install_dir} ${tar_extract}
       chmod +x ${bin}
       rm -f /tmp/${title}.tar.gz
       END
