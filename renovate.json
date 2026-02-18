@@ -49,7 +49,8 @@
         "data/.*\\.yaml$"
       ],
       "matchStrings": [
-        "(?:#|//)\\s*renovate:\\s*datasource=(?<datasource>[^\\s]+)\\s+depName=(?<depName>[^\\s]+)(?:\\s+versioning=(?<versioning>[^\\s]+))?\\s+[^=:]*?[=:]\\s*['\"](?<currentValue>[\\w+\\.-]+)['\"]"
+        "(?:#|//)\\s*renovate:\\s*datasource=(?<datasource>[^\\s]+)\\s+depName=(?<depName>[^\\s]+)(?:\\s+versioning=(?<versioning>[^\\s]+))?\\s+[^=:]*?[=:]\\s*['\"](?<currentValue>[\\w+\\.-]+)['\"]",
+        "['\"](?<currentValue>[\\w+\\.-]+)['\"]\\s*,?\\s*(?:#|//)\\s*renovate:\\s*datasource=(?<datasource>[^\\s]+)\\s+depName=(?<depName>[^\\s]+)(?:\\s+versioning=(?<versioning>[^\\s]+))?"
       ],
       "datasourceTemplate": "github-releases",
       "versioningTemplate": "semver"
