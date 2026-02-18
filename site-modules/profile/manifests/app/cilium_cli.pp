@@ -9,6 +9,6 @@ class profile::app::cilium_cli (
     url         => "https://github.com/cilium/cilium-cli/releases/download/v${version}/cilium-linux-amd64.tar.gz",
     tarball     => true,
     tar_extract => 'cilium',
-    version_cmd => 'cilium version --client',
+    version_cmd => "cilium version --client | grep 'cilium-cli'",
   }
 }

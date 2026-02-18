@@ -9,6 +9,5 @@ class profile::app::kubectx (
     url         => "https://github.com/ahmetb/kubectx/releases/download/v${version}/kubectx_v${version}_linux_x86_64.tar.gz",
     tarball     => true,
     tar_extract => 'kubectx',
-    version_cmd => 'kubectx --version',
   }
 }
