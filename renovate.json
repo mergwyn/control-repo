@@ -1,8 +1,6 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "baseBranchPatterns": [
-    "production"
-  ],
+  "baseBranches": ["production"],
   "extends": [
     "config:best-practices",
     "schedule:weekly",
@@ -15,50 +13,46 @@
   ],
   "enabledManagers": [
     "puppet",
-    "custom.regex"
+    "regex"
   ],
   "internalChecksFilter": "strict",
-  "major": {
-    "minimumReleaseAge": "21 days"
-  },
-  "minor": {
-    "minimumReleaseAge": "8 days"
-  },
-  "patch": {
-    "minimumReleaseAge": "3 days"
-  },
+  "major": { "minimumReleaseAge": "21 days" },
+  "minor": { "minimumReleaseAge": "8 days" },
+  "patch": { "minimumReleaseAge": "3 days" },
   "packageRules": [
     {
-      "matchManagers": [
-        "ruby-version"
-      ],
+      "matchManagers": ["ruby-version"],
       "enabled": false
     },
     {
-      "matchPackageNames": [
-        "ruby"
-      ],
+      "matchPackageNames": ["ruby"],
       "enabled": false
     },
     {
-      "matchPackageNames": [
-        "helmfile/helmfile"
-      ],
+      "description": "Pin helmfile to 0.x until ready for v1 breaking changes",
+      "matchPackageNames": ["helmfile/helmfile"],
       "allowedVersions": "< 1.0.0"
+    },
+    {
+      "description": "Automerge patch updates for GitHub binaries",
+      "matchDatasources": ["github-releases"],
+      "matchUpdateTypes": ["patch"],
+      "automerge": true
     }
   ],
   "customManagers": [
     {
       "customType": "regex",
-      "managerFilePatterns": [
-        "/site-modules/profile/manifests/.*\\.pp$/",
-        "/hieradata/.*\\.yaml$/",
-        "/data/.*\\.yaml$/"
+      "fileMatch": [
+        "site-modules/profile/manifests/.*\\.pp$",
+        "hieradata/.*\\.yaml$",
+        "data/.*\\.yaml$"
       ],
       "matchStrings": [
-        "(?:#|//)\\s*renovate:\\s*datasource=(?<datasource>[^\\s]+)\\s+depName=(?<depName>[^\\s]+)(?:\\s+versioning=(?<versioning>[^\\s]+))?\\s+.*?['\"]?(?<currentValue>[\\w+\\.-]+)['\"]?"
+        "(?:#|//)\\s*renovate:\\s*datasource=(?<datasource>[^\\s]+)\\s+depName=(?<depName>[^\\s]+)(?:\\s+versioning=(?<versioning>[^\\s]+))?\\s+.*?[=:]\\s*['\"]?(?<currentValue>[\\w+\\.-]+)['\"]?"
       ],
-      "datasourceTemplate": "github-releases"
+      "datasourceTemplate": "github-releases",
+      "versioningTemplate": "semver"
     }
   ]
 }
