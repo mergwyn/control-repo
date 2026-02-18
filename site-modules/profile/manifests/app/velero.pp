@@ -1,39 +1,14 @@
 # @summary velero backup (k8s)
 #
 class profile::app::velero (
+  String $version  = '1.17.2',
 ) {
-  $scripts = '/etc/openvpn/scripts'
-
-  $aptpackages = [
-    # 'rclone',
-  ]
-  package { $aptpackages: ensure => present, }
-
-#TODO rclone config
-#TODO install velero
-
-  case $facts['os']['architecture'] {
-    'amd64': { $edition = 'linux-amd64' }
-    default: { fail("Architecture ${facts['os']['architecture']} is not supported") }
-  }
-
-  $archive_name = "/velero.latest.${edition}.tar.gz"
-  $archive_path = "${facts['puppet_vardir']}/${archive_name}"
-  $install_path = '/usr/local/bin'
-  $creates      = "${install_path}/velero"
-
-# TODO copy unison pattern
-  githubreleases_download { $archive_path:
-    author            => 'vmware-tanzu',
-    repository        => 'velero',
-    asset             => true,
-    asset_filepattern => $edition,
-  }
-  -> archive { $archive_name:
-    source       => "file://${archive_path}",
-    extract      => true,
-    extract_path => $install_path,
-    cleanup      => false,
-    require      => Githubreleases_download[$archive_path],
+  profile::app::binary_install { 'velero':
+    version     => $version,
+    binary      => 'velero',
+    url         => "https://github.com/vmware-tanzu/velero/releases/download/v${version}/velero-v${version}-linux-amd64.tar.gz",
+    tarball     => true,
+    tar_extract => "velero-v${version}-linux-amd64/velero",
+    version_cmd => 'velero version --client-only',
   }
 }
