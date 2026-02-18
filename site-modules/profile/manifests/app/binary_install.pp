@@ -56,7 +56,7 @@ define profile::app::binary_install (
     $cmd = @("END")
       set -e
       curl -fsSL ${url} -o /tmp/${title}.tar.gz
-      tar -xzf /tmp/${title}.tar.gz --strip-components=1-C ${install_dir} ${tar_extract}
+      tar -xzf /tmp/${title}.tar.gz --strip-components=1 -C ${install_dir} ${tar_extract}
       chmod +x ${bin}
       rm -f /tmp/${title}.tar.gz
     END
