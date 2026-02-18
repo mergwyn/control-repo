@@ -1,54 +1,59 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-
-  "baseBranches": ["production"],
-
+  "baseBranchPatterns": [
+    "production"
+  ],
   "extends": [
     "config:best-practices",
     "schedule:weekly",
     ":automergePatch"
   ],
-
   "timezone": "Europe/London",
-
   "ignorePaths": [
     "Gemfile",
     ".devcontainer/**"
   ],
-
   "enabledManagers": [
     "puppet",
-    "regex"
+    "custom.regex"
   ],
-
   "internalChecksFilter": "strict",
-
-  "major": { "minimumReleaseAge": "21 days" },
-  "minor": { "minimumReleaseAge": "8 days" },
-  "patch": { "minimumReleaseAge": "3 days" },
-
+  "major": {
+    "minimumReleaseAge": "21 days"
+  },
+  "minor": {
+    "minimumReleaseAge": "8 days"
+  },
+  "patch": {
+    "minimumReleaseAge": "3 days"
+  },
   "packageRules": [
     {
-      "matchManagers": ["ruby-version"],
+      "matchManagers": [
+        "ruby-version"
+      ],
       "enabled": false
     },
     {
-      "matchPackageNames": ["ruby"],
+      "matchPackageNames": [
+        "ruby"
+      ],
       "enabled": false
     },
     {
-      "matchPackageNames": ["helmfile/helmfile"],
+      "matchPackageNames": [
+        "helmfile/helmfile"
+      ],
       "allowedVersions": "< 1.0.0"
     }
   ],
-
   "customManagers": [
     {
       "customType": "regex",
-      "fileMatch": [
-        "site-modules/profile/manifests/.*\\.pp$",
-        "hieradata/.*\\.yaml$",
-        "data/.*\\.yaml$"
+      "managerFilePatterns": [
+        "/site-modules/profile/manifests/.*\\.pp$/",
+        "/hieradata/.*\\.yaml$/",
+        "/data/.*\\.yaml$/"
       ],
       "matchStrings": [
         "(?:#|//)\\s*renovate:\\s*datasource=(?<datasource>[^\\s]+)\\s+depName=(?<depName>[^\\s]+)(?:\\s+versioning=(?<versioning>[^\\s]+))?\\s+.*?['\"]?(?<currentValue>[\\w+\\.-]+)['\"]?"
