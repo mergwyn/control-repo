@@ -1,0 +1,53 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "baseBranches": [
+    "production",
+    "renovate_github_releases"
+  ],
+  "extends": [
+    "config:best-practices",
+    "schedule:weekly",
+    ":automergePatch"
+  ],
+  "timezone": "Europe/London",
+  "ignorePaths": [
+    "Gemfile",
+    ".devcontainer/**"
+  ],
+  "enabledManagers": [
+    "puppet",
+    "regex"
+  ],
+  "internalChecksFilter": "strict",
+  "major": {
+    "minimumReleaseAge": "21 days"
+  },
+  "minor": {
+    "minimumReleaseAge": "8 days"
+  },
+  "patch": {
+    "minimumReleaseAge": "3 days"
+  },
+  "packageRules": [
+    {
+      "matchManagers": ["ruby-version"],
+      "enabled": false
+    },
+    {
+      "matchPackageNames": ["ruby"],
+      "enabled": false
+    }
+  ],
+  "regexManagers": [
+    {
+      "fileMatch": [
+        "site-modules/profile/manifests/.*\\.pp$"
+      ],
+      "matchStrings": [
+        "String\\s+\\$version\\s*=\\s*'(?<currentValue>[^']+)'"
+      ],
+      "datasourceTemplate": "github-releases",
+      "versioningTemplate": "semver"
+    }
+  ]
+}
