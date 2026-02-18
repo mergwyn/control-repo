@@ -46,7 +46,11 @@ define profile::app::binary_install (
   }
 
   # Determine if --strip-components=1 is needed
-  $strip_opt = ($tar_extract =~ /\//) ? '--strip-components=1' : ''
+  if $tar_extract and $tar_extract =~ /\// {
+    $strip_opt = '--strip-components=1'
+  } else {
+    $strip_opt = ''
+  }
 
   if $tarball {
     $cmd = @("END")
