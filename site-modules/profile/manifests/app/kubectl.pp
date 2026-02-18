@@ -21,10 +21,12 @@ class profile::app::kubectl (
   # Install kubectl only if symlink does not exist
   exec { 'install-kubectl':
     command => @("END"),
-      set -e
-      curl -fsSL https://dl.k8s.io/release/v${version}/bin/linux/amd64/kubectl -o ${kubectl}
-      chmod +x ${kubectl}
-      | - END
+                sh -c '
+                  set -e
+                  curl -fsSL https://dl.k8s.io/release/v${version}/bin/linux/amd64/kubectl -o ${kubectl}
+                  chmod +x ${kubectl}
+                '
+                | - END
     path    => ['/bin', '/usr/bin', $bin_dir],
     require => Exec['kubectl-symlink-to-k3s'],
     unless  => @("END"),
