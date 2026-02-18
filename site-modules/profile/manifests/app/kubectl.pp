@@ -10,7 +10,11 @@ class profile::app::kubectl (
   # Only create symlink if kubectl is not already a symlink to k3s
   exec { 'kubectl-symlink-to-k3s':
     command => "/bin/ln -sf ${k3s} ${kubectl}",
-    onlyif  => "test ! -L ${kubectl} || [ \$(readlink ${kubectl}) != ${k3s} ]",
+    onlyif  => @("END"),
+                test -x ${k3s} && (
+                  test ! -L ${kubectl} || [ "$(readlink ${kubectl})" != "${k3s}" ]
+                )
+                | - END
     path    => ['/bin', '/usr/bin'],
   }
 
