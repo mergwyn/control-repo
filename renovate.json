@@ -43,7 +43,8 @@
       "customType": "regex",
       "fileMatch": ["site-modules/profile/manifests/.*\\.pp$"],
       "matchStrings": [
-        "# renovate: datasource=github-releases depName=(?<depName>[^\\s]+)\\s+\\$\\w+\\s*=\\s*'(?<currentValue>[^']+)'"
+        "String\\s+\\$\\w+\\s*=\\s*'(?<currentValue>[^']+)',\\s*#\\s*renovate:\\s*datasource=(?<datasource>[^\\s]+)\\s+depName=(?<depName>[^\\s]+)",
+        "#\\s*renovate:\\s*datasource=(?<datasource>[^\\s]+)\\s+depName=(?<depName>[^\\s]+)\\s+\\$\\w+\\s*=\\s*'(?<currentValue>[^']+)'"
       ],
       "datasourceTemplate": "github-releases",
       "versioningTemplate": "semver"
