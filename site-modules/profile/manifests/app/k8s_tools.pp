@@ -7,6 +7,7 @@ class profile::app::k8s_tools {
       include profile::app::cilium_cli
       include profile::app::helm
       include profile::app::helmfile
+      include profile::app::kube_ps1
       include profile::app::kubectl
       include profile::app::kubectx
       include profile::app::kustomize
@@ -25,6 +26,7 @@ class profile::app::k8s_tools {
         'cilium-cli',
         'helm',
         'helmfile',
+        'kube_ps1',
         'kubectl',
         'kubectx', # includes kubens
         'kustomize',
