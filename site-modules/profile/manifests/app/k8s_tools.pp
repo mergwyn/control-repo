@@ -26,7 +26,7 @@ class profile::app::k8s_tools {
         'cilium-cli',
         'helm',
         'helmfile',
-        'kube_ps1',
+        'kube-ps1',
         'kubectl',
         'kubectx', # includes kubens
         'kustomize',
