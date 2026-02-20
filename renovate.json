@@ -41,13 +41,6 @@
       "enabled": false
     },
     {
-      "description": "Pin helmfile to 0.x until ready for v1 breaking changes",
-      "matchPackageNames": [
-        "helmfile/helmfile"
-      ],
-      "allowedVersions": "< 1.0.0"
-    },
-    {
       "description": "Automerge patch updates for GitHub binaries",
       "matchDatasources": [
         "github-releases"
@@ -56,6 +49,12 @@
         "patch"
       ],
       "automerge": true
+    },
+    {
+      "matchDatasources": ["github-commits"],
+      "groupName": "commit-tracked tools",
+      "minimumReleaseAge": "7 days",
+      "automerge": false
     }
   ],
   "customManagers": [
