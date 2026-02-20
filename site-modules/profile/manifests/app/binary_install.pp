@@ -74,7 +74,7 @@ define profile::app::binary_install (
     $cmd_stamp = "echo '# version: ${version}' >> ${bin}"
     # Chain stamping after main install
     exec { "stamp-${title}":
-      command => "sh -c '${cmd_stamp}'",
+      command => "printf '# version: %s\\n' '${version}' >> '${bin}'",
       path    => ['/usr/bin', '/bin', $install_dir],
       onlyif  => "test -x ${bin} && ! tail -1 ${bin} | grep -q '${version}'",
       require => Exec["install-${title}"],
