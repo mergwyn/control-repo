@@ -1,14 +1,13 @@
 # @summary Install kube-ps1 shell script for prompt integration
 #
 class profile::app::kube_ps1 (
-  String $version = '0.12.1', # renovate: datasource=github-releases depName:n3kub/kube-ps1
+  String $version = '8c1a9b4', # renovate: datasource=github-commits depName=jonmosco/kube-ps1
 ) {
   profile::app::binary_install { 'kube-ps1':
     version     => $version,
     binary      => 'kube-ps1.sh',
-    url         => "https://github.com/n3kub/kube-ps1/releases/download/v${version}/kube-ps1.sh",
-    tarball     => false,
+    url         => "https://raw.githubusercontent.com/jonmosco/kube-ps1/${version}/kube-ps1.sh",
+    install_dir => '/usr/local/share/kube-ps1',
     stamp       => true,
-    install_dir => '/usr/local/share/',
   }
 }
