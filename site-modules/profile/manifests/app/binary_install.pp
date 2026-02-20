@@ -71,7 +71,7 @@ define profile::app::binary_install (
 
   # If stamping, append the version string to the script
   if $stamp {
-    $cmd_stamp = "echo '${version}' >> ${bin}"
+    $cmd_stamp = "echo '# version: ${version}' >> ${bin}"
     # Chain stamping after main install
     exec { "stamp-${title}":
       command => "sh -c '${cmd_stamp}'",
