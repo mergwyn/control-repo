@@ -19,10 +19,10 @@
   ],
   "internalChecksFilter": "strict",
   "major": {
-    "minimumReleaseAge": "21 days"
+    "minimumReleaseAge": "14 days"
   },
   "minor": {
-    "minimumReleaseAge": "8 days"
+    "minimumReleaseAge": "5 days"
   },
   "patch": {
     "minimumReleaseAge": "3 days"
