@@ -7,7 +7,7 @@ class profile::app::kube_ps1 (
     version     => $version,
     binary      => 'kube-ps1.sh',
     url         => "https://github.com/jonmosco/kube-ps1/raw/${version}/kube-ps1.sh",
-    
+
     install_dir => '/usr/local/share',
     stamp       => true,
   }
