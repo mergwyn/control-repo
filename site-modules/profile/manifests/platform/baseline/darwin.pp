@@ -38,7 +38,7 @@ class profile::platform::baseline::darwin {
     content => @("EOT"),
       # Managed by Puppet
       # Add gssapi options to allow kerberos auth to work with ssh
-      Host *.$trusted['domain']
+      Host *.${trusted['domain']}
           # SendEnv LANG LC_*
         ForwardX11 yes
         GSSAPIAuthentication yes
