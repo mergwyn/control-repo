@@ -35,10 +35,10 @@ class profile::platform::baseline::darwin {
     owner   => 'root',
     group   => 'wheel',
     mode    => '0644',
-    content => @(EOT),
+    content => @("EOT"),
       # Managed by Puppet
       # Add gssapi options to allow kerberos auth to work with ssh
-      Host *
+      Host *.$trusted['domain']
           # SendEnv LANG LC_*
         ForwardX11 yes
         GSSAPIAuthentication yes
