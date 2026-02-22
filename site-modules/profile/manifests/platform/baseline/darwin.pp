@@ -27,7 +27,7 @@ class profile::platform::baseline::darwin {
       GSSAPIAuthentication yes
       GSSAPICleanupCredentials yes
       | EOT
-    notify  => Service['ssh'],
+    notify  => Service['com.openssh.sshd'],
   }
 
   file { '/etc/ssh/ssh_config.d/200-gssapi.conf':
@@ -44,10 +44,10 @@ class profile::platform::baseline::darwin {
         GSSAPIAuthentication yes
         GSSAPIDelegateCredentials yes
       | EOT
-    notify  => Service['ssh'],
+    notify  => Service['com.openssh.sshd'],
   }
 
-  service { 'ssh':
+  service { 'com.openssh.sshd':
     ensure     => running,
     enable     => true,
     provider   => 'launchd',
