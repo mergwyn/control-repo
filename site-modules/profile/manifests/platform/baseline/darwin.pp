@@ -24,7 +24,7 @@ class profile::platform::baseline::darwin {
     content => @(EOT),
       # Managed by Puppet
       # Add gssapi options to allow kerberos auth to work with sshd
-      SSAPIAuthentication yes
+      GSSAPIAuthentication yes
       GSSAPICleanupCredentials yes
       | EOT
     notify  => Service['ssh'],
