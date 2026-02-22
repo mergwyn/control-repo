@@ -36,3 +36,4 @@ bolt-debug.log
 .onceover/
 spec/fixtures
 .fixtures.yml
+pdk.yaml
