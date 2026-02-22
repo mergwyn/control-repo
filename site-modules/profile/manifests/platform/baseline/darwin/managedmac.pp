@@ -69,43 +69,4 @@ class profile::platform::baseline::darwin::managedmac {
 #  }
 
   class { 'managedmac::screensharing': enable => true, }
-
-  file { '/etc/ssh/sshd_config.d/200-gssapi.conf':
-    ensure  => file,
-    owner   => 'root',
-    group   => 'wheel',
-    mode    => '0644',
-    content => @(EOT),
-      # Managed by Puppet
-      # Add gssapi options to allow kerberos auth to work with sshd
-      SSAPIAuthentication yes
-      GSSAPICleanupCredentials yes
-      | EOT
-    notify  => Service['ssh'],
-  }
-
-  file { '/etc/ssh/ssh_config.d/200-gssapi.conf':
-    ensure  => file,
-    owner   => 'root',
-    group   => 'wheel',
-    mode    => '0644',
-    content => @(EOT),
-      # Managed by Puppet
-      # Add gssapi options to allow kerberos auth to work with ssh
-      Host *
-          # SendEnv LANG LC_*
-        ForwardX11 yes
-        GSSAPIAuthentication yes
-        GSSAPIDelegateCredentials yes
-      | EOT
-    notify  => Service['ssh'],
-  }
-
-  service { 'ssh':
-    ensure     => running,
-    enable     => true,
-    provider   => 'launchd',
-    hasrestart => true,
-    restart    => '/bin/launchctl kickstart -k system/com.openssh.sshd',
-  }
 }
