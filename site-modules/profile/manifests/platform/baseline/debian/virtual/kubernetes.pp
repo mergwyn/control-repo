@@ -14,6 +14,29 @@ class profile::platform::baseline::debian::virtual::kubernetes (
 # nfs client needed for some services/pods
       stdlib::ensure_packages (['nfs-common'], { ensure => present })
 
+      # home-assistant now uses the host network and these settings are needed
+      # for HA 2026 + K3s HostNetwork Stability
+      sysctl { 'net.netfilter.nf_conntrack_tcp_be_liberal':
+        ensure => present,
+        value  => '1',
+        target => '/etc/sysctl.d/99-homeassistant.conf',
+      }
+      sysctl { 'net.ipv4.ip_local_port_range':
+        ensure => present,
+        value  => '10240 65000',
+        target => '/etc/sysctl.d/99-homeassistant.conf',
+      }
+      sysctl { 'net.ipv4.tcp_tw_reuse':
+        ensure => present,
+        value  => '1',
+        target => '/etc/sysctl.d/99-homeassistant.conf',
+      }
+      sysctl { 'net.ipv4.tcp_fin_timeout':
+        ensure => present,
+        value  => '15',
+        target => '/etc/sysctl.d/99-homeassistant.conf',
+      }
+
 # Stop import scan service as recommended for openebs
 #      service { 'zfs-import-scan.service':
 #        ensure =>  stopped,

@@ -36,6 +36,9 @@ profile::platform::baseline::debian::netplan::bridges:
     routes:
       - to: "0.0.0.0/0"
         via: "%{lookup('defaults::gateway')}"
+      - to: 224.0.0.0/4
+        scope: link
+        type: multicast
     nameservers:
       # search: "%{alias('defaults::dns::search')}"
       addresses: 
