@@ -16,7 +16,7 @@ done
 
 ensureDir "${HOME}/Library/LaunchAgents"
 
-for file in com.theclarkhome.prefsync.plist com.theclarkhome.logoutwatcher.plist
+for file in com.theclarkhome.prefsync.plist #com.theclarkhome.logoutwatcher.plist
 do
 	[[ -f "${HOME}/Library/LaunchAgents/${file}" ]] && rm "${HOME}/Library/LaunchAgents/${file}"
 	ln -s "/usr/local/share/${file}" "${HOME}/Library/LaunchAgents/${file}"
