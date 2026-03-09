@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
-lxc remote list --format json \
-  | jq -cr 'to_entries[] | select (.value.Protocol != "simplestreams") | .key'
+lxc remote list --format json |
+  jq -r '.[].server_name'
 
