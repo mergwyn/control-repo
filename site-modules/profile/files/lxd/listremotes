@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
 
-lxc remote list --format json |
+lxc cluster list --format json |
   jq -r '.[].server_name'
-
