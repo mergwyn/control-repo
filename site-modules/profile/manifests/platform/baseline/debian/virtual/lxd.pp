@@ -47,5 +47,4 @@ class profile::platform::baseline::debian::virtual::lxd {
       source => "puppet:///modules/profile/lxd/${script}",
     }
   }
-
 }
