@@ -26,4 +26,26 @@ class profile::platform::baseline::debian::virtual::lxd {
   }
 
   kmod::load { 'ip_vs': }
+
+# Define the list of scripts
+  $lxd_scripts = [
+    'allcontainers',
+    'allhosts',
+    'allremotes',
+    'listcontainers',
+    'listremotes',
+    'upgrade_lxd',
+  ]
+
+# Iterate and create the file resources
+  $lxd_scripts.each |String $script| {
+    file { "/usr/local/bin/${script}":
+      ensure => file,
+      owner  => 'root',
+      group  => 'root',
+      mode   => '0755',
+      source => "puppet:///modules/profile/lxd/${script}",
+    }
+  }
+
 }
