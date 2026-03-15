@@ -208,7 +208,6 @@ class profile::app::dhcpd (
                /usr/sbin/samba rix,
                /var/lib/samba/private/krb5.conf r,
                /var/lib/sss/pubconf/kdcinfo.* r,
-
                | EOT
   }
 }
