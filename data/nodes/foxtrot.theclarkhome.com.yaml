@@ -3,6 +3,7 @@
 classes:
   - profile::platform::baseline::debian::netplan
   - profile::platform::baseline::debian::virtual::docker
+  - kmod
 
 profile::platform::baseline::debian::zfs::kernelopts::arc_max_percent: 40
 
