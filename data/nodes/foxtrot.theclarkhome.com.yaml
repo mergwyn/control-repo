@@ -6,6 +6,14 @@ classes:
 
 profile::platform::baseline::debian::zfs::kernelopts::arc_max_percent: 40
 
+# Specifically for SMR and USB DAS stability
+kmod::list_of_options:
+  'zfs_deadman_smr_tuning':
+    module: 'zfs'
+    option: 'zfs_vdev_deadman_synctime_ms'
+    value:  '60000'
+    notify: 'Exec[update_initramfs_all]'
+
 profile::platform::baseline::debian::netplan::ethernets:
   enp3s0:
     dhcp4: no
