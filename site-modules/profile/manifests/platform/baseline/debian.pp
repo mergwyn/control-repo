@@ -16,6 +16,8 @@ class profile::platform::baseline::debian {
   #include profile::platform::baseline::debian::systemd_timers
   include profile::platform::baseline::debian::usb
 
+  include kmod
+
   # TODO: include profile::platform::baseline::debian::netplan
 
   include profile::app::avahi
