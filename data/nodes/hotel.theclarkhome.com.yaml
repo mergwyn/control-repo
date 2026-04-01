@@ -2,6 +2,20 @@
 
 classes:
   - profile::platform::baseline::debian::netplan
+  - kmod
+
+# e1000 hangs
+kmod::list_of_options:
+  'e1000e_throttlerate':
+     module: e1000e
+     option: InterruptThrottleRate
+     value: 1
+     notify: 'Exec[update_initramfs_all]'
+  'e1000e_use_workqueue':
+     module: e1000e
+     option: use_workqueue
+     value: 1
+     notify: 'Exec[update_initramfs_all]'
 
 packages:
   - bridge-utils
