@@ -1,6 +1,6 @@
 #!/bin/bash
 
-LEVEL=$1
+LEVEL=${1:-1}
 DUMPDIR=/var/backups
 USER=root
 MYSQLADMIN=$(which mysqladmin)

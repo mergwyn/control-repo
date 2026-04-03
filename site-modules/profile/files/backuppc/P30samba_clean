@@ -3,9 +3,5 @@
 
 WHERE=/var/backups
 
-LEVEL=$1
-STATUS=$2
-echo $0: $LEVEL $STATUS
-
-[[ ${STATUS} = 1 ]] && rm -f "$WHERE/"{samba4_private.,sysvol}*bz2 
+rm -f "$WHERE/"{samba4_private.,sysvol}*bz2 
 
