@@ -10,13 +10,14 @@ class profile::app::samba::dc {
   # support for samba backup as part of kopia run
   $scripts='/etc/kopia'
   $preuser="${scripts}/snap-before"
-  $postuser="${scripts}/snap-before"
+  $postuser="${scripts}/snap-after"
 
   $oldfiles = [
     '/var/lib/samba/sysvol/theclarkhome.com/scripts/samba4_backup',
     '/etc/cron.daily/samba4-backup',
     '/etc/backuppc/scripts/DumpPreUser/S30samba_backup',
     '/etc/backuppc/scripts/DumpPostUser//P30samba_clean',
+    '/etc/kopia/snap-before/P30samba_clean',
   ]
   file { $oldfiles: ensure => absent, }
 
