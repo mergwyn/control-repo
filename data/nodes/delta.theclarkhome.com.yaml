@@ -1,0 +1,59 @@
+---
+
+classes:
+  - profile::platform::baseline::debian::netplan
+
+packages:
+  - bridge-utils
+
+profile::platform::baseline::debian::netplan::ethernets:
+  enp99s0:
+    dhcp4: no
+    mtu: 9000
+profile::platform::baseline::debian::netplan::bridges:
+  br0:
+    interfaces:
+      - enp99s0
+    mtu: 9000
+    dhcp4: no
+    dhcp6: no
+    addresses:
+      - "%{lookup('defaults::subnet')}.14/%{lookup('defaults::bits')}"
+    #link-local: [ ipv4 ]
+    routes:
+      - to: "0.0.0.0/0"
+        via: "%{lookup('defaults::gateway')}"
+      - to: 224.0.0.0/4
+        scope: link
+    nameservers:
+      # search: "%{alias('defaults::dns::search')}"
+      addresses: "%{alias('defaults::dns::nameservers')}"
+    parameters:
+      stp: false
+      forward_delay: 0
+
+# Config for lxd server
+lxd::preseed:
+  storage_pools:
+  - config:
+      source: rpool/lxd
+      volatile.initial_source: rpool/lxd
+      zfs.pool_name: rpool/lxd
+    description: ""
+    name: default
+    driver: zfs
+
+profile::app::kopia::maintenance: false
+
+profile::platform::baseline::debian::zfs::snapshotter::settings:
+  rpool/zfspv:
+    snap: "no"
+  rpool/srv:
+    snap: "yes"
+
+# kopia client
+profile::app::kopia::backup_files_exclude:
+  '/':
+    - '/var/lib/rancher/k3s/agent/containerd'
+    - '/run/k3s/containerd'
+    - '/srv/media'

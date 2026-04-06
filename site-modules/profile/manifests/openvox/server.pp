@@ -44,7 +44,7 @@ class profile::openvox::server {
 
   # Configure Puppetboard
   class { 'puppetboard':
-    manage_git          => true,
+    # manage_git          => true,
     manage_virtualenv   => true,
     default_environment => 'production',
     secret_key          => fqdn_rand_string(32),

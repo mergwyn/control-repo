@@ -5,10 +5,10 @@ source /opt/scripts/functions/log.sh
 too_old="36 hours ago"
 
 source /etc/default/kopia
+kopiacmd=/opt/scripts/bin/kopiacmd
 
 # Refresh certificates
-kopiacmd=/opt/scripts/bin/kopiacmd
-LOGLEVEL=WARN ${kopiacmd} system certs > /dev/null
+# LOGLEVEL=WARN ${kopiacmd} system certs > /dev/null
 
 for repo in ${REPOS} ; do
   log_debug Connecting to repo ${repo}
