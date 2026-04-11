@@ -89,6 +89,10 @@ jobs:
 
       - name: Generate fixtures from Puppetfile
         if: ${{ github.repository_owner == 'mergwyn' }}
+        env:
+          LANG: en_US.UTF-
+          LC_ALL: en_US.UTF-8
+          RUBYOPT: "-Eutf-8"
         run: |
           echo Generate .fixtures.yaml from Puppetfile
           scripts/generate-fixtures
