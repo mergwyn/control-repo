@@ -1,4 +1,4 @@
-# @summary Setup of pupper development
+# @summary Setup of puppet development tools
 #
 class profile::openvox::dev {
   package { 'puppet-lint':
@@ -6,5 +6,4 @@ class profile::openvox::dev {
     provider => 'gem',
     command  => '/opt/puppetlabs/puppet/bin/gem',
   }
-  package { 'pdk': }
 }
