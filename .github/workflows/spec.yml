@@ -71,6 +71,7 @@ jobs:
       BUILDEVENT_FILE: '../buildevents.txt'
       PUPPET_GEM_VERSION: ${{ matrix.puppet_version }}
       FACTER_GEM_VERSION: 'https://github.com/puppetlabs/facter#main'
+      LANG: C.UTF-8
 
     steps:
       - run: |
@@ -89,6 +90,10 @@ jobs:
 
       - name: Generate fixtures from Puppetfile
         if: ${{ github.repository_owner == 'mergwyn' }}
+        env:
+          LANG: en_US.UTF-
+          LC_ALL: en_US.UTF-8
+          RUBYOPT: "-Eutf-8"
         run: |
           echo Generate .fixtures.yaml from Puppetfile
           scripts/generate-fixtures
@@ -101,7 +106,11 @@ jobs:
           echo ::group::bundler environment
           bundle env
           echo ::endgroup::
-
+      - name: Set UTF-8 Environment
+        run: |
+          echo "LANG=C.UTF-8" >> $GITHUB_ENV
+          echo "LC_ALL=C.UTF-8" >> $GITHUB_ENV
+    
       - name: Run parallel_spec tests
         run: |
           bundle exec rake parallel_spec

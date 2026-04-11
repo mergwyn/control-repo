@@ -15,7 +15,7 @@ class profile::app::transcoder {
     enable  => true,
     active  => true,
     content => @("EOT"),
-                                                                            [Unit]
+                [Unit]
                 Description=Scan for presence of Humax PVR and notify plex
                 After=multi-user.target
 
