@@ -43,6 +43,9 @@ Gemfile:
     ":development":
       - gem: "generate-puppetfile"
         version: "~> 1.0"
+  overrides:
+    - gem: puppetlabs_spec_helper
+      version: '~> 7.4'
 #  overrides:
 #    - gem: facterdb
 #      version: '~> 3.4'

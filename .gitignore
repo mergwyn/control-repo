@@ -11,7 +11,6 @@
 /bin/
 /doc/
 /Gemfile.local
-/Gemfile.lock
 /junit/
 /log/
 /pkg/
@@ -20,8 +19,8 @@
 /tmp/
 /vendor/
 /.vendor/
-convert_report.txt
-update_report.txt
+/convert_report.txt
+/update_report.txt
 .DS_Store
 .project
 .envrc
