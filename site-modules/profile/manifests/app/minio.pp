@@ -1,8 +1,8 @@
 #
 class profile::app::minio (
   String $version = '2024-03-30T09-41-12Z',  # renovate: datasource=github-releases depName=minio/minio
-  String $root_user,
-  Sensitive[String] $root_password,
+  String $root_user = "$(lookup('secrets::minio-root'))",
+  String $root_password = "$(lookup('secrets::minio-root-password'))",
   Stdlib::Absolutepath $data_dir = '/srv/minio',
   Integer $api_port = 9000,
   Integer $console_port = 9001,
@@ -59,10 +59,10 @@ class profile::app::minio (
     default:
       ensure => present,
       target => '/etc/default/minio',
-      notify => Service['minio'],
+      notify => Service['minio.service'],
       ;
     'MINIO_ROOT_USER':         value => $root_user, ;
-    'MINIO_ROOT_PASSWORD':     value => $root_password.unwrap, ;
+    'MINIO_ROOT_PASSWORD':     value => $root_password, ;
     'MINIO_VOLUMES':           value => $data_dir, ;
     'MINIO_OPTS':              value => "--address ${listen_address}:${api_port} --console-address ${listen_address}:${console_port}", ;
     'MINIO_PROMETHEUS_URL':    value => 'https://prometheus.theclarkhome.com', ;
@@ -73,7 +73,7 @@ class profile::app::minio (
   systemd::unit_file { 'minio.service':
     enable  => true,
     active  => true,
-    content => @("SERVICE"/L)
+    content => @("SERVICE"/L$)
       [Unit]
       Description=MinIO
       Documentation=https://min.io/docs/minio/linux/index.html
@@ -83,8 +83,8 @@ class profile::app::minio (
       AssertFileIsExecutable=/usr/local/bin/minio
 
       [Service]
-      User=$user
-      Group=$group
+      User=${user}
+      Group=${group}
       ProtectProc=invisible
       EnvironmentFile=/etc/default/minio
       ExecStartPre=/bin/bash -c "if [ -z \"${MINIO_VOLUMES}\" ]; then echo \"Variable MINIO_VOLUMES not set in /etc/default/minio\"; exit 1; fi"
@@ -109,6 +109,6 @@ class profile::app::minio (
   }
 
   # Ensure dependencies are in place before starting the service
-  Profile::App::Binary_install['minio'] -> Service['minio']
-  File[$data_dir] -> Service['minio']
+  Profile::App::Binary_install['minio'] -> Service['minio.service']
+  File[$data_dir] -> Service['minio.service']
 }
