@@ -1,13 +1,13 @@
 version: 5
 
-defaults: 
+defaults:
   datadir: ../data
   data_hash: yaml_data
 
-hierarchy: 
+hierarchy:
   - name: "YAML test hierarchy"
     paths:
-      - 'secrets.yaml'
+      - "secrets.eyaml"
       - "nodes/%{trusted.certname}-%{environment}.yaml"
       - "nodes/%{trusted.certname}.yaml"
       - "%{environment}.yaml"
@@ -17,5 +17,4 @@ hierarchy:
       - "os/%{facts.os.name}/%{facts.os.release.major}.yaml"
       - "os/%{facts.os.family}.yaml"
       - "os/%{facts.os.name}.yaml"
-      - 'common.yaml'
-
+      - "common.yaml"
