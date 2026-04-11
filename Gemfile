@@ -36,13 +36,14 @@ group :development do
   gem "rb-readline", '= 0.5.5',                  require: false, platforms: [:mswin, :mingw, :x64_mingw]
   gem "rexml", '>= 3.0.0', '< 3.2.7',            require: false
   gem "onceover",                                require: false
+  gem "hiera-eyaml",                             require: false
   gem "rspec-puppet-utils",                      require: false
   gem "github_changelog_generator",              require: false
   gem "generate-puppetfile", '~> 1.0',           require: false
 end
 group :development, :release_prep do
   gem "puppet-strings", '~> 4.0',         require: false
-  gem "puppetlabs_spec_helper", '~> 8.0', require: false
+  gem "puppetlabs_spec_helper", '~> 7.4', require: false
   gem "puppet-blacksmith", '~> 7.0',      require: false
 end
 group :system_tests do

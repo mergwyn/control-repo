@@ -27,4 +27,3 @@ PuppetLint.configuration.ignore_paths = [".vendor/**/*.pp", ".bundle/**/*.pp", "
 require 'onceover/rake_tasks'
 FastGettext.default_text_domain = 'default-text-domain'
 Rake.add_rakelib 'rakelib'
-
