@@ -1,8 +1,8 @@
 #
 class profile::app::minio (
   String $version = '2024-03-30T09-41-12Z',  # renovate: datasource=github-releases depName=minio/minio
-  String $root_user = "$(lookup('secrets::minio-root'))",
-  String $root_password = "$(lookup('secrets::minio-root-password'))",
+  String $root_user = "${lookup('secrets::minio-root')}",
+String $root_password = "${lookup('secrets::minio-root-password')}",
   Stdlib::Absolutepath $data_dir = '/srv/minio',
   Integer $api_port = 9000,
   Integer $console_port = 9001,
@@ -11,16 +11,19 @@ class profile::app::minio (
 
   $user = 'minio-user'
   $group = 'minio-user'
+  $uid = 2001
+  $gid = 2001
+
   # Create MinIO user
   group { $group:
     ensure => present,
-    gid    => 997,
+    gid    => $gid,
   }
 
   user { $user:
     ensure     => present,
-    uid        => 996,
-    gid        => 997,
+    uid        => $uid,
+    gid        => $gid,
     home       => '/nonexistent',
     shell      => '/usr/sbin/nologin',
     system     => true,
@@ -34,7 +37,7 @@ class profile::app::minio (
     owner  => $user,
     group  => $group,
     mode   => '0750',
-    require => User['minio'],
+    require => User[$user],
   }
 
   # Install MinIO binary using your helper
@@ -87,8 +90,8 @@ class profile::app::minio (
       Group=${group}
       ProtectProc=invisible
       EnvironmentFile=/etc/default/minio
-      ExecStartPre=/bin/bash -c "if [ -z \"${MINIO_VOLUMES}\" ]; then echo \"Variable MINIO_VOLUMES not set in /etc/default/minio\"; exit 1; fi"
-      ExecStart=/usr/local/bin/minio server $MINIO_OPTS $MINIO_VOLUMES
+      ExecStartPre=/bin/bash -c "if [ -z \"\${MINIO_VOLUMES}\" ]; then echo \"Variable MINIO_VOLUMES not set in /etc/default/minio\"; exit 1; fi"
+      ExecStart=/usr/local/bin/minio server \$MINIO_OPTS \$MINIO_VOLUMES
 
       # Let systemd restart this service always
       Restart=always
@@ -105,7 +108,7 @@ class profile::app::minio (
 
       [Install]
       WantedBy=multi-user.target
-      | SERVICE,
+      | SERVICE
   }
 
   # Ensure dependencies are in place before starting the service
