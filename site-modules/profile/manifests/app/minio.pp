@@ -8,7 +8,6 @@ String $root_password = "${lookup('secrets::minio_root_password')}",
   Integer $console_port = 9001,
   String $listen_address = '0.0.0.0',
 ) {
-
   $user = 'minio-user'
   $group = 'minio-user'
   $uid = 2001
@@ -33,10 +32,10 @@ String $root_password = "${lookup('secrets::minio_root_password')}",
 
   # Ensure data directory exists on ZFS
   file { $data_dir:
-    ensure => directory,
-    owner  => $user,
-    group  => $group,
-    mode   => '0750',
+    ensure  => directory,
+    owner   => $user,
+    group   => $group,
+    mode    => '0750',
     require => User[$user],
   }
 
@@ -44,7 +43,7 @@ String $root_password = "${lookup('secrets::minio_root_password')}",
   profile::app::binary_install { 'minio':
     version     => $version,
     binary      => 'minio',
-    url         => "https://dl.min.io/server/minio/release/linux-amd64/minio",
+    url         => 'https://dl.min.io/server/minio/release/linux-amd64/minio',
     tarball     => false,
     version_cmd => '/usr/local/bin/minio --version | grep -oP "minio version \K[^ ]+" | cut -d. -f1-4',
     install_dir => '/usr/local/bin',
@@ -76,7 +75,7 @@ String $root_password = "${lookup('secrets::minio_root_password')}",
   systemd::unit_file { 'minio.service':
     enable  => true,
     active  => true,
-    content => @("SERVICE"/L$)
+    content => @("SERVICE"/L$),
       [Unit]
       Description=MinIO
       Documentation=https://min.io/docs/minio/linux/index.html

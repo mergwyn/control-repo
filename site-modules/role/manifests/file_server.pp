@@ -22,5 +22,4 @@ class role::file_server {
   include profile::app::timemachine
   include profile::app::transcoder
   include profile::app::unison
-
 }
