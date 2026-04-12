@@ -49,10 +49,49 @@ profile::platform::baseline::debian::zfs::snapshotter::settings:
     snap: "no"
   rpool/srv:
     snap: "yes"
+  srv:
+    frequent: 4
+    hourly: 24
+    daily: 7
+    weekly: 4
+    monthly: 3
+    yearly: 0
+    snap: "no"
+    clean: "yes"
+  srv/home:
+    snap: "yes"
+  srv/media:
+    monthly: 0
+    snap: "yes"
+  srv/media/humax:
+    snap: "yes"
+    monthly: 0
+    weekly: 0
 
 # kopia client
 profile::app::kopia::backup_files_exclude:
   "/":
-    - "/var/lib/rancher/k3s/agent/containerd"
     - "/run/k3s/containerd"
     - "/srv/media"
+    - "/var/lib/rancher/k3s/agent/containerd"
+    - "*.cloudf"
+    - "/home/gary/odrive/Amazon Cloud Drive/Pictures"
+    - "/media/offsite"
+    - "/nfs"
+    - "/srv/backup/home-assistant"
+    - "/srv/media/content/christian"
+    - "/srv/media/content/christmas"
+    - "/srv/media/content/films"
+    - "/srv/media/content/golf"
+    - "/srv/media/content/home-videos"
+    - "/srv/media/content/music"
+    - "/srv/media/content/radio-shows"
+    - "/srv/media/content/torrents"
+    - "/srv/media/content/tv"
+    - "/srv/media/content/usenet"
+    - "/srv/media/humax"
+    - "/srv/minio"
+    - "/srv/timemachine"
+    - "/srv/virtual/VirtualBox"
+    - "/srv/virtual/vmware"
+    - "/var/lib/backuppc"
