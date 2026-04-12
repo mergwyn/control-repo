@@ -10,5 +10,4 @@ class role::lxd_server {
   include profile::app::sssd
   include profile::app::unison
   include profile::app::lxd::backup
-
 }

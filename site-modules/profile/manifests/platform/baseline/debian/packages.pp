@@ -8,7 +8,7 @@ class profile::platform::baseline::debian::packages {
     'jq',
     'sysstat',
     'btop',
-    'inxi'
+    'inxi',
   ]
   package { $install_packages : ensure => present }
 
