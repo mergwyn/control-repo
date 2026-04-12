@@ -39,6 +39,7 @@ group :development do
   gem "hiera-eyaml",                             require: false
   gem "rspec-puppet-utils",                      require: false
   gem "github_changelog_generator",              require: false
+  gem "puppet-editor-services",                  require: false
   gem "generate-puppetfile", '~> 1.0',           require: false
 end
 group :development, :release_prep do

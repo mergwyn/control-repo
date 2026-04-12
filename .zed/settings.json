@@ -1,13 +1,13 @@
 {
   "lsp": {
     "puppet-languageserver": {
-      "command": "/Users/gary/.pdk/cache/ruby/3.2.0/bin/puppet-languageserver",
-      "args": []
-    }
+      "command": "pdk",
+      "args": ["bundle", "exec", "puppet-languageserver"],
+    },
   },
   "languages": {
     "Puppet": {
-      "language_servers": ["puppet-languageserver"]
-    }
-  }
+      "language_servers": ["puppet-languageserver"],
+    },
+  },
 }

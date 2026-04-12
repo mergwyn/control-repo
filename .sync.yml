@@ -31,24 +31,22 @@ appveyor.yml:
 Gemfile:
   required:
     ":development":
-      #      - gem: rake
-      #      - gem: r10k
-      #      - gem: ra10ke
+      # - gem: rake
+      # - gem: r10k
+      # - gem: ra10ke
       - gem: onceover
       - gem: hiera-eyaml
-      #      - gem: CFPropertyList
+      # - gem: CFPropertyList
       - gem: rspec-puppet-utils
       - gem: github_changelog_generator
+      - gem: puppet-editor-services
   optional:
     ":development":
       - gem: "generate-puppetfile"
         version: "~> 1.0"
   overrides:
     - gem: puppetlabs_spec_helper
-      version: '~> 7.4'
-#  overrides:
-#    - gem: facterdb
-#      version: '~> 3.4'
+      version: "~> 7.4"
 
 spec/spec_helper.rb:
   coverage_report: true
