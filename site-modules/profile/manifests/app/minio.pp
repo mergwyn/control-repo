@@ -73,7 +73,7 @@ String $root_password = "${lookup('secrets::minio_root_password')}",
 
   # Systemd service
   systemd::unit_file { 'minio.service':
-    enable  => true,
+    enable  => false,
     active  => true,
     content => @("SERVICE"/L$),
       [Unit]
