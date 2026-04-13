@@ -21,7 +21,7 @@ class role::main_server {
   include profile::app::samba::shares
   #include profile::app::speedtest
   include profile::app::sssd
-  #include profile::app::timemachine
-  include profile::app::transcoder
+  include profile::app::timemachine
+  #include profile::app::transcoder
   include profile::app::unison
 }
