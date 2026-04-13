@@ -10,18 +10,18 @@ class role::main_server {
   include profile::openvox::dev
 
   include profile::app::gpo::clean
-  include profile::app::iptv
+  #include profile::app::iptv
   include profile::app::k8s_tools
   include profile::app::kopia
   include profile::app::lxd::backup
-  include profile::app::nginx::phonebook
-  include profile::app::nginx::webdav
+  #include profile::app::nginx::phonebook
+  #include profile::app::nginx::webdav
   include profile::app::odrive
-  include profile::app::photos
+  #include profile::app::photos
   include profile::app::samba::shares
-  include profile::app::speedtest
+  #include profile::app::speedtest
   include profile::app::sssd
-  include profile::app::timemachine
+  #include profile::app::timemachine
   include profile::app::transcoder
   include profile::app::unison
 }
