@@ -4,16 +4,6 @@
 #
 class profile::platform::baseline::debian::network::e1000e {
 
-  notice('Applying e1000e network tuning profile')
-
-  # Kernel module tuning
-  kmod::option { 'zfs_arc_max':
-    module => 'e1000e',
-    option => 'InterruptThrottleRate',
-    value  => 1,
-    notify => Exec['update-initramfs-e1000e'],
-  }
-
   exec { 'update-initramfs-e1000e':
     command     => '/usr/sbin/update-initramfs -u -k all',
     refreshonly => true,
