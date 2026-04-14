@@ -1,11 +1,13 @@
+
 Facter.add(:network_driver_class) do
   setcode do
-    if Dir.glob('/sys/class/net/*').any? { |i|
-      File.basename(File.realpath("#{i}/device/driver") rescue '') == 'e1000e'
-    }
-      'e1000e'
-    else
-      'generic'
+    Dir.glob('/sys/class/net/*').any? do |iface|
+      begin
+        driver_path = File.realpath("#{iface}/device/driver")
+        File.basename(driver_path) == 'e1000e'
+      rescue
+        false
+      end
     end
   end
 end
