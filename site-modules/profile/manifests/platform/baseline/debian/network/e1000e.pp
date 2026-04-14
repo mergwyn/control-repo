@@ -21,7 +21,7 @@ class profile::platform::baseline::debian::network::e1000e {
   file { '/usr/local/bin/e1000e-tune.sh':
     ensure => file,
     mode   => '0755',
-    content => @(EOF)
+    content => @(EOF/L)
       #!/usr/bin/env bash
       set -e
 
