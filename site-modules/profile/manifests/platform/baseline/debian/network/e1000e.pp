@@ -21,7 +21,7 @@ class profile::platform::baseline::debian::network::e1000e {
   file { '/usr/local/bin/e1000e-tune.sh':
     ensure => file,
     mode   => '0755',
-    content => @(EOF/L)
+    content => @(EOF)
       #!/usr/bin/env bash
       set -e
 
@@ -43,8 +43,8 @@ class profile::platform::baseline::debian::network::e1000e {
 
   # systemd service
   systemd::unit_file { 'e1000e-tune.service':
-    enable  => false,
-    active  => false,
+    enable  => true,
+    active  => true,
     # lint:ignore:140chars
     content => @("EOT"),
       [Unit]
