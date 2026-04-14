@@ -1,6 +1,6 @@
 Facter.add(:network_driver_class) do
   setcode do
-    drivers = Dir.glob('/sys/class/net/*').map do |iface|
+    drivers = Dir.glob('/sys/class/net/*').map { |iface|
       driver_path = "#{iface}/device/driver"
       next unless File.exist?(driver_path)
 
@@ -9,7 +9,7 @@ Facter.add(:network_driver_class) do
       rescue
         nil
       end
-    end.compact.uniq
+    }.compact.uniq
 
     if drivers.include?('e1000e')
       'e1000e'
