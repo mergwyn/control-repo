@@ -38,7 +38,7 @@ class profile::platform::baseline::debian::network::e1000e {
           fi
         fi
       done
-    | EOF
+      | EOF
   }
 
   # systemd service
