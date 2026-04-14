@@ -23,6 +23,8 @@ hierarchy:
       - "role/%{trusted.extensions.pp_role}.yaml"
   - name: "Physical/Virtual"
     path: "virtual/%{facts.virtual}_%{facts.os.name}.yaml"
+  - name: "Network driver class"
+    path: "network/%{facts.network_driver_class}.yaml"
   - name: "osfamily/major release"
     paths:
       - "os/%{facts.os.family}/%{facts.os.release.major}.yaml"

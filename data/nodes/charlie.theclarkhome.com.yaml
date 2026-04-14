@@ -1,21 +1,6 @@
 ---
-
 classes:
   - profile::platform::baseline::debian::netplan
-  - kmod
-
-# e1000 hangs
-kmod::list_of_options:
-  'e1000e_throttlerate':
-     module: e1000e
-     option: InterruptThrottleRate
-     value: 1
-     notify: 'Exec[update_initramfs_all]'
-  'e1000e_use_workqueue':
-     module: e1000e
-     option: use_workqueue
-     value: 1
-     notify: 'Exec[update_initramfs_all]'
 
 packages:
   - bridge-utils
@@ -49,13 +34,13 @@ profile::platform::baseline::debian::netplan::bridges:
 # Config for lxd server
 lxd::preseed:
   storage_pools:
-  - config:
-      source: rpool/lxd
-      volatile.initial_source: rpool/lxd
-      zfs.pool_name: rpool/lxd
-    description: ""
-    name: default
-    driver: zfs
+    - config:
+        source: rpool/lxd
+        volatile.initial_source: rpool/lxd
+        zfs.pool_name: rpool/lxd
+      description: ""
+      name: default
+      driver: zfs
 
 profile::app::kopia::maintenance: false
 
@@ -67,7 +52,7 @@ profile::platform::baseline::debian::zfs::snapshotter::settings:
 
 # kopia client
 profile::app::kopia::backup_files_exclude:
-  '/':
-    - '/var/lib/rancher/k3s/agent/containerd'
-    - '/run/k3s/containerd'
-    - '/srv/media'
+  "/":
+    - "/var/lib/rancher/k3s/agent/containerd"
+    - "/run/k3s/containerd"
+    - "/srv/media"
