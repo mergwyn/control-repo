@@ -18,11 +18,11 @@ class profile::platform::baseline::debian::network::e1000e {
   }
 
   # Runtime tuning script (driver-discovery at runtime)
-  file { '/usr/local/sbin/e1000e-tune.sh':
+  file { '/usr/local/bin/e1000e-tune.sh':
     ensure => file,
     mode   => '0755',
     content => @(EOF)
-      #!/bin/bash
+      #!/usr/bin/env bash
       set -e
 
       for iface in /sys/class/net/*; do
@@ -54,7 +54,7 @@ class profile::platform::baseline::debian::network::e1000e {
 
       [Service]
       Type=oneshot
-      ExecStart=/usr/local/sbin/e1000e-tune.sh
+      ExecStart=/usr/local/bin/e1000e-tune.sh
       RemainAfterExit=yes
 
       [Install]
