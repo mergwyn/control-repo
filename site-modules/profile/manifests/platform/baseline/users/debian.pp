@@ -18,6 +18,15 @@ class profile::platform::baseline::users::debian {
     managehome => true,
   }
 
+  # Make sure users have video and render groups if required
+  $media_users = ['media']
+
+  group { ['video', 'render']:
+    ensure          => present,
+    members         => $media_users,
+    auth_membership => false,
+  }
+
 # These files are all related to user profiles
   File {
     ensure => present,
