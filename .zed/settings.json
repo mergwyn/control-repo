@@ -4,10 +4,17 @@
       "command": "pdk",
       "args": ["bundle", "exec", "puppet-languageserver"],
     },
+    "solargraph": {
+      "command": "/usr/local/bin/solargraph",
+      "args": ["stdio"],
+    },
   },
   "languages": {
     "Puppet": {
       "language_servers": ["puppet-languageserver"],
+    },
+    "Ruby": {
+      "language_servers": ["solargraph"],
     },
   },
 }
