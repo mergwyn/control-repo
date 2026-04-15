@@ -1,0 +1,3 @@
+---
+classes:
+  - profile::platform::baseline::debian::network::e1000e
