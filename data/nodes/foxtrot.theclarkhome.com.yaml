@@ -1,37 +1,34 @@
 ---
-
 classes:
   - profile::platform::baseline::debian::netplan
   - profile::platform::baseline::debian::virtual::docker
   - kmod
 
-profile::platform::baseline::debian::zfs::kernelopts::arc_max_percent: 40
-
 # Specifically for SMR and USB DAS stability
 kmod::list_of_options:
-  'zfs_deadman_smr_tuning':
-    module: 'zfs'
-    option: 'zfs_vdev_deadman_synctime_ms'
-    value:  '60000'
-    notify: 'Exec[update_initramfs_all]'
+  "zfs_deadman_smr_tuning":
+    module: "zfs"
+    option: "zfs_vdev_deadman_synctime_ms"
+    value: "60000"
+    notify: "Exec[update_initramfs_all]"
 
 profile::platform::baseline::debian::netplan::ethernets:
   enp3s0:
     dhcp4: no
     mtu: 9000
   # enp4s0:
-    # dhcp4: no
-    # mtu: 9000
+  # dhcp4: no
+  # mtu: 9000
 # profile::platform::baseline::debian::netplan::bonds:
-  # bond0:
-    # interfaces:
-      # - enp3s0
-      # - enp4s0
-    # mtu: 9000
-    # parameters:
-      # #mode: active-backup
-      # mode: balance-alb
-      # primary: enp3s0
+# bond0:
+# interfaces:
+# - enp3s0
+# - enp4s0
+# mtu: 9000
+# parameters:
+# #mode: active-backup
+# mode: balance-alb
+# primary: enp3s0
 profile::platform::baseline::debian::netplan::bridges:
   br0:
     interfaces:
@@ -40,7 +37,7 @@ profile::platform::baseline::debian::netplan::bridges:
     dhcp4: no
     dhcp6: no
     #link-local: [ ipv4 ]
-    addresses: 
+    addresses:
       - "%{lookup('defaults::subnet')}.12/%{lookup('defaults::bits')}"
     routes:
       - to: "0.0.0.0/0"
@@ -49,13 +46,12 @@ profile::platform::baseline::debian::netplan::bridges:
         scope: link
     nameservers:
       # search: "%{alias('defaults::dns::search')}"
-      addresses: 
+      addresses:
         - "%{lookup('defaults::dns::nameservers.1')}"
         - "%{lookup('defaults::dns::nameservers.0')}"
     parameters:
       stp: false
       forward_delay: 0
-
 
 profile::platform::baseline::files::objects:
   /srv2/backuppc:
@@ -63,51 +59,50 @@ profile::platform::baseline::files::objects:
     require: Mount[srv2]
 
 profile::platform::baseline::debian::mounts::defaults:
-  ensure: 'mounted'
+  ensure: "mounted"
 profile::platform::baseline::debian::mounts::objects:
   srv2:
-    name:     '/srv2'
-    device:   'UUID=6abf26ff-6a49-4048-8153-942d48fc3e5a'
-    fstype:   'ext4'
-    options:  'defaults,user_xattr,acl'
+    name: "/srv2"
+    device: "UUID=6abf26ff-6a49-4048-8153-942d48fc3e5a"
+    fstype: "ext4"
+    options: "defaults,user_xattr,acl"
   backuppc:
-    name:     '/var/lib/backuppc'
-    device:   '/srv2/backuppc'
-    fstype:   'none'
-    options:  'bind,rw'
-    require:  File[/srv2/backuppc]
+    name: "/var/lib/backuppc"
+    device: "/srv2/backuppc"
+    fstype: "none"
+    options: "bind,rw"
+    require: File[/srv2/backuppc]
 
 lxd::preseed:
   networks:
-  - config:
-      ipv4.address: 10.230.201.1/24
-      ipv4.nat: "true"
-      ipv6.address: none
-      ipv6.nat: "true"
-    description: ""
-    name: lxdbr0
-    type: bridge
-    project: default
+    - config:
+        ipv4.address: 10.230.201.1/24
+        ipv4.nat: "true"
+        ipv6.address: none
+        ipv6.nat: "true"
+      description: ""
+      name: lxdbr0
+      type: bridge
+      project: default
   storage_pools:
-  - config:
-      source: srv/lxd
-      volatile.initial_source: srv/lxd
-      volume.zfs.use_refquota: "true"
-      volume.zfs.remove_snapshots: "true"
-      zfs.pool_name: srv/lxd
-    description: ""
-    name: srv
-    driver: zfs
-  - config:
-      source: rpool/lxd
-      volatile.initial_source: rpool/lxd
-      volume.zfs.use_refquota: "true"
-      volume.zfs.remove_snapshots: "true"
-      zfs.pool_name: rpool/lxd
-    description: ""
-    name: rpool
-    driver: zfs
-
+    - config:
+        source: srv/lxd
+        volatile.initial_source: srv/lxd
+        volume.zfs.use_refquota: "true"
+        volume.zfs.remove_snapshots: "true"
+        zfs.pool_name: srv/lxd
+      description: ""
+      name: srv
+      driver: zfs
+    - config:
+        source: rpool/lxd
+        volatile.initial_source: rpool/lxd
+        volume.zfs.use_refquota: "true"
+        volume.zfs.remove_snapshots: "true"
+        zfs.pool_name: rpool/lxd
+      description: ""
+      name: rpool
+      driver: zfs
 
 profile::platform::baseline::debian::zfs::snapshotter::settings:
   rpool/zfspv:
@@ -133,7 +128,6 @@ profile::platform::baseline::debian::zfs::snapshotter::settings:
   rpool/home:
     snap: "yes"
 
-
 #profile::app::backuppc::client::backup_files_exclude:
 
 # kopia client
@@ -149,32 +143,32 @@ profile::app::kopia::snaps:
 
 profile::app::kopia::maintenance: true
 profile::app::kopia::backup_files_exclude:
-  '/':
-    - '*.cloudf'
-    - '/home/gary/odrive/Amazon Cloud Drive/Pictures'
-    - '.lima/[a-z]*'
-    - '/media/offsite'
-    - '/nfs'
-    - '/opt/appdata/plex/Plex Media Server/Cache'
-    - '/opt/appdata/plex/Plex Media Server/Logs'
-    - '/opt/appdata/plex/Plex Media Server/Media'
-    - '/opt/appdata/plex/Plex Media Server/Metadata'
-    - '/srv2'
-    - '/srv/backup/home-assistant'
-    - '/srv/media/content/christian'
-    - '/srv/media/content/christmas'
-    - '/srv/media/content/films'
-    - '/srv/media/content/golf'
-    - '/srv/media/content/home-videos'
-    - '/srv/media/content/music'
-    - '/srv/media/content/radio-shows'
-    - '/srv/media/content/torrents'
-    - '/srv/media/content/tv'
-    - '/srv/media/content/usenet'
-    - '/srv/media/humax'
-    - '/srv/minio'
-    - '/srv/timemachine'
-    - '/srv/virtual/VirtualBox'
-    - '/srv/virtual/vmware'
-    - '/var/lib/backuppc'
-    - '/var/lib/rancher/k3s/agent/containerd'
+  "/":
+    - "*.cloudf"
+    - "/home/gary/odrive/Amazon Cloud Drive/Pictures"
+    - ".lima/[a-z]*"
+    - "/media/offsite"
+    - "/nfs"
+    - "/opt/appdata/plex/Plex Media Server/Cache"
+    - "/opt/appdata/plex/Plex Media Server/Logs"
+    - "/opt/appdata/plex/Plex Media Server/Media"
+    - "/opt/appdata/plex/Plex Media Server/Metadata"
+    - "/srv2"
+    - "/srv/backup/home-assistant"
+    - "/srv/media/content/christian"
+    - "/srv/media/content/christmas"
+    - "/srv/media/content/films"
+    - "/srv/media/content/golf"
+    - "/srv/media/content/home-videos"
+    - "/srv/media/content/music"
+    - "/srv/media/content/radio-shows"
+    - "/srv/media/content/torrents"
+    - "/srv/media/content/tv"
+    - "/srv/media/content/usenet"
+    - "/srv/media/humax"
+    - "/srv/minio"
+    - "/srv/timemachine"
+    - "/srv/virtual/VirtualBox"
+    - "/srv/virtual/vmware"
+    - "/var/lib/backuppc"
+    - "/var/lib/rancher/k3s/agent/containerd"
