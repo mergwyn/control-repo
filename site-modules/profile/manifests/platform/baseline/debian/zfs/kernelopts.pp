@@ -18,7 +18,6 @@ class profile::platform::baseline::debian::zfs::kernelopts {
     $zfs_arc_bytes = '4294967296'
   }
 
-  if $mem_total_bytes >
   kmod::option { 'zfs_arc_max':
     module => 'zfs',
     option => 'zfs_arc_max',
