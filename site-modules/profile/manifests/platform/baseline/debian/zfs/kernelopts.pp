@@ -5,15 +5,17 @@ class profile::platform::baseline::debian::zfs::kernelopts {
   # Calculate ARC max: ~12% of total RAM, but with sensible floors/caps
   $mem_total_bytes = $facts['memory']['system']['total_bytes']
 
-  $zfs_arc_bytes = $mem_total_bytes ? {
+  if $mem_total_bytes < 10737418240 {
     # If < 10GB (8GB NUCs), set to 1GB
-    /^[0-9]{1,10}$/ if $mem_total_bytes < 10737418240 => '1073741824',
-
+    $zfs_arc_bytes = '1073741824'
+  }
+  elsif $mem_total_bytes < 21474836480 {
     # If < 20GB (16GB NUCs), set to 2GB
-    /^[0-9]{1,11}$/ if $mem_total_bytes < 21474836480 => '2147483648',
-
+    $zfs_arc_bytes = '2147483648'
+  }
+  else {
     # If 32GB or more, set to 4GB
-    default                                          => '4294967296',
+    $zfs_arc_bytes = '4294967296'
   }
 
   if $mem_total_bytes >
