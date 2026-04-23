@@ -150,7 +150,7 @@ class profile::app::sickbeard_automator (
       output-format    => 'mp4',
       output-extension => 'mp4',
       temp-extension   => 'partial',
-      preopts          => '-probesize,50000000,-analyzeduration,1000000000,-ss,00:10:00,-t,00:00:30'
+      preopts          => '-probesize,50000000,-analyzeduration,1000000000,-ss,00:10:00,-t,00:00:30',
       postopts         => '-nostats,-ignore_unknown,-max_muxing_queue_size,9999'
       #postopts         => '-ignore_unknown, -max_muxing_queue_size, 1024',
       #postopts         => '-ignore_unknown',
