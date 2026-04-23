@@ -45,7 +45,7 @@ String $root_password = "${lookup('secrets::minio_root_password')}",
     binary      => 'minio',
     url         => 'https://dl.min.io/server/minio/release/linux-amd64/minio',
     tarball     => false,
-    version_cmd => '/usr/local/bin/minio --version | grep -oP "minio version \K[^ ]+" | cut -d. -f1-4',
+    version_cmd => '/usr/local/bin/minio --version | grep -oP "minio version RELEASE.\K[^ ]+" | cut -d. -f1-4',
     install_dir => '/usr/local/bin',
   }
 
