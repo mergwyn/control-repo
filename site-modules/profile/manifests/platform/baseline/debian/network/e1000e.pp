@@ -3,7 +3,6 @@
 # Primary focus is to ensure the network device does not hang
 #
 class profile::platform::baseline::debian::network::e1000e {
-
   exec { 'update-initramfs-e1000e':
     command     => '/usr/sbin/update-initramfs -u -k all',
     refreshonly => true,
@@ -11,17 +10,17 @@ class profile::platform::baseline::debian::network::e1000e {
 
   # Ensure module loads early in initramfs
   file_line { 'e1000e-initramfs':
-    path  => '/etc/initramfs-tools/modules',
-    line  => 'e1000e',
-    match => '^e1000e$',
+    path   => '/etc/initramfs-tools/modules',
+    line   => 'e1000e',
+    match  => '^e1000e$',
     notify => Exec['update-initramfs-e1000e'],
   }
 
   # Runtime tuning script (driver-discovery at runtime)
   file { '/usr/local/bin/e1000e-tune.sh':
-    ensure => file,
-    mode   => '0755',
-    content => @(EOF)
+    ensure  => file,
+    mode    => '0755',
+    content => @(EOF),
       #!/usr/bin/env bash
       set -e
 
@@ -62,5 +61,4 @@ class profile::platform::baseline::debian::network::e1000e {
       | EOT
     # lint:endignore
   }
-
 }

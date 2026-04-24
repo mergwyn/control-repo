@@ -1,7 +1,6 @@
 # @summary kernel options (mainly tuning)
 #
 class profile::platform::baseline::debian::zfs::kernelopts {
-
   # Calculate ARC max: ~12% of total RAM, but with sensible floors/caps
   $mem_total_bytes = $facts['memory']['system']['total_bytes']
 
