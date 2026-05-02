@@ -1,7 +1,7 @@
 # Unison preferences file
 include common
 #root = /Users/gary/Library
-#root = ssh://gary@foxtrot//home/gary/Library
+#root = ssh://gary@delta.theclarkhome.com//home/gary/Library
 #path = Library
 #path = Documents/Microsoft User Data
 

@@ -1,7 +1,7 @@
 # Unison preferences file
 include common
 #root = /Users/gary/
-#root = ssh://gary@foxtrot//home/gary
+#root = ssh://gary@delta.theclarkhome.com/home/gary
 
 # Library folder items to exclude:
 
