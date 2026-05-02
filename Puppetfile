@@ -78,7 +78,7 @@ mod 'thias/libvirt', '1.0.3'
 mod 'puppet/webmin', :git => 'https://github.com/rehanone/puppet-webmin', :ref => 'master'
 #mod 'wyrie/backuppc', '2.0.0'
 mod 'zack/exports', '1.0.1'
-mod 'zehweh/netplan', '2.0.0'
+mod 'zehweh/netplan', '2.1.0'
 
 # puppet 6 core types
 mod 'puppetlabs/host_core', '2.0.1'
