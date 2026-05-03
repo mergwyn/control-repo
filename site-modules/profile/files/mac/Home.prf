@@ -49,6 +49,7 @@ ignore = BelowPath *.swp
 ignore = BelowPath .SymAVQSFile
 ignore = BelowPath .Trash
 ignore = BelowPath .unison
+ignore = BelowPath src
 ignore = Path .kube/config
 ignore = Name .*.icloud
 ignore = Name *.sock
