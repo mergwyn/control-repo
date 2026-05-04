@@ -1,22 +1,10 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "baseBranchPatterns": [
-    "production"
-  ],
-  "extends": [
-    "config:best-practices",
-    "schedule:weekly",
-    ":automergePatch"
-  ],
+  "baseBranchPatterns": ["production"],
+  "extends": ["config:best-practices", "schedule:weekly", ":automergePatch"],
   "timezone": "Europe/London",
-  "ignorePaths": [
-    "Gemfile",
-    ".devcontainer/**"
-  ],
-  "enabledManagers": [
-    "puppet",
-    "custom.regex"
-  ],
+  "ignorePaths": ["Gemfile", ".devcontainer/**"],
+  "enabledManagers": ["puppet", "custom.regex"],
   "internalChecksFilter": "strict",
   "major": {
     "minimumReleaseAge": "14 days"
@@ -29,25 +17,21 @@
   },
   "packageRules": [
     {
-      "matchManagers": [
-        "ruby-version"
-      ],
+      "matchManagers": ["ruby-version"],
       "enabled": false
     },
     {
-      "matchPackageNames": [
-        "ruby"
-      ],
+      "matchPackageNames": ["ruby"],
       "enabled": false
+    },
+    {
+      "matchPackageNames": ["minio/minio"],
+      "extractVersion": "^RELEASE\\.(?<version>.+)$"
     },
     {
       "description": "Automerge patch updates for GitHub binaries",
-      "matchDatasources": [
-        "github-releases"
-      ],
-      "matchUpdateTypes": [
-        "patch"
-      ],
+      "matchDatasources": ["github-releases"],
+      "matchUpdateTypes": ["patch"],
       "automerge": true
     },
     {

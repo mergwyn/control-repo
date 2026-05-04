@@ -1,6 +1,7 @@
 #
 class profile::app::minio (
-  String $version = '2024-03-30T09-41-12Z',  # renovate: datasource=github-releases depName=minio/minio
+  # renovate: datasource=github-releases depName=minio/minio versioning=regex:^RELEASE\.(?<major>\d{4}-\d{2}-\d{2}T\d{2}-\d{2}-\d{2}Z)$
+  String $version = '2024-03-30T09-41-12Z',
   String $root_user = "${lookup('secrets::minio_root')}",
 String $root_password = "${lookup('secrets::minio_root_password')}",
   Stdlib::Absolutepath $data_dir = '/srv/minio',
