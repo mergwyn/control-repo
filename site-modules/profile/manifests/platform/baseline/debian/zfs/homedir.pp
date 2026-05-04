@@ -4,19 +4,18 @@
 class profile::platform::baseline::debian::zfs::homedir (
   String $pool = 'rpool',
 ) {
-
   file { '/usr/local/sbin/mkhomedir-zfs':
     ensure  => file,
     owner   => 'root',
     group   => 'root',
     mode    => '0750',
-    content => @("EOF"),
+    content => @("EOF"/L$),
       #!/bin/bash
-      USERNAME=$PAM_USER
-      if [ ! -d /home/$USERNAME ]; then
-          zfs create -o mountpoint=/home/$USERNAME ${pool}/home/$USERNAME
-          chown $USERNAME:$USERNAME /home/$USERNAME
-          chmod 750 /home/$USERNAME
+      USERNAME=\$PAM_USER
+      if [ ! -d /home/\$USERNAME ]; then
+          zfs create -o mountpoint=/home/\$USERNAME ${pool}/home/\$USERNAME
+          chown \$USERNAME:\$USERNAME /home/\$USERNAME
+          chmod 750 /home/\$USERNAME
       fi
       | EOF
   }
@@ -30,5 +29,4 @@ class profile::platform::baseline::debian::zfs::homedir (
     arguments => '/usr/local/sbin/mkhomedir-zfs',
     require   => File['/usr/local/sbin/mkhomedir-zfs'],
   }
-
 }
