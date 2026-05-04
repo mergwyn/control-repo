@@ -43,12 +43,26 @@ lxd::preseed:
       driver: zfs
 
 profile::app::kopia::maintenance: false
+profile::app::kopia::snaps:
+  - /etc
+  - /home
+  - /opt
+  - /root
+  - /srv/media/content/christmas
+  - /srv/media/content/golf
+  - /srv/media/content/home-videos
+  - /srv/media/content/music
+  - /srv/media/content/radio-shows
+  - /srv/media/content/tv/Frasier
+  - /srv/public
+  - /srv/src
+  - /usr/local
+  - /var/backups
+  - /var/spool/cron
 
 profile::platform::baseline::debian::zfs::snapshotter::settings:
   rpool/zfspv:
     snap: "no"
-  rpool/srv:
-    snap: "yes"
   srv:
     frequent: 4
     hourly: 24
@@ -58,7 +72,7 @@ profile::platform::baseline::debian::zfs::snapshotter::settings:
     yearly: 0
     snap: "no"
     clean: "yes"
-  srv/home:
+  rpool/home:
     snap: "yes"
   srv/media:
     monthly: 0
