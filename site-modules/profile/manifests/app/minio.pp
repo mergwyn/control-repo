@@ -111,6 +111,6 @@ String $root_password = "${lookup('secrets::minio_root_password')}",
   }
 
   # Ensure dependencies are in place before starting the service
-  Profile::App::Binary_install['minio'] -> Service['minio.service']
+  Profile::App::Binary_install['minio'] ~> Service['minio.service']
   File[$data_dir] -> Service['minio.service']
 }

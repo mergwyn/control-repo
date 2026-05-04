@@ -52,27 +52,32 @@ define profile::app::binary_install (
     $strip_opt = ''
   }
 
-  # Command to download/install the binary or tarball
+  # Command to download/install the binary or tarball.
+  # In both cases we download/extract to a temporary location first, then
+  # atomic-swap (mv) into the final path. This avoids curl(23)/ETXTBSY when
+  # the target binary is locked by a running daemon, since mv replaces the
+  # directory entry without truncating the existing file.
   if $tarball {
     $cmd = @("END")
       set -e
+      mkdir -p /tmp/${title}-extract
       curl -fsSL ${url} -o /tmp/${title}.tar.gz
-      tar -xzf /tmp/${title}.tar.gz ${strip_opt} -C ${install_dir} ${tar_extract}
-      chmod +x ${bin}
-      rm -f /tmp/${title}.tar.gz
+      tar -xzf /tmp/${title}.tar.gz ${strip_opt} -C /tmp/${title}-extract ${tar_extract}
+      chmod +x /tmp/${title}-extract/$(basename ${tar_extract})
+      mv -f /tmp/${title}-extract/$(basename ${tar_extract}) ${bin}
+      rm -rf /tmp/${title}.tar.gz /tmp/${title}-extract
       END
   } else {
     $cmd = @("END")
       set -e
-      curl -fsSL ${url} -o ${bin}
-      chmod +x ${bin}
+      curl -fsSL ${url} -o ${bin}.tmp
+      chmod +x ${bin}.tmp
+      mv -f ${bin}.tmp ${bin}
       END
   }
 
   # If stamping, append the version string to the script
   if $stamp {
-    $cmd_stamp = "echo '# version: ${version}' >> ${bin}"
-    # Chain stamping after main install
     exec { "stamp-${title}":
       command => "printf '# version: %s\\n' '${version}' >> '${bin}'",
       path    => ['/usr/bin', '/bin', $install_dir],
