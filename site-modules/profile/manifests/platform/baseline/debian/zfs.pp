@@ -9,4 +9,5 @@ class profile::platform::baseline::debian::zfs {
   include profile::platform::baseline::debian::zfs::zabbix
   include profile::platform::baseline::debian::zfs::trim
   include profile::platform::baseline::debian::zfs::backup
+  include profile::platform::baseline::debian::zfs::homedir
 }
