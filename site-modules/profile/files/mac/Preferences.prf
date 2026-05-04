@@ -62,3 +62,4 @@ ignore = BelowPath Sounds
 ignore = BelowPath Spelling
 ignore = BelowPath Voices
 ignore = BelowPath iMovie
+ignore = BelowPath src
