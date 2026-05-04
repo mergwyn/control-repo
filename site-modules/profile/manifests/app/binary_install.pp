@@ -62,9 +62,9 @@ define profile::app::binary_install (
       set -e
       mkdir -p /tmp/${title}-extract
       curl -fsSL ${url} -o /tmp/${title}.tar.gz
-      tar -xzf /tmp/${title}.tar.gz ${strip_opt} -C /tmp/${title}-extract ${tar_extract}
-      chmod +x /tmp/${title}-extract/$(basename ${tar_extract})
-      mv -f /tmp/${title}-extract/$(basename ${tar_extract}) ${bin}
+      tar -xzf /tmp/${title}.tar.gz -C /tmp/${title}-extract
+      chmod +x /tmp/${title}-extract/${tar_extract}
+      mv -f /tmp/${title}-extract/${tar_extract} ${bin}
       rm -rf /tmp/${title}.tar.gz /tmp/${title}-extract
       END
   } else {
