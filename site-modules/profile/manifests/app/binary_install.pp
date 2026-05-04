@@ -58,13 +58,14 @@ define profile::app::binary_install (
   # the target binary is locked by a running daemon, since mv replaces the
   # directory entry without truncating the existing file.
   if $tarball {
+    $tar_src = "/tmp/${title}-extract/${tar_extract}"
     $cmd = @("END")
       set -e
       mkdir -p /tmp/${title}-extract
       curl -fsSL ${url} -o /tmp/${title}.tar.gz
       tar -xzf /tmp/${title}.tar.gz -C /tmp/${title}-extract
-      chmod +x /tmp/${title}-extract/${tar_extract}
-      mv -f /tmp/${title}-extract/${tar_extract} ${bin}
+      chmod +x ${tar_src}
+      mv -f ${tar_src} ${bin}
       rm -rf /tmp/${title}.tar.gz /tmp/${title}-extract
       END
   } else {
