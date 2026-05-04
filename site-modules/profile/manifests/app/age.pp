@@ -8,7 +8,7 @@ class profile::app::age (
     binary      => 'age',
     url         => "https://github.com/FiloSottile/age/releases/download/v${version}/age-v${version}-linux-amd64.tar.gz",
     tarball     => true,
-    tar_extract => 'age',
+    tar_extract => 'age/age',
     version_cmd => 'age --version',
   }
 }
