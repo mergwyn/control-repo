@@ -9,6 +9,10 @@ profile::app::backuppc::client::scripts: "/etc/backuppc-scripts"
 profile::app::backuppc::client::preuser: "%{lookup('profile::app::backuppc::client::scripts')}/DumpPreUser"
 profile::app::backuppc::client::postuser: "%{lookup('profile::app::backuppc::client::scripts')}/DumpPostUser"
 
+profile::app::kopia::client::scripts: "/etc/kopia"
+profile::app::kopia::client::snapafter: "%{lookup('profile::app::kopia::client::scripts')}/snap-after"
+profile::app::kopia::client::snapbefore: "%{lookup('profile::app::kopia::client::scripts')}/snap-before"
+#
 # set nginx package
 nginx::package_name: "nginx-extras"
 nginx::server_purge: true

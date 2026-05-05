@@ -1,9 +1,8 @@
 ---
-
 classes:
   - profile::platform::baseline::debian::netplan
 
-profile::app::dhcpd::role:         secondary
+profile::app::dhcpd::role: secondary
 profile::app::dhcpd::peer_address: "%{lookup('defaults::subnet')}.22"
 
 profile::platform::baseline::debian::netplan::ethernets:
@@ -19,4 +18,3 @@ profile::platform::baseline::debian::netplan::ethernets:
       addresses:
         - "%{lookup('defaults::subnet')}.21"
         - "%{lookup('defaults::subnet')}.22"
-

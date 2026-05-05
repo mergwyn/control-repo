@@ -44,10 +44,6 @@ lxd::preseed:
 
 profile::app::kopia::maintenance: false
 profile::app::kopia::snaps:
-  - /etc
-  - /home
-  - /opt
-  - /root
   - /srv/media/content/christmas
   - /srv/media/content/golf
   - /srv/media/content/home-videos
@@ -56,9 +52,6 @@ profile::app::kopia::snaps:
   - /srv/media/content/tv/Frasier
   - /srv/public
   - /srv/src
-  - /usr/local
-  - /var/backups
-  - /var/spool/cron
 
 profile::platform::baseline::debian::zfs::snapshotter::settings:
   rpool/zfspv:

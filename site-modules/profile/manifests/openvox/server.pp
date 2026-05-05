@@ -54,22 +54,25 @@ class profile::openvox::server {
     vhost_name => 'echo.theclarkhome.com',
     port       => 80,
   }
-# TODO sort out backup without backuppc
-#  $scripts  = hiera('profile::app::backuppc::client::scripts')
-#  $preuser  = hiera('profile::app::backuppc::client::preuser')
-#  $postuser = hiera('profile::app::backuppc::client::postuser')
-#
-#  file { "${preuser}/S21postgresql-backup":
-#    ensure  => file,
-#    source  => 'puppet:///modules/profile/backuppc/S21postgresql-backup',
-#    mode    => '0555',
-#    require => Class['profile::app::backuppc::client'],
-#  }
-#
-#  file { "${postuser}/P21postgresql-backup-clean":
-#    ensure  => file,
-#    source  => 'puppet:///modules/profile/backuppc/P21postgresql-backup-clean',
-#    mode    => '0555',
-#    require => Class['profile::app::backuppc::client'],
-#  }
+
+  $snapbefore = lookup('profile::app::kopia::client::snapbefore')
+
+  file { "${snapbefore}/S50postgres_dump":
+    ensure  => file,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0755',
+    content => @("EOF"),
+      #!/bin/bash
+      set -e
+
+      DUMP_DIR=/var/backups/postgres
+      mkdir -p "\$DUMP_DIR"
+
+      sudo -u postgres pg_dump -p 5432 -Fc puppetdb > "\$DUMP_DIR/puppetdb.dump"
+
+      find "\$DUMP_DIR" -name '*.dump' -mtime +3 -delete
+      | EOF
+  }
+
 }
