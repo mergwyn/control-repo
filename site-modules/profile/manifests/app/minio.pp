@@ -1,7 +1,7 @@
 #
 class profile::app::minio (
-  # renovate: datasource=github-releases depName=minio/minio versioning=regex:^RELEASE\.(?<major>\d{4}-\d{2}-\d{2}T\d{2}-\d{2}-\d{2}Z)$
-  String $version = '2024-03-30T09-41-12Z',
+  # renovate: datasource=github-releases depName=minio/minio extractVersion=^RELEASE\.(?<version>.+)$
+  String $version = '2025-09-07T16-13-09Z',
   String $root_user = "${lookup('secrets::minio_root')}",
   String $root_password = "${lookup('secrets::minio_root_password')}",
   Stdlib::Absolutepath $data_dir = '/srv/minio',
@@ -44,7 +44,7 @@ class profile::app::minio (
   profile::app::binary_install { 'minio':
     version     => $version,
     binary      => 'minio',
-    url         => 'https://dl.min.io/server/minio/release/linux-amd64/minio',
+    url         => "https://dl.min.io/server/minio/release/linux-amd64/archive/minio.RELEASE.${version}",
     tarball     => false,
     version_cmd => '/usr/local/bin/minio --version | grep -oP "minio version RELEASE.\K[^ ]+" | cut -d. -f1-4',
     install_dir => '/usr/local/bin',
