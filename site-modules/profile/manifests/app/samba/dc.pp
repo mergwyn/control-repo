@@ -1,4 +1,4 @@
-# 
+#
 # @summary Sets up a samba AD
 #
 # TODO: complete dev and test
@@ -8,9 +8,8 @@ class profile::app::samba::dc {
   include profile::app::unison
 
   # support for samba backup as part of kopia run
-  $scripts='/etc/kopia'
-  $preuser="${scripts}/snap-before"
-  $postuser="${scripts}/snap-after"
+  $snapafter = lookup('profile::app::kopia::client::snapafter')
+  $snapbefore = lookup('profile::app::kopia::client::snapbefore')
 
   $oldfiles = [
     '/var/lib/samba/sysvol/theclarkhome.com/scripts/samba4_backup',
@@ -21,12 +20,12 @@ class profile::app::samba::dc {
   ]
   file { $oldfiles: ensure => absent, }
 
-  file { "${preuser}/S30samba_backup":
+  file { "${snapbefore}/S30samba_backup":
     ensure => file,
     source => 'puppet:///modules/profile/backuppc/S30samba_backup',
     mode   => '0555',
   }
-  file { "${postuser}/P30samba_clean":
+  file { "${snapafter}/P30samba_clean":
     ensure => file,
     source => 'puppet:///modules/profile/backuppc/P30samba_clean',
     mode   => '0555',
