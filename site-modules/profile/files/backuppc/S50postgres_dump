@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+set -e
+
+DUMP_DIR=/var/backups/postgres
+mkdir -p "$DUMP_DIR"
+
+sudo -u postgres pg_dump -p 5432 -Fc puppetdb > "$DUMP_DIR/puppetdb.dump"
+
+# Keep last 3 dumps (kopia handles longer retention)
+find "$DUMP_DIR" -name '*.dump' -mtime +3 -delete
+EOF

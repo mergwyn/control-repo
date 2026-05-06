@@ -58,21 +58,10 @@ class profile::openvox::server {
   $snapbefore = lookup('profile::app::kopia::client::snapbefore')
 
   file { "${snapbefore}/S50postgres_dump":
-    ensure  => file,
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0755',
-    content => @("EOF"),
-      #!/bin/bash
-      set -e
-
-      DUMP_DIR=/var/backups/postgres
-      mkdir -p "\$DUMP_DIR"
-
-      sudo -u postgres pg_dump -p 5432 -Fc puppetdb > "\$DUMP_DIR/puppetdb.dump"
-
-      find "\$DUMP_DIR" -name '*.dump' -mtime +3 -delete
-      | EOF
+    ensure => file,
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0755',
+    source => 'puppet:///modules/profile/backuppc/S50postgres_dump',
   }
-
 }
