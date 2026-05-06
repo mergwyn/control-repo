@@ -37,6 +37,24 @@ class profile::platform::baseline::debian::virtual::kubernetes (
         target => '/etc/sysctl.d/99-homeassistant.conf',
       }
 
+      # TODO: get the dns names from hiera
+      file { '/var/lib/rancher/k3s/server/manifests/coredns-custom.yaml':
+        ensure  => file,
+        owner   => 'root',
+        group   => 'root',
+        mode    => '0644',
+        content => @(EOF),
+          apiVersion: v1
+          kind: ConfigMap
+          metadata:
+            name: coredns-custom
+            namespace: kube-system
+          data:
+            forward.override: |
+              forward . 10.58.0.21 10.58.0.22 1.1.1.1
+          EOF
+      }
+
 # Stop import scan service as recommended for openebs
 #      service { 'zfs-import-scan.service':
 #        ensure =>  stopped,
