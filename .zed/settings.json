@@ -1,12 +1,16 @@
 {
   "lsp": {
     "puppet-languageserver": {
-      "command": "pdk",
-      "args": ["bundle", "exec", "puppet-languageserver"],
+      "binary": {
+        "path": "pdk",
+        "arguments": ["bundle", "exec", "puppet-languageserver", "--stdio"],
+      },
     },
     "solargraph": {
-      "command": "/usr/local/bin/solargraph",
-      "args": ["stdio"],
+      "binary": {
+        "path": "/usr/local/bin/solargraph",
+        "arguments": ["stdio"],
+      },
     },
   },
   "languages": {
