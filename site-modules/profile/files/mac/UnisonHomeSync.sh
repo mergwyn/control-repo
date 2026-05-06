@@ -1,6 +1,6 @@
 #!/bin/bash
 LOCAL="${HOME}"
-REMOTE="ssh://${LOGNAME}@foxtrot.theclarkhome.com//home/${LOGNAME}"
+REMOTE="ssh://${LOGNAME}@delta.theclarkhome.com//home/${LOGNAME}"
 ARGS="-silent -ui text -repeat watch -terse"
 cp /dev/null ~/.unison/unison.log
 
