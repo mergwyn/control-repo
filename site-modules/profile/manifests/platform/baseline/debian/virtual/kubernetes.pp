@@ -50,8 +50,12 @@ class profile::platform::baseline::debian::virtual::kubernetes (
             name: coredns-custom
             namespace: kube-system
           data:
-            forward.override: |
-              forward . 10.58.0.21 10.58.0.22 1.1.1.1
+            theclarkhome.server: |
+              theclarkhome.com:53 {
+                  errors
+                  cache 30
+                  forward . 10.58.0.21 10.58.0.22
+              }
           EOF
       }
 
