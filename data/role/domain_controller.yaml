@@ -4,4 +4,4 @@ samba::dc::role: "dc"
 
 profile::app::kopia::snaps:
   - /var/lib/samba/ # sysvol, sam.ldb, secrets, DNS data
-  - /var/lib/bind/ # if using BIND_DLZ for DNS
+  # - /var/lib/bind/ # if using BIND_DLZ for DNS
