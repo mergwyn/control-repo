@@ -25,7 +25,7 @@ profile::platform::baseline::debian::netplan::bridges:
       - to: 224.0.0.0/4
         scope: link
     nameservers:
-      # search: "%{alias('defaults::dns::search')}"
+      search: "%{alias('defaults::dns::search')}"
       addresses: "%{alias('defaults::dns::nameservers')}"
     parameters:
       stp: false

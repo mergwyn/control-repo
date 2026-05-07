@@ -1,70 +1,70 @@
 ---
-
 # environment
-defaults::workgroup:       'THECLARKHOME'
-defaults::realm:           'THECLARKHOME.COM'
-defaults::puppetmaster:    "echo.%{trusted.domain}"
+defaults::workgroup: "THECLARKHOME"
+defaults::realm: "THECLARKHOME.COM"
+defaults::puppetmaster: "echo.%{trusted.domain}"
 
 # user
-defaults::adminemail:      "root@%{trusted.domain}"
-defaults::adminuser:       'administrator'
+defaults::adminemail: "root@%{trusted.domain}"
+defaults::adminuser: "administrator"
 
 # always get latest
-vcsrepo::ensure:           'latest'
+vcsrepo::ensure: "latest"
 
 # network
-defaults::netmask:         '255.255.255.0'
-defaults::bits:            '24'
-defaults::subnet:          '10.58.0'
-defaults::network:         "%{lookup('defaults::subnet')}.0"
-defaults::gateway:         "%{lookup('defaults::subnet')}.1"
-defaults::cidr:            "%{lookup('defaults::network')}/%{lookup('defaults::bits')}"
+defaults::netmask: "255.255.255.0"
+defaults::bits: "24"
+defaults::subnet: "10.58.0"
+defaults::network: "%{lookup('defaults::subnet')}.0"
+defaults::gateway: "%{lookup('defaults::subnet')}.1"
+defaults::cidr: "%{lookup('defaults::network')}/%{lookup('defaults::bits')}"
 # DNS
-defaults::dns::vip:        "%{lookup('defaults::subnet')}.20"
+defaults::dns::vip: "%{lookup('defaults::subnet')}.20"
 defaults::dns::search:
   - "%{trusted.domain}"
   - local
 defaults::dns::nameservers:
   - "%{lookup('defaults::subnet')}.22"
   - "%{lookup('defaults::subnet')}.21"
+  - "1.1.1.1"
 
 # VPN settings
-defaults::vpn_gateway:     "%{lookup('defaults::subnet')}.2"
+defaults::vpn_gateway: "%{lookup('defaults::subnet')}.2"
 defaults::vpn::servers:
   - "%{lookup('defaults::subnet')}.3"
   - "%{lookup('defaults::subnet')}.4"
 defaults::vpn::use_systemd_resolved: true
-profile::infrastructure::router::type: 'privatvpn'
+profile::infrastructure::router::type: "privatvpn"
 
-defaults::backup_server:   'foxtrot'
-defaults::system_user:     'root'
-defaults::system_home_dir: '/root'
-defaults::media_user:      'media'
-defaults::media_group:     '513'
+defaults::backup_server: "foxtrot"
+defaults::system_user: "root"
+defaults::system_home_dir: "/root"
+defaults::media_user: "media"
+defaults::media_group: "513"
 
-defaults::zabbix_version:   '6.4'
-defaults::zabbix_user:      'zabbix'
-defaults::zabbix_pass:      "%{lookup('secrets::zabbix')}"
-defaults::zabbix_url:       "zulu.%{trusted.domain}"
+defaults::zabbix_version: "6.4"
+defaults::zabbix_user: "zabbix"
+defaults::zabbix_pass: "%{lookup('secrets::zabbix')}"
+defaults::zabbix_url: "zulu.%{trusted.domain}"
 
 profile::app::zabbix::agent::enabled: false
 
-# openvox support 
+# openvox support
 puppet::client_package: openvox-agent
 puppet::server_package: openvox-server
 puppetdb::puppetdb_package: openvoxdb
 puppetdb::master::config::terminus_package: openvoxdb-termini
 
-sssd::domains: [ "domain/%{rusted.domain}" ]
-sssd::services: [ 'nss' ]
+sssd::domains: ["domain/%{rusted.domain}"]
+sssd::services: ["nss"]
 
 profile::app::k8s_tools::packages:
-  - 'age'
+  - "age"
 
 lookup_options:
   "^classes(.*)$":
     merge: deep
-    knockout_prefix: '--'
+    knockout_prefix: "--"
   sudo::configs:
     merge:
       strategy: deep

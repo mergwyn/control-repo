@@ -1,5 +1,4 @@
 ---
-
 classes:
   - profile::platform::baseline::debian::netplan
   - profile::platform::baseline::debian::virtual::docker
@@ -24,7 +23,7 @@ profile::platform::baseline::debian::netplan::bridges:
       - to: 224.0.0.0/4
         scope: link
     nameservers:
-      # search: "%{alias('defaults::dns::search')}"
+      search: "%{alias('defaults::dns::search')}"
       addresses: "%{alias('defaults::dns::nameservers')}"
     parameters:
       stp: false
@@ -33,13 +32,13 @@ profile::platform::baseline::debian::netplan::bridges:
 # Config for lxd server
 lxd::preseed:
   storage_pools:
-  - config:
-      source: rpool/lxd
-      volatile.initial_source: rpool/lxd
-      zfs.pool_name: rpool/lxd
-    description: ""
-    name: default
-    driver: zfs
+    - config:
+        source: rpool/lxd
+        volatile.initial_source: rpool/lxd
+        zfs.pool_name: rpool/lxd
+      description: ""
+      name: default
+      driver: zfs
 
 profile::platform::baseline::debian::zfs::snapshotter::settings:
   rpool/zfspv:
@@ -47,10 +46,10 @@ profile::platform::baseline::debian::zfs::snapshotter::settings:
 
 profile::app::kopia::maintenance: false
 profile::app::kopia::backup_files_exclude:
-  '/':
-    - '/var/lib/rancher/k3s/agent/containerd'
-    - '/run/k3s/containerd'
-    - '/srv/media'
-    - '/opt/appdata/*/logs'
-    - '/opt/appdata/*/cache'
-    - '/opt/appdata/*/MediaCover'
+  "/":
+    - "/var/lib/rancher/k3s/agent/containerd"
+    - "/run/k3s/containerd"
+    - "/srv/media"
+    - "/opt/appdata/*/logs"
+    - "/opt/appdata/*/cache"
+    - "/opt/appdata/*/MediaCover"
