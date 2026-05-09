@@ -18,5 +18,4 @@ class profile::app::kubectx (
     install_dir => '/usr/local/bin',
     stamp       => true,
   }
-
 }

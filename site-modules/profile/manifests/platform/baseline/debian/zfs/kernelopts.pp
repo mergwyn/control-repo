@@ -1,7 +1,6 @@
 class profile::platform::baseline::debian::zfs::kernelopts (
-  Float $arc_percent = 0.25,
+  Float[0,1] $arc_percent = 0.25,
 ) {
-
   $mem_total_bytes = $facts['memory']['system']['total_bytes']
 
   $arc_candidate   = Integer($mem_total_bytes * $arc_percent)
