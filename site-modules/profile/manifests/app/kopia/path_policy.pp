@@ -11,7 +11,7 @@ define profile::app::kopia::path_policy (
   $path_safe = regsubst(regsubst($path, '/', '-', 'G'), '^-', '', 'G')
   $snapbefore = lookup('profile::app::kopia::client::snapbefore')
   $snapafter  = lookup('profile::app::kopia::client::snapafter')
-  $kopiacmd = lookup('profile::app::kopia::client::kopiacmd', {default_value => '/opt/scripts/bin/kopiacmd'})
+  $kopiacmd = lookup('profile::app::kopia::client::kopiacmd')
 
   if $before_snapshot {
     $before_wrapper = "${snapbefore}/hook-${path_safe}"
