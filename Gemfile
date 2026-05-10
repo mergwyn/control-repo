@@ -40,6 +40,7 @@ group :development do
   gem "rspec-puppet-utils",                      require: false
   gem "github_changelog_generator",              require: false
   gem "puppet-editor-services",                  require: false
+  gem "puppet-lint", '4.2.4',                    require: false
   gem "generate-puppetfile", '~> 1.0',           require: false
 end
 group :development, :release_prep do

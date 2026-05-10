@@ -40,6 +40,8 @@ Gemfile:
       - gem: rspec-puppet-utils
       - gem: github_changelog_generator
       - gem: puppet-editor-services
+      - gem: puppet-lint
+        version: "4.2.4"
   optional:
     ":development":
       - gem: "generate-puppetfile"

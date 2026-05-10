@@ -1,0 +1,20 @@
+[
+  {
+    "label": "PDK Lint Project",
+    "command": "pdk lint",
+    "use_new_terminal": true,
+    "allow_concurrent_runs": false,
+  },
+  {
+    "label": "PDK Validate File",
+    "command": "pdk validate",
+    "args": ["$ZED_FILE"],
+    "use_new_terminal": true,
+  },
+  {
+    "label": "PDK Lint Fix File",
+    "command": "pdk bundle exec puppet-lint --fix $ZED_FILE",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": false,
+  },
+]

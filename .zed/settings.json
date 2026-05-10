@@ -2,8 +2,14 @@
   "lsp": {
     "puppet-languageserver": {
       "binary": {
-        "path": "pdk",
-        "arguments": ["bundle", "exec", "puppet-languageserver", "--stdio"],
+        "path": "/opt/puppetlabs/pdk/bin/pdk",
+        "arguments": [
+          "bundle",
+          "exec",
+          "puppet-languageserver",
+          "--stdio",
+          "--no-cache",
+        ],
       },
     },
     "solargraph": {

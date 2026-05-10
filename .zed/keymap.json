@@ -1,0 +1,8 @@
+[
+  {
+    "context": "Workspace",
+    "bindings": {
+      "ctrl-alt-l": ["task:spawn", { "task_name": "PDK Lint Fix File" }],
+    },
+  },
+]
