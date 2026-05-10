@@ -27,7 +27,7 @@ class profile::app::kopia (
       Variant[String,Array[String]],
       Hash[String, Variant[String,Array[String]]]
     ]
-  ] $backup_files_exclude,
+  ] $backup_files_exclude            = undef,
 ) {
   include profile::app::scripts
 
@@ -83,8 +83,16 @@ class profile::app::kopia (
 
 # Create backup excludes from the backuppc values
 # TODO switch to kopia values
+  $excludes = $backup_files_exclude ? {
+    undef   => [],
+    default => $backup_files_exclude.keys.sort.map |$key| {
+      $backup_files_exclude[$key]
+    }.flatten,
+  }
+
+  # TODO: make this path aware rather than dropping /.kopiagnore
   file { '/.kopiaignore':
     ensure  => file,
-    content => inline_template('<% @backup_files_exclude.keys.sort.each do |key| -%><% @backup_files_exclude[key].each do |exclude| %><%= exclude %><%= "\n" %><% end %><% end %>'),
+    content => "${join($excludes, "\n")}\n",
   }
 }

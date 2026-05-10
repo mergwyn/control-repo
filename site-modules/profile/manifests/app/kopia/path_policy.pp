@@ -12,6 +12,7 @@ define profile::app::kopia::path_policy (
   $snapbefore = lookup('profile::app::kopia::client::snapbefore')
   $snapafter  = lookup('profile::app::kopia::client::snapafter')
   $kopiacmd = lookup('profile::app::kopia::client::kopiacmd')
+  $homedir = '/root'  # TODO: make this configurable
 
   if $before_snapshot {
     $before_wrapper = "${snapbefore}/hook-${path_safe}"
@@ -44,7 +45,7 @@ define profile::app::kopia::path_policy (
     }
 
     exec { "kopia-policy-after-${path}":
-      command   => "${kopiacmd} path_policy '${path}' --before-snapshot-root-action '${after_wrapper}'",
+      command   => "${kopiacmd} path_policy '${path}' --after-snapshot-root-action '${after_wrapper}'",
       unless    => "/usr/bin/kopia --config-file=${homedir}/.config/kopia/kopia-minio.config policy get '${path}' 2>/dev/null | grep -qF '${after_wrapper}'",
       subscribe => File[$after_wrapper],
       require   => File[$after_wrapper],
