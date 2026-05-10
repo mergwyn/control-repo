@@ -57,6 +57,8 @@ puppetdb::master::config::terminus_package: openvoxdb-termini
 sssd::domains: ["domain/%{rusted.domain}"]
 sssd::services: ["nss"]
 
+profile::app::kopia::client::kopiacmd: "/opt/scripts/bin/kopiacmd"
+
 profile::app::k8s_tools::packages:
   - "age"
 

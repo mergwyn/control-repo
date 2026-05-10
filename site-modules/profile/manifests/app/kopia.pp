@@ -73,6 +73,14 @@ class profile::app::kopia (
     source => 'puppet:///modules/profile/kopia-maintenance',
   }
 
+  file { "${topdir}/.bws_env":
+    ensure  => file,
+    owner   => 'root',
+    group   => 'Domain Admins',
+    mode    => '0640',
+    content => inline_template("BWS_ACCESS_TOKEN=<%= lookup('secrets::kopia::bws_token') %>\n"),
+  }
+
 # Create backup excludes from the backuppc values
 # TODO switch to kopia values
   file { '/.kopiaignore':
