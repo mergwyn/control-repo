@@ -11,4 +11,8 @@ class profile::platform::baseline::debian::zfs::backup {
     source => 'puppet:///modules/profile/backuppc/S40zfs_props',
     mode   => '0555',
   }
+
+  profile::app::kopia::path_policy { '/var/backups':
+    before_snapshot => ["${preuser}/S40zfs_props"],
+  }
 }
