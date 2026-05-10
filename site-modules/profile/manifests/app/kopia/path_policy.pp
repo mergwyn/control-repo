@@ -26,10 +26,11 @@ define profile::app::kopia::path_policy (
     }
 
     exec { "kopia-policy-before-${path}":
-      command   => "${kopiacmd} path_policy '${path}' --before-snapshot-root-action '${before_wrapper}'",
-      unless    => "/usr/bin/kopia --config-file=${homedir}/.config/kopia/kopia-minio.config policy get '${path}' 2>/dev/null | grep -qF '${before_wrapper}'",
-      subscribe => File[$before_wrapper],
-      require   => File[$before_wrapper],
+      command     => "${kopiacmd} path_policy '${path}' --before-snapshot-root-action '${before_wrapper}'",
+      unless      => "/usr/bin/kopia --config-file=${homedir}/.config/kopia/kopia-minio.config policy get '${path}' 2>/dev/null | grep -qF '${before_wrapper}'",
+      environment => ['HOME=/root'],
+      subscribe   => File[$before_wrapper],
+      require     => File[$before_wrapper],
     }
   }
 
@@ -45,10 +46,11 @@ define profile::app::kopia::path_policy (
     }
 
     exec { "kopia-policy-after-${path}":
-      command   => "${kopiacmd} path_policy '${path}' --after-snapshot-root-action '${after_wrapper}'",
-      unless    => "/usr/bin/kopia --config-file=${homedir}/.config/kopia/kopia-minio.config policy get '${path}' 2>/dev/null | grep -qF '${after_wrapper}'",
-      subscribe => File[$after_wrapper],
-      require   => File[$after_wrapper],
+      command     => "${kopiacmd} path_policy '${path}' --after-snapshot-root-action '${after_wrapper}'",
+      unless      => "/usr/bin/kopia --config-file=${homedir}/.config/kopia/kopia-minio.config policy get '${path}' 2>/dev/null | grep -qF '${after_wrapper}'",
+      environment => ['HOME=/root'],
+      subscribe   => File[$after_wrapper],
+      require     => File[$after_wrapper],
     }
   }
 }
