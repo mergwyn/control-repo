@@ -2,17 +2,16 @@
 #
 class profile::platform::baseline::debian::zfs::backup {
   # support for samba backup as part of kopia run
-  $scripts='/etc/kopia'
-  $preuser="${scripts}/snap-before"
-  $postuser="${scripts}/snap-after"
+  $snapbefore = lookup('profile::app::kopia::client::snapbefore')
+  $snapafter = lookup('profile::app::kopia::client::snapafter')
 
-  file { "${preuser}/S40zfs_props":
+  file { "${snapbefore}/S40zfs_props":
     ensure => file,
     source => 'puppet:///modules/profile/backuppc/S40zfs_props',
     mode   => '0555',
   }
 
   profile::app::kopia::path_policy { '/var/backups':
-    before_snapshot => ["${preuser}/S40zfs_props"],
+    before_snapshot => ["${snapbefore}/S40zfs_props"],
   }
 }

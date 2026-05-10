@@ -30,6 +30,7 @@ define profile::app::kopia::path_policy (
       subscribe => File[$before_wrapper],
       require   => File[$before_wrapper],
     }
+  }
 
   if $after_snapshot {
     $after_wrapper = "${snapafter}/hook-${path_safe}"
