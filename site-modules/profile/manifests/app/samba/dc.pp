@@ -30,6 +30,11 @@ class profile::app::samba::dc {
     source => 'puppet:///modules/profile/backuppc/P30samba_clean',
     mode   => '0555',
   }
+  profile::app::kopia::path_policy { '/var/backups':
+    before_snapshot => ["${snapbefore}/S30samba_backup"],
+    after_snapshot  => ["${snapafter}/P30samba_clean"],
+  }
+
   #class { '::samba::dc':
   #domain             => $trusted['domain'],
   #realm              => lookup("default::realm"),

@@ -12,16 +12,16 @@
 # @param repos
 #
 class profile::app::kopia (
-  Stdlib::Absolutepath $topdir                          = '/etc/kopia',
-  Stdlib::Absolutepath $config                          = "${topdir}/config.d",
-  Stdlib::Absolutepath $snapbefore                      = "${topdir}/snap-before",
-  Stdlib::Absolutepath $snapafter                       = "${topdir}/snap-after",
-  Stdlib::Absolutepath $folderbefore                    = "${topdir}/folder-before",
-  Stdlib::Absolutepath $folderafter                     = "${topdir}/folder-after",
-  Boolean $maintenance                                  = false,
-  String $args                                          = '--log-level=error --no-progress',
-  String $repos                                         = '',
-  Array[String] $snaps                                  = '[/]',
+  Stdlib::Absolutepath $topdir       = '/etc/kopia',
+  Stdlib::Absolutepath $config       = "${topdir}/config.d",
+  Stdlib::Absolutepath $snapbefore   = "${topdir}/snap-before",
+  Stdlib::Absolutepath $snapafter    = "${topdir}/snap-after",
+  Stdlib::Absolutepath $folderbefore = "${topdir}/folder-before",
+  Stdlib::Absolutepath $folderafter  = "${topdir}/folder-after",
+  Boolean $maintenance               = false,
+  String $args                       = '--log-level=error --no-progress',
+  String $repos                      = '',
+  Array[String] $snaps               = '[/]',
   Optional[
     Variant[
       Variant[String,Array[String]],

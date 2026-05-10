@@ -64,4 +64,8 @@ class profile::openvox::server {
     mode   => '0755',
     source => 'puppet:///modules/profile/backuppc/S50postgres_dump',
   }
+
+  profile::app::kopia::path_policy { '/var/lib/postgresql':
+    before_snapshot => ["${snapbefore}/S50postgres_dump"],
+  }
 }
