@@ -22,7 +22,7 @@ define profile::app::kopia::path_policy (
       owner   => 'root',
       group   => 'root',
       mode    => '0755',
-      content => inline_template("#!/bin/bash\nset -e\n<%= @before_snapshot.join(\"\n\") %>\n"),
+      content => inline_template("#!/bin/bash\ncd /tmp\nset -e\n<%= @before_snapshot.join(\"\n\") %>\n"),
     }
 
     exec { "kopia-policy-before-${path}":
