@@ -46,7 +46,7 @@ define profile::app::kopia::path_policy (
     }
 
     exec { "kopia-policy-after-${path}":
-      command     => "${kopiacmd} path_policy '${path}' --after-snapshot-root-action '${after_wrapper}'",
+      command     => "${kopiacmd} path policy '${path}' --after-snapshot-root-action '${after_wrapper}'",
       unless      => "/usr/bin/kopia --config-file=${homedir}/.config/kopia/kopia-minio.config policy get '${path}' 2>/dev/null | grep -qF '${after_wrapper}'",
       environment => ['HOME=/root'],
       subscribe   => File[$after_wrapper],
