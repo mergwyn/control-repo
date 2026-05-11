@@ -10,6 +10,7 @@ class profile::app::k8s_tools {
       include profile::app::kube_ps1
       include profile::app::kubectl
       include profile::app::kubectx
+      include profile::app::kubens
       include profile::app::kustomize
       include profile::app::sops
       include profile::app::velero
