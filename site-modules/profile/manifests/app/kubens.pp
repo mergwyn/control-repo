@@ -1,4 +1,4 @@
-# @summary Install kubectx/kubensshell script with version stamping
+# @summary Install kubens shell script with version stamping
 #
 class profile::app::kubens (
   String $version = '013b6bc252ea6bbe7c8372ed64c327ad8a52f003', # renovate: datasource=github-commits depName=ahmetb/kubectx
