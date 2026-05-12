@@ -18,10 +18,16 @@ class profile::app::scripts {
     ensure  => file,
     content => @("EOT"/),
                # Expand the PATH to include my scripts
+               if [ -z "\${PATH-}" ] ; then
+                 export PATH=${codedir}/bin
+               elif ! echo "\${PATH}" | grep -q ${codedir}/bin ; then
+                 export PATH="\${PATH}:${codedir}/bin"
+               fi
                PATH=\$PATH:${codedir}/bin
                | EOT
   }
 
+  # TODO: remove
   file { "${codedir}/iptv/iptv_urls":
     ensure  => file,
     mode    => '0600',
