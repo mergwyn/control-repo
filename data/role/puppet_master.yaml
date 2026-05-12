@@ -17,4 +17,3 @@ profile::app::kopia::backup_files_exclude:
 
 profile::app::kopia::snaps:
   - /var/lib/postgresql/ # PuppetDB's backing store
-  - /var/lib/puppetdb/ # PuppetDB data/certs
