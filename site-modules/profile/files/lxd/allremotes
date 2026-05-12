@@ -9,7 +9,7 @@ for remote in $(listremotes) ; do
     boldecho "executing: $*"  >&2
     bash -c "$*"
   else
-    boldecho "executing: ssh -q -t ${remote} bash -l -c "$*"  >&2
+    boldecho "executing: ssh -q -t ${remote} bash -l -c $*"  >&2
     ssh -q -t "${remote}" bash -l -c "$*"
   fi
 done
