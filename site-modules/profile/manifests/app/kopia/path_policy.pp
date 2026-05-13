@@ -7,12 +7,13 @@ define profile::app::kopia::path_policy (
   Optional[Array[String]] $before_snapshot = undef,
   Optional[Array[String]] $after_snapshot  = undef,
 ) {
-  $path      = $title
-  $path_safe = regsubst(regsubst($path, '/', '-', 'G'), '^-', '', 'G')
-  $snapbefore = lookup('profile::app::kopia::client::snapbefore')
-  $snapafter  = lookup('profile::app::kopia::client::snapafter')
-  $kopiacmd = lookup('profile::app::kopia::client::kopiacmd')
-  $homedir = '/root'  # TODO: make this configurable
+  $path         = $title
+  $path_safe    = regsubst(regsubst($path, '/', '-', 'G'), '^-', '', 'G')
+  $snapbefore   = lookup('profile::app::kopia::client::snapbefore')
+  $snapafter    = lookup('profile::app::kopia::client::snapafter')
+  $kopiacmd     = lookup('profile::app::kopia::client::kopiacmd')
+  $homedir      = '/root'  # TODO: make this configurable
+  $repos        = lookup('profile::app::kopia::repos', Array[String], 'first', [])
   $primary_repo = $repos[0]
 
   if $before_snapshot {
