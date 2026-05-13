@@ -20,7 +20,7 @@ class profile::app::kopia (
   Stdlib::Absolutepath $folderafter  = "${topdir}/folder-after",
   Boolean $maintenance               = false,
   String $args                       = '--log-level=error --no-progress',
-  String $repos                      = '',
+  Array[String] $repos               = [],
   Array[String] $snaps               = '[/]',
   Optional[
     Variant[
@@ -59,8 +59,8 @@ class profile::app::kopia (
       ;
     'MAINTENANCE': value => $maintenance, ;
     'ARGS':        value => $args, ;
-    'REPOS':       value => $repos, ;
-    'SNAPS':       value => join($snaps, ',');
+    'REPOS':       value => join($repos, ' '), ;
+    'SNAPS':       value => join($snaps, ',') ;
   }
   file { '/etc/cron.daily/kopia-backup':
     ensure => file,

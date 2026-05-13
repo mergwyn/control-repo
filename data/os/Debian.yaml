@@ -25,7 +25,9 @@ samba::classic::realm: "%{lookup('defaults::realm')}"
 profile::app::backuppc::client::backuppc_hostname: "foxtrot.%{trusted.domain}"
 profile::app::backuppc::client::backup_files_exclude:
 
-profile::app::kopia::repos: "kopia-minio kopia-idrivee2"
+profile::app::kopia::repos:
+  - minio-kopia
+  - idrive-kopia
 profile::app::kopia::snaps:
   - /etc
   - /root
