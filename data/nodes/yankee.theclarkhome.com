@@ -1,6 +1,6 @@
 ---
 
-secrets::privatevpn::wg::config: "%{alias('secrets::privatevpn::wg::wg1::config')}"
+profile::app::wireguard::wg_config: "%{alias('secrets::privatevpn::wg::wg1::config')}"
 
 profile::platform::baseline::debian::netplan::ethernets:
   eth0:
