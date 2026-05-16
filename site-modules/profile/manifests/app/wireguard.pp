@@ -18,8 +18,8 @@
 class profile::app::wireguard (
   String[1] $lan        = 'eth0',   # interface facing k8s nodes
   String[1] $vpn        = 'wg0',    # WireGuard interface name
-  String[1] $wg_config  = lookup('secrets::privatevpn::wg::wg1::config'),
   String[1] $lan_subnet = lookup('defaults::lan_subnet'),       # e.g. '10.58.0.0/16' — pods to masquerade
+  String[1] $wg_config;
 ) {
   # ── Packages ────────────────────────────────────────────────────────────────
 
