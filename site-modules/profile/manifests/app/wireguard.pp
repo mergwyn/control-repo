@@ -19,15 +19,15 @@ class profile::app::wireguard (
   String[1] $lan        = 'eth0',   # interface facing k8s nodes
   String[1] $vpn        = 'wg0',    # WireGuard interface name
   String[1] $lan_subnet = lookup('defaults::lan_subnet'),       # e.g. '10.58.0.0/16' — pods to masquerade
-  Optional String[1] $wg_config,
+  String[1] $wg_config,
 ) {
-  # ── Packages ────────────────────────────────────────────────────────────────
+  # Packages
 
   package { ['wireguard-tools', 'iptables']:
     ensure => present,
   }
 
-  # ── WireGuard config ─────────────────────────────────────────────────────────
+  # WireGuard config 
   # Stored in /etc/wireguard/wg0.conf, picked up by wg-quick@wg0.service
 
   file { '/etc/wireguard':
@@ -68,7 +68,7 @@ class profile::app::wireguard (
     -> Ini_setting['wireguard_postdown']
     ~> Service['wg-quick@wg0']
 
-  # ── Service ──────────────────────────────────────────────────────────────────
+  # Service
 
   service { 'wg-quick@wg0':
     ensure  => running,
@@ -79,7 +79,7 @@ class profile::app::wireguard (
     ],
   }
 
-  # ── IP forwarding ─────────────────────────────────────────────────────────────
+  # IP forwarding
   # Must be enabled for the container to route pod traffic through the tunnel.
 
   sysctl { 'net.ipv4.ip_forward':
@@ -87,9 +87,9 @@ class profile::app::wireguard (
     value  => '1',
   }
 
-  # ── Monitoring (optional — remove if not using node_exporter) ────────────────
+  # Monitoring (optional remove if not using node_exporter)
   # Exposes wg show stats; scrape with a custom textfile collector if desired.
-  # Placeholder — flesh out if you add prometheus-node-exporter to this container.
+  # Placeholder - flesh out if you add prometheus-node-exporter to this container.
 
   # include profile::monitoring::node_exporter
 }
