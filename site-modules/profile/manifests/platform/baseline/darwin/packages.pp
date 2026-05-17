@@ -8,6 +8,7 @@ class profile::platform::baseline::darwin::packages {
     'unison',
     'python@3.12',   # TODO convert to a fact
     'python-tk@3.12',
+    'yq',
   ]
   package { $taps:
     ensure   => 'present',
