@@ -12,6 +12,8 @@ class profile::platform::baseline::debian::packages {
   ]
   package { $install_packages : ensure => present }
 
+  include profile::app::yq
+
   $remove_packages = [
     'vim-tiny',
     'mlocate',
