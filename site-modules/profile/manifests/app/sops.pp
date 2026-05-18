@@ -1,7 +1,7 @@
 #
 #
 class profile::app::sops (
-  String $version = '3.12.2', # renovate: datasource=github-releases depName=getsops/sops
+  String $version = '3.13.0', # renovate: datasource=github-releases depName=getsops/sops
 ) {
   profile::app::binary_install { 'sops':
     version     => $version,
