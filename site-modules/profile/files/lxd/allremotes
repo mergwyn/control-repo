@@ -6,10 +6,12 @@ boldecho() { echo "$(tput smso)$*$(tput rmso)" ; }
 
 for remote in $(listremotes) ; do
   if [[ ${remote} = "local" ]] ; then
-    boldecho "executing: $*"  >&2
-    bash -c "$*"
+    boldecho "executing locally: $*" >&2
+    # Using bash -l -c here ensures local execution matches remote environment rules
+    bash -l -c "$*"
   else
-    boldecho "executing: ssh -q -t ${remote} bash -l -c $*"  >&2
-    ssh -q -t "${remote}" bash -l -c "$*"
+    boldecho "executing: ssh -q -t ${remote} bash -l -c \"$*\"" >&2
+    # We explicitly pass 'bash -l -c' to SSH, wrapping your command in a single string
+    ssh -q -t "${remote}" "bash -l -c \"$*\""
   fi
 done

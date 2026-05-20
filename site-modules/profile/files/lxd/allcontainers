@@ -4,6 +4,6 @@ PATH=$PATH:$(dirname "$0")
 boldecho() { echo "$(tput smso)$*$(tput rmso)" ; }
 
 for container in $(listcontainers); do
-  boldecho executing: lxc exec "${container}" -- bash -l -c "$*" >&2
-  lxc exec "${container}" -- bash -l -c "$*"
+  boldecho executing: lxc exec "${container}" -- bash -l -c \"$*\" >&2
+  lxc exec "${container}" -- bash -l -c \"$*\"
 done
