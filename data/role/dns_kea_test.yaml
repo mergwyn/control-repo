@@ -1,0 +1,67 @@
+profile::app::dhcp::subnets:
+  - subnet: 10.58.0.0/24
+    pools:
+      - pool: 10.58.0.100 - 10.58.0.199
+    reservations: "%{lookup('profile::app::dhcp::reservations')}"
+
+profile::app::dhcp::reservations:
+  - hostname: zigbee1
+    hw-address: 18:69:d8:46:fc:d2
+    ip-address: 10.58.0.201
+
+kea::dhcp4::config:
+  Dhcp4:
+    interfaces-config:
+      interfaces:
+        - eth0
+
+    lease-database:
+      type: memfile
+      persist: true
+      name: /var/lib/kea/dhcp4.leases
+
+    subnet4:
+      - id: 1
+        subnet: 10.58.0.0/24
+        pools:
+          - pool: 10.58.0.100 - 10.58.0.199
+        option-data:
+          - name: routers
+            data: 10.58.0.1
+          - name: domain-name-servers
+            data: 10.58.0.21,10.58.0.22
+        ddns-send-updates: true
+        ddns-domain: theclarkhome.com.
+        ddns-rev-domain: 0.58.10.in-addr.arpa.
+
+    loggers:
+      - name: kea-dhcp4
+        severity: INFO
+
+kea::dhcp_ddns::config:
+  DhcpDdns:
+    enable-updates: true
+    dns-server-timeout: 500
+    ncr-protocol: UDP
+    ncr-format: JSON
+    tsig-keys:
+      - name: dhcp-ddns
+        algorithm: hmac-sha256
+        secret: "%{lookup('dhcp::ddns::tsig_secret')}"
+
+    forward-ddns:
+      ddns-domains:
+        - name: theclarkhome.com.
+          key-name: dhcp-ddns
+          dns-servers:
+            - ip-address: 10.58.0.21
+              port: 53
+
+    reverse-ddns:
+      ddns-domains:
+        - name: 0.58.10.in-addr.arpa.
+          key-name: dhcp-ddns
+          dns-servers:
+            - ip-address: 10.58.0.21
+              port: 53
+

@@ -1,0 +1,70 @@
+classes:
+  - profile::platform::baseline::debian::netplan
+
+profile::platform::baseline::debian::netplan::ethernets:
+  eth0:
+    dhcp4: no
+    addresses:
+      - "%{lookup('defaults::subnet')}.26/%{lookup('defaults::bits')}"
+    routes:
+      - to: default
+        via: "%{lookup('defaults::gateway')}"
+    nameservers:
+      search: "%{alias('defaults::dns::search')}"
+      addresses:
+        - "%{lookup('defaults::subnet')}.21"
+        - "%{lookup('defaults::subnet')}.22"
+
+# Enable DHCP for testing
+profile::app::dhcp::dhcp4: true
+
+# Bind Kea only to loopback
+profile::app::dhcp::interfaces:
+  - 127.0.0.1
+
+# Use a safe, fake subnet for testing
+profile::app::dhcp::subnets:
+  - subnet: 192.168.250.0/24
+    pools:
+      - pool: 192.168.250.100 - 192.168.250.150
+    option-data:
+      - name: routers
+        data: 192.168.250.1
+      - name: domain-name-servers
+        data: 127.0.0.1
+    reservations:
+      - hostname: test1
+        hw-address: 00:11:22:33:44:55
+        ip-address: 192.168.250.101
+      - hostname: test2
+        hw-address: 66:77:88:99:aa:bb
+        ip-address: 192.168.250.102
+
+# HA disabled for test
+profile::app::dhcp::role: undef
+profile::app::dhcp::peer_address: undef
+
+# Prevent answering DHCP on the wire
+kea::dhcp4::config:
+  Dhcp4:
+    interfaces-config:
+      interfaces: []        # <— critical for test mode
+    lease-database:
+      type: memfile
+      persist: false
+    expired-leases-processing:
+      reclaim-timer-wait-time: 60
+    renew-timer: 900
+    rebind-timer: 1800
+    valid-lifetime: 3600
+
+    subnet4: []             # no subnets yet
+
+    loggers:
+      - name: kea-dhcp4
+        severity: INFO
+
+kea::dhcp_ddns::config:
+  DhcpDdns:
+    enable-updates: false
+
