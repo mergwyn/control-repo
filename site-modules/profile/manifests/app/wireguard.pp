@@ -27,7 +27,7 @@ class profile::app::wireguard (
     ensure => present,
   }
 
-  # WireGuard config 
+  # WireGuard config
   # Stored in /etc/wireguard/wg0.conf, picked up by wg-quick@wg0.service
 
   file { '/etc/wireguard':

@@ -1,0 +1,2 @@
+profile::app::wireguard::wg_config: "[Interface]\nPrivateKey = test\nAddress = 10.0.0.1/32\n\n[Peer]\nPublicKey = test\nEndpoint = test:51820\nAllowedIPs = 0.0.0.0/0\n"
+profile::app::wireguard::lan_subnet: "10.58.0.0/24"
