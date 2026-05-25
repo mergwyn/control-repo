@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+# Managed by Puppet - do not edit
+# Sets DHCP failover to partner-down if peer unreachable
+
+PEER_HOST="<%= $peer_address %>"
+PEER_PORT="<%= $peer_port %>"
+WAIT=<%= $wait_seconds %>
+LEASES_FILE="<%= $leases_file %>"
+FAILOVER_NAME="<%= $failover_name %>"
+LOCKFILE="/var/run/dhcp-failover-watchdog.lock"
+
+exec 9>"$LOCKFILE"
+flock -n 9 || exit 0
+
+sleep "$WAIT"
+
+current_state=$(grep -A2 "failover peer \"${FAILOVER_NAME}\"" "$LEASES_FILE" \
+  | grep 'my state' | awk '{print $3}')
+
+[[ "$current_state" != "communications-interrupted" ]] && exit 0
+
+if nc -z -w5 "$PEER_HOST" "$PEER_PORT" 2>/dev/null; then
+  exit 0
+fi
+
+logger -t dhcp-failover-watchdog \
+  "Peer ${PEER_HOST} unreachable, setting partner-down"
+
+sed -i 's/my state communications-interrupted/my state partner-down/' "$LEASES_FILE"
+systemctl restart isc-dhcp-server

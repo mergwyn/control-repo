@@ -41,6 +41,11 @@ class profile::app::dhcpd (
       load_split   => 256,
     }
   }
+  if ($role == 'secondary' and $peer_address) {
+    class { 'profile::app::dhcpd::watchdog':
+      peer_address => $peer_address,
+    }
+  }
 
 # Hosts with fixed ip
   dhcp::host { 'hp1810':       mac => 'd4:c9:ef:37:ca:e0', ip => '10.58.0.2' }
@@ -52,7 +57,7 @@ class profile::app::dhcpd (
   dhcp::host { 'wclient':      mac => '04:ee:e8:1f:68:73', ip => '10.58.0.241' }
   dhcp::host { 'logger1':      mac => 'b8:d6:1a:57:5e:57', ip => '10.58.0.242' }  # Solis D_7A1231135150313A
 
-# Hosts that just need names 
+# Hosts that just need names
   dhcp::host { 'switch2':               mac => 'a0:40:a0:71:7e:ce' }
   dhcp::host { 'robovac':               mac => '80:7d:3a:3b:67:3c' }
   dhcp::host { 'humax-wifi':            mac => '80:1f:02:21:a1:74' }
@@ -125,7 +130,7 @@ class profile::app::dhcpd (
                  log(concat("Commit: IP: ", ClientIP, " DHCID: ", ClientDHCID, " Name: ", ClientName));
                  execute("/etc/dhcp/dhcp-dyndns.sh", "add", ClientIP, ClientDHCID, ClientName);
                }
- 
+
                on release {
                  ${noname};
                  ${clientip};
@@ -134,7 +139,7 @@ class profile::app::dhcpd (
                  log(concat("Release: IP: ", ClientIP));
                  execute("/etc/dhcp/dhcp-dyndns.sh", "delete", ClientIP, ClientDHCID, ClientName);
                }
- 
+
                on expiry {
                  ${clientip};
                  # cannot get a ClientMac here, apparently this only works when actually receiving a packet
