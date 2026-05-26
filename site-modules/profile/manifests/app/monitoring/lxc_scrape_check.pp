@@ -1,6 +1,6 @@
 class profile::app::monitoring::lxc_scrape_check (
   String        $prometheus_url = "https://prometheus.${trusted['domain']}",
-  String        $scrape_job     = 'node-exporter-lxc',
+  String        $scrape_job     = 'node-exporter', # was 'node-exporter-lxc'
   Array[String] $exclude        = [],
 ) {
   file { '/etc/cron.daily/prometheus-lxc-check':
