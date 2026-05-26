@@ -1,6 +1,8 @@
 #
 #
-class profile::platform::baseline::debian::virtual::lxd {
+class profile::platform::baseline::debian::virtual::lxd (
+    Array[String] $scrape_check_exclude = [],
+) {
   package { ['bridge-utils']: }
   package { ['criu']: ensure => absent }
 
@@ -46,5 +48,9 @@ class profile::platform::baseline::debian::virtual::lxd {
       mode   => '0755',
       source => "puppet:///modules/profile/lxd/${script}",
     }
+  }
+
+  class { 'profile::app::monitoring::lxc_scrape_check':
+    exclude => $scrape_check_exclude,
   }
 }
