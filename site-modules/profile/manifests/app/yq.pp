@@ -6,7 +6,7 @@ class profile::app::yq (
   profile::app::binary_install { 'yq':
     version     => $version,
     binary      => 'yq',
-    url         => "https://github.com/mikefarah/yq/releases/download/${version}/yq_linux_amd64",
+    url         => "https://github.com/mikefarah/yq/releases/download/v${version}/yq_linux_amd64",
     version_cmd => 'yq --version',
   }
 }
