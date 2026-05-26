@@ -1,5 +1,5 @@
 class profile::app::monitoring::lxc_scrape_check (
-  String        $prometheus_url = "http://prometheus.${trusted['domain']}",
+  String        $prometheus_url = "https://prometheus.${trusted['domain']}",
   String        $scrape_job     = 'node-exporter-lxc',
   Array[String] $exclude        = [],
 ) {
