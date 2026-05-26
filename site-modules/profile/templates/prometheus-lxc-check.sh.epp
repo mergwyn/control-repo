@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+# Managed by Puppet - do not edit
+# Check for LXC containers missing from Prometheus scrape config
+
+PROMETHEUS_URL="<%= $prometheus_url %>"
+SCRAPE_JOB="<%= $scrape_job %>"
+EXCLUDE=(<%= $exclude.map |$e| { "\"${e}\"" }.join(' ') %>)
+
+# Get running LXC containers, excluding any in the exclude list
+running=()
+while IFS= read -r container; do
+  skip=false
+  for excl in "${EXCLUDE[@]}"; do
+    if [[ "${container,,}" == "${excl,,}" ]]; then
+      skip=true
+      break
+    fi
+  done
+  $skip || running+=("$container")
+done < <(lxc list --format csv --columns ns | awk -F, '$2=="RUNNING"{print $1}')
+
+# Get containers currently being scraped
+scraped=$(curl -s "${PROMETHEUS_URL}/api/v1/targets" \
+  | jq -r --arg job "$SCRAPE_JOB" \
+    '.data.activeTargets[] | select(.labels.job==$job) | .labels.instance' \
+  | sed 's/\.theclarkhome\.com//')
+
+missing=()
+for container in "${running[@]}"; do
+  if ! echo "$scraped" | grep -qi "^${container}$"; then
+    missing+=("$container")
+  fi
+done
+
+if (( ${#missing[@]} > 0 )); then
+  logger -p daemon.warn -t prometheus-lxc-check \
+    "LXC containers not in Prometheus scrape config: ${missing[*]}"
+  echo "WARNING: Missing from Prometheus: ${missing[*]}"
+  exit 1
+fi
+
+exit 0
