@@ -21,8 +21,8 @@ done < <(lxc list --format csv --columns ns | awk -F, '$2=="RUNNING"{print $1}')
 
 # Get containers currently being scraped
 scraped=$(curl -s "${PROMETHEUS_URL}/api/v1/targets" \
-  | jq -r --arg job "$SCRAPE_JOB" \
-    '.data.activeTargets[] | select(.labels.job==$job) | .labels.instance' \
+  | jq -r --arg pool "$SCRAPE_JOB" \
+    '.data.activeTargets[] | select(.labels.scrapePool==$pool) | .labels.instance' \
   | sed 's/\.theclarkhome\.com//')
 
 missing=()
