@@ -2,6 +2,7 @@
 #
 class profile::platform::baseline::debian::virtual::lxd (
     Array[String] $scrape_check_exclude = [],
+    Boolean       $scrape_check_primary  = false,
 ) {
   package { ['bridge-utils']: }
   package { ['criu']: ensure => absent }
@@ -50,7 +51,13 @@ class profile::platform::baseline::debian::virtual::lxd (
     }
   }
 
-  class { 'profile::app::monitoring::lxc_scrape_check':
-    exclude => $scrape_check_exclude,
+  if $scrape_check_primary {
+    class { 'profile::app::monitoring::lxc_scrape_check':
+      exclude => $scrape_check_exclude,
+    }
+  } else {
+    file { '/etc/cron.daily/prometheus-lxc-check':
+      ensure => absent,
+    }
   }
 }

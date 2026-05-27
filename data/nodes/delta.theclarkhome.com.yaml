@@ -42,6 +42,8 @@ lxd::preseed:
       name: default
       driver: zfs
 
+# container node exporter config
+profile::platform::baseline::debian::virtual::lxd::scrape_check_primary: true
 profile::platform::baseline::debian::virtual::lxd::scrape_check_exclude:
   - k3s-1
   - k3s-2
