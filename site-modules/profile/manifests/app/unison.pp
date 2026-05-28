@@ -1,4 +1,4 @@
-# summary Unison
+# summary Install and configure unison
 #
 class profile::app::unison (
   String $version = '2.53.7', # renovate: datasource=github-releases depName=bcpierce00/unison
