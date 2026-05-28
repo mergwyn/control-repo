@@ -1,6 +1,6 @@
 # profile::app::age
 #
-class profile::app::age (
+class profile::app::tools::age (
   String $version = '1.3.1', # renovate: datasource=github-releases depName=FiloSottile/age
 ) {
   profile::app::binary_install { 'age':

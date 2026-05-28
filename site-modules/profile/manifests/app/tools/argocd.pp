@@ -1,6 +1,6 @@
 # @summary Install argocd at a specified version
 #
-class profile::app::argocd (
+class profile::app::tools::argocd (
   String $version = '3.4.2', # renovate: datasource=github-releases depName=argoproj/argo-cd
 ) {
   profile::app::binary_install { 'argocd':

@@ -1,6 +1,6 @@
 #
 #
-class profile::app::kubectl (
+class profile::app::tools::kubectl (
   String $version = '1.36.0', # renovate: datasource=github-releases depName=kubernetes/kubernetes
 ) {
   $bin_dir = '/usr/local/bin'

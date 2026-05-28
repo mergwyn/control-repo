@@ -2,17 +2,17 @@
 class profile::app::k8s_tools {
   case $facts['os']['family'] {
     'Debian': {
-      include profile::app::age
-      include profile::app::argocd
-      include profile::app::cilium_cli
-      include profile::app::helm
-      include profile::app::helmfile
-      include profile::app::kube_ps1
-      include profile::app::kubectl
-      include profile::app::kubectx  # includes kubens
-      include profile::app::kustomize
-      include profile::app::sops
-      include profile::app::velero
+      include profile::app::tools::age
+      include profile::app::tools::argocd
+      include profile::app::tools::cilium_cli
+      include profile::app::tools::helm
+      include profile::app::tools::helmfile
+      include profile::app::tools::kube_ps1
+      include profile::app::tools::kubectl
+      include profile::app::tools::kubectx  # includes kubens
+      include profile::app::tools::kustomize
+      include profile::app::tools::sops
+      include profile::app::tools::velero
     }
     'Darwin': {
       Package {

@@ -1,6 +1,6 @@
 #
 #
-class profile::app::helm (
+class profile::app::tools::helm (
   String $version = '4.2.0', # renovate: datasource=github-releases depName=helm/helm
 ) {
   profile::app::binary_install { 'helm':
