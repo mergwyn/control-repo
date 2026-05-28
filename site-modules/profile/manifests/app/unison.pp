@@ -54,6 +54,7 @@ class profile::app::unison (
         binary      => 'unison',
         url         => "https://github.com/bcpierce00/unison/releases/download/v${version}/unison-${version}-${os}-${hardware}.tar.gz",
         tarball     => true,
+        tar_extract => 'linux-amd64/unison',
         version_cmd => 'unison -version',
       }
 
