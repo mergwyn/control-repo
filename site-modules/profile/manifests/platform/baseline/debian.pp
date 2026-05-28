@@ -18,6 +18,7 @@ class profile::platform::baseline::debian {
 
   if $facts['virtual'] == 'lxc' {
     include profile::app::monitoring::node_exporter
+    include profile::platform::baseline::debian::virtual::lxc_masked_services
   }
 
   include kmod
