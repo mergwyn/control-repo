@@ -12,5 +12,4 @@ class role::k8s_server {
   include profile::app::lxd::backup
   include profile::app::sssd
   include profile::app::unison
-
 }
