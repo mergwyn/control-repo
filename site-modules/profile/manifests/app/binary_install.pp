@@ -45,22 +45,30 @@ define profile::app::binary_install (
   Boolean                                      $stamp        = false,
 ) {
   # Normalize binary list to an array and build install paths
-  # Normalize to an array using stdlib's wrap() to support multiple Puppet/stdlib versions
-  $binaries = wrap($binary)
+  # Normalize to an array without relying on stdlib functions
+  case $binary {
+    Array[String[1]]: { $binaries = $binary }
+    default:          { $binaries = [$binary] }
+  }
   $bins = $binaries.map |$b| { "${install_dir}/${b}" }
 
   if $tarball and $tar_extract == undef {
     fail('tar_extract must be defined when tarball is true')
   }
 
-  # Normalize tar_extract to an array when provided
+  # Normalize tar_extract to an array when provided (without stdlib helpers)
+
   if $tar_extract == undef {
     $tar_extract_list = undef
   } else {
-    $tar_extract_list = wrap($tar_extract)
+    case $tar_extract {
+      Array[String[1]]: { $tar_extract_list = $tar_extract }
+      default:          { $tar_extract_list = [$tar_extract] }
+    }
   }
 
   # If we have multiple binaries, require tar_extract to map to them when using a tarball
+
   if $tarball and $tar_extract_list != undef and size($tar_extract_list) != size($binaries) {
     fail('When installing multiple binaries from a tarball, tar_extract must be an array with the same number of entries as binaries')
   }
