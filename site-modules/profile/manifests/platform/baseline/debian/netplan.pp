@@ -19,7 +19,7 @@ class profile::platform::baseline::debian::netplan (
     fail("${name} can only be called on Ubuntu")
   }
 
-  package { 'netplan.io': }
+  package { 'netplan.io': provider => apt, }
 
   service { 'systemd-networkd':
     enable => true,
