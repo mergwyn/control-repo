@@ -134,16 +134,25 @@ define profile::app::binary_install (
     $version_cmd_real = $version_cmd
   }
 
+  # Ensure HOME is set during the exec. If caller provided env_vars and it already contains a HOME entry, use as-is.
+  # Otherwise append HOME=/root.
+  if $env_vars == undef {
+    $exec_env = ['HOME=/root']
+  } else {
+    $home_vars = $env_vars.filter |$e| { $e =~ /^HOME=/ }
+    if size($home_vars) > 0 {
+      $exec_env = $env_vars
+    } else {
+      $exec_env = $env_vars + ['HOME=/root']
+    }
+  }
+
   # Main install exec
   exec { "install-${title}":
     command     => "sh -c '${cmd}'",
     path        => ['/usr/bin', '/bin', $install_dir],
     require     => Package['curl'],
-    # Ensure HOME is set during the exec; if caller provided env_vars, append HOME, otherwise default to HOME=/root
-    environment => $env_vars ? {
-      undef   => ['HOME=/root'],
-      default => $env_vars + ['HOME=/root'],
-    },
+    environment => $exec_env,
     # Skip execution if primary binary exists and version matches
 
     unless      => @("END"),

@@ -57,48 +57,6 @@ class profile::app::unison (
         tar_extract => ['bin/unison', 'bin/unison-fsmonitor'],
         version_cmd => 'unison -version',
       }
-
-#      $version = '2.53.7'
-#
-#
-#      $archive_name = "unison-${version}-${os}-${hardware}.tar.gz"
-#
-#      $url = "https://github.com/bcpierce00/unison/releases/download/v${version}/${archive_name}"
-#      $archive_path = "${facts['puppet_vardir']}/${archive_name}"
-#      $install_path = '/opt'
-#      $extract_dir  = "${install_path}/unison-${version}"
-#      $creates      = "${extract_dir}/bin/unison"
-#      $link         = '/usr/local/bin/unison'
-#      $keep         = 2
-#
-#      file { $extract_dir: ensure => directory, }
-#
-#      archive { $archive_path:
-#        source       => $url,
-#        extract      => true,
-#        extract_path => $extract_dir,
-#        cleanup      => true,
-#        creates      => $creates,
-#      }
-#      file { "${link}-fsmonitor":
-#        ensure    => 'link',
-#        target    => "${creates}-fsmonitor",
-#        subscribe => Archive[$archive_path],
-#      }
-#      file { $link:
-#        ensure    => 'link',
-#        target    => $creates,
-#        subscribe => Archive[$archive_path],
-#      }
-#      exec { 'unison-tidy':
-#        cwd         => $install_path,
-#        path        => '/usr/sbin:/usr/bin:/sbin:/bin:',
-#        command     => "ls -dtr ${link}-* | head -n -${keep} | xargs rm -rf",
-#        #onlyif      => "test $(ls -d ${link}-* | wc -l) -gt ${keep}",
-#        refreshonly => true,
-#        subscribe   => Archive[$archive_path],
-#      }
-
       # TODO add configuration
     }
     default: {
