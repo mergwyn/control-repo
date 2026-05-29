@@ -139,8 +139,13 @@ define profile::app::binary_install (
     command     => "sh -c '${cmd}'",
     path        => ['/usr/bin', '/bin', $install_dir],
     require     => Package['curl'],
-    environment => $env_vars,
+    # Ensure HOME is set during the exec; if caller provided env_vars, append HOME, otherwise default to HOME=/root
+    environment => $env_vars ? {
+      undef   => ['HOME=/root'],
+      default => $env_vars + ['HOME=/root'],
+    },
     # Skip execution if primary binary exists and version matches
+
     unless      => @("END"),
       sh -c '
         if test -x ${bins[0]}; then
