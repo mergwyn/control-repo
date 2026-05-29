@@ -49,7 +49,7 @@ profile::platform::baseline::debian::virtual::lxd::scrape_check_exclude:
   - k3s-2
   - k3s-3
 
-profile::app::kopia::maintenance: false
+profile::app::kopia::maintenance: true
 profile::app::kopia::snaps:
   - /srv/media/content/christmas
   - /srv/media/content/golf
