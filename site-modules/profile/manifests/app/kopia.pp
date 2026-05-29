@@ -67,10 +67,13 @@ class profile::app::kopia (
     mode   => '0755',
     source => 'puppet:///modules/profile/kopia-backup',
   }
-  file { '/etc/cron.weekly/kopia-maintenance':
+  file { '/etc/cron.daily/kopia-maintenance':
     ensure => file,
     mode   => '0755',
     source => 'puppet:///modules/profile/kopia-maintenance',
+  }
+  file { '/etc/cron.weekly/kopia-maintenance':
+    ensure => absent,
   }
 
   $bws_token = lookup('secrets::kopia::bws_token')

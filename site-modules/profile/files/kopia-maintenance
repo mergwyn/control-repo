@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 source /opt/scripts/functions/log.sh
+default_owner=nobody
 
 kopiacmd="/opt/scripts/bin/kopiacmd"
 
@@ -10,7 +11,7 @@ source /etc/default/kopia
 
 for repo in $(${kopiacmd} repo valid kopia) ; do
   log_notice "Starting maintenance for repo: ${repo}"
-  LOGLEVEL=WARN ${kopiacmd} repo connect ${repo}
+  LOGLEVEL=WARN ${kopiacmd} repo connect "${repo}"
   export KOPIA_CONFIG_PATH=~/.config/kopia/${repo}.config
 
   kopia maintenance info
@@ -28,7 +29,7 @@ for repo in $(${kopiacmd} repo valid kopia) ; do
     log_warn "Maintenance user for ${repo} not set, changing to ${owner}"
   fi
   log_info "Resetting maintenance user for ${repo} to ${owner}"
-  kopia maintenance set --owner=${owner:-"default@default"}
+  kopia maintenance set --owner="${owner:-${default_owner}}"
   unset KOPIA_CONFIG_PATH
   log_notice "Maintenance complete for repo: ${repo}"
 done
@@ -37,7 +38,7 @@ done
 for repo in $(${kopiacmd} repo valid velero) ; do
   # kopia maintenance is handled by velero
   log_notice "Cleaning policies for repo: ${repo}"
-  LOGLEVEL=WARN ${kopiacmd} repo connect ${repo}
+  LOGLEVEL=WARN ${kopiacmd} repo connect "${repo}"
   export KOPIA_CONFIG_PATH=~/.config/kopia/${repo}.config
 
   # reset owner if needed
