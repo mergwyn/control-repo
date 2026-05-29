@@ -143,9 +143,11 @@ define profile::app::binary_install (
     # Skip execution if primary binary exists and version matches
     unless      => @("END"),
       sh -c '
-        if test -x ${bins[0]};
-        then ${version_cmd_real} 2>/dev/null | grep -q ${version};
-        else exit 1;
+        if test -x ${bins[0]}; then
+          echo "binary_install[${title}]: found=$(which ${binaries[0]} 2>&1), version=$(${version_cmd_real} 2>&1)" >&2
+          ${version_cmd_real} 2>&1 | grep -F -q -- "${version}"
+        else
+          exit 1
         fi
       '
       | - END
