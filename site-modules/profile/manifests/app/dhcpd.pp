@@ -34,11 +34,14 @@ class profile::app::dhcpd (
   }
   if ($role and $peer_address) {
     class { 'dhcp::failover':
-      role         => $role,
-      peer_address => $peer_address,
-      port         => 647,
-      #mclt         => 3600,
-      load_split   => 256,
+      role                     => $role,
+      peer_address             => $peer_address,
+      port                     => 647,
+      mclt                     => 600,
+      load_split               => 256,
+      max_response_delay       => 15,
+      max_unacked_updates      => 5,
+      load_balance_max_seconds => 3,
     }
   }
   if ($role == 'secondary' and $peer_address) {
@@ -49,7 +52,7 @@ class profile::app::dhcpd (
 
 # Hosts with fixed ip
   dhcp::host { 'hp1810':       mac => 'd4:c9:ef:37:ca:e0', ip => '10.58.0.2' }
-  dhcp::host { 'zigbee1':      mac => '18:69:d8:46:fc:d2', ip => '10.58.0.201' }  # Silvercrest zigbee gateway
+  #dhcp::host { 'zigbee1':      mac => '18:69:d8:46:fc:d2', ip => '10.58.0.201' }  # Silvercrest zigbee gateway
   dhcp::host { 'samsung-ashp': mac => '90:15:06:f9:ed:f4', ip => '10.58.0.202' }  # ASHP M5 atom lite
   dhcp::host { 'slzb-06-1':    mac => '4c:c3:82:cc:e9:ff', ip => '10.58.0.203' }  # SLZB6 zigbee gateway
   dhcp::host { 'm5atom-dev':   mac => '00:4b:12:a1:93:dc', ip => '10.58.0.204' }  # Dev M5 atom lite
