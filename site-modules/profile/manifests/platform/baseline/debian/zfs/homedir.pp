@@ -11,11 +11,23 @@ class profile::platform::baseline::debian::zfs::homedir (
     mode    => '0750',
     content => @("EOF"/L$),
       #!/bin/bash
-      USERNAME=\$PAM_USER
-      if [ ! -d /home/\$USERNAME ]; then
-          zfs create -o mountpoint=/home/\$USERNAME ${pool}/home/\$USERNAME
-          chown \$USERNAME:\$USERNAME /home/\$USERNAME
-          chmod 750 /home/\$USERNAME
+      # Don't create ZFS datasets for root or system accounts
+      if [ "\$PAM_USER" = "root" ]; then
+          exit 0
+      fi
+
+      HOMEDIR=\$(getent passwd "\$PAM_USER" | cut -d: -f6)
+
+      # Only act on home dirs under /home
+      if [[ "\$HOMEDIR" != /home/* ]]; then
+          exit 0
+      fi
+
+      if [ ! -d "\$HOMEDIR" ]; then
+          USERNAME=\$PAM_USER
+          zfs create -o mountpoint="\$HOMEDIR" ${pool}/home/\$USERNAME
+          chown \$USERNAME:\$USERNAME "\$HOMEDIR"
+          chmod 750 "\$HOMEDIR"
       fi
       | EOF
   }
