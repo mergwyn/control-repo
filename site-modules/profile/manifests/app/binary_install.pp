@@ -1,18 +1,19 @@
 # @summary Install a standalone binary or script from a URL, with optional stamping
 #
-# Downloads and installs a single binary or tarball into a target directory.
-# Installation is skipped if the binary exists and the reported version matches.
-# Scripts can be stamped with the version string to allow idempotent updates.
+# Downloads and installs a single binary or script from a URL, or extracts one or more
+# binaries from a tarball or zip archive. Installation is skipped if the binary exists
+# and the reported version matches. Scripts can be stamped with the version string to
+# allow idempotent updates.
 #
 # @param version
 #   Expected version string used for idempotency checks.
 #
 # @param url
-#   HTTP(S) URL of the binary, script, or tarball to download.
+#   HTTP(S) URL of the binary, script, tarball, or zip to download.
 #
 # @param binary
 #   Name of the binary/script to install (no path). Can be a single String or an Array
-#   of Strings when installing multiple binaries from the same tarball.
+#   of Strings when installing multiple binaries from the same archive.
 #
 # @param version_cmd
 #   Command used to output the installed version. Defaults to 'echo ${version}'.
@@ -27,6 +28,14 @@
 #   Strings mapping one-to-one to `binary` when installing multiple binaries.
 #   Required when `tarball` is true.
 #
+# @param zip
+#   Whether the download is a zip archive containing the binary/script.
+#
+# @param zip_extract
+#   Path inside the zip to extract. Can be a single String or an Array of
+#   Strings mapping one-to-one to `binary` when installing multiple binaries.
+#   If omitted when `zip` is true, the binary name is used as the path.
+#
 # @param env_vars
 #   Optional hash of environment variables to pass to the `exec` command.
 #
@@ -34,18 +43,23 @@
 #   Whether to append a version stamp to a script to allow update detection.
 #
 define profile::app::binary_install (
-  String[1]                                    $version,
-  Stdlib::HTTPUrl                              $url,
-  Variant[String[1], Array[String[1]]]         $binary,
-  String[1]                                    $version_cmd  = "echo ${version}",
-  Boolean                                      $tarball      = false,
-  Stdlib::Absolutepath                         $install_dir  = '/usr/local/bin',
+  String[1]                                      $version,
+  Stdlib::HTTPUrl                                $url,
+  Variant[String[1], Array[String[1]]]           $binary,
+  String[1]                                      $version_cmd  = "echo ${version}",
+  Boolean                                        $tarball      = false,
+  Boolean                                        $zip          = false,
+  Stdlib::Absolutepath                           $install_dir  = '/usr/local/bin',
   Optional[Variant[String[1], Array[String[1]]]] $tar_extract  = undef,
-  Optional[Array]                              $env_vars     = undef,
-  Boolean                                      $stamp        = false,
+  Optional[Variant[String[1], Array[String[1]]]] $zip_extract  = undef,
+  Optional[Array]                                $env_vars     = undef,
+  Boolean                                        $stamp        = false,
 ) {
-  # Normalize binary list to an array and build install paths
-  # Normalize to an array without relying on stdlib functions
+  if $tarball and $zip {
+    fail('tarball and zip cannot both be true')
+  }
+
+  # Normalize binary to array
   case $binary {
     Array[String[1]]: { $binaries = $binary }
     default:          { $binaries = [$binary] }
@@ -56,8 +70,7 @@ define profile::app::binary_install (
     fail('tar_extract must be defined when tarball is true')
   }
 
-  # Normalize tar_extract to an array when provided (without stdlib helpers)
-
+  # Normalize tar_extract
   if $tar_extract == undef {
     $tar_extract_list = undef
   } else {
@@ -67,35 +80,45 @@ define profile::app::binary_install (
     }
   }
 
-  # If we have multiple binaries, require tar_extract to map to them when using a tarball
+  # Normalize zip_extract — default to binary names if not specified
+  if $zip {
+    if $zip_extract == undef {
+      $zip_extract_list = $binaries
+    } else {
+      case $zip_extract {
+        Array[String[1]]: { $zip_extract_list = $zip_extract }
+        default:          { $zip_extract_list = [$zip_extract] }
+      }
+    }
+  } else {
+    $zip_extract_list = undef
+  }
 
   if $tarball and $tar_extract_list != undef and size($tar_extract_list) != size($binaries) {
-    fail('When installing multiple binaries from a tarball, tar_extract must be an array with the same number of entries as binaries')
+    fail('When installing multiple binaries from a tarball, tar_extract must have the same number of entries as binary')
   }
 
-  # Prevent non-tarball installs from attempting to install multiple binaries from a single URL
-  if ! $tarball and size($binaries) > 1 {
-    fail('Installing multiple binaries is only supported when downloading a tarball')
+  if $zip and size($zip_extract_list) != size($binaries) {
+    fail('When installing multiple binaries from a zip, zip_extract must have the same number of entries as binary')
   }
 
-  # Determine if --strip-components=1 is needed for tarballs
+  if ! $tarball and ! $zip and size($binaries) > 1 {
+    fail('Installing multiple binaries is only supported when downloading a tarball or zip')
+  }
+
+  # strip-components for tarballs with paths
   if $tar_extract_list and $tar_extract_list[0] =~ /\// {
     $strip_opt = '--strip-components=1'
   } else {
     $strip_opt = ''
   }
 
-  # Build install command(s)
+  # Build install command
   if $tarball {
-    # Build commands to move each requested file from the extracted tree to its final path
-    if $tar_extract_list == undef {
-      fail('tar_extract_list should never be undef here')
-    }
-
     $pairs = zip($binaries, $tar_extract_list)
     $mv_lines = $pairs.map |$pair| {
-      $bin_name   = $pair[0]
-      $extract_p  = $pair[1]
+      $bin_name  = $pair[0]
+      $extract_p = $pair[1]
       "chmod +x /tmp/${title}-extract/${extract_p}\n      mv -f /tmp/${title}-extract/${extract_p} ${install_dir}/${bin_name}"
     }.join("\n      ")
 
@@ -107,6 +130,22 @@ define profile::app::binary_install (
       ${mv_lines}
       rm -rf /tmp/${title}.tar.gz /tmp/${title}-extract
       END
+  } elsif $zip {
+    $pairs = zip($binaries, $zip_extract_list)
+    $mv_lines = $pairs.map |$pair| {
+      $bin_name  = $pair[0]
+      $extract_p = $pair[1]
+      "chmod +x /tmp/${title}-extract/${extract_p}\n      mv -f /tmp/${title}-extract/${extract_p} ${install_dir}/${bin_name}"
+    }.join("\n      ")
+
+    $cmd = @("END")
+      set -e
+      mkdir -p /tmp/${title}-extract
+      curl -fsSL ${url} -o /tmp/${title}.zip
+      unzip -o /tmp/${title}.zip -d /tmp/${title}-extract
+      ${mv_lines}
+      rm -rf /tmp/${title}.zip /tmp/${title}-extract
+      END
   } else {
     $bin = $bins[0]
     $cmd = @("END")
@@ -117,9 +156,8 @@ define profile::app::binary_install (
       END
   }
 
-  # If stamping, append the version string to the script(s)
+  # Stamping
   if $stamp {
-    # Create a stamp exec for each binary
     $binaries.each |$bname| {
       exec { "stamp-${title}-${bname}":
         command => "printf '# version: %s\\n' '${version}' >> '${install_dir}/${bname}'",
@@ -128,14 +166,20 @@ define profile::app::binary_install (
         require => Exec["install-${title}"],
       }
     }
-    # When stamping, use the tail of the primary binary as version_cmd
     $version_cmd_real = "tail -1 ${bins[0]}"
   } else {
     $version_cmd_real = $version_cmd
   }
 
-  # Ensure HOME is set during the exec. If caller provided env_vars and it already contains a HOME entry, use as-is.
-  # Otherwise append HOME=/root.
+  # Ensure unzip is available when needed
+  if $zip {
+    ensure_packages(['unzip'])
+    $install_require = [Package['curl'], Package['unzip']]
+  } else {
+    $install_require = [Package['curl']]
+  }
+
+  # Environment
   if $env_vars == undef {
     $exec_env = ['HOME=/root']
   } else {
@@ -151,10 +195,8 @@ define profile::app::binary_install (
   exec { "install-${title}":
     command     => "sh -c '${cmd}'",
     path        => ['/usr/bin', '/bin', $install_dir],
-    require     => Package['curl'],
+    require     => $install_require,
     environment => $exec_env,
-    # Skip execution if primary binary exists and version matches
-
     unless      => @("END"),
       sh -c '
         if test -x ${bins[0]}; then

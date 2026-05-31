@@ -1,19 +1,46 @@
+# @summary Manages MinIO object storage server
 #
+# Installs and configures MinIO, including TLS via acme.sh wildcard cert.
+#
+# @param version
+#   MinIO release version string.
+#   renovate: datasource=github-releases depName=minio/minio extractVersion=^RELEASE\.(?<version>.+)$
+# @param root_user
+#   MinIO root username, sourced from Hiera secrets.
+# @param root_password
+#   MinIO root password, sourced from Hiera secrets.
+# @param data_dir
+#   Absolute path to the MinIO data directory (expects ZFS mount).
+# @param api_port
+#   Port for the MinIO S3 API.
+# @param console_port
+#   Port for the MinIO web console.
+# @param listen_address
+#   Address MinIO binds to.
+# @param certs_dir
+#   Directory MinIO reads TLS certs from. Expects public.crt and private.key.
+# @param cert_source
+#   Absolute path to the acme.sh-managed certificate file.
+# @param key_source
+#   Absolute path to the acme.sh-managed private key file.
 class profile::app::minio (
-  String $version = '2025-09-07T16-13-09Z', #renovate: datasource=github-releases depName=minio/minio extractVersion=^RELEASE\.(?<version>.+)$
-  String $root_user = "${lookup('secrets::minio_root')}",
-  String $root_password = "${lookup('secrets::minio_root_password')}",
-  Stdlib::Absolutepath $data_dir = '/srv/minio',
-  Integer $api_port = 9000,
-  Integer $console_port = 9001,
-  String $listen_address = '0.0.0.0',
+  String                $version         = '2025-09-07T16-13-09Z', #renovate: datasource=github-releases depName=minio/minio extractVersion=^RELEASE\.(?<version>.+)$
+  String                $root_user       = lookup('secrets::minio_root'),
+  String                $root_password   = lookup('secrets::minio_root_password'),
+  Stdlib::Absolutepath  $data_dir        = '/srv/minio',
+  Integer               $api_port        = 9000,
+  Integer               $console_port    = 9001,
+  String                $listen_address  = '0.0.0.0',
+  Stdlib::Absolutepath  $certs_dir       = '/etc/minio/certs',
+  Stdlib::Absolutepath  $cert_source     = "/etc/acme/*.${trusted.domain}/fullchain.pem",
+  Stdlib::Absolutepath  $key_source      = "/etc/acme/*.${trusted.domain}/private.key",
 ) {
-  $user = 'minio-user'
+  $user  = 'minio-user'
   $group = 'minio-user'
-  $uid = 2001
-  $gid = 2001
+  $uid   = 2001
+  $gid   = 2001
 
-  # Create MinIO user
+  # User and group
   group { $group:
     ensure => present,
     gid    => $gid,
@@ -30,7 +57,7 @@ class profile::app::minio (
     require    => Group[$group],
   }
 
-  # Ensure data directory exists on ZFS
+  # Data directory (ZFS)
   file { $data_dir:
     ensure  => directory,
     owner   => $user,
@@ -39,7 +66,40 @@ class profile::app::minio (
     require => User[$user],
   }
 
-  # Install MinIO binary using your helper
+  include profile::app::acme
+
+  # Certs directory
+  file { $certs_dir:
+    ensure  => directory,
+    owner   => $user,
+    group   => $group,
+    mode    => '0750',
+    require => User[$user],
+  }
+
+  # Certificate files — copied from acme.sh output
+  # MinIO requires exactly these filenames
+  file { "${certs_dir}/public.crt":
+    ensure  => file,
+    owner   => $user,
+    group   => $group,
+    mode    => '0640',
+    source  => $cert_source,
+    notify  => Service['minio.service'],
+    require => File[$certs_dir],
+  }
+
+  file { "${certs_dir}/private.key":
+    ensure  => file,
+    owner   => $user,
+    group   => $group,
+    mode    => '0640',
+    source  => $key_source,
+    notify  => Service['minio.service'],
+    require => File[$certs_dir],
+  }
+
+  # Binary
   profile::app::binary_install { 'minio':
     version     => $version,
     binary      => 'minio',
@@ -66,7 +126,7 @@ class profile::app::minio (
     'MINIO_ROOT_USER':         value => $root_user, ;
     'MINIO_ROOT_PASSWORD':     value => $root_password, ;
     'MINIO_VOLUMES':           value => $data_dir, ;
-    'MINIO_OPTS':              value => "--address ${listen_address}:${api_port} --console-address ${listen_address}:${console_port}", ;
+    'MINIO_OPTS':              value => "--address ${listen_address}:${api_port} --console-address ${listen_address}:${console_port} --certs-dir ${certs_dir}", ;
     'MINIO_PROMETHEUS_URL':    value => 'https://prometheus.theclarkhome.com', ;
     'MINIO_PROMETHEUS_JOB_ID': value => 'minio-job', ;
   }
@@ -91,17 +151,9 @@ class profile::app::minio (
       EnvironmentFile=/etc/default/minio
       ExecStartPre=/bin/bash -c "if [ -z \"\${MINIO_VOLUMES}\" ]; then echo \"Variable MINIO_VOLUMES not set in /etc/default/minio\"; exit 1; fi"
       ExecStart=/usr/local/bin/minio server \$MINIO_OPTS \$MINIO_VOLUMES
-
-      # Let systemd restart this service always
       Restart=always
-
-      # Specifies the maximum file descriptor number that can be opened by this process
       LimitNOFILE=65536
-
-      # Specifies the maximum number of threads this process can create
       TasksMax=infinity
-
-      # Disable timeout logic and wait until process is stopped
       TimeoutStopSec=infinity
       SendSIGKILL=no
 
@@ -110,7 +162,8 @@ class profile::app::minio (
       | SERVICE
   }
 
-  # Ensure dependencies are in place before starting the service
   Profile::App::Binary_install['minio'] ~> Service['minio.service']
-  File[$data_dir] -> Service['minio.service']
+  File[$data_dir]               -> Service['minio.service']
+  File["${certs_dir}/public.crt"]  -> Service['minio.service']
+  File["${certs_dir}/private.key"] -> Service['minio.service']
 }
