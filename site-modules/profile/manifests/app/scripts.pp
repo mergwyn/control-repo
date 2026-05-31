@@ -2,6 +2,7 @@
 #
 class profile::app::scripts {
   include profile::app::git
+  include profile::app::tools::bws # used by kopiacmd
 
   $codedir='/opt/scripts'
 
