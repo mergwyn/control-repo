@@ -74,37 +74,36 @@ class profile::app::minio (
   # Filter out system directories you don't want Puppet managing (like /etc itself)
   $target_dirs = $dir_tree.filter |$dir| { $dir != '/' and $dir != '/etc' }
 
-  # 3. Loop through and create them in order
+  # Loop through and create them in order
   $target_dirs.each |$dir| {
-    if ! defined(File[$dir]) {
-      file { $dir:
-        ensure  => directory,
-        owner   => $user,
-        group   => $group,
-        mode    => '0750',
-        require => User[$user],
-      }
-    }
-  } -> {
-    # Certificate files — copied from acme.sh output
-    # MinIO requires exactly these filenames
-    file { "${certs_dir}/public.crt":
-      ensure  => file,
-      owner   => $user,
-      group   => $group,
-      mode    => '0640',
-      source  => $cert_source,
-      notify  => Service['minio.service'],
-    }
+    ensure_resource('file', $dir, {
+      'ensure'  => directory,
+      'owner'   => $user,
+      'group'   => $group,
+      'mode'    => '0750',
+      'require' => User[$user],
+    })
+  }
 
-    file { "${certs_dir}/private.key":
-      ensure  => file,
-      owner   => $user,
-      group   => $group,
-      mode    => '0640',
-      source  => $key_source,
-      notify  => Service['minio.service'],
-    }
+  # Certificate files — copied from acme.sh output
+  file { "${certs_dir}/public.crt":
+    ensure  => file,
+    owner   => $user,
+    group   => $group,
+    mode    => '0640',
+    source  => $cert_source,
+    require => File[$certs_dir],
+    notify  => Service['minio.service'],
+  }
+
+  file { "${certs_dir}/private.key":
+    ensure  => file,
+    owner   => $user,
+    group   => $group,
+    mode    => '0640',
+    source  => $key_source,
+    require => File[$certs_dir],
+    notify  => Service['minio.service'],
   }
 
   # Binary
