@@ -85,28 +85,26 @@ class profile::app::minio (
         require => User[$user],
       }
     }
-  }
+  } -> {
+    # Certificate files — copied from acme.sh output
+    # MinIO requires exactly these filenames
+    file { "${certs_dir}/public.crt":
+      ensure  => file,
+      owner   => $user,
+      group   => $group,
+      mode    => '0640',
+      source  => $cert_source,
+      notify  => Service['minio.service'],
+    }
 
-  # Certificate files — copied from acme.sh output
-  # MinIO requires exactly these filenames
-  file { "${certs_dir}/public.crt":
-    ensure  => file,
-    owner   => $user,
-    group   => $group,
-    mode    => '0640',
-    source  => $cert_source,
-    notify  => Service['minio.service'],
-    require => File[$certs_dir],
-  }
-
-  file { "${certs_dir}/private.key":
-    ensure  => file,
-    owner   => $user,
-    group   => $group,
-    mode    => '0640',
-    source  => $key_source,
-    notify  => Service['minio.service'],
-    require => File[$certs_dir],
+    file { "${certs_dir}/private.key":
+      ensure  => file,
+      owner   => $user,
+      group   => $group,
+      mode    => '0640',
+      source  => $key_source,
+      notify  => Service['minio.service'],
+    }
   }
 
   # Binary
