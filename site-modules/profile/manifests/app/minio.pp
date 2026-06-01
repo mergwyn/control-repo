@@ -32,8 +32,8 @@ class profile::app::minio (
   Integer               $console_port    = 9001,
   String                $listen_address  = '0.0.0.0',
   Stdlib::Absolutepath  $certs_dir       = '/etc/minio/certs',
-  Stdlib::Absolutepath  $cert_source     = "/etc/acme/*.${trusted['domain']}/fullchain.pem",
-  Stdlib::Absolutepath  $key_source      = "/etc/acme/*.${trusted['domain']}/private.key",
+  Stdlib::Absolutepath  $cert_source     = "/etc/acme/wildcard.${trusted['domain']}/fullchain.pem",
+  Stdlib::Absolutepath  $key_source      = "/etc/acme/wildcard.${trusted['domain']}/private.key",
 ) {
   $user  = 'minio-user'
   $group = 'minio-user'
