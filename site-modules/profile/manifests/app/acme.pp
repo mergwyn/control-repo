@@ -118,9 +118,16 @@ class profile::app::acme (
       | SCRIPT
     require => Profile::App::Binary_install['acme.sh'],
   }
+
   # Per-domain cert issuance
   $domains.each |String $domain| {
-    $cert_dir = "${cert_base}/${domain}"
+    # Filesystem-safe name: replace * only (dots are valid in paths)
+    $fs_domain = regsubst($domain, '[*]', 'wildcard', 'G')
+
+    # Systemd-safe name: replace * and . with -, prefix wildcard- for readability
+    $safe_domain = regsubst(regsubst($domain, '[*\.]', '-', 'G'), '^-+', 'wildcard-')
+
+    $cert_dir = "${cert_base}/${fs_domain}"
 
     file { $cert_dir:
       ensure  => directory,
@@ -138,7 +145,7 @@ class profile::app::acme (
     $reload_cmd = $all_reload_cmds.join(' && ')
 
     # Issue cert — skipped if fullchain already exists
-    exec { "acme-issue-${domain}":
+    exec { "acme-issue-${safe_domain}":
       command => @("CMD"/L$),
         /usr/local/bin/acme-issue \
           --issue \
@@ -162,7 +169,7 @@ class profile::app::acme (
     }
 
     # Renewal service (triggered by timer)
-    systemd::unit_file { "acme-renew-${domain}.service":
+    systemd::unit_file { "acme-renew-${safe_domain}.service":
       enable  => false,
       active  => false,
       content => @("SERVICE"/L$),
@@ -178,7 +185,7 @@ class profile::app::acme (
     }
 
     # Daily renewal timer
-    systemd::unit_file { "acme-renew-${domain}.timer":
+    systemd::unit_file { "acme-renew-${safe_domain}.timer":
       enable  => true,
       active  => true,
       content => @("TIMER"/L$),
@@ -193,7 +200,7 @@ class profile::app::acme (
         [Install]
         WantedBy=timers.target
         | TIMER
-      require => Systemd::Unit_file["acme-renew-${domain}.service"],
+      require => Systemd::Unit_file["acme-renew-${safe_domain}.service"],
     }
   }
 }

@@ -48,6 +48,7 @@ profile::app::acme::domains:
   - "*.%{trusted.domain}"
 profile::acme::deploy_hooks:
   minio: 'minio.service'
+profile::app::blikvm::domain: "wildcard.%{trusted.domain}"
 
 # container node exporter config
 profile::platform::baseline::debian::virtual::lxd::scrape_check_primary: true
