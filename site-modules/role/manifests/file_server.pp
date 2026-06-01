@@ -17,6 +17,7 @@ class role::file_server {
   include profile::app::kopia
   include profile::app::lxd::backup
   include profile::app::minio
+  include profile::app::blikvm
   include profile::app::samba::shares
   include profile::app::sssd
   include profile::app::timemachine
