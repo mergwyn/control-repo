@@ -1,15 +1,16 @@
 # @summary Manages acme.sh installation and certificate issuance via DNS-01 (Cloudflare)
 #
-# Installs acme.sh, configures Cloudflare credentials via BWS, and issues/renews
-# wildcard certificates. On renewal, all scripts in /etc/acme/deploy.d/ are executed.
-# Other profiles (e.g. profile::app::blikvm) drop scripts into that directory to
-# hook into the renewal process without coupling back to this profile.
+# Installs acme.sh via its own installer to ensure the full directory structure
+# (including dnsapi/) is present. Configures Cloudflare credentials via BWS and
+# issues/renews wildcard certificates. On renewal, all scripts in deploy.d/ are
+# executed. Other profiles drop scripts into that directory to hook into the renewal
+# process without coupling back to this profile.
 #
 # @param version
 #   acme.sh release version.
 #   renovate: datasource=github-releases depName=acmesh-official/acme.sh extractVersion=^(?<version>.+)$
 # @param config_home
-#   Directory for acme.sh account data and renewal state.
+#   Directory for acme.sh account data, renewal state, and dnsapi scripts.
 # @param cert_base
 #   Base directory for issued certificates. Per-domain subdirectories are created here.
 # @param email
@@ -34,7 +35,8 @@ class profile::app::acme (
 ) {
   include profile::app::tools::bws
 
-  # Install acme.sh from tarball
+  # Download and install acme.sh binary via binary_install
+  # This provides the script itself and version idempotency
   profile::app::binary_install { 'acme.sh':
     version     => $version,
     binary      => 'acme.sh',
@@ -43,6 +45,21 @@ class profile::app::acme (
     tar_extract => "acme.sh-${version}/acme.sh",
     version_cmd => '/usr/local/bin/acme.sh --version 2>&1 | grep -oP "(?<=v)[\d.]+"',
     install_dir => '/usr/local/bin',
+  }
+
+  # Run acme.sh installer to set up full directory structure including dnsapi/
+  # --no-cron disables acme.sh's own cron job; renewal is managed via systemd timer
+  exec { 'acme.sh-install':
+    command => @("CMD"/L),
+      /usr/local/bin/acme.sh \
+        --install \
+        --no-cron \
+        --config-home ${config_home} \
+        --bin-dir /usr/local/bin
+      | CMD
+    path    => ['/usr/bin', '/bin', '/usr/local/bin'],
+    unless  => "test -d ${config_home}/dnsapi",
+    require => Profile::App::Binary_install['acme.sh'],
   }
 
   # acme.sh config/state home
@@ -116,7 +133,7 @@ class profile::app::acme (
 
       exec /usr/local/bin/acme.sh --config-home "${config_home}" "\$@"
       | SCRIPT
-    require => Profile::App::Binary_install['acme.sh'],
+    require => Exec['acme.sh-install'],
   }
 
   # Per-domain cert issuance
@@ -152,20 +169,31 @@ class profile::app::acme (
           --dns dns_cf \
           --domain "${domain}" \
           --server letsencrypt \
-          --accountemail "${email}" \
+          --accountemail "${email}"
+        | CMD
+      creates => "${config_home}/${fs_domain}/fullchain.cer",
+      path    => ['/usr/bin', '/bin', '/usr/local/bin'],
+      require => [
+        File['/usr/local/bin/acme-issue'],
+        File[$cert_dir],
+      ],
+    }
+
+    # Install cert to target paths — reruns if cert is renewed
+    exec { "acme-install-cert-${safe_domain}":
+      command     => @("CMD"/L$),
+        /usr/local/bin/acme-issue \
           --install-cert \
+          --domain "${domain}" \
           --cert-file "${cert_dir}/cert.pem" \
           --key-file "${cert_dir}/private.key" \
           --fullchain-file "${cert_dir}/fullchain.pem" \
           --reloadcmd '${reload_cmd}'
         | CMD
-      creates => "${cert_dir}/fullchain.pem",
-      path    => ['/usr/bin', '/bin', '/usr/local/bin'],
-      require => [
-        File['/usr/local/bin/acme-issue'],
-        File['/usr/local/bin/acme-deploy'],
-        File[$cert_dir],
-      ],
+      refreshonly => false,
+      path        => ['/usr/bin', '/bin', '/usr/local/bin'],
+      unless      => "test -f ${cert_dir}/fullchain.pem",
+      require     => Exec["acme-issue-${safe_domain}"],
     }
 
     # Renewal service (triggered by timer)
@@ -180,7 +208,8 @@ class profile::app::acme (
 
         [Service]
         Type=oneshot
-        ExecStart=/usr/local/bin/acme-issue --renew --domain ${domain} --server letsencrypt --reloadcmd '${reload_cmd}'
+        ExecStart=/usr/local/bin/acme-issue --renew --domain ${domain} --server letsencrypt
+        ExecStartPost=/usr/local/bin/acme-issue --install-cert --domain ${domain} --cert-file ${cert_dir}/cert.pem --key-file ${cert_dir}/private.key --fullchain-file ${cert_dir}/fullchain.pem --reloadcmd '${reload_cmd}'
         | SERVICE
     }
 

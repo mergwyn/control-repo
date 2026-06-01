@@ -79,7 +79,7 @@ class profile::app::minio (
     owner   => $user,
     group   => $group,
     mode    => '0750',
-    require => [ User[$user], Exec["mkdir_p_${certs_dir}"] ],
+    require => [User[$user], Exec["mkdir_p_${certs_dir}"]],
   }
 
   # Certificate files — copied from acme.sh output
