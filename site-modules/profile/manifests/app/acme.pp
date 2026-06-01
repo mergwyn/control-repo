@@ -54,8 +54,7 @@ class profile::app::acme (
       /usr/local/bin/acme.sh \
         --install \
         --no-cron \
-        --config-home ${config_home} \
-        --bin-dir /usr/local/bin
+        --home ${config_home}
       | CMD
     path    => ['/usr/bin', '/bin', '/usr/local/bin'],
     unless  => "test -d ${config_home}/dnsapi",
