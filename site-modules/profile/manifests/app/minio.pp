@@ -69,20 +69,17 @@ class profile::app::minio (
   include profile::app::acme
 
   # Certs directory
-  # Break the path down into an array of parent paths
-  $dir_tree = prefix(split(regsubst($certs_dir, '^/', ''), '/'), '/')
-  # Filter out system directories you don't want Puppet managing (like /etc itself)
-  $target_dirs = $dir_tree.filter |$dir| { $dir != '/' and $dir != '/etc' }
+  exec { "mkdir_p_${certs_dir}":
+    command => "/usr/bin/mkdir -p ${certs_dir}",
+    creates => $certs_dir,
+  }
 
-  # Loop through and create them in order
-  $target_dirs.each |$dir| {
-    ensure_resource('file', $dir, {
-      'ensure'  => directory,
-      'owner'   => $user,
-      'group'   => $group,
-      'mode'    => '0750',
-      'require' => User[$user],
-    })
+  file { $certs_dir:
+    ensure  => directory,
+    owner   => $user,
+    group   => $group,
+    mode    => '0750',
+    require => [ User[$user], Exec["mkdir_p_${certs_dir}"] ],
   }
 
   # Certificate files — copied from acme.sh output
