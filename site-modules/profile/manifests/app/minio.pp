@@ -123,12 +123,13 @@ class profile::app::minio (
       target => '/etc/default/minio',
       notify => Service['minio.service'],
       ;
-    'MINIO_ROOT_USER':         value => $root_user, ;
-    'MINIO_ROOT_PASSWORD':     value => $root_password, ;
-    'MINIO_VOLUMES':           value => $data_dir, ;
-    'MINIO_OPTS':              value => "--address ${listen_address}:${api_port} --console-address ${listen_address}:${console_port} --certs-dir ${certs_dir}", ;
-    'MINIO_PROMETHEUS_URL':    value => 'https://prometheus.theclarkhome.com', ;
-    'MINIO_PROMETHEUS_JOB_ID': value => 'minio-job', ;
+    'MINIO_ROOT_USER':            value => $root_user, ;
+    'MINIO_ROOT_PASSWORD':        value => $root_password, ;
+    'MINIO_VOLUMES':              value => $data_dir, ;
+    'MINIO_OPTS':                 value => "--address ${listen_address}:${api_port} --console-address ${listen_address}:${console_port} --certs-dir ${certs_dir}", ;
+    'MINIO_BROWSER_REDIRECT_URL': value => "https://${trusted['hostname']}.${trusted['domain']}:${api_port}", ;
+    'MINIO_PROMETHEUS_URL':       value => "https://prometheus.${trusted['domain']}", ;
+    'MINIO_PROMETHEUS_JOB_ID':    value => 'minio-job', ;
   }
 
   # Systemd service
