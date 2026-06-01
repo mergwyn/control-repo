@@ -1,7 +1,9 @@
 # @summary Manages acme.sh installation and certificate issuance via DNS-01 (Cloudflare)
 #
 # Installs acme.sh, configures Cloudflare credentials via BWS, and issues/renews
-# wildcard certificates. Deploy hooks notify dependent services on renewal.
+# wildcard certificates. On renewal, all scripts in /etc/acme/deploy.d/ are executed.
+# Other profiles (e.g. profile::app::blikvm) drop scripts into that directory to
+# hook into the renewal process without coupling back to this profile.
 #
 # @param version
 #   acme.sh release version.
@@ -24,7 +26,7 @@ class profile::app::acme (
   String               $version       = '3.1.0', #renovate: datasource=github-releases depName=acmesh-official/acme.sh extractVersion=^(?<version>.+)$
   Stdlib::Absolutepath $config_home   = '/var/lib/acme',
   Stdlib::Absolutepath $cert_base     = '/etc/acme',
-  String               $email         = lookup('profile::acme::email'),
+  String               $email         = lookup('profile::app::acme::email'),
   Array[String]        $domains       = [],
   String               $cf_token_uuid = '8565e45d-d1a5-4eec-a4ae-b35d00b79b05',
   String               $bws_token     = lookup('secrets::kopia::bws_token'),
@@ -59,6 +61,41 @@ class profile::app::acme (
     mode   => '0755',
   }
 
+  # deploy.d directory — scripts dropped here are run on every cert renewal
+  file { "${cert_base}/deploy.d":
+    ensure  => directory,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0700',
+    require => File[$cert_base],
+  }
+
+  # deploy.d runner — executes all scripts in deploy.d in order
+  file { '/usr/local/bin/acme-deploy':
+    ensure  => file,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0700',
+    content => @("SCRIPT"/L$),
+      #!/usr/bin/env bash
+      set -euo pipefail
+
+      DEPLOY_DIR="${cert_base}/deploy.d"
+
+      if [[ ! -d "\${DEPLOY_DIR}" ]]; then
+        echo "Deploy directory \${DEPLOY_DIR} not found"
+        exit 1
+      fi
+
+      for script in "\${DEPLOY_DIR}"/[0-9]*.sh; do
+        [[ -x "\$script" ]] || continue
+        echo "Running deploy script: \$script"
+        "\$script" || { echo "Deploy script failed: \$script"; exit 1; }
+      done
+      | SCRIPT
+    require => File["${cert_base}/deploy.d"],
+  }
+
   # Wrapper script: fetches CF token from BWS and invokes acme.sh
   # CF_Token is the variable name acme.sh expects for dns_cf
   file { '/usr/local/bin/acme-issue':
@@ -81,7 +118,6 @@ class profile::app::acme (
       | SCRIPT
     require => Profile::App::Binary_install['acme.sh'],
   }
-
   # Per-domain cert issuance
   $domains.each |String $domain| {
     $cert_dir = "${cert_base}/${domain}"
@@ -94,15 +130,12 @@ class profile::app::acme (
       require => File[$cert_base],
     }
 
-    # Build reload command from deploy_hooks
-    $reload_cmd = $deploy_hooks.map |String $label, String $unit| {
+    # Build reload command: run deploy.d runner, then restart any deploy_hooks units
+    $hook_cmds = $deploy_hooks.map |String $label, String $unit| {
       "systemctl restart ${unit}"
-    }.join(' && ')
-
-    $reloadcmd_flag = $reload_cmd ? {
-      ''      => '',
-      default => "--reloadcmd '${reload_cmd}'",
     }
+    $all_reload_cmds = ['/usr/local/bin/acme-deploy'] + $hook_cmds
+    $reload_cmd = $all_reload_cmds.join(' && ')
 
     # Issue cert — skipped if fullchain already exists
     exec { "acme-issue-${domain}":
@@ -117,17 +150,18 @@ class profile::app::acme (
           --cert-file "${cert_dir}/cert.pem" \
           --key-file "${cert_dir}/private.key" \
           --fullchain-file "${cert_dir}/fullchain.pem" \
-          ${reloadcmd_flag}
+          --reloadcmd '${reload_cmd}'
         | CMD
       creates => "${cert_dir}/fullchain.pem",
       path    => ['/usr/bin', '/bin', '/usr/local/bin'],
       require => [
         File['/usr/local/bin/acme-issue'],
+        File['/usr/local/bin/acme-deploy'],
         File[$cert_dir],
       ],
     }
 
-    # Renewal via systemd timer
+    # Renewal service (triggered by timer)
     systemd::unit_file { "acme-renew-${domain}.service":
       enable  => false,
       active  => false,
@@ -139,10 +173,11 @@ class profile::app::acme (
 
         [Service]
         Type=oneshot
-        ExecStart=/usr/local/bin/acme-issue --renew --domain ${domain} --server letsencrypt ${reloadcmd_flag}
+        ExecStart=/usr/local/bin/acme-issue --renew --domain ${domain} --server letsencrypt --reloadcmd '${reload_cmd}'
         | SERVICE
     }
 
+    # Daily renewal timer
     systemd::unit_file { "acme-renew-${domain}.timer":
       enable  => true,
       active  => true,

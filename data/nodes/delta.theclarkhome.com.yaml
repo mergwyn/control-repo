@@ -43,8 +43,8 @@ lxd::preseed:
       driver: zfs
 
 
-profile::acme::email: "gary@%{trusted.domain}"
-profile::acme::domains:
+profile::app::acme::email: "gary@%{trusted.domain}"
+profile::app::acme::domains:
   - "*.%{trusted.domain}"
 profile::acme::deploy_hooks:
   minio: 'minio.service'
