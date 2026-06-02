@@ -5,5 +5,5 @@ boldecho() { echo "$(tput smso)$*$(tput rmso)" ; }
 
 for container in $(listcontainers); do
   boldecho executing: lxc exec "${container}" -- bash -l -c \"$*\" >&2
-  lxc exec "${container}" -- bash -l -c \"$*\"
+  lxc exec "${container}" -- bash -l -c "$*"
 done
