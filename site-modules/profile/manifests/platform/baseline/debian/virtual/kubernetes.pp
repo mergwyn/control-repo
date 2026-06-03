@@ -4,6 +4,7 @@ class profile::platform::baseline::debian::virtual::kubernetes (
   Enum['microk8s','k3s'] $provider = 'k3s',
   Boolean $enable_cstor            = false,
   Boolean $enable_mayastor         = false,
+  Boolean $enable_longhorn         = true,
 ) {
   if $facts['os']['family'] != 'Debian' {
     fail("${name} can only be called on Debian")
@@ -97,7 +98,7 @@ class profile::platform::baseline::debian::virtual::kubernetes (
     kmod::load { 'nvme_tcp': ensure => absent }
   }
 
-  if $enable_cstor {
+  if $enable_cstor or $enable_longhorn {
     package { 'open-iscsi': ensure => present, }
     -> service { 'iscsid':
       ensure => running,
