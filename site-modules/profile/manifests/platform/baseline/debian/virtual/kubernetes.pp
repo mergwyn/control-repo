@@ -103,7 +103,5 @@ class profile::platform::baseline::debian::virtual::kubernetes (
       ensure => running,
       enable => true,
     }
-  } else {
-    package { 'open-iscsi': ensure => absent, }
   }
 }
