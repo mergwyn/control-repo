@@ -4,7 +4,7 @@ class profile::platform::baseline::debian::virtual::kubernetes (
   Enum['microk8s','k3s'] $provider = 'k3s',
   Boolean $enable_cstor            = false,
   Boolean $enable_mayastor         = false,
-  Boolean $enable_longhorn         = true,
+  Boolean $enable_longhorn         = false,
 ) {
   if $facts['os']['family'] != 'Debian' {
     fail("${name} can only be called on Debian")
