@@ -5,6 +5,15 @@ classes:
 packages:
   - bridge-utils
 
+profile::platform::baseline::debian::mounts::defaults:
+  ensure: "mounted"
+profile::platform::baseline::debian::mounts::objects:
+  longhorn:
+    name: '/var/lib/longhorn-sda'
+    device: 'UUID="20e5b186-c6bf-4b32-91b8-53c7c440b17a"'
+    fstype: 'ext4'
+    options: 'defaults'
+
 profile::platform::baseline::debian::netplan::ethernets:
   enp99s0:
     dhcp4: no
@@ -41,6 +50,14 @@ lxd::preseed:
       description: ""
       name: default
       driver: zfs
+
+
+profile::app::acme::email: "gary@%{trusted.domain}"
+profile::app::acme::domains:
+  - "*.%{trusted.domain}"
+profile::acme::deploy_hooks:
+  minio: 'minio.service'
+profile::app::blikvm::domain: "wildcard.%{trusted.domain}"
 
 # container node exporter config
 profile::platform::baseline::debian::virtual::lxd::scrape_check_primary: true
