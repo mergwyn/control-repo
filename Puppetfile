@@ -57,7 +57,7 @@ mod 'puppet/nginx', :git => 'https://github.com/voxpupuli/puppet-nginx', :tag =>
 mod 'puppet/php', '12.0.0'
 mod 'puppet/postfix', '6.0.0'
 mod 'puppet/puppetboard', '12.1.0'
-mod 'puppet/python', '8.0.0'
+mod 'puppet/python', '9.0.0'
 mod 'puppet/r10k', '15.1.0'
 mod 'puppet/selinux', '5.0.0'
 mod 'puppet/sssd', '1.0.0'
