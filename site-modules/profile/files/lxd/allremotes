@@ -3,9 +3,10 @@
 PATH=$PATH:$(dirname "$0")
 
 boldecho() { echo "$(tput smso)$*$(tput rmso)" ; }
+here=$(hostname -s)
 
 for remote in $(listremotes) ; do
-  if [[ ${remote} = "local" ]] ; then
+  if [[ ${remote} = "${here}" ]] ; then
     boldecho "executing locally: $*" >&2
     # Using bash -l -c here ensures local execution matches remote environment rules
     bash -l -c "$*"
