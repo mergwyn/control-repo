@@ -10,7 +10,7 @@ profile::platform::baseline::debian::mounts::defaults:
 profile::platform::baseline::debian::mounts::objects:
   longhorn:
     name: '/var/lib/longhorn-sda'
-    device: 'UUID=0bd12f5a-be2c-4b6e-be18-8f21ac9b0337"'
+    device: 'UUID=0bd12f5a-be2c-4b6e-be18-8f21ac9b0337'
     fstype: 'ext4'
     options: 'defaults'
 
