@@ -14,7 +14,7 @@ for repo in ${REPOS} ; do
   log_debug Connecting to repo ${repo}
   LOGLEVEL=WARN ${kopiacmd} repo connect ${repo}
 
-  [[ ${repo} != filesystem ]] 
+  [[ ${repo} != filesystem ]]
   log_info "Starting backup for repo: ${repo}"
   export KOPIA_CONFIG_PATH=~/.config/kopia/${repo}.config
 
@@ -23,7 +23,7 @@ for repo in ${REPOS} ; do
   IFS=, read -ra snaparray <<< "${SNAPS}"
   for snap in "${snaparray[@]}"; do
     log_info "Creating snapshot ${snap} in ${repo}"
-    kopia snapshot create ${ARGS} "${snap}" 2>&1 | grep -v 'unknown or unsupported entry type'
+    kopia snapshot create ${ARGS} "${snap}" --force-hash=100 2>&1 | grep -v 'unknown or unsupported entry type'
   done
 
   unset KOPIA_CONFIG_PATH
