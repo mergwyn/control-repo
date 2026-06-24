@@ -1,18 +1,17 @@
 # @summary Manages acme.sh installation and certificate issuance via DNS-01 (Cloudflare)
 #
-# Installs acme.sh via its own installer to ensure the full directory structure
-# (including dnsapi/) is present. Configures Cloudflare credentials via BWS and
-# issues/renews wildcard certificates. On renewal, all scripts in deploy.d/ are
-# executed. Other profiles drop scripts into that directory to hook into the renewal
-# process without coupling back to this profile.
+# Installs acme.sh using its own native installer (placing everything under
+# /root/.acme.sh/, including dnsapi/, account data, and renewal state — fighting
+# this layout causes installer failures). Configures Cloudflare credentials via
+# BWS and issues/renews wildcard certificates. On renewal, all scripts in
+# deploy.d/ are executed. Other profiles drop scripts into that directory to hook
+# into the renewal process without coupling back to this profile.
 #
 # @param version
 #   acme.sh release version.
 #   renovate: datasource=github-releases depName=acmesh-official/acme.sh extractVersion=^(?<version>.+)$
-# @param config_home
-#   Directory for acme.sh account data, renewal state, and dnsapi scripts.
 # @param cert_base
-#   Base directory for issued certificates. Per-domain subdirectories are created here.
+#   Base directory for deployed certificates. Per-domain subdirectories are created here.
 # @param email
 #   Email address for Let's Encrypt account registration.
 # @param domains
@@ -25,7 +24,6 @@
 #   Hash of arbitrary label to systemd unit name. All units are restarted on cert renewal.
 class profile::app::acme (
   String               $version       = '3.1.0', #renovate: datasource=github-releases depName=acmesh-official/acme.sh extractVersion=^(?<version>.+)$
-  Stdlib::Absolutepath $config_home   = '/var/lib/acme',
   Stdlib::Absolutepath $cert_base     = '/etc/acme',
   String               $email         = lookup('profile::app::acme::email'),
   Array[String]        $domains       = [],
@@ -35,38 +33,25 @@ class profile::app::acme (
 ) {
   include profile::app::tools::bws
 
-  # Download and install acme.sh binary via binary_install
-  # This provides the script itself and version idempotency
-  profile::app::binary_install { 'acme.sh':
-    version     => $version,
-    binary      => 'acme.sh',
-    url         => "https://github.com/acmesh-official/acme.sh/archive/refs/tags/${version}.tar.gz",
-    tarball     => true,
-    tar_extract => "acme.sh-${version}/acme.sh",
-    version_cmd => '/usr/local/bin/acme.sh --version 2>&1 | grep -oP "(?<=v)[\d.]+"',
-    install_dir => '/usr/local/bin',
-  }
+  $acme_bin = '/root/.acme.sh/acme.sh'
 
-  # Run acme.sh installer to set up full directory structure including dnsapi/
-  # --no-cron disables acme.sh's own cron job; renewal is managed via systemd timer
+  # Download tarball and run acme.sh's own installer from within it.
+  # acme.sh expects to run from its own extracted directory and installs
+  # itself, dnsapi/, and account state under --home (defaults to ~/.acme.sh).
   exec { 'acme.sh-install':
     command => @("CMD"/L),
-      /usr/local/bin/acme.sh \
-        --install \
-        --no-cron \
-        --home ${config_home}
+      set -e
+      rm -rf /tmp/acme.sh-install
+      mkdir -p /tmp/acme.sh-install
+      curl -fsSL https://github.com/acmesh-official/acme.sh/archive/refs/tags/${version}.tar.gz -o /tmp/acme.sh-install/acme.sh.tar.gz
+      tar -xzf /tmp/acme.sh-install/acme.sh.tar.gz -C /tmp/acme.sh-install --strip-components=1
+      cd /tmp/acme.sh-install
+      ./acme.sh --install --no-cron
+      rm -rf /tmp/acme.sh-install
       | CMD
     path    => ['/usr/bin', '/bin', '/usr/local/bin'],
-    unless  => "test -d ${config_home}/dnsapi",
-    require => Profile::App::Binary_install['acme.sh'],
-  }
-
-  # acme.sh config/state home
-  file { $config_home:
-    ensure => directory,
-    owner  => 'root',
-    group  => 'root',
-    mode   => '0700',
+    creates => $acme_bin,
+    require => Package['curl'],
   }
 
   # Base directory for deployed certs
@@ -130,7 +115,7 @@ class profile::app::acme (
       [[ -z "\${CF_Token}" ]] && { echo "Failed to retrieve Cloudflare token from BWS"; exit 1; }
       export CF_Token
 
-      exec /usr/local/bin/acme.sh --config-home "${config_home}" "\$@"
+      exec ${acme_bin} "\$@"
       | SCRIPT
     require => Exec['acme.sh-install'],
   }
@@ -160,7 +145,7 @@ class profile::app::acme (
     $all_reload_cmds = ['/usr/local/bin/acme-deploy'] + $hook_cmds
     $reload_cmd = $all_reload_cmds.join(' && ')
 
-    # Issue cert — skipped if fullchain already exists
+    # Issue cert — acme.sh stores it under its own --home; skipped if already issued
     exec { "acme-issue-${safe_domain}":
       command => @("CMD"/L$),
         /usr/local/bin/acme-issue \
@@ -170,8 +155,8 @@ class profile::app::acme (
           --server letsencrypt \
           --accountemail "${email}"
         | CMD
-      creates => "${config_home}/${fs_domain}/fullchain.cer",
       path    => ['/usr/bin', '/bin', '/usr/local/bin'],
+      unless  => "test -d /root/.acme.sh/${domain}",
       require => [
         File['/usr/local/bin/acme-issue'],
         File[$cert_dir],
@@ -180,7 +165,7 @@ class profile::app::acme (
 
     # Install cert to target paths — reruns if cert is renewed
     exec { "acme-install-cert-${safe_domain}":
-      command     => @("CMD"/L$),
+      command => @("CMD"/L$),
         /usr/local/bin/acme-issue \
           --install-cert \
           --domain "${domain}" \
@@ -189,10 +174,9 @@ class profile::app::acme (
           --fullchain-file "${cert_dir}/fullchain.pem" \
           --reloadcmd '${reload_cmd}'
         | CMD
-      refreshonly => false,
-      path        => ['/usr/bin', '/bin', '/usr/local/bin'],
-      unless      => "test -f ${cert_dir}/fullchain.pem",
-      require     => Exec["acme-issue-${safe_domain}"],
+      path    => ['/usr/bin', '/bin', '/usr/local/bin'],
+      unless  => "test -f ${cert_dir}/fullchain.pem",
+      require => Exec["acme-issue-${safe_domain}"],
     }
 
     # Renewal service (triggered by timer)
