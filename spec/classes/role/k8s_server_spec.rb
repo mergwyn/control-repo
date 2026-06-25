@@ -13,7 +13,17 @@ describe 'role::k8s_server' do
       let(:trusted_facts) { { 'pp_role' => 'k8s_server' } }
       let(:node) { 'unittest.theclarkhome.com' }
       let(:pre_condition) do
-        'function puppetdb_query($string) { return [{ title => "fqdn", value => "certname.example.com" }] }'
+        <<-PUPPET
+          # Mock the PuppetDB function
+          function puppetdb_query($string) {
+            return [{ title => "fqdn", value => "certname.example.com" }]
+          }
+
+          # Inject the parameter at the profile level
+          class { 'profile::app::cloudflared':
+            tunnel_token => 'mocked_fake_token_string_for_role_testing',
+          }
+        PUPPET
       end
 
       # Comment out to display all available resources easily

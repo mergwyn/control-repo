@@ -10,6 +10,7 @@ class role::main_server {
   include profile::openvox::dev
 
   include profile::app::gpo::clean
+  include profile::app::cloudflared
   #include profile::app::iptv
   include profile::app::k8s_tools
   include profile::app::kopia

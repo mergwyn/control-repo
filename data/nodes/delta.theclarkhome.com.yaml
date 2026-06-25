@@ -51,6 +51,20 @@ lxd::preseed:
       name: default
       driver: zfs
 
+profile::app::cloudflared::tunnel_token: >
+    ENC[PKCS7,MIICKwYJKoZIhvcNAQcDoIICHDCCAhgCAQAxggEhMIIBHQIBAD
+    AFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEABtmX7lR4+KBJkBw2EBSrK1S9iW
+    ldbpSXcp8dp1wMajaaxvTbNH4rJ1JyPNFojRkZrPq2Vph7hOJvK6JR7Wl0kF
+    J0lzi/VVJ1xFgZOreN2Wv+M2tKbKaYIeFgAZuONh2SVYtLO0jKqPRbfB7Vr7
+    SUbarVBAIL871JGipSiGCx7GqbniOaCmHnbbFrJS3luy5Mef5kqPgDjJJca9
+    381DtGatPxsDQSycmX8jD9bvNRqSzPVk5fsIGNdq7DK7XQWOMn9niixwAkiR
+    UkyIe145r9IaGTbyhveDH8bTBOOqGC6ww2893PVbveOrVhHBgR0nHUYPfTz3
+    2PhoNxWAqeDyTdczCB7QYJKoZIhvcNAQcBMB0GCWCGSAFlAwQBKgQQtzWKEy
+    hpR1QQOlKn6P6ugICBwB29PwCQvUTi80Rw4utAZoWEaX8CDq0fjVRwtSykd1
+    h3FiL2Kg8O+GijtiXBJdLLn1ZulS0iGJ2VFHU6CBzb4UYUHhVkhWCbrm48kX
+    5F/B5dize2/N7gaVt066syTGe19Ng5uj4SXOPNjL1APr9XtdPr2fLRzZYvKL
+    XcFRapg9ALAuzBVsJESnHfPIJxyZLZP97ebFKjbttXj3ZOHV5eFZLa1lLRyh
+    NDuzhSH0XDJN7ezfmTlaW2Vh3datPvSg85JA==]
 
 profile::app::acme::email: "gary@%{trusted.domain}"
 profile::app::acme::domains:

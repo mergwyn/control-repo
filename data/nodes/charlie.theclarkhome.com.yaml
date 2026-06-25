@@ -40,6 +40,21 @@ profile::platform::baseline::debian::netplan::bridges:
       stp: false
       forward_delay: 0
 
+profile::app::cloudflared::tunnel_token: >
+    ENC[PKCS7,MIICKwYJKoZIhvcNAQcDoIICHDCCAhgCAQAxggEhMIIBHQIBAD
+    AFMAACAQEwDQYJKoZIhvcNAQEBBQAEggEAK6uslZDg1v2HesX3YDgBM6Ai5r
+    ZrOdHTBRKxbQmGlp/JfVbgxMHzsxqFwTxVgN9x94+n1lYE5l8N2+XusZyw80
+    4Sgdf1C3LQAt01pRIQKd0EkKcF3F5T938L2h4sia3n0PDTpgsXL9e4FbOT0v
+    rvsyMD3aV/vQEurWyUmTPtwJPwN0vvCfF0AXnBqujz/wMPEQ9zV3/yv01UQc
+    +PvdUpMDO3qeJh0pGPVa6Sp/SwBiujgP2UIJoiRI/xKe3WOrVLRdqVzDRIdq
+    NoirTRgMEI2TYGNM6WxTV8DNvJ3/gpGmQdZvarrL5fDc/L2qikJW5ZqWAPjV
+    D4VdCyqLCYL0Kv0DCB7QYJKoZIhvcNAQcBMB0GCWCGSAFlAwQBKgQQJ4FGZ3
+    +RL3tWRUH/Bs3OvYCBwAWYpC65wxW/mtzdoFv5Bg3djOR/QhPcHOTx7vqJcn
+    TJSjp20uhTJSLqQ8JBi7LXjQDCE3Lhmnelpwn/DrNq2m9AKWSHqLIQjDUMj+
+    QEBXFD9+IP5d79SYSnIHORgzns7BQ3531k9UbtgVsGdRQaJNhBap//FsEMVk
+    xpOJNid+cat/5blI23brtPqtAUdm1iiaCqQIUxYDtvPQt6kvLiZbb8v+DHe2
+    TUXAAoGP0kzlqRoW1m2JFoosLe/WZ1PliRcg==]
+
 # Config for lxd server
 lxd::preseed:
   storage_pools:

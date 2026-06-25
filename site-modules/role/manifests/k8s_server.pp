@@ -7,6 +7,7 @@ class role::k8s_server {
   include profile::platform::baseline::debian::virtual::lxd
   include profile::platform::baseline::debian::nfs_server
 
+  include profile::app::cloudflared
   include profile::app::k8s_tools
   include profile::app::kopia
   include profile::app::lxd::backup
