@@ -38,7 +38,7 @@ class profile::platform::baseline::debian::zfs::homedir (
     type      => 'session',
     control   => 'optional',
     module    => 'pam_exec.so',
-    arguments => 'open_only /usr/local/sbin/mkhomedir-zfs',
+    arguments => ['open_only', '/usr/local/sbin/mkhomedir-zfs'],
     require   => File['/usr/local/sbin/mkhomedir-zfs'],
   }
 }
