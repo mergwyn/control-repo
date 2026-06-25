@@ -52,7 +52,8 @@ class profile::app::cloudflared (
 
   # 2. Install the cloudflared package
   package { 'cloudflared':
-    ensure => $package_ensure,
+    ensure  => $package_ensure,
+    require => Class['apt::update'],
   }
 
   # 3. Create the configuration directory
