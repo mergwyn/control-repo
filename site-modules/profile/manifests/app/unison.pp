@@ -1,7 +1,7 @@
 # summary Install and configure unison
 #
 class profile::app::unison (
-  String $version = '2.53.8', # renovate: datasource=github-releases depName=bcpierce00/unison
+  String $version = '2.54.0', # renovate: datasource=github-releases depName=bcpierce00/unison
 ) {
   case $facts['os']['family'] {
     'Darwin': {
@@ -52,7 +52,9 @@ class profile::app::unison (
       profile::app::binary_install { 'unison':
         version     => $version,
         binary      => ['unison', 'unison-fsmonitor'],
-        url         => "https://github.com/bcpierce00/unison/releases/download/v${version}/unison-${version}-${os}-${hardware}.tar.gz",
+        #url         => "https://github.com/bcpierce00/unison/releases/download/v${version}/unison-${version}-${os}-${hardware}.tar.gz",
+        #TODO: The above URL is the correct one, but the unison-fsmonitor binary is not included in that tarball.  The following URL is a workaround that includes both binaries, but it is not the official release.  We should try to get the official release to include both binaries.
+        url         => "https://github.com/bcpierce00/unison/releases/download/v${version}/unison-${version}-ubuntu-22.04-${hardware}.tar.gz",
         tarball     => true,
         tar_extract => ['bin/unison', 'bin/unison-fsmonitor'],
         version_cmd => 'unison -version',
