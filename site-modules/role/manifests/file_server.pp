@@ -12,6 +12,7 @@ class role::file_server {
 
   include profile::openvox::dev
 
+  include profile::app::cloudflared
   include profile::app::gpo::clean
   include profile::app::k8s_tools
   include profile::app::kopia
