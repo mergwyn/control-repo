@@ -34,14 +34,13 @@ class profile::app::dhcpd (
   }
   if ($role and $peer_address) {
     class { 'dhcp::failover':
-      role                     => $role,
-      peer_address             => $peer_address,
-      port                     => 647,
-      mclt                     => 600,
-      load_split               => 256,
-      max_response_delay       => 15,
-      max_unacked_updates      => 5,
-      load_balance_max_seconds => 3,
+      role                => $role,
+      peer_address        => $peer_address,
+      port                => 647,
+      mclt                => 600,
+      load_split          => 256,
+      max_response_delay  => 15,
+      max_unacked_updates => 5,
     }
   }
   if ($role == 'secondary' and $peer_address) {
