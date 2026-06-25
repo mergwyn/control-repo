@@ -57,14 +57,25 @@ class profile::app::cloudflared (
   }
 
   # 3. Register the systemd service via 'cloudflared service install'.
-  #    This is a one-time operation that writes the unit file and drops the
-  #    tunnel token into /etc/cloudflared/config.yml.  We guard it with
-  #    'unless' so it only runs when the unit file is absent, making it
-  #    effectively idempotent.
+  #
+  #    Uninstall first if the unit file exists but contains a stale token
+  #    (i.e. the token in Hiera has changed). Both onlyif conditions must
+  #    be true simultaneously: file present AND current token absent.
+  exec { 'cloudflared service uninstall':
+    command => '/usr/bin/cloudflared service uninstall',
+    onlyif  => [
+      '/usr/bin/test -f /etc/systemd/system/cloudflared.service',
+      "/usr/bin/grep -qvF '${tunnel_token}' /etc/systemd/system/cloudflared.service",
+    ],
+    require => Package['cloudflared'],
+  }
+
+  #    Install (or re-install after token rotation) when the current token
+  #    is not already present in the unit file.
   exec { 'cloudflared service install':
     command => "/usr/bin/cloudflared service install ${tunnel_token}",
-    unless  => '/usr/bin/test -f /etc/systemd/system/cloudflared.service',
-    require => Package['cloudflared'],
+    unless  => "/usr/bin/grep -qF '${tunnel_token}' /etc/systemd/system/cloudflared.service",
+    require => [Package['cloudflared'], Exec['cloudflared service uninstall']],
   }
 
   # 4. Manage the cloudflared background service
