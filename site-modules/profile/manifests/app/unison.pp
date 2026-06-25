@@ -52,7 +52,7 @@ class profile::app::unison (
       profile::app::binary_install { 'unison':
         version     => $version,
         binary      => ['unison', 'unison-fsmonitor'],
-        #url         => "https://github.com/bcpierce00/unison/releases/download/v${version}/unison-${version}-${os}-${hardware}.tar.gz",
+        url         => "https://github.com/bcpierce00/unison/releases/download/v${version}/unison-${version}-${os}-${hardware}.tar.gz",
         tarball     => true,
         tar_extract => ['bin/unison', 'bin/unison-fsmonitor'],
         version_cmd => 'unison -version',
