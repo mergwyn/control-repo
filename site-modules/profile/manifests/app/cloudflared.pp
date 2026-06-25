@@ -77,8 +77,8 @@ class profile::app::cloudflared (
 
   # 4. Manage the cloudflared background service
   service { 'cloudflared':
-    ensure    => running,
-    enable    => true,
-    require   => Exec['cloudflared service install'],
+    ensure  => running,
+    enable  => true,
+    require => Exec['cloudflared service install'],
   }
 }
