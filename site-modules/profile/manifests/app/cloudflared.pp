@@ -28,7 +28,7 @@ class profile::app::cloudflared (
 
     apt::source { 'cloudflare':
       ensure   => $package_ensure,
-      location => 'https://pkg.cloudflare.com/',
+      location => 'https://pkg.cloudflare.com/cloudflared',
       release  => $facts['os']['distro']['codename'],
       repos    => 'main',
       key      => {
