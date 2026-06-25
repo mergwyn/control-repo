@@ -32,7 +32,7 @@ class profile::app::cloudflared (
       release  => $facts['os']['distro']['codename'],
       repos    => 'main',
       key      => {
-        'id'     => '9CF8C2E689C8F6CD8E1E5E4E3C1A1A5D241E7A31',
+        'id'     => 'CC94B39C77AE7342A68B89628A682D308D4E5E73',
         'source' => 'https://pkg.cloudflare.com/cloudflare-main.gpg',
       },
       before   => Package['cloudflared'],
