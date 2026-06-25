@@ -56,30 +56,21 @@ class profile::app::cloudflared (
     require => Class['apt::update'],
   }
 
-  # 3. Create the configuration directory
-  file { '/etc/cloudflared':
-    ensure  => directory,
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0755',
+  # 3. Register the systemd service via 'cloudflared service install'.
+  #    This is a one-time operation that writes the unit file and drops the
+  #    tunnel token into /etc/cloudflared/config.yml.  We guard it with
+  #    'unless' so it only runs when the unit file is absent, making it
+  #    effectively idempotent.
+  exec { 'cloudflared service install':
+    command => "/usr/bin/cloudflared service install ${tunnel_token}",
+    unless  => '/usr/bin/test -f /etc/systemd/system/cloudflared.service',
     require => Package['cloudflared'],
   }
 
-  # 4. Inject the Remotely Managed Tunnel Token
-  file { '/etc/cloudflared/config.yml':
-    ensure  => file,
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0600',
-    content => "tunnel: ${tunnel_token}\n",
-    require => File['/etc/cloudflared'],
-    notify  => Service['cloudflared'],
-  }
-
-  # 5. Manage the cloudflared background service
+  # 4. Manage the cloudflared background service
   service { 'cloudflared':
     ensure    => running,
     enable    => true,
-    subscribe => File['/etc/cloudflared/config.yml'],
+    require   => Exec['cloudflared service install'],
   }
 }
