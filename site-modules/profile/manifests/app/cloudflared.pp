@@ -63,10 +63,7 @@ class profile::app::cloudflared (
   #    be true simultaneously: file present AND current token absent.
   exec { 'cloudflared service uninstall':
     command => '/usr/bin/cloudflared service uninstall',
-    onlyif  => [
-      '/usr/bin/test -f /etc/systemd/system/cloudflared.service',
-      "/usr/bin/grep -qvF '${tunnel_token}' /etc/systemd/system/cloudflared.service",
-    ],
+    onlyif  => "/bin/sh -c 'test -f /etc/systemd/system/cloudflared.service && ! grep -qF \"${tunnel_token}\" /etc/systemd/system/cloudflared.service'",
     require => Package['cloudflared'],
   }
 
