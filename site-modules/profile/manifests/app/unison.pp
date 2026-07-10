@@ -47,7 +47,7 @@ class profile::app::unison (
     'Debian': {
       package { 'unison': ensure => absent, }
       $os = downcase($facts['os']['name'])
-      $osver = "-22-04"  # TODO this is the only version currently built
+      $osver = "-22.04"  # TODO this is the only version currently built
       $hardware = $facts['os']['hardware']
 
       profile::app::binary_install { 'unison':
