@@ -56,7 +56,7 @@ class profile::app::unison (
         binary      => ['unison', 'unison-fsmonitor'],
         url         => "https://github.com/bcpierce00/unison/releases/download/v${version}/${path}.tar.gz",
         tarball     => true,
-        tar_extract => ["${path}/bin/unison", "${path}/bin/unison-fsmonitor"]
+        tar_extract => ["${path}/bin/unison", "${path}/bin/unison-fsmonitor"],
         version_cmd => 'unison -version',
       }
       # TODO add configuration
