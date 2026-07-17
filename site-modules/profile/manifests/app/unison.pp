@@ -49,13 +49,14 @@ class profile::app::unison (
       $os = downcase($facts['os']['name'])
       $osver = "-22.04"  # TODO this is the only version currently built
       $hardware = $facts['os']['hardware']
+      $path ="unison-${version}-${os}${osver}-${hardware}"
 
       profile::app::binary_install { 'unison':
         version     => $version,
         binary      => ['unison', 'unison-fsmonitor'],
-        url         => "https://github.com/bcpierce00/unison/releases/download/v${version}/unison-${version}-${os}${osver}-${hardware}.tar.gz",
+        url         => "https://github.com/bcpierce00/unison/releases/download/v${version}/${path}.tar.gz",
         tarball     => true,
-        tar_extract => ['bin/unison', 'bin/unison-fsmonitor'],
+        tar_extract => ["${path}/bin/unison", "${path}/bin/unison-fsmonitor"]
         version_cmd => 'unison -version',
       }
       # TODO add configuration
