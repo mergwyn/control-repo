@@ -2,9 +2,14 @@
 KERNEL!="sd[a-z][0-9]", GOTO="media_by_label_auto_mount_end"  
 # Import FS infos  
 IMPORT{program}="/sbin/blkid -o udev -p %N"  
+
+# Skip ZFS member disks entirely
+ENV{ID_FS_TYPE}=="zfs|zfs_member", GOTO="media_by_label_auto_mount_end"
+
 # Get a label if present, otherwise specify one  
 ENV{ID_FS_LABEL}!="", ENV{dir_name}="%E{ID_FS_LABEL}"  
 ENV{ID_FS_LABEL}=="", ENV{dir_name}="usbhd-%k"  
+#
 # Global mount options  
 ACTION=="add", ENV{mount_options}="relatime"  
 # Filesystem-specific mount options  
