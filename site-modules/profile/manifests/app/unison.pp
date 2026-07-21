@@ -1,7 +1,7 @@
 # summary Install and configure unison
 #
 class profile::app::unison (
-  String $version = '2.53.8', # renovate: datasource=github-releases depName=bcpierce00/unison
+  String $version = '2.54.0', # renovate: datasource=github-releases depName=bcpierce00/unison
 ) {
   case $facts['os']['family'] {
     'Darwin': {
