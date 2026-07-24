@@ -20,3 +20,26 @@ profile::platform::baseline::packages::objects:
   plex: {}
   monitorcontrol: {}
 
+
+profile::os::macos::loginwindow_text: "%{facts.networking.hostname}"
+profile::os::macos::ad_domain: undef
+profile::os::macos::ad_ou: undef
+profile::os::macos::ad_admin_user: 'administrator'
+profile::os::macos::ad_admin_password: "%{lookup('secrets:domain')}"
+#profile::os::macos::ntp_servers: ['time.apple.com']
+profile::os::macos::tm_host: "delta.local"
+profile::os::macos::tm_share: "timemachine"
+profile::os::macos::tm_user: "backup"
+profile::os::macos::tm_password: "%{lookup('secrets:backup')}"
+#profile::os::macos::tm_quota_mb: 0
+profile::os::macos::tm_exclusions: [
+  "/Users/Shared/Virtual Machines/",
+  "/Users/Shared/Amazon Photos Downloads",
+  "~gary/odrive/",
+]
+
+profile::os::macos:::domain_admin_group_list: [
+  'THECLARKHOME\Administrators',
+  'THECLARKHOME\Domain Admins',
+  'THECLARKHOME\Enterprise Admins',
+]
