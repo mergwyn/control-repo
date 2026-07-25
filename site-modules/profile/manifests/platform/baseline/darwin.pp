@@ -2,10 +2,13 @@
 #
 class profile::platform::baseline::darwin {
   include profile::platform::baseline::users::darwin
+  include profile::platform::baseline::darwin::activedirectory
   include profile::platform::baseline::darwin::brew
-  include profile::platform::baseline::darwin::timemachine
+  include profile::platform::baseline::darwin::loginwindow
+  include profile::platform::baseline::darwin::ntp
   include profile::platform::baseline::darwin::packages
   include profile::platform::baseline::darwin::puppet
+  include profile::platform::baseline::darwin::timemachine
 
   File {
     owner => 'root',
