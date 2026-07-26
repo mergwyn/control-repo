@@ -50,23 +50,25 @@ class profile::platform::baseline::darwin::brew {
       User['brew'],
     ],
   }
-  exec { 'homebrew_auto_upgrade':
-    path        => ['/opt/homebrew/bin', '/usr/bin', '/bin', '/usr/sbin', '/sbin'],
-    cwd         => '/tmp',
-    command     => '/bin/bash -l -c "/opt/homebrew/bin/brew update && /opt/homebrew/bin/brew upgrade"',
-    environment => [
-      "HOME=${home}",
-      'HOMEBREW_NO_ENV_HINTS=1',
-    ],
-    user        => 'brew',
-    onlyif      => '/bin/bash -l -c "/opt/homebrew/bin/brew outdated --quiet 2>/dev/null" | /usr/bin/grep -E -q "^[a-zA-Z0-9_-]+"',
-    timeout     => 600,
-  }
 
   sudo::conf { 'brew':
     content => @(END),
       gary ALL=(brew) NOPASSWD: /usr/local/bin/brew,/bin/bash
       brew ALL=(root) NOPASSWD: /usr/bin/touch,/bin/rm,/bin/cp /bin/mv,/usr/sbin/chown
       END
+  }
+
+  exec { 'homebrew_auto_upgrade':
+    path        => ['/opt/homebrew/bin', '/usr/bin', '/bin', '/usr/sbin', '/sbin'],
+    cwd         => '/tmp',
+    command     => '/bin/bash -l -c "/opt/homebrew/bin/brew update && /opt/homebrew/bin/brew upgrade --greedy"',
+    environment => [
+      "HOME=${home}",
+      'HOMEBREW_NO_ENV_HINTS=1',
+      'HOMEBREW_NO_AUTO_UPDATE=1',
+    ],
+    user        => 'brew',
+    onlyif      => '/bin/bash -l -c "/opt/homebrew/bin/brew outdated --quiet 2>/dev/null" | /usr/bin/grep -E -q "^[a-zA-Z0-9_-]+"',
+    timeout     => 600,
   }
 }
