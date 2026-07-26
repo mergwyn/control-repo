@@ -28,10 +28,10 @@ profile::platform::baseline::darwin::timemachine::user: timemachine
 profile::platform::baseline::darwin::timemachine::password: "%{lookup('secrets::timemachine')}"
 profile::platform::baseline::darwin::timemachine::exclusions: [
   "/Users/Shared/Virtual Machines/",
-  "~/.ollama/models/",
-  "~/Library/Containers/com.utmapp.UTM/Data/",
-  ~/src/cluster-gitops/.git",
-  ~/src/control-repo/.git",
+  "/Users/gary/.ollama/models/",
+  "/Users/gary/Library/Containers/com.utmapp.UTM/Data/",
+  "/Users/gary/src/cluster-gitops/.git",
+  "/Users/gary/src/control-repo/.git",
 ]
 
 profile::platform::baseline::darwin::activedirectory::admin_user: "%{lookup('secrets::domain_user')}"
