@@ -55,7 +55,7 @@ class profile::platform::baseline::darwin::brew {
     command     => '/opt/homebrew/bin/brew update && /opt/homebrew/bin/brew upgrade',
     environment => ["HOME=${home}"],
     user        => 'brew',
-    onlyif      => '/opt/homebrew/bin/brew outdated --quiet | /usr/bin/grep -q .',
+    onlyif      => '/opt/homebrew/bin/brew outdated --quiet 2>/dev/null | /usr/bin/grep -E -q "^[a-zA-Z0-9_-]+"',
     timeout     => 600,
   }
 
