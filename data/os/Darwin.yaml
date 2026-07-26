@@ -32,8 +32,8 @@ profile::platform::baseline::darwin::timemachine::exclusions: [
   "~gary/odrive/",
 ]
 
-profile::platform::baseline::darwin::activedirectory::admin_user: administrator
-profile::platform::baseline::darwin::activedirectory::admin_password: "%{lookup('secrets:domain')}"
+profile::platform::baseline::darwin::activedirectory::admin_user: "%{lookup('secrets:domain_user')}"
+profile::platform::baseline::darwin::activedirectory::admin_password: "%{lookup('secrets:domain_password')}"
 profile::platform::baseline::darwin::activedirectory::admin_group_list: [
   'THECLARKHOME\Administrators',
   'THECLARKHOME\Domain Admins',
