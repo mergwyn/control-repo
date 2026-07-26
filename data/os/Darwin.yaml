@@ -28,8 +28,6 @@ profile::platform::baseline::darwin::timemachine::user: timemachine
 profile::platform::baseline::darwin::timemachine::password: "%{lookup('secrets::timemachine')}"
 profile::platform::baseline::darwin::timemachine::exclusions: [
   "/Users/Shared/Virtual Machines/",
-  "/Users/Shared/Amazon Photos Downloads",
-  "~gary/odrive/",
 ]
 
 profile::platform::baseline::darwin::activedirectory::admin_user: "%{lookup('secrets::domain_user')}"
