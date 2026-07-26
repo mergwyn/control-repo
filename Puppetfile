@@ -66,7 +66,7 @@ mod 'puppet/systemd', :git => 'https://github.com/camptocamp/puppet-systemd', :t
 mod 'puppet/unattended_upgrades', '9.1.0'
 mod 'puppet/unbound', '8.1.0'
 mod 'puppet/zabbix', '10.0.0'
-mod 'saz/ssh', '14.1.0'
+mod 'saz/ssh', '15.0.0'
 mod 'saz/sudo', '9.0.2'
 mod 'saz/timezone', '7.0.0'
 mod 'stm/debconf', '8.0.0'
