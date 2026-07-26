@@ -5,6 +5,7 @@ class profile::platform::baseline::darwin {
   include profile::platform::baseline::darwin::brew
   include profile::platform::baseline::darwin::timemachine
   include profile::platform::baseline::darwin::packages
+  contain profile::platform::baseline::darwin::puppet
 
   File {
     owner => 'root',

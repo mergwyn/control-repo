@@ -15,6 +15,7 @@ class profile::platform::baseline::debian {
   include profile::platform::baseline::debian::sysctl
   #include profile::platform::baseline::debian::systemd_timers
   include profile::platform::baseline::debian::usb
+  include profile::platform::baseline::debian::puppet
 
   if $facts['virtual'] == 'lxc' {
     include profile::app::monitoring::node_exporter
