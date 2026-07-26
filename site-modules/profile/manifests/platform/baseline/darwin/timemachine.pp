@@ -14,12 +14,13 @@
 #   Absolute paths to exclude from Time Machine backups.
 #
 class profile::platform::baseline::darwin::timemachine (
-  Optional[String] $host       = undef,
-  Optional[String] $share      = undef,
-  Optional[String] $user       = undef,
-  Optional[String] $password   = undef,
-  Integer          $quota_mb   = 0,
-  Array[String]    $exclusions = [],
+  Optional[String]   $host        = undef,
+  Optional[String]   $share       = undef,
+  Optional[String]   $user        = undef,
+  Optional[String]   $password    = undef,
+  Enum['smb', 'afp'] $mount_style = 'smb',
+  Integer            $quota_mb    = 0,
+  Array[String]      $exclusions  = [],
 ) {
   if $host and $share {
     unless $user and $password {
@@ -28,8 +29,8 @@ class profile::platform::baseline::darwin::timemachine (
 
     exec { 'set timemachine destination':
       path    => $facts['path'],
-      unless  => "tmutil destinationinfo | grep -q \"${host}\"",
-      command => "tmutil setdestination -a \"afp://${user}:${password.unwrap}@${host}/${share}\"",
+      unless  => "tmutil destinationinfo | grep -iq \"${host}\"",
+      command => "tmutil setdestination -a \"${mount_syle}://${user}:${password.unwrap}@${host}/${share}\"",
     }
   }
 
