@@ -22,7 +22,7 @@ profile::platform::baseline::packages::objects:
 
 profile::platform::baseline::darwin::loginwindow::text: "%{facts.networking.hostname}"
 
-profile::platform::baseline::darwin::timemachine::host: delta.local
+profile::platform::baseline::darwin::timemachine::host: "delta.${trusted['domain']}"
 profile::platform::baseline::darwin::timemachine::share: timemachine
 profile::platform::baseline::darwin::timemachine::user: timemachine
 profile::platform::baseline::darwin::timemachine::password: "%{lookup('secrets::timemachine')}"
