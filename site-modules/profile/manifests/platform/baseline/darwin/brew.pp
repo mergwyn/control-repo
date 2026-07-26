@@ -51,6 +51,14 @@ class profile::platform::baseline::darwin::brew {
     ],
   }
 
+  exec { 'homebrew_auto_upgrade':
+    command     => '/opt/homebrew/bin/brew update && /opt/homebrew/bin/brew upgrade',
+    environment => ["HOME=${home}"],
+    user        => 'brew',
+    onlyif      => '/opt/homebrew/bin/brew outdated --quiet | /usr/bin/grep -q .',
+    timeout     => 600,
+  }
+
   sudo::conf { 'brew':
     content => 'gary ALL=(brew) NOPASSWD: /usr/local/bin/brew,/bin/bash',
   }
