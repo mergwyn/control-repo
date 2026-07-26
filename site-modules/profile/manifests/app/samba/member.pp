@@ -12,8 +12,8 @@ class profile::app::samba::member {
     security            => 'ADS',         # * security mode.
     krbconf             => true,         # * Deploy krb5.conf fil e (default: true)
     nsswitch            => false,         # * Add winbind to nsswitch,
-    adminuser           => lookup('defaults::adminuser'),
-    adminpassword       => lookup('secrets::domain'),
+    adminuser           => lookup('secrets::domainuser'),
+    adminpassword       => lookup('secrets::domain_password'),
     globaloptions       => {
       'kerberos method'                           => 'secrets and keytab',
       'ntlm auth'                                 => 'yes',
