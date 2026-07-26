@@ -14,12 +14,12 @@
 #   Absolute paths to exclude from Time Machine backups.
 #
 class profile::platform::baseline::darwin::timemachine (
-  Optional[String]            $host       = undef,
-  Optional[String]            $share      = undef,
-  Optional[String]            $user       = undef,
-  Optional[Sensitive[String]] $password   = undef,
-  Integer                     $quota_mb   = 0,
-  Array[String]                $exclusions = [],
+  Optional[String] $host       = undef,
+  Optional[String] $share      = undef,
+  Optional[String] $user       = undef,
+  Optional[String] $password   = undef,
+  Integer          $quota_mb   = 0,
+  Array[String]    $exclusions = [],
 ) {
   if $host and $share {
     unless $user and $password {

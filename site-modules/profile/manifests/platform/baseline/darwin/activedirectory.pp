@@ -32,21 +32,21 @@
 #   AD groups granted local admin rights, e.g. 'DOMAIN\\Domain Admins'.
 #
 class profile::platform::baseline::darwin::activedirectory (
-  String                  $admin_user,
-  Sensitive[String]       $admin_password,
-  String                  $domain                     = $trusted['domain'],
-  Optional[String]        $ou                         = undef,
-  String                  $computer_name              = $trusted['hostname'],
-  Enum['smb', 'afp']      $mount_style                = 'smb',
-  Boolean                 $create_mobile_account       = true,
-  Boolean                 $warn_before_mobile_account  = true,
-  Boolean                 $force_home_local            = true,
-  Boolean                 $use_windows_unc_path        = true,
-  String                  $default_shell               = '/bin/bash',
-  String                  $uid_attribute               = 'uidNumber',
-  String                  $gid_attribute               = 'gidNumber',
-  String                  $ggid_attribute              = 'gidNumber',
-  Array[String]           $admin_group_list            = [],
+  String             $admin_user,
+  String             $admin_password,
+  String             $domain                     = $trusted['domain'],
+  Optional[String]   $ou                         = undef,
+  String             $computer_name              = $trusted['hostname'],
+  Enum['smb', 'afp'] $mount_style                = 'smb',
+  Boolean            $create_mobile_account       = true,
+  Boolean            $warn_before_mobile_account  = true,
+  Boolean            $force_home_local            = true,
+  Boolean            $use_windows_unc_path        = true,
+  String             $default_shell               = '/bin/bash',
+  String             $uid_attribute               = 'uidNumber',
+  String             $gid_attribute               = 'gidNumber',
+  String             $ggid_attribute              = 'gidNumber',
+  Array[String]      $admin_group_list            = [],
 ) {
   $mobile_flag    = $create_mobile_account ? { true => 'enable', false => 'disable' }
   $confirm_flag   = $warn_before_mobile_account ? { true => 'enable', false => 'disable' }

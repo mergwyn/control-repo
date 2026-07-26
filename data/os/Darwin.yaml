@@ -25,7 +25,7 @@ profile::platform::baseline::darwin::loginwindow::text: "%{facts.networking.host
 profile::platform::baseline::darwin::timemachine::host: delta.local
 profile::platform::baseline::darwin::timemachine::share: timemachine
 profile::platform::baseline::darwin::timemachine::user: backup
-profile::platform::baseline::darwin::timemachine::password: "%{alias('secrets:backup')}"
+profile::platform::baseline::darwin::timemachine::password: "%{lookup('secrets:backup')}"
 profile::platform::baseline::darwin::timemachine::exclusions: [
   "/Users/Shared/Virtual Machines/",
   "/Users/Shared/Amazon Photos Downloads",
@@ -33,7 +33,7 @@ profile::platform::baseline::darwin::timemachine::exclusions: [
 ]
 
 profile::platform::baseline::darwin::activedirectory::admin_user: "%{lookup('secrets:domain_user')}"
-profile::platform::baseline::darwin::activedirectory::admin_password: "%{alias('secrets:domain_password')}"
+profile::platform::baseline::darwin::activedirectory::admin_password: "%{lookup('secrets:domain_password')}"
 profile::platform::baseline::darwin::activedirectory::admin_group_list: [
   'THECLARKHOME\Administrators',
   'THECLARKHOME\Domain Admins',
