@@ -50,9 +50,9 @@ class profile::platform::baseline::darwin::brew {
       User['brew'],
     ],
   }
-
   exec { 'homebrew_auto_upgrade':
     path        => ['/opt/homebrew/bin', '/usr/bin', '/bin', '/usr/sbin', '/sbin'],
+    cwd         => '/tmp',
     command     => '/bin/bash -l -c "/opt/homebrew/bin/brew update && /opt/homebrew/bin/brew upgrade"',
     environment => [
       "HOME=${home}",
