@@ -30,7 +30,7 @@ class profile::platform::baseline::darwin::timemachine (
     exec { 'set timemachine destination':
       path    => $facts['path'],
       unless  => "tmutil destinationinfo | grep -iq \"${host}\"",
-      command => "tmutil setdestination -a \"${mount_syle}://${user}:${password.unwrap}@${host}/${share}\"",
+      command => "tmutil setdestination -a \"${mount_style}://${user}:${password.unwrap}@${host}/${share}\"",
     }
   }
 
