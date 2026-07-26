@@ -17,7 +17,7 @@ class profile::app::k8s_tools {
     'Darwin': {
       Package {
         ensure   => latest,
-        provider => 'brew',
+        provider => 'homebrew',
       }
 
       package { [

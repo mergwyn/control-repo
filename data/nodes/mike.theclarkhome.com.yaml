@@ -1,7 +1,7 @@
 ---
 
 profile::platform::baseline::packages::defaults:
-  ensure: present
+  ensure: latest
   provider: homebrew
 profile::platform::baseline::packages::objects:
   autozimu/homebrew-formulas/unison-fsmonitor: {}

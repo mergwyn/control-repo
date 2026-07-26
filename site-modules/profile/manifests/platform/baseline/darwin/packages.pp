@@ -11,7 +11,7 @@ class profile::platform::baseline::darwin::packages {
     'yq',
   ]
   package { $taps:
-    ensure   => 'present',
+    ensure   => 'latest',
     provider => 'brew',
   }
 }
