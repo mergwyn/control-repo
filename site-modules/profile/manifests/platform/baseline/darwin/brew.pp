@@ -53,7 +53,10 @@ class profile::platform::baseline::darwin::brew {
 
   exec { 'homebrew_auto_upgrade':
     command     => '/opt/homebrew/bin/brew update && /opt/homebrew/bin/brew upgrade',
-    environment => ["HOME=${home}"],
+    environment => [
+      "HOME=${home}",
+      'HOMEBREW_NO_ENV_HINTS=1',
+    ],
     user        => 'brew',
     onlyif      => '/opt/homebrew/bin/brew outdated --quiet 2>/dev/null | /usr/bin/grep -E -q "^[a-zA-Z0-9_-]+"',
     timeout     => 600,
