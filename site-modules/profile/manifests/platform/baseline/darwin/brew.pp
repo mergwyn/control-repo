@@ -64,6 +64,9 @@ class profile::platform::baseline::darwin::brew {
   }
 
   sudo::conf { 'brew':
-    content => 'gary ALL=(brew) NOPASSWD: /usr/local/bin/brew,/bin/bash',
+    content => @(END),
+      gary ALL=(brew) NOPASSWD: /usr/local/bin/brew,/bin/bash
+      brew ALL=(root) NOPASSWD: /usr/bin/touch,/bin/rm,/bin/cp /bin/mv,/usr/sbin/chown
+      END
   }
 }
