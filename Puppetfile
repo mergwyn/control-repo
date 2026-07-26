@@ -89,7 +89,7 @@ mod 'puppetlabs/cron_core', '2.0.2'
 mod 'puppetlabs/exec', '4.0.0'
 
 # windows
-mod 'puppetlabs/chocolatey', '8.0.3'
+mod 'puppetlabs/chocolatey', '9.0.0'
 mod 'puppetlabs/dism', '1.3.1'
 mod 'puppetlabs/registry', '5.0.3'
 mod 'puppetlabs/concat', '10.0.1'
