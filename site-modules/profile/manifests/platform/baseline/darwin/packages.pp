@@ -12,6 +12,6 @@ class profile::platform::baseline::darwin::packages {
   ]
   package { $taps:
     ensure   => 'latest',
-    provider => 'brew',
+    provider => 'homebrew',
   }
 }
