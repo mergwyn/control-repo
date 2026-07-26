@@ -30,8 +30,8 @@ profile::platform::baseline::darwin::timemachine::exclusions: [
   "/Users/Shared/Virtual Machines/",
   "/Users/gary/.ollama/models/",
   "/Users/gary/Library/Containers/com.utmapp.UTM/Data/",
-  "/Users/gary/src/cluster-gitops/.git",
-  "/Users/gary/src/control-repo/.git",
+  "/Users/gary/src/cluster-gitops/.git/",
+  "/Users/gary/src/control-repo/.git/",
 ]
 
 profile::platform::baseline::darwin::activedirectory::admin_user: "%{lookup('secrets::domain_user')}"
