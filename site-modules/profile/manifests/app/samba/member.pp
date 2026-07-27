@@ -12,7 +12,7 @@ class profile::app::samba::member {
     security            => 'ADS',         # * security mode.
     krbconf             => true,         # * Deploy krb5.conf fil e (default: true)
     nsswitch            => false,         # * Add winbind to nsswitch,
-    adminuser           => lookup('secrets::domainuser'),
+    adminuser           => lookup('secrets::domain_user'),
     adminpassword       => lookup('secrets::domain_password'),
     globaloptions       => {
       'kerberos method'                           => 'secrets and keytab',
