@@ -17,7 +17,6 @@ jobs:
 
 
       - run: which pdk; pdk --version; which ruby || echo "no ruby on PATH"; env | grep -i path
-      - run: /opt/puppetlabs/pdk/private/ruby/*/bin/ruby scripts/generate-fixtures
       - name: Generate fixtures from Puppetfile
         if: ${{ github.repository_owner == 'mergwyn' }}
         run: |
