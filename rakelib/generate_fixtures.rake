@@ -1,4 +1,4 @@
-require_relative '../scripts/generate-fixtures.rb'
+require_relative '../scripts/generate-fixtures'
 
    desc 'Regenerate .fixtures.yml from the Puppetfile'
    task :fixtures do
