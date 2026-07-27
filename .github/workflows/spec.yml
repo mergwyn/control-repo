@@ -111,6 +111,13 @@ jobs:
           echo "LANG=C.UTF-8" >> $GITHUB_ENV
           echo "LC_ALL=C.UTF-8" >> $GITHUB_ENV
 
+      - name: Stub brew binary for compile tests
+        run: |
+          sudo mkdir -p /usr/local/bin
+          printf '#!/bin/sh\nexit 0\n' | sudo tee /usr/local/bin/brew > /dev/null
+          sudo chmod +x /usr/local/bin/brew
+          sudo chown "$(id -u):$(id -g)" /usr/local/bin/brew   # must NOT be root-owned
+
       - name: Run parallel_spec tests
         run: |
           bundle exec rake parallel_spec
