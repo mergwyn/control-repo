@@ -32,11 +32,16 @@ class profile::app::cloudflared (
       release  => 'any',
       repos    => 'main',
       key      => {
-        'id'     => 'CC94B39C77AE7342A68B89628A682D308D4E5E73',
+        'name'   => 'cloudflare-main.gpg',
         'source' => 'https://pkg.cloudflare.com/cloudflare-main.gpg',
       },
       before   => Package['cloudflared'],
     }
+    apt::key { 'cloudflare-legacy':
+      ensure => absent,
+      id     => 'CC94B39C77AE7342A68B89628A682D308D4E5E73',
+    }
+
   }
 
   elsif $facts['os']['family'] == 'RedHat' {
