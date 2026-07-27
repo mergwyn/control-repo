@@ -2,7 +2,7 @@
 #
 class profile::platform::baseline::debian::packages {
   Package {
-    provider =>  'apt',
+    provider => 'apt',
   }
 
   $install_packages = [
