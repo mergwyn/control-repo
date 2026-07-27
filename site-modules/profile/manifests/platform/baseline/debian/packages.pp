@@ -1,6 +1,13 @@
 # @summary Packages for Debian
 #
 class profile::platform::baseline::debian::packages {
+  Package {
+    provider => $facts['os']['family'] ? {
+      'Debian' => 'apt',
+      'RedHat' => 'yum',
+      default  => undef,
+    },
+  }
   $install_packages = [
     'vim',
     'anacron',
