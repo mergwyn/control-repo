@@ -20,16 +20,9 @@
       ]
     },
     {
-      "operatingsystem": "windows",
+      "operatingsystem": "Darwin",
       "operatingsystemrelease": [
-        "12"
-      ]
-    },
-    {
-      "operatingsystem": "macos",
-      "operatingsystemrelease": [
-        "11",
-        "10.15"
+        "26"
       ]
     }
   ],
