@@ -53,7 +53,7 @@ jobs:
         id: get-matrix
         run: |
           if [ '${{ github.repository_owner }}' == 'mergwyn' ]; then
-            bundle exec matrix_from_metadata_v3 --exclude-platforms '["Darwin-26"]'
+            bundle exec matrix_from_metadata_v3 --platform-exclude '["Darwin-26"]'
           else
             echo  "::set-output name=spec_matrix::{}"
           fi
