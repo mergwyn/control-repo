@@ -27,8 +27,5 @@ jobs:
           printf '#!/bin/sh\nexit 0\n' > /usr/local/bin/brew
           chmod +x /usr/local/bin/brew
 
-      - name: Set up PDK
-        uses: puppetlabs/action-pdk_install@v0.4.0   # or whatever you're using today
-
       - name: Run unit tests
         run: pdk test unit -c
