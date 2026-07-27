@@ -41,7 +41,6 @@ class profile::app::cloudflared (
       ensure => absent,
       id     => 'CC94B39C77AE7342A68B89628A682D308D4E5E73',
     }
-
   }
 
   elsif $facts['os']['family'] == 'RedHat' {
