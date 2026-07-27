@@ -15,13 +15,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-
-      - run: which pdk; pdk --version; which ruby || echo "no ruby on PATH"; env | grep -i path
       - name: Generate fixtures from Puppetfile
         if: ${{ github.repository_owner == 'mergwyn' }}
         run: |
+          eval $(pdk env)
           echo Generate .fixtures.yaml from Puppetfile
-          pdk bundle exec ruby scripts/generate-fixtures
+          ruby scripts/generate-fixtures
 
       - name: Stub brew binary for compile tests
         run: |
