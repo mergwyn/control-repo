@@ -2,12 +2,9 @@
 #
 class profile::platform::baseline::debian::packages {
   Package {
-    provider => $facts['os']['family'] ? {
-      'Debian' => 'apt',
-      'RedHat' => 'yum',
-      default  => undef,
-    },
+    provider =>  'apt',
   }
+
   $install_packages = [
     'vim',
     'anacron',
