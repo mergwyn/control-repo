@@ -15,13 +15,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Generate fixtures from Puppetfile
-        if: ${{ github.repository_owner == 'mergwyn' }}
-        run: |
-          eval $(pdk env)
-          echo Generate .fixtures.yaml from Puppetfile
-          ruby scripts/generate-fixtures
-
       - name: Stub brew binary for compile tests
         run: |
           mkdir -p /usr/local/bin
