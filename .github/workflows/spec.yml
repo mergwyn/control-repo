@@ -7,12 +7,13 @@ on:
   pull_request:
     types:
       - opened
-      - updated
+      - edited
+
     branches:
-      'renovate/**'
+      - 'renovate/**'
   push:
     branches:
-      production
+      - production
 
 #concurrency:
 #  group: ${{ github.head_ref }}
@@ -52,7 +53,7 @@ jobs:
         id: get-matrix
         run: |
           if [ '${{ github.repository_owner }}' == 'mergwyn' ]; then
-            bundle exec matrix_from_metadata_v2 --exclude-platforms '["Darwin-18","Darwin-20","windows-10","windows-11"]'
+            bundle exec matrix_from_metadata_v3 --exclude-platforms '["Darwin-26"]'
           else
             echo  "::set-output name=spec_matrix::{}"
           fi
