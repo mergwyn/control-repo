@@ -21,11 +21,15 @@ fixtures = {
 puppetfile.modules.each do |mod|
   case mod.class.to_s
   when 'R10K::Module::Git'
-    # Handles Git (GitHub/GitLab/etc)
-    fixtures['fixtures']['repositories'][mod.name] = {
+    ref = mod.instance_variable_get(:@ref) || 'master'
+    entry = {
       'repo' => mod.instance_variable_get(:@remote),
-      'ref'  => mod.instance_variable_get(:@ref) || 'master'
+      'ref'  => ref
     }
+    # git clone -b <ref> works for branches and tags alike (just not raw commit SHAs),
+    # and ensures a local branch/ref exists before fixtures.rb does `git reset --hard <ref>`
+    entry['branch'] = ref unless ref =~ /\A[0-9a-f]{7,40}\z/i
+    fixtures['fixtures']['repositories'][mod.name] = entry
   when 'R10K::Module::Forge'
     # Handles Puppet Forge
     fixtures['fixtures']['forge_modules'][mod.name] = {
