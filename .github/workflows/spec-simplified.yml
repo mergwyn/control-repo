@@ -1,8 +1,17 @@
 name: Spec tests (Simplified)
 
 on:
+  schedule:
+    - cron: '0 0 1 * *'        # Monthly bit-rot check
+  workflow_dispatch:           # Manual trigger from GitHub UI
   push:
+    branches:
+      - production              # Runs when merged into production
   pull_request:
+    types: [opened, synchronize, reopened] # Runs when PR is opened, updated, or reopened
+    branches:
+      - production              # PRs targeting production
+      - 'renovate/**'           # PRs created by Renovate Keeps Renovate updates tested
 
 jobs:
   spec-simplifed:
