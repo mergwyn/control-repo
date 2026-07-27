@@ -1,0 +1,34 @@
+name: Spec tests (Simplified)
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  spec:
+    runs-on: ubuntu-latest
+    container: puppet/pdk:latest
+    env:
+      LANG: en_US.UTF-8
+      LC_ALL: en_US.UTF-8
+      RUBYOPT: "-Eutf-8"
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Generate fixtures from Puppetfile
+        if: ${{ github.repository_owner == 'mergwyn' }}
+        run: |
+          echo Generate .fixtures.yaml from Puppetfile
+          scripts/generate-fixtures
+
+      - name: Stub brew binary for compile tests
+        run: |
+          mkdir -p /usr/local/bin
+          printf '#!/bin/sh\nexit 0\n' > /usr/local/bin/brew
+          chmod +x /usr/local/bin/brew
+
+      - name: Set up PDK
+        uses: puppetlabs/action-pdk_install@v0.4.0   # or whatever you're using today
+
+      - name: Run unit tests
+        run: pdk test unit -c
