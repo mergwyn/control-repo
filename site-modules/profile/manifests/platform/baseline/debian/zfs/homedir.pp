@@ -10,7 +10,7 @@ class profile::platform::baseline::debian::zfs::homedir (
     group   => 'root',
     mode    => '0750',
     content => @("EOF"/L$),
-      #!/bin/bash
+      #!/usr/bin/env bash
       # Don't create ZFS datasets for root or system accounts
       if [ "\$PAM_USER" = "root" ]; then
           exit 0
@@ -38,7 +38,7 @@ class profile::platform::baseline::debian::zfs::homedir (
     type      => 'session',
     control   => 'optional',
     module    => 'pam_exec.so',
-    arguments => ['open_only', '/usr/local/sbin/mkhomedir-zfs'],
+    arguments => ['type=open_session', '/usr/local/sbin/mkhomedir-zfs'],
     require   => File['/usr/local/sbin/mkhomedir-zfs'],
   }
 }
