@@ -18,11 +18,11 @@
 #   giving enough time to intervene and not slowing routine reboots.
 #
 # @example Basic usage with default timeout
-#   include platform::baseline::debian::boot::refind
+#   include profile::platform::baseline::debian::boot::refind
 #
 # @example Overriding the timeout via Hiera
-#   platform::baseline::debian::boot::refind::timeout: 10
-class platform::baseline::debian::boot::refind (
+#   profile::platform::baseline::debian::boot::refind::timeout: 10
+class profile::platform::baseline::debian::boot::refind (
   Integer $timeout = 5,
 ) {
   if $facts['has_refind'] {
