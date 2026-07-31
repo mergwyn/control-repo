@@ -3,7 +3,7 @@ class profile::platform::baseline::darwin::puppet {
     # Only load/kickstart the daemon if the agent process isn't running at all
     exec { 'ensure_puppet_daemon_running':
       command => '/bin/launchctl bootstrap system /Library/LaunchDaemons/org.voxpupuli.puppet.plist',
-      unless  => '/bin/pgrep -f "puppet agent"',
+      unless  => '/opt/homebrew/bin/pgrep -f "puppet agent"',
     }
   } else {
     service { 'puppet':
@@ -12,4 +12,3 @@ class profile::platform::baseline::darwin::puppet {
     }
   }
 }
-
