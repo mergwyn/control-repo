@@ -31,6 +31,20 @@ class profile::platform::baseline::debian::boot::refind (
       line  => "timeout ${timeout}",
       match => '^timeout\s',
     }
+
+    file { '/boot/efi/EFI/BOOT':
+      ensure => directory,
+    }
+
+    # Copy rEFInd itself into the standard UEFI fallback path, so
+    # firmware can find and boot it even if NVRAM entries are lost.
+    # Uses a local file:// source since this is copying within the
+    # same node, not distributing from the Puppet server.
+    file { '/boot/efi/EFI/BOOT/BOOTX64.EFI':
+      ensure  => file,
+      source  => 'file:///boot/efi/EFI/refind/refind_x64.efi',
+      require => File['/boot/efi/EFI/BOOT'],
+    }
   } else {
     notify { 'refind_not_present':
       message => "platform::baseline::debian::boot::refind: skipped, no refind.conf found on ${trusted['certname']}",
