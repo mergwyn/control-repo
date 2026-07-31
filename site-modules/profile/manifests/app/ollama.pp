@@ -36,7 +36,7 @@ class profile::app::ollama (
   Enum['present', 'installed', 'latest'] $ensure         = 'installed',
   Stdlib::Host                         $listen_host      = '127.0.0.1',
   Stdlib::Port                         $listen_port      = 11434,
-  Stdlib::Absolutepath                 $models_dir       = '/Users/Shared/ollama/models',
+  Stdlib::Absolutepath                 $models_dir       = '/opt/ollama/models',
   Enum['running', 'stopped']           $service_ensure   = 'running',
   Boolean                              $service_enable   = true,
   String[1]                            $listen_origins   = '*',
