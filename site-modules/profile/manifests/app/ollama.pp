@@ -76,7 +76,7 @@ class profile::app::ollama (
     owner   => 'root',
     group   => 'wheel',
     mode    => '0644',
-    content => epp('profile/app/ollama_launchd.plist.epp', {
+    content => epp('profile/ollama_launchd.plist.epp', {
       'user'           => $user,
       'ollama_bin'     => $ollama_bin,
       'listen_host'    => $listen_host,
