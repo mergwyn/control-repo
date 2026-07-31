@@ -65,7 +65,7 @@ class profile::app::ollama (
   file { $models_dir:
     ensure => directory,
     owner  => $user,
-    group  => 'staff',
+    group  => '513',
     mode   => '0750',
   }
 
