@@ -19,9 +19,6 @@
     <string>serve</string>
   </array>
 
-  <key>UserName</key>
-  <string><%= $user %></string>
-
   <key>EnvironmentVariables</key>
   <dict>
     <key>OLLAMA_HOST</key>
@@ -30,6 +27,8 @@
     <string><%= $models_dir %></string>
     <key>OLLAMA_ORIGINS</key>
     <string><%= $listen_origins %></string>
+    <key>HOME</key>
+    <string>/Users/<%= $user %></string>
   </dict>
 
   <key>RunAtLoad</key>
