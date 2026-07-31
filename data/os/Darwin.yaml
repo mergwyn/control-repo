@@ -28,8 +28,7 @@ profile::platform::baseline::darwin::timemachine::user: timemachine
 profile::platform::baseline::darwin::timemachine::password: "%{lookup('secrets::timemachine')}"
 profile::platform::baseline::darwin::timemachine::exclusions: [
   "/Users/Shared/Virtual Machines/",
-  "/Users/gary/.ollama/models/",
-  "/Users/Shared/ollama/models/",
+  "/opt/ollama/models/",
   # "/Users/gary/Library/Containers/com.utmapp.UTM/Data/",
   "/Users/gary/src/cluster-gitops/.git/",
   "/Users/gary/src/control-repo/.git/",
