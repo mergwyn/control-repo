@@ -68,7 +68,6 @@ class profile::platform::baseline::debian::boot::zfsbootmenu (
   String  $kernel_cmdline        = 'rd.vconsole.keymap=gb ro quiet loglevel=0',
   Optional[String] $kernel_cmdline_extra = undef,
 ) {
-
   if $facts['has_zfsbootmenu'] {
     $effective_cmdline = $kernel_cmdline_extra ? {
       undef   => $kernel_cmdline,
