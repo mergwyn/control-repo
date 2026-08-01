@@ -7,4 +7,5 @@
 class profile::platform::baseline::debian::boot {
   include profile::platform::baseline::debian::boot::refind
   include profile::platform::baseline::debian::boot::zbm_regen
+  include profile::platform::baseline::debian::boot::zfsbootmenu
 }

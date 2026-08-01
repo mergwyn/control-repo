@@ -1,0 +1,27 @@
+<%- |
+  String  $efi_dir,
+  Boolean $manage_images,
+  Integer $versions,
+  String  $kernel_cmdline
+| -%>
+Global:
+  ManageImages: <%= $manage_images ? { true => 'true', false => 'false' } %>
+  BootMountPoint: "/boot/efi"
+  DracutConfDir: "/etc/zfsbootmenu/dracut.conf.d"
+  PreHooksDir: "/etc/zfsbootmenu/generate-zbm.pre.d"
+  PostHooksDir: "/etc/zfsbootmenu/generate-zbm.post.d"
+  InitCPIOConfig: "/etc/zfsbootmenu/mkinitcpio.conf"
+
+Components:
+  ImageDir: "<%= $efi_dir %>"
+  Versions: <%= $versions ? { 0 => 'false', default => $versions } %>
+  Enabled: true
+
+EFI:
+  ImageDir: "<%= $efi_dir %>"
+  Versions: <%= $versions ? { 0 => 'false', default => $versions } %>
+  Enabled: false
+  SplashImage: "/etc/zfsbootmenu/splash.bmp"
+
+Kernel:
+  CommandLine: "<%= $kernel_cmdline %>"
