@@ -12,7 +12,7 @@ describe 'role::main_server' do
       let(:facts) do
         os_facts.merge(
           has_refind: true,
-          has_zfsbootmenu: true
+          has_zfsbootmenu: true,
         )
       end
       let(:trusted_facts) { { 'pp_role' => 'main_server' } }
