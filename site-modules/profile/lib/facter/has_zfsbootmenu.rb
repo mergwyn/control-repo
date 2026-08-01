@@ -7,6 +7,6 @@
 # a manually maintained list of which hosts currently run ZBM.
 Facter.add(:has_zfsbootmenu) do
   setcode do
-    !!Facter::Core::Execution.which('generate-zbm')
+    Facter::Core::Execution.which('generate-zbm')
   end
 end
