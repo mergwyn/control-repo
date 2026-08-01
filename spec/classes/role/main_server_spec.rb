@@ -9,7 +9,12 @@ describe 'role::main_server' do
       # Puppet::Util::Log.level = :debug
       # Puppet::Util::Log.newdestination(:console)
 
-      let(:facts) { os_facts }
+      let(:facts) do
+        os_facts.merge({
+          has_refind: true,
+          has_zfsbootmenu: true
+        })
+      end
       let(:trusted_facts) { { 'pp_role' => 'main_server' } }
       let(:node) { 'unittest.theclarkhome.com' }
       let(:pre_condition) do
