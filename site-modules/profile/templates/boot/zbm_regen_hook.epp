@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# Managed by Puppet — platform::baseline::debian::boot::zbm_regen
+# Regenerates the ZFSBootMenu image after a kernel package update, so
+# the boot image stays current with installed kernel and ZFS versions.
+set -euo pipefail
+
+if command -v generate-zbm >/dev/null 2>&1; then
+  generate-zbm
+fi

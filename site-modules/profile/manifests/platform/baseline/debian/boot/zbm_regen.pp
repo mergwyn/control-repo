@@ -27,7 +27,7 @@ class profile::platform::baseline::debian::boot::zbm_regen {
       owner   => 'root',
       group   => 'root',
       mode    => '0755',
-      content => epp('platform/boot/zbm_regen_hook.epp'),
+      content => epp('profile/boot/zbm_regen_hook.epp'),
     }
   } else {
     notify { 'zfsbootmenu_not_present':
