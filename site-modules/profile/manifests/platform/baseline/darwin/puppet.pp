@@ -6,4 +6,3 @@ class profile::platform::baseline::darwin::puppet {
     pattern   => 'puppet agent',
   }
 }
-
