@@ -11,11 +11,11 @@ describe 'role::mac_laptop' do
       # it { pp facts }  # uncomment to dump the facts loaded
 
       let(:facts) do
-              os_facts.merge(
-                # Standard macOS path for Homebrew on Apple Silicon or Intel
-                homebrew_bin: '/usr/local/bin/brew'
-              )
-            end
+        os_facts.merge(
+          # Standard macOS path for Homebrew on Apple Silicon or Intel
+          homebrew_bin: '/usr/local/bin/brew',
+        )
+      end
       let(:trusted_facts) { { 'pp_role' => 'mac_laptop' } }
       let(:node) { 'unittest.theclarkhome.com' }
       let(:pre_condition) do
