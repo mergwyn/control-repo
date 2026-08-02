@@ -74,7 +74,7 @@ class profile::platform::baseline::debian::boot::zfsbootmenu (
       default => "${kernel_cmdline} ${kernel_cmdline_extra}",
     }
 
-    package { ['git', 'make', 'dracut']:
+    package { ['make', 'dracut']:
       ensure => installed,
     }
 
@@ -91,7 +91,7 @@ class profile::platform::baseline::debian::boot::zfsbootmenu (
     }
 
     exec { 'zfsbootmenu_build':
-      command     => 'make core dracut',
+      command     => '/usr/bin/make core dracut',
       cwd         => $src_dir,
       refreshonly => true,
       subscribe   => Vcsrepo[$src_dir],
