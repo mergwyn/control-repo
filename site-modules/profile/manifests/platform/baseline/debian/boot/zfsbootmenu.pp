@@ -59,7 +59,7 @@
 #   Optional per-node kernel command line additions
 #
 class profile::platform::baseline::debian::boot::zfsbootmenu (
-  String  $version               = 'v3.0.1', # renovate: datasource=github-tags depName=zbm-dev/zfsbootmenu
+  String  $version               = 'v3.1.0', # renovate: datasource=github-tags depName=zbm-dev/zfsbootmenu
   String  $repo                  = 'https://github.com/zbm-dev/zfsbootmenu.git',
   String  $src_dir               = '/usr/local/src/zfsbootmenu',
   String  $efi_dir               = '/boot/efi/EFI/ubuntu',
