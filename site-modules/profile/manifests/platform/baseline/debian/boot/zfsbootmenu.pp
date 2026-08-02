@@ -98,7 +98,7 @@ class profile::platform::baseline::debian::boot::zfsbootmenu (
       require     => Package['make'],
     }
 
-    file { '/etc/zfsbootmenu':
+    file { ['/etc/zfsbootmenu', '/etc/zfsbootmenu/generate-zbm.post.d']:
       ensure => directory,
     }
 
@@ -131,6 +131,7 @@ class profile::platform::baseline::debian::boot::zfsbootmenu (
     notify { "ZFSBootMenu ${version} installed — run generate-zbm manually":
       subscribe => Exec['zfsbootmenu_build'],
     }
+
     file { '/etc/update-motd.d/99-zfsbootmenu':
       ensure  => file,
       mode    => '0755',
@@ -155,6 +156,7 @@ class profile::platform::baseline::debian::boot::zfsbootmenu (
         #!/bin/sh
         rm -f /etc/zfsbootmenu/NEEDS_REBUILD
         EOF
+      require => File['/etc/zfsbootmenu/generate-zbm.post.d'],
     }
   }
 }
