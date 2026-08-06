@@ -33,7 +33,7 @@ class profile::platform::baseline::debian::zfs::snapshotter (
         require    => File[$target],
       }
       -> python::pip { $type:
-        ensure       => 'present',
+        ensure       => '1.6.0',
         pkgname      => $type,
         pip_provider => 'pip',
         virtualenv   => $venv,
@@ -59,13 +59,15 @@ class profile::platform::baseline::debian::zfs::snapshotter (
         require => File[$configdir],
       }
       $default_settings = {
-        'rpool' => {
+        'default' => {
           'frequent' => '4',
           'hourly'   => '24',
           'daily'    => '7',
           'weekly'   => '4',
           'monthly'  => '3',
           'yearly'   => '0',
+        },
+        'rpool' => {
           'snap'     => 'no',
           'clean'    => 'yes',
         },
@@ -73,6 +75,9 @@ class profile::platform::baseline::debian::zfs::snapshotter (
           'snap' => 'yes',
         },
         'rpool/home' => {
+          'snap' => 'yes',
+        },
+        'rpool/home/*' => {
           'snap' => 'yes',
         },
       }

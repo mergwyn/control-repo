@@ -6,9 +6,11 @@ class profile::platform::baseline::darwin::puppet {
       unless  => '/opt/homebrew/bin/pgrep -f "puppet agent"',
     }
   } else {
-    service { 'puppet':
-      ensure => running,
-      enable => true,
-    }
+     service { 'puppet':
+       ensure    => running,
+       enable    => true,
+       hasstatus => false, # Bypass launchctl status check bug on macOS
+       pattern   => 'puppet agent',
+     }
   }
 }
