@@ -146,7 +146,7 @@ class profile::platform::baseline::debian::boot::zfsbootmenu (
           echo "Run: generate-zbm"
           echo ""
         fi
-        EOF
+        | EOF
     }
 
     file { '/etc/zfsbootmenu/generate-zbm.post.d/99-clear-marker':
@@ -155,7 +155,7 @@ class profile::platform::baseline::debian::boot::zfsbootmenu (
       content => @("EOF"/),
         #!/bin/sh
         rm -f /etc/zfsbootmenu/NEEDS_REBUILD
-        EOF
+        | EOF
       require => File['/etc/zfsbootmenu/generate-zbm.post.d'],
     }
   }
