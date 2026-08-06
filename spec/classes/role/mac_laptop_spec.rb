@@ -8,8 +8,14 @@ describe 'role::mac_laptop' do
       # add these two lines in a single test block to enable puppet and hiera debug mode
       # Puppet::Util::Log.level = :debug
       # Puppet::Util::Log.newdestination(:console)
+      # it { pp facts }  # uncomment to dump the facts loaded
 
-      let(:facts) { os_facts }
+      let(:facts) do
+        os_facts.merge(
+          # Standard macOS path for Homebrew on Apple Silicon or Intel
+          homebrew_bin: '/usr/local/bin/brew',
+        )
+      end
       let(:trusted_facts) { { 'pp_role' => 'mac_laptop' } }
       let(:node) { 'unittest.theclarkhome.com' }
       let(:pre_condition) do

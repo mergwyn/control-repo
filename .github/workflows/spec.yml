@@ -97,8 +97,6 @@ jobs:
           echo Generate .fixtures.yaml from Puppetfile
           scripts/generate-fixtures.rb
           echo Post generate .fixtures.yml
-          ls -l .fixtures.yml
-          cat .fixtures.yml
 
       - name: Print bundle environment
         run: |

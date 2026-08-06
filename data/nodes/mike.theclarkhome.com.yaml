@@ -1,8 +1,13 @@
 ---
+classes:
+  - profile::app::ollama  # TODO find a better way to do this
+
+profile::app::ollama::listen_host: '0.0.0.0'
 
 profile::platform::baseline::packages::defaults:
   ensure: latest
   provider: homebrew
+
 profile::platform::baseline::packages::objects:
   autozimu/homebrew-formulas/unison-fsmonitor: {}
   db-browser-for-sqlite: {}

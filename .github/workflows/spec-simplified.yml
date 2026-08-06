@@ -1,0 +1,34 @@
+name: Spec tests (Simplified)
+
+on:
+  schedule:
+    - cron: '0 0 1 * *'        # Monthly bit-rot check
+  workflow_dispatch:           # Manual trigger from GitHub UI
+  push:
+    branches:
+      - production              # Runs when merged into production
+  pull_request:
+    types: [opened, synchronize, reopened] # Runs when PR is opened, updated, or reopened
+    branches:
+      - production              # PRs targeting production
+      - 'renovate/**'           # PRs created by Renovate Keeps Renovate updates tested
+
+jobs:
+  spec-simplifed:
+    runs-on: ubuntu-latest
+    container: puppet/pdk:3.4.0.1.64.ge5fd1ee
+    env:
+      LANG: en_US.UTF-8
+      LC_ALL: en_US.UTF-8
+      RUBYOPT: "-Eutf-8"
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Stub brew binary for compile tests
+        run: |
+          mkdir -p /usr/local/bin
+          printf '#!/bin/sh\nexit 0\n' > /usr/local/bin/brew
+          chmod +x /usr/local/bin/brew
+
+      - name: Run unit tests
+        run: pdk test unit -c

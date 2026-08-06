@@ -3,7 +3,6 @@
 node: 'default.theclarkhome.com'
 release: 'amd64'
 serverversion: '8.10.0'
-service_provider: 'systemd'
 
 jackett_version: '0.16.656'
 radarr_version: '0.2.0.1480'
@@ -14,8 +13,3 @@ python3_release: '3.8'
 python3_version: '3.8.10'
 
 has_compiler: true
-networking:
-  primary: eth0
-  interfaces:
-    eth0:
-     ip: 1.2.3.4

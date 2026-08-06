@@ -1,0 +1,46 @@
+<%- | String[1]        $user,
+      Stdlib::Absolutepath $ollama_bin,
+      Stdlib::Host      $listen_host,
+      Stdlib::Port      $listen_port,
+      Stdlib::Absolutepath $models_dir,
+      String[1]         $listen_origins,
+| -%>
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.ollama.serve</string>
+
+  <key>ProgramArguments</key>
+  <array>
+    <string><%= $ollama_bin %></string>
+    <string>serve</string>
+  </array>
+
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>OLLAMA_HOST</key>
+    <string><%= $listen_host %>:<%= $listen_port %></string>
+    <key>OLLAMA_MODELS</key>
+    <string><%= $models_dir %></string>
+    <key>OLLAMA_ORIGINS</key>
+    <string><%= $listen_origins %></string>
+    <key>HOME</key>
+    <string>/Users/<%= $user %></string>
+  </dict>
+
+  <key>RunAtLoad</key>
+  <true/>
+
+  <key>KeepAlive</key>
+  <true/>
+
+  <key>StandardOutPath</key>
+  <string>/var/log/ollama.log</string>
+
+  <key>StandardErrorPath</key>
+  <string>/var/log/ollama.err.log</string>
+</dict>
+</plist>
