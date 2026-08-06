@@ -11,5 +11,6 @@ ssh_version: '7.6'
 chocolateyversion: '0.10.15'
 python3_release: '3.8'
 python3_version: '3.8.10'
+initramfs_provider: dracut
 
 has_compiler: true
