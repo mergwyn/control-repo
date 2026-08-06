@@ -142,8 +142,8 @@ class profile::platform::baseline::debian::boot::zfsbootmenu (
         MARKER="/etc/zfsbootmenu/NEEDS_REBUILD"
         if [ -f "\$MARKER" ]; then
           echo ""
-          echo "⚠️  ZFSBootMenu needs regeneration"
-          echo "   Run: generate-zbm"
+          echo "ZFSBootMenu needs regeneration"
+          echo "Run: generate-zbm"
           echo ""
         fi
         EOF
