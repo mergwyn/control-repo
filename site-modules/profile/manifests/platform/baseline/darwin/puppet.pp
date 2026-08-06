@@ -10,7 +10,7 @@ class profile::platform::baseline::darwin::puppet {
       ensure    => running,
       enable    => true,
       hasstatus => false, # Bypass launchctl status check bug on macOS
-      pattern   => 'puppet agent'
+      pattern   => 'puppet agent',
     }
   }
 }
