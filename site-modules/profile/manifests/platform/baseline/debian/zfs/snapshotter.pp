@@ -77,9 +77,6 @@ class profile::platform::baseline::debian::zfs::snapshotter (
         'rpool/home' => {
           'snap' => 'yes',
         },
-        'rpool/home/*' => {
-          'snap' => 'yes',
-        },
       }
       inifile::create_ini_settings($default_settings + $settings, $defaults)
 
