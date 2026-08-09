@@ -43,7 +43,10 @@ profile::platform::baseline::debian::netplan::bridges:
       stp: false
       forward_delay: 0
 
-
+# The nvme drive has potential issues with power management, so we disable it
+# to avoid starting and stopping the drive too
+profile::platform::baseline::debian::boot::zfsbootmenu::kernel_cmdline_extra:
+  "nvme_core.default_ps_max_latency_us=0"
 
 # Config for lxd server
 lxd::preseed:
