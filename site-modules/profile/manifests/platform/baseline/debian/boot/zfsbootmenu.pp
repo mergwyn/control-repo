@@ -112,6 +112,7 @@ class profile::platform::baseline::debian::boot::zfsbootmenu (
         'versions'       => $versions,
         'kernel_cmdline' => $effective_cmdline,
       }),
+      require => Exec['zfsbootmenu_build'],
     }
 
     # Add notifcation if a manual rebuild of zbm is required
