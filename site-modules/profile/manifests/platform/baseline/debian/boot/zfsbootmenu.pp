@@ -3,13 +3,25 @@
 # @description
 # Installs and maintains ZFSBootMenu from upstream Git using a pinned version.
 #
-# This class manages:
+# This class owns the full ZFSBootMenu boot chain on nodes where it applies:
 #
-# * ZFSBootMenu source checkout
-# * ZFSBootMenu build/install
-# * ZFSBootMenu configuration
+# * The ZFSBootMenu-specific dracut setup it needs to build
+#   (contained as the private `boot::zfsbootmenu::dracut_setup` class -
+#   see that class for why this isn't a top-level, unconditional class)
+# * ZFSBootMenu source checkout, build/install, configuration
 # * Manual rebuild notification
 # * Optional kernel post-install regeneration hook
+# * The refind_linux.conf boot stanza that tells rEFInd how to boot via
+#   ZFSBootMenu - rEFInd's own config/binary are managed separately by
+#   profile::platform::baseline::debian::boot::refind, which boot.pp
+#   orders before this class
+#
+# Nodes are initially provisioned with ZFSBootMenu already installed via
+# https://github.com/Sithuk/ubuntu-server-zfsbootmenu, which is what makes
+# has_zfsbootmenu true from the start - this class's job from a Puppet
+# run's perspective is to bring src_dir under git management and take over
+# from there, cleaning up the non-git directory that script leaves behind
+# if needed (see the zfsbootmenu_src_cleanup exec).
 #
 # By default Puppet does not generate EFI boot images. Instead it creates
 # a NEEDS_REBUILD marker requiring an operator to run generate-zbm.
@@ -35,7 +47,6 @@
 # @param src_dir
 #   Local checkout location.
 #
-# @param efi_dir
 #   EFI image output directory.
 #
 # @param manage_images
@@ -70,9 +81,26 @@ class profile::platform::baseline::debian::boot::zfsbootmenu (
       default => "${kernel_cmdline} ${kernel_cmdline_extra}",
     }
 
+    # ZBM-specific dracut packages + config, owned and contained here -
+    # see boot::zfsbootmenu::dracut_setup for why.
+    contain profile::platform::baseline::debian::boot::zfsbootmenu::dracut_setup
+
     # Install zbm from the github repo
     package { 'make': ensure => installed, }
     file { '/usr/local/src': ensure => directory, }
+
+    # Node provisioning (github.com/Sithuk/ubuntu-server-zfsbootmenu) sets
+    # up ZFSBootMenu directly, without leaving a git working copy at
+    # src_dir. On a freshly-provisioned node that leaves a non-git
+    # directory sitting where vcsrepo wants to clone, which it refuses to
+    # touch. Clear it out first - but only when it genuinely isn't a git
+    # repo yet, so this is a no-op on every run once our own clone exists.
+    exec { 'zfsbootmenu_src_cleanup':
+      command => "/bin/rm -rf ${src_dir}",
+      onlyif  => "/usr/bin/test -e ${src_dir} -a ! -d ${src_dir}/.git",
+      require => File['/usr/local/src'],
+      before  => Vcsrepo[$src_dir],
+    }
 
     vcsrepo { $src_dir:
       ensure   => present,
@@ -89,7 +117,7 @@ class profile::platform::baseline::debian::boot::zfsbootmenu (
       subscribe   => Vcsrepo[$src_dir],
       require     => [
         Package['make'],
-        File['/etc/dracut.conf.d/99-zfsbootmenu.conf'],
+        Class['profile::platform::baseline::debian::boot::zfsbootmenu::dracut_setup'],
       ],
     }
 

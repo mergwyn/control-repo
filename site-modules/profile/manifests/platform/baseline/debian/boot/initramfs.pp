@@ -1,19 +1,30 @@
-# @summary Manage initramfs generation consistently across platforms
+# @summary Manage initramfs generation for non-ZFSBootMenu Debian systems
 #
 # @description
 # This class provides a unified interface for rebuilding initramfs across
-# heterogeneous environments (physical hosts, VMs, and containers).
+# heterogeneous environments (physical hosts, VMs, and containers) that are
+# NOT using ZFSBootMenu.
 #
-# It abstracts the underlying initramfs implementation and ensures that:
+# Nodes with `has_zfsbootmenu` true manage their own dracut build entirely
+# through `profile::platform::baseline::debian::boot::zfsbootmenu` (and its
+# private `dracut_setup` sub-class) and should NOT be routed through this
+# class's `dracut` provider - doing so sets up two independent things
+# rebuilding the same initramfs. The `initramfs_provider` fact should report
+# `'none'` on ZFSBootMenu nodes; see the guard rail in `boot.pp`.
 #
-# * dracut is used on modern ZFSBootMenu systems
+# This class abstracts the underlying initramfs implementation for
+# everything else and ensures that:
+#
+# * dracut is used where a node's fact selects it (non-ZBM dracut systems)
 # * initramfs-tools is supported for legacy Debian systems
-# * no action is taken on container platforms (e.g. LXC)
+# * no action is taken on container platforms (e.g. LXC), via the `none`
+#   provider
 #
 # A single rebuild command is exposed:
 #   /usr/local/sbin/rebuild-initramfs
 #
-# Other classes should notify:
+# Other classes (outside of ZFSBootMenu, which manages its own rebuild)
+# should notify:
 #   Exec['rebuild_initramfs']
 #
 # This avoids hardcoding initramfs tooling throughout the codebase and
@@ -29,9 +40,10 @@
 #   The initramfs implementation to use.
 #
 #   Valid values:
-#     - 'dracut'            : Use dracut to generate initramfs (preferred for ZBM)
+#     - 'dracut'            : Use dracut to generate initramfs (non-ZBM systems)
 #     - 'initramfs-tools'   : Use Debian initramfs-tools
-#     - 'none'              : No initramfs (containers)
+#     - 'none'              : No initramfs (containers, and ZFSBootMenu nodes
+#                              which manage dracut themselves)
 #
 class profile::platform::baseline::debian::boot::initramfs (
   Enum['dracut', 'initramfs-tools', 'none', 'unknown'] $provider = $facts['initramfs_provider'],
