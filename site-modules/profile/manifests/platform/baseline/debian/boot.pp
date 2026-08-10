@@ -20,10 +20,14 @@
 #   unconditionally on any Debian-family node — nothing here requires the
 #   caller to know which boot chain a given node uses.
 #
-#   `initramfs_provider` reports `'none'` on any node where ZFSBootMenu is
-#   present (see lib/facter/initramfs_provider.rb), so `boot::initramfs`'s
-#   dracut path and `boot::zfsbootmenu`'s own dracut build never overlap -
-#   this is enforced at the fact level, not re-checked here.
+#   `initramfs_provider` reports `'dracut'` on ZFSBootMenu nodes too (they
+#   have dracut installed as a build dependency). That's intentional, not
+#   an overlap to resolve: `boot::initramfs`'s `Exec['rebuild_initramfs']`
+#   is a general "a kernel/driver config changed, refresh the initramfs"
+#   hook other classes notify (e.g. e1000e driver params), independent of
+#   `boot::zfsbootmenu`'s own `Exec['zfsbootmenu_build']`, which rebuilds
+#   ZBM's own EFI image on version/config changes. Both are legitimate,
+#   separate consumers of dracut on the same node.
 #
 #   `boot::refind` is explicitly ordered before `boot::zfsbootmenu`, since
 #   the latter writes into rEFInd's directory structure.
