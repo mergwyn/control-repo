@@ -89,7 +89,7 @@ class profile::platform::baseline::debian::boot::zfsbootmenu (
       subscribe   => Vcsrepo[$src_dir],
       require     => [
         Package['make'],
-        Class['profile::platform::baseline::debian::boot::dracut'],
+        File['/etc/dracut.conf.d/99-zfsbootmenu.conf'],
       ],
     }
 
@@ -127,7 +127,7 @@ class profile::platform::baseline::debian::boot::zfsbootmenu (
       subscribe => Exec['zfsbootmenu_build'],
     }
 
-    # Clear down the notificaiton via a bm posi install hook
+    # Clear down the notificaton via a zbm post install hook
     file { '/etc/zfsbootmenu/generate-zbm.post.d/99-clear-marker':
       ensure  => file,
       owner   => 'root',
@@ -156,7 +156,18 @@ class profile::platform::baseline::debian::boot::zfsbootmenu (
       }
     }
 
-    # Tidy update initramfs hooks
+    file { '/boot/efi/EFI/ubuntu/refind_linux.conf':
+      ensure  => file,
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0755',
+      content => @(EOF),
+        "Boot default"  "zfsbootmenu:POOL=rpool zbm.import_policy=hostid zbm.set_hostid zbm.timeout=5 ro quiet loglevel=0"
+        "Boot to menu"  "zfsbootmenu:POOL=rpool zbm.import_policy=hostid zbm.set_hostid zbm.show ro quiet loglevel=0"
+        | EOF
+    }
+
+    # Tidy updateinitramfs hooks
     file {
       [
         '/etc/kernel/postinst.d/initramfs-tools',

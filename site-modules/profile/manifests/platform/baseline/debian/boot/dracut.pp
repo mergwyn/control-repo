@@ -31,7 +31,8 @@ class profile::platform::baseline::debian::boot::dracut {
     mode    => '0644',
     content => @("EOF"/L),
       install_items+=" /etc/hostid "
-      add_dracutmodules+=" zfs "
+      force_dracutmodules+=" zfs "
+      hostonly="no"
       | EOF
   }
 }
