@@ -19,4 +19,6 @@ profile::platform::baseline::debian::netplan::ethernets:
         via: "%{lookup('defaults::gateway')}"
     nameservers:
       search: "%{alias('defaults::dns::search')}"
-      addresses: "%{alias('defaults::dns::nameservers')}"
+      addresses:
+      - "%{lookup('defaults::dns::nameservers.1')}"
+      - "%{lookup('defaults::dns::nameservers.0')}"
