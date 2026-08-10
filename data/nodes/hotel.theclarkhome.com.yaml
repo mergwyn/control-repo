@@ -15,14 +15,16 @@ profile::platform::baseline::debian::mounts::objects:
     options: 'defaults'
 
 node::ip: "%{lookup('defaults::subnet')}.10"
+node::interface: "eno1"
+
 profile::platform::baseline::debian::netplan::ethernets:
-  eno1:
+ "%{lookup('node::interface')}":
     dhcp4: no
     mtu: 9000
 profile::platform::baseline::debian::netplan::bridges:
   br0:
     interfaces:
-      - eno1
+      - "%{lookup('node::interface')}"
     mtu: 9000
     dhcp4: no
     dhcp6: no
@@ -40,8 +42,6 @@ profile::platform::baseline::debian::netplan::bridges:
     parameters:
       stp: false
       forward_delay: 0
-
-
 
 # Config for lxd server
 lxd::preseed:

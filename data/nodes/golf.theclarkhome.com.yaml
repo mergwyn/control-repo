@@ -4,14 +4,15 @@ classes:
   - profile::platform::baseline::debian::virtual::docker
 
 node::ip: "%{lookup('defaults::subnet')}.11"
+node::interface: "enp2s0"
 profile::platform::baseline::debian::netplan::ethernets:
-  enp2s0:
+ "%{lookup('node::interface')}":
     dhcp4: no
     mtu: 9000
 profile::platform::baseline::debian::netplan::bridges:
   br0:
     interfaces:
-      - enp2s0
+      - "%{lookup('node::interface')}"
     mtu: 9000
     dhcp4: no
     dhcp6: no

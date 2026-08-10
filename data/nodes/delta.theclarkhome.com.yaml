@@ -15,14 +15,16 @@ profile::platform::baseline::debian::mounts::objects:
     options: 'defaults'
 
 node::ip: "%{lookup('defaults::subnet')}.14"
+node::interface: "enp99s0"
+
 profile::platform::baseline::debian::netplan::ethernets:
-  enp99s0:
+ "%{lookup('node::interface')}":
     dhcp4: no
     mtu: 9000
 profile::platform::baseline::debian::netplan::bridges:
   br0:
     interfaces:
-      - enp99s0
+      - "%{lookup('node::interface')}"
     mtu: 9000
     dhcp4: no
     dhcp6: no

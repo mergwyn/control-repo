@@ -5,7 +5,6 @@ classes:
 packages:
   - bridge-utils
 
-node::ip: "%{lookup('defaults::subnet')}.13"
 profile::platform::baseline::debian::mounts::defaults:
   ensure: "mounted"
 profile::platform::baseline::debian::mounts::objects:
@@ -15,14 +14,17 @@ profile::platform::baseline::debian::mounts::objects:
     fstype: 'ext4'
     options: 'defaults'
 
+node::ip: "%{lookup('defaults::subnet')}.13"
+node::interface: "eno1"
+
 profile::platform::baseline::debian::netplan::ethernets:
-  eno1:
+ "%{lookup('node::interface')}":
     dhcp4: no
     mtu: 9000
 profile::platform::baseline::debian::netplan::bridges:
   br0:
     interfaces:
-      - eno1
+      - "%{lookup('node::interface')}"
     mtu: 9000
     dhcp4: no
     dhcp6: no

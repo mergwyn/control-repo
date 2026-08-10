@@ -7,8 +7,10 @@ profile::app::dhcpd::role:         primary
 profile::app::dhcpd::peer_address: "%{lookup('defaults::dns::nameservers.0')}"
 
 node::ip: "%{lookup('defaults::dns::nameservers.1')}"
+node::interface: "eth0"
+
 profile::platform::baseline::debian::netplan::ethernets:
-  eth0:
+ "%{lookup('node::interface')}":
     dhcp4: no
     addresses:
       - "%{lookup('node::ip')}/%{lookup('defaults::bits')}"
