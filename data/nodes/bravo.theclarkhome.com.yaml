@@ -6,11 +6,12 @@ classes:
 profile::app::dhcpd::role:         primary
 profile::app::dhcpd::peer_address: "%{lookup('defaults::subnet')}.21"
 
+node::ip: "%{lookup('defaults::subnet')}.22"
 profile::platform::baseline::debian::netplan::ethernets:
   eth0:
     dhcp4: no
     addresses:
-      - "%{lookup('defaults::subnet')}.22/%{lookup('defaults::bits')}"
+      - "%{lookup('node::ip')}/%{lookup('defaults::bits')}"
     routes:
       - to: default
         via: "%{lookup('defaults::gateway')}"

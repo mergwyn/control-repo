@@ -3,6 +3,7 @@ classes:
   - profile::platform::baseline::debian::netplan
   - profile::platform::baseline::debian::virtual::docker
 
+node::ip: "%{lookup('defaults::subnet')}.11"
 profile::platform::baseline::debian::netplan::ethernets:
   enp2s0:
     dhcp4: no
@@ -15,7 +16,7 @@ profile::platform::baseline::debian::netplan::bridges:
     dhcp4: no
     dhcp6: no
     addresses:
-      - "%{lookup('defaults::subnet')}.11/%{lookup('defaults::bits')}"
+      - "%{lookup('node::ip')}/%{lookup('defaults::bits')}"
     #link-local: [ ipv4 ]
     routes:
       - to: "0.0.0.0/0"
