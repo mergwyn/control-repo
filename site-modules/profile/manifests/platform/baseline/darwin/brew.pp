@@ -61,7 +61,7 @@ class profile::platform::baseline::darwin::brew {
   exec { 'homebrew_auto_upgrade':
     path        => ['/opt/homebrew/bin', '/usr/bin', '/bin', '/usr/sbin', '/sbin'],
     cwd         => '/tmp',
-    command     => '/bin/bash -l -c "/opt/homebrew/bin/brew update && /opt/homebrew/bin/brew upgrade --greedy"',
+    command     => '/bin/bash -l -c "/opt/homebrew/bin/brew update && /opt/homebrew/bin/brew upgrade"',
     environment => [
       "HOME=${home}",
       'HOMEBREW_NO_ENV_HINTS=1',
