@@ -3,10 +3,9 @@ classes:
   - profile::platform::baseline::debian::netplan
 
 profile::app::dhcpd::role: secondary
-profile::app::dhcpd::peer_address: "%{lookup('defaults::subnet')}.22"
+profile::app::dhcpd::peer_address: "%{lookup('defaults::dns::nameservers.1')}"
 
-node::ip: "%{lookup('defaults::subnet')}.21"
-
+node::ip: "%{lookup('defaults::dns::nameservers.0')}"
 profile::platform::baseline::debian::netplan::ethernets:
   eth0:
     dhcp4: no
@@ -18,5 +17,5 @@ profile::platform::baseline::debian::netplan::ethernets:
     nameservers:
       search: "%{alias('defaults::dns::search')}"
       addresses:
-        - "%{lookup('defaults::subnet')}.21"
-        - "%{lookup('defaults::subnet')}.22"
+      - "%{lookup('defaults::dns::nameservers.1')}"
+      - "%{lookup('defaults::dns::nameservers.0')}"
