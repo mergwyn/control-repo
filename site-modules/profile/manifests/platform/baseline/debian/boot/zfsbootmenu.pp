@@ -15,6 +15,9 @@
 #   ZFSBootMenu - rEFInd's own config/binary are managed separately by
 #   profile::platform::baseline::debian::boot::refind, which boot.pp
 #   orders before this class
+# * Optional SSH access into the ZFSBootMenu environment itself, via the
+#   contained `boot::zfsbootmenu::remote_access` class - opt-in per node,
+#   see that class for configuration
 #
 # Nodes are initially provisioned with ZFSBootMenu already installed via
 # https://github.com/Sithuk/ubuntu-server-zfsbootmenu, which is what makes
@@ -47,6 +50,7 @@
 # @param src_dir
 #   Local checkout location.
 #
+# @param efi_dir
 #   EFI image output directory.
 #
 # @param manage_images
@@ -64,6 +68,15 @@
 # @param auto_regenerate
 #   Install kernel postinst hook to automatically run generate-zbm.
 #
+# @param zbm_timeout
+#   Seconds the "Boot default" rEFInd entry waits (via zbm.timeout) before
+#   auto-booting the default boot environment. This is also the effective
+#   window to SSH in via boot::zfsbootmenu::remote_access before the
+#   initramfs (and dropbear with it) is gone - 5s default is fine for
+#   normal unattended reboots but is too tight to reliably catch remotely.
+#   Raise this on nodes where remote_access is enabled, or connect via the
+#   separate "Boot to menu" entry (zbm.show), which waits indefinitely.
+#
 class profile::platform::baseline::debian::boot::zfsbootmenu (
   String $version = 'v3.1.0', # renovate: datasource=github-tags depName=zbm-dev/zfsbootmenu
   String $repo = 'https://github.com/zbm-dev/zfsbootmenu.git',
@@ -74,6 +87,7 @@ class profile::platform::baseline::debian::boot::zfsbootmenu (
   String $kernel_cmdline = 'rd.vconsole.keymap=gb ro quiet loglevel=0',
   Optional[String] $kernel_cmdline_extra = undef,
   Boolean $auto_regenerate = true,
+  Integer $zbm_timeout = 5,
 ) {
   if $facts['has_zfsbootmenu'] {
     $effective_cmdline = $kernel_cmdline_extra ? {
@@ -125,9 +139,15 @@ class profile::platform::baseline::debian::boot::zfsbootmenu (
     file { [
       '/etc/zfsbootmenu',
       '/etc/zfsbootmenu/generate-zbm.post.d',
+      '/etc/zfsbootmenu/dracut.conf.d',
     ]:
       ensure => directory,
     }
+
+    # Opt-in per node via Hiera (see the class itself) - SSH access into
+    # the ZFSBootMenu environment, replacing reliance on the blikvm for
+    # remote recovery.
+    contain profile::platform::baseline::debian::boot::zfsbootmenu::remote_access
 
     file { '/etc/zfsbootmenu/config.yaml':
       ensure  => file,
@@ -189,10 +209,7 @@ class profile::platform::baseline::debian::boot::zfsbootmenu (
       owner   => 'root',
       group   => 'root',
       mode    => '0755',
-      content => @(EOF),
-        "Boot default"  "zfsbootmenu:POOL=rpool zbm.import_policy=hostid zbm.set_hostid zbm.timeout=5 ro quiet loglevel=0"
-        "Boot to menu"  "zfsbootmenu:POOL=rpool zbm.import_policy=hostid zbm.set_hostid zbm.show ro quiet loglevel=0"
-        | EOF
+      content => "\"Boot default\"  \"zfsbootmenu:POOL=rpool zbm.import_policy=hostid zbm.set_hostid zbm.timeout=${zbm_timeout} ro quiet loglevel=0\"\n\"Boot to menu\"  \"zfsbootmenu:POOL=rpool zbm.import_policy=hostid zbm.set_hostid zbm.show ro quiet loglevel=0\"\n",
     }
 
     # Tidy updateinitramfs hooks
