@@ -4,7 +4,6 @@ classes:
   - profile::platform::baseline::debian::ssh::zbm_recovery
 
 profile::platform::baseline::debian::boot::zfsbootmenu::remote_access::enable: false
-profile::platform::baseline::debian::boot::zfsbootmenu::zbm_timeout: 30
 
 node::ip: "%{lookup('defaults::subnet')}.11"
 node::interface: "enp2s0"

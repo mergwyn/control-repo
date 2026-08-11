@@ -87,7 +87,7 @@ class profile::platform::baseline::debian::boot::zfsbootmenu (
   String $kernel_cmdline = 'rd.vconsole.keymap=gb ro quiet loglevel=0',
   Optional[String] $kernel_cmdline_extra = undef,
   Boolean $auto_regenerate = true,
-  Integer $zbm_timeout = 5,
+  Integer $zbm_timeout = 30,
 ) {
   if $facts['has_zfsbootmenu'] {
     $effective_cmdline = $kernel_cmdline_extra ? {
