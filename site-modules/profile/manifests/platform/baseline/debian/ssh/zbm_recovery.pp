@@ -28,16 +28,22 @@
 #
 # @param private_key
 #   The recovery keypair's private key, from encrypted Hiera (hiera-eyaml).
+#   Typed as a plain String here because that's what eyaml_lookup_key
+#   actually returns - it decrypts to a string, it doesn't wrap it as
+#   Sensitive. Wrapped in Sensitive() below before it touches the file
+#   resource, so it's still redacted from Puppet run reports.
 #
 class profile::platform::baseline::debian::ssh::zbm_recovery (
-  Sensitive[String[1]] $private_key,
+  String[1] $private_key,
 ) {
+  $private_key_sensitive = Sensitive($private_key)
+
   file { '/etc/ssh/zbm_recovery':
     ensure    => file,
     owner     => 'root',
     group     => 'root',
     mode      => '0400',
-    content   => $private_key,
+    content   => $private_key_sensitive,
     show_diff => false,
   }
 
