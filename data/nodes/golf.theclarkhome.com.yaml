@@ -1,7 +1,9 @@
 ---
 classes:
   - profile::platform::baseline::debian::netplan
-  - profile::platform::baseline::debian::virtual::docker
+  - profile::platform::baseline::debian::ssh::zbm_recovery
+
+profile::platform::baseline::debian::boot::zfsbootmenu::remote_access::enable: false
 
 node::ip: "%{lookup('defaults::subnet')}.11"
 node::interface: "enp2s0"
