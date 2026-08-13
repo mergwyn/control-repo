@@ -51,9 +51,9 @@ class profile::platform::baseline::debian::boot::refind (
       source  => 'file:///boot/efi/EFI/refind/refind_x64.efi',
       require => File['/boot/efi/EFI/BOOT'],
     }
-  } else {
-    notify { 'refind_not_present':
-      message => "platform::baseline::debian::boot::refind: skipped, no refind.conf found on ${trusted['certname']}",
-    }
+    # } else {
+    # notify { 'refind_not_present':
+    #   message => "platform::baseline::debian::boot::refind: skipped, no refind.conf found on ${trusted['certname']}",
+    #  }
   }
 }
