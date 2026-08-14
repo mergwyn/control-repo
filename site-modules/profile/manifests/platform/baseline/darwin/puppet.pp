@@ -32,7 +32,7 @@ class profile::platform::baseline::darwin::puppet {
             <string>--verbose</string>
             <string>--no-daemonize</string>
             <string>--logdest</string>
-            <string>console</string>
+            <string>/var/log/puppetlabs/puppet/puppet.log</string>
           </array>
 
           <key>RunAtLoad</key>
