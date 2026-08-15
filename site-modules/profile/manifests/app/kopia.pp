@@ -8,8 +8,10 @@
 # @param folderafter
 # @param maintenance
 # @param args
-# @param backup_files_exclude
 # @param repos
+# @param snaps
+# @param backup_files_exclude
+# @param common_excludes
 #
 class profile::app::kopia (
   Stdlib::Absolutepath $topdir       = '/etc/kopia',
@@ -21,17 +23,17 @@ class profile::app::kopia (
   Boolean $maintenance               = false,
   String $args                       = '--log-level=error --no-progress',
   Array[String] $repos               = [],
-  Array[String] $snaps               = '[/]',
+  Array[Stdlib::Absolutepath] $snaps = ['/'],
   Optional[
-    Variant[
-      Variant[String,Array[String]],
-      Hash[String, Variant[String,Array[String]]]
+    Hash[
+      Stdlib::Absolutepath,
+      Variant[String, Array[String]]
     ]
   ] $backup_files_exclude            = undef,
+  Array[String] $common_excludes     = [],
 ) {
   include profile::app::scripts
-
-# Install kopia
+  # Install kopia
   apt::keyring { 'kopia-keyring.gpg':
     source => 'puppet:///modules/profile/kopia-keyring.gpg',
   }
@@ -43,15 +45,13 @@ class profile::app::kopia (
     keyring       => '/etc/apt/keyrings/kopia-keyring.gpg',
   }
   package { ['kopia']: }
-  file {['/etc/apt/sources.list.d/kopia.list', '/etc/apt/keyrings/kopia-keyring.asc']: ensure => absent }
-
-# setup directory structure
-  file {[$topdir, $config, $snapbefore, $snapafter, $folderbefore, $folderafter]:
+  file { ['/etc/apt/sources.list.d/kopia.list', '/etc/apt/keyrings/kopia-keyring.asc']: ensure => absent }
+  # setup directory structure
+  file { [$topdir, $config, $snapbefore, $snapafter, $folderbefore, $folderafter]:
     ensure => directory,
   }
-# TODO replicate code to add pre and postdump backuppc scripts
-
-# Daily backup script
+  # TODO replicate code to add pre and postdump backuppc scripts
+  # Daily backup script
   shellvar {
     default:
       ensure => present,
@@ -75,9 +75,7 @@ class profile::app::kopia (
   file { '/etc/cron.weekly/kopia-maintenance':
     ensure => absent,
   }
-
   $bws_token = lookup('secrets::kopia::bws_token')
-
   file { "${topdir}/.bws_env":
     ensure  => file,
     owner   => 'root',
@@ -86,18 +84,30 @@ class profile::app::kopia (
     content => "export BWS_ACCESS_TOKEN=${bws_token}\n",
   }
 
-# Create backup excludes from the backuppc values
-# TODO switch to kopia values
-  $excludes = $backup_files_exclude ? {
-    undef   => [],
-    default => $backup_files_exclude.keys.sort.map |$key| {
-      $backup_files_exclude[$key]
-    }.flatten,
+  # Create path-aware .kopiaignore files, one per snapshot root, merging
+  # common excludes with any path-specific excludes for that root.
+  $exclude_paths = $backup_files_exclude ? {
+    undef   => {},
+    default => $backup_files_exclude,
   }
 
-  # TODO: make this path aware rather than dropping /.kopiagnore
-  file { '/.kopiaignore':
-    ensure  => file,
-    content => "${join($excludes, "\n")}\n",
+  # Union of declared snapshot roots and any exclude-hash keys, so a path
+  # with no specific excludes still gets the common set rather than nothing.
+  $all_snap_paths = ($snaps + $exclude_paths.keys).unique
+
+  $all_snap_paths.each |$path| {
+    $path_rules = $exclude_paths[$path] ? {
+      undef   => [],
+      String  => [$exclude_paths[$path]],
+      default => $exclude_paths[$path],
+    }
+    $content = ($common_excludes + $path_rules).unique
+
+    if !empty($content) {
+      file { "${path}/.kopiaignore":
+        ensure  => file,
+        content => "${join($content, "\n")}\n",
+      }
+    }
   }
 }
