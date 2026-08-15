@@ -8,12 +8,6 @@ profile::platform::baseline::packages::objects:
 puppetdb::listen_address: "0.0.0.0"
 puppetdb::master::config::puppetdb_server: "%{facts.networking.fqdn}"
 
-#profile::app::backuppc::client::backup_files_exclude:
-
 # kopia client
-profile::app::kopia::backup_files_exclude:
-  "/":
-    - "/var/lib/postgresql"
-
 profile::app::kopia::snaps:
   - /var/lib/postgresql/ # PuppetDB's backing store
