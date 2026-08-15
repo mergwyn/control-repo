@@ -49,6 +49,7 @@ profile::platform::baseline::debian::zfs::snapshotter::settings:
     snap: "no"
 
 profile::app::kopia::maintenance: false
+profile::app::kopia::backup_files_exclude:
   "/opt":
     - "/appdata/*/logs"
     - "appdata/*/cache"
