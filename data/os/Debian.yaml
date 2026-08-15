@@ -145,3 +145,10 @@ profile::app::kopia::backup_files_exclude:
     - "*.vmdk"
     - "zero"
     - ".zfs"
+  "/opt":
+     - - "puppetlabs/"
+  "/home":
+     - "*/VirtualBox VMs/"
+     - "*/Download/"
+     -  ".git/"
+     - ".zfs"
