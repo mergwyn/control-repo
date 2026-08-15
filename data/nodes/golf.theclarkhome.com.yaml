@@ -51,6 +51,6 @@ profile::platform::baseline::debian::zfs::snapshotter::settings:
 profile::app::kopia::maintenance: false
 profile::app::kopia::backup_files_exclude:
   "/opt":
-    - "/appdata/*/logs"
+    - "appdata/*/logs"
     - "appdata/*/cache"
     - "appdata/*/MediaCover"
