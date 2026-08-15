@@ -61,10 +61,3 @@ profile::platform::baseline::debian::zfs::snapshotter::settings:
     snap: "no"
   rpool/srv:
     snap: "yes"
-
-# kopia client
-profile::app::kopia::backup_files_exclude:
-  "/":
-    - "/var/lib/rancher/k3s/agent/containerd"
-    - "/run/k3s/containerd"
-    - "/srv/media"

@@ -1,7 +1,9 @@
 ---
 classes:
   - profile::platform::baseline::debian::netplan
-  - profile::platform::baseline::debian::virtual::docker
+  - profile::platform::baseline::debian::ssh::zbm_recovery
+
+profile::platform::baseline::debian::boot::zfsbootmenu::remote_access::enable: true
 
 node::ip: "%{lookup('defaults::subnet')}.11"
 node::interface: "enp2s0"
@@ -47,11 +49,7 @@ profile::platform::baseline::debian::zfs::snapshotter::settings:
     snap: "no"
 
 profile::app::kopia::maintenance: false
-profile::app::kopia::backup_files_exclude:
-  "/":
-    - "/var/lib/rancher/k3s/agent/containerd"
-    - "/run/k3s/containerd"
-    - "/srv/media"
-    - "/opt/appdata/*/logs"
-    - "/opt/appdata/*/cache"
-    - "/opt/appdata/*/MediaCover"
+  "/opt":
+    - "/appdata/*/logs"
+    - "appdata/*/cache"
+    - "appdata/*/MediaCover"

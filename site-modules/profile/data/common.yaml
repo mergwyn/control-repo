@@ -19,7 +19,9 @@ lookup_options:
   profile::app::kopia::backup_files_exclude:
     merge: deep
     knockout_prefix: "--"
-
+  profile::app::kopia::common_excludes:
+    merge: deep
+    knockout_prefix: "--"
   profile::app::kopia::snaps:
     merge: deep
     knockout_prefix: "--"

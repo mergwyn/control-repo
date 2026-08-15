@@ -81,8 +81,6 @@ profile::app::kopia::common_excludes:
   - '.Trashes'
 
 profile::app::kopia::backup_files_exclude:
-  "/":
-    - ".dummy"
   "/opt":
     - "puppetlabs/puppet/cache"
     - "puppetlabs/puppet/pdk/share/cache"
