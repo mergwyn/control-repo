@@ -31,14 +31,15 @@ class profile::platform::baseline::darwin::puppet {
             <string>agent</string>
             <string>--verbose</string>
             <string>--no-daemonize</string>
+            <string>--onetime</string>
             <string>--logdest</string>
             <string>/var/log/puppetlabs/puppet/puppet.log</string>
           </array>
 
-          <key>RunAtLoad</key>
-          <true/>
+          <key>StartInterval</key>
+          <integer>1800</integer>
 
-          <key>KeepAlive</key>
+          <key>RunAtLoad</key>
           <true/>
 
           <key>StandardOutPath</key>
