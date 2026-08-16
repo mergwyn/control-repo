@@ -25,7 +25,10 @@ class profile::app::monitoring::node_exporter (
     notify  => Service['prometheus-node-exporter'],
   }
 
-  file { '/var/lib/node_exporter/textfile_collector':
+  file {[
+      '/var/lib/node_exporter'
+      '/var/lib/node_exporter/textfile_collector'
+    ]}:
     ensure => directory,
     owner  => 'root',
     group  => 'root',
@@ -38,3 +41,4 @@ class profile::app::monitoring::node_exporter (
     require => Package['prometheus-node-exporter'],
   }
 }
+
