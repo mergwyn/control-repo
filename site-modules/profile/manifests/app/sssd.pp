@@ -38,7 +38,7 @@ class profile::app::sssd {
 # TODO workaorund https://bugs.launchpad.net/ubuntu/+source/sssd/+bug/1934997
         'ad_gpo_access_control'          => 'permissive',
       },
-      'pac'                     => {},
+      'pac'                     => {},  # deployed to silent errors on ubuntu desktop
     },
     #require => Service[ 'SambaWinBind' ],
   }
