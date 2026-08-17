@@ -11,7 +11,6 @@ class profile::app::sssd {
   class { 'sssd':
     main_config  => {
       'sssd'                    => {
-        'services'            => ['nss', 'pam', pac],
         'config_file_version' => 2,
         'domains'             => $trusted['domain'],
       },
