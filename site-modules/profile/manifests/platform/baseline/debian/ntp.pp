@@ -14,6 +14,11 @@ class profile::platform::baseline::debian::ntp (
     package { 'chrony': ensure => absent }
   }
   else {
+    package { [ 'ntpsec', 'python3-ntp' ]:
+      ensure => purged,
+      before => Package['chrony'],
+    }
+
     $network_servers = lookup('ntp::servers')
 
     # Ubuntu enables systemd-timesyncd by default; it must be disabled
