@@ -2,20 +2,22 @@
 #   Expose OpenVox agent health metrics to Prometheus.
 #
 # @description
-#   Parses the OpenVox last_run_summary.yaml file and writes metrics
-#   for consumption by the node_exporter textfile collector.
+#   Parses the OpenVox last_run_summary.yaml file and writes Prometheus
+#   metrics for consumption by the node_exporter textfile collector.
 #
 #   The metrics are updated periodically using a systemd timer.
+# penvo
 #
 # @example
 #   include profile::openvox::monitoring
 #
 class profile::openvox::monitoring {
-  include profile::app::monitoring::node_exporter
-
   $summary_file = '/opt/puppetlabs/puppet/public/last_run_summary.yaml'
   $script       = '/usr/local/sbin/openvox-prometheus'
-  $metrics_file = '/var/lib/node_exporter/textfile_collector/openvox.prom'
+  $metrics_dir  = '/var/lib/node_exporter/textfile_collector'
+  $metrics_file = "${metrics_dir}/openvox.prom"
+
+  include profile::app::monitoring::node_exporter_textfile
 
   file { $script:
     ensure  => file,
@@ -26,6 +28,7 @@ class profile::openvox::monitoring {
       summary_file => $summary_file,
       metrics_file => $metrics_file,
     }),
+    require => File[$metrics_dir],
   }
 
   $_timer = @("EOT")

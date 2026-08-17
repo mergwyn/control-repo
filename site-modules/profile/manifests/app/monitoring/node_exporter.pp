@@ -9,23 +9,10 @@
 class profile::app::monitoring::node_exporter (
   Stdlib::Port $port = 9100,
 ) {
+  include profile::app::monitoring::node_exporter_textfile
+
   package { 'prometheus-node-exporter':
     ensure => installed,
-  }
-
-  file { '/var/lib/node_exporter':
-    ensure => directory,
-    owner  => 'prometheus',
-    group  => 'prometheus',
-    mode   => '0755',
-  }
-
-  file { '/var/lib/node_exporter/textfile_collector':
-    ensure  => directory,
-    owner   => 'prometheus',
-    group   => 'prometheus',
-    mode    => '0755',
-    require => File['/var/lib/node_exporter'],
   }
 
   file { '/etc/default/prometheus-node-exporter':

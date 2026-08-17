@@ -3,6 +3,7 @@
 class profile::openvox::agent {
   include sudo
   include profile::openvox::repo
+  include profile::openvox::monitoring
 
   # make sure we match server major version
   $ver = split($server_facts['serverversion'], '\.')
