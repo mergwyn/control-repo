@@ -14,8 +14,8 @@ class profile::platform::baseline::debian::zfs::snapshotter (
 
       $venv           = "${target}/venv"
 
-      $owner          = lookup('defaults::media_user')
-      $group          = lookup('defaults::media_group')
+      $owner          = lookup('defaults::system_user')
+      $group          = lookup('defaults::system_group')
       $adminemail     = lookup('defaults::adminemail')
 
       file { $target:
