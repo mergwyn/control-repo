@@ -4,7 +4,7 @@
 #   Text displayed at the login window (e.g. hostname).
 #
 class profile::platform::baseline::darwin::loginwindow (
-  String $text = $trusted['hostname'],
+  String $text = "This is ${trusted['hostname']}",
 ) {
   exec { 'set loginwindow text':
     path    => $facts['path'],

@@ -11,7 +11,6 @@ class profile::app::sssd {
   class { 'sssd':
     main_config  => {
       'sssd'                    => {
-#        'services'            => ['nss', 'pam'],
         'config_file_version' => 2,
         'domains'             => $trusted['domain'],
       },
@@ -38,6 +37,7 @@ class profile::app::sssd {
 # TODO workaorund https://bugs.launchpad.net/ubuntu/+source/sssd/+bug/1934997
         'ad_gpo_access_control'          => 'permissive',
       },
+      'pac'                     => {},  # deployed to silent errors on ubuntu desktop
     },
     #require => Service[ 'SambaWinBind' ],
   }

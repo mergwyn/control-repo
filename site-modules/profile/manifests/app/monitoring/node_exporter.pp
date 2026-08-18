@@ -1,7 +1,16 @@
-# profile/manifests/app/monitoring/nodeexporter.pp
+# profile/manifests/app/monitoring/node_exporter.pp
+#
+# @summary
+#   Install and manage Prometheus node_exporter.
+#
+# @param port
+#   Port on which node_exporter listens.
+#
 class profile::app::monitoring::node_exporter (
-    Stdlib::Port   $port             = 9100,
+  Stdlib::Port $port = 9100,
 ) {
+  include profile::app::monitoring::node_exporter_textfile
+
   package { 'prometheus-node-exporter':
     ensure => installed,
   }
@@ -13,7 +22,7 @@ class profile::app::monitoring::node_exporter (
     mode    => '0644',
     content => @("EOT"),
       # Managed by Puppet - do not edit
-      ARGS="--web.listen-address=:${port}"
+      ARGS="--web.listen-address=:${port} --collector.textfile.directory=/var/lib/node_exporter/textfile_collector"
       | EOT
     notify  => Service['prometheus-node-exporter'],
   }
@@ -21,6 +30,9 @@ class profile::app::monitoring::node_exporter (
   service { 'prometheus-node-exporter':
     ensure  => running,
     enable  => true,
-    require => Package['prometheus-node-exporter'],
+    require => [
+      Package['prometheus-node-exporter'],
+      File['/var/lib/node_exporter/textfile_collector'],
+    ],
   }
 }

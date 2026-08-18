@@ -1,6 +1,7 @@
 #
 class role::ubuntu_desktop {
   include profile::platform::baseline  # All roles should have the base profile
+  include profile::app::monitoring::node_exporter
   include profile::app::sssd
 
   #include profile::app::backuppc::client

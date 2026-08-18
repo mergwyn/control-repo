@@ -1,0 +1,50 @@
+#!/opt/puppetlabs/puppet/bin/ruby
+
+require 'yaml'
+
+summary_file = '<%= $summary_file %>'
+metrics_file = '<%= $metrics_file %>'
+
+begin
+  summary = YAML.safe_load(File.read(summary_file))
+
+  resources = summary.fetch('resources')
+  time      = summary.fetch('time')
+
+  metrics = <<~PROM
+    # HELP openvox_last_run_timestamp_seconds Unix timestamp of the last OpenVox run.
+    # TYPE openvox_last_run_timestamp_seconds gauge
+    openvox_last_run_timestamp_seconds #{time.fetch('last_run')}
+
+    # HELP openvox_last_run_failed_resources Number of resources that failed in the last OpenVox run.
+    # TYPE openvox_last_run_failed_resources gauge
+    openvox_last_run_failed_resources #{resources.fetch('failed')}
+
+    # HELP openvox_last_run_changed_resources Number of resources changed in the last OpenVox run.
+    # TYPE openvox_last_run_changed_resources gauge
+    openvox_last_run_changed_resources #{resources.fetch('changed')}
+
+    # HELP openvox_last_run_corrective_changes Number of corrective changes in the last OpenVox run.
+    # TYPE openvox_last_run_corrective_changes gauge
+    openvox_last_run_corrective_changes #{resources.fetch('corrective_change')}
+
+    # HELP openvox_last_run_duration_seconds Duration of the last OpenVox run.
+    # TYPE openvox_last_run_duration_seconds gauge
+    openvox_last_run_duration_seconds #{time.fetch('total')}
+
+    # HELP openvox_last_run_resources_total Number of resources evaluated in the last OpenVox run.
+    # TYPE openvox_last_run_resources_total gauge
+    openvox_last_run_resources_total #{resources.fetch('total')}
+
+    # HELP openvox_last_run_failures Number of failed events in the last OpenVox run.
+    # TYPE openvox_last_run_failures gauge
+    openvox_last_run_failures #{summary.fetch('events').fetch('failure')}
+  PROM
+
+  temporary_file = "#{metrics_file}.tmp"
+  File.write(temporary_file, metrics, mode: 'w', perm: 0644)
+  File.rename(temporary_file, metrics_file)
+rescue StandardError => e
+  warn "Unable to generate OpenVox Prometheus metrics: #{e.message}"
+  exit 1
+end

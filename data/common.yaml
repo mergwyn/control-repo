@@ -36,8 +36,9 @@ defaults::vpn::servers:
 defaults::vpn::use_systemd_resolved: true
 profile::infrastructure::router::type: "privatvpn"
 
-defaults::backup_server: "foxtrot"
+defaults::backup_server: "delta"
 defaults::system_user: "root"
+defaults::system_group: "root"
 defaults::system_home_dir: "/root"
 defaults::media_user: "media"
 defaults::media_group: "513"
