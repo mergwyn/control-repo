@@ -36,5 +36,6 @@ class profile::platform::baseline::debian::boot::zfsbootmenu::dracut_setup {
       hostonly="no"
       | EOF
     require => Package['dracut'],
+    notify  => Exec['rebuild_initramfs'],
   }
 }
