@@ -14,7 +14,7 @@ class profile::platform::baseline::debian::ntp (
     package { 'chrony': ensure => absent }
   }
   else {
-    package { [ 'ntpsec', 'python3-ntp' ]:
+    package { ['ntpsec', 'python3-ntp']:
       ensure => purged,
       before => Package['chrony'],
     }
@@ -40,7 +40,7 @@ class profile::platform::baseline::debian::ntp (
       owner   => 'root',
       group   => 'root',
       mode    => '0644',
-      content => epp('profile/ntp/chrony.conf.epp', {
+      content => epp('profile/chrony.conf.epp', {
         'servers'        => $network_servers,
         'allow'          => $allow_subnets,
         'ntpsigndsocket' => '/var/lib/samba/ntp_signd/',
