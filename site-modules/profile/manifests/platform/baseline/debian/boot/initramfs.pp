@@ -58,7 +58,7 @@ class profile::platform::baseline::debian::boot::initramfs (
   #!/bin/sh
   set -e
   echo "Rebuilding initramfs using dracut"
-  exec dracut -f
+  exec dracut --force --regenerate-all
   EOF
   ,
     'initramfs-tools' => @("EOF"/L)
