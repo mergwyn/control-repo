@@ -12,6 +12,12 @@
 # (visible via `efibootmgr`), which is not reliably manageable from the
 # OS on all hardware and is set manually where needed.
 #
+# On nodes using ZFSBootMenu, the actual boot stanza rEFInd reads
+# (refind_linux.conf) is written by
+# profile::platform::baseline::debian::boot::zfsbootmenu, not here -
+# this class only owns rEFInd's own config and binary, not what it boots.
+# boot.pp orders this class before boot::zfsbootmenu.
+#
 # @param timeout
 #   Timeout in seconds for the rEFInd boot menu before it auto-boots the
 #   default entry. Defaults to 5 seconds, chosen as a balance between
@@ -45,9 +51,9 @@ class profile::platform::baseline::debian::boot::refind (
       source  => 'file:///boot/efi/EFI/refind/refind_x64.efi',
       require => File['/boot/efi/EFI/BOOT'],
     }
-  } else {
-    notify { 'refind_not_present':
-      message => "platform::baseline::debian::boot::refind: skipped, no refind.conf found on ${trusted['certname']}",
-    }
+    # } else {
+    # notify { 'refind_not_present':
+    #   message => "platform::baseline::debian::boot::refind: skipped, no refind.conf found on ${trusted['certname']}",
+    #  }
   }
 }

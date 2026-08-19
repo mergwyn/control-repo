@@ -1,0 +1,7 @@
+---
+# List of hosts available for SSH access to the ZBM environment
+profile::platform::baseline::debian::ssh::zbm_hosts:
+  charlie: '10.58.0.13'
+  delta: '10.58.0.14'
+  golf: '10.58.0.11'
+  hotel: '10.58.0.10'

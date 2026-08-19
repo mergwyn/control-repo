@@ -3,17 +3,39 @@
 # Primary focus is to ensure the network device does not hang
 #
 class profile::platform::baseline::debian::network::e1000e {
-  exec { 'update-initramfs-e1000e':
-    command     => '/usr/sbin/update-initramfs -u -k all',
-    refreshonly => true,
+  # Ensure module loads early in initramfs
+  $provider = $facts['initramfs_provider']
+
+  $config = $provider ? {
+    'dracut' => {
+      type    => 'file',
+      path    => '/etc/dracut.conf.d/e1000e.conf',
+      content => "add_drivers+=\" e1000e \"\n",
+    },
+    'initramfs-tools' => {
+      type => 'file_line',
+      path => '/etc/initramfs-tools/modules',
+      line => 'e1000e',
+      match => '^e1000e$',
+    },
+    default => undef,
   }
 
-  # Ensure module loads early in initramfs
-  file_line { 'e1000e-initramfs':
-    path   => '/etc/initramfs-tools/modules',
-    line   => 'e1000e',
-    match  => '^e1000e$',
-    notify => Exec['update-initramfs-e1000e'],
+  if $config {
+    if $config['type'] == 'file' {
+      file { $config['path']:
+        ensure  => file,
+        content => $config['content'],
+        notify  => Exec['rebuild_initramfs'],
+      }
+    } else {
+      file_line { 'e1000e-initramfs':
+        path   => $config['path'],
+        line   => $config['line'],
+        match  => $config['match'],
+        notify => Exec['rebuild_initramfs'],
+      }
+    }
   }
 
   # Runtime tuning script (driver-discovery at runtime)

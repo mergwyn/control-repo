@@ -3,36 +3,69 @@
 # @param collect_keys
 #   Set storeconfigs_enabled to collect and distribute keys
 #
+# @param extra_client_options
+#   Additional client_options entries, merged on top of the base config
+#   below (shallow merge - each key either adds a new entry or replaces
+#   one of the base entries wholesale). For one-off/manual Host blocks;
+#   for the ZFSBootMenu recovery aliases, use $zbm_hosts instead.
+#
+# @param zbm_hosts
+#   Name => IP map of ZFSBootMenu recovery hosts. Generates a
+#   `Host zbm-<name>` block per entry, with the fixed Port/User/
+#   IdentityFile/etc. settings used by
+#   profile::platform::baseline::debian::ssh::zbm_recovery baked in here
+#   rather than repeated per node in Hiera - set once (e.g. in
+#   data/virtual/physical_<os.name>.yaml, so it applies to every physical
+#   node without touching anything virtual or non-Debian) rather than
+#   copy-pasted per node.
+#
 class profile::platform::baseline::debian::ssh (
-  Boolean $collect_keys = true,
+  Boolean $collect_keys                    = true,
+  Hash $extra_client_options               = {},
+  Hash[String[1], String[1]] $zbm_hosts    = {},
 ) {
+  $zbm_client_options = $zbm_hosts.reduce({}) |$memo, $host| {
+    $memo + {
+      "Host zbm-${host[0]}" => {
+        'Hostname'              => $host[1],
+        'Port'                  => 222,
+        'User'                  => 'root',
+        'IdentityFile'          => '/etc/ssh/zbm_recovery',
+        'IdentitiesOnly'        => 'yes',
+        'UserKnownHostsFile'    => '/etc/ssh/zbm_recovery_known_hosts',
+        'StrictHostKeyChecking' => 'accept-new',
+      }
+    }
+  }
 # The values below have been set for an Ubuntu 20.04 distribution
 # Values may need to be changed for different versions
+  $base_client_options = {
+    'PasswordAuthentication'    => 'yes',
+    'PubkeyAuthentication'      => 'yes',
+    'HostbasedAuthentication'   => 'yes',
+    'IdentityFile'              => ['~/.ssh/id_rsa', '~/.ssh/id_dsa'],
+    'Protocol'                  => '2',
+    'HashKnownHosts'            => 'yes',
+    'GlobalKnownHostsFile'      => '/etc/ssh/ssh_known_hosts',
+    'GSSAPIAuthentication'      => 'yes',
+    'GSSAPIDelegateCredentials' => 'yes',
+    'ForwardX11Trusted'         => 'yes',
+    'UseRoaming'                => 'no',
+    'SendEnv'                   => [
+      'LANG LANGUAGE LC_CTYPE LC_NUMERIC LC_TIME LC_COLLATE LC_MONETARY LC_MESSAGES',
+      'LC_PAPER LC_NAME LC_ADDRESS LC_TELEPHONE LC_MEASUREMENT',
+      'LC_IDENTIFICATION LC_ALL',
+    ],
+    'EnableSSHKeysign'          => 'yes',
+    'Host cisco1'               => {
+      'HostkeyAlgorithms' => 'ssh-dss,ssh-rsa',
+      'KexAlgorithms'     => '+diffie-hellman-group1-sha1,diffie-hellman-group14-sha1',
+    },
+  }
+
   class { 'ssh':
     storeconfigs_enabled => $collect_keys,
-    client_options       => {
-      'PasswordAuthentication'    => 'yes',
-      'PubkeyAuthentication'      => 'yes',
-      'HostbasedAuthentication'   => 'yes',
-      'IdentityFile'              => ['~/.ssh/id_rsa', '~/.ssh/id_dsa'],
-      'Protocol'                  => '2',
-      'HashKnownHosts'            => 'yes',
-      'GlobalKnownHostsFile'      => '/etc/ssh/ssh_known_hosts',
-      'GSSAPIAuthentication'      => 'yes',
-      'GSSAPIDelegateCredentials' => 'yes',
-      'ForwardX11Trusted'         => 'yes',
-      'UseRoaming'                => 'no',
-      'SendEnv'                   => [
-        'LANG LANGUAGE LC_CTYPE LC_NUMERIC LC_TIME LC_COLLATE LC_MONETARY LC_MESSAGES',
-        'LC_PAPER LC_NAME LC_ADDRESS LC_TELEPHONE LC_MEASUREMENT',
-        'LC_IDENTIFICATION LC_ALL',
-      ],
-      'EnableSSHKeysign'          => 'yes',
-      'Host cisco1'               => {
-        'HostkeyAlgorithms' => 'ssh-dss,ssh-rsa',
-        'KexAlgorithms'     => '+diffie-hellman-group1-sha1,diffie-hellman-group14-sha1',
-      },
-    },
+    client_options       => $base_client_options + $zbm_client_options + $extra_client_options,
     server_options       => {
       'LoginGraceTime'                  => '120',
       'PermitRootLogin'                 => 'without-password',

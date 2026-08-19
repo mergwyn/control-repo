@@ -32,6 +32,7 @@ profile::app::kopia::repos:
   - minio-kopia
   - idrive-kopia
 profile::app::kopia::snaps:
+  - /boot
   - /etc
   - /root
   - /home

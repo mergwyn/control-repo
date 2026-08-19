@@ -10,7 +10,7 @@ kmod::list_of_options:
     module: "zfs"
     option: "zfs_vdev_deadman_synctime_ms"
     value: "60000"
-    notify: "Exec[update_initramfs_all]"
+    notify: "Exec[rebuild_initramfs]"
 
 profile::platform::baseline::debian::netplan::ethernets:
   enp3s0:
