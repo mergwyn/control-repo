@@ -31,7 +31,7 @@ class profile::platform::baseline::debian::boot::zfsbootmenu::dracut_setup {
     group   => 'root',
     mode    => '0644',
     content => @("EOF"/L),
-      install_items+=" /etc/hostid /etc/zfs/zpool.cache "
+      install_items+=" /etc/hostid "
       force_dracutmodules+=" zfs "
       hostonly="no"
       | EOF
