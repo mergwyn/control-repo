@@ -28,6 +28,9 @@ defaults::dns::nameservers:
   - "%{lookup('defaults::subnet')}.21"
   - "%{lookup('defaults::subnet')}.22"
 
+ntp::allow_subnets:
+  - "%{lookup('defaults::network')}/%{lookup('defaults::bits')}"
+
 # VPN settings
 defaults::vpn_gateway: "%{lookup('defaults::subnet')}.2"
 defaults::vpn::servers:

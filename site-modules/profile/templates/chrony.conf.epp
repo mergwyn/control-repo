@@ -1,0 +1,29 @@
+<%- | Array[String] $servers,
+      Array[String] $allow,
+      Optional[String] $ntpsigndsocket = undef,
+| -%>
+# Managed by Puppet - profile::platform::baseline::debian::ntp
+# Do not edit directly.
+
+driftfile /var/lib/chrony/chrony.drift
+logdir /var/log/chrony
+
+<% $servers.each |$server| { -%>
+server <%= $server %> iburst
+<% } -%>
+
+# Fallback reference when no upstream servers are reachable
+local stratum 10
+
+<% $allow.each |$subnet| { -%>
+allow <%= $subnet %>
+<% } -%>
+
+<% if $ntpsigndsocket { -%>
+# Samba AD signed NTP support
+ntpsigndsocket <%= $ntpsigndsocket %>
+<% } -%>
+
+rtcsync
+makestep 1.0 3
+leapsectz right/UTC

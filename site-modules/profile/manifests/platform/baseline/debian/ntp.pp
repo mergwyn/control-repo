@@ -1,29 +1,58 @@
-# @summary ntp settings
+# @summary Configures time synchronisation using chrony.
 #
-class profile::platform::baseline::debian::ntp {
-# ntp for physical machines only
+# Physical hosts run chrony as an NTP server/client, including Samba AD
+# signed-NTP support for Windows clients. Virtual/container nodes have
+# chrony removed, since they sync time from their host.
+#
+# @param allow_subnets
+#   Subnets permitted to query these hosts for time (e.g. AD clients).
+#
+class profile::platform::baseline::debian::ntp (
+  Array[String] $allow_subnets = lookup('ntp::allow_subnets', Array[String], 'first', []),
+) {
   if $facts['virtual'] != 'physical' {
-    package { 'ntp': ensure => absent }
+    package { 'chrony': ensure => absent }
   }
   else {
-    $local_clock = '127.127.1.0'
-    #$network_servers = $servers + lookup('ntp::servers'),
+    package { ['ntpsec', 'python3-ntp']:
+      ensure => purged,
+      before => Package['chrony'],
+    }
+
     $network_servers = lookup('ntp::servers')
 
-    $restrict_default = [
-      'default kod nomodify notrap nopeer mssntp',
-      $local_clock,
-    ]
+    # Ubuntu enables systemd-timesyncd by default; it must be disabled
+    # so it doesn't fight with chrony over the system clock.
+    service { 'systemd-timesyncd':
+      ensure => stopped,
+      enable => mask,
+      before => Service['chrony'],
+    }
 
-    $restrict_args = ' mask 255.255.255.255 nomodify notrap nopeer noquery'
-    $restrict = regsubst($network_servers, '$', $restrict_args)
+    package { 'chrony':
+      ensure => installed,
+    }
 
-    class { 'ntp':
-      ntpsigndsocket    => '/var/lib/samba/ntp_signd/',
-      preferred_servers => $network_servers,
-      servers           => [$local_clock] + $network_servers,
-      restrict          => $restrict_default + $restrict,
-      fudge             => ["${local_clock} stratum 10"],
+    # The conf file is managed by this class as the voxpupuli/chronypPuppet
+    # module doesn't expose ntpsigndsocket parameter yet.
+    file { '/etc/chrony/chrony.conf':
+      ensure  => file,
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0644',
+      content => epp('profile/chrony.conf.epp', {
+        'servers'        => $network_servers,
+        'allow'          => $allow_subnets,
+        'ntpsigndsocket' => '/var/lib/samba/ntp_signd/',
+      }),
+      require => Package['chrony'],
+      notify  => Service['chrony'],
+    }
+
+    service { 'chrony':
+      ensure  => running,
+      enable  => true,
+      require => Package['chrony'],
     }
   }
 }
