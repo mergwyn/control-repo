@@ -18,7 +18,14 @@ class profile::app::tools::helm (
     version_cmd     => 'helm version --short',
   }
 
-  # 2. Export HELM_PLUGINS System-Wide for All Non-Root Users
+  # 2. Clean Up Legacy Root Plugin Directory
+  file { '/root/.local/share/helm/plugins':
+    ensure  => absent,
+    force   => true,
+    recurse => true,
+  }
+
+  # 3. Export HELM_PLUGINS System-Wide for All Users
   file { '/etc/profile.d/helm.sh':
     ensure  => file,
     owner   => 'root',
@@ -27,8 +34,8 @@ class profile::app::tools::helm (
     content => "export HELM_PLUGINS=\"${plugin_dir}\"\n",
   }
 
-  # 3. Ensure Shared Plugin Directory Structure Exists
-  file { ['/usr/local/share/helm', $plugin_dir, "${plugin_dir}/helm-diff"]:
+  # 4. Ensure Shared Plugin Directory Exists
+  file { ['/usr/local/share/helm', $plugin_dir]:
     ensure  => directory,
     owner   => 'root',
     group   => 'root',
@@ -36,57 +43,29 @@ class profile::app::tools::helm (
     require => Profile::App::Binary_install['helm'],
   }
 
-  # 4. Download & Extract helm-secrets Plugins
-  # 4.1. Ensure all 3 plugin directories exist
-    $secrets_plugins = [
-      "${plugin_dir}/secrets",
-      "${plugin_dir}/secrets-getter",
-      "${plugin_dir}/secrets-post-renderer",
-    ]
+  # 5. Install / Upgrade helm-secrets Components via OCI
+  $secrets_plugins = ['secrets', 'secrets-getter', 'secrets-post-renderer']
 
-    file { $secrets_plugins:
-      ensure  => directory,
-      owner   => 'root',
-      group   => 'root',
-      mode    => '0755',
-      require => File[$plugin_dir],
+  $secrets_plugins.each |String $plugin| {
+    exec { "install_${plugin}":
+      command     => "/usr/local/bin/helm plugin install oci://ghcr.io/jkroepke/helm-secrets/${plugin} --version ${secrets_version}",
+      # Skip if plugin exists AND version matches $secrets_version
+      unless      => "grep -qE 'version: \"?${secrets_version}\"?' ${plugin_dir}/${plugin}/plugin.yaml 2>/dev/null",
+      environment => ["HELM_PLUGINS=${plugin_dir}"],
+      path        => ['/usr/local/bin', '/usr/bin', '/bin'],
+      require     => File[$plugin_dir],
     }
+  }
 
-    # 4.2. Extract helm-secrets archive into all three plugin folders
-    $secrets_plugins.each |String $dir| {
-      archive { "${dir}/secrets.tar.gz":
-        ensure       => present,
-        source       => "https://github.com/jkroepke/helm-secrets/releases/download/v${secrets_version}/helm-secrets.tar.gz",
-        extract      => true,
-        extract_path => $dir,
-        creates      => "${dir}/scripts",
-        cleanup      => true,
-        require      => File[$dir],
-      }
-    }
+  # 6. Install / Upgrade helm-diff via Git URL
+  $clean_diff_version = regsubst($diff_version, '^v', '')
 
-    # 4.3. Set up plugin.yaml for secrets-getter
-    file { "${plugin_dir}/secrets-getter/plugin.yaml":
-      ensure  => file,
-      source  => "${plugin_dir}/secrets-getter/plugin.getter.yaml",
-      require => Archive["${plugin_dir}/secrets-getter/secrets.tar.gz"],
-    }
-
-    # 4.4. Set up plugin.yaml for secrets-post-renderer
-    file { "${plugin_dir}/secrets-post-renderer/plugin.yaml":
-      ensure  => file,
-      source  => "${plugin_dir}/secrets-post-renderer/plugin.post-renderer.yaml",
-      require => Archive["${plugin_dir}/secrets-post-renderer/secrets.tar.gz"],
-    }
-
-  # 5. Download & Extract helm-diff Plugin
-  archive { "${plugin_dir}/helm-diff.tgz":
-    ensure       => present,
-    source       => "https://github.com/databus23/helm-diff/releases/download/${diff_version}/helm-diff-linux-amd64.tgz",
-    extract      => true,
-    extract_path => "${plugin_dir}/helm-diff",
-    creates      => "${plugin_dir}/helm-diff/diff/plugin.yaml",
-    cleanup      => true,
-    require      => File["${plugin_dir}/helm-diff"],
+  exec { 'install_helm_diff':
+    command     => "/usr/local/bin/helm plugin install https://github.com/databus23/helm-diff --version ${diff_version}",
+    # Skip if installed AND version matches $diff_version (checking both legacy and new folder structures)
+    unless      => "grep -qE 'version: \"?${clean_diff_version}\"?' ${plugin_dir}/helm-diff/diff/plugin.yaml 2>/dev/null || grep -qE 'version: \"?${clean_diff_version}\"?' ${plugin_dir}/helm-diff/plugin.yaml 2>/dev/null",
+    environment => ["HELM_PLUGINS=${plugin_dir}"],
+    path        => ['/usr/local/bin', '/usr/bin', '/bin'],
+    require     => File[$plugin_dir],
   }
 }
