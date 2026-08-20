@@ -48,7 +48,7 @@ class profile::app::tools::helm (
 
   $secrets_plugins.each |String $plugin| {
     exec { "install_${plugin}":
-      command     => "/usr/local/bin/helm plugin install oci://ghcr.io/jkroepke/helm-secrets/${plugin} --version ${secrets_version} --verify=false",
+      command     => "/usr/local/bin/helm plugin install oci://ghcr.io/jkroepke/helm-secrets/${plugin}:${secrets_version} --verify=false",
       # Skip if plugin exists AND version matches $secrets_version
       unless      => "grep -qE 'version: \"?${secrets_version}\"?' ${plugin_dir}/${plugin}/plugin.yaml 2>/dev/null",
       environment => ["HELM_PLUGINS=${plugin_dir}"],
