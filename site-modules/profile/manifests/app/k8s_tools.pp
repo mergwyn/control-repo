@@ -3,6 +3,7 @@ class profile::app::k8s_tools {
   case $facts['os']['family'] {
     'Debian': {
       include profile::app::tools::age
+      include profile::app::tools::bws
       include profile::app::tools::argocd
       include profile::app::tools::cilium_cli
       include profile::app::tools::helm
@@ -22,6 +23,7 @@ class profile::app::k8s_tools {
 
       package { [
         'age',
+        'bws',
         'argocd',
         'cilium-cli',
         'helm',
