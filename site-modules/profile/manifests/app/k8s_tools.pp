@@ -23,7 +23,6 @@ class profile::app::k8s_tools {
 
       package { [
         'age',
-        'bws',
         'argocd',
         'cilium-cli',
         'helm',
