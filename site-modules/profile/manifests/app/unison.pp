@@ -52,12 +52,12 @@ class profile::app::unison (
       $path ="unison-${version}-${os}${osver}-${hardware}"
 
       profile::app::binary_install { 'unison':
-        version     => $version,
-        binary      => ['unison', 'unison-fsmonitor'],
-        url         => "https://github.com/bcpierce00/unison/releases/download/v${version}/${path}.tar.gz",
-        tarball     => true,
-        tar_extract => ["${path}/bin/unison", "${path}/bin/unison-fsmonitor"],
-        version_cmd => 'unison -version',
+        version         => $version,
+        binary          => ['unison', 'unison-fsmonitor'],
+        url             => "https://github.com/bcpierce00/unison/releases/download/v${version}/${path}.tar.gz",
+        archive         => 'tar.gz',
+        archive_extract => ["${path}/bin/unison", "${path}/bin/unison-fsmonitor"],
+        version_cmd     => 'unison -version',
       }
       # TODO add configuration
     }

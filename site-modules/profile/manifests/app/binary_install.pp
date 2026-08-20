@@ -40,7 +40,7 @@ define profile::app::binary_install (
   String[1]                                      $version,
   Stdlib::HTTPUrl                                $url,
   Variant[String[1], Array[String[1]]]           $binary,
-  String[1]                                      $version         = "echo ${version}",
+  String[1]                                      $version_cmd     = "echo ${version}",
   Enum['none', 'tar.gz', 'zip']                  $archive         = 'none',
   Stdlib::Absolutepath                           $install_dir     = '/usr/local/bin',
   Optional[Variant[String[1], Array[String[1]]]] $archive_extract = undef,
@@ -79,9 +79,9 @@ define profile::app::binary_install (
   }
 
   # Ensure required download/archive tools are available.
-  package { 'curl':
-    ensure => installed,
-  }
+  # package { 'curl':
+  #   ensure => installed,
+  # }
 
   if $archive == 'zip' {
     package { 'unzip':

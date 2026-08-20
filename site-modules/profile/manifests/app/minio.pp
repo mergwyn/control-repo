@@ -44,7 +44,6 @@ class profile::app::minio (
     version     => $version,
     binary      => 'minio',
     url         => "https://dl.min.io/server/minio/release/linux-amd64/archive/minio.RELEASE.${version}",
-    tarball     => false,
     version_cmd => '/usr/local/bin/minio --version | grep -oP "minio version RELEASE.\K[^ ]+" | cut -d. -f1-4',
     install_dir => '/usr/local/bin',
   }
