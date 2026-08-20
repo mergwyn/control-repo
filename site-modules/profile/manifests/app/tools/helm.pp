@@ -48,7 +48,7 @@ class profile::app::tools::helm (
 
   $secrets_plugins.each |String $plugin| {
     exec { "install_${plugin}":
-      command     => "/usr/local/bin/helm plugin install oci://ghcr.io/jkroepke/helm-secrets/${plugin} --version ${secrets_version}",
+      command     => "/usr/local/bin/helm plugin install oci://ghcr.io/jkroepke/helm-secrets/${plugin} --version ${secrets_version} --verify=false",
       # Skip if plugin exists AND version matches $secrets_version
       unless      => "grep -qE 'version: \"?${secrets_version}\"?' ${plugin_dir}/${plugin}/plugin.yaml 2>/dev/null",
       environment => ["HELM_PLUGINS=${plugin_dir}"],
@@ -61,7 +61,7 @@ class profile::app::tools::helm (
   $clean_diff_version = regsubst($diff_version, '^v', '')
 
   exec { 'install_helm_diff':
-    command     => "/usr/local/bin/helm plugin install https://github.com/databus23/helm-diff --version ${diff_version}",
+    command     => "/usr/local/bin/helm plugin install https://github.com/databus23/helm-diff --version ${diff_version} --verify=false",
     # Skip if installed AND version matches $diff_version (checking both legacy and new folder structures)
     unless      => "grep -qE 'version: \"?${clean_diff_version}\"?' ${plugin_dir}/helm-diff/diff/plugin.yaml 2>/dev/null || grep -qE 'version: \"?${clean_diff_version}\"?' ${plugin_dir}/helm-diff/plugin.yaml 2>/dev/null",
     environment => ["HELM_PLUGINS=${plugin_dir}"],
