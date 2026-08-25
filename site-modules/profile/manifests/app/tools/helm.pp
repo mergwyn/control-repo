@@ -4,7 +4,7 @@
 #
 class profile::app::tools::helm (
   String $version         = '4.2.4',                      # renovate: datasource=github-releases depName=helm/helm
-  String $secrets_version = '4.7.6',                      # renovate: datasource=github-releases depName=jkroepke/helm-secrets
+  String $secrets_version = '4.7.7',                      # renovate: datasource=github-releases depName=jkroepke/helm-secrets
   String $diff_version    = 'v3.15.7',                     # renovate: datasource=github-releases depName=databus23/helm-diff
   String $plugin_dir      = '/usr/local/share/helm/plugins',
 ) {
