@@ -164,15 +164,13 @@ class profile::platform::baseline::debian::boot::zfsbootmenu (
     }
 
     # Add notifcation if a manual rebuild of zbm is required
-    file { '/etc/zfsbootmenu/NEEDS_REBUILD':
-      ensure    => file,
-      owner     => 'root',
-      group     => 'root',
-      mode      => '0644',
-      content   => "ZFSBootMenu configuration changed or updated to ${version}. Run 'generate-zbm' manually.\n",
-      replace   => true,
-      require   => File['/etc/zfsbootmenu/config.yaml'],
-      subscribe => Exec['zfsbootmenu_build'],
+    exec { 'zfsbootmenu_needs_rebuild':
+      command     => "/usr/bin/printf '%s\\n' \"ZFSBootMenu configuration changed or updated to ${version}. Run 'generate-zbm' manually.\" > /etc/zfsbootmenu/NEEDS_REBUILD",
+      refreshonly => true,
+      subscribe   => [
+        Exec['zfsbootmenu_build'],
+        File['/etc/zfsbootmenu/config.yaml'],
+      ],
     }
 
     # Clear down the notificaton via a zbm post install hook

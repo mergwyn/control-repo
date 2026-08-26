@@ -113,7 +113,7 @@ class profile::platform::baseline::debian::boot::zfsbootmenu::remote_access (
       source  => "file://${src_dir}/module/60crypt-ssh",
       ignore  => ['helper', 'Makefile'],
       require => Vcsrepo[$src_dir],
-      notify  => File['/etc/zfsbootmenu/NEEDS_REBUILD'],
+      notify  => Exec['zfsbootmenu_needs_rebuild'],
     }
 
     file { '/etc/dropbear':
@@ -127,7 +127,7 @@ class profile::platform::baseline::debian::boot::zfsbootmenu::remote_access (
         command => "/usr/bin/ssh-keygen -q -N '' -m PEM -t ${keytype} -f /etc/dropbear/ssh_host_${keytype}_key",
         creates => "/etc/dropbear/ssh_host_${keytype}_key",
         require => File['/etc/dropbear'],
-        notify  => File['/etc/zfsbootmenu/NEEDS_REBUILD'],
+        notify  => Exec['zfsbootmenu_needs_rebuild'],
       }
     }
 
@@ -135,7 +135,7 @@ class profile::platform::baseline::debian::boot::zfsbootmenu::remote_access (
       ensure  => link,
       target  => $authorized_keys_path,
       require => File['/etc/dropbear'],
-      notify  => File['/etc/zfsbootmenu/NEEDS_REBUILD'],
+      notify  => Exec['zfsbootmenu_needs_rebuild'],
     }
 
     file { '/etc/cmdline.d':
@@ -149,7 +149,7 @@ class profile::platform::baseline::debian::boot::zfsbootmenu::remote_access (
       mode    => '0644',
       content => "ip=${ip}::${gateway}:${netmask}::${interface}:none rd.neednet=1\n",
       require => File['/etc/cmdline.d'],
-      notify  => File['/etc/zfsbootmenu/NEEDS_REBUILD'],
+      notify  => Exec['zfsbootmenu_needs_rebuild'],
     }
 
     file { '/etc/zfsbootmenu/dracut.conf.d/dropbear.conf':
@@ -174,7 +174,7 @@ class profile::platform::baseline::debian::boot::zfsbootmenu::remote_access (
         File['/etc/dropbear/root_key'],
         File['/etc/cmdline.d/dracut-network.conf'],
       ],
-      notify  => File['/etc/zfsbootmenu/NEEDS_REBUILD'],
+      notify  => Exec['zfsbootmenu_needs_rebuild'],
     }
   }
 }
