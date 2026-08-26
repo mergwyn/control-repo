@@ -11,33 +11,36 @@ class profile::app::sssd {
   class { 'sssd':
     main_config  => {
       'sssd'                    => {
-        'config_file_version' => 2,
-        'domains'             => $trusted['domain'],
+        'config_file_version'    => 2,
+        'domains'                => $trusted['domain'],
+        'implicit_pac_responder' => false,
       },
       'nss'                     => {
         'filter_groups' => 'root',
         'filter_users'  => 'root',
       },
       'domain/theclarkhome.com' => {
-        'access_provider'                => 'ad',
-        'ad_domain'                      => $trusted['domain'],
-        'auth_provider'                  => 'ad',
-        'cache_credentials'              => true,
-        'debug_level'                    => '1',
-        'dyndns_update'                  => false,
-        'enumerate'                      => true,
         'id_provider'                    => 'ad',
+        'access_provider'                => 'ad',
+        'auth_provider'                  => 'ad',
+        'ad_domain'                      => $trusted['domain'],
+        'ad_gpo_access_control'          => 'permissive',
+
         'krb5_keytab'                    => '/etc/krb5.keytab',
         'krb5_store_password_if_offline' => true,
+        'cache_credentials'              => true,
+
         'ldap_id_mapping'                => false,
         'ldap_sasl_mech'                 => 'gssapi',
         'ldap_uri'                       => ['ldap://bravo.theclarkhome.com,ldap://alpha.theclarkhome.com'],
         'ldap_use_tokengroups'           => false,
+
+        'dyndns_update'                  => false,
+        'enumerate'                      => true,
         'use_fully_qualified_names'      => false,
-# TODO workaorund https://bugs.launchpad.net/ubuntu/+source/sssd/+bug/1934997
-        'ad_gpo_access_control'          => 'permissive',
+
+        'debug_level'                    => '1',
       },
-      'pac'                     => {},  # deployed to silent errors on ubuntu desktop
     },
     #require => Service[ 'SambaWinBind' ],
   }
