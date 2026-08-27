@@ -1,4 +1,4 @@
-# @summary Supports either k3s or microk8s kuvernetes variants
+# @summary Supports either k3s or microk8s kubernetes variants
 #
 class profile::platform::baseline::debian::virtual::kubernetes (
   Enum['microk8s','k3s'] $provider = 'k3s',
@@ -12,7 +12,9 @@ class profile::platform::baseline::debian::virtual::kubernetes (
 
   case ($provider) {
     'k3s': {
-# nfs client needed for some services/pods
+      include profile::platform::baseline::debian::virtual::k3s::vpn_egress_routing
+
+      # nfs client needed for some services/pods
       stdlib::ensure_packages (['nfs-common'], { ensure => present })
 
       # home-assistant now uses the host network and these settings are needed

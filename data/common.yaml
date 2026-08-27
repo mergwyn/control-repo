@@ -32,10 +32,11 @@ ntp::allow_subnets:
   - "%{lookup('defaults::network')}/%{lookup('defaults::bits')}"
 
 # VPN settings
-defaults::vpn_gateway: "%{lookup('defaults::subnet')}.2"
 defaults::vpn::servers:
-  - "%{lookup('defaults::subnet')}.3"
-  - "%{lookup('defaults::subnet')}.4"
+  - "%{lookup('defaults::subnet')}.23"  # yankee
+  - "%{lookup('defaults::subnet')}.24"  # zulu
+defaults::vpn_gateway: "%{lookup('defaults::vpn::servers.1')}"
+
 defaults::vpn::use_systemd_resolved: true
 profile::infrastructure::router::type: "privatvpn"
 

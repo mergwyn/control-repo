@@ -2,11 +2,14 @@
 
 profile::app::wireguard::wg_config: "%{alias('secrets::privatevpn::wg::wg1::config')}"
 
+node::ip: "%{lookup('defaults::vpn::servers.0')}"
+node::interface: "eth0"
+
 profile::platform::baseline::debian::netplan::ethernets:
   eth0:
     dhcp4: no
     addresses:
-      - "%{lookup('defaults::subnet')}.23%{lookup('defaults::bits')}"
+      - "%{lookup('node::ip')}/%{lookup('defaults::bits')}"
     routes:
       - to: default
         via: "%{lookup('defaults::gateway')}"
