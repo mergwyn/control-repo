@@ -16,7 +16,7 @@
 # behind.
 #
 class profile::platform::baseline::debian::virtual::k3s::vpn_egress_routing (
-  Boolean   $enabled      = true,
+  Boolean   $enabled      = false,
   String[1] $gateway_ip   = '10.58.0.24',   # zulu, eth0
   String[1] $vpn_range    = '10.58.0.50-10.58.0.59', # vpn-gateway Multus range
   Integer   $fw_mark      = 100,
