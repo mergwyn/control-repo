@@ -12,8 +12,6 @@ class profile::platform::baseline::debian::virtual::kubernetes (
 
   case ($provider) {
     'k3s': {
-      include profile::platform::baseline::debian::virtual::k3s::vpn_egress_routing
-
       # nfs client needed for some services/pods
       stdlib::ensure_packages (['nfs-common'], { ensure => present })
 
