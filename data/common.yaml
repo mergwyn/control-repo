@@ -37,6 +37,9 @@ defaults::vpn::servers:
   - "%{lookup('defaults::subnet')}.24"  # zulu
 defaults::vpn_gateway: "%{lookup('defaults::vpn::servers.1')}"
 
+# K3s settings
+defaults::k3s::clusterIP: "10.43.0.10"
+
 defaults::vpn::use_systemd_resolved: true
 profile::infrastructure::router::type: "privatvpn"
 

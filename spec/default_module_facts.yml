@@ -14,3 +14,5 @@ python3_version: '3.8.10'
 initramfs_provider: dracut
 
 has_compiler: true
+
+defaults::k3s::clusterIP: 1.2.3.4
