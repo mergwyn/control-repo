@@ -77,7 +77,7 @@
 #
 class profile::platform::baseline::debian::boot::zfsbootmenu::remote_access (
   Boolean $enable                     = false,
-  String $version                     = 'v1.0.3', # renovate: datasource=github-tags depName=dracut-crypt-ssh/dracut-crypt-ssh
+  String $version                     = 'v1.0.8', # renovate: datasource=github-tags depName=dracut-crypt-ssh/dracut-crypt-ssh
   String $repo                        = 'https://github.com/dracut-crypt-ssh/dracut-crypt-ssh.git',
   String $src_dir                     = '/usr/local/src/dracut-crypt-ssh',
   Integer $dropbear_port              = 222,
