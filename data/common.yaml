@@ -42,6 +42,9 @@ defaults::vpn::nameservers:
 # K3s settings
 defaults::k3s::clusterIP: "10.43.0.10"
 
+# K3s settings
+defaults::k3s::clusterIP: "10.43.0.10"
+
 defaults::vpn::use_systemd_resolved: true
 profile::infrastructure::router::type: "privatvpn"
 
