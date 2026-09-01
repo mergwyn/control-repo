@@ -60,6 +60,7 @@ class profile::app::unbound::wireguard (
     val_permissive_mode    => true,
     outgoing_interface     => [$facts['networking']['interfaces']['wg0']['ip']],
     control_enable         => true,
+    force_restart          => true,
   }
 
   unbound::stub { $cluster_domain:
