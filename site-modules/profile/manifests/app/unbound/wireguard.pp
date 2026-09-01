@@ -52,17 +52,14 @@ class profile::app::unbound::wireguard (
   Stdlib::IP::Address::V4 $cluster_ip     = lookup('defaults::k3s::clusterIP'),
   String[1]               $cluster_domain = 'cluster.local',
 ) {
-  class { 'unbound::remote':
-    enable => true,
-  }
-  -> class { 'unbound':
+  class { 'unbound':
     interface              => [$gateway_ip, '127.0.0.1'],
     interface_automatic    => false,
     access                 => ["${lookup('defaults::lan_subnet')}", '127.0.0.0/8'],
     do_not_query_localhost => false,
     val_permissive_mode    => true,
     outgoing_interface     => [$facts['networking']['interfaces']['wg0']['ip']],
-    require                => Class['unbound::remote'],
+    control_enable         => true,
   }
 
   unbound::stub { $cluster_domain:
