@@ -68,7 +68,7 @@ class profile::app::unbound::wireguard (
   }
 
   unbound::forward { '.':
-    address => lookup('defaults::vpn::dns_servers'),
+    address => lookup('defaults::vpn::nameservers'),
     require => Class['unbound'],
   }
 }
