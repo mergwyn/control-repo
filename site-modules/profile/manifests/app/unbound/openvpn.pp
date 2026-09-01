@@ -12,7 +12,7 @@
 #
 class profile::app::unbound::openvpn (
   String[1]               $lan     = 'eth0',
-  Stdlib::IP::Address::V4 $gateway = lookup('defaults::vpn_gateway'),
+  Stdlib::IP::Address::V4 $gateway = lookup('defaults::vpn::gateway'),
   Boolean                 $use_systemd_resolved = lookup('defaults::vpn::use_systemd_resolved'),
 ) {
 # Add net_raw to allow ip_transparent to work

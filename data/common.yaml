@@ -35,7 +35,9 @@ ntp::allow_subnets:
 defaults::vpn::servers:
   - "%{lookup('defaults::subnet')}.23"  # yankee
   - "%{lookup('defaults::subnet')}.24"  # zulu
-defaults::vpn_gateway: "%{lookup('defaults::vpn::servers.1')}"
+defaults::vpn::gateway: "%{lookup('defaults::vpn::servers.1')}"
+defaults::vpn::nameservers:
+  - 10.35.53.1  # TODO can this be extracted from the VPN server config secret?
 
 # K3s settings
 defaults::k3s::clusterIP: "10.43.0.10"

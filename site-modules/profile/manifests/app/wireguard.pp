@@ -114,5 +114,5 @@ class profile::app::wireguard (
   # Monitoring (optional remove if not using node_exporter)
   # Exposes wg show stats; scrape with a custom textfile collector if desired.
   # TODO: flesh out if you add prometheus-node-exporter to this container.
-  include profile::monitoring::node_exporter
+  include  profile::app::monitoring::node_exporter
 }

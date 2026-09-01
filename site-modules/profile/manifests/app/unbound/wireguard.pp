@@ -48,7 +48,7 @@
 #   a non-default --cluster-domain.
 #
 class profile::app::unbound::wireguard (
-  Stdlib::IP::Address::V4 $gateway_ip     = lookup('defaults::vpn_gateway'), # 10.58.0.24
+  Stdlib::IP::Address::V4 $gateway_ip     = lookup('defaults::vpn::gateway'), # 10.58.0.24
   Stdlib::IP::Address::V4 $cluster_ip     = lookup('defaults::k3s::clusterIP'),
   String[1]               $cluster_domain = 'cluster.local',
 ) {
@@ -69,7 +69,7 @@ class profile::app::unbound::wireguard (
 
   # Everything else goes out over the tunnel
   unbound::forward { '.':
-    address => lookup('defaults::vpn::dns_servers'), # PrivateVPN resolvers
+    address => lookup('defaults::vpn::nameservers'), # PrivateVPN resolvers
     require => Class['unbound'],
   }
 
