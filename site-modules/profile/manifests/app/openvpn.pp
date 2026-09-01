@@ -63,7 +63,7 @@ class profile::app::openvpn (
 ##### privat vpn setup
   include profile::app::openvpn::privat
 
-  include profile::app::unbound
+  include profile::app::unbound::openvpn
 
 # Remove https://github.com/jonathanio/update-systemd-resolved
   $tidylist= [

@@ -1,4 +1,8 @@
-# @summary Set up unbound DNS server
+# @summary Set up unbound DNS server for openvpn clients.
+#
+# This is a special case of unbound that is used on the VPN gateway to provide
+# DNS for clients connected via openvpn. It is not intended to be used on other
+# hosts.
 #
 # @param lan
 #   Interface to use to get the local address
@@ -6,9 +10,9 @@
 # @param gateway
 #   (virtual) ip address of the VPN gateway
 #
-class profile::app::unbound (
+class profile::app::unbound::openvpn (
   String[1]               $lan     = 'eth0',
-  Stdlib::IP::Address::V4 $gateway = lookup('defaults::vpn_gateway'),
+  Stdlib::IP::Address::V4 $gateway = lookup('defaults::vpn::gateway'),
   Boolean                 $use_systemd_resolved = lookup('defaults::vpn::use_systemd_resolved'),
 ) {
 # Add net_raw to allow ip_transparent to work
@@ -18,8 +22,8 @@ class profile::app::unbound (
     notify  => Service['apparmor'],
     before  => Package['unbound'],
     content => @("EOT"),
-                                                                           capability net_raw,
-               | EOT
+      capability net_raw,
+      | EOT
   }
 
 # These interfaces are common

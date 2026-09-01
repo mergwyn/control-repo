@@ -8,7 +8,7 @@ class profile::app::keepalived::vpn (
   String[1]               $vpn = 'tun0',
   Integer                 $vrid = 50,
   Integer                 $prio = 101,
-  Stdlib::IP::Address::V4 $v_ip = "${lookup('defaults::vpn_gateway')}",
+  Stdlib::IP::Address::V4 $v_ip = "${lookup('defaults::vpns::gateway')}",
   Stdlib::IP::Address::V4 $v_cidr = "${v_ip}/${lookup('defaults::bits')}",
   #Stdlib::IP::Address::V4 $v_ip = "${lookup('defaults::subnet')}.2/${lookup('defaults::bits')}",
   Stdlib::Email           $notification_email = lookup('defaults::adminemail'),

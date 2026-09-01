@@ -6,4 +6,9 @@ networking:
   ip: "172.16.254.254"
   ip6: "FE80:0000:0000:0000:AAAA:AAAA:AAAA"
   mac: "AA:AA:AA:AA:AA:AA"
+  primary: "eth0"
+  domain: "theclarkhome.com"
+  interfaces:
+    wg0:
+     ip: '10.8.0.1'
 is_pe: false
