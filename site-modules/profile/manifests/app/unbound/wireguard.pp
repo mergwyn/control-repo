@@ -58,7 +58,6 @@ class profile::app::unbound::wireguard (
     access                 => ["${lookup('defaults::lan_subnet')}", '127.0.0.0/8'],
     do_not_query_localhost => false,
     val_permissive_mode    => true,
-    outgoing_interface     => [$facts['networking']['interfaces']['wg0']['ip']],
     control_enable         => true,
     force_restart          => true,
   }
