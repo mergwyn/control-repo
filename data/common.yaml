@@ -40,7 +40,7 @@ defaults::vpn::nameservers:
   - 10.35.53.1  # TODO can this be extracted from the VPN server config secret?
 
 # K3s settings
-defaults::k3s::clusterIP: "10.43.0.10"
+defaults::k3s::coreDNS: "10.58.0.37"
 
 defaults::vpn::use_systemd_resolved: true
 profile::infrastructure::router::type: "privatvpn"

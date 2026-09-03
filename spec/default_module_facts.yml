@@ -15,4 +15,4 @@ initramfs_provider: dracut
 
 has_compiler: true
 
-defaults::k3s::clusterIP: 1.2.3.4
+defaults::k3s::coreDNS: 1.2.3.4

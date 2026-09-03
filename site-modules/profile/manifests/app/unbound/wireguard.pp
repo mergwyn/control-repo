@@ -49,7 +49,7 @@
 #
 class profile::app::unbound::wireguard (
   Stdlib::IP::Address::V4 $gateway_ip     = lookup('defaults::vpn::gateway'), # 10.58.0.24
-  Stdlib::IP::Address::V4 $cluster_ip     = lookup('defaults::k3s::clusterIP'),
+  Stdlib::IP::Address::V4 $cluster_ip     = lookup('defaults::k3s::coreDNS'),
   String[1]               $cluster_domain = 'cluster.local',
 ) {
   class { 'unbound':
