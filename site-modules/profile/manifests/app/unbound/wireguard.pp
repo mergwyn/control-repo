@@ -72,3 +72,4 @@ class profile::app::unbound::wireguard (
     require => Class['unbound'],
   }
 }
+
