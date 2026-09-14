@@ -37,11 +37,7 @@
 #   zulu's LAN-facing IP. Unbound binds here so pods on the LAN/net1 side
 #   can reach it directly, in addition to loopback.
 # @param cluster_ip
-#   CoreDNS's ClusterIP (k3s default convention: 10th address of the
-#   service CIDR, e.g. 10.43.0.10 - confirm against the live cluster
-#   rather than assuming, via:
-#     kubectl get svc -n kube-system kube-dns -o jsonpath='{.spec.clusterIP}'
-#   ). All queries for $cluster_domain are stubbed here.
+#   CoreDNS's ClusterIP  external address. All queries for $cluster_domain are stubbed here.
 # @param cluster_domain
 #   The cluster's internal DNS suffix. Defaults to the Kubernetes
 #   standard 'cluster.local'; only override if the cluster was built with
@@ -72,4 +68,3 @@ class profile::app::unbound::wireguard (
     require => Class['unbound'],
   }
 }
-
