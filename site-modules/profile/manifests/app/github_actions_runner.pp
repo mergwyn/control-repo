@@ -41,19 +41,20 @@ class profile::app::github_actions_runner (
     default => "--labels ${labels.join(',')}",
   }
 
+  file { $install_dir:
+    ensure => directory,
+    owner  => $runner_user,
+    group  => $runner_user,
+    mode   => '0750',
+  }
+
   user { $runner_user:
     ensure     => present,
     system     => true,
     home       => $install_dir,
     managehome => true,
     shell      => '/usr/sbin/nologin',
-  }
-
-  file { $install_dir:
-    ensure => directory,
-    owner  => $runner_user,
-    group  => $runner_user,
-    mode   => '0750',
+    require    => File[$install_dir],
   }
 
   $tarball = "${install_dir}/actions-runner-linux-x64-${version}.tar.gz"
