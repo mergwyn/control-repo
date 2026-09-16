@@ -48,7 +48,15 @@ class profile::app::github_actions_runner (
     shell      => '/usr/sbin/nologin',
   }
 
-  file { "${install_dir}/.env":
+  file { $install_dir:
+    ensure  => directory,
+    owner   => $runner_user,
+    group   => $runner_user,
+    mode    => '0750',
+    require => User[$runner_user],
+  }
+
+  -> file { "${install_dir}/.env":
     ensure  => file,
     owner   => $runner_user,
     group   => $runner_user,
