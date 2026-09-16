@@ -48,12 +48,18 @@ class profile::app::github_actions_runner (
     shell      => '/usr/sbin/nologin',
   }
 
-  file { $install_dir:
-    ensure  => directory,
+  file { "${install_dir}/.env":
+    ensure  => file,
     owner   => $runner_user,
     group   => $runner_user,
-    mode    => '0750',
-    require => User[$runner_user],
+    mode    => '0640',
+    content => "HELM_PLUGINS=/usr/local/share/helm/plugins\n",
+    require => Exec['extract-actions-runner'],
+  }
+
+  ~> exec { 'restart-actions-runner-service':
+    command     => "/bin/systemctl restart $(/bin/systemctl list-unit-files --type=service | /bin/grep -o 'actions\.runner\.[^ ]*\.service' | /usr/bin/head -1)",
+    refreshonly => true,
   }
 
   $tarball = "${install_dir}/actions-runner-linux-x64-${version}.tar.gz"
@@ -102,9 +108,10 @@ class profile::app::github_actions_runner (
     unless  => '/usr/bin/systemctl list-unit-files | /bin/grep -q actions.runner',
   }
 
-  ~> exec { 'start-actions-runner-service':
-    command => "${install_dir}/svc.sh start",
-    cwd     => $install_dir,
-    unless  => "${install_dir}/svc.sh status | /bin/grep -q active",
+  -> exec { 'start-actions-runner-service':
+    command => "/bin/systemctl start $(/bin/systemctl list-unit-files --type=service | /bin/grep -o 'actions\.runner\.[^ ]*\.service' | /usr/bin/head -1)",
+    unless  => "/bin/systemctl is-active --quiet $(/bin/systemctl list-unit-files --type=service | /bin/grep -o 'actions\.runner\.[^ ]*\.service' | /usr/bin/head -1)",
   }
+
+
 }
