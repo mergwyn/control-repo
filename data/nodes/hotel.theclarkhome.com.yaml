@@ -12,7 +12,7 @@ profile::platform::baseline::debian::mounts::objects:
     name: '/var/lib/longhorn-sda'
     device: 'UUID=1d2210ca-b079-45e0-a7fe-8d34c9807cd8'
     fstype: 'ext4'
-    options: 'defaults'
+    options: 'defaults,nofail,x-systemd.device-timeout=10s'
 
 node::ip: "%{lookup('defaults::subnet')}.10"
 node::interface: "eno1"
