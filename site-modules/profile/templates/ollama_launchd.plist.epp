@@ -32,10 +32,6 @@
     <string><%= $max_loaded_models %></string>
     <key>HOME</key>
     <string>/Users/<%= $user %></string>
-    <key>ENABLE_MODEL_FILTER</key>
-    <string>true</string>
-    <key>MODEL_FILTER_LIST</key>
-    <string>openrouter/free,openrouter/auto,llama3.1:8b,qwen3:8b</string>
   </dict>
 
   <key>RunAtLoad</key>
