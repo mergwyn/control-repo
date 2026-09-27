@@ -31,6 +31,11 @@
 #   Value for OLLAMA_ORIGINS, controlling which request origins the
 #   API accepts. Use '*' to allow all (matches prior manual setup).
 #
+# @param max_loaded_models
+#   Value for OLLAMA_MAX_LOADED_MODELS, the number of models Ollama
+#   keeps resident in memory at once. Raising this avoids swap delay
+#   between models but increases peak memory use.
+#
 class profile::app::ollama (
   String[1]                            $user            = 'gary',
   Enum['present', 'installed', 'latest'] $ensure         = 'installed',
@@ -40,6 +45,7 @@ class profile::app::ollama (
   Enum['running', 'stopped']           $service_ensure   = 'running',
   Boolean                              $service_enable   = true,
   String[1]                            $listen_origins   = '*',
+  Integer[1]                           $max_loaded_models = 2,
 ) {
   # This profile only makes sense on macOS. Fail loudly rather than
   # silently no-op, so a misapplied role is caught immediately.
@@ -77,12 +83,13 @@ class profile::app::ollama (
     group   => 'wheel',
     mode    => '0644',
     content => epp('profile/ollama_launchd.plist.epp', {
-      'user'           => $user,
-      'ollama_bin'     => $ollama_bin,
-      'listen_host'    => $listen_host,
-      'listen_port'    => $listen_port,
-      'models_dir'     => $models_dir,
-      'listen_origins' => $listen_origins,
+      'user'              => $user,
+      'ollama_bin'        => $ollama_bin,
+      'listen_host'       => $listen_host,
+      'listen_port'       => $listen_port,
+      'models_dir'        => $models_dir,
+      'listen_origins'    => $listen_origins,
+      'max_loaded_models' => $max_loaded_models,
     }),
     require => Package['ollama'],
     notify  => Service['com.ollama.serve'],
