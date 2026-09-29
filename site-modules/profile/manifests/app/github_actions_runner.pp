@@ -120,6 +120,4 @@ class profile::app::github_actions_runner (
     command => "/bin/systemctl start $(/bin/systemctl list-unit-files --type=service | /bin/grep -o 'actions\.runner\.[^ ]*\.service' | /usr/bin/head -1)",
     unless  => "/bin/systemctl is-active --quiet $(/bin/systemctl list-unit-files --type=service | /bin/grep -o 'actions\.runner\.[^ ]*\.service' | /usr/bin/head -1)",
   }
-
-
 }
