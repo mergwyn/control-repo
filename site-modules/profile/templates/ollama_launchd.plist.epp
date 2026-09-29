@@ -32,6 +32,8 @@
     <string><%= $max_loaded_models %></string>
     <key>HOME</key>
     <string>/Users/<%= $user %></string>
+    <key>OLLAMA_KEEP_ALIVE</key>
+    <string>24h</string>
   </dict>
 
   <key>RunAtLoad</key>
