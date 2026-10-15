@@ -26,7 +26,11 @@
 #   required for `runs-on: self-hosted` to match, but useful if you ever
 #   run runners on more than one node and want to target this one
 #   specifically.
-#
+# @sops_age_key
+#   Extra labels beyond the automatic self-hosted/OS/arch ones. Not
+#   required for `runs-on: self-hosted` to match, but useful if you ever
+#   run runners on more than one node and want to target this one
+#   specifically.
 class profile::app::github_actions_runner (
   String[1]            $github_pat  = lookup('secrets::github_token'),
   String               $repo        = 'mergwyn/cluster-gitops',
@@ -35,6 +39,7 @@ class profile::app::github_actions_runner (
   Stdlib::Absolutepath $install_dir = '/opt/actions-runner',
   String               $runner_user = 'github-runner',
   Array[String]        $labels      = [],
+  Sensitive[String[1]] $sops_age_key = Sensitive(lookup('secrets::sops_age_key')),
 ) {
   $label_arg = $labels.empty ? {
     true    => '',
@@ -63,6 +68,26 @@ class profile::app::github_actions_runner (
     mode    => '0640',
     content => "HELM_PLUGINS=/usr/local/share/helm/plugins\n",
     require => Exec['extract-actions-runner'],
+  }
+
+  # install the age keys
+  $sops_dir = "${install_dir}/.config/sops/age"
+
+  file { ["${install_dir}/.config", "${install_dir}/.config/sops", $sops_dir]:
+    ensure  => directory,
+    owner   => $runner_user,
+    group   => $runner_user,
+    mode    => '0700',
+    require => File[$install_dir],
+  }
+
+  file { "${sops_dir}/keys.txt":
+    ensure  => file,
+    owner   => $runner_user,
+    group   => $runner_user,
+    mode    => '0600',
+    content => $sops_age_key,
+    require => File[$sops_dir],
   }
 
   ~> exec { 'restart-actions-runner-service':
