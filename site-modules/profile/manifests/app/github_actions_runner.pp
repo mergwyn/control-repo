@@ -35,7 +35,7 @@ class profile::app::github_actions_runner (
   String[1]            $github_pat  = lookup('secrets::github_token'),
   String               $repo        = 'mergwyn/cluster-gitops',
   # renovate: datasource=github-releases depName=actions/runner
-  String               $version     = '2.319.1',
+  String               $version     = '2.338.0',
   Stdlib::Absolutepath $install_dir = '/opt/actions-runner',
   String               $runner_user = 'github-runner',
   Array[String]        $labels      = [],
