@@ -82,7 +82,7 @@ mod 'zack/exports', '1.0.1'
 mod 'zehweh/netplan', '2.1.0'
 
 # puppet 6 core types
-mod 'puppetlabs/host_core', '2.0.1'
+mod 'puppetlabs/host_core', '2.1.0'
 mod 'puppetlabs/mount_core', '2.0.1'
 mod 'puppetlabs/cron_core', '2.0.3'
 
