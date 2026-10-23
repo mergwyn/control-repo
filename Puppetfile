@@ -45,7 +45,7 @@ mod 'puppetlabs/inifile', '6.4.1'
 mod 'puppetlabs/mailalias_core', '1.2.0'
 #mod 'puppetlabs/mysql', '17.3.0'
 mod 'puppetlabs/mysql', :git => 'https://github.com/puppetlabs/puppetlabs-mysql', :tag => 'v17.3.0'
-mod 'puppetlabs/ntp', '11.1.1'
+mod 'puppetlabs/ntp', '11.2.0'
 mod 'puppetlabs/postgresql', '10.6.3'
 mod 'puppetlabs/puppetdb', '8.1.0'
 mod 'puppetlabs/puppetserver_gem', '1.1.1'
@@ -72,7 +72,7 @@ mod 'puppet/unattended_upgrades', '9.1.0'
 mod 'puppet/unbound', '8.1.0'
 mod 'puppet/zabbix', '10.0.0'
 mod 'saz/ssh', '15.0.0'
-mod 'saz/sudo', '9.0.2'
+mod 'saz/sudo', '10.0.1'
 mod 'saz/timezone', '7.0.0'
 mod 'stm/debconf', '8.0.0'
 mod 'thekevjames/homebrew', '2.1.1'
@@ -88,8 +88,8 @@ mod 'puppet/webmin', :git => 'https://github.com/rehanone/puppet-webmin', :ref =
 mod 'zehweh/netplan', '2.1.0'
 
 # puppet 6 core types
-mod 'puppetlabs/host_core', '2.0.1'
-mod 'puppetlabs/mount_core', '2.0.1'
+mod 'puppetlabs/host_core', '2.1.0'
+mod 'puppetlabs/mount_core', '2.1.0'
 mod 'puppetlabs/cron_core', '2.0.3'
 
 # tasks
