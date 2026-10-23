@@ -92,7 +92,7 @@ mod 'puppetlabs/exec', '4.0.0'
 # windows
 mod 'puppetlabs/chocolatey', '9.0.0'
 mod 'puppetlabs/dism', '1.3.1'
-mod 'puppetlabs/registry', '5.0.3'
+mod 'puppetlabs/registry', '6.0.0'
 mod 'puppetlabs/concat', '10.0.1'
 mod 'puppetlabs/scheduled_task', '5.0.0'
 mod 'puppetlabs/powershell', '6.1.0'
