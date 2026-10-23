@@ -86,6 +86,7 @@ mod 'puppet/webmin', :git => 'https://github.com/rehanone/puppet-webmin', :ref =
 #mod 'wyrie/backuppc', '2.0.0'
 #tidyup mod 'zack/exports', '1.0.1'
 mod 'zehweh/netplan', '2.1.0'
+mod 'puppetlabs/concat', '10.0.1'
 
 # puppet 6 core types
 mod 'puppetlabs/host_core', '2.1.0'
@@ -99,7 +100,6 @@ mod 'puppetlabs/cron_core', '2.0.3'
 #tidyup mod 'puppetlabs/chocolatey', '9.0.0'
 #tidyup mod 'puppetlabs/dism', '1.3.1'
 #tidyup mod 'puppetlabs/registry', '5.0.3'
-#tidyup mod 'puppetlabs/concat', '10.0.1'
 #tidyup mod 'puppetlabs/scheduled_task', '5.0.0'
 #tidyup mod 'puppetlabs/powershell', '6.1.0'
 #tidyup mod 'puppetlabs/pwshlib', '2.0.1'
