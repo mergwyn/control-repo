@@ -34,7 +34,7 @@ mod 'puppetlabs/apache', :git => 'https://github.com/puppetlabs/puppetlabs-apach
 mod 'puppetlabs/apt', '11.4.0'
 mod 'puppetlabs/augeas_core', '2.1.0'
 mod 'puppetlabs/docker', '10.5.0'
-mod 'puppetlabs/firewall', '8.5.0'
+mod 'puppetlabs/firewall', '8.6.0'
 mod 'puppetlabs/git', '0.5.0'
 mod 'puppetlabs/inifile', '6.5.0'
 mod 'puppetlabs/mailalias_core', '1.2.0'
