@@ -87,7 +87,7 @@ mod 'puppetlabs/mount_core', '2.1.0'
 mod 'puppetlabs/cron_core', '2.1.0'
 
 # tasks
-mod 'puppetlabs/exec', '4.0.0'
+mod 'puppetlabs/exec', '4.1.0'
 
 # windows
 mod 'puppetlabs/chocolatey', '9.0.0'
