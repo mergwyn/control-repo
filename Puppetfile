@@ -17,7 +17,7 @@ mod 'mergwyn/radarr', :git => 'https://github.com/mergwyn/mergwyn-radarr', :bran
 mod 'mosen/cups', '1.5.0'
 mod 'peelman/kea', '0.0.5'
 mod 'puppet/alternatives', '6.0.0'
-mod 'puppet/archive', '8.1.0'
+mod 'puppet/archive', '9.0.0'
 mod 'puppet/augeasproviders_core', '5.0.0'
 mod 'puppet/augeasproviders_pam', '5.0.0'
 mod 'puppet/augeasproviders_shellvar', '7.0.0'
