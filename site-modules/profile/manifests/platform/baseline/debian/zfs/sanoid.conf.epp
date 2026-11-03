@@ -1,0 +1,17 @@
+<%- | Hash $datasets, Hash $keymap | -%>
+# Managed by Puppet
+[template_default]
+<% $datasets['default'].each |$k, $v| { -%>
+<%= pick($keymap[$k], $k) %> = <%= $v %>
+<% } -%>
+frequent_period = 15
+recursive = yes
+
+<% $datasets.filter |$ds, $_| { $ds != 'default' }.each |$ds, $opts| { -%>
+[<%= $ds %>]
+use_template = default
+<% $opts.each |$k, $v| { -%>
+<%= pick($keymap[$k], $k) %> = <%= $v %>
+<% } -%>
+
+<% } -%>

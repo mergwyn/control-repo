@@ -4,7 +4,66 @@ class profile::platform::baseline::debian::zfs::snapshotter (
   String $type   = 'pyznap',
   Hash $settings = {},
 ) {
+  # Setup default settings for all types
+  $owner          = lookup('defaults::system_user')
+  $group          = lookup('defaults::system_group')
+  $adminemail     = lookup('defaults::adminemail')
+
+  file { $configdir:
+    ensure  => directory,
+    owner   => $owner,
+    group   => $group,
+    require => Class['sssd'],
+  }
+  $defaults = {
+    path    => $target_ini,
+    require => File[$configdir],
+  }
+
+  $default_settings = {
+    'default' => {
+      'frequent' => '4',
+      'hourly'   => '24',
+      'daily'    => '7',
+      'weekly'   => '4',
+      'monthly'  => '3',
+      'yearly'   => '0',
+    },
+    'rpool' => {
+      'snap'     => 'no',
+      'clean'    => 'yes',
+    },
+    'rpool/ROOT' => {
+      'snap' => 'yes',
+    },
+    'rpool/home' => {
+      'snap' => 'yes',
+    },
+  }
+  inifile::create_ini_settings($default_settings + $settings, $defaults)
+
   case $type {
+    'sanoid': {
+      $datasets = $default_settings + $settings
+      $keymap   = { 'snap' => 'autosnap', 'clean' => 'autoprune', 'frequent' => 'frequently' }
+
+      # Puppet won't remove the old cron when the pyznap branch drops out of the catalog
+      cron::job { 'pyznap': ensure => absent }
+
+      package { 'sanoid': ensure => installed }
+      -> file { '/etc/sanoid': ensure => directory }
+      -> file { '/etc/sanoid/sanoid.conf':
+        ensure  => file,
+        mode    => '0644',
+        content => epp('profile/platform/baseline/debian/zfs/sanoid.conf.epp',
+                        { datasets => $datasets, keymap => $keymap }),
+      }
+      ~> service { 'sanoid.timer':
+        ensure => running,
+        enable => true,
+      }
+      package { 'zfs-auto-snapshot': ensure => absent }
+    }
     'pyznap': {
       $codedir        = '/opt'
       $target         = "${codedir}/pyznap"
@@ -13,10 +72,6 @@ class profile::platform::baseline::debian::zfs::snapshotter (
       $link           = '/usr/local/bin/pyznap'
 
       $venv           = "${target}/venv"
-
-      $owner          = lookup('defaults::system_user')
-      $group          = lookup('defaults::system_group')
-      $adminemail     = lookup('defaults::adminemail')
 
       file { $target:
         ensure  => directory,
@@ -47,38 +102,6 @@ class profile::platform::baseline::debian::zfs::snapshotter (
         target    => "${venv}/bin/pyznap",
         subscribe => File[$venv],
       }
-
-      file { $configdir:
-        ensure  => directory,
-        owner   => $owner,
-        group   => $group,
-        require => Class['sssd'],
-      }
-      $defaults = {
-        path    => $target_ini,
-        require => File[$configdir],
-      }
-      $default_settings = {
-        'default' => {
-          'frequent' => '4',
-          'hourly'   => '24',
-          'daily'    => '7',
-          'weekly'   => '4',
-          'monthly'  => '3',
-          'yearly'   => '0',
-        },
-        'rpool' => {
-          'snap'     => 'no',
-          'clean'    => 'yes',
-        },
-        'rpool/ROOT' => {
-          'snap' => 'yes',
-        },
-        'rpool/home' => {
-          'snap' => 'yes',
-        },
-      }
-      inifile::create_ini_settings($default_settings + $settings, $defaults)
 
       cron::job { 'pyznap':
         user        => root,
