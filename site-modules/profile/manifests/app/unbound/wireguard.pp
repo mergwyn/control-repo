@@ -1,9 +1,9 @@
 # @summary Split-DNS resolver for the zulu WireGuard gateway
 #
-# Runs Unbound on zulu (not a k3s node, so no ipvlan/netfilter-bypass
+# Runs Unbound on a vpn gateway (not a k3s node, so no ipvlan/netfilter-bypass
 # concerns apply here - Unbound sees normal traffic like any other host).
 #
-# Pods routed through zulu (dispatcharr, qbittorrent, sabnzbd) point their
+# Pods routed through this node (eg dispatcharr, qbittorrent, sabnzbd) point their
 # DNS at this resolver instead of CoreDNS directly, giving them split
 # resolution from a single upstream:
 #   - queries for $cluster_domain (in-cluster service/pod names - e.g.
@@ -14,7 +14,7 @@
 #     closing the DNS-leak gap left by routing traffic through the VPN
 #     while still resolving names via the node's normal path
 #
-# Binding to $gateway_ip (zulu's LAN-facing address, not just loopback)
+# Binding to $gateway_ip (nodes's LAN-facing address, not just loopback)
 # is what makes this resolver reachable from pods on the LAN side at all;
 # 127.0.0.1 is also bound for local/remote-control tooling on zulu itself.
 #
@@ -31,10 +31,10 @@
 # validation failures rather than hard-failing the query.
 #
 # unbound::remote is enabled for local diagnostics (unbound-control) when
-# troubleshooting resolution issues on zulu directly.
+# troubleshooting resolution issues on the gateway node directly.
 #
 # @param gateway_ip
-#   zulu's LAN-facing IP. Unbound binds here so pods on the LAN/net1 side
+#   This node's LAN-facing IP. Unbound binds here so pods on the LAN/net1 side
 #   can reach it directly, in addition to loopback.
 # @param cluster_ip
 #   CoreDNS's ClusterIP  external address. All queries for $cluster_domain are stubbed here.
@@ -44,7 +44,7 @@
 #   a non-default --cluster-domain.
 #
 class profile::app::unbound::wireguard (
-  Stdlib::IP::Address::V4 $gateway_ip     = lookup('defaults::vpn::gateway'), # 10.58.0.24
+  Stdlib::IP::Address::V4 $gateway_ip     = $facts['networking']['ip'], # Primary ip address
   Stdlib::IP::Address::V4 $cluster_ip     = lookup('defaults::k3s::cluster_ip'),
   String[1]               $cluster_domain = 'cluster.local',
 ) {
