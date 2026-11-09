@@ -1,7 +1,7 @@
 # @summary Install yq lightweight and portable command-line YAML, JSON, INI and XML processor.
 #
 class profile::app::yq (
-  String $version = '4.54.1',  # renovate: datasource=github-commits depName=mikefarah/yq
+  String $version = '4.54.2',  # renovate: datasource=github-commits depName=mikefarah/yq
 ) {
   profile::app::binary_install { 'yq':
     version     => $version,
