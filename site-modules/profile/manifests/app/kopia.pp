@@ -62,20 +62,10 @@ class profile::app::kopia (
     'REPOS':       value => join($repos, ' '), ;
     'SNAPS':       value => join($snaps, ',') ;
   }
-  file { '/etc/cron.daily/kopia-backup':
-    ensure => file,
-    mode   => '0755',
-    source => 'puppet:///modules/profile/kopia-backup',
-  }
-  file { '/etc/cron.daily/kopia-maintenance':
-    ensure => file,
-    mode   => '0755',
-    source => 'puppet:///modules/profile/kopia-maintenance',
-  }
-  file { '/etc/cron.weekly/kopia-maintenance':
-    ensure => absent,
-  }
-  $bws_token = lookup('secrets::kopia::bws_token')
+  file { '/etc/cron.daily/kopia-backup': ensure => absent }
+  file { '/etc/cron.daily/kopia-maintenance': ensure => absent }
+
+  $bws_token = lookupn
   file { "${topdir}/.bws_env":
     ensure  => file,
     owner   => 'root',
@@ -83,6 +73,8 @@ class profile::app::kopia (
     mode    => '0640',
     content => "export BWS_ACCESS_TOKEN=${bws_token}\n",
   }
+
+  include profile::app::kopia::trigger
 
   # Create path-aware .kopiaignore files, one per snapshot root, merging
   # common excludes with any path-specific excludes for that root.

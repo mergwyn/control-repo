@@ -16,6 +16,7 @@ class role::file_server {
   include profile::app::gpo::clean
   include profile::app::k8s_tools
   include profile::app::kopia
+  include profile::app::kopia::orchestrator
   include profile::app::lxd::backup
   include profile::app::minio
   include profile::app::samba::shares
