@@ -65,7 +65,7 @@ class profile::app::kopia (
   file { '/etc/cron.daily/kopia-backup': ensure => absent }
   file { '/etc/cron.daily/kopia-maintenance': ensure => absent }
 
-  $bws_token = lookupn
+  $bws_token = lookup('secrets::kopia::bws_token')
   file { "${topdir}/.bws_env":
     ensure  => file,
     owner   => 'root',
