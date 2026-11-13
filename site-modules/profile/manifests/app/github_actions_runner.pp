@@ -86,7 +86,7 @@ class profile::app::github_actions_runner (
     owner   => $runner_user,
     group   => $runner_user,
     mode    => '0600',
-    content => $sops_age_key,
+    content => Sensitive("${strip($sops_age_key.unwrap)}\n"),
     require => File[$sops_dir],
   }
 
